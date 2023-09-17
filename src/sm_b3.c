@@ -126,7 +126,7 @@ void BrinstarPipeBug_PreInstr_2(uint16 k) {  // 0xB38890
       else
         v4 = 2;
       PipeBug->pbg_var_E = v4;
-      BrinstarPipeBug_Func_1();
+      BrinstarPipeBug_Func_SetInstrList();
     }
   }
 }
@@ -137,7 +137,7 @@ void BrinstarPipeBug_PreInstr_3(uint16 k) {  // 0xB388E3
   PipeBug->base.y_pos += v2 - 2;
   if ((int16)(PipeBug->pbg_var_00 - PipeBug->base.y_pos) >= 0 && PipeBug->base.y_pos < samus_y_pos) {
     PipeBug->pbg_var_E |= 1;
-    BrinstarPipeBug_Func_1();
+    BrinstarPipeBug_Func_SetInstrList();
     PipeBug->pbg_var_F = FUNC16(BrinstarPipeBug_PreInstr_4);
   }
 }
@@ -158,7 +158,7 @@ void BrinstarPipeBug_PreInstr_4(uint16 k) {  // 0xB3891C
     PipeBug->base.y_pos = pbg_var_C;
     PipeBug->base.y_subpos = pbg_var_C;
     PipeBug->pbg_var_E = 0;
-    BrinstarPipeBug_Func_1();
+    BrinstarPipeBug_Func_SetInstrList();
     PipeBug->base.properties |= kEnemyProps_Invisible;
     PipeBug->pbg_var_D = 48;
     PipeBug->pbg_var_F = FUNC16(BrinstarPipeBug_PreInstr_5);
@@ -171,7 +171,7 @@ void BrinstarPipeBug_PreInstr_5(uint16 k) {  // 0xB3897E
     E->pbg_var_F = FUNC16(BrinstarPipeBug_PreInstr_2);
 }
 
-void BrinstarPipeBug_Func_1(void) {  // 0xB3898B
+void BrinstarPipeBug_Func_SetInstrList(void) {  // 0xB3898B
   Enemy_PipeBug *PipeBug = Get_PipeBug(cur_enemy_index);
   uint16 pbg_var_E = PipeBug->pbg_var_E;
   if (pbg_var_E != PipeBug->pbg_var_01) {
@@ -598,70 +598,70 @@ void BrinstarYellowPipeBug_Func_10(uint16 k) {  // 0xB3927A
   }
 }
 
-const uint16 *Botwoon_Instr_1(uint16 k, const uint16 *jp) {  // 0xB394C7
+const uint16 *Botwoon_Instr_AimUpRadius8x16Unused(uint16 k, const uint16 *jp) {  // 0xB394C7
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 8;
   E->base.y_height = 16;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_2(uint16 k, const uint16 *jp) {  // 0xB394D7
+const uint16 *Botwoon_Instr_AimUpLeftRadius12x12(uint16 k, const uint16 *jp) {  // 0xB394D7
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 12;
   E->base.y_height = 12;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_3(uint16 k, const uint16 *jp) {  // 0xB394E7
+const uint16 *Botwoon_Instr_AimLeftRadius16x8(uint16 k, const uint16 *jp) {  // 0xB394E7
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 16;
   E->base.y_height = 8;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_4(uint16 k, const uint16 *jp) {  // 0xB394F7
+const uint16 *Botwoon_Instr_AimDownLeftRadius12x12(uint16 k, const uint16 *jp) {  // 0xB394F7
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 12;
   E->base.y_height = 12;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_5(uint16 k, const uint16 *jp) {  // 0xB39507
+const uint16 *Botwoon_Instr_AimDownRadius8x16Unused(uint16 k, const uint16 *jp) {  // 0xB39507
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 8;
   E->base.y_height = 16;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_6(uint16 k, const uint16 *jp) {  // 0xB39517
+const uint16 *Botwoon_Instr_AimDownRadius8x16(uint16 k, const uint16 *jp) {  // 0xB39517
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 8;
   E->base.y_height = 16;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_7(uint16 k, const uint16 *jp) {  // 0xB39527
+const uint16 *Botwoon_Instr_AimDownRightRadius12x12(uint16 k, const uint16 *jp) {  // 0xB39527
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 12;
   E->base.y_height = 12;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_8(uint16 k, const uint16 *jp) {  // 0xB39537
+const uint16 *Botwoon_Instr_AimRightRadius16x8(uint16 k, const uint16 *jp) {  // 0xB39537
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 16;
   E->base.y_height = 8;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_9(uint16 k, const uint16 *jp) {  // 0xB39547
+const uint16 *Botwoon_Instr_AimUprightRadius12x12(uint16 k, const uint16 *jp) {  // 0xB39547
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 12;
   E->base.y_height = 12;
   return jp;
 }
 
-const uint16 *Botwoon_Instr_10(uint16 k, const uint16 *jp) {  // 0xB39557
+const uint16 *Botwoon_Instr_AimUpRadius8x16(uint16 k, const uint16 *jp) {  // 0xB39557
 
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.x_width = 8;
@@ -670,7 +670,7 @@ const uint16 *Botwoon_Instr_10(uint16 k, const uint16 *jp) {  // 0xB39557
 }
 
 const uint16 *Botwoon_Instr_SetSpitting(uint16 k, const uint16 *jp) {  // 0xB39567
-  Get_Botwoon(cur_enemy_index)->botwoon_var_5A = 1;
+  Get_Botwoon(cur_enemy_index)->botwoon_var_SpitFlag = 1;
   return jp;
 }
 
@@ -701,9 +701,9 @@ void Botwoon_Init(void) {  // 0xB39583
     } while (!v5);
     E->base.current_instruction = addr_kBotwoon_Ilist_9389;
     E->botwoon_var_3B = addr_kBotwoon_Ilist_9389;
-    E->botwoon_var_D = FUNC16(Botwoon_Func_6);
-    E->botwoon_var_E = FUNC16(Botwoon_Func_19);
-    E->botwoon_var_F = FUNC16(Botwoon_Func_26);
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_Initialize);
+    E->botwoon_var_E = FUNC16(Botwoon_Func_MoveToTargetHole);
+    E->botwoon_var_F = FUNC16(Botwoon_Func_MoveHeadAround);
     E->botwoon_var_20 = 256;
     E->botwoon_var_38 = g_word_B394BB[0];
     E->botwoon_var_C = g_word_B394BB[1];
@@ -734,30 +734,30 @@ void Botwoon_Init(void) {  // 0xB39583
 
 void CallBotwoonFuncVarD(uint32 ea, uint16 k) {
   switch (ea) {
-  case fnBotwoon_Func_6: Botwoon_Func_6(); return;
-  case fnBotwoon_Func_7: Botwoon_Func_7(); return;
-  case fnBotwoon_Func_12: Botwoon_Func_12(); return;
-  case fnBotwoon_Func_13: Botwoon_Func_13(); return;
-  case fnBotwoon_Func_14: Botwoon_Func_14(); return;
-  case fnBotwoon_Func_15: Botwoon_Func_15(); return;
-  case fnBotwoon_Func_16: Botwoon_Func_16(); return;
-  case fnBotwoon_Func_18: Botwoon_Func_18(k); return;
+  case fnBotwoon_Func_Initialize: Botwoon_Func_Initialize(); return;
+  case fnBotwoon_Func_GoInHole: Botwoon_Func_GoInHole(); return;
+  case fnBotwoon_Func_MoveAround: Botwoon_Func_MoveAround(); return;
+  case fnBotwoon_Func_Spit: Botwoon_Func_Spit(); return;
+  case fnBotwoon_Func_PreDeathDelay: Botwoon_Func_PreDeathDelay(); return;
+  case fnBotwoon_Func_FallToGround: Botwoon_Func_FallToGround(); return;
+  case fnBotwoon_Func_WaitForBodyToFall: Botwoon_Func_WaitForBodyToFall(); return;
+  case fnBotwoon_Func_CrumbleWall: Botwoon_Func_CrumbleWall(k); return;
   default: Unreachable();
   }
 }
 void CallBotwoonFuncVarE(uint32 ea) {
   switch (ea) {
-  case fnBotwoon_Func_19: Botwoon_Func_19(); return;
-  case fnBotwoon_Func_32: Botwoon_Func_32(); return;
-  case fnBotwoon_Func_33: Botwoon_Func_33(); return;
+  case fnBotwoon_Func_MoveToTargetHole: Botwoon_Func_MoveToTargetHole(); return;
+  case fnBotwoon_Func_StartMovementUsingData: Botwoon_Func_StartMovementUsingData(); return;
+  case fnBotwoon_Func_MoveUsingData: Botwoon_Func_MoveUsingData(); return;
   default: Unreachable();
   }
 }
 
 void Botwoon_Main(void) {  // 0xB39668
-  Botwoon_Func_3();
+  Botwoon_Func_CheckDeath();
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  CallBotwoonFuncVarD(E->botwoon_var_D | 0xB30000, cur_enemy_index);
+  CallBotwoonFuncVarD(E->botwoon_var_Func | 0xB30000, cur_enemy_index);
   Botwoon_HealthBasedPalHandling();
 }
 
@@ -769,27 +769,27 @@ void Botwoon_Func_1(uint16 k) {  // 0xB3967B
 
 void Botwoon_Func_2(void) {  // 0xB39696
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  if (!E->botwoon_var_2F && E->botwoon_var_2E && !E->botwoon_var_33 && !E->botwoon_var_21) {
-    E->botwoon_var_F = FUNC16(Botwoon_Func_27);
+  if (!E->botwoon_var_DeathFlag && E->botwoon_var_2E && !E->botwoon_var_33 && !E->botwoon_var_21) {
+    E->botwoon_var_F = FUNC16(Botwoon_Func_SetSpitAngle);
     E->botwoon_var_21 = 24;
   }
   E->botwoon_var_2E = 0;
 }
 
-void Botwoon_Func_3(void) {  // 0xB396C6
+void Botwoon_Func_CheckDeath(void) {  // 0xB396C6
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  if (E->botwoon_var_2F) {
-    if (E->botwoon_var_3E) {
-      E->botwoon_var_30 = 1;
-      E->botwoon_var_D = FUNC16(Botwoon_Func_14);
-      E->botwoon_var_22 = 240;
-      E->botwoon_var_2F = 0;
-      E->botwoon_var_3E = 0;
+  if (E->botwoon_var_DeathFlag) {
+    if (E->botwoon_var_ShowingTailFlag) {
+      E->botwoon_var_BodyDeathFlag = 1;
+      E->botwoon_var_Func = FUNC16(Botwoon_Func_PreDeathDelay);
+      E->botwoon_var_PreDeathCounter = 240;
+      E->botwoon_var_DeathFlag = 0;
+      E->botwoon_var_ShowingTailFlag = 0;
     }
   }
 }
 
-void Botwoon_Func_4(void) {  // 0xB396F5
+void Botwoon_Func_SetIntangible(void) {  // 0xB396F5
   Enemy_Botwoon *E = Get_Botwoon(0);
   E->base.properties |= kEnemyProps_Tangible;
 }
@@ -818,15 +818,15 @@ void Botwoon_HealthBasedPalHandling(void) {  // 0xB3982B
   }
 }
 
-void Botwoon_Func_6(void) {  // 0xB39878
+void Botwoon_Func_Initialize(void) {  // 0xB39878
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   uint16 v1 = E->botwoon_var_20 - 1;
   E->botwoon_var_20 = v1;
   if (!v1)
-    E->botwoon_var_D = FUNC16(Botwoon_Func_7);
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_GoInHole);
 }
 
-void Botwoon_Func_7(void) {  // 0xB3989D
+void Botwoon_Func_GoInHole(void) {  // 0xB3989D
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if (E->botwoon_var_3C) {
     E->botwoon_var_3C = 0;
@@ -836,50 +836,50 @@ void Botwoon_Func_7(void) {  // 0xB3989D
     }
     E->botwoon_var_59 = 0;
     if (!r18 || r18 == 2 || r18 == 4) {
-      Botwoon_Func_8();
+      Botwoon_Func_SetUpMovement();
     } else {
       if (r18 != 6 && r18 != 8 && r18 != 10 && r18 != 12 && r18 != 14) {
         Unreachable();
       }
-      Botwoon_Func_9();
+      Botwoon_Func_SetUpSpit();
     }
   } else {
     CallBotwoonFuncVarE(E->botwoon_var_E | 0xB30000);
-    Botwoon_Func_22();
-    Botwoon_Func_23();
+    Botwoon_Func_UpdatePositionHistory();
+    Botwoon_Func_UpdateBodyPositions();
     CallEnemyPreInstr(E->botwoon_var_F | 0xB30000);
-    Botwoon_Func_25();
-    Botwoon_Func_24();
-    Botwoon_Func_31(cur_enemy_index);
+    Botwoon_Func_SetBodyTableIndexes();
+    Botwoon_Func_UpdatePositionHistoryIndex();
+    Botwoon_Func_CollisionDetection(cur_enemy_index);
   }
 }
 
-void Botwoon_Func_8(void) {  // 0xB398EC
+void Botwoon_Func_SetUpMovement(void) {  // 0xB398EC
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  E->botwoon_var_D = FUNC16(Botwoon_Func_12);
-  E->botwoon_var_E = FUNC16(Botwoon_Func_32);
+  E->botwoon_var_Func = FUNC16(Botwoon_Func_MoveAround);
+  E->botwoon_var_E = FUNC16(Botwoon_Func_StartMovementUsingData);
   E->botwoon_var_21 = 0;
-  E->botwoon_var_F = FUNC16(Botwoon_Func_26);
+  E->botwoon_var_F = FUNC16(Botwoon_Func_MoveHeadAround);
   E->botwoon_var_4B = 0;
-  Botwoon_Func_10(cur_enemy_index);
+  Botwoon_Func_ChooseMovementPath(cur_enemy_index);
 }
 
-void Botwoon_Func_9(void) {  // 0xB39913
+void Botwoon_Func_SetUpSpit(void) {  // 0xB39913
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  E->botwoon_var_D = FUNC16(Botwoon_Func_13);
-  E->botwoon_var_F = FUNC16(Botwoon_Func_27);
+  E->botwoon_var_Func = FUNC16(Botwoon_Func_Spit);
+  E->botwoon_var_F = FUNC16(Botwoon_Func_SetSpitAngle);
   E->botwoon_var_21 = 48;
   E->base.properties &= ~kEnemyProps_Tangible;
 }
 
-void Botwoon_Func_10(uint16 k) {  // 0xB39933
-  Botwoon_Func_11(k);
+void Botwoon_Func_ChooseMovementPath(uint16 k) {  // 0xB39933
+  Botwoon_Func_SetSpeed(k);
   Enemy_Botwoon *E = Get_Botwoon(k);
   uint16 r18 = E->botwoon_var_33 ? 128 : 0;
   E->botwoon_var_40 = (NextRandom() & 0x18) + r18 + 4 * E->botwoon_var_37;
 }
 
-void Botwoon_Func_11(uint16 k) {  // 0xB3995D
+void Botwoon_Func_SetSpeed(uint16 k) {  // 0xB3995D
   int16 health;
 
   Enemy_Botwoon *E = Get_Botwoon(k);
@@ -898,25 +898,25 @@ void Botwoon_Func_11(uint16 k) {  // 0xB3995D
   }
 }
 
-void Botwoon_Func_12(void) {  // 0xB399A4
+void Botwoon_Func_MoveAround(void) {  // 0xB399A4
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if (E->botwoon_var_3C) {
     E->botwoon_var_3C = 0;
-    E->botwoon_var_D = FUNC16(Botwoon_Func_7);
-    E->botwoon_var_E = FUNC16(Botwoon_Func_19);
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_GoInHole);
+    E->botwoon_var_E = FUNC16(Botwoon_Func_MoveToTargetHole);
     if (E->botwoon_var_33)
       E->botwoon_var_35 = 0;
   } else {
     CallBotwoonFuncVarE(E->botwoon_var_E | 0xB30000);
-    Botwoon_Func_22();
-    Botwoon_Func_23();
+    Botwoon_Func_UpdatePositionHistory();
+    Botwoon_Func_UpdateBodyPositions();
     CallEnemyPreInstr(E->botwoon_var_F | 0xB30000);
-    Botwoon_Func_25();
-    Botwoon_Func_24();
+    Botwoon_Func_SetBodyTableIndexes();
+    Botwoon_Func_UpdatePositionHistoryIndex();
   }
 }
 
-void Botwoon_Func_13(void) {  // 0xB399E4
+void Botwoon_Func_Spit(void) {  // 0xB399E4
   uint16 v3;
 
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
@@ -925,28 +925,28 @@ void Botwoon_Func_13(void) {  // 0xB399E4
     CallEnemyPreInstr(E->botwoon_var_F | 0xB30000);
   } else {
     E->botwoon_var_3C = 0;
-    E->botwoon_var_D = FUNC16(Botwoon_Func_12);
-    E->botwoon_var_E = FUNC16(Botwoon_Func_32);
-    E->botwoon_var_F = FUNC16(Botwoon_Func_26);
-    if (E->botwoon_var_2F || (v3 = NextRandom() & 1, E->botwoon_var_33 = v3, (E->botwoon_var_34 = v3) == 0)) {
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_MoveAround);
+    E->botwoon_var_E = FUNC16(Botwoon_Func_StartMovementUsingData);
+    E->botwoon_var_F = FUNC16(Botwoon_Func_MoveHeadAround);
+    if (E->botwoon_var_DeathFlag || (v3 = NextRandom() & 1, E->botwoon_var_33 = v3, (E->botwoon_var_34 = v3) == 0)) {
       E->botwoon_var_4B = 0;
     } else {
       E->botwoon_var_35 = 0;
       E->botwoon_var_36 = -1;
     }
-    Botwoon_Func_10(cur_enemy_index);
+    Botwoon_Func_ChooseMovementPath(cur_enemy_index);
   }
 }
 
-void Botwoon_Func_14(void) {  // 0xB39A46
+void Botwoon_Func_PreDeathDelay(void) {  // 0xB39A46
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  uint16 v1 = E->botwoon_var_22 + 1;
-  E->botwoon_var_22 = v1;
+  uint16 v1 = E->botwoon_var_PreDeathCounter + 1;
+  E->botwoon_var_PreDeathCounter = v1;
   if (!sign16(v1 - 256))
-    E->botwoon_var_D = FUNC16(Botwoon_Func_15);
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_FallToGround);
 }
 
-void Botwoon_Func_15(void) {  // 0xB39A5E
+void Botwoon_Func_FallToGround(void) {  // 0xB39A5E
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   int v2 = (8 * HIBYTE(E->botwoon_var_28)) >> 1;
   AddToHiLo(&E->base.y_pos, &E->base.y_subpos, __PAIR32__(kCommonEnemySpeeds_Quadratic[v2 + 1], kCommonEnemySpeeds_Quadratic[v2]));
@@ -954,7 +954,7 @@ void Botwoon_Func_15(void) {  // 0xB39A5E
     E->botwoon_var_28 += 192;
   } else {
     E->base.y_pos = 200;
-    E->botwoon_var_D = FUNC16(Botwoon_Func_16);
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_WaitForBodyToFall);
     eproj_spawn_pt = (Point16U){ E->base.x_pos, E->base.y_pos };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x1D);
     Botwoon_QueueExplosionSfx();
@@ -962,15 +962,15 @@ void Botwoon_Func_15(void) {  // 0xB39A5E
   }
 }
 
-void Botwoon_Func_16(void) {  // 0xB39ACA
+void Botwoon_Func_WaitForBodyToFall(void) {  // 0xB39ACA
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if (E->botwoon_var_5F) {
-    E->botwoon_var_D = FUNC16(Botwoon_Func_18);
-    Botwoon_Func_17(cur_enemy_index);
+    E->botwoon_var_Func = FUNC16(Botwoon_Func_CrumbleWall);
+    Botwoon_Func_SpawnCrumbleWall(cur_enemy_index);
   }
 }
 
-void Botwoon_Func_17(uint16 k) {  // 0xB39ADD
+void Botwoon_Func_SpawnCrumbleWall(uint16 k) {  // 0xB39ADD
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0f, 0x04, 0xb79b });
   Enemy_ItemDrop_Botwoon(k);
   Enemy_Botwoon *E = Get_Botwoon(k);
@@ -979,7 +979,7 @@ void Botwoon_Func_17(uint16 k) {  // 0xB39ADD
   E->botwoon_var_25 = 0;
 }
 
-void Botwoon_Func_18(uint16 k) {  // 0xB39AF9
+void Botwoon_Func_CrumbleWall(uint16 k) {  // 0xB39AF9
   Enemy_Botwoon *E = Get_Botwoon(k);
   if (sign16(E->botwoon_var_23 - 192)) {
     if (!sign16(E->botwoon_var_23 - 64)) {
@@ -1012,21 +1012,21 @@ void Botwoon_Func_18(uint16 k) {  // 0xB39AF9
   }
 }
 
-void Botwoon_Func_19(void) {  // 0xB39BB7
-  Point16U pt = Botwoon_Func_20(cur_enemy_index);
+void Botwoon_Func_MoveToTargetHole(void) {  // 0xB39BB7
+  Point16U pt = Botwoon_Func_GetOffsetToHole(cur_enemy_index);
   uint16 v1 = CalculateAngleFromXY(pt.x, pt.y);
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->botwoon_var_39 = v1;
   E->botwoon_var_3A = (uint8)(64 - v1);
   if (E->botwoon_var_33 == E->botwoon_var_34) {
-    Botwoon_Func_21();
+    Botwoon_Func_MoveToTargeHoleByAngleAndSpeed();
   } else {
     E->botwoon_var_34 = E->botwoon_var_33;
     E->botwoon_var_3C = 1;
   }
 }
 
-Point16U Botwoon_Func_20(uint16 k) {  // 0xB39BF8
+Point16U Botwoon_Func_GetOffsetToHole(uint16 k) {  // 0xB39BF8
   Enemy_Botwoon *E = Get_Botwoon(k);
   int v2 = E->botwoon_var_37 >> 1;
   uint16 v3 = g_word_B3949B[v2] + 4 - E->base.x_pos;
@@ -1048,20 +1048,20 @@ Point16U Botwoon_Func_20(uint16 k) {  // 0xB39BF8
   return (Point16U) { r18, r20 };
 }
 
-void Botwoon_Func_21(void) {  // 0xB39C48
+void Botwoon_Func_MoveToTargeHoleByAngleAndSpeed(void) {  // 0xB39C48
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   Point32 pt = ConvertAngleToXy(E->botwoon_var_3A, E->botwoon_var_38);
-  EnemyFunc_B691(E->botwoon_var_3A, pt);
+  MoveEnemyByAngleAndXYSpeed(E->botwoon_var_3A, pt);
 }
 
-void Botwoon_Func_22(void) {  // 0xB39C7B
+void Botwoon_Func_UpdatePositionHistory(void) {  // 0xB39C7B
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   uint16 botwoon_var_B = E->botwoon_var_B;
   *(uint16 *)((uint8 *)&kraid_unk9000 + botwoon_var_B) = E->base.x_pos;
   *(uint16 *)((uint8 *)&g_word_7E9002 + botwoon_var_B) = E->base.y_pos;
 }
 
-void Botwoon_Func_23(void) {  // 0xB39C90
+void Botwoon_Func_UpdateBodyPositions(void) {  // 0xB39C90
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   uint16 r18 = (E->botwoon_var_B - E->botwoon_var_C) & 0x3FF;
   int n = 24;
@@ -1081,10 +1081,10 @@ void Botwoon_Func_23(void) {  // 0xB39C90
       }
       if (!v2) {
         E->botwoon_var_35 = 0;
-        E->botwoon_var_3E = 0;
+        E->botwoon_var_ShowingTailFlag = 0;
         E->botwoon_var_36 = -1;
         if (!E->botwoon_var_33)
-          E->botwoon_var_3E = 1;
+          E->botwoon_var_ShowingTailFlag = 1;
       }
     }
     int v7 = botwoo_var_00 >> 1;
@@ -1095,12 +1095,12 @@ void Botwoon_Func_23(void) {  // 0xB39C90
   } while ((n & 0x8000) == 0);
 }
 
-void Botwoon_Func_24(void) {  // 0xB39D3C
+void Botwoon_Func_UpdatePositionHistoryIndex(void) {  // 0xB39D3C
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->botwoon_var_B = (E->botwoon_var_B + 4) & 0x3FF;
 }
 
-void Botwoon_Func_25(void) {  // 0xB39D4D
+void Botwoon_Func_SetBodyTableIndexes(void) {  // 0xB39D4D
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   int n = 24;
   do {
@@ -1126,7 +1126,7 @@ void Botwoon_Func_25(void) {  // 0xB39D4D
   } while (n >= 0);
 }
 
-void Botwoon_Func_26(uint16 k) {  // 0xB39DC0
+void Botwoon_Func_MoveHeadAround(uint16 k) {  // 0xB39DC0
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   uint16 x = E->base.x_pos - E->botwoon_var_56;
   uint16 y = E->base.y_pos - E->botwoon_var_57;
@@ -1162,7 +1162,7 @@ void Botwoon_Func_26(uint16 k) {  // 0xB39DC0
   E->botwoon_var_51 = E->base.y_pos;
 }
 
-void Botwoon_Func_27(uint16 k) {  // 0xB39E7D
+void Botwoon_Func_SetSpitAngle(uint16 k) {  // 0xB39E7D
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->base.layer = 2;
   uint16 v2 = CalculateAngleOfSamusFromEnemy(cur_enemy_index);
@@ -1173,15 +1173,15 @@ void Botwoon_Func_27(uint16 k) {  // 0xB39E7D
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->botwoon_var_3D = (uint8)(64 - E->botwoon_var_3D);
-  E->botwoon_var_F = FUNC16(Botwoon_Func_28);
-  if (E->botwoon_var_D != 0x99E4)
-    E->botwoon_var_F = FUNC16(Botwoon_Func_29);
+  E->botwoon_var_F = FUNC16(Botwoon_Func_SpawnFiveSpitProjectiles);
+  if (E->botwoon_var_Func != 0x99E4)
+    E->botwoon_var_F = FUNC16(Botwoon_Func_SpawnThreeSpitProjectiles);
   CallEnemyPreInstr(E->botwoon_var_F | 0xB30000);
 }
 
-void Botwoon_Func_28(uint16 k) {  // 0xB39EE0
+void Botwoon_Func_SpawnFiveSpitProjectiles(uint16 k) {  // 0xB39EE0
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  if (E->botwoon_var_5A) {
+  if (E->botwoon_var_SpitFlag) {
     eproj_init_param_3 = E->botwoon_var_3D - 32;
     int n = 5;
     uint16 varE32 = g_word_B39E77[E->botwoon_var_3F];
@@ -1189,12 +1189,12 @@ void Botwoon_Func_28(uint16 k) {  // 0xB39EE0
       SpawnEprojWithGfx(varE32, cur_enemy_index, addr_kEproj_BotwoonsSpit);
       eproj_init_param_3 += 16;
     } while (--n);
-    E->botwoon_var_5A = 0;
-    E->botwoon_var_F = FUNC16(Botwoon_Func_30);
+    E->botwoon_var_SpitFlag = 0;
+    E->botwoon_var_F = FUNC16(Botwoon_Func_CooldownSpit);
   }
 }
 
-void Botwoon_Func_29(uint16 k) {  // 0xB39F34
+void Botwoon_Func_SpawnThreeSpitProjectiles(uint16 k) {  // 0xB39F34
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   eproj_init_param_3 = E->botwoon_var_3D - 16;
   int n = 3;
@@ -1203,20 +1203,20 @@ void Botwoon_Func_29(uint16 k) {  // 0xB39F34
     SpawnEprojWithGfx(varE32, cur_enemy_index, addr_kEproj_BotwoonsSpit);
     eproj_init_param_3 += 16;
   } while (--n);
-  Get_Botwoon(cur_enemy_index)->botwoon_var_F = FUNC16(Botwoon_Func_30);
+  Get_Botwoon(cur_enemy_index)->botwoon_var_F = FUNC16(Botwoon_Func_CooldownSpit);
 }
 
-void Botwoon_Func_30(uint16 k) {  // 0xB39F7A
+void Botwoon_Func_CooldownSpit(uint16 k) {  // 0xB39F7A
   Enemy_Botwoon *E = Get_Botwoon(k);
   int16 v2 = E->botwoon_var_21 - 1;
   E->botwoon_var_21 = v2;
   if (v2 < 0) {
     E->botwoon_var_21 = 0;
-    E->botwoon_var_F = FUNC16(Botwoon_Func_26);
+    E->botwoon_var_F = FUNC16(Botwoon_Func_MoveHeadAround);
   }
 }
 
-void Botwoon_Func_31(uint16 k) {  // 0xB39F93
+void Botwoon_Func_CollisionDetection(uint16 k) {  // 0xB39F93
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
 
   if (!Get_Botwoon(k)->botwoon_var_35) {
@@ -1243,8 +1243,8 @@ void Botwoon_Touch(void) {  // 0xB39FFF
   Enemy_NormalTouchAI_SkipDeathAnim_B3();
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if (!E->base.health) {
-    E->botwoon_var_2F = 1;
-    Botwoon_Func_4();
+    E->botwoon_var_DeathFlag = 1;
+    Botwoon_Func_SetIntangible();
   }
 }
 
@@ -1253,8 +1253,8 @@ void Botwoon_Shot(void) {  // 0xB3A016
   E->botwoon_var_4C = E->base.health;
   Enemy_NormalShotAI_SkipSomeParts_B3();
   if (!E->base.health) {
-    E->botwoon_var_2F = 1;
-    Botwoon_Func_4();
+    E->botwoon_var_DeathFlag = 1;
+    Botwoon_Func_SetIntangible();
   }
 }
 
@@ -1262,12 +1262,12 @@ void Botwoon_Powerbomb(void) {  // 0xB3A041
   Enemy_NormalPowerBombAI_SkipDeathAnim_B3();
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if (!E->base.health) {
-    E->botwoon_var_2F = 1;
-    Botwoon_Func_4();
+    E->botwoon_var_DeathFlag = 1;
+    Botwoon_Func_SetIntangible();
   }
 }
 
-void Botwoon_Func_32(void) {  // 0xB3E250
+void Botwoon_Func_StartMovementUsingData(void) {  // 0xB3E250
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   E->botwoon_var_E = addr_loc_B3E28C;
   E->botwoon_var_3C = 0;
@@ -1278,10 +1278,10 @@ void Botwoon_Func_32(void) {  // 0xB3E250
   E->botwoon_var_44 = v2;
   if (v2 < 0)
     E->botwoon_var_42 -= 4;
-  Botwoon_Func_33();
+  Botwoon_Func_MoveUsingData();
 }
 
-void Botwoon_Func_33(void) {  // 0xB3E28C
+void Botwoon_Func_MoveUsingData(void) {  // 0xB3E28C
   uint16 x = 0, y = 0;
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   int n = E->botwoon_var_38;
@@ -1303,14 +1303,14 @@ void Botwoon_Func_33(void) {  // 0xB3E28C
   E->base.y_pos += y;
 }
 
-const uint16 *EscapeEtecoon_Instr_1(uint16 k, const uint16 *jp) {  // 0xB3E545
+const uint16 *EscapeEtecoon_Instr_MoveIfAcid(uint16 k, const uint16 *jp) {  // 0xB3E545
   if (lava_acid_y_pos >= 0xCE)
     return jp + 1;
   else
     return INSTR_RETURN_ADDR(jp[0]);
 }
 
-const uint16 *EscapeEtecoon_Instr_2(uint16 k, const uint16 *jp) {  // 0xB3E610
+const uint16 *EscapeEtecoon_Instr_MoveTo(uint16 k, const uint16 *jp) {  // 0xB3E610
   Enemy_EscapeEtecoon *E = Get_EscapeEtecoon(k);
   E->base.x_pos += jp[0];
   return jp + 1;
@@ -1363,27 +1363,27 @@ void EscapeEtecoon_Init(void) {  // 0xB3E6CB
   }
 }
 
-const uint16 *EscapeDachora_Instr_2(uint16 k, const uint16 *jp) {  // 0xB3EAA8
+const uint16 *EscapeDachora_Instr_MoveIfAcid(uint16 k, const uint16 *jp) {  // 0xB3EAA8
   if (lava_acid_y_pos >= 0xCE)
     return jp + 1;
   else
     return INSTR_RETURN_ADDR(jp[0]);
 }
 
-const uint16 *EscapeDachora_Instr_3(uint16 k, const uint16 *jp) {  // 0xB3EAB8
+const uint16 *EscapeDachora_Instr_MoveIfCrittersEscaped(uint16 k, const uint16 *jp) {  // 0xB3EAB8
   if (CheckEventHappened(0xF))
     return INSTR_RETURN_ADDR(jp[0]);
   else
     return jp + 1;
 }
 
-const uint16 *EscapeDachora_Instr_1(uint16 k, const uint16 *jp) {  // 0xB3EAC9
+const uint16 *EscapeDachora_Instr_MoveLeft(uint16 k, const uint16 *jp) {  // 0xB3EAC9
   Enemy_EscapeDachora *E = Get_EscapeDachora(cur_enemy_index);
   E->base.x_pos -= 6;
   return jp;
 }
 
-const uint16 *EscapeDachora_Instr_4(uint16 k, const uint16 *jp) {  // 0xB3EAD7
+const uint16 *EscapeDachora_Instr_MoveRight(uint16 k, const uint16 *jp) {  // 0xB3EAD7
   Enemy_EscapeDachora *E = Get_EscapeDachora(cur_enemy_index);
   E->base.x_pos += 6;
   return jp;

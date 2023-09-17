@@ -379,33 +379,33 @@ static void Samus_HandleAnimDelay(void) {
 
 static Func_U8 *const kSamusIsBottomDrawnFuncs[28] = {  // 0x9085E2
   SamusBottomDrawn_0_Standing,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
   SamusBottomDrawn_3_SpinJump,
-  SamusBottomDrawn_4,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_4,
-  SamusBottomDrawn_4,
-  SamusBottomDrawn_4,
+  SamusBottomDrawn_4_FlagNotDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_4_FlagNotDrawn,
+  SamusBottomDrawn_4_FlagNotDrawn,
+  SamusBottomDrawn_4_FlagNotDrawn,
   SamusBottomDrawn_A_Knockback,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
   UNUSED_SamusBottomDrawn_D,
-  SamusBottomDrawn_1,
+  SamusBottomDrawn_1_FlagDrawn,
   SamusBottomDrawn_F_Transitions,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_4,
-  SamusBottomDrawn_4,
-  SamusBottomDrawn_4,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_4_FlagNotDrawn,
+  SamusBottomDrawn_4_FlagNotDrawn,
+  SamusBottomDrawn_4_FlagNotDrawn,
   SamusBottomDrawn_14_WallJump,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1_FlagDrawn,
   SamusBottomDrawn_19_DamageBoost,
-  SamusBottomDrawn_1,
-  SamusBottomDrawn_1B,
+  SamusBottomDrawn_1_FlagDrawn,
+  SamusBottomDrawn_1B_Crouching,
 };
 
 void Samus_Draw(void) {
@@ -427,11 +427,11 @@ void Samus_Draw(void) {
   SetSamusTilesDefsForCurAnim();
 }
 
-uint8 SamusBottomDrawn_1(void) {  // 0x908686
+uint8 SamusBottomDrawn_1_FlagDrawn(void) {  // 0x908686
   return 1;
 }
 
-uint8 SamusBottomDrawn_4(void) {  // 0x908688
+uint8 SamusBottomDrawn_4_FlagNotDrawn(void) {  // 0x908688
   samus_bottom_half_spritemap_index = 0;
   return 0;
 }
@@ -519,7 +519,7 @@ uint8 SamusBottomDrawn_19_DamageBoost(void) {  // 0x90877C
   return 0;
 }
 
-uint8 SamusBottomDrawn_1B(void) {  // 0x908790
+uint8 SamusBottomDrawn_1B_Crouching(void) {  // 0x908790
   if (sign16(samus_pose - kPose_CF_FaceR_Ranintowall_AimUR)) {
     if (samus_pose != kPose_CB_FaceR_Shinespark_Vert && samus_pose != kPose_CC_FaceL_Shinespark_Vert)
       return 1;
@@ -2538,16 +2538,16 @@ void ClearProjectile(uint16 k) {  // 0x90ADB7
 }
 
 static Func_Y_V *const kKillProjectileFuncs[10] = {  // 0x90AE06
-  KillProjectileFunc_0,
-  KillProjectileFunc_1,
-  KillProjectileFunc_2,
-  KillProjectileFunc_3,
-  KillProjectileFunc_4,
-  KillProjectileFunc_4,
-  KillProjectileFunc_6,
-  KillProjectileFunc_7,
-  KillProjectileFunc_8,
-  KillProjectileFunc_0,
+  KillProjectileFunc_0_Up,
+  KillProjectileFunc_1_UpRight,
+  KillProjectileFunc_2_Right,
+  KillProjectileFunc_3_DownRight,
+  KillProjectileFunc_4_Down,
+  KillProjectileFunc_4_Down,
+  KillProjectileFunc_6_DownLeft,
+  KillProjectileFunc_7_Left,
+  KillProjectileFunc_8_UpLeft,
+  KillProjectileFunc_0_Up,
 };
 
 void KillProjectile(uint16 k) {
@@ -2565,41 +2565,41 @@ void KillProjectile(uint16 k) {
   projectile_bomb_pre_instructions[k >> 1] = FUNC16(ProjPreInstr_Empty);
 }
 
-void KillProjectileFunc_0(uint16 j) {  // 0x90AE4E
+void KillProjectileFunc_0_Up(uint16 j) {  // 0x90AE4E
   projectile_y_pos[j >> 1] -= projectile_y_radius[j >> 1];
 }
 
-void KillProjectileFunc_1(uint16 j) {  // 0x90AE59
+void KillProjectileFunc_1_UpRight(uint16 j) {  // 0x90AE59
   int v1 = j >> 1;
   projectile_x_pos[v1] += projectile_x_radius[v1];
   projectile_y_pos[v1] -= projectile_y_radius[v1];
 }
 
-void KillProjectileFunc_2(uint16 j) {  // 0x90AE6E
+void KillProjectileFunc_2_Right(uint16 j) {  // 0x90AE6E
   projectile_x_pos[j >> 1] += projectile_x_radius[j >> 1];
 }
 
-void KillProjectileFunc_3(uint16 j) {  // 0x90AE79
+void KillProjectileFunc_3_DownRight(uint16 j) {  // 0x90AE79
   int v1 = j >> 1;
   projectile_x_pos[v1] += projectile_x_radius[v1];
   projectile_y_pos[v1] += projectile_y_radius[v1];
 }
 
-void KillProjectileFunc_4(uint16 j) {  // 0x90AE8E
+void KillProjectileFunc_4_Down(uint16 j) {  // 0x90AE8E
   projectile_y_pos[j >> 1] += projectile_y_radius[j >> 1];
 }
 
-void KillProjectileFunc_6(uint16 j) {  // 0x90AE99
+void KillProjectileFunc_6_DownLeft(uint16 j) {  // 0x90AE99
   int v1 = j >> 1;
   projectile_x_pos[v1] -= projectile_x_radius[v1];
   projectile_y_pos[v1] += projectile_y_radius[v1];
 }
 
-void KillProjectileFunc_7(uint16 j) {  // 0x90AEAE
+void KillProjectileFunc_7_Left(uint16 j) {  // 0x90AEAE
   projectile_x_pos[j >> 1] -= projectile_x_radius[j >> 1];
 }
 
-void KillProjectileFunc_8(uint16 j) {  // 0x90AEB9
+void KillProjectileFunc_8_UpLeft(uint16 j) {  // 0x90AEB9
   int v1 = j >> 1;
   projectile_x_pos[v1] -= projectile_x_radius[v1];
   projectile_y_pos[v1] -= projectile_y_radius[v1];
@@ -2609,34 +2609,34 @@ void CallProjPreInstr(uint32 ea, uint16 k) {
   switch (ea) {
   case fnProjPreInstr_Empty: return;
   case fnProjPreInstr_Beam_NoWaveBeam: ProjPreInstr_Beam_NoWaveBeam(k); return;
-  case fnProjPreInstr_Dir0459: ProjPreInstr_Dir0459(k); return;
-  case fnProjPreInstr_Dir1368: ProjPreInstr_Dir1368(k); return;
-  case fnProjPreInstr_Dir27: ProjPreInstr_Dir27(k); return;
+  case fnProjPreInstr_BlockCollNoWaveBeamVert: ProjPreInstr_BlockCollNoWaveBeamVert(k); return;
+  case fnProjPreInstr_BlockCollNoWaveBeamDiagonal: ProjPreInstr_BlockCollNoWaveBeamDiagonal(k); return;
+  case fnProjPreInstr_BlockCollNoWaveBeamHoriz: ProjPreInstr_BlockCollNoWaveBeamHoriz(k); return;
   case fnProjPreInstr_Missile: ProjPreInstr_Missile(k); return;
-  case fnProjPreInstr_Missile_Func0459: ProjPreInstr_Missile_Func0459(k); return;
-  case fnProjPreInstr_Missile_Func1368: ProjPreInstr_Missile_Func1368(k); return;
-  case fnProjPreInstr_Missile_Func27: ProjPreInstr_Missile_Func27(k); return;
+  case fnProjPreInstr_BlockCollMissileVert: ProjPreInstr_BlockCollMissileVert(k); return;
+  case fnProjPreInstr_BlockCollMissileDiagonal: ProjPreInstr_BlockCollMissileDiagonal(k); return;
+  case fnProjPreInstr_BlockCollMissileHoriz: ProjPreInstr_BlockCollMissileHoriz(k); return;
   case fnProjPreInstr_SuperMissile: ProjPreInstr_SuperMissile(k); return;
-  case fnProjPreInstr_SuperMissile_Func0459: ProjPreInstr_SuperMissile_Func0459(k); return;
-  case fnProjPreInstr_SuperMissile_Func1368: ProjPreInstr_SuperMissile_Func1368(k); return;
-  case fnProjPreInstr_SuperMissile_Func27: ProjPreInstr_SuperMissile_Func27(k); return;
-  case fnProjPreInstr_Func1: ProjPreInstr_Func1(k); return;
+  case fnProjPreInstr_BlockCollSuperMissileVert: ProjPreInstr_BlockCollSuperMissileVert(k); return;
+  case fnProjPreInstr_BlockCollSuperMissileDiagonal: ProjPreInstr_BlockCollSuperMissileDiagonal(k); return;
+  case fnProjPreInstr_BlockCollSuperMissileHoriz: ProjPreInstr_BlockCollSuperMissileHoriz(k); return;
+  case fnProjPreInstr_SuperMissileLink: ProjPreInstr_SuperMissileLink(k); return;
   case fnProjPreInstr_Bomb: ProjPreInstr_Bomb(k); return;
   case fnProjPreInstr_PowerBomb: ProjPreInstr_PowerBomb(k); return;
-  case fnProjPreInstr_WavePlasmaEtc: ProjPreInstr_WavePlasmaEtc(k); return;
+  case fnProjPreInstr_WaveCombined: ProjPreInstr_WaveCombined(k); return;
   case fnProjPreInstr_BeamOrIceWave: ProjPreInstr_BeamOrIceWave(k); return;
   case fnProjPreInstr_Wave_Shared: ProjPreInstr_Wave_Shared(k); return;
-  case fnProjPreInstr_WavePlasmaEtc_0459: ProjPreInstr_WavePlasmaEtc_0459(k); return;
-  case fnProjPreInstr_WavePlasmaEtc_1368: ProjPreInstr_WavePlasmaEtc_1368(k); return;
-  case fnProjPreInstr_WavePlasmaEtc_27: ProjPreInstr_WavePlasmaEtc_27(k); return;
+  case fnProjPreInstr_BlockCollWaveBeamVert: ProjPreInstr_BlockCollWaveBeamVert(k); return;
+  case fnProjPreInstr_BlockCollWaveBeamDiagonal: ProjPreInstr_BlockCollWaveBeamDiagonal(k); return;
+  case fnProjPreInstr_BlockCollWaveBeamHoriz: ProjPreInstr_BlockCollWaveBeamHoriz(k); return;
   case fnProjPreInstr_HyperBeam: ProjPreInstr_HyperBeam(k); return;
-  case fnProjPreInstr_IceSba: ProjPreInstr_IceSba(k); return;
-  case fnProjPreInstr_IceSba2: ProjPreInstr_IceSba2(k); return;
+  case fnProjPreInstr_IceSbaMain: ProjPreInstr_IceSbaMain(k); return;
+  case fnProjPreInstr_IceSbaEnd: ProjPreInstr_IceSbaEnd(k); return;
   case fnProjPreInstr_SpeedEcho: ProjPreInstr_SpeedEcho(k); return;
   case fnProjPreInstr_PlasmaSba: ProjPreInstr_PlasmaSba(k); return;
-  case fnProjPreInstr_PlasmaSbaFunc_0: ProjPreInstr_PlasmaSbaFunc_0(k); return;
-  case fnProjPreInstr_PlasmaSbaFunc_1: ProjPreInstr_PlasmaSbaFunc_1(k); return;
-  case fnProjPreInstr_PlasmaSbaFunc_2: ProjPreInstr_PlasmaSbaFunc_2(k); return;
+  case fnProjPreInstr_PlasmaSba_Phase0Expand: ProjPreInstr_PlasmaSba_Phase0Expand(k); return;
+  case fnProjPreInstr_PlasmaSba_Phase1Contract: ProjPreInstr_PlasmaSba_Phase1Contract(k); return;
+  case fnProjPreInstr_PlasmaSba_Phase2Disperse: ProjPreInstr_PlasmaSba_Phase2Disperse(k); return;
   case fnProjPreInstr_SpreadBomb: ProjPreInstr_SpreadBomb(k); return;
   case fnProjPreInstr_WaveSba: ProjPreInstr_WaveSba(k); return;
   case fnProjPreInstr_SpazerSba: ProjPreInstr_SpazerSba(k); return;
@@ -2663,16 +2663,16 @@ static const int16 kDirToVelMult16_X[10] = { 0, 16, 16, 16, 0, 0, -16, -16, -16,
 static const int16 kDirToVelMult16_Y[10] = { -16, -16, 0, 16, 16, 16, 16, 0, -16, -16 };
 
 static Func_Y_V *const kProjPreInstr_Beam_Funcs[10] = {  // 0x90AEF3
-  ProjPreInstr_Dir0459,
-  ProjPreInstr_Dir1368,
-  ProjPreInstr_Dir27,
-  ProjPreInstr_Dir1368,
-  ProjPreInstr_Dir0459,
-  ProjPreInstr_Dir0459,
-  ProjPreInstr_Dir1368,
-  ProjPreInstr_Dir27,
-  ProjPreInstr_Dir1368,
-  ProjPreInstr_Dir0459,
+  ProjPreInstr_BlockCollNoWaveBeamVert,
+  ProjPreInstr_BlockCollNoWaveBeamDiagonal,
+  ProjPreInstr_BlockCollNoWaveBeamHoriz,
+  ProjPreInstr_BlockCollNoWaveBeamDiagonal,
+  ProjPreInstr_BlockCollNoWaveBeamVert,
+  ProjPreInstr_BlockCollNoWaveBeamVert,
+  ProjPreInstr_BlockCollNoWaveBeamDiagonal,
+  ProjPreInstr_BlockCollNoWaveBeamHoriz,
+  ProjPreInstr_BlockCollNoWaveBeamDiagonal,
+  ProjPreInstr_BlockCollNoWaveBeamVert,
 };
 
 void ProjPreInstr_Beam_NoWaveBeam(uint16 k) {
@@ -2696,31 +2696,31 @@ void ProjPreInstr_Beam_NoWaveBeam(uint16 k) {
   }
 }
 
-void ProjPreInstr_Dir0459(uint16 k) {  // 0x90AF4A
+void ProjPreInstr_BlockCollNoWaveBeamVert(uint16 k) {  // 0x90AF4A
   BlockCollNoWaveBeamVert(projectile_index);
 }
 
-void ProjPreInstr_Dir1368(uint16 k) {  // 0x90AF52
+void ProjPreInstr_BlockCollNoWaveBeamDiagonal(uint16 k) {  // 0x90AF52
   uint16 v1 = projectile_index;
   if (!(BlockCollNoWaveBeamHoriz(projectile_index) & 1))
     BlockCollNoWaveBeamVert(v1);
 }
 
-void ProjPreInstr_Dir27(uint16 k) {  // 0x90AF60
+void ProjPreInstr_BlockCollNoWaveBeamHoriz(uint16 k) {  // 0x90AF60
   BlockCollNoWaveBeamHoriz(projectile_index);
 }
 
 static Func_Y_V *const kProjPreInstr_Missile_Funcs[10] = {  // 0x90AF68
-  ProjPreInstr_Missile_Func0459,
-  ProjPreInstr_Missile_Func1368,
-  ProjPreInstr_Missile_Func27,
-  ProjPreInstr_Missile_Func1368,
-  ProjPreInstr_Missile_Func0459,
-  ProjPreInstr_Missile_Func0459,
-  ProjPreInstr_Missile_Func1368,
-  ProjPreInstr_Missile_Func27,
-  ProjPreInstr_Missile_Func1368,
-  ProjPreInstr_Missile_Func0459,
+  ProjPreInstr_BlockCollMissileVert,
+  ProjPreInstr_BlockCollMissileDiagonal,
+  ProjPreInstr_BlockCollMissileHoriz,
+  ProjPreInstr_BlockCollMissileDiagonal,
+  ProjPreInstr_BlockCollMissileVert,
+  ProjPreInstr_BlockCollMissileVert,
+  ProjPreInstr_BlockCollMissileDiagonal,
+  ProjPreInstr_BlockCollMissileHoriz,
+  ProjPreInstr_BlockCollMissileDiagonal,
+  ProjPreInstr_BlockCollMissileVert,
 };
 
 void ProjPreInstr_Missile(uint16 k) {
@@ -2739,37 +2739,37 @@ void ProjPreInstr_Missile(uint16 k) {
     int v5 = v4 >> 1;
     projectile_bomb_x_speed[v3] += kDirToVelMult16_X[v5];
     projectile_bomb_y_speed[v3] += kDirToVelMult16_Y[v5];
-    Missile_Func1(k);
+    AccelerateMissileOrSuperMissile(k);
     kProjPreInstr_Missile_Funcs[v4 >> 1](v4);
     DeleteProjectileIfFarOffScreen();
   }
 }
 
-void ProjPreInstr_Missile_Func0459(uint16 k) {  // 0x90AFC7
+void ProjPreInstr_BlockCollMissileVert(uint16 k) {  // 0x90AFC7
   BlockCollMissileVert(projectile_index);
 }
 
-void ProjPreInstr_Missile_Func1368(uint16 k) {  // 0x90AFCF
+void ProjPreInstr_BlockCollMissileDiagonal(uint16 k) {  // 0x90AFCF
   uint16 v1 = projectile_index;
   if (!BlockCollMissileHoriz(projectile_index))
     BlockCollMissileVert(v1);
 }
 
-void ProjPreInstr_Missile_Func27(uint16 k) {  // 0x90AFDD
+void ProjPreInstr_BlockCollMissileHoriz(uint16 k) {  // 0x90AFDD
   BlockCollMissileHoriz(projectile_index);
 }
 
 static Func_Y_V *const kProjPreInstr_SuperMissile_Funcs[10] = {  // 0x90AFE5
-  ProjPreInstr_SuperMissile_Func0459,
-  ProjPreInstr_SuperMissile_Func1368,
-  ProjPreInstr_SuperMissile_Func27,
-  ProjPreInstr_SuperMissile_Func1368,
-  ProjPreInstr_SuperMissile_Func0459,
-  ProjPreInstr_SuperMissile_Func0459,
-  ProjPreInstr_SuperMissile_Func1368,
-  ProjPreInstr_SuperMissile_Func27,
-  ProjPreInstr_SuperMissile_Func1368,
-  ProjPreInstr_SuperMissile_Func0459,
+  ProjPreInstr_BlockCollSuperMissileVert,
+  ProjPreInstr_BlockCollSuperMissileDiagonal,
+  ProjPreInstr_BlockCollSuperMissileHoriz,
+  ProjPreInstr_BlockCollSuperMissileDiagonal,
+  ProjPreInstr_BlockCollSuperMissileVert,
+  ProjPreInstr_BlockCollSuperMissileVert,
+  ProjPreInstr_BlockCollSuperMissileDiagonal,
+  ProjPreInstr_BlockCollSuperMissileHoriz,
+  ProjPreInstr_BlockCollSuperMissileDiagonal,
+  ProjPreInstr_BlockCollSuperMissileVert,
 };
 
 void ProjPreInstr_SuperMissile(uint16 k) {
@@ -2791,18 +2791,18 @@ LABEL_7:
     k = projectile_index;
   }
   v3 = projectile_dir[k >> 1] & 0xF;
-  Missile_Func1(k);
+  AccelerateMissileOrSuperMissile(k);
   kProjPreInstr_SuperMissile_Funcs[v3](v3);
   if (DeleteProjectileIfFarOffScreen() & 1)
     goto LABEL_7;
 }
 
-void ProjPreInstr_SuperMissile_Func0459(uint16 k) {  // 0x90B047
+void ProjPreInstr_BlockCollSuperMissileVert(uint16 k) {  // 0x90B047
   BlockCollMissileVert(projectile_index);
   SuperMissileBlockCollDetect_Y();
 }
 
-void ProjPreInstr_SuperMissile_Func1368(uint16 k) {  // 0x90B052
+void ProjPreInstr_BlockCollSuperMissileDiagonal(uint16 k) {  // 0x90B052
   uint16 v1 = projectile_index;
   if (BlockCollMissileHoriz(projectile_index)) {
     SuperMissileBlockCollDetect_X();
@@ -2813,12 +2813,12 @@ void ProjPreInstr_SuperMissile_Func1368(uint16 k) {  // 0x90B052
   }
 }
 
-void ProjPreInstr_SuperMissile_Func27(uint16 k) {  // 0x90B06A
+void ProjPreInstr_BlockCollSuperMissileHoriz(uint16 k) {  // 0x90B06A
   BlockCollMissileHoriz(projectile_index);
   SuperMissileBlockCollDetect_X();
 }
 
-void ProjPreInstr_Func1(uint16 k) {  // 0x90B075
+void ProjPreInstr_SuperMissileLink(uint16 k) {  // 0x90B075
   if ((projectile_dir[k >> 1] & 0xF0) != 0) {
     ClearProjectile(k);
     for (int i = 8; i >= 0; i -= 2) {
@@ -2832,7 +2832,7 @@ void ProjPreInstr_Bomb(uint16 k) {  // 0x90B099
   if ((projectile_dir[k >> 1] & 0xF0) != 0) {
     ClearProjectile(k);
   } else {
-    Bomb_Func2();
+    HandleBomb();
     BombOrPowerBomb_Func1(k);
   }
 }
@@ -2841,12 +2841,12 @@ void ProjPreInstr_PowerBomb(uint16 k) {  // 0x90B0AE
   if ((projectile_dir[k >> 1] & 0xF0) != 0) {
     ClearProjectile(k);
   } else {
-    PowerBomb_Func3();
+    HandlePowerBomb();
     BombOrPowerBomb_Func1(k);
   }
 }
 
-void ProjPreInstr_WavePlasmaEtc(uint16 k) {  // 0x90B0C3
+void ProjPreInstr_WaveCombined(uint16 k) {  // 0x90B0C3
   int v1 = k >> 1;
   if ((projectile_dir[v1] & 0xF0) != 0) {
     ClearProjectile(k);
@@ -2873,16 +2873,16 @@ void ProjPreInstr_BeamOrIceWave(uint16 k) {  // 0x90B0E4
 }
 
 static Func_Y_V *const kProjPreInstr_WavePlasmaEtcFuncs[10] = {  // 0x90B103
-  ProjPreInstr_WavePlasmaEtc_0459,
-  ProjPreInstr_WavePlasmaEtc_1368,
-  ProjPreInstr_WavePlasmaEtc_27,
-  ProjPreInstr_WavePlasmaEtc_1368,
-  ProjPreInstr_WavePlasmaEtc_0459,
-  ProjPreInstr_WavePlasmaEtc_0459,
-  ProjPreInstr_WavePlasmaEtc_1368,
-  ProjPreInstr_WavePlasmaEtc_27,
-  ProjPreInstr_WavePlasmaEtc_1368,
-  ProjPreInstr_WavePlasmaEtc_0459,
+  ProjPreInstr_BlockCollWaveBeamVert,
+  ProjPreInstr_BlockCollWaveBeamDiagonal,
+  ProjPreInstr_BlockCollWaveBeamHoriz,
+  ProjPreInstr_BlockCollWaveBeamDiagonal,
+  ProjPreInstr_BlockCollWaveBeamVert,
+  ProjPreInstr_BlockCollWaveBeamVert,
+  ProjPreInstr_BlockCollWaveBeamDiagonal,
+  ProjPreInstr_BlockCollWaveBeamHoriz,
+  ProjPreInstr_BlockCollWaveBeamDiagonal,
+  ProjPreInstr_BlockCollWaveBeamVert,
 };
 
 void ProjPreInstr_Wave_Shared(uint16 k) {
@@ -2896,17 +2896,17 @@ void ProjPreInstr_Wave_Shared(uint16 k) {
   DeleteProjectileIfFarOffScreen();
 }
 
-void ProjPreInstr_WavePlasmaEtc_0459(uint16 k) {  // 0x90B13B
+void ProjPreInstr_BlockCollWaveBeamVert(uint16 k) {  // 0x90B13B
   BlockCollWaveBeamVert(projectile_index);
 }
 
-void ProjPreInstr_WavePlasmaEtc_1368(uint16 k) {  // 0x90B143
+void ProjPreInstr_BlockCollWaveBeamDiagonal(uint16 k) {  // 0x90B143
   uint16 v1 = projectile_index;
   if (!(BlockCollWaveBeamHoriz(projectile_index) & 1))
     BlockCollWaveBeamVert(v1);
 }
 
-void ProjPreInstr_WavePlasmaEtc_27(uint16 k) {  // 0x90B151
+void ProjPreInstr_BlockCollWaveBeamHoriz(uint16 k) {  // 0x90B151
   BlockCollWaveBeamHoriz(projectile_index);
 }
 
@@ -3035,7 +3035,7 @@ void InitializeProjectileSpeed(uint16 k, uint16 r22) {  // 0x90B1F3
   }
 }
 
-void Missile_Func1(uint16 k) {  // 0x90B2F6
+void AccelerateMissileOrSuperMissile(uint16 k) {  // 0x90B2F6
   static const uint16 word_90C301 = 0x100;
   uint16 v3;
 
@@ -3054,7 +3054,7 @@ void Missile_Func1(uint16 k) {  // 0x90B2F6
     if ((v2 & 0xFF00) != 0) {
       InitializeProjectileSpeed(k, projectile_variables[v1]);
       if ((projectile_type[v1] & 0x200) != 0)
-        Missile_Func2();
+        SpawnSuperMissileLink();
     }
   }
 }
@@ -3177,7 +3177,7 @@ void SpawnProjectileTrail(uint16 k) {  // 0x90B657
   int v6 = v2;
   projectiletrail_left_instr_list_ptr[v5] = off_90B5BB[v6];
   projectiletrail_right_instr_list_ptr[v5] = off_90B609[v6];
-  ProjectileTrail_Func5(projectile_index, v4);
+  SetProjectileTrailPosition(projectile_index, v4);
 }
 
 void CallProjInstr(uint32 ea, uint16 j) {
@@ -3379,13 +3379,13 @@ static const uint16 kProjectileBombPreInstr[12] = {  // 0x90B887
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
   (uint16)fnProjPreInstr_BeamOrIceWave,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
 };
 
 void FireUnchargedBeam(void) {
@@ -3458,17 +3458,17 @@ LABEL_20:
 
 static const uint16 kFireChargedBeam_Funcs[12] = {  // 0x90B986
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
   (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WavePlasmaEtc,
+  (uint16)fnProjPreInstr_WaveCombined,
 };
 
 void FireChargedBeam(void) {
@@ -3725,37 +3725,37 @@ void FireHyperBeam(void) {  // 0x90BCD1
 }
 
 static Func_V *const kCheckBeamCollByDir[10] = {  // 0x90BD64
-  CheckBeamCollByDir_0459,
-  CheckBeamCollByDir_1368,
-  CheckBeamCollByDir_2,
-  CheckBeamCollByDir_1368,
-  CheckBeamCollByDir_0459,
-  CheckBeamCollByDir_0459,
-  CheckBeamCollByDir_1368,
-  CheckBeamCollByDir_7,
-  CheckBeamCollByDir_1368,
-  CheckBeamCollByDir_0459,
+  CheckBeamCollByDir_Vertical,
+  CheckBeamCollByDir_Diagonal,
+  CheckBeamCollByDir_Right,
+  CheckBeamCollByDir_Diagonal,
+  CheckBeamCollByDir_Vertical,
+  CheckBeamCollByDir_Vertical,
+  CheckBeamCollByDir_Diagonal,
+  CheckBeamCollByDir_Left,
+  CheckBeamCollByDir_Diagonal,
+  CheckBeamCollByDir_Vertical,
 };
 
 void CheckBeamCollByDir(uint16 k) {
   kCheckBeamCollByDir[projectile_dir[k >> 1] & 0xF]();
 }
 
-void CheckBeamCollByDir_0459(void) {  // 0x90BD86
+void CheckBeamCollByDir_Vertical(void) {  // 0x90BD86
   BlockCollNoWaveBeamVert(projectile_index);
 }
 
-void CheckBeamCollByDir_1368(void) {  // 0x90BD8E
+void CheckBeamCollByDir_Diagonal(void) {  // 0x90BD8E
   uint16 v0 = projectile_index;
   if (!(BlockCollNoWaveBeamHoriz(projectile_index) & 1))
     BlockCollNoWaveBeamVert(v0);
 }
 
-void CheckBeamCollByDir_2(void) {  // 0x90BD9C
+void CheckBeamCollByDir_Right(void) {  // 0x90BD9C
   BlockCollNoWaveBeamHoriz(projectile_index);
 }
 
-void CheckBeamCollByDir_7(void) {  // 0x90BDA4
+void CheckBeamCollByDir_Left(void) {  // 0x90BDA4
   uint16 v0 = projectile_index;
   projectile_bomb_x_speed[projectile_index >> 1] = -1;
   BlockCollNoWaveBeamHoriz(v0);
@@ -3878,7 +3878,7 @@ LABEL_10:;
   }
 }
 
-void Missile_Func2(void) {  // 0x90BF46
+void SpawnSuperMissileLink(void) {  // 0x90BF46
   uint16 v0 = 0;
   while (projectile_damage[v0 >> 1]) {
     v0 += 2;
@@ -3894,7 +3894,7 @@ void Missile_Func2(void) {  // 0x90BF46
   projectile_dir[v1] = projectile_dir[v2];
   InitProjectilePositionDirection(r20);
   InitializeInstrForSuperMissile(v0);
-  projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_Func1);
+  projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_SuperMissileLink);
   projectile_variables[projectile_index >> 1] = v0 + (projectile_variables[projectile_index >> 1] & 0xFF00);
   ++projectile_counter;
 }
@@ -3998,7 +3998,7 @@ uint8 HudSelectionHandler_MorphBall_Helper2(void) {  // 0x90C0E7
   }
 }
 
-void Bomb_Func2(void) {  // 0x90C128
+void HandleBomb(void) {  // 0x90C128
   uint16 v0 = projectile_index;
   int v1 = projectile_index >> 1;
   uint16 v2 = projectile_variables[v1];
@@ -4015,7 +4015,7 @@ void Bomb_Func2(void) {  // 0x90C128
   }
 }
 
-void PowerBomb_Func3(void) {  // 0x90C157
+void HandlePowerBomb(void) {  // 0x90C157
   uint16 v0 = projectile_index;
   int v1 = projectile_index >> 1;
   uint16 v2 = projectile_variables[v1];
@@ -4331,8 +4331,8 @@ uint8 FireSba_FireWave(void) {  // 0x90CD1A
 uint8 FireSba_FireIce(void) {  // 0x90CD9B
   static const uint16 kIcePlasmaSbaProjectileOriginAngles[8] = { 0, 0x40, 0x80, 0xc0, 0x20, 0x60, 0xa0, 0xe0 };
 
-  if (projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_IceSba2)
-      || projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_IceSba)) {
+  if (projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_IceSbaEnd)
+      || projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_IceSbaMain)) {
     return 0;
   }
   for (int i = 6; i >= 0; i -= 2) {
@@ -4340,7 +4340,7 @@ uint8 FireSba_FireIce(void) {  // 0x90CD9B
     projectile_timers[v2] = 4;
     projectile_type[v2] = equipped_beams & 0x100F | 0x8010;
     projectile_dir[v2] = 0;
-    projectile_bomb_pre_instructions[v2] = FUNC16(ProjPreInstr_IceSba);
+    projectile_bomb_pre_instructions[v2] = FUNC16(ProjPreInstr_IceSbaMain);
     projectile_variables[v2] = kIcePlasmaSbaProjectileOriginAngles[v2];
     projectile_bomb_y_speed[v2] = 600;
     InitializeProjectile(i);
@@ -4411,7 +4411,7 @@ uint8 FireSba_FirePlasma(void) {  // 0x90CE98
   return 1;
 }
 
-void ProjPreInstr_IceSba(uint16 k) {  // 0x90CF09
+void ProjPreInstr_IceSbaMain(uint16 k) {  // 0x90CF09
   int v1 = k >> 1;
   if ((projectile_dir[v1] & 0xF0) != 0) {
     QueueSfx1_Max6(0x24);
@@ -4430,7 +4430,7 @@ void ProjPreInstr_IceSba(uint16 k) {  // 0x90CF09
     projectile_variables[v3] = (uint8)(used_for_sba_attacksB60 + projectile_variables[v3]);
     v2 = projectile_bomb_y_speed[v3]-- == 1;
     if (v2) {
-      projectile_bomb_pre_instructions[v3] = FUNC16(ProjPreInstr_IceSba2);
+      projectile_bomb_pre_instructions[v3] = FUNC16(ProjPreInstr_IceSbaEnd);
       projectile_bomb_x_speed[v3] = 40;
       QueueSfx1_Max6(0x24);
     }
@@ -4439,7 +4439,7 @@ void ProjPreInstr_IceSba(uint16 k) {  // 0x90CF09
   }
 }
 
-void ProjPreInstr_IceSba2(uint16 k) {  // 0x90CF7A
+void ProjPreInstr_IceSbaEnd(uint16 k) {  // 0x90CF7A
   int16 v5;
   int16 v6;
   int16 v7;
@@ -4472,7 +4472,7 @@ LABEL_9:
   }
 }
 
-void Projectile_Func7_Shinespark(void) {  // 0x90CFFA
+void TriggerShinesparkWindup(void) {  // 0x90CFFA
   samus_movement_handler = FUNC16(Samus_MoveHandlerShinesparkWindup);
   samus_y_dir = 1;
   speed_boost_counter = 1024;
@@ -4844,9 +4844,9 @@ void SamusMoveHandler_CrystalFlashStart(void) {  // 0x90D678
 }
 
 static Func_V *const kSamusMoveHandler_CrystalFlashMainFuncs[3] = {  // 0x90D6CE
-  SamusMoveHandler_CrystalFlashMain_0,
-  SamusMoveHandler_CrystalFlashMain_1,
-  SamusMoveHandler_CrystalFlashMain_2,
+  SamusMoveHandler_CrystalFlashMain_0_DecMissiles,
+  SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles,
+  SamusMoveHandler_CrystalFlashMain_2_DecPowerBombs,
 };
 
 void SamusMoveHandler_CrystalFlashMain(void) {
@@ -4855,7 +4855,7 @@ void SamusMoveHandler_CrystalFlashMain(void) {
   samus_knockback_timer = 0;
 }
 
-void SamusMoveHandler_CrystalFlashMain_0(void) {  // 0x90D6E3
+void SamusMoveHandler_CrystalFlashMain_0_DecMissiles(void) {  // 0x90D6E3
   if ((nmi_frame_counter_word & 7) == 0) {
     --samus_missiles;
     Samus_RestoreHealth(0x32);
@@ -4867,7 +4867,7 @@ void SamusMoveHandler_CrystalFlashMain_0(void) {  // 0x90D6E3
   }
 }
 
-void SamusMoveHandler_CrystalFlashMain_1(void) {  // 0x90D706
+void SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles(void) {  // 0x90D706
   if ((nmi_frame_counter_word & 7) == 0) {
     --samus_super_missiles;
     Samus_RestoreHealth(0x32);
@@ -4879,7 +4879,7 @@ void SamusMoveHandler_CrystalFlashMain_1(void) {  // 0x90D706
   }
 }
 
-void SamusMoveHandler_CrystalFlashMain_2(void) {  // 0x90D729
+void SamusMoveHandler_CrystalFlashMain_2_DecPowerBombs(void) {  // 0x90D729
   if ((nmi_frame_counter_word & 7) == 0) {
     --samus_power_bombs;
     Samus_RestoreHealth(0x32);
@@ -4924,22 +4924,22 @@ void ProjPreInstr_PlasmaSba(uint16 k) {  // 0x90D793
     v3 = 2 * projectile_bomb_y_speed[v1];
     if (v3) {
       if (v3 == 2) {
-        ProjPreInstr_PlasmaSbaFunc_1(k);
+        ProjPreInstr_PlasmaSba_Phase1Contract(k);
       } else {
         if (v3 != 4) {
           Unreachable();
           while (1)
             ;
         }
-        ProjPreInstr_PlasmaSbaFunc_2(k);
+        ProjPreInstr_PlasmaSba_Phase2Disperse(k);
       }
     } else {
-      ProjPreInstr_PlasmaSbaFunc_0(k);
+      ProjPreInstr_PlasmaSba_Phase0Expand(k);
     }
   }
 }
 
-void ProjPreInstr_PlasmaSbaFunc_0(uint16 j) {  // 0x90D7E1
+void ProjPreInstr_PlasmaSba_Phase0Expand(uint16 j) {  // 0x90D7E1
   int v1 = j >> 1;
   uint16 v2 = (uint8)(projectile_bomb_x_speed[v1] + 4);
   projectile_bomb_x_speed[v1] = v2;
@@ -4947,7 +4947,7 @@ void ProjPreInstr_PlasmaSbaFunc_0(uint16 j) {  // 0x90D7E1
     projectile_bomb_y_speed[v1] = 1;
 }
 
-void ProjPreInstr_PlasmaSbaFunc_1(uint16 j) {  // 0x90D7FA
+void ProjPreInstr_PlasmaSba_Phase1Contract(uint16 j) {  // 0x90D7FA
   int v1 = j >> 1;
   uint16 v2 = (uint8)(projectile_bomb_x_speed[v1] - 4);
   projectile_bomb_x_speed[v1] = v2;
@@ -4955,7 +4955,7 @@ void ProjPreInstr_PlasmaSbaFunc_1(uint16 j) {  // 0x90D7FA
     projectile_bomb_y_speed[v1] = 2;
 }
 
-void ProjPreInstr_PlasmaSbaFunc_2(uint16 j) {  // 0x90D813
+void ProjPreInstr_PlasmaSba_Phase2Disperse(uint16 j) {  // 0x90D813
   int v1 = j >> 1;
   if (sign16(projectile_x_pos[v1] - layer1_x_pos + 32)
       || !sign16(projectile_x_pos[v1] - layer1_x_pos - 288)
@@ -4978,7 +4978,7 @@ void ProjPreInstr_SpreadBomb(uint16 k) {  // 0x90D8F7
     ClearProjectile(k);
     return;
   }
-  Bomb_Func2();
+  HandleBomb();
   if (projectile_variables[v1]) {
     AddToHiLo(&projectile_bomb_y_speed[v1], &projectile_timers[v1], __PAIR32__(samus_y_accel, samus_y_subaccel));
     AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], __PAIR32__(projectile_bomb_y_speed[v1], projectile_timers[v1]));
@@ -5089,16 +5089,16 @@ void BombSpread(void) {  // 0x90D849
 typedef void Func_SpazerSba_V(uint16 j, uint16 r22);
 
 static Func_SpazerSba_V *const kProjPreInstr_SpazerSba_FuncsB[3] = {  // 0x90DB06
-  ProjPreInstr_SpazerSba_FuncB_0,
-  ProjPreInstr_SpazerSba_FuncB_1,
-  ProjPreInstr_SpazerSba_FuncB_2,
+  ProjPreInstr_SpazerSba_Phase0Circle,
+  ProjPreInstr_SpazerSba_Phase2FlyToPoint,
+  ProjPreInstr_SpazerSba_Phase4FlyFromPoint,
 };
 
 static Func_Y_V *const kProjPreInstr_SpazerSba_FuncsA[4] = {
-  ProjPreInstr_SpazerSba_FuncA_0,
-  ProjPreInstr_SpazerSba_FuncA_1,
-  ProjPreInstr_SpazerSba_FuncA_2,
-  ProjPreInstr_SpazerSba_FuncA_3,
+  ProjPreInstr_SpazerSba_ClearProjPair0,
+  ProjPreInstr_SpazerSba_ClearProjPair2,
+  ProjPreInstr_SpazerSba_ClearProjPair4,
+  ProjPreInstr_SpazerSba_ClearProjPair6,
 };
 
 void ProjPreInstr_SpazerSba(uint16 k) {
@@ -5121,27 +5121,27 @@ void ProjPreInstr_SpazerSba(uint16 k) {
   }
 }
 
-void ProjPreInstr_SpazerSba_FuncA_0(uint16 k) {  // 0x90DB57
+void ProjPreInstr_SpazerSba_ClearProjPair0(uint16 k) {  // 0x90DB57
   ClearProjectile(k);
   ClearProjectile(4);
 }
 
-void ProjPreInstr_SpazerSba_FuncA_1(uint16 k) {  // 0x90DB66
+void ProjPreInstr_SpazerSba_ClearProjPair2(uint16 k) {  // 0x90DB66
   ClearProjectile(k);
   ClearProjectile(6);
 }
 
-void ProjPreInstr_SpazerSba_FuncA_2(uint16 k) {  // 0x90DB75
+void ProjPreInstr_SpazerSba_ClearProjPair4(uint16 k) {  // 0x90DB75
   ClearProjectile(k);
   ClearProjectile(0);
 }
 
-void ProjPreInstr_SpazerSba_FuncA_3(uint16 k) {  // 0x90DB84
+void ProjPreInstr_SpazerSba_ClearProjPair6(uint16 k) {  // 0x90DB84
   ClearProjectile(k);
   ClearProjectile(2);
 }
 
-void ProjPreInstr_SpazerSba_FuncB_0(uint16 j, uint16 r22) {  // 0x90DB93
+void ProjPreInstr_SpazerSba_Phase0Circle(uint16 j, uint16 r22) {  // 0x90DB93
   static const int16 kProjPreInstr_SpazerSba_Yspeed[4] = { 2, -2, 2, -2 };
 
   int v1 = j >> 1;
@@ -5156,7 +5156,7 @@ void ProjPreInstr_SpazerSba_FuncB_0(uint16 j, uint16 r22) {  // 0x90DB93
   }
 }
 
-void ProjPreInstr_SpazerSba_FuncB_1(uint16 j, uint16 r22) {  // 0x90DBCF
+void ProjPreInstr_SpazerSba_Phase2FlyToPoint(uint16 j, uint16 r22) {  // 0x90DBCF
   static const int16 kSpazerProjectileYSpeed[4] = { -2, 2, -2, 2 };
 
   uint16 v1 = r22 + samus_y_pos - 114;
@@ -5178,7 +5178,7 @@ void ProjPreInstr_SpazerSba_FuncB_1(uint16 j, uint16 r22) {  // 0x90DBCF
   }
 }
 
-void ProjPreInstr_SpazerSba_FuncB_2(uint16 j, uint16 r22) {  // 0x90DC30
+void ProjPreInstr_SpazerSba_Phase4FlyFromPoint(uint16 j, uint16 r22) {  // 0x90DC30
   int v2;
   uint16 v3;
 
@@ -5513,33 +5513,33 @@ void Samus_ClearMoveVars(void) {  // 0x90DF6E
 
 static Func_U8 *const kSetupBombJump[28] = {  // 0x90DF99
   SetupBombJump_StandCrouch,
-  SetupBombJump_1,
-  SetupBombJump_2,
-  SetupBombJump_2,
-  SetupBombJump_4,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
   SetupBombJump_StandCrouch,
-  SetupBombJump_1,
-  SetupBombJump_4,
-  SetupBombJump_4,
-  SetupBombJump_4,
-  SetupBombJump_4,
-  SetupBombJump_1,
-  SetupBombJump_1,
-  SetupBombJump_1,
-  SetupBombJump_2,
-  SetupBombJump_2,
-  SetupBombJump_1,
-  SetupBombJump_4,
-  SetupBombJump_4,
-  SetupBombJump_4,
-  SetupBombJump_1,
-  SetupBombJump_1,
-  SetupBombJump_1,
-  SetupBombJump_2,
-  SetupBombJump_2,
-  SetupBombJump_2,
-  SetupBombJump_1A,
-  SetupBombJump_1A,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_MorphedKnockbackCrystalFlash,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_JumpTurnAroundDamageBoostTransition,
+  SetupBombJump_GrabbedShinesparkCrystalFlashDrainedMBAttack,
+  SetupBombJump_GrabbedShinesparkCrystalFlashDrainedMBAttack,
 };
 void SetupBombJump(void) {
   if (!HIBYTE(bomb_jump_dir)) {
@@ -5550,12 +5550,12 @@ void SetupBombJump(void) {
 
 uint8 SetupBombJump_StandCrouch(void) {  // 0x90DFED
   if (!time_is_frozen_flag)
-    return SetupBombJump_1();
+    return SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple();
   bomb_jump_dir = 0;
   return 0;
 }
 
-uint8 SetupBombJump_1(void) {  // 0x90DFF7
+uint8 SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple(void) {  // 0x90DFF7
   if (samus_pose_x_dir == 4)
     samus_new_pose_interrupted = kPose_52_FaceL_Jump_NoAim_MoveF;
   else
@@ -5563,17 +5563,17 @@ uint8 SetupBombJump_1(void) {  // 0x90DFF7
   return 1;
 }
 
-uint8 SetupBombJump_4(void) {  // 0x90E012
+uint8 SetupBombJump_MorphedKnockbackCrystalFlash(void) {  // 0x90E012
   samus_new_pose_interrupted = samus_pose;
   return 1;
 }
 
-uint8 SetupBombJump_2(void) {  // 0x90E01A
+uint8 SetupBombJump_JumpTurnAroundDamageBoostTransition(void) {  // 0x90E01A
   samus_input_handler = FUNC16(Samus_InputHandler_E913);
-  return SetupBombJump_1A();
+  return SetupBombJump_GrabbedShinesparkCrystalFlashDrainedMBAttack();
 }
 
-uint8 SetupBombJump_1A(void) {  // 0x90E020
+uint8 SetupBombJump_GrabbedShinesparkCrystalFlashDrainedMBAttack(void) {  // 0x90E020
   bomb_jump_dir = 0;
   return 0;
 }
@@ -6307,7 +6307,7 @@ void DrawSamusAndProjectiles(void) {  // 0x90EB35
 void CallSamusDrawHandler(uint32 ea) {
   switch (ea) {
   case fnSamusDrawHandler_Default: SamusDrawHandler_Default(); return;
-  case fnsub_90EB86: sub_90EB86(); return;
+  case fnSamusDrawHandler_NoChargeOrGrapple: SamusDrawHandler_NoChargeOrGrapple(); return;
   case fnnullsub_152:
   case fnnullsub_156: return;
   case fnSamus_DrawHandler_EndOfShinespark: Samus_DrawHandler_EndOfShinespark(); return;
@@ -6324,10 +6324,10 @@ void SamusDrawSprites(void) {  // 0x90EB4B
 
 void SamusDrawHandler_Default(void) {  // 0x90EB52
   HandleChargingBeamGfxAudio();
-  sub_90EB55();
+  DrawSamus_NoChargeOrGrapple();
 }
 
-void sub_90EB55(void) {  // 0x90EB55
+void DrawSamus_NoChargeOrGrapple(void) {  // 0x90EB55
   if ((arm_cannon_drawing_mode & 0xF) != 0) {
     if ((arm_cannon_drawing_mode & 0xF) == 2) {
       HandleAtmosphericEffects();
@@ -6346,9 +6346,9 @@ void sub_90EB55(void) {  // 0x90EB55
   }
 }
 
-void sub_90EB86(void) {  // 0x90EB86
+void SamusDrawHandler_NoChargeOrGrapple(void) {  // 0x90EB86
   if (!sign16(grapple_beam_function + 0x37AA)) {
-    sub_90EB55();
+    DrawSamus_NoChargeOrGrapple();
     return;
   }
   if (grapple_beam_function == FUNC16(GrappleBeamFunc_Firing)
@@ -6471,13 +6471,13 @@ void UNUSEDsub_90ED6C(void) {  // 0x90ED6C
 
 static Func_V *const kSamus_FootstepGraphics[8] = {  // 0x90ED88
   Samus_FootstepGraphics_Crateria,
-  Samus_FootstepGraphics_1,
-  Samus_FootstepGraphics_1,
-  Samus_FootstepGraphics_1,
+  Samus_FootstepGraphics_Common,
+  Samus_FootstepGraphics_Common,
+  Samus_FootstepGraphics_Common,
   Samus_FootstepGraphics_Maridia,
-  Samus_FootstepGraphics_1,
-  Samus_FootstepGraphics_1,
-  Samus_FootstepGraphics_1,
+  Samus_FootstepGraphics_Common,
+  Samus_FootstepGraphics_Common,
+  Samus_FootstepGraphics_Common,
 };
 void Samus_FootstepGraphics(void) {
   kSamus_FootstepGraphics[area_index]();
@@ -6498,7 +6498,7 @@ void Samus_FootstepGraphics_Crateria(void) {
       goto LABEL_12;
     }
 LABEL_11:
-    Samus_FootstepGraphics_1();
+    Samus_FootstepGraphics_Common();
     return;
   }
   if (fx_type != 10)
@@ -6530,7 +6530,7 @@ void Samus_FootstepGraphics_Maridia(void) {  // 0x90EDEC
   atmospheric_gfx_anim_timer[1] = 3;
 }
 
-void Samus_FootstepGraphics_1(void) {  // 0x90EE64
+void Samus_FootstepGraphics_Common(void) {  // 0x90EE64
   if ((speed_boost_counter & 0xFF00) == 1024) {
     uint16 r18 = Samus_GetBottom_R18();
     if ((fx_y_pos & 0x8000) != 0) {
@@ -6645,22 +6645,22 @@ static Func_U8 *const kSamusCodeHandlers[32] = {  // 0x90F084
   SamusCode_0D_IsGrappleActive,
   SamusCode_0E,
   SamusCode_0F_EnableTimerHandling,
-  SamusCode_10,
+  SamusCode_10_UnlockSamusFromReserveTank,
   SamusCode_11_SetupForDeath,
   SamusCode_12_SetSuperPaletteFlag1,
   SamusCode_12_SetSuperPaletteFlag0,
-  SamusCode_14,
+  SamusCode_14_QueueSfx,
   SamusCode_15_CalledBySuitAcquision,
-  SamusCode_16,
+  SamusCode_16_EnableRainbowSamus,
   SamusCode_17_DisableRainbowSamusAndStandUp,
-  SamusCode_18,
+  SamusCode_18_SetupDrainedAndDisableStandUp,
   SamusCode_17_FreezeDrainedSamus,
   SamusCode_1A,
   SamusCode_1B_CheckedLockSamus,
-  SamusCode_1C,
+  SamusCode_1C_PlaySpinSfxIfSpinJumping,
   SamusCode_1D_ClearSoundInDoor,
   SamusCode_1E,
-  SamusCode_1F,
+  SamusCode_1F_KillGrappleBeam,
 };
 
 uint16 CallSomeSamusCode(uint16 a) {
@@ -6837,7 +6837,7 @@ uint8 SamusCode_0F_EnableTimerHandling(void) {  // 0x90F2D8
   return 0;
 }
 
-uint8 SamusCode_10(void) {  // 0x90F2E0
+uint8 SamusCode_10_UnlockSamusFromReserveTank(void) {  // 0x90F2E0
   if (frame_handler_beta != FUNC16(j_HandleDemoRecorder_2_0)) {
     frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Func11);
     frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_Func17);
@@ -6876,7 +6876,7 @@ uint8 SamusCode_12_SetSuperPaletteFlag0(void) {  // 0x90F328
   return 0;
 }
 
-uint8 SamusCode_14(void) {  // 0x90F331
+uint8 SamusCode_14_QueueSfx(void) {  // 0x90F331
   if (sign16(samus_health - 31))
     QueueSfx3_Max6(2);
   if (!SamusCode_0D_IsGrappleActive_A()) {
@@ -6914,12 +6914,12 @@ uint8 Samus_SetupForBeingDrained(void) {  // 0x90F394
   return 1;
 }
 
-uint8 SamusCode_18(void) {  // 0x90F3C0
+uint8 SamusCode_18_SetupDrainedAndDisableStandUp(void) {  // 0x90F3C0
   frame_handler_gamma = FUNC16(Samus_Func2);
   return Samus_SetupForBeingDrained();
 }
 
-uint8 SamusCode_16(void) {  // 0x90F3C9
+uint8 SamusCode_16_EnableRainbowSamus(void) {  // 0x90F3C9
   samus_special_super_palette_flags = 0x8000;
   special_samus_palette_frame = 1;
   special_samus_palette_timer = 1;
@@ -6956,7 +6956,7 @@ uint8 SamusCode_1B_CheckedLockSamus(void) {  // 0x90F411
     return SamusCode_00_LockSamus();
 }
 
-uint8 SamusCode_1C(void) {  // 0x90F41E
+uint8 SamusCode_1C_PlaySpinSfxIfSpinJumping(void) {  // 0x90F41E
   if (samus_movement_type == kMovementType_14_WallJumping) {
     if (sign16(samus_anim_frame - 23)) {
       if (sign16(samus_anim_frame - 13)) {
@@ -6997,7 +6997,7 @@ uint8 SamusCode_1D_ClearSoundInDoor(void) {  // 0x90F471
 uint8 SamusCode_1E(void) {  // 0x90F4A2
   if (game_state == 8) {
     if (samus_movement_type == 3 || samus_movement_type == 20) {
-      SamusCode_1C();
+      SamusCode_1C_PlaySpinSfxIfSpinJumping();
       return 0;
     }
     if (!sign16(flare_counter - 16))
@@ -7006,7 +7006,7 @@ uint8 SamusCode_1E(void) {  // 0x90F4A2
   return 0;
 }
 
-uint8 SamusCode_1F(void) {  // 0x90F4D0
+uint8 SamusCode_1F_KillGrappleBeam(void) {  // 0x90F4D0
   if (grapple_beam_function != (uint16)addr_loc_90C4F0) {
     grapple_beam_unkD1E = 0;
     grapple_beam_unkD20 = 0;

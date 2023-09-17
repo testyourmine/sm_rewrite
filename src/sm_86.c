@@ -53,9 +53,10 @@ typedef struct EprojCollInfo {
   uint16 eci_r34;
 } EprojCollInfo;
 
-static uint8 EprojColl_85C2(EprojCollInfo *eci, uint16 a, uint16 k);
-static uint8 EprojColl_8676(EprojCollInfo *eci, uint16 a, uint16 k, uint16 j);
-static uint8 EprojColl_874E(EprojCollInfo *eci);
+static uint8 EprojColl_HorizSlopeSquare(EprojCollInfo *eci, uint16 a, uint16 k);
+static uint8 EprojColl_VertSlopeSquare(EprojCollInfo *eci, uint16 a, uint16 k, uint16 j);
+static uint8 EprojColl_HorizSlopeNonSquare(void);
+static uint8 EprojColl_VertSlopeNonSquare(EprojCollInfo *eci);
 static Rect16U Eproj_GetCollDetectRect(uint16 k);
 
 static void CallEprojPreInstr(uint32 ea, uint16 k);
@@ -67,7 +68,7 @@ uint16 MoveEprojWithVelocity(uint16 k);
 uint16 MoveEprojWithVelocityX(uint16 k);
 uint16 MoveEprojWithVelocityY(uint16 k);
 
-void sub_8690B3(uint16 k);
+void MoveEprojHorizAndOrVert(uint16 k);
 void sub_869DA5(uint16 k);
 void sub_86A301(uint16 j);
 void sub_86A887(uint16 k);
@@ -91,7 +92,7 @@ void sub_86D992(uint16 k);
 void sub_86DCC3(uint16 j);
 void sub_86E049(uint16 k);
 void sub_86E0A4(uint16 k);
-void sub_86EC0C(uint16 k);
+void DeleteEprojIfOffScreen(uint16 k);
 
 
 void EnableEprojs(void) {  // 0x868000
@@ -507,17 +508,17 @@ static uint8 EprojColl_SetCarry(EprojCollInfo *eci) {  // 0x86858C
 static uint8 EprojColl_858E(EprojCollInfo *eci) {  // 0x86858E
   uint16 v0 = BTS[cur_block_index] & 0x1F;
   if (v0 < 5)
-    return EprojColl_85C2(eci, v0, cur_block_index);
+    return EprojColl_HorizSlopeSquare(eci, v0, cur_block_index);
   current_slope_bts = BTS[cur_block_index];
-  return EprojColl_873D();
+  return EprojColl_HorizSlopeNonSquare();
 }
 
 static uint8 EprojColl_85AD(EprojCollInfo *eci) {  // 0x8685AD
   uint16 v0 = BTS[cur_block_index] & 0x1F;
   if (v0 >= 5)
-    return EprojColl_874E(eci);
+    return EprojColl_VertSlopeNonSquare(eci);
   else
-    return EprojColl_8676(eci, v0, cur_block_index, 0);
+    return EprojColl_VertSlopeSquare(eci, v0, cur_block_index, 0);
 }
 
 static const uint8 unk_868729[20] = {  // 0x8685C2
@@ -525,7 +526,7 @@ static const uint8 unk_868729[20] = {  // 0x8685C2
   0x80, 0x81, 0x82, 0x83,
 };
 
-static uint8 EprojColl_85C2(EprojCollInfo *eci, uint16 a, uint16 k) {
+static uint8 EprojColl_HorizSlopeSquare(EprojCollInfo *eci, uint16 a, uint16 k) {
   uint16 temp_collision_DD4 = 4 * a;
   uint16 temp_collision_DD6 = BTS[k] >> 6;
   uint16 v2 = 4 * a + (temp_collision_DD6 ^ ((eci->eci_r34 & 8) >> 3));
@@ -568,7 +569,7 @@ LABEL_17:;
   return 1;
 }
 
-static uint8 EprojColl_8676(EprojCollInfo *eci, uint16 a, uint16 k, uint16 j) {  // 0x868676
+static uint8 EprojColl_VertSlopeSquare(EprojCollInfo *eci, uint16 a, uint16 k, uint16 j) {  // 0x868676
   uint16 v2 = eproj_index;
 
   uint16 temp_collision_DD4 = 4 * a;
@@ -613,11 +614,11 @@ LABEL_17:;
   return 1;
 }
 
-uint8 EprojColl_873D(void) {  // 0x86873D
+uint8 EprojColl_HorizSlopeNonSquare(void) {  // 0x86873D
   return 0;
 }
 
-static uint8 EprojColl_874E(EprojCollInfo *eci) {  // 0x86874E
+static uint8 EprojColl_VertSlopeNonSquare(EprojCollInfo *eci) {  // 0x86874E
   int16 v3;
   int16 v5;
   uint16 v6;
@@ -738,7 +739,7 @@ uint8 EprojBlockCollisition_CheckVertical(EprojCollInfo *eci, uint16 k) {  // 0x
   return rv;
 }
 
-uint8 EprojBlockCollisition_Horiz(uint16 k) {  // 0x8688B6
+uint8 EprojBlockCollision_Horiz(uint16 k) {  // 0x8688B6
   int v1 = k >> 1;
   int32 amt = INT16_SHL8(eproj_x_vel[v1]);
   uint16 R30 = HIBYTE(eproj_radius[v1]);
@@ -780,7 +781,7 @@ uint8 EprojBlockCollisition_Horiz(uint16 k) {  // 0x8688B6
   return 1;
 }
 
-uint8 EprojBlockCollisition_Vertical(uint16 k) {  // 0x86897B
+uint8 EprojBlockCollision_Vertical(uint16 k) {  // 0x86897B
   int16 v5;
 
   int v1 = k >> 1;
@@ -976,8 +977,8 @@ void EprojPreInstr_DraygonsTurret_8DFF(uint16 k) {  // 0x868DFF
   int16 v1;
 
   EprojPowerBombCollision(k);
-  Eproj_FuncE73E_MoveXY(k);
-  v1 = Eproj_FuncE722(k);
+  MoveEprojWithAngleAndSpeed(k);
+  v1 = CheckForEprojInDraygonRoom(k);
   if (v1)
     eproj_id[k >> 1] = 0;
 }
@@ -986,14 +987,14 @@ void EprojPreInstr_DraygonsGunk_8E0F(uint16 k) {  // 0x868E0F
   uint16 v3;
 
   EprojPowerBombCollision(k);
-  Eproj_FuncE73E_MoveXY(k);
+  MoveEprojWithAngleAndSpeed(k);
   int v1 = k >> 1;
   uint16 v2 = abs16(samus_x_pos - eproj_x_pos[v1]);
   if (sign16(v2 - 16) && (v3 = abs16(samus_y_pos - eproj_y_pos[v1]), sign16(v3 - 20))) {
     eproj_instr_list_ptr[v1] = 0x8C38;
     eproj_instr_timers[v1] = 1;
   } else {
-    if (Eproj_FuncE722(k))
+    if (CheckForEprojInDraygonRoom(k))
       eproj_id[v1] = 0;
   }
 }
@@ -1013,7 +1014,7 @@ static void EprojInit_CrocomireProjectile(uint16 j) {  // 0x869023
 
 static const int16 word_869059[9] = { -16, 0, 32, -16, 0, 32, -16, 0, 32 }; // bug: oob read
 void EprojPreInstr_CrocomireProjectile(uint16 k) {  // 0x86906B
-  EprojBlockCollisition_Horiz(k);
+  EprojBlockCollision_Horiz(k);
   eproj_gfx_idx[0] = 2560;
   eproj_timers[k >> 1] += eproj_x_vel[k >> 1];
   uint16 x = -64;
@@ -1022,11 +1023,11 @@ void EprojPreInstr_CrocomireProjectile(uint16 k) {  // 0x86906B
   int v2 = k >> 1;
   eproj_x_vel[v2] = 4 * kSinCosTable8bit_Sext[v1 + 64];
   eproj_y_vel[v2] = 4 * kSinCosTable8bit_Sext[v1];
-  eproj_pre_instr[v2] = FUNC16(sub_8690B3);
+  eproj_pre_instr[v2] = FUNC16(MoveEprojHorizAndOrVert);
 }
 
-void sub_8690B3(uint16 k) {  // 0x8690B3
-  if (EprojBlockCollisition_Horiz(k) & 1 || EprojBlockCollisition_Vertical(k) & 1)
+void MoveEprojHorizAndOrVert(uint16 k) {  // 0x8690B3
+  if (EprojBlockCollision_Horiz(k) & 1 || EprojBlockCollision_Vertical(k) & 1)
     eproj_id[k >> 1] = 0;
 }
 
@@ -1122,7 +1123,7 @@ static void EprojInit_CrocomireBridgeCrumbling(uint16 j) {  // 0x869286
 }
 
 void EprojPreInstr_CrocomireBridgeCrumbling(uint16 k) {  // 0x8692BA
-  if (EprojBlockCollisition_Vertical(k) & 1)
+  if (EprojBlockCollision_Vertical(k) & 1)
     eproj_id[k >> 1] = 0;
   else
     eproj_y_vel[k >> 1] = (eproj_y_vel[k >> 1] + 24) & 0x3FFF;
@@ -1189,7 +1190,7 @@ void EprojPreInstr_9634(uint16 k) {  // 0x869392
   int v1 = k >> 1;
   if (eproj_E[v1] >= 8) {
     MoveEprojWithVelocity(k);
-    if (EprojBlockCollisition_Vertical(k) & 1) {
+    if (EprojBlockCollision_Vertical(k) & 1) {
       eproj_instr_list_ptr[v1] = addr_off_869574;
       ++eproj_E[v1];
       eproj_instr_timers[v1] = 1;
@@ -1223,10 +1224,10 @@ void SetAreaDependentEprojProperties(uint16 j) {  // 0x869402
 
 void EprojPreInstr_9642_RidleysFireball(uint16 k) {  // 0x86940E
   uint16 v1;
-  if (EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1) {
     v1 = -27042;
   } else {
-    if (!(EprojBlockCollisition_Vertical(k) & 1))
+    if (!(EprojBlockCollision_Vertical(k) & 1))
       return;
     v1 = -27056;
   }
@@ -1300,7 +1301,7 @@ static void EprojInit_967A(uint16 j) {  // 0x8694DC
 
 void EprojPreInstr_966C(uint16 k) {  // 0x86950D
   MoveEprojWithVelocityX(k);
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     int v1 = k >> 1;
     eproj_instr_list_ptr[v1] = addr_off_869574;
     eproj_instr_timers[v1] = 1;
@@ -1309,7 +1310,7 @@ void EprojPreInstr_966C(uint16 k) {  // 0x86950D
 
 void EprojPreInstr_9688(uint16 k) {  // 0x869522
   MoveEprojWithVelocityY(k);
-  if (EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1) {
     int v1 = k >> 1;
     eproj_instr_list_ptr[v1] = addr_off_869574;
     eproj_instr_timers[v1] = 1;
@@ -1317,17 +1318,17 @@ void EprojPreInstr_9688(uint16 k) {  // 0x869522
 }
 
 void EprojPreInstr_96A4(uint16 k) {  // 0x869537
-  if (EprojBlockCollisition_Horiz(k) & 1)
+  if (EprojBlockCollision_Horiz(k) & 1)
     eproj_id[k >> 1] = 0;
 }
 
 void EprojPreInstr_96C0(uint16 k) {  // 0x869540
-  if (EprojBlockCollisition_Vertical(k) & 1)
+  if (EprojBlockCollision_Vertical(k) & 1)
     eproj_id[k >> 1] = 0;
 }
 
 void EprojPreInstr_96CE(uint16 k) {  // 0x869549
-  if (EprojBlockCollisition_Vertical(k) & 1)
+  if (EprojBlockCollision_Vertical(k) & 1)
     eproj_id[k >> 1] = 0;
 }
 
@@ -1367,7 +1368,7 @@ static void EprojInit_9734_CeresFallingDebris(uint16 j) {  // 0x8696DC
 void EprojPreInstr_9734_CeresFallingDebris(uint16 k) {  // 0x869701
   int v1 = k >> 1;
   eproj_y_vel[v1] += 16;
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     eproj_id[v1] = 0;
     eproj_spawn_pt = (Point16U) { eproj_x_pos[v1], eproj_y_pos[v1] };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
@@ -1456,7 +1457,7 @@ static void EprojInit_PhantoonStartingFireballs(uint16 j) {  // 0x86993A
   eproj_y_vel[v1] = 0;
   uint16 v2 = byte_869979[eproj_init_param_1];
   eproj_E[v1] = v2;
-  Point16U pt = Eproj_PhantomFireballs_Func1(v2, 0x30);
+  Point16U pt = Eproj_PhantoonFireballs_GetXYRadius(v2, 0x30);
   eproj_x_pos[v1] = pt.x + enemy_data[0].x_pos;
   eproj_y_pos[v1] = pt.y + enemy_data[0].y_pos + 16;
 }
@@ -1464,7 +1465,7 @@ static void EprojInit_PhantoonStartingFireballs(uint16 j) {  // 0x86993A
 void EprojPreInstr_PhantoonStartingFireballs(uint16 k) {  // 0x869981
   int v1 = k >> 1;
   eproj_y_vel[v1] += 16;
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     eproj_properties[v1] = eproj_properties[v1] & 0xFFF | 0x8000;
     eproj_pre_instr[v1] = FUNC16(EprojPreInstr_PhantoonStartingFireballs2);
     eproj_instr_list_ptr[v1] = addr_word_86976C;
@@ -1497,7 +1498,7 @@ static const uint16 word_869A3E[3] = { 0xfd00, 0xfe00, 0xff00 };
 void EprojPreInstr_PhantoonStartingFireballs3(uint16 k) {  // 0x869A01
   int v1 = k >> 1;
   eproj_y_vel[v1] += 16;
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     uint16 v2 = eproj_E[v1] + 1;
     eproj_E[v1] = v2;
     if (sign16(v2 - 3)) {
@@ -1506,7 +1507,7 @@ void EprojPreInstr_PhantoonStartingFireballs3(uint16 k) {  // 0x869A01
     }
     goto LABEL_6;
   }
-  if (EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1) {
 LABEL_6:
     eproj_instr_list_ptr[v1] = addr_word_869782;
     eproj_instr_timers[v1] = 1;
@@ -1521,7 +1522,7 @@ void EprojPreInstr_PhantoonDestroyableFireballs(uint16 k) {  // 0x869A45
   eproj_y_vel[v1] += 4;
   uint16 v2 = (uint8)(LOBYTE(eproj_x_vel[v1]) + eproj_E[v1]);
   eproj_E[v1] = v2;
-  Point16U pt = Eproj_PhantomFireballs_Func1(v2, eproj_y_vel[v1]);
+  Point16U pt = Eproj_PhantoonFireballs_GetXYRadius(v2, eproj_y_vel[v1]);
   bool v3 = (int16)(pt.x + enemy_data[0].x_pos) < 0;
   v4 = pt.x + enemy_data[0].x_pos;
   eproj_x_pos[v1] = pt.x + enemy_data[0].x_pos;
@@ -1548,7 +1549,7 @@ void EprojPreInstr_PhantoonDestroyableFireballs_2(uint16 k) {  // 0x869A94
     QueueSfx3_Max6(0x1D);
 LABEL_5:
     eproj_y_vel[v1] += 16;
-    if (EprojBlockCollisition_Vertical(k) & 1) {
+    if (EprojBlockCollision_Vertical(k) & 1) {
       eproj_instr_list_ptr[v1] = addr_word_8697AC;
       eproj_instr_timers[v1] = 1;
       eproj_y_pos[v1] += 8;
@@ -1565,7 +1566,7 @@ void EprojPreInstr_PhantoonDestroyableFireballs_3(uint16 k) {  // 0x869ADA
   eproj_y_vel[v1] += 2;
   uint16 v2 = (uint8)(eproj_E[v1] + 2);
   eproj_E[v1] = v2;
-  Point16U pt = Eproj_PhantomFireballs_Func1(v2, eproj_y_vel[v1]);
+  Point16U pt = Eproj_PhantoonFireballs_GetXYRadius(v2, eproj_y_vel[v1]);
   bool v3 = (int16)(pt.x + enemy_data[0].x_pos) < 0;
   v4 = pt.x + enemy_data[0].x_pos;
   eproj_x_pos[v1] = pt.x + enemy_data[0].x_pos;
@@ -1598,7 +1599,7 @@ void EprojPreInstr_PhantoonStartingFireballsB_2(uint16 k) {  // 0x869B41
 LABEL_5:;
     uint8 v4 = eproj_E[v1] + 1;
     eproj_E[v1] = v4;
-    Point16U pt = Eproj_PhantomFireballs_Func1(v4, eproj_y_vel[v1]);
+    Point16U pt = Eproj_PhantoonFireballs_GetXYRadius(v4, eproj_y_vel[v1]);
     eproj_x_pos[v1] = pt.x + enemy_data[0].x_pos;
     eproj_y_pos[v1] = pt.y + enemy_data[0].y_pos + 16;
     return;
@@ -1615,28 +1616,28 @@ LABEL_5:;
   eproj_instr_list_ptr[v1] = addr_off_8697F8;
 }
 
-Point16U Eproj_PhantomFireballs_Func1(uint16 j, uint16 a) {  // 0x869BA2
+Point16U Eproj_PhantoonFireballs_GetXYRadius(uint16 j, uint16 a) {  // 0x869BA2
   int16 v3;
   uint16 v2, v4;
 
   uint16 r24 = a;
   uint16 r26 = j;
   if (sign16(j - 128))
-    v2 = Eproj_PhantomFireballs_Func2(2 * j, r24);
+    v2 = Eproj_PhantomFireballs_GetRadiusComponent(2 * j, r24);
   else
-    v2 = -Eproj_PhantomFireballs_Func2(2 * (uint8)(j + 0x80), r24);
+    v2 = -Eproj_PhantomFireballs_GetRadiusComponent(2 * (uint8)(j + 0x80), r24);
   uint16 r20 = v2;
   v3 = (uint8)(r26 - 64);
   if (sign16(v3 - 128))
-    v4 = Eproj_PhantomFireballs_Func2(2 * v3, r24);
+    v4 = Eproj_PhantomFireballs_GetRadiusComponent(2 * v3, r24);
   else
-    v4 = -Eproj_PhantomFireballs_Func2(2 * (uint8)(v3 + 0x80), r24);
+    v4 = -Eproj_PhantomFireballs_GetRadiusComponent(2 * (uint8)(v3 + 0x80), r24);
   uint16 r22 = v4;
   return (Point16U) { r20, r22 };
 }
 
 
-uint16 Eproj_PhantomFireballs_Func2(uint16 k, uint16 r24) {  // 0x869BF3
+uint16 Eproj_PhantomFireballs_GetRadiusComponent(uint16 k, uint16 r24) {  // 0x869BF3
   uint16 r18 = Mult8x8(*((uint8 *)&kSinCosTable8bit_Sext[64] + k), r24) >> 8;
   return r18 + Mult8x8(*((uint8 *)&kSinCosTable8bit_Sext[64] + k + 1), r24);
 }
@@ -1682,7 +1683,7 @@ static void EprojInit_RocksWhenKraidRises(uint16 j) {  // 0x869D0C
 }
 
 void EprojPreInstr_KraidRocks(uint16 k) {  // 0x869D56
-  if (EprojBlockCollisition_Horiz(k) & 1 || EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1 || EprojBlockCollision_Vertical(k) & 1) {
     eproj_id[k >> 1] = 0;
   } else {
     int v1 = k >> 1;
@@ -1696,7 +1697,7 @@ void EprojPreInstr_KraidRocks(uint16 k) {  // 0x869D56
 }
 
 void EprojPreInstr_RocksFallingKraidCeiling(uint16 k) {  // 0x869D89
-  if (EprojBlockCollisition_Vertical(k) & 1)
+  if (EprojBlockCollision_Vertical(k) & 1)
     eproj_id[k >> 1] = 0;
   else
     eproj_y_vel[k >> 1] = (eproj_y_vel[k >> 1] + 24) & 0x3FFF;
@@ -1723,7 +1724,7 @@ static void EprojInit_MiniKraidSpit(uint16 j) {  // 0x869DEC
 void EprojPreInit_MiniKraidSpit(uint16 k) {  // 0x869E1E
   int16 v2;
 
-  if (EprojBlockCollisition_Horiz(k) & 1 || EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1 || EprojBlockCollision_Vertical(k) & 1) {
     eproj_id[k >> 1] = 0;
   } else {
     int v1 = k >> 1;
@@ -1757,7 +1758,7 @@ static void EprojInit_MiniKraidSpikesRight(uint16 j) {  // 0x869E4B
 }
 
 void EprojPreInstr_MiniKraidSpikes(uint16 k) {  // 0x869E83
-  if (EprojBlockCollisition_Horiz(k) & 1)
+  if (EprojBlockCollision_Horiz(k) & 1)
     eproj_id[k >> 1] = 0;
 }
 
@@ -1780,7 +1781,7 @@ static void EprojInit_WalkingLavaSeahorseFireball(uint16 j) {  // 0x869EB2
 
 void EprojPreInstr_WalkingLavaSeahorseFireball(uint16 k) {  // 0x869EFF
   uint16 v2;
-  if (EprojBlockCollisition_Vertical(k) & 1 || EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1 || EprojBlockCollision_Horiz(k) & 1) {
     eproj_id[k >> 1] = 0;
   } else {
     int v1 = k >> 1;
@@ -2101,7 +2102,7 @@ void sub_86A887(uint16 v0) {  // 0x86A887
   int16 v3;
   int16 v4;
 
-  if (EprojBlockCollisition_Horiz(v0) & 1) {
+  if (EprojBlockCollision_Horiz(v0) & 1) {
     int v6 = v0 >> 1;
     eproj_instr_list_ptr[v6] = 0xA48A;
     eproj_instr_timers[v6] = 1;
@@ -2119,7 +2120,7 @@ void sub_86A887(uint16 v0) {  // 0x86A887
         v3 = 3;
       eproj_x_vel[v1] = v3;
     }
-    uint8 carry = EprojBlockCollisition_Vertical(v0);
+    uint8 carry = EprojBlockCollision_Vertical(v0);
     if ((eproj_y_vel[v1] & 0x8000) != 0 || !carry) {
       uint16 v5 = eproj_y_vel[v1] + 16;
       eproj_y_vel[v1] = v5;
@@ -2135,7 +2136,7 @@ void sub_86A887(uint16 v0) {  // 0x86A887
 }
 
 void EprojPreInstr_A977(uint16 k) {  // 0x86A8EF
-  uint8 carry = EprojBlockCollisition_Vertical(k);
+  uint8 carry = EprojBlockCollision_Vertical(k);
   int v1 = k >> 1;
   if ((eproj_y_vel[v1] & 0x8000) != 0 || !carry) {
     uint16 v2 = eproj_F[0] + eproj_y_vel[v1];
@@ -2154,13 +2155,13 @@ void sub_86A91A(uint16 v0) {  // 0x86A91A
     eproj_x_vel[v1] = 256;
   if ((joypad2_last & 0x200) != 0)
     eproj_x_vel[v1] = -256;
-  EprojBlockCollisition_Horiz(v0);
+  EprojBlockCollision_Horiz(v0);
   eproj_y_vel[v1] = 0;
   if ((joypad2_last & 0x400) != 0)
     eproj_y_vel[v1] = 256;
   if ((joypad2_last & 0x800) != 0)
     eproj_y_vel[v1] = -256;
-  EprojBlockCollisition_Vertical(v0);
+  EprojBlockCollision_Vertical(v0);
 }
 
 static void EprojInit_AB07(uint16 j) {  // 0x86AA3D
@@ -2221,12 +2222,12 @@ static void EprojInit_GoldenTorizosChozoOrbs(uint16 j) {  // 0x86AC7C
 }
 
 void EprojPreInstr_BombTorizosChozoOrbs(uint16 k) {  // 0x86ACAD
-  if (EprojBlockCollisition_Horiz(k)) {
+  if (EprojBlockCollision_Horiz(k)) {
     int v3 = k >> 1;
     eproj_instr_list_ptr[v3] = addr_off_86AB25;
     eproj_instr_timers[v3] = 1;
   } else {
-    uint8 carry = EprojBlockCollisition_Vertical(k);
+    uint8 carry = EprojBlockCollision_Vertical(k);
     int v1 = k >> 1;
     if ((eproj_y_vel[v1] & 0x8000) != 0 || !carry) {
       uint16 v2 = eproj_y_vel[v1] + 18;
@@ -2248,9 +2249,9 @@ void EprojPreInstr_GoldenTorizosChozoOrbs(uint16 k) {  // 0x86ACFA
   uint16 v3;
   uint16 v4;
 
-  if (EprojBlockCollisition_Horiz(k) & 1)
+  if (EprojBlockCollision_Horiz(k) & 1)
     eproj_x_vel[k >> 1] = -eproj_x_vel[k >> 1];
-  if (EprojBlockCollisition_Vertical(k) & 1
+  if (EprojBlockCollision_Vertical(k) & 1
       && (v1 = k >> 1, (eproj_y_vel[v1] & 0x8000) == 0)
       && ((v2 = eproj_x_vel[v1], v2 >= 0) ? (v3 = v2 - 64) : (v3 = v2 + 64),
           eproj_x_vel[v1] = v3,
@@ -2294,7 +2295,7 @@ static void EprojInit_TorizoSonicBoom(uint16 j) {  // 0x86AE15
 }
 
 void EprojPreInstr_TorizoSonicBoom(uint16 k) {  // 0x86AE6C
-  if (EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1) {
     int v4 = k >> 1;
     eproj_instr_list_ptr[v4] = addr_off_86ADE5;
     eproj_instr_timers[v4] = 1;
@@ -2363,11 +2364,11 @@ void EprojPreInstr_GoldenTorizoEgg(uint16 k) {  // 0x86B043
     eproj_instr_timers[v1] = 1;
     eproj_x_vel[v1] = ((eproj_E[v1] & 0x8000) != 0) ? 256 : -256;
   } else {
-    if (EprojBlockCollisition_Horiz(k) & 1) {
+    if (EprojBlockCollision_Horiz(k) & 1) {
       eproj_x_vel[v1] = -eproj_x_vel[v1];
       eproj_E[v1] ^= 0x8000;
     }
-    if (EprojBlockCollisition_Vertical(k) & 1 && (eproj_y_vel[v1] & 0x8000) == 0) {
+    if (EprojBlockCollision_Vertical(k) & 1 && (eproj_y_vel[v1] & 0x8000) == 0) {
       eproj_x_vel[v1] += sign16(eproj_x_vel[v1]) ? 32 : -32;
       eproj_y_vel[v1] = -eproj_y_vel[v1];
     }
@@ -2380,7 +2381,7 @@ void EprojPreInstr_GoldenTorizoEgg(uint16 k) {  // 0x86B043
 void sub_86B0B9(uint16 k) {  // 0x86B0B9
   int16 v2;
 
-  if (EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1) {
     int v3 = k >> 1;
     eproj_pre_instr[v3] = 0xB0DD;
     eproj_y_vel[v3] = 0;
@@ -2395,7 +2396,7 @@ void sub_86B0B9(uint16 k) {  // 0x86B0B9
 }
 
 void sub_86B0DD(uint16 k) {  // 0x86B0DD
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     int v1 = k >> 1;
     eproj_instr_list_ptr[v1] = ((eproj_E[v1] & 0x8000) != 0) ? addr_off_86B1A8 : addr_off_86B190;
     eproj_instr_timers[v1] = 1;
@@ -2432,8 +2433,8 @@ void EprojPreInstr_B237(uint16 k) {  // 0x86B237
   int v1;
   uint8 carry;
 
-  if (EprojBlockCollisition_Horiz(k)
-      || (carry = EprojBlockCollisition_Vertical(k), v1 = k >> 1, (eproj_y_vel[v1] & 0x8000) == 0)
+  if (EprojBlockCollision_Horiz(k)
+      || (carry = EprojBlockCollision_Vertical(k), v1 = k >> 1, (eproj_y_vel[v1] & 0x8000) == 0)
       && carry) {
     int v3 = k >> 1;
     eproj_instr_list_ptr[v3] = addr_off_86B2EF;
@@ -2476,12 +2477,12 @@ static void EprojInit_GoldenTorizoEyeBeam(uint16 j) {  // 0x86B328
 }
 
 void EprojPreInstr_GoldenTorizoEyeBeam(uint16 k) {  // 0x86B38A
-  if (EprojBlockCollisition_Horiz(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1) {
     eproj_instr_list_ptr[k >> 1] = addr_off_86B3CD;
     eproj_instr_timers[k >> 1] = 1;
     return;
   }
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     int v1 = k >> 1;
     eproj_y_pos[v1] = (eproj_y_pos[v1] & 0xFFF0 | 8) - 2;
     eproj_instr_list_ptr[v1] = addr_off_86B3E5;
@@ -2582,7 +2583,7 @@ static void EprojInit_EyeDoorSweat(uint16 j) {  // 0x86B683
 
 void EprojPreInstr_EyeDoorProjectile(uint16 k) {  // 0x86B6B9
   int v3 = k >> 1;
-  if (EprojBlockCollisition_Horiz(k) & 1 || EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Horiz(k) & 1 || EprojBlockCollision_Vertical(k) & 1) {
 LABEL_8:;
     eproj_instr_list_ptr[v3] = addr_off_86B5F3;
     eproj_instr_timers[v3] = 1;
@@ -2598,8 +2599,8 @@ LABEL_8:;
 }
 
 void EprojPreInstr_EyeDoorSweat(uint16 k) {  // 0x86B714
-  EprojBlockCollisition_Horiz(k);
-  uint8 carry = EprojBlockCollisition_Vertical(k);
+  EprojBlockCollision_Horiz(k);
+  uint8 carry = EprojBlockCollision_Vertical(k);
   int v1 = k >> 1;
   if ((eproj_y_vel[v1] & 0x8000) != 0 || !carry) {
     eproj_y_vel[v1] += 12;
@@ -2877,15 +2878,15 @@ static void EprojInit_ShaktoolAttackMiddleBackCircle(uint16 j) {  // 0x86BD9C
 }
 
 static void EprojInit_ShaktoolAttackFrontCircle(uint16 v1) {  // 0x86BE03
-  if (EprojBlockCollisition_Horiz(v1) & 1 || EprojBlockCollisition_Vertical(v1) & 1)
+  if (EprojBlockCollision_Horiz(v1) & 1 || EprojBlockCollision_Vertical(v1) & 1)
     eproj_id[v1 >> 1] = 0;
 }
 
 void EprojPreInstr_BE12(uint16 k) {  // 0x86BE12
   int v1 = k >> 1;
   if (eproj_id[eproj_E[v1] >> 1]) {
-    EprojBlockCollisition_Horiz(k);
-    EprojBlockCollisition_Vertical(k);
+    EprojBlockCollision_Horiz(k);
+    EprojBlockCollision_Vertical(k);
   } else {
     eproj_id[v1] = 0;
   }
@@ -3167,7 +3168,7 @@ void Eproj_MoveToBlueRingSpawnPosition(uint16 k) {  // 0x86C335
       samus_knockback_timer = 5;
       knockback_x_dir = (int16)(samus_x_pos - eproj_x_pos[k >> 1]) >= 0;
     } else if (CheckForBlueRingCollisionWithRoom(k) & 1) {
-      Eproj_Earthqhake5(k);
+      BlueRingContactEarthquake(k);
     }
   }
 }
@@ -3211,7 +3212,7 @@ Rect16U Eproj_GetCollDetectRect(uint16 k) {  // 0x86C3E9
   return rect;
 }
 
-void Eproj_Earthqhake5(uint16 k) {  // 0x86C404
+void BlueRingContactEarthquake(uint16 k) {  // 0x86C404
   earthquake_timer = 10;
   earthquake_type = 5;
   BlueRingContactExplosion(k);
@@ -3612,10 +3613,10 @@ void sub_86CFE6(uint16 k) {  // 0x86CFE6
 
 void sub_86CFF8(uint16 k) {  // 0x86CFF8
   int v1 = k >> 1;
-  if (EprojBlockCollisition_Vertical(k) & 1) {
+  if (EprojBlockCollision_Vertical(k) & 1) {
     eproj_instr_list_ptr[v1] = addr_off_86CF56;
     eproj_instr_timers[v1] = 1;
-  } else if (EprojBlockCollisition_Horiz(k) & 1) {
+  } else if (EprojBlockCollision_Horiz(k) & 1) {
     eproj_x_vel[k >> 1] = 0;
   } else {
     uint16 v2 = eproj_y_vel[v1] + 16;
@@ -3675,11 +3676,11 @@ static const uint16 word_86D082 = 0xe0;
 void EprojPreInstr_D0EC(uint16 k) {  // 0x86D0EC
   EprojPreInstr_KagosBugs_Func1(k);
   EprojPreInstr_KagosBugs_Func2(k);
-  if (EprojBlockCollisition_Horiz(k)) {
+  if (EprojBlockCollision_Horiz(k)) {
     eproj_x_vel[k >> 1] = 0;
     goto LABEL_6;
   }
-  if (EprojBlockCollisition_Vertical(k)) {
+  if (EprojBlockCollision_Vertical(k)) {
 LABEL_6:
     eproj_y_vel[k >> 1] = 256;
 LABEL_7:;
@@ -3699,9 +3700,9 @@ LABEL_7:;
 void EprojPreInstr_D128(uint16 v0) {  // 0x86D128
   EprojPreInstr_KagosBugs_Func1(v0);
   EprojPreInstr_KagosBugs_Func2(v0);
-  if (EprojBlockCollisition_Horiz(v0) & 1) {
+  if (EprojBlockCollision_Horiz(v0) & 1) {
     eproj_x_vel[v0 >> 1] = 0;
-  } else if (EprojBlockCollisition_Vertical(v0) & 1) {
+  } else if (EprojBlockCollision_Vertical(v0) & 1) {
     int v1 = v0 >> 1;
     eproj_pre_instr[v1] = FUNC16(nullsub_302);
     eproj_instr_list_ptr[v1] = addr_word_86D03C;
@@ -3771,8 +3772,8 @@ static const int16 word_86D22A[8] = { -32, -32, 0, 32, 32, 32, 0, -32 };
 void EprojPreInstr_MaridiaFloatersSpikes(uint16 k) {  // 0x86D263
   int v1 = k >> 1;
   eproj_x_vel[v1] += word_86D21A[eproj_E[v1]];
-  if (EprojBlockCollisition_Horiz(k) & 1
-      || (eproj_y_vel[v1] += word_86D22A[eproj_E[v1]],  EprojBlockCollisition_Vertical(k) & 1)) {
+  if (EprojBlockCollision_Horiz(k) & 1
+      || (eproj_y_vel[v1] += word_86D22A[eproj_E[v1]],  EprojBlockCollision_Vertical(k) & 1)) {
     eproj_instr_list_ptr[v1] = addr_off_86D218;
     eproj_instr_timers[v1] = 1;
   }
@@ -3818,7 +3819,7 @@ static void EprojInit_WreckedShipRobotLaserUp(uint16 j) {  // 0x86D341
 void EprojPreInstr_WreckedShipRobotLaser(uint16 k) {  // 0x86D3BF
   int v1 = k >> 1;
   eproj_gfx_idx[v1] = 0;
-  if (EprojBlockCollisition_Horiz(k) & 1 || EprojBlockCollisition_Vertical(k) & 1)
+  if (EprojBlockCollision_Horiz(k) & 1 || EprojBlockCollision_Vertical(k) & 1)
     eproj_id[v1] = 0;
 }
 
@@ -4373,7 +4374,7 @@ static uint16 CheckIfEprojIsOffScreen(uint16 k) {  // 0x86E6E0
   return 1;
 }
 
-uint16 Eproj_FuncE722(uint16 k) {  // 0x86E722
+uint16 CheckForEprojInDraygonRoom(uint16 k) {  // 0x86E722
   int16 v2;
   int16 v3;
 
@@ -4392,7 +4393,7 @@ uint16 Eproj_FuncE722(uint16 k) {  // 0x86E722
   return result;
 }
 
-void Eproj_FuncE73E_MoveXY(uint16 k) {  // 0x86E73E
+void MoveEprojWithAngleAndSpeed(uint16 k) {  // 0x86E73E
   int v1 = k >> 1;
   if (((g_word_7E97DC[v1] + 64) & 0x80) != 0) {
     AddToHiLo(&eproj_x_pos[v1], &eproj_x_subpos[v1], -IPAIR32(eproj_x_vel[v1], eproj_E[v1]));
@@ -4440,8 +4441,8 @@ static void EprojInit_BotwoonsBody(uint16 j) {  // 0x86EA31
 void CallBotwoonEprojFunc(uint32 ea, uint16 k) {
   switch (ea) {
   case fnEproj_BotwoonsBody_Main: Eproj_BotwoonsBody_Main(k); return;
-  case fnEproj_BotwonsBodyFunction_Dying: Eproj_BotwonsBodyFunction_Dying(k); return;
-  case fnEproj_BotwonsBodyFunction_Dying2: Eproj_BotwonsBodyFunction_Dying2(k); return;
+  case fnEproj_BotwonsBodyFunction_DyingSetDelay: Eproj_BotwonsBodyFunction_DyingSetDelay(k); return;
+  case fnEproj_BotwonsBodyFunction_DyingWaiting: Eproj_BotwonsBodyFunction_DyingWaiting(k); return;
   case fnEproj_BotwonsBodyFunction_DyingFalling: Eproj_BotwonsBodyFunction_DyingFalling(k); return;
   case fnnullsub_101: return;
   default: Unreachable();
@@ -4452,7 +4453,7 @@ void EprojPreInstr_BotwoonsBody(uint16 k) {  // 0x86EA80
   if (*(uint16 *)&extra_enemy_ram8000[0].pad[32]) {
     int v1 = k >> 1;
     if (eproj_x_vel[v1] == FUNC16(Eproj_BotwoonsBody_Main))
-      eproj_x_vel[v1] = FUNC16(Eproj_BotwonsBodyFunction_Dying);
+      eproj_x_vel[v1] = FUNC16(Eproj_BotwonsBodyFunction_DyingSetDelay);
   }
   CallBotwoonEprojFunc(eproj_x_vel[k >> 1] | 0x860000, k);
 }
@@ -4486,14 +4487,14 @@ void Eproj_BotwoonsBodyHurtFlashHandling2(uint16 j) {  // 0x86EAD4
   }
 }
 
-void Eproj_BotwonsBodyFunction_Dying(uint16 v0) {  // 0x86EAF4
+void Eproj_BotwonsBodyFunction_DyingSetDelay(uint16 v0) {  // 0x86EAF4
   int v1 = v0 >> 1;
   eproj_E[v1] = 4 * v0 + 96;
   eproj_x_vel[v1] = 0xEB04;
-  Eproj_BotwonsBodyFunction_Dying2(v0);
+  Eproj_BotwonsBodyFunction_DyingWaiting(v0);
 }
 
-void Eproj_BotwonsBodyFunction_Dying2(uint16 v0) {  // 0x86EB04
+void Eproj_BotwonsBodyFunction_DyingWaiting(uint16 v0) {  // 0x86EB04
   int v1 = v0 >> 1;
   if (!sign16(++eproj_E[v1] - 256))
     eproj_x_vel[v1] = FUNC16(Eproj_BotwonsBodyFunction_DyingFalling);
@@ -4542,16 +4543,16 @@ static void EprojInit_BotwoonsSpit(uint16 j) {  // 0x86EBC6
 }
 
 void EprojPreInstr_BotwoonsSpit(uint16 k) {  // 0x86EC05
-  Eproj_FuncE73E_MoveXY(k);
-  sub_86EC0C(k);
+  MoveEprojWithAngleAndSpeed(k);
+  DeleteEprojIfOffScreen(k);
 }
 
-void sub_86EC0C(uint16 k) {  // 0x86EC0C
-  if (sub_86EC18(k))
+void DeleteEprojIfOffScreen(uint16 k) {  // 0x86EC0C
+  if (CheckEprojOffScreen(k))
     eproj_id[k >> 1] = 0;
 }
 
-uint16 sub_86EC18(uint16 k) {  // 0x86EC18
+uint16 CheckEprojOffScreen(uint16 k) {  // 0x86EC18
   int v1 = k >> 1;
   return (int16)(eproj_x_pos[v1] - layer1_x_pos) < 0
     || (int16)(layer1_x_pos + 256 - eproj_x_pos[v1]) < 0
@@ -4898,7 +4899,7 @@ static void EprojInit_Sparks(uint16 j) {  // 0x86F391
 void EprojPreInstr_Sparks(uint16 k) {  // 0x86F3F0
   int v1 = k >> 1;
   if ((eproj_y_vel[v1] & 0x8000) == 0) {
-    if (EprojBlockCollisition_Vertical(k) & 1) {
+    if (EprojBlockCollision_Vertical(k) & 1) {
       eproj_instr_list_ptr[v1] = 0xF363;
       eproj_instr_timers[v1] = 1;
 
@@ -5057,7 +5058,7 @@ static void CallEprojPreInstr(uint32 ea, uint16 k) {
   case fnEprojPreInstr_DraygonsTurret_8DFF: EprojPreInstr_DraygonsTurret_8DFF(k); return;
   case fnEprojPreInstr_DraygonsGunk_8E0F: EprojPreInstr_DraygonsGunk_8E0F(k); return;
   case fnEprojPreInstr_CrocomireProjectile: EprojPreInstr_CrocomireProjectile(k); return;
-  case fnsub_8690B3: sub_8690B3(k); return;
+  case fnMoveEprojHorizAndOrVert: MoveEprojHorizAndOrVert(k); return;
   case fnEprojPreInstr_CrocomireSpikeWallPieces: EprojPreInstr_CrocomireSpikeWallPieces(k); return;
   case fnEprojPreInstr_CrocomireBridgeCrumbling: EprojPreInstr_CrocomireBridgeCrumbling(k); return;
   case fnEprojPreInstr_9634: EprojPreInstr_9634(k); return;

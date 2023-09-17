@@ -1341,8 +1341,8 @@ void DrawFileSelectSlotSamusHelmet(uint16 k) {  // 0x819DE4
   DrawMenuSpritemap(kDrawFileSlotHelmet_Spritemaps[v6 >> 1], eproj_id[v5 + 5], eproj_id[v5 + 10], 3584);
 }
 static Func_V *const kFileSelectMapFuncs[23] = {  // 0x819E3E
-  FileSelectMap_0,
-  FileSelectMap_1,
+  FileSelectMap_0_OptionsToAreaSelectSetupFadeOut,
+  FileSelectMap_1_OptionsToAreaSelectFadeOut,
   FileSelectMap_2_LoadAreaSelectForegroundTilemap,
   FileSelectMap_3_LoadAreaSelectBackgroundTilemap,
   FileSelectMap_4_SetupExpandingSquareTransition,
@@ -1352,24 +1352,24 @@ static Func_V *const kFileSelectMapFuncs[23] = {  // 0x819E3E
   FileSelectMap_8_ExpandSquareTransToRoomSelectMap,
   FileSelectMap_9_InitRoomSelectMap,
   FileSelectMap_10_RoomSelectMap,
-  FileSelectMap_11,
-  FileSelectMap_11,
-  FileSelectMap_13,
-  FileSelectMap_14,
-  FileSelectMap_15_ClearTileMap,
-  FileSelectMap_16_LoadPalettes,
+  FileSelectMap_11_RoomSelectToGameWaitForFadeOut,
+  FileSelectMap_11_RoomSelectToGameWaitForFadeOut,
+  FileSelectMap_13_RoomSelectToLoadGameFadeOut,
+  FileSelectMap_14_RoomSelectToLoadGameWait,
+  FileSelectMap_15_RoomSelectToAreaSelectClearTileMap,
+  FileSelectMap_16_RoomSelectToAreaSelectLoadPalettes,
   FileSelectMap_2_LoadAreaSelectForegroundTilemap,
-  FileSelectMap_18,
+  FileSelectMap_18_RoomSelectToAreaSelectLoadBackgroundTilemap,
   FileSelectMap_4_SetupExpandingSquareTransition,
-  FileSelectMap_20_SetupExpandingSquare,
-  FileSelectMap_21_MoveExpandingSquare,
-  FileSelectMap_22,
+  FileSelectMap_20_SetupContractingSquare,
+  FileSelectMap_21_RoomSelectToAreaSelectMoveExpandingSquare,
+  FileSelectMap_22_SelectSlotFromFileClear,
 };
 void FileSelectMap(void) {
   kFileSelectMapFuncs[menu_index]();
 }
 
-void FileSelectMap_22(void) {  // 0x819E7B
+void FileSelectMap_22_SelectSlotFromFileClear(void) {  // 0x819E7B
   DrawAreaSelectMapLabels();
   HandleFadeOut();
   if ((reg_INIDISP & 0xF) == 0) {
@@ -1633,7 +1633,7 @@ LABEL_28:
   }
 }
 
-void FileSelectMap_0(void) {  // 0x81A32A
+void FileSelectMap_0_OptionsToAreaSelectSetupFadeOut(void) {  // 0x81A32A
   VramWriteEntry *v1;
 
   ClearMenuTilemap();
@@ -1656,7 +1656,7 @@ void FileSelectMap_0(void) {  // 0x81A32A
   ++menu_index;
 }
 
-void FileSelectMap_1(void) {  // 0x81A37C
+void FileSelectMap_1_OptionsToAreaSelectFadeOut(void) {  // 0x81A37C
   int16 v1;
   int16 v2;
 
@@ -1741,7 +1741,7 @@ void FileSelectMap_2_LoadAreaSelectForegroundTilemap(void) {  // 0x81A546
   ++menu_index;
 }
 
-void FileSelectMap_18(void) {  // 0x81A578
+void FileSelectMap_18_RoomSelectToAreaSelectLoadBackgroundTilemap(void) {  // 0x81A578
   ++menu_index;
   LoadAreaSelectBackgroundTilemap(area_index);
 }
@@ -2322,13 +2322,13 @@ void HandleFileSelectMapScrollArrows(void) {  // 0x81AECA
   }
 }
 
-void FileSelectMap_11(void) {  // 0x81AF5A
+void FileSelectMap_11_RoomSelectToGameWaitForFadeOut(void) {  // 0x81AF5A
   DrawFileSelectMapIcons();
   DisplayMapElevatorDestinations();
   ++menu_index;
 }
 
-void FileSelectMap_13(void) {  // 0x81AF66
+void FileSelectMap_13_RoomSelectToLoadGameFadeOut(void) {  // 0x81AF66
   DrawFileSelectMapIcons();
   DisplayMapElevatorDestinations();
   HandleFadeOut();
@@ -2338,7 +2338,7 @@ void FileSelectMap_13(void) {  // 0x81AF66
   }
 }
 
-void FileSelectMap_14(void) {  // 0x81AF83
+void FileSelectMap_14_RoomSelectToLoadGameWait(void) {  // 0x81AF83
   if (!--enemy_data[0].x_pos) {
     ScreenOff();
     ++game_state;
@@ -2346,7 +2346,7 @@ void FileSelectMap_14(void) {  // 0x81AF83
   }
 }
 
-void FileSelectMap_15_ClearTileMap(void) {  // 0x81AF97
+void FileSelectMap_15_RoomSelectToAreaSelectClearTileMap(void) {  // 0x81AF97
   reg_TM = 18;
   for (int i = 2046; i >= 0; i -= 2)
     *(uint16 *)((uint8 *)ram3000.pause_menu_map_tilemap + (uint16)i) = 15;
@@ -2360,7 +2360,7 @@ void FileSelectMap_15_ClearTileMap(void) {  // 0x81AF97
   ++menu_index;
 }
 
-void FileSelectMap_16_LoadPalettes(void) {  // 0x81AFD3
+void FileSelectMap_16_RoomSelectToAreaSelectLoadPalettes(void) {  // 0x81AFD3
   int16 v0;
   int16 v1;
 
@@ -2375,7 +2375,7 @@ void FileSelectMap_16_LoadPalettes(void) {  // 0x81AFD3
   ++menu_index;
 }
 
-void FileSelectMap_20_SetupExpandingSquare(void) {  // 0x81AFF6
+void FileSelectMap_20_SetupContractingSquare(void) {  // 0x81AFF6
   reg_HDMAEN = 0;
   QueueSfx1_Max6(0x3C);
   expand_sq_timer = kRoomSelectMapExpandingSquareTimers[area_index] - 12;
@@ -2417,7 +2417,7 @@ void FileSelectMap_20_SetupExpandingSquare(void) {  // 0x81AFF6
   reg_BG1HOFS = 0;
 }
 
-void FileSelectMap_21_MoveExpandingSquare(void) {  // 0x81B0BB
+void FileSelectMap_21_RoomSelectToAreaSelectMoveExpandingSquare(void) {  // 0x81B0BB
   AddToHiLo(&expand_sq_left_pos, &expand_sq_left_subpos, -IPAIR32(expand_sq_left_vel, expand_sq_left_subvel));
   AddToHiLo(&expand_sq_right_pos, &expand_sq_right_subpos, -IPAIR32(expand_sq_right_vel, expand_sq_right_subvel));
   AddToHiLo(&expand_sq_top_pos, &expand_sq_top_subpos, -IPAIR32(expand_sq_top_vel, expand_sq_top_subvel));

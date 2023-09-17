@@ -1723,7 +1723,7 @@ uint8 PlmSetup_B9ED_CrittersEscapeBlock(uint16 j) {  // 0x84B9C5
   return 0;
 }
 
-uint8 sub_84B9F1(uint16 j) {  // 0x84B9F1
+uint8 PlmSetup_B9F1_TurnCeresDoorSolid(uint16 j) {  // 0x84B9F1
   uint16 v1 = plm_block_indices[j >> 1];
   level_data[v1 >> 1] = level_data[v1 >> 1] & 0xFFF | 0x8000;
   uint16 v2 = room_width_in_blocks * 2 + v1;
@@ -1938,7 +1938,7 @@ const uint8 *PlmInstr_SetGreyDoorPreInstr(const uint8 *plmp, uint16 k) {  // 0x8
 
 uint8 PlmSetup_C806_LeftGreenGateTrigger(uint16 j) {  // 0x84C54D
   if ((projectile_type[projectile_index >> 1] & 0xFFF) == 512)
-    return sub_84C63F(j);
+    return TriggerPlmOfBlockToTheRight(j);
   QueueSfx2_Max6(0x57);
   plm_header_ptr[j >> 1] = 0;
   return 0;
@@ -1946,7 +1946,7 @@ uint8 PlmSetup_C806_LeftGreenGateTrigger(uint16 j) {  // 0x84C54D
 
 uint8 PlmSetup_C80A_RightGreenGateTrigger(uint16 j) {  // 0x84C56C
   if ((projectile_type[projectile_index >> 1] & 0xFFF) == 512)
-    return sub_84C647(j);
+    return TriggerPlmOfBlockToTheLeft(j);
   QueueSfx2_Max6(0x57);
   plm_header_ptr[j >> 1] = 0;
   return 0;
@@ -1957,7 +1957,7 @@ uint8 PlmSetup_C80E_LeftRedGateTrigger(uint16 j) {  // 0x84C58B
 
   v1 = projectile_type[projectile_index >> 1] & 0xFFF;
   if (v1 == 256 || v1 == 512)
-    return sub_84C63F(j);
+    return TriggerPlmOfBlockToTheRight(j);
   QueueSfx2_Max6(0x57);
   plm_header_ptr[j >> 1] = 0;
   return 0;
@@ -1968,7 +1968,7 @@ uint8 PlmSetup_C812_RightRedGateTrigger(uint16 j) {  // 0x84C5AF
 
   v1 = projectile_type[projectile_index >> 1] & 0xFFF;
   if (v1 == 256 || v1 == 512)
-    return sub_84C647(j);
+    return TriggerPlmOfBlockToTheLeft(j);
   QueueSfx2_Max6(0x57);
   plm_header_ptr[j >> 1] = 0;
   return 0;
@@ -1976,7 +1976,7 @@ uint8 PlmSetup_C812_RightRedGateTrigger(uint16 j) {  // 0x84C5AF
 
 uint8 PlmSetup_C822_RightYellowGateTrigger(uint16 j) {  // 0x84C5F1
   if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
-    return sub_84C647(j);
+    return TriggerPlmOfBlockToTheLeft(j);
   QueueSfx2_Max6(0x57);
   plm_header_ptr[j >> 1] = 0;
   return 0;
@@ -1984,7 +1984,7 @@ uint8 PlmSetup_C822_RightYellowGateTrigger(uint16 j) {  // 0x84C5F1
 
 uint8 PlmSetup_C81E_LeftYellowGateTrigger(uint16 j) {  // 0x84C5D3
   if ((projectile_type[projectile_index >> 1] & 0xFFF) == 768)
-    return sub_84C63F(j);
+    return TriggerPlmOfBlockToTheRight(j);
   QueueSfx2_Max6(0x57);
   int v1 = j >> 1;
   plm_header_ptr[v1] = 0;
@@ -1993,27 +1993,27 @@ uint8 PlmSetup_C81E_LeftYellowGateTrigger(uint16 j) {  // 0x84C5D3
 
 uint8 PlmSetup_C81A_RightBlueGateTrigger(uint16 j) {  // 0x84C627
   if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
-    return sub_84C647(j);
+    return TriggerPlmOfBlockToTheLeft(j);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
 
 uint8 PlmSetup_C816_LeftBlueGateTrigger(uint16 j) {  // 0x84C610
   if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
-    return sub_84C63F(j);
+    return TriggerPlmOfBlockToTheRight(j);
   plm_header_ptr[j >> 1] = 0;
   return PlmSetup_C81A_RightBlueGateTrigger(j);
 }
 
-uint8 sub_84C63F(uint16 j) {  // 0x84C63F
-  return sub_84C64C(j, plm_block_indices[j >> 1] + 2);
+uint8 TriggerPlmOfBlockToTheRight(uint16 j) {  // 0x84C63F
+  return TriggerPlmAtBlockIndex(j, plm_block_indices[j >> 1] + 2);
 }
 
-uint8 sub_84C647(uint16 j) {  // 0x84C647
-  return sub_84C64C(j, plm_block_indices[j >> 1] - 2);
+uint8 TriggerPlmOfBlockToTheLeft(uint16 j) {  // 0x84C647
+  return TriggerPlmAtBlockIndex(j, plm_block_indices[j >> 1] - 2);
 }
 
-uint8 sub_84C64C(uint16 j, uint16 a) {  // 0x84C64C
+uint8 TriggerPlmAtBlockIndex(uint16 j, uint16 a) {  // 0x84C64C
   uint16 v2 = 78;
   while (a != plm_block_indices[v2 >> 1]) {
     v2 -= 2;
@@ -2577,7 +2577,7 @@ const uint8 *PlmInstr_MoveUpAndMakeBlueDoorFacingRight(const uint8 *plmp, uint16
   int v2 = k >> 1;
   uint16 blk = (plm_block_indices[v2] -= room_width_in_blocks * 2);
   WriteLevelDataBlockTypeAndBts(blk, 0xC041);
-  sub_84D7EF(blk);
+  Create3BlocksVerticalExtension(blk);
   return plmp;
 }
 
@@ -2585,11 +2585,11 @@ const uint8 *PlmInstr_MoveUpAndMakeBlueDoorFacingLeft(const uint8 *plmp, uint16 
   int v2 = k >> 1;
   uint16 blk = (plm_block_indices[v2] -= room_width_in_blocks * 2);
   WriteLevelDataBlockTypeAndBts(blk, 0xC040);
-  sub_84D7EF(blk);
+  Create3BlocksVerticalExtension(blk);
   return plmp;
 }
 
-void sub_84D7EF(uint16 k) {  // 0x84D7EF
+void Create3BlocksVerticalExtension(uint16 k) {  // 0x84D7EF
   uint16 v1 = room_width_in_blocks * 2 + k;
   WriteLevelDataBlockTypeAndBts(v1, 0xD0FF);
   uint16 v2 = room_width_in_blocks * 2 + v1;
@@ -2823,55 +2823,55 @@ const uint8 *PlmInstr_E63B(const uint8 *plmp, uint16 k) {  // 0x84E63B
   return plmp;
 }
 
-uint8 sub_84EE4D(uint16 j) {  // 0x84EE4D
-  return sub_84EE5F(j, 8);
+uint8 PlmSetup_EnergyTank(uint16 j) {  // 0x84EE4D
+  return SetPlmGfxAndSetupAbility(j, 8);
 }
 
-uint8 sub_84EE52(uint16 j) {  // 0x84EE52
-  return sub_84EE5F(j, 0xA);
+uint8 PlmSetup_MissileTank(uint16 j) {  // 0x84EE52
+  return SetPlmGfxAndSetupAbility(j, 0xA);
 }
 
-uint8 sub_84EE57(uint16 j) {  // 0x84EE57
-  return sub_84EE5F(j, 0xC);
+uint8 PlmSetup_SuperMissileTank(uint16 j) {  // 0x84EE57
+  return SetPlmGfxAndSetupAbility(j, 0xC);
 }
 
-uint8 sub_84EE5C(uint16 j) {  // 0x84EE5C
-  return sub_84EE5F(j, 0xE);
+uint8 PlmSetup_PowerBombTank(uint16 j) {  // 0x84EE5C
+  return SetPlmGfxAndSetupAbility(j, 0xE);
 }
 
-uint8 sub_84EE5F(uint16 j, uint16 a) {  // 0x84EE5F
+uint8 SetPlmGfxAndSetupAbility(uint16 j, uint16 a) {  // 0x84EE5F
   plm_variables[j >> 1] = a;
-  return sub_84EE64(j);
+  return PlmSetup_AbilityTank(j);
 }
 
-uint8 sub_84EE64(uint16 j) {  // 0x84EE64
+uint8 PlmSetup_AbilityTank(uint16 j) {  // 0x84EE64
   WriteLevelDataBlockTypeAndBts(plm_block_indices[j >> 1], 0x45);
   ++global_number_of_items_loaded_ctr;
   return 0;
 }
 
-uint8 sub_84EE77(uint16 j) {  // 0x84EE77
-  return sub_84EE89(j, 8);
+uint8 PlmSetup_EnergyTankShotBlock(uint16 j) {  // 0x84EE77
+  return SetPlmGfxAndSetupAbilityShotBlock(j, 8);
 }
 
-uint8 sub_84EE7C(uint16 j) {  // 0x84EE7C
-  return sub_84EE89(j, 0xA);
+uint8 PlmSetup_MissileTankShotBlock(uint16 j) {  // 0x84EE7C
+  return SetPlmGfxAndSetupAbilityShotBlock(j, 0xA);
 }
 
-uint8 sub_84EE81(uint16 j) {  // 0x84EE81
-  return sub_84EE89(j, 0xC);
+uint8 PlmSetup_SuperMissileTankShotBlock(uint16 j) {  // 0x84EE81
+  return SetPlmGfxAndSetupAbilityShotBlock(j, 0xC);
 }
 
-uint8 sub_84EE86(uint16 j) {  // 0x84EE86
-  return sub_84EE89(j, 0xE);
+uint8 PlmSetup_PowerBombTankShotBlock(uint16 j) {  // 0x84EE86
+  return SetPlmGfxAndSetupAbilityShotBlock(j, 0xE);
 }
 
-uint8 sub_84EE89(uint16 j, uint16 a) {  // 0x84EE89
+uint8 SetPlmGfxAndSetupAbilityShotBlock(uint16 j, uint16 a) {  // 0x84EE89
   plm_variables[j >> 1] = a;
-  return sub_84EE8E(j);
+  return PlmSetup_AbilityTankShotBlock(j);
 }
 
-uint8 sub_84EE8E(uint16 j) {  // 0x84EE8E
+uint8 PlmSetup_AbilityTankShotBlock(uint16 j) {  // 0x84EE8E
   int v1 = j >> 1;
   WriteLevelDataBlockTypeAndBts(plm_block_indices[v1], 0xC045);
   plm_variable[v1] = level_data[plm_block_indices[v1] >> 1];
@@ -2879,7 +2879,7 @@ uint8 sub_84EE8E(uint16 j) {  // 0x84EE8E
   return 0;
 }
 
-uint8 sub_84EEAB(uint16 v0) {  // 0x84EEAB
+uint8 PlmSetup_ItemCollisionDetection(uint16 v0) {  // 0x84EEAB
   int i;
 
   if (time_is_frozen_flag) {
@@ -2951,7 +2951,7 @@ uint8 CallPlmHeaderFunc(uint32 ea, uint16 j) {
   case fnPlmSetup_B974: return PlmSetup_B974(j);
   case fnPlmSetup_B9C1_CrittersEscapeBlock: return PlmSetup_B9C1_CrittersEscapeBlock(j);
   case fnPlmSetup_B9ED_CrittersEscapeBlock: return PlmSetup_B9ED_CrittersEscapeBlock(j);
-  case fnsub_84B9F1: return sub_84B9F1(j);
+  case fnPlmSetup_B9F1_TurnCeresDoorSolid: return PlmSetup_B9F1_TurnCeresDoorSolid(j);
   case fnPlmSetup_BB30_CrateriaMainstreetEscape: return PlmSetup_BB30_CrateriaMainstreetEscape(j);
   case fnPlmSetup_C806_LeftGreenGateTrigger: return PlmSetup_C806_LeftGreenGateTrigger(j);
   case fnPlmSetup_C80A_RightGreenGateTrigger: return PlmSetup_C80A_RightGreenGateTrigger(j);
@@ -3004,17 +3004,17 @@ uint8 CallPlmHeaderFunc(uint32 ea, uint16 j) {
   case fnPlmSetup_DraygonCannonFacingLeft: return PlmSetup_DraygonCannonFacingLeft(j);
   case fnPlmSetup_DraygonCannonFacingDiagonalLeft: return PlmSetup_DraygonCannonFacingDiagonalLeft(j);
   case fnPlmSetup_DraygonCannon: return PlmSetup_DraygonCannon(j);
-  case fnsub_84EE4D: return sub_84EE4D(j);
-  case fnsub_84EE52: return sub_84EE52(j);
-  case fnsub_84EE57: return sub_84EE57(j);
-  case fnsub_84EE5C: return sub_84EE5C(j);
-  case fnsub_84EE64: return sub_84EE64(j);
-  case fnsub_84EE77: return sub_84EE77(j);
-  case fnsub_84EE7C: return sub_84EE7C(j);
-  case fnsub_84EE81: return sub_84EE81(j);
-  case fnsub_84EE86: return sub_84EE86(j);
-  case fnsub_84EE8E: return sub_84EE8E(j);
-  case fnsub_84EEAB: return sub_84EEAB(j);
+  case fnPlmSetup_EnergyTank: return PlmSetup_EnergyTank(j);
+  case fnPlmSetup_MissileTank: return PlmSetup_MissileTank(j);
+  case fnPlmSetup_SuperMissileTank: return PlmSetup_SuperMissileTank(j);
+  case fnPlmSetup_PowerBombTank: return PlmSetup_PowerBombTank(j);
+  case fnPlmSetup_AbilityTank: return PlmSetup_AbilityTank(j);
+  case fnPlmSetup_EnergyTankShotBlock: return PlmSetup_EnergyTankShotBlock(j);
+  case fnPlmSetup_MissileTankShotBlock: return PlmSetup_MissileTankShotBlock(j);
+  case fnPlmSetup_SuperMissileTankShotBlock: return PlmSetup_SuperMissileTankShotBlock(j);
+  case fnPlmSetup_PowerBombTankShotBlock: return PlmSetup_PowerBombTankShotBlock(j);
+  case fnPlmSetup_AbilityTankShotBlock: return PlmSetup_AbilityTankShotBlock(j);
+  case fnPlmSetup_ItemCollisionDetection: return PlmSetup_ItemCollisionDetection(j);
   default: return Unreachable();
   }
 }

@@ -1546,13 +1546,13 @@ void CreditsObject_ProcessOne(void) {  // 0x8B996A
       if (!i)
         return;
     }
-    CreditsObject_Func1(i);
+    CreditsObject_LoadDecompressedTilesToCinematicBgTilemap(i);
     cinematic_var26 = (cinematic_var26 + 1) & 0x1F;
     cinematic_var21 = i + 4;
   }
 }
 
-void CreditsObject_Func1(uint16 j) {  // 0x8B99C1
+void CreditsObject_LoadDecompressedTilesToCinematicBgTilemap(uint16 j) {  // 0x8B99C1
   uint16 RegWord = Mult8x8(cinematic_var26, 0x40);
   int n = 31;
   const uint16 *src = (const uint16*)(g_ram + 0x10000 + *((uint16 *)RomPtr_8C(j) + 1));
@@ -1769,7 +1769,7 @@ void CinematicSpriteInit_0(uint16 j) {  // 0x8B9CBC
   cinematicbg_arr9[v1] = 512;
 }
 
-void sub_8B9CCF(uint16 k) {  // 0x8B9CCF
+void CinematicSprPreInstr_1994ScrollingText(uint16 k) {  // 0x8B9CCF
   reg_INIDISP = 15;
   cinematicspr_preinstr_func[k >> 1] = FUNC16(CinematicFunction_nullsub_116);
 }
@@ -6158,7 +6158,7 @@ void CallCinematicSprPreInstr(uint32 ea, uint16 j) {
   case fnCinematicSprPreInstr_nullsub_300: return;
   case fnCinematicFunction_nullsub_116: return;
   case fnCinematicFunction_nullsub_298: return;
-  case fnsub_8B9CCF: sub_8B9CCF(j); return;
+  case fnsub_8B9CCF: CinematicSprPreInstr_1994ScrollingText(j); return;
   case fnnullsub_122:  return;
   case fnSetSomeStuffForSpriteObject_4_MetroidEgg: SetSomeStuffForSpriteObject_4_MetroidEgg(j); return;
   case fnCinematicSprPreInstr_A903: CinematicSprPreInstr_A903(j); return;

@@ -598,7 +598,7 @@ void DemoSetFunc_Common(uint16 a) {  // 0x918A56
 
 void DemoSetFunc_5(void) {  // 0x918A68
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
-  Projectile_Func7_Shinespark();
+  TriggerShinesparkWindup();
   samus_pose = kPose_CD_FaceR_Shinespark_Diag;
   SamusFunc_F433();
   Samus_SetAnimationFrameIfPoseChanged();
@@ -606,7 +606,7 @@ void DemoSetFunc_5(void) {  // 0x918A68
 
 void DemoSetFunc_6(void) {  // 0x918A81
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
-  Projectile_Func7_Shinespark();
+  TriggerShinesparkWindup();
   samus_pose = kPose_CA_FaceL_Shinespark_Horiz;
   SamusFunc_F433();
   Samus_SetAnimationFrameIfPoseChanged();
@@ -3318,7 +3318,7 @@ LABEL_7:
       if (samus_shine_timer) {
         samus_pose = kPose_C7_FaceR_ShinesparkWindup_Vert;
 LABEL_11:
-        Projectile_Func7_Shinespark();
+        TriggerShinesparkWindup();
         if (samus_prev_movement_type2 == kMovementType_02_NormalJumping)
           samus_prev_y_pos = --samus_y_pos;
         return 1;

@@ -73,7 +73,7 @@ static const uint8 kIsGrappleBannedForMovementType[28] = {
   1, 0, 0, 1, 1, 1, 0, 1,
 };
 
-void ProjectileTrail_Func5(uint16 k, uint16 j) {  // 0x9BA3CC
+void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
   uint16 R22 = ProjectileInsts_GetValue(k);
   uint16 r18, r20;
   if ((ceres_status & 0x8000) == 0) {
@@ -768,7 +768,7 @@ void GrappleBeamFunc_FireGoToCancel(void) {  // 0x9BC51E
   grapple_beam_unkD36 = 0;
   slow_grabble_scrolling_flag = 0;
   GrappleFunc_AF87();
-  samus_draw_handler = FUNC16(sub_90EB86);
+  samus_draw_handler = FUNC16(SamusDrawHandler_NoChargeOrGrapple);
   grapple_walljump_timer = 0;
   LoadProjectilePalette(2);
   palette_buffer[223] = 32657;

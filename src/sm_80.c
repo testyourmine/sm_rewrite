@@ -362,20 +362,20 @@ void InitializePpuIoRegs(void) {  // 0x808792
 }
 
 void WriteLotsOf0x1c2f(void) {  // 0x8088D1
-  sub_8088EB(0x1C2F);
-  sub_8088FE(0x1C2F);
-  sub_808911(0x1C2F);
+  Write0x800BytesToRam3000(0x1C2F);
+  Write0x800BytesToRam4000(0x1C2F);
+  Write0x800BytesToRam6000(0x1C2F);
 }
 
-void sub_8088EB(uint16 a) {  // 0x8088EB
+void Write0x800BytesToRam3000(uint16 a) {  // 0x8088EB
   memset7E((uint16*)(g_ram + 0x3000), a, 0x800);
 }
 
-void sub_8088FE(uint16 a) {  // 0x8088FE
+void Write0x800BytesToRam4000(uint16 a) {  // 0x8088FE
   memset7E((uint16 *)(g_ram + 0x4000), a, 0x800);
 }
 
-void sub_808911(uint16 a) {  // 0x808911
+void Write0x800BytesToRam6000(uint16 a) {  // 0x808911
   memset7E((uint16 *)(g_ram + 0x6000), a, 0x800);
 }
 

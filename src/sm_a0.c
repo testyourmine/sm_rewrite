@@ -1215,11 +1215,11 @@ void CallEnemyPreInstr(uint32 ea) {
   case fnBrinstarPipeBug_PreInstr_4: BrinstarPipeBug_PreInstr_4(k); return;  // 0xb3891c
   case fnBrinstarPipeBug_PreInstr_5: BrinstarPipeBug_PreInstr_5(k); return;  // 0xb3897e
   case fnNorfairPipeBug_Func_5: NorfairPipeBug_Func_5(k); return;  // 0xb38cff
-  case fnBotwoon_Func_26: Botwoon_Func_26(k); return;  // 0xb39dc0
-  case fnBotwoon_Func_27: Botwoon_Func_27(k); return;  // 0xb39e7d
-  case fnBotwoon_Func_28: Botwoon_Func_28(k); return;  // 0xb39ee0
-  case fnBotwoon_Func_29: Botwoon_Func_29(k); return;  // 0xb39f34
-  case fnBotwoon_Func_30: Botwoon_Func_30(k); return;  // 0xb39f7a
+  case fnBotwoon_Func_MoveHeadAround: Botwoon_Func_MoveHeadAround(k); return;  // 0xb39dc0
+  case fnBotwoon_Func_SetSpitAngle: Botwoon_Func_SetSpitAngle(k); return;  // 0xb39e7d
+  case fnBotwoon_Func_SpawnFiveSpitProjectiles: Botwoon_Func_SpawnFiveSpitProjectiles(k); return;  // 0xb39ee0
+  case fnBotwoon_Func_SpawnThreeSpitProjectiles: Botwoon_Func_SpawnThreeSpitProjectiles(k); return;  // 0xb39f34
+  case fnBotwoon_Func_CooldownSpit: Botwoon_Func_CooldownSpit(k); return;  // 0xb39f7a
   case fnTorizo_Func_5: Torizo_Func_5(k); return;
   case fnTorizo_Func_6: Torizo_Func_6(k); return;
   case fnTorizo_Func_7: Torizo_Func_7(k); return;
@@ -1461,11 +1461,11 @@ const uint16 *CallEnemyInstr(uint32 ea, uint16 k, const uint16 *j) {
   case fnEnemyInstr_DecTimerAndGoto2_A7: return EnemyInstr_DecTimerAndGoto(k, j);
   case fnEnemyInstr_SetTimer_A7: return EnemyInstr_SetTimer(k, j);
   case fnEnemyInstr_Sleep_A7: return EnemyInstr_Sleep(k, j);
-  case fnKraid_Instr_9: return Kraid_Instr_9(k, j);
+  case fnKraid_Instr_9: return Kraid_Instr_SlowArmIfLessThanHalfHealth(k, j);
   case fnKraid_Instr_1: return Kraid_Instr_1(k, j);
   case fnKraid_Instr_DecYpos: return Kraid_Instr_DecYpos(k, j);
   case fnKraid_Instr_IncrYpos_Shake: return Kraid_Instr_IncrYpos_Shake(k, j);
-  case fnKraid_Instr_PlaySound_0x76: return Kraid_Instr_PlaySound_0x76(k, j);
+  case fnKraid_Instr_PlaySound_0x76: return Kraid_Instr_PlayEarthQuakeSfx(k, j);
   case fnKraid_Instr_XposMinus3: return Kraid_Instr_XposMinus3(k, j);
   case fnKraid_Instr_XposMinus3b: return Kraid_Instr_XposMinus3b(k, j);
   case fnKraid_Instr_XposPlus3: return Kraid_Instr_XposPlus3(k, j);
@@ -1668,24 +1668,24 @@ const uint16 *CallEnemyInstr(uint32 ea, uint16 k, const uint16 *j) {
   case fnEnemyInstr_DecTimerAndGoto2_B3: return EnemyInstr_DecTimerAndGoto(k, j);
   case fnEnemyInstr_SetTimer_B3: return EnemyInstr_SetTimer(k, j);
   case fnEnemyInstr_Sleep_B3: return EnemyInstr_Sleep(k, j);
-  case fnBotwoon_Instr_1: return Botwoon_Instr_1(k, j);
-  case fnBotwoon_Instr_2: return Botwoon_Instr_2(k, j);
-  case fnBotwoon_Instr_3: return Botwoon_Instr_3(k, j);
-  case fnBotwoon_Instr_4: return Botwoon_Instr_4(k, j);
-  case fnBotwoon_Instr_5: return Botwoon_Instr_5(k, j);
-  case fnBotwoon_Instr_6: return Botwoon_Instr_6(k, j);
-  case fnBotwoon_Instr_7: return Botwoon_Instr_7(k, j);
-  case fnBotwoon_Instr_8: return Botwoon_Instr_8(k, j);
-  case fnBotwoon_Instr_9: return Botwoon_Instr_9(k, j);
-  case fnBotwoon_Instr_10: return Botwoon_Instr_10(k, j);
+  case fnBotwoon_Instr_1: return Botwoon_Instr_AimUpRadius8x16Unused(k, j);
+  case fnBotwoon_Instr_2: return Botwoon_Instr_AimUpLeftRadius12x12(k, j);
+  case fnBotwoon_Instr_3: return Botwoon_Instr_AimLeftRadius16x8(k, j);
+  case fnBotwoon_Instr_4: return Botwoon_Instr_AimDownLeftRadius12x12(k, j);
+  case fnBotwoon_Instr_5: return Botwoon_Instr_AimDownRadius8x16Unused(k, j);
+  case fnBotwoon_Instr_6: return Botwoon_Instr_AimDownRadius8x16(k, j);
+  case fnBotwoon_Instr_7: return Botwoon_Instr_AimDownRightRadius12x12(k, j);
+  case fnBotwoon_Instr_8: return Botwoon_Instr_AimRightRadius16x8(k, j);
+  case fnBotwoon_Instr_9: return Botwoon_Instr_AimUprightRadius12x12(k, j);
+  case fnBotwoon_Instr_10: return Botwoon_Instr_AimUpRadius8x16(k, j);
   case fnBotwoon_Instr_SetSpitting: return Botwoon_Instr_SetSpitting(k, j);
   case fnBotwoon_Instr_QueueSpitSfx: return Botwoon_Instr_QueueSpitSfx(k, j);
-  case fnEscapeEtecoon_Instr_1: return EscapeEtecoon_Instr_1(k, j);
-  case fnEscapeEtecoon_Instr_2: return EscapeEtecoon_Instr_2(k, j);
-  case fnEscapeDachora_Instr_2: return EscapeDachora_Instr_2(k, j);
-  case fnEscapeDachora_Instr_3: return EscapeDachora_Instr_3(k, j);
-  case fnEscapeDachora_Instr_1: return EscapeDachora_Instr_1(k, j);
-  case fnEscapeDachora_Instr_4: return EscapeDachora_Instr_4(k, j);
+  case fnEscapeEtecoon_Instr_1: return EscapeEtecoon_Instr_MoveIfAcid(k, j);
+  case fnEscapeEtecoon_Instr_2: return EscapeEtecoon_Instr_MoveTo(k, j);
+  case fnEscapeDachora_Instr_2: return EscapeDachora_Instr_MoveIfAcid(k, j);
+  case fnEscapeDachora_Instr_3: return EscapeDachora_Instr_MoveIfCrittersEscaped(k, j);
+  case fnEscapeDachora_Instr_1: return EscapeDachora_Instr_MoveLeft(k, j);
+  case fnEscapeDachora_Instr_4: return EscapeDachora_Instr_MoveRight(k, j);
   case fnMotherBrain_Instr_MoveBodyUp10Left4: return MotherBrain_Instr_MoveBodyUp10Left4(k, j);
   case fnMotherBrain_Instr_MoveBodyUp16Left4: return MotherBrain_Instr_MoveBodyUp16Left4(k, j);
   case fnMotherBrain_Instr_MoveBodyUp12Right2: return MotherBrain_Instr_MoveBodyUp12Right2(k, j);
@@ -3098,7 +3098,7 @@ Point32 ConvertAngleToXy(uint16 r18, uint16 r20) {  // 0xA0B643
   return (Point32) { ss, tt };
 }
 
-void EnemyFunc_B691(uint16 varE20, Point32 pt) {  // 0xA0B691
+void MoveEnemyByAngleAndXYSpeed(uint16 varE20, Point32 pt) {  // 0xA0B691
   EnemyData *E = gEnemyData(cur_enemy_index);
   if (((varE20 + 64) & 0x80) != 0)
     AddToHiLo(&E->x_pos, &E->x_subpos, -(int32)pt.x);

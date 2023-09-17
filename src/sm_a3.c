@@ -1055,7 +1055,7 @@ void Roach_Func_28(void) {  // 0xA3A52A
 void Roach_Func_29(uint16 k) {  // 0xA3A578
   Enemy_Roach *E = Get_Roach(k);
   uint16 varE20 = HIBYTE(E->roach_parameter_1);
-  EnemyFunc_B691(varE20, (Point32) { __PAIR32__(E->roach_var_01, E->roach_var_00), __PAIR32__(E->roach_var_03, E->roach_var_02) });
+  MoveEnemyByAngleAndXYSpeed(varE20, (Point32) { __PAIR32__(E->roach_var_01, E->roach_var_00), __PAIR32__(E->roach_var_03, E->roach_var_02) });
 }
 
 void Roach_Func_30(uint16 k) {  // 0xA3A5A3

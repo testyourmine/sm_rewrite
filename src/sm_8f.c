@@ -25,11 +25,11 @@ void RoomSetup_TurnWallIntoShotblocks(void) {  // 0x8F91B2
 void RoomSetup_ShakeDuringEscape(void) {  // 0x8F91BD
   earthquake_type = 6;
   earthquake_timer = -1;
-  FxTypeFunc_20();
+  FxTypeFunc_20_ScrollingSkyLand();
 }
 
 void RoomSetup_ScrollingSkyLand(void) {  // 0x8F91C9
-  FxTypeFunc_20();
+  FxTypeFunc_20_ScrollingSkyLand();
 }
 
 void RoomSetup_ScrollingSkyOcean(void) {  // 0x8F91CE

@@ -157,9 +157,9 @@ CoroutineRet WaitForNMI_Async(void);
 CoroutineRet WaitForNMI_NoUpdate_Async(void);
 void WriteLotsOf0x1c2f(void);
 void memset7E(uint16 *k, uint16 a, uint16 j);
-void sub_8088EB(uint16 a);
-void sub_8088FE(uint16 a);
-void sub_808911(uint16 a);
+void Write0x800BytesToRam3000(uint16 a);
+void Write0x800BytesToRam4000(uint16 a);
+void Write0x800BytesToRam6000(uint16 a);
 
 // Bank 81
 uint16 CheckIfFileSelectMapAreaCanBeSelected(uint16 a);
@@ -198,18 +198,18 @@ void DrawSpritemapWithBaseTile2(uint8 db, uint16 j, uint16 r20_x, uint16 r18_y, 
 void DrawSpritemapWithBaseTileOffscreen(uint8 db, uint16 j, uint16 r20_x, uint16 r18_y, uint16 r3, uint16 r0);
 void FileSelectClearRestOfMenuTilemapRow(uint16 k);
 void FileSelectMap(void);
-void FileSelectMap_0(void);
-void FileSelectMap_1(void);
+void FileSelectMap_0_OptionsToAreaSelectSetupFadeOut(void);
+void FileSelectMap_1_OptionsToAreaSelectFadeOut(void);
 void FileSelectMap_10_RoomSelectMap(void);
-void FileSelectMap_11(void);
-void FileSelectMap_13(void);
-void FileSelectMap_14(void);
-void FileSelectMap_15_ClearTileMap(void);
-void FileSelectMap_16_LoadPalettes(void);
-void FileSelectMap_18(void);
-void FileSelectMap_20_SetupExpandingSquare(void);
-void FileSelectMap_21_MoveExpandingSquare(void);
-void FileSelectMap_22(void);
+void FileSelectMap_11_RoomSelectToGameWaitForFadeOut(void);
+void FileSelectMap_13_RoomSelectToLoadGameFadeOut(void);
+void FileSelectMap_14_RoomSelectToLoadGameWait(void);
+void FileSelectMap_15_RoomSelectToAreaSelectClearTileMap(void);
+void FileSelectMap_16_RoomSelectToAreaSelectLoadPalettes(void);
+void FileSelectMap_18_RoomSelectToAreaSelectLoadBackgroundTilemap(void);
+void FileSelectMap_20_SetupContractingSquare(void);
+void FileSelectMap_21_RoomSelectToAreaSelectMoveExpandingSquare(void);
+void FileSelectMap_22_SelectSlotFromFileClear(void);
 void FileSelectMap_2_LoadAreaSelectForegroundTilemap(void);
 void FileSelectMap_3_LoadAreaSelectBackgroundTilemap(void);
 void FileSelectMap_4_SetupExpandingSquareTransition(void);
@@ -310,10 +310,10 @@ uint16 LoadLibraryBackgroundFunc_A_ClearBG2Tilemap(uint16 j);
 uint16 LoadLibraryBackgroundFunc_C_ClearKraidLayer2(uint16 j);
 uint16 LoadLibraryBackgroundFunc_E_DoorDependentTransferToVram(uint16 j);
 uint16 MapScrolling_GetSpeedIndex(void);
-uint16 OptionsInstr_8C64(uint16 k, uint16 j);
-uint16 OptionsInstr_8C79(uint16 k, uint16 j);
-uint16 OptionsInstr_8C89(uint16 k, uint16 j);
-uint16 OptionsInstr_8C93(uint16 k, uint16 j);
+uint16 OptionsInstr_Sleep(uint16 k, uint16 j);
+uint16 OptionsInstr_ClearPreInstr(uint16 k, uint16 j);
+uint16 OptionsInstr_DecrementTimerAndGoto(uint16 k, uint16 j);
+uint16 OptionsInstr_SetTimer(uint16 k, uint16 j);
 uint16 OptionsInstr_Destroy(uint16 k, uint16 j);
 uint16 OptionsInstr_Goto(uint16 k, uint16 j);
 uint16 OptionsInstr_SetPreInstr(uint16 k, uint16 j);
@@ -336,11 +336,11 @@ CoroutineRet DoorTransitionFunction_HandleElevator(void);
 CoroutineRet DoorTransitionFunction_Wait48frames(void);
 uint8 OptionsMenuFunc8(void);
 uint8 RefillHealthFromReserveTanks(void);
-uint8 sub_82DAF7(uint16 a);
-uint8 sub_82DB0C(uint16 a);
-void BabyMetroidPlaySfx0x23(void);
-void BabyMetroidPlaySfx0x26(void);
-void BabyMetroidPlaySfx0x27(void);
+uint8 AdvancePaletteFadeForAllPalettesInA(uint16 a);
+uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a);
+void BabyMetroidCry1PlaySfx(void);
+void BabyMetroidCry2PlaySfx(void);
+void BabyMetroidCry3PlaySfx(void);
 void BackupBG2TilemapForPauseMenu(void);
 void BackupGameplayPalettesAndLoadForPause(void);
 void BackupSomeGfxStateForPause(void);
@@ -534,28 +534,28 @@ void MapScrolling_3_Up(void);
 void MapScrolling_4_Down(void);
 void MapScrolling_Common(void);
 void NullFunc(void);
-void OptionsMenuControllerFunc_0(void);
-void OptionsMenuControllerFunc_7(void);
-void OptionsMenuControllerFunc_8(void);
-void OptionsMenuFunc1(void);
-void OptionsMenuFunc2(uint16 k);
-void OptionsMenuFunc4(void);
-void OptionsMenuFunc5(uint16 a, uint16 k, uint16 j);
-void OptionsMenuFunc6(void);
-void OptionsMenuFunc7(void);
+void OptionsMenuControllerFunc_SetBinding(void);
+void OptionsMenuControllerFunc_End(void);
+void OptionsMenuControllerFunc_ResetToDefault(void);
+void OptionsMenuFunc1_HandleObject(void);
+void OptionsMenuFunc2_ProcessObject(uint16 k);
+void OptionsMenuFunc4_SetLanguageHighlight(void);
+void OptionsMenuFunc5_SetMenuPalettes(uint16 a, uint16 k, uint16 j);
+void OptionsMenuFunc6_DrawControllerBindings(void);
+void OptionsMenuFunc7_SetSpecialSettingsHighlight(void);
 void OptionsMenu_AddToVramQueue(void);
-void OptionsPreInstr_F2A9(uint16 k);
-void OptionsPreInstr_F376(uint16 k);
-void OptionsPreInstr_F3A0(uint16 k);
-void OptionsPreInstr_F3E2(uint16 k);
-void OptionsPreInstr_F42C(uint16 k);
+void OptionsPreInstr_MenuSelectMissile(uint16 k);
+void OptionsPreInstr_OptionsModeBorder(uint16 k);
+void OptionsPreInstr_ControllerSettingModeBorder(uint16 k);
+void OptionsPreInstr_SpecialSettingModeBorder(uint16 k);
+void OptionsPreInstr_FileSelectHelmet(uint16 k);
 void OptionsPreInstr_nullsub_57(uint16 k);
 void PauseMenu_0_MapScreen(void);
 void PauseMenu_1_EquipmentScreen(void);
-void PauseMenu_2(void);
+void PauseMenu_2_MapToEquipment_FadeOut(void);
 void PauseMenu_3_MapToEquipment_Load(void);
 void PauseMenu_4_MapToEquipment_FadeIn(void);
-void PauseMenu_5(void);
+void PauseMenu_5_EquipmentToMap_FadeOut(void);
 void PauseMenu_6_EquipmentToMap_Load(void);
 void PauseMenu_7_EquipmentToMap_FadeIn(void);
 void PlayRoomMusicTrackAfterAFrames(uint16 a);
@@ -612,23 +612,23 @@ uint16 SetBtsTo0x10AdvanceRowUp(uint16 k);
 uint8 ActivateStationIfSamusCannonLinedUp(uint16 a, uint16 j);
 uint8 SpawnPLM(uint16 a);
 uint8 WakePlmIfSamusIsBelowAndRightOfTarget(uint16 k, uint16 x_r18, uint16 y_r20);
-uint8 sub_84B9F1(uint16 j);
-uint8 sub_84C63F(uint16 j);
-uint8 sub_84C647(uint16 j);
-uint8 sub_84C64C(uint16 j, uint16 a);
-uint8 sub_84EE4D(uint16 j);
-uint8 sub_84EE52(uint16 j);
-uint8 sub_84EE57(uint16 j);
-uint8 sub_84EE5C(uint16 j);
-uint8 sub_84EE5F(uint16 j, uint16 a);
-uint8 sub_84EE64(uint16 j);
-uint8 sub_84EE77(uint16 j);
-uint8 sub_84EE7C(uint16 j);
-uint8 sub_84EE81(uint16 j);
-uint8 sub_84EE86(uint16 j);
-uint8 sub_84EE89(uint16 j, uint16 a);
-uint8 sub_84EE8E(uint16 j);
-uint8 sub_84EEAB(uint16 j);
+uint8 PlmSetup_B9F1_TurnCeresDoorSolid(uint16 j);
+uint8 TriggerPlmOfBlockToTheRight(uint16 j);
+uint8 TriggerPlmOfBlockToTheLeft(uint16 j);
+uint8 TriggerPlmAtBlockIndex(uint16 j, uint16 a);
+uint8 PlmSetup_EnergyTank(uint16 j);
+uint8 PlmSetup_MissileTank(uint16 j);
+uint8 PlmSetup_SuperMissileTank(uint16 j);
+uint8 PlmSetup_PowerBombTank(uint16 j);
+uint8 SetPlmGfxAndSetupAbility(uint16 j, uint16 a);
+uint8 PlmSetup_AbilityTank(uint16 j);
+uint8 PlmSetup_EnergyTankShotBlock(uint16 j);
+uint8 PlmSetup_MissileTankShotBlock(uint16 j);
+uint8 PlmSetup_SuperMissileTankShotBlock(uint16 j);
+uint8 PlmSetup_PowerBombTankShotBlock(uint16 j);
+uint8 SetPlmGfxAndSetupAbilityShotBlock(uint16 j, uint16 a);
+uint8 PlmSetup_AbilityTankShotBlock(uint16 j);
+uint8 PlmSetup_ItemCollisionDetection(uint16 j);
 void CalculatePlmBlockCoords(uint16 k);
 void ClearPLMs(void);
 void ClearSoundsWhenGoingThroughDoor(void);
@@ -660,7 +660,7 @@ void SpawnMotherBrainGlassShatteringShard(uint16 a);
 void SpawnRoomPLM(uint16 k);
 void WriteLevelDataBlockTypeAndBts(uint16 k, uint16 a);
 
-void sub_84D7EF(uint16 k);
+void Create3BlocksVerticalExtension(uint16 k);
 
 // Bank 85
 int DisplayMessageBox_Poll(uint16 a);
@@ -680,18 +680,17 @@ uint16 Math_MultBySinCos(uint16 r38, uint16 a);
 uint16 EprojPreInstrHelper_DBF2_Func2(uint16 k);
 uint16 EprojPreInstrHelper_SpikeShootingPlantSpikes_Func2(uint16 k);
 uint16 EprojPreInstr_NorfairLavaquakeRocks_Inner2(uint16 k);
-uint16 Eproj_FuncE722(uint16 k);
-uint16 Eproj_PhantomFireballs_Func2(uint16 k, uint16 r24);
+uint16 CheckForEprojInDraygonRoom(uint16 k);
+uint16 Eproj_PhantomFireballs_GetRadiusComponent(uint16 k, uint16 r24);
 uint16 RandomDropRoutine(uint16 k);
 const uint8 *sub_86B13E(uint16 k, const uint8 *epjp);
 uint16 sub_86DFA0(uint16 k);
 uint16 sub_86E0B0(uint16 k);
-uint16 sub_86EC18(uint16 k);
+uint16 CheckEprojOffScreen(uint16 k);
 uint8 CheckForBlueRingCollisionWithRoom(uint16 k);
 uint8 CheckForCollisionWithShitroid_DoubleRet(uint16 k);
-uint8 EprojBlockCollisition_Horiz(uint16 k);
-uint8 EprojBlockCollisition_Vertical(uint16 k);
-uint8 EprojColl_873D(void);
+uint8 EprojBlockCollision_Horiz(uint16 k);
+uint8 EprojBlockCollision_Vertical(uint16 k);
 uint8 Eproj_MotherBrainRoomTurretBullets_CheckIfTurretOnScreen(uint16 k);
 uint8 MotherBrainBomb_Bomb_CollDetect_DoubleRet(uint16 k);
 uint8 MoveMotherBrainBomb(uint16 k, uint16 a);
@@ -705,15 +704,15 @@ void EnableEprojs(void);
 
 void EprojRunAll(void);
 void Eproj_AngleToSamus(uint16 j, uint16 r18, uint16 r20);
-void Eproj_BotwonsBodyFunction_Dying(uint16 k);
-void Eproj_BotwonsBodyFunction_Dying2(uint16 k);
+void Eproj_BotwonsBodyFunction_DyingSetDelay(uint16 k);
+void Eproj_BotwonsBodyFunction_DyingWaiting(uint16 k);
 void Eproj_BotwonsBodyFunction_DyingFalling(uint16 k);
 void Eproj_BotwoonsBodyHurtFlashHandling1(uint16 k);
 void Eproj_BotwoonsBodyHurtFlashHandling2(uint16 j);
 void Eproj_BotwoonsBody_Main(uint16 k);
 void Eproj_DeleteIfYposOutside(uint16 k);
-void Eproj_Earthqhake5(uint16 k);
-void Eproj_FuncE73E_MoveXY(uint16 k);
+void BlueRingContactEarthquake(uint16 k);
+void MoveEprojWithAngleAndSpeed(uint16 k);
 void Eproj_LavaThrownByLavaman_MoveX1(uint16 k);
 void Eproj_LavaThrownByLavaman_MoveX2(uint16 k);
 void Eproj_MotherBrainRoomTurretBullets_Func2(uint16 k);
@@ -723,7 +722,7 @@ void Eproj_NamiFuneFireball_After(uint16 k);
 void Eproj_NorfairLavaquakeRocks_Func1(uint16 k);
 void Eproj_NorfairLavaquakeRocks_Func2(uint16 k);
 void Eproj_NorfairLavaquakeRocks_Func3(uint16 k);
-Point16U Eproj_PhantomFireballs_Func1(uint16 j, uint16 a);
+Point16U Eproj_PhantoonFireballs_GetXYRadius(uint16 j, uint16 a);
 void Eproj_Pickup_BigHealth(void);
 void Eproj_Pickup_Missiles(void);
 void Eproj_Pickup_PowerBombs(void);
@@ -786,13 +785,13 @@ uint16 SpawnMotherBrainRainbowBeamHdma(void);
 uint8 AdvanceSuitPickupColorMathSubscreenToWhite(void);
 uint8 AdvanceSuitPickupColorMathToBlue(void);
 uint8 AdvanceSuitPickupColorMathToOrange(void);
-uint8 GravitySuitPickup_3(void);
+uint8 GravitySuitPickup_3_GiveSamusGravitySuit(void);
 uint8 GravitySuitPickup_6(void);
 uint8 RaiseOrLowerFx(void);
 uint8 VariaSuitPickup_0_LightBeamAppears(void);
-uint8 VariaSuitPickup_1(void);
-uint8 VariaSuitPickup_2_LightBeamWidens(void);
-uint8 VariaSuitPickup_3(void);
+uint8 VariaSuitPickup_1_LightBeamWidens_Linear(void);
+uint8 VariaSuitPickup_2_LightBeamWidens_Curved(void);
+uint8 VariaSuitPickup_3_GiveSamusVariaSuit(void);
 uint8 VariaSuitPickup_4_LightBeamShrinks(void);
 uint8 VariaSuitPickup_5_LightBeamDissipates(void);
 uint8 VariaSuitPickup_6(void);
@@ -821,9 +820,9 @@ void FxRisingFunction_LavaAcid_Raising(void);
 void FxRisingFunction_LavaAcid_WaitToRise(void);
 void FxRisingFunction_WaterRising(void);
 void FxRisingFunction_WaterWaitToRise(void);
-void FxTypeFunc_20(void);
+void FxTypeFunc_20_ScrollingSkyLand(void);
 void FxTypeFunc_22_ScrollingSky(void);
-void FxTypeFunc_24(void);
+void FxTypeFunc_24_Fireflea(void);
 void FxTypeFunc_26_TourianEntranceStatue(void);
 void FxTypeFunc_28_CeresRidley(void);
 void FxTypeFunc_2C_Haze(void);
@@ -832,7 +831,7 @@ void FxTypeFunc_4_Acid(void);
 void FxTypeFunc_6_Water(void);
 void FxTypeFunc_8_Spores(void);
 void FxTypeFunc_A_Rain(void);
-void FxTypeFunc_C(void);
+void FxTypeFunc_C_Fog(void);
 void FxTypeFunc_CeresElevator(void);
 void HandleEarthquakeSoundEffect(void);
 void HandleLayerBlendingPowerBomb(uint16 j);
@@ -871,14 +870,14 @@ void SpawnPowerBombExplosion(void);
 void SpawnTitleScreenGradientObjs(void);
 void WaitUntilEndOfVblankAndClearHdma(void);
 
-void sub_8882AC(void);
+void DeleteHdmaObjects(void);
 void sub_88D916(void);
 void sub_88DBCB(uint16 k);
-void sub_88DE18(uint16 k, uint16 a);
-void sub_88DF34(void);
+void SetupHazeColorMathSubscreenHdma(uint16 k, uint16 a);
+void SpawnDraygonMainScreenLayerHdmaObject(void);
 void sub_88DF3D(void);
 void sub_88DF46(void);
-void sub_88E487(uint16 a, uint16 r22);
+void SpawnWavyPhantoonHdmaObject(uint16 a, uint16 r22);
 void sub_88E7ED(void);
 void sub_88E987(uint16 k);
 
@@ -921,7 +920,7 @@ void ClearYColorsFromIndexX(uint16 k, uint16 j);
 void ComposeFadingPalettes(void);
 void ConfigureTitleSequenceGradientHDMA(void);
 void CopyPalettesToFadingPalettes(void);
-void CreditsObject_Func1(uint16 j);
+void CreditsObject_LoadDecompressedTilesToCinematicBgTilemap(uint16 j);
 void CreditsObject_Init(uint16 j);
 void CreditsObject_Process(void);
 void CreditsObject_ProcessOne(void);
@@ -934,7 +933,6 @@ void DrawCinematicSpriteObjects_Intro(void);
 void DrawIntroSprites(void);
 void EnableCinematicBgObjects(void);
 void EnableCinematicBgTilemapUpdates(void);
-void EnableCinematicBgTilemapUpdates_(void);
 uint16 EnableCinematicBgTilemapUpdates__(uint16 k, uint16 j);
 uint16 EnableCinematicBgTilemapUpdates__0(uint16 k, uint16 j);
 void EnableTextGlowObjects_(void);
@@ -986,7 +984,7 @@ void UpdateCinematicBgTilemap(void);
 void UpdateSamusEyesTilemap(void);
 void sub_8B94E1(void);
 void sub_8B9743(void);
-void sub_8B9CCF(uint16 k);
+void CinematicSprPreInstr_1994ScrollingText(uint16 k);
 void sub_8B9CDE(void);
 uint16 sub_8BB51E(uint16 k, uint16 j);
 
@@ -1034,12 +1032,12 @@ uint8 HudSelectionHandler_MorphBall_Helper(void);
 uint8 HudSelectionHandler_MorphBall_Helper2(void);
 uint8 InitProjectilePositionDirection(uint16 r20);
 uint8 SamusBottomDrawn_0_Standing(void);
-uint8 SamusBottomDrawn_1(void);
+uint8 SamusBottomDrawn_1_FlagDrawn(void);
 uint8 SamusBottomDrawn_14_WallJump(void);
 uint8 SamusBottomDrawn_19_DamageBoost(void);
-uint8 SamusBottomDrawn_1B(void);
+uint8 SamusBottomDrawn_1B_Crouching(void);
 uint8 SamusBottomDrawn_3_SpinJump(void);
-uint8 SamusBottomDrawn_4(void);
+uint8 SamusBottomDrawn_4_FlagNotDrawn(void);
 uint8 SamusBottomDrawn_A_Knockback(void);
 uint8 SamusBottomDrawn_F_Transitions(void);
 uint8 SamusCode_00_LockSamus(void);
@@ -1059,23 +1057,23 @@ uint8 SamusCode_0C_UnlockFromMapStation(void);
 uint8 SamusCode_0D_IsGrappleActive(void);
 uint8 SamusCode_0E(void);
 uint8 SamusCode_0F_EnableTimerHandling(void);
-uint8 SamusCode_10(void);
+uint8 SamusCode_10_UnlockSamusFromReserveTank(void);
 uint8 SamusCode_11_15_Common(void);
 uint8 SamusCode_11_SetupForDeath(void);
 uint8 SamusCode_12_SetSuperPaletteFlag0(void);
 uint8 SamusCode_12_SetSuperPaletteFlag1(void);
-uint8 SamusCode_14(void);
+uint8 SamusCode_14_QueueSfx(void);
 uint8 SamusCode_15_CalledBySuitAcquision(void);
-uint8 SamusCode_16(void);
+uint8 SamusCode_16_EnableRainbowSamus(void);
 uint8 SamusCode_17_DisableRainbowSamusAndStandUp(void);
 uint8 SamusCode_17_FreezeDrainedSamus(void);
-uint8 SamusCode_18(void);
+uint8 SamusCode_18_SetupDrainedAndDisableStandUp(void);
 uint8 SamusCode_1A(void);
 uint8 SamusCode_1B_CheckedLockSamus(void);
-uint8 SamusCode_1C(void);
+uint8 SamusCode_1C_PlaySpinSfxIfSpinJumping(void);
 uint8 SamusCode_1D_ClearSoundInDoor(void);
 uint8 SamusCode_1E(void);
-uint8 SamusCode_1F(void);
+uint8 SamusCode_1F_KillGrappleBeam(void);
 uint8 Samus_CanFireBeam(void);
 uint8 Samus_CanFireSuperMissile(void);
 uint8 Samus_CheckAndMoveY(void);
@@ -1092,10 +1090,10 @@ uint8 Samus_HitInterrupt_Unused(void);
 uint8 Samus_MoveY_Simple_(void);
 uint8 Samus_SetupForBeingDrained(void);
 uint8 Samus_WallJumpCheck(int32 amt);
-uint8 SetupBombJump_1(void);
-uint8 SetupBombJump_1A(void);
-uint8 SetupBombJump_2(void);
-uint8 SetupBombJump_4(void);
+uint8 SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple(void);
+uint8 SetupBombJump_GrabbedShinesparkCrystalFlashDrainedMBAttack(void);
+uint8 SetupBombJump_JumpTurnAroundDamageBoostTransition(void);
+uint8 SetupBombJump_MorphedKnockbackCrystalFlash(void);
 uint8 SetupBombJump_StandCrouch(void);
 uint8 SwitchToHudHandler_Grapple(void);
 uint8 SwitchToHudHandler_Missiles(void);
@@ -1113,12 +1111,12 @@ void AtmosphericTypeFunc_5_Bubbles(uint16 k, uint16 j);
 void AtmosphericTypeFunc_67_Dust(uint16 k, uint16 j);
 void AtmosphericTypeFunc_Common(uint16 j, uint16 a);
 void BombSpread(void);
-void Bomb_Func2(void);
+void HandleBomb(void);
 void CheckBeamCollByDir(uint16 k);
-void CheckBeamCollByDir_0459(void);
-void CheckBeamCollByDir_1368(void);
-void CheckBeamCollByDir_2(void);
-void CheckBeamCollByDir_7(void);
+void CheckBeamCollByDir_Vertical(void);
+void CheckBeamCollByDir_Diagonal(void);
+void CheckBeamCollByDir_Right(void);
+void CheckBeamCollByDir_Left(void);
 void ClearFlareAnimationState(void);
 void ClearProjectile(uint16 k);
 void DisableMinimapAndMarkBossRoomAsExplored(void);
@@ -1155,67 +1153,67 @@ void InitializeMiniMapBroken(void);
 void InitializeProjectileSpeed(uint16 k, uint16 r22);
 void InitializeProjectileSpeedOfType(uint16 r20);
 void KillProjectile(uint16 k);
-void KillProjectileFunc_0(uint16 j);
-void KillProjectileFunc_1(uint16 j);
-void KillProjectileFunc_2(uint16 j);
-void KillProjectileFunc_3(uint16 j);
-void KillProjectileFunc_4(uint16 j);
-void KillProjectileFunc_6(uint16 j);
-void KillProjectileFunc_7(uint16 j);
-void KillProjectileFunc_8(uint16 j);
+void KillProjectileFunc_0_Up(uint16 j);
+void KillProjectileFunc_1_UpRight(uint16 j);
+void KillProjectileFunc_2_Right(uint16 j);
+void KillProjectileFunc_3_DownRight(uint16 j);
+void KillProjectileFunc_4_Down(uint16 j);
+void KillProjectileFunc_6_DownLeft(uint16 j);
+void KillProjectileFunc_7_Left(uint16 j);
+void KillProjectileFunc_8_UpLeft(uint16 j);
 void LoadProjectilePalette(uint16 a);
 void MainScrollingRoutine(void);
-void Missile_Func1(uint16 k);
-void Missile_Func2(void);
+void AccelerateMissileOrSuperMissile(uint16 k);
+void SpawnSuperMissileLink(void);
 void MoveSamusWithControlPad(void);
-void PowerBomb_Func3(void);
+void HandlePowerBomb(void);
 void ProjInstr_MoveLeftProjectileTrailDown(uint16 j);
 void ProjInstr_MoveLeftProjectileTrailUp(uint16 j);
 void ProjInstr_MoveRightProjectileTrailDown(uint16 j);
 void ProjPreInstr_BeamOrIceWave(uint16 k);
 void ProjPreInstr_Beam_NoWaveBeam(uint16 k);
 void ProjPreInstr_Bomb(uint16 k);
-void ProjPreInstr_Dir0459(uint16 k);
-void ProjPreInstr_Dir1368(uint16 k);
-void ProjPreInstr_Dir27(uint16 k);
+void ProjPreInstr_BlockCollNoWaveBeamVert(uint16 k);
+void ProjPreInstr_BlockCollNoWaveBeamDiagonal(uint16 k);
+void ProjPreInstr_BlockCollNoWaveBeamHoriz(uint16 k);
 void ProjPreInstr_EndOfSpazerSba(uint16 k);
-void ProjPreInstr_Func1(uint16 k);
+void ProjPreInstr_SuperMissileLink(uint16 k);
 void ProjPreInstr_HyperBeam(uint16 k);
-void ProjPreInstr_IceSba(uint16 k);
-void ProjPreInstr_IceSba2(uint16 k);
+void ProjPreInstr_IceSbaMain(uint16 k);
+void ProjPreInstr_IceSbaEnd(uint16 k);
 void ProjPreInstr_Missile(uint16 k);
-void ProjPreInstr_Missile_Func0459(uint16 k);
-void ProjPreInstr_Missile_Func1368(uint16 k);
-void ProjPreInstr_Missile_Func27(uint16 k);
+void ProjPreInstr_BlockCollMissileVert(uint16 k);
+void ProjPreInstr_BlockCollMissileDiagonal(uint16 k);
+void ProjPreInstr_BlockCollMissileHoriz(uint16 k);
 void ProjPreInstr_PlasmaSba(uint16 k);
-void ProjPreInstr_PlasmaSbaFunc_0(uint16 j);
-void ProjPreInstr_PlasmaSbaFunc_1(uint16 j);
-void ProjPreInstr_PlasmaSbaFunc_2(uint16 j);
+void ProjPreInstr_PlasmaSba_Phase0Expand(uint16 j);
+void ProjPreInstr_PlasmaSba_Phase1Contract(uint16 j);
+void ProjPreInstr_PlasmaSba_Phase2Disperse(uint16 j);
 void ProjPreInstr_PowerBomb(uint16 k);
 void ProjPreInstr_SpazerSba(uint16 k);
-void ProjPreInstr_SpazerSba_FuncA_0(uint16 k);
-void ProjPreInstr_SpazerSba_FuncA_1(uint16 k);
-void ProjPreInstr_SpazerSba_FuncA_2(uint16 k);
-void ProjPreInstr_SpazerSba_FuncA_3(uint16 k);
-void ProjPreInstr_SpazerSba_FuncB_0(uint16 j, uint16 r22);
-void ProjPreInstr_SpazerSba_FuncB_1(uint16 j, uint16 r22);
-void ProjPreInstr_SpazerSba_FuncB_2(uint16 j, uint16 r22);
+void ProjPreInstr_SpazerSba_ClearProjPair0(uint16 k);
+void ProjPreInstr_SpazerSba_ClearProjPair2(uint16 k);
+void ProjPreInstr_SpazerSba_ClearProjPair4(uint16 k);
+void ProjPreInstr_SpazerSba_ClearProjPair6(uint16 k);
+void ProjPreInstr_SpazerSba_Phase0Circle(uint16 j, uint16 r22);
+void ProjPreInstr_SpazerSba_Phase2FlyToPoint(uint16 j, uint16 r22);
+void ProjPreInstr_SpazerSba_Phase4FlyFromPoint(uint16 j, uint16 r22);
 void ProjPreInstr_SpeedEcho(uint16 k);
 void ProjPreInstr_SpreadBomb(uint16 k);
 void ProjPreInstr_SuperMissile(uint16 k);
-void ProjPreInstr_SuperMissile_Func0459(uint16 k);
-void ProjPreInstr_SuperMissile_Func1368(uint16 k);
-void ProjPreInstr_SuperMissile_Func27(uint16 k);
+void ProjPreInstr_BlockCollSuperMissileVert(uint16 k);
+void ProjPreInstr_BlockCollSuperMissileDiagonal(uint16 k);
+void ProjPreInstr_BlockCollSuperMissileHoriz(uint16 k);
 void ProjPreInstr_UnknownProj8027(uint16 k);
-void ProjPreInstr_WavePlasmaEtc(uint16 k);
-void ProjPreInstr_WavePlasmaEtc_0459(uint16 k);
-void ProjPreInstr_WavePlasmaEtc_1368(uint16 k);
-void ProjPreInstr_WavePlasmaEtc_27(uint16 k);
+void ProjPreInstr_WaveCombined(uint16 k);
+void ProjPreInstr_BlockCollWaveBeamVert(uint16 k);
+void ProjPreInstr_BlockCollWaveBeamDiagonal(uint16 k);
+void ProjPreInstr_BlockCollWaveBeamHoriz(uint16 k);
 void ProjPreInstr_WaveSba(uint16 k);
 void ProjPreInstr_Wave_Shared(uint16 k);
 void ProjectileReflection(uint16 r20);
 void Projectile_Func4(uint16 k);
-void Projectile_Func7_Shinespark(void);
+void TriggerShinesparkWindup(void);
 Point16U Projectile_SinLookup(uint16 j, uint16 a);
 void ResetProjectileData(void);
 void RunFrameHandlerGamma(void);
@@ -1226,9 +1224,9 @@ void SamusDisplayHandler_UsingElevator(void);
 void SamusDrawHandler_Default(void);
 void SamusDrawSprites(void);
 void SamusMoveHandler_CrystalFlashMain(void);
-void SamusMoveHandler_CrystalFlashMain_0(void);
-void SamusMoveHandler_CrystalFlashMain_1(void);
-void SamusMoveHandler_CrystalFlashMain_2(void);
+void SamusMoveHandler_CrystalFlashMain_0_DecMissiles(void);
+void SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles(void);
+void SamusMoveHandler_CrystalFlashMain_2_DecPowerBombs(void);
 void SamusMoveHandler_CrystalFlashStart(void);
 void SamusMovementType_Xray(void);
 void Samus_AlignBottomWithPrevPose(void);
@@ -1249,7 +1247,6 @@ int32 Samus_CalcDisplacementMoveRight(int32 amt);
 void Samus_CalcDistanceMoved_X(void);
 void Samus_CalcDistanceMoved_Y(void);
 uint32 Samus_CalcSpeed_X(uint32 amt);
-void Samus_CalcSpritemapPos_Default_(void);
 void Samus_CallInputHandler(void);
 void Samus_CheckStartFalling(void);
 void Samus_ClearMoveVars(void);
@@ -1267,7 +1264,7 @@ void Samus_DrawStartingDeathAnim(void);
 void Samus_DrawWhenNotAnimatingOrDying(void);
 void Samus_FallingMovement(void);
 void Samus_FootstepGraphics(void);
-void Samus_FootstepGraphics_1(void);
+void Samus_FootstepGraphics_Common(void);
 void Samus_FootstepGraphics_Crateria(void);
 void Samus_FootstepGraphics_Maridia(void);
 void Samus_FrameHandlerAlfa_Func11(void);
@@ -1421,8 +1418,8 @@ void WaveBeam_CheckColl_7(void);
 void WriteBeamPalette_A(uint16 a);
 void WriteBeamPalette_Y(uint16 j);
 void kSamusMoveHandler_CrystalFlashFinish(void);
-void sub_90EB55(void);
-void sub_90EB86(void);
+void DrawSamus_NoChargeOrGrapple(void);
+void SamusDrawHandler_NoChargeOrGrapple(void);
 
 // Bank 91
 uint16 DemoInstr_ClearPreInstr(uint16 k, uint16 j);
@@ -1728,7 +1725,7 @@ void HandleConnectingGrapple_StuckInPlace(void);
 void HandleConnectingGrapple_Swinging(void);
 void HandleGrappleBeamFlare(void);
 void HandleSamusDeathSequence_Helper2(void);
-void ProjectileTrail_Func5(uint16 k, uint16 j);
+void SetProjectileTrailPosition(uint16 k, uint16 j);
 void PropelSamusFromGrappleSwing(void);
 void QueueTransferOfSamusDeathSequence(uint16 j);
 void StartSamusDeathAnimation(void);
@@ -1811,7 +1808,7 @@ void EnemyBombCollHandler_Multibox(void);
 void EnemyCollisionHandler(void);
 void EnemyDeathAnimation(uint16 k, uint16 a);
 void EnemyFunc_A6B4_UsedBySporeSpawn(void);
-void EnemyFunc_B691(uint16 varE20, Point32 pt);
+void MoveEnemyByAngleAndXYSpeed(uint16 varE20, Point32 pt);
 uint32 EnemyFunc_Divide(uint32 a, uint32 b);
 void EnemyFunc_B7A1(void);
 void EnemyGrappleDeath(void);
@@ -3037,11 +3034,11 @@ const uint16 *EnemyInstr_Call_A7(uint16 k, const uint16 *jp);
 uint16 Kraid_CheckIfDead(void);
 uint16 Kraid_ExecuteInstr(void);
 const uint16 *Kraid_Instr_1(uint16 k, const uint16 *jp);
-const uint16 *Kraid_Instr_9(uint16 k, const uint16 *jp);
+const uint16 *Kraid_Instr_SlowArmIfLessThanHalfHealth(uint16 k, const uint16 *jp);
 const uint16 *Kraid_Instr_DecYpos(uint16 k, const uint16 *jp);
 const uint16 *Kraid_Instr_IncrYpos_Shake(uint16 k, const uint16 *jp);
 const uint16 *Kraid_Instr_MoveHimRight(uint16 k, const uint16 *jp);
-const uint16 *Kraid_Instr_PlaySound_0x76(uint16 k, const uint16 *jp);
+const uint16 *Kraid_Instr_PlayEarthQuakeSfx(uint16 k, const uint16 *jp);
 const uint16 *Kraid_Instr_XposMinus3(uint16 k, const uint16 *jp);
 const uint16 *Kraid_Instr_XposMinus3b(uint16 k, const uint16 *jp);
 const uint16 *Kraid_Instr_XposPlus3(uint16 k, const uint16 *jp);
@@ -3050,7 +3047,7 @@ uint16 Phantoon_CalculateNthTransitionColorComponentFromXtoY(uint16 a, uint16 k,
 uint16 Phantoon_Func_10_CalculateNthTransitionColorFromXtoY(uint16 a, uint16 k, uint16 j);
 uint8 Etecoon_Func_2(uint16 k);
 uint8 Etecoon_Func_3(uint16 k);
-uint8 Phantoon_Func_3(int32 amt);
+uint8 Phantoon_Func_ChangeWaveAmplitude(int32 amt);
 uint8 Phantoon_Func_8(void);
 uint8 Phantoon_Func_9(void);
 uint8 Phantoon_SetColorBasedOnHp(void);
@@ -4206,59 +4203,59 @@ void sub_B2F554(void);
 void sub_B2F5B3(void);
 
 // Bank B3
-const uint16 *Botwoon_Instr_1(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_10(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_2(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_3(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_4(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_5(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_6(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_7(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_8(uint16 k, const uint16 *jp);
-const uint16 *Botwoon_Instr_9(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimUpRadius8x16Unused(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimUpRadius8x16(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimUpLeftRadius12x12(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimLeftRadius16x8(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimDownLeftRadius12x12(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimDownRadius8x16Unused(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimDownRadius8x16(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimDownRightRadius12x12(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimRightRadius16x8(uint16 k, const uint16 *jp);
+const uint16 *Botwoon_Instr_AimUprightRadius12x12(uint16 k, const uint16 *jp);
 const uint16 *Botwoon_Instr_QueueSpitSfx(uint16 k, const uint16 *jp);
 const uint16 *Botwoon_Instr_SetSpitting(uint16 k, const uint16 *jp);
 const uint16 *Enemy_ClearAiPreInstr_B3(uint16 k, const uint16 *jp);
 const uint16 *Enemy_SetAiPreInstr_B3(uint16 k, const uint16 *jp);
-const uint16 *EscapeDachora_Instr_1(uint16 k, const uint16 *jp);
-const uint16 *EscapeDachora_Instr_2(uint16 k, const uint16 *jp);
-const uint16 *EscapeDachora_Instr_3(uint16 k, const uint16 *jp);
-const uint16 *EscapeDachora_Instr_4(uint16 k, const uint16 *jp);
-const uint16 *EscapeEtecoon_Instr_1(uint16 k, const uint16 *jp);
-const uint16 *EscapeEtecoon_Instr_2(uint16 k, const uint16 *jp);
+const uint16 *EscapeDachora_Instr_MoveLeft(uint16 k, const uint16 *jp);
+const uint16 *EscapeDachora_Instr_MoveIfAcid(uint16 k, const uint16 *jp);
+const uint16 *EscapeDachora_Instr_MoveIfCrittersEscaped(uint16 k, const uint16 *jp);
+const uint16 *EscapeDachora_Instr_MoveRight(uint16 k, const uint16 *jp);
+const uint16 *EscapeEtecoon_Instr_MoveIfAcid(uint16 k, const uint16 *jp);
+const uint16 *EscapeEtecoon_Instr_MoveTo(uint16 k, const uint16 *jp);
 void Botwoon_Func_1(uint16 k);
-void Botwoon_Func_10(uint16 k);
-void Botwoon_Func_11(uint16 k);
-void Botwoon_Func_12(void);
-void Botwoon_Func_13(void);
-void Botwoon_Func_14(void);
-void Botwoon_Func_15(void);
-void Botwoon_Func_16(void);
-void Botwoon_Func_17(uint16 k);
-void Botwoon_Func_18(uint16 k);
-void Botwoon_Func_19(void);
+void Botwoon_Func_ChooseMovementPath(uint16 k);
+void Botwoon_Func_SetSpeed(uint16 k);
+void Botwoon_Func_MoveAround(void);
+void Botwoon_Func_Spit(void);
+void Botwoon_Func_PreDeathDelay(void);
+void Botwoon_Func_FallToGround(void);
+void Botwoon_Func_WaitForBodyToFall(void);
+void Botwoon_Func_SpawnCrumbleWall(uint16 k);
+void Botwoon_Func_CrumbleWall(uint16 k);
+void Botwoon_Func_MoveToTargetHole(void);
 void Botwoon_Func_2(void);
-Point16U Botwoon_Func_20(uint16 k);
-void Botwoon_Func_21(void);
-void Botwoon_Func_22(void);
-void Botwoon_Func_23(void);
-void Botwoon_Func_24(void);
-void Botwoon_Func_25(void);
-void Botwoon_Func_26(uint16 k);
-void Botwoon_Func_27(uint16 k);
-void Botwoon_Func_28(uint16 k);
-void Botwoon_Func_29(uint16 k);
-void Botwoon_Func_3(void);
-void Botwoon_Func_30(uint16 k);
-void Botwoon_Func_31(uint16 k);
-void Botwoon_Func_32(void);
-void Botwoon_Func_33(void);
-void Botwoon_Func_4(void);
+Point16U Botwoon_Func_GetOffsetToHole(uint16 k);
+void Botwoon_Func_MoveToTargeHoleByAngleAndSpeed(void);
+void Botwoon_Func_UpdatePositionHistory(void);
+void Botwoon_Func_UpdateBodyPositions(void);
+void Botwoon_Func_UpdatePositionHistoryIndex(void);
+void Botwoon_Func_SetBodyTableIndexes(void);
+void Botwoon_Func_MoveHeadAround(uint16 k);
+void Botwoon_Func_SetSpitAngle(uint16 k);
+void Botwoon_Func_SpawnFiveSpitProjectiles(uint16 k);
+void Botwoon_Func_SpawnThreeSpitProjectiles(uint16 k);
+void Botwoon_Func_CheckDeath(void);
+void Botwoon_Func_CooldownSpit(uint16 k);
+void Botwoon_Func_CollisionDetection(uint16 k);
+void Botwoon_Func_StartMovementUsingData(void);
+void Botwoon_Func_MoveUsingData(void);
+void Botwoon_Func_SetIntangible(void);
 void Botwoon_Func_5(void);
-void Botwoon_Func_6(void);
-void Botwoon_Func_7(void);
-void Botwoon_Func_8(void);
-void Botwoon_Func_9(void);
+void Botwoon_Func_Initialize(void);
+void Botwoon_Func_GoInHole(void);
+void Botwoon_Func_SetUpMovement(void);
+void Botwoon_Func_SetUpSpit(void);
 void Botwoon_HealthBasedPalHandling(void);
 void Botwoon_Init(void);
 void Botwoon_Main(void);
@@ -4266,7 +4263,7 @@ void Botwoon_Powerbomb(void);
 void Botwoon_QueueExplosionSfx(void);
 void Botwoon_Shot(void);
 void Botwoon_Touch(void);
-void BrinstarPipeBug_Func_1(void);
+void BrinstarPipeBug_Func_SetInstrList(void);
 void BrinstarPipeBug_Init(void);
 void BrinstarPipeBug_Main(void);
 void BrinstarPipeBug_PreInstr_1(uint16 k);
@@ -4342,12 +4339,12 @@ void VerifySRAM(void);
 #define fnnullsub_8 0x828B0D
 #define fnOptionsPreInstr_nullsub_57 0x828C10
 #define fnOptionsInstr_Destroy 0x828C5A
-#define fnOptionsInstr_8C64 0x828C64
+#define fnOptionsInstr_Sleep 0x828C64
 #define fnOptionsInstr_SetPreInstr 0x828C6E
-#define fnOptionsInstr_8C79 0x828C79
+#define fnOptionsInstr_ClearPreInstr 0x828C79
 #define fnOptionsInstr_Goto 0x828C82
-#define fnOptionsInstr_8C89 0x828C89
-#define fnOptionsInstr_8C93 0x828C93
+#define fnOptionsInstr_DecrementTimerAndGoto 0x828C89
+#define fnOptionsInstr_SetTimer 0x828C93
 #define fnBabyMetroidPlaySfx0x23 0x82BC0C
 #define fnBabyMetroidPlaySfx0x26 0x82BC15
 #define fnBabyMetroidPlaySfx0x27 0x82BC1E
@@ -4367,16 +4364,16 @@ void VerifySRAM(void);
 #define fnDoorTransition_HandleTransition 0x82E6A2
 #define fnDoorTransition_FadeInScreenAndFinish 0x82E737
 #define fnsub_82F296 0x82F296
-#define fnOptionsPreInstr_F2A9 0x82F2A9
+#define fnOptionsPreInstr_MenuSelectMissile 0x82F2A9
 #define fnsub_82F34B 0x82F34B
 #define fnsub_82F353 0x82F353
 #define fnsub_82F35B 0x82F35B
 #define fnsub_82F363 0x82F363
-#define fnOptionsPreInstr_F376 0x82F376
-#define fnOptionsPreInstr_F3A0 0x82F3A0
-#define fnOptionsPreInstr_F3E2 0x82F3E2
+#define fnOptionsPreInstr_OptionsModeBorder 0x82F376
+#define fnOptionsPreInstr_ControllerSettingModeBorder 0x82F3A0
+#define fnOptionsPreInstr_SpecialSettingModeBorder 0x82F3E2
 #define fnsub_82F419 0x82F419
-#define fnOptionsPreInstr_F42C 0x82F42C
+#define fnOptionsPreInstr_FileSelectHelmet 0x82F42C
 #define fnPlmPreInstr_nullsub_60 0x848469
 #define fnPlmPreInstr_Empty2 0x8484E6
 #define fnPlmPreInstr_Empty3 0x84853D
@@ -4510,7 +4507,7 @@ void VerifySRAM(void);
 #define fnPlmSetup_B9C1_CrittersEscapeBlock 0x84B978
 #define fnPlmInstr_SetCrittersEscapedEvent 0x84B9B9
 #define fnPlmSetup_B9ED_CrittersEscapeBlock 0x84B9C5
-#define fnsub_84B9F1 0x84B9F1
+#define fnPlmSetup_B9F1_TurnCeresDoorSolid 0x84B9F1
 #define fnPlmInstr_JumpIfSamusHasNoBombs 0x84BA6F
 #define fnnullsub_84BAFA 0x84BAFA
 #define fnPlmSetup_BB30_CrateriaMainstreetEscape 0x84BB09
@@ -4644,17 +4641,17 @@ void VerifySRAM(void);
 #define fnPlmInstr_DrawItemFrame_Common 0x84E07F
 #define fnPlmInstr_ClearChargeBeamCounter 0x84E29D
 #define fnPlmInstr_E63B 0x84E63B
-#define fnsub_84EE4D 0x84EE4D
-#define fnsub_84EE52 0x84EE52
-#define fnsub_84EE57 0x84EE57
-#define fnsub_84EE5C 0x84EE5C
-#define fnsub_84EE64 0x84EE64
-#define fnsub_84EE77 0x84EE77
-#define fnsub_84EE7C 0x84EE7C
-#define fnsub_84EE81 0x84EE81
-#define fnsub_84EE86 0x84EE86
-#define fnsub_84EE8E 0x84EE8E
-#define fnsub_84EEAB 0x84EEAB
+#define fnPlmSetup_EnergyTank 0x84EE4D
+#define fnPlmSetup_MissileTank 0x84EE52
+#define fnPlmSetup_SuperMissileTank 0x84EE57
+#define fnPlmSetup_PowerBombTank 0x84EE5C
+#define fnPlmSetup_AbilityTank 0x84EE64
+#define fnPlmSetup_EnergyTankShotBlock 0x84EE77
+#define fnPlmSetup_MissileTankShotBlock 0x84EE7C
+#define fnPlmSetup_SuperMissileTankShotBlock 0x84EE81
+#define fnPlmSetup_PowerBombTankShotBlock 0x84EE86
+#define fnPlmSetup_AbilityTankShotBlock 0x84EE8E
+#define fnPlmSetup_ItemCollisionDetection 0x84EEAB
 #define fnWriteLargeMessageBoxTilemap 0x85825A
 #define fnWriteSmallMessageBoxTilemap 0x858289
 #define fnDrawShootButtonAndSetupPpuForLargeMessageBox 0x8583C5
@@ -4724,7 +4721,7 @@ void VerifySRAM(void);
 #define fnEprojPreInstr_DraygonsGunk_8E0F 0x868E0F
 #define fnEprojInit_CrocomireProjectile 0x869023
 #define fnEprojPreInstr_CrocomireProjectile 0x86906B
-#define fnsub_8690B3 0x8690B3
+#define fnMoveEprojHorizAndOrVert 0x8690B3
 #define fnEprojInit_CrocomireSpikeWallPieces 0x8690CF
 #define fnEprojPreInstr_CrocomireSpikeWallPieces 0x869115
 #define fnEprojInstr_9270 0x869270
@@ -5001,8 +4998,8 @@ void VerifySRAM(void);
 #define fnEprojInit_BotwoonsBody 0x86EA31
 #define fnEprojPreInstr_BotwoonsBody 0x86EA80
 #define fnEproj_BotwoonsBody_Main 0x86EA98
-#define fnEproj_BotwonsBodyFunction_Dying 0x86EAF4
-#define fnEproj_BotwonsBodyFunction_Dying2 0x86EB04
+#define fnEproj_BotwonsBodyFunction_DyingSetDelay 0x86EAF4
+#define fnEproj_BotwonsBodyFunction_DyingWaiting 0x86EB04
 #define fnEproj_BotwonsBodyFunction_DyingFalling 0x86EB1F
 #define fnnullsub_101 0x86EB93
 #define fnEprojInit_BotwoonsSpit 0x86EBC6
@@ -5677,33 +5674,33 @@ void VerifySRAM(void);
 #define fnSamus_MovementHandler_Normal 0x90A337
 #define fnnullsub_13 0x90A671
 #define fnProjPreInstr_Beam_NoWaveBeam 0x90AEF3
-#define fnProjPreInstr_Dir0459 0x90AF4A
-#define fnProjPreInstr_Dir1368 0x90AF52
-#define fnProjPreInstr_Dir27 0x90AF60
+#define fnProjPreInstr_BlockCollNoWaveBeamVert 0x90AF4A
+#define fnProjPreInstr_BlockCollNoWaveBeamDiagonal 0x90AF52
+#define fnProjPreInstr_BlockCollNoWaveBeamHoriz 0x90AF60
 #define fnProjPreInstr_Missile 0x90AF68
-#define fnProjPreInstr_Missile_Func0459 0x90AFC7
-#define fnProjPreInstr_Missile_Func1368 0x90AFCF
-#define fnProjPreInstr_Missile_Func27 0x90AFDD
+#define fnProjPreInstr_BlockCollMissileVert 0x90AFC7
+#define fnProjPreInstr_BlockCollMissileDiagonal 0x90AFCF
+#define fnProjPreInstr_BlockCollMissileHoriz 0x90AFDD
 #define fnProjPreInstr_SuperMissile 0x90AFE5
-#define fnProjPreInstr_SuperMissile_Func0459 0x90B047
-#define fnProjPreInstr_SuperMissile_Func1368 0x90B052
-#define fnProjPreInstr_SuperMissile_Func27 0x90B06A
-#define fnProjPreInstr_Func1 0x90B075
+#define fnProjPreInstr_BlockCollSuperMissileVert 0x90B047
+#define fnProjPreInstr_BlockCollSuperMissileDiagonal 0x90B052
+#define fnProjPreInstr_BlockCollSuperMissileHoriz 0x90B06A
+#define fnProjPreInstr_SuperMissileLink 0x90B075
 #define fnProjPreInstr_Bomb 0x90B099
 #define fnProjPreInstr_PowerBomb 0x90B0AE
-#define fnProjPreInstr_WavePlasmaEtc 0x90B0C3
+#define fnProjPreInstr_WaveCombined 0x90B0C3
 #define fnProjPreInstr_BeamOrIceWave 0x90B0E4
 #define fnProjPreInstr_Wave_Shared 0x90B103
-#define fnProjPreInstr_WavePlasmaEtc_0459 0x90B13B
-#define fnProjPreInstr_WavePlasmaEtc_1368 0x90B143
-#define fnProjPreInstr_WavePlasmaEtc_27 0x90B151
+#define fnProjPreInstr_BlockCollWaveBeamVert 0x90B13B
+#define fnProjPreInstr_BlockCollWaveBeamDiagonal 0x90B143
+#define fnProjPreInstr_BlockCollWaveBeamHoriz 0x90B151
 #define fnProjPreInstr_HyperBeam 0x90B159
 #define fnProjPreInstr_Empty 0x90B169
 #define fnProjInstr_MoveLeftProjectileTrailDown 0x90B525
 #define fnProjInstr_MoveRightProjectileTrailDown 0x90B587
 #define fnProjInstr_MoveLeftProjectileTrailUp 0x90B5B3
-#define fnProjPreInstr_IceSba 0x90CF09
-#define fnProjPreInstr_IceSba2 0x90CF7A
+#define fnProjPreInstr_IceSbaMain 0x90CF09
+#define fnProjPreInstr_IceSbaEnd 0x90CF7A
 #define fnSamus_MoveHandlerShinesparkWindup 0x90D068
 #define fnSamus_MoveHandlerVerticalShinespark 0x90D0AB
 #define fnSamus_MoveHandler_Shinespark_Diag 0x90D0D7
@@ -5719,9 +5716,9 @@ void VerifySRAM(void);
 #define fnSamusMoveHandler_CrystalFlashMain 0x90D6CE
 #define fnkSamusMoveHandler_CrystalFlashFinish 0x90D75B
 #define fnProjPreInstr_PlasmaSba 0x90D793
-#define fnProjPreInstr_PlasmaSbaFunc_0 0x90D7E1
-#define fnProjPreInstr_PlasmaSbaFunc_1 0x90D7FA
-#define fnProjPreInstr_PlasmaSbaFunc_2 0x90D813
+#define fnProjPreInstr_PlasmaSba_Phase0Expand 0x90D7E1
+#define fnProjPreInstr_PlasmaSba_Phase1Contract 0x90D7FA
+#define fnProjPreInstr_PlasmaSba_Phase2Disperse 0x90D813
 #define fnProjPreInstr_SpreadBomb 0x90D8F7
 #define fnProjPreInstr_WaveSba 0x90DA08
 #define fnProjPreInstr_SpazerSba 0x90DB06
@@ -5773,7 +5770,7 @@ void VerifySRAM(void);
 #define fnHandleAutoJumpHack 0x90E926
 #define fnSamusMovementType_Xray 0x90E94F
 #define fnSamusDrawHandler_Default 0x90EB52
-#define fnsub_90EB86 0x90EB86
+#define fnSamusDrawHandler_NoChargeOrGrapple 0x90EB86
 #define fnnullsub_156 0x90EBF2
 #define fnSamus_DrawHandler_EndOfShinespark 0x90EBF3
 #define fnSamusDisplayHandler_UsingElevator 0x90EC14
@@ -7760,25 +7757,25 @@ void VerifySRAM(void);
 #define fnBotwoon_Func_1 0xB3967B
 #define fnBotwoon_Func_2 0xB39696
 #define fnBotwoon_Func_3 0xB396C6
-#define fnBotwoon_Func_6 0xB39878
-#define fnBotwoon_Func_7 0xB3989D
-#define fnBotwoon_Func_12 0xB399A4
-#define fnBotwoon_Func_13 0xB399E4
-#define fnBotwoon_Func_14 0xB39A46
-#define fnBotwoon_Func_15 0xB39A5E
-#define fnBotwoon_Func_16 0xB39ACA
-#define fnBotwoon_Func_18 0xB39AF9
-#define fnBotwoon_Func_19 0xB39BB7
-#define fnBotwoon_Func_26 0xB39DC0
-#define fnBotwoon_Func_27 0xB39E7D
-#define fnBotwoon_Func_28 0xB39EE0
-#define fnBotwoon_Func_29 0xB39F34
-#define fnBotwoon_Func_30 0xB39F7A
+#define fnBotwoon_Func_Initialize 0xB39878
+#define fnBotwoon_Func_GoInHole 0xB3989D
+#define fnBotwoon_Func_MoveAround 0xB399A4
+#define fnBotwoon_Func_Spit 0xB399E4
+#define fnBotwoon_Func_PreDeathDelay 0xB39A46
+#define fnBotwoon_Func_FallToGround 0xB39A5E
+#define fnBotwoon_Func_WaitForBodyToFall 0xB39ACA
+#define fnBotwoon_Func_CrumbleWall 0xB39AF9
+#define fnBotwoon_Func_MoveToTargetHole 0xB39BB7
+#define fnBotwoon_Func_MoveHeadAround 0xB39DC0
+#define fnBotwoon_Func_SetSpitAngle 0xB39E7D
+#define fnBotwoon_Func_SpawnFiveSpitProjectiles 0xB39EE0
+#define fnBotwoon_Func_SpawnThreeSpitProjectiles 0xB39F34
+#define fnBotwoon_Func_CooldownSpit 0xB39F7A
 #define fnBotwoon_Touch 0xB39FFF
 #define fnBotwoon_Shot 0xB3A016
 #define fnBotwoon_Powerbomb 0xB3A041
-#define fnBotwoon_Func_32 0xB3E250
-#define fnBotwoon_Func_33 0xB3E28C
+#define fnBotwoon_Func_StartMovementUsingData 0xB3E250
+#define fnBotwoon_Func_MoveUsingData 0xB3E28C
 #define fnEscapeEtecoon_Instr_1 0xB3E545
 #define fnEscapeEtecoon_Instr_2 0xB3E610
 #define fnEscapeEtecoon_Main 0xB3E655

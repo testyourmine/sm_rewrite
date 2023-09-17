@@ -155,7 +155,7 @@ const uint16 *Torizo_Instr_38(uint16 k, const uint16 *jp) {  // 0xAAB24D
 }
 
 const uint16 *Torizo_Instr_6(uint16 k, const uint16 *jp) {  // 0xAAB271
-  sub_82DAF7(0x600);
+  AdvancePaletteFadeForAllPalettesInA(0x600);
   return jp;
 }
 
@@ -520,7 +520,7 @@ void Torizo_Main(void) {  // 0xAAC6A4
 
 void Torizo_Func_2(uint16 k) {  // 0xAAC6AC
   Torizo_C643(k);
-  if (!(sub_82DAF7(0x600) & 1))
+  if (!(AdvancePaletteFadeForAllPalettesInA(0x600) & 1))
     Get_Torizo(k)->toriz_var_E = FUNC16(nullsub_270);
 }
 

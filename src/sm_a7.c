@@ -154,7 +154,7 @@ void Enemy_NormalFrozenAI_A7(void) {  // 0xA78041
   NormalEnemyFrozenAI();
 }
 
-const uint16 *Kraid_Instr_9(uint16 k, const uint16 *jp) {  // 0xA78A8F
+const uint16 *Kraid_Instr_SlowArmIfLessThanHalfHealth(uint16 k, const uint16 *jp) {  // 0xA78A8F
   Enemy_Kraid *E = Get_Kraid(0);
   if ((int16)(E->base.health - E->kraid_healths_8ths[3]) < 0) {
     Enemy_Kraid *E1 = Get_Kraid(0x40);
@@ -890,7 +890,7 @@ const uint16 *Kraid_Instr_IncrYpos_Shake(uint16 k, const uint16 *jp) {  // 0xA7B
   return jp;
 }
 
-const uint16 *Kraid_Instr_PlaySound_0x76(uint16 k, const uint16 *jp) {  // 0xA7B64E
+const uint16 *Kraid_Instr_PlayEarthQuakeSfx(uint16 k, const uint16 *jp) {  // 0xA7B64E
   QueueSfx2_Max6(0x76);
   return jp;
 }
@@ -2179,7 +2179,7 @@ void Phantoon_Func_2(uint16 k) {  // 0xA7CF0C
     *(uint16 *)((uint8 *)&g_stru_A7902D[0].ypos + 1) = *(uint16 *)((uint8 *)&g_stru_A7902D[0].ypos + 1) == 0;
 }
 
-uint8 Phantoon_Func_3(int32 amt) {  // 0xA7CF27
+uint8 Phantoon_Func_ChangeWaveAmplitude(int32 amt) {  // 0xA7CF27
   Enemy_Phantoon *E = Get_Phantoon(0xC0);
   uint16 r18 = amt, r20 = amt >> 16;
   if (E->phant_var_E) {
@@ -2561,7 +2561,7 @@ void Phantoon_SpawnFireballsBeforeFight(uint16 k) {  // 0xA7D508
     Enemy_Phantoon *E3 = Get_Phantoon(0xC0);
     E3->phant_parameter_1 = -32767;
     EK->phant_var_E = 120;
-    sub_88E487(2, g_word_A7CDA3);
+    SpawnWavyPhantoonHdmaObject(2, g_word_A7CDA3);
     E3->phant_var_D = g_word_A7CD9D;
     Get_Phantoon(0x40)->phant_var_F = 0;
     QueueMusic_Delayed8(5);
@@ -2570,7 +2570,7 @@ void Phantoon_SpawnFireballsBeforeFight(uint16 k) {  // 0xA7D508
 
 void Phantoon_WavyFadeIn(uint16 k) {  // 0xA7D54A
   Phantoon_FadeIn(0xC);
-  if (Phantoon_Func_3(__PAIR32__(g_word_A7CD9D, g_word_A7CD9B))) {
+  if (Phantoon_Func_ChangeWaveAmplitude(__PAIR32__(g_word_A7CD9D, g_word_A7CD9B))) {
     Enemy_Phantoon *E = Get_Phantoon(k);
     E->phant_var_F = FUNC16(Phantoon_PickPatternForRound1);
     Get_Phantoon(0xC0)->phant_parameter_1 = 1;
@@ -2955,7 +2955,7 @@ void Phantoon_DyingPhantoonExplosions(uint16 k) {  // 0xA7D98B
 void Phantoon_WavyDyingPhantoonAndCry(uint16 k) {  // 0xA7DA51
   Enemy_Phantoon *Phantoon; // r10
 
-  sub_88E487(1, g_word_A7CDA3);
+  SpawnWavyPhantoonHdmaObject(1, g_word_A7CDA3);
   Get_Phantoon(0xC0)->phant_var_D = 0;
   Get_Phantoon(k)->phant_var_F = FUNC16(Phantoon_DyingFadeOut);
   Phantoon = Get_Phantoon(0x40);
@@ -2968,7 +2968,7 @@ void Phantoon_WavyDyingPhantoonAndCry(uint16 k) {  // 0xA7DA51
 }
 
 void Phantoon_DyingFadeOut(uint16 k) {  // 0xA7DA86
-  Phantoon_Func_3(__PAIR32__(g_word_A7CDA1, g_word_A7CD9F));
+  Phantoon_Func_ChangeWaveAmplitude(__PAIR32__(g_word_A7CDA1, g_word_A7CD9F));
   Enemy_Phantoon *E = Get_Phantoon(0x40);
   if (E->phant_var_C == 0xFFFF) {
     Phantoon_FadeOut(0xC);

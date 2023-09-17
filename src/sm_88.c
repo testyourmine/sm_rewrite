@@ -334,10 +334,10 @@ void WaitUntilEndOfVblankAndClearHdma(void) {  // 0x88829E
 // but we run the frames instantly so no need.
   WriteReg(MDMAEN, 0);
   WriteReg(HDMAEN, 0);
-  sub_8882AC();
+  DeleteHdmaObjects();
 }
 
-void sub_8882AC(void) {  // 0x8882AC
+void DeleteHdmaObjects(void) {  // 0x8882AC
   reg_HDMAEN = 0;
   for (int i = 10; i >= 0; i -= 2)
     hdma_object_channels_bitmask[i >> 1] = 0;
@@ -1625,7 +1625,7 @@ uint16 HdmaFunc_A786(uint16 k, uint16 r18, uint16 r20, uint16 r22) {  // 0x88A78
 static const SpawnHdmaObject_Args unk_88A7EF = { 0x42, 0x0f, 0xad76 };
 static const SpawnHdmaObject_Args unk_88A80B = { 0x42, 0x0f, 0xad89 };
 
-void FxTypeFunc_20(void) {  // 0x88A7D8
+void FxTypeFunc_20_ScrollingSkyLand(void) {  // 0x88A7D8
   layer2_scroll_x |= 1;
   layer2_scroll_y |= 1;
   SpawnHdmaObject(0x88, &unk_88A7EF);
@@ -1760,7 +1760,7 @@ static const SpawnHdmaObject_Args unk_88B08C = { 0x42, 0x11, 0xb0ac };
 static const uint16 kFirefleaFlashingShades[12] = { 0, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x500, 0x400, 0x300, 0x200, 0x100 };
 static const uint16 kFirefleaDarknessShades[6] = { 0, 0x600, 0xc00, 0x1200, 0x1800, 0x1900 };
 
-void FxTypeFunc_24(void) {  // 0x88B07C
+void FxTypeFunc_24_Fireflea(void) {  // 0x88B07C
   fireflea_flashing_timer = 6;
   fireflea_flashing_index = 0;
   SpawnHdmaObject(0x88, &unk_88B08C);
@@ -2295,7 +2295,7 @@ void HdmaobjPreInstr_SporesBG3Xscroll(uint16 k) {  // 0x88DA47
   }
 }
 
-void FxTypeFunc_C(void) {  // 0x88DB08
+void FxTypeFunc_C_Fog(void) {  // 0x88DB08
   gameplay_BG3SC = 92;
   static const SpawnHdmaObject_Args unk_88DB14 = { 0x43, 0x11, 0xdb19 };
   SpawnHdmaObject(0x88, &unk_88DB14);
@@ -2431,14 +2431,14 @@ void FxTypeFunc_2C_Haze(void) {  // 0x88DDC7
 }
 
 void HdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyAlive(uint16 k) {  // 0x88DE10
-  sub_88DE18(k, 0x80);
+  SetupHazeColorMathSubscreenHdma(k, 0x80);
 }
 
 void HdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyDead(uint16 k) {  // 0x88DE15
-  sub_88DE18(k, 0x20);
+  SetupHazeColorMathSubscreenHdma(k, 0x20);
 }
 
-void sub_88DE18(uint16 k, uint16 a) {  // 0x88DE18
+void SetupHazeColorMathSubscreenHdma(uint16 k, uint16 a) {  // 0x88DE18
   int v2 = (uint8)k >> 1;
   hdma_object_B[v2] = a;
   hdma_object_A[v2] = 0;
@@ -2507,7 +2507,7 @@ static const SpawnHdmaObject_Args unk_88DF38 = { 0x00, 0x2c, 0xdf4f };
 static const SpawnHdmaObject_Args unk_88DF41 = { 0x00, 0x2c, 0xdf6b };
 
 static const SpawnHdmaObject_Args unk_88DF4A = { 0x02, 0x12, 0xdf77 };
-void sub_88DF34(void) {  // 0x88DF34
+void SpawnDraygonMainScreenLayerHdmaObject(void) {  // 0x88DF34
   SpawnHdmaObject(0x88, &unk_88DF38);
 }
 
@@ -2548,9 +2548,9 @@ void HdmaobjPreInstr_DF94(uint16 v0) {  // 0x88DF94
 
 static Func_U8 *const off_88E04E[7] = {  // 0x88E026
   VariaSuitPickup_0_LightBeamAppears,
-  VariaSuitPickup_1,
-  VariaSuitPickup_2_LightBeamWidens,
-  VariaSuitPickup_3,
+  VariaSuitPickup_1_LightBeamWidens_Linear,
+  VariaSuitPickup_2_LightBeamWidens_Curved,
+  VariaSuitPickup_3_GiveSamusVariaSuit,
   VariaSuitPickup_4_LightBeamShrinks,
   VariaSuitPickup_5_LightBeamDissipates,
   VariaSuitPickup_6,
@@ -2567,9 +2567,9 @@ void HdmaobjPreInstr_VariaSuitPickup(uint16 k) {
 
 static Func_U8 *const off_88E084[7] = {  // 0x88E05C
   VariaSuitPickup_0_LightBeamAppears,
-  VariaSuitPickup_1,
-  VariaSuitPickup_2_LightBeamWidens,
-  GravitySuitPickup_3,
+  VariaSuitPickup_1_LightBeamWidens_Linear,
+  VariaSuitPickup_2_LightBeamWidens_Curved,
+  GravitySuitPickup_3_GiveSamusGravitySuit,
   VariaSuitPickup_4_LightBeamShrinks,
   VariaSuitPickup_5_LightBeamDissipates,
   GravitySuitPickup_6,
@@ -2610,7 +2610,7 @@ uint8 VariaSuitPickup_0_LightBeamAppears(void) {  // 0x88E092
   return 1;
 }
 
-uint8 VariaSuitPickup_1(void) {  // 0x88E0D7
+uint8 VariaSuitPickup_1_LightBeamWidens_Linear(void) {  // 0x88E0D7
   LOBYTE(suit_pickup_light_beam_pos) = suit_pickup_light_beam_pos - HIBYTE(suit_pickup_light_beam_widening_speed);
   HIBYTE(suit_pickup_light_beam_pos) += HIBYTE(suit_pickup_light_beam_widening_speed);
   for (int i = 510; i >= 0; i -= 2)
@@ -2623,7 +2623,7 @@ uint8 VariaSuitPickup_1(void) {  // 0x88E0D7
 }
 
 
-uint8 VariaSuitPickup_2_LightBeamWidens(void) {  // 0x88E113
+uint8 VariaSuitPickup_2_LightBeamWidens_Curved(void) {  // 0x88E113
   int8 v1;
   int16 v2;
   int8 v4;
@@ -2774,7 +2774,7 @@ uint8 AdvanceSuitPickupColorMathToOrange(void) {  // 0x88E2F9
   return 1;
 }
 
-uint8 VariaSuitPickup_3(void) {  // 0x88E320
+uint8 VariaSuitPickup_3_GiveSamusVariaSuit(void) {  // 0x88E320
   equipped_items |= 1;
   collected_items |= 1;
   samus_pose = kPose_9B_FaceF_VariaGravitySuit;
@@ -2789,7 +2789,7 @@ uint8 VariaSuitPickup_3(void) {  // 0x88E320
   return 1;
 }
 
-uint8 GravitySuitPickup_3(void) {  // 0x88E361
+uint8 GravitySuitPickup_3_GiveSamusGravitySuit(void) {  // 0x88E361
   equipped_items |= 0x20;
   collected_items |= 0x20;
   samus_pose = kPose_9B_FaceF_VariaGravitySuit;
@@ -2829,7 +2829,7 @@ void HdmaobjPreInstr_E449(uint16 k) {  // 0x88E449
   }
 }
 static const SpawnHdmaObject_Args unk_88E4A0 = { 0x42, 0x0f, 0xe4a8 };
-void sub_88E487(uint16 v0, uint16 r22) {  // 0x88E487
+void SpawnWavyPhantoonHdmaObject(uint16 v0, uint16 r22) {  // 0x88E487
   enemy_data[2].parameter_1 = v0;
   enemy_data[3].ai_var_D = 0;
   enemy_data[3].ai_var_E = 0;

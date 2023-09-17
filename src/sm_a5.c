@@ -63,7 +63,7 @@ void Draygon_Init(void) {  // 0xA58687
   Get_Draygon(0xC0)->base.current_instruction = addr_kDraygon_Ilist_9813;
   enemy_bg2_tilemap_size = 1024;
   Get_Draygon(cur_enemy_index)->draygon_var_A = FUNC16(Draygon_Func_1);
-  sub_88DF34();
+  SpawnDraygonMainScreenLayerHdmaObject();
   room_loading_irq_handler = 12;
   SpawnBG3ScrollHdmaObject();
   Get_Draygon(0)->draygon_var_45 = 1;
@@ -540,7 +540,7 @@ void Draygon_Func_22(void) {  // 0xA58E19
     } else {
       uint16 varE20 = (uint8)(64 - CalculateAngleFromXY(samus_x_pos - E->base.x_pos, samus_y_pos - E->base.y_pos));
       Point32 pt = ConvertAngleToXy(varE20, 2);
-      EnemyFunc_B691(varE20, pt);
+      MoveEnemyByAngleAndXYSpeed(varE20, pt);
     }
   } else {
     E->draygon_var_A = FUNC16(Draygon_Func_30);
@@ -573,7 +573,7 @@ void Draygon_Func_24(uint16 k) {  // 0xA58F1E
     } else {
       uint16 varE20 = (uint8)(64 - CalculateAngleFromXY(256 - E->base.x_pos, 384 - E->base.y_pos));
       Point32 pt = ConvertAngleToXy(varE20, 2);
-      EnemyFunc_B691(varE20, pt);
+      MoveEnemyByAngleAndXYSpeed(varE20, pt);
       Draygon_Func_40(k);
     }
   }
@@ -691,7 +691,7 @@ void Draygon_Func_31(void) {  // 0xA59185
   }
   E->draygon_var_43 = (uint8)(64 - CalculateAngleFromXY(64 - (E->base.x_pos >> 2), 120 - (E->base.y_pos >> 2)));
   Point32 pt = ConvertAngleToXy(LOBYTE(E->draygon_var_43), 1);
-  EnemyFunc_B691(LOBYTE(E->draygon_var_43), pt);
+  MoveEnemyByAngleAndXYSpeed(LOBYTE(E->draygon_var_43), pt);
   uint16 v3 = Abs16(E->base.x_pos - 256);
   if (sign16(v3 - 4)) {
     uint16 v4 = Abs16(E->base.y_pos - 480);
@@ -1465,7 +1465,7 @@ void SporeSpawn_Func_4(void) {  // 0xA5EBEE
   Enemy_SporeSpawn *E = Get_SporeSpawn(cur_enemy_index);
   Enemy_SporeSpawn *E0 = Get_SporeSpawn(0);
   uint16 varE20 = LOBYTE(E0->ssn_var_43);
-  EnemyFunc_B691(varE20, (Point32) { __PAIR32__(E->ssn_var_28, E->ssn_var_29), __PAIR32__(E->ssn_var_2A, E->ssn_var_2B) });
+  MoveEnemyByAngleAndXYSpeed(varE20, (Point32) { __PAIR32__(E->ssn_var_28, E->ssn_var_29), __PAIR32__(E->ssn_var_2A, E->ssn_var_2B) });
   uint16 v2 = Abs16(E0->base.x_pos - 128);
   if (sign16(v2 - 8)) {
     uint16 v3 = Abs16(E0->base.y_pos - 624);
