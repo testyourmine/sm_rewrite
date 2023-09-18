@@ -5,33 +5,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_81.h"
 
-
-#define kOffsetToSaveSlot ((uint16*)RomFixedPtr(0x81812b))
-#define kPackedBytesPerArea_Count ((uint8*)RomFixedPtr(0x818131))
-#define kPackedBytesPerArea_PackedOffs ((uint16*)RomFixedPtr(0x818138))
-#define kPackedBytesPerArea_UnpackedOffs ((uint16*)RomFixedPtr(0x8182d6))
-#define kMenuPalettes ((uint16*)RomFixedPtr(0x8ee400))
-#define kZebesAndStarsTilemap ((uint16*)RomFixedPtr(0x8edc00))
-#define kAreaMapForegroundSetDefs ((uint16*)RomFixedPtr(0x81a4e6))
-#define kAreaMapForegroundColors ((uint16*)RomFixedPtr(0x81a40e))
-#define kBg2RoomSelectMapTilemap ((uint16*)RomFixedPtr(0xb6e000))
-#define kFileSelectExpandingSquareTilemap ((uint16*)RomFixedPtr(0x81b14b))
-#define kMapIconDataPointers ((MapIconDataPointers*)RomFixedPtr(0x82c7cb))
-#define g_word_82C749 ((uint16*)RomFixedPtr(0x82c749))
-#define kRoomState_aa82_aa8f (*(RoomDefRoomstate*)RomFixedPtr(0x8faa8f))
-#define kLeftMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af32))
-#define kRightMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af3c))
-#define kUpMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af46))
-#define kDownMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af50))
-#define g_off_82C569 ((uint16*)RomFixedPtr(0x82c569))
-#define kSamusSpritemapTable ((uint16*)RomFixedPtr(0x92808d))
-#define g_off_93A1A1 ((uint16*)RomFixedPtr(0x93a1a1))
-#define kExpandingSquareVels ((ExpandingSquareVels*)RomFixedPtr(0x81aa34))
-
-
-
-static const uint16 kFileSelectMap_AreaIndexes[6] = { 0, 3, 5, 1, 4, 2 };
 
 void SoftReset(void) {
   game_state = 0xffff;
@@ -186,7 +161,7 @@ void DrawSpritemapOffScreen(uint16 j, uint16 x_r20, uint16 y_r18, uint16 chr_r22
 }
 
 void DrawMenuSpritemap(uint16 a, uint16 k, uint16 j, uint16 chr_r3) {  // 0x81891F
-  const uint8 *pp = RomPtr_82(g_off_82C569[a]);
+  const uint8 *pp = RomPtr_82(gMenuSpritemapTable[a]);
   int n = GET_WORD(pp);
   pp += 2;
   int idx = oam_next_ptr;
@@ -224,7 +199,7 @@ void DrawSamusSpritemap(uint16 a, uint16 x_pos, uint16 y_pos) {  // 0x8189AE
 }
 
 void DrawBeamGrappleSpritemap(uint16 a, uint16 x_r20, uint16 y_r18) {  // 0x818A37
-  DrawGrappleOrProjectileSpritemap(RomPtr_93(g_off_93A1A1[a]), x_r20, y_r18);
+  DrawGrappleOrProjectileSpritemap(RomPtr_93(gFlareSpritemapTable[a]), x_r20, y_r18);
 }
 
 void DrawProjectileSpritemap(uint16 k, uint16 x_r20, uint16 y_r18) {  // 0x818A4B
@@ -2038,7 +2013,7 @@ static const uint16 kAreaSelectMapLabelPositions[12] = {  // 0x81A97E
 };
 void DrawAreaSelectMapLabels(void) {
   uint16 r3 = 0;
-  DrawMenuSpritemap(g_word_82C749[0], 0x80, 0x10, r3);
+  DrawMenuSpritemap(gAreaSelectSpritemapOffset[0], 0x80, 0x10, r3);
   for(int i = 0; i < 6; i++) {
     r3 = (i == file_select_map_area_index) ? 0 : 512;
     uint16 v1 = 2 * kFileSelectMap_AreaIndexes[i];
@@ -2056,7 +2031,7 @@ void DrawAreaSelectMapLabels(void) {
 LABEL_11:;
           int j = 4 * kFileSelectMap_AreaIndexes[i] >> 1;
           DrawMenuSpritemap(
-            g_word_82C749[0] + kFileSelectMap_AreaIndexes[i] + 1,
+            gAreaSelectSpritemapOffset[0] + kFileSelectMap_AreaIndexes[i] + 1,
             kAreaSelectMapLabelPositions[j],
             kAreaSelectMapLabelPositions[j + 1], r3);
           break;

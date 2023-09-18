@@ -3,10 +3,8 @@
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"
+#include "sm_92.h"
 
-#define kSamus_AnimationDefinitionPtrs ((uint16*)RomFixedPtr(0x92d94e))
-#define kSamus_TileDefs_TopHalf ((uint16*)RomFixedPtr(0x92d91e))
-#define kSamus_TileDefs_BottomHalf ((uint16*)RomFixedPtr(0x92d938))
 
 void SetSamusTilesDefsForCurAnim(void) {  // 0x928000
   uint16 v0 = 4 * samus_anim_frame + kSamus_AnimationDefinitionPtrs[samus_pose];

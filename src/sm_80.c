@@ -6,12 +6,8 @@
 #include "funcs.h"
 #include "enemy_types.h"
 #include "spc_player.h"
+#include "sm_80.h"
 
-
-#define kMusicPointers (*(LongPtr*)RomFixedPtr(0x8fe7e1))
-#define kTimerDigitsSpritemapPtr ((uint16*)RomFixedPtr(0x809fd4))
-#define kLoadStationLists ((uint16*)RomFixedPtr(0x80c4b5))
-#define off_80CD46 ((uint16*)RomFixedPtr(0x80cd46))
 
 void APU_UploadBank(uint32 addr) {  // 0x808028
   if (!g_use_my_apu_code)
@@ -651,7 +647,7 @@ void HandleMusicQueue(void) {  // 0x808F0C
     if ((music_entry & 0x8000) != 0) {
       music_data_index = (uint8)music_entry;
       cur_music_track = -1;
-      APU_UploadBank(Load24((LongPtr *)((uint8 *)&kMusicPointers + (uint8)music_entry)));
+      APU_UploadBank(Load24((LongPtr *)(uint8 *)&kMusicPointers[((uint8)music_entry) / 3]));
       cur_music_track = 0;
       int v5 = music_queue_read_pos;
       music_queue_track[v5 >> 1] = 0;
@@ -2644,7 +2640,7 @@ void LoadFromLoadStation(void) {  // 0x80C437
 
 
 void SetElevatorsAsUsed(void) {  // 0x80CD07
-  const uint8 *v0 = RomPtr_80(off_80CD46[area_index] + 4 * ((elevator_door_properties_orientation & 0xF) - 1));
+  const uint8 *v0 = RomPtr_80(kAreaElevatorBitsPtr[area_index] + 4 * ((elevator_door_properties_orientation & 0xF) - 1));
   used_save_stations_and_elevators[v0[0]] |= v0[1];
   used_save_stations_and_elevators[v0[2]] |= v0[3];
 }

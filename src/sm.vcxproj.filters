@@ -263,6 +263,21 @@
     <ClInclude Include="..\third_party\gl_core\gl_core_3_1.h">
       <Filter>Shader</Filter>
     </ClInclude>
+    <ClInclude Include="sm_92.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_8b.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_80.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_81.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_82.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

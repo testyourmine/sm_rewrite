@@ -3,35 +3,8 @@
 #include "ida_types.h"
 #include "funcs.h"
 #include "variables.h"
+#include "sm_8b.h"
 
-
-#define kPalettes_Intro ((uint16*)RomFixedPtr(0x8ce3e9))
-#define kPalettes_Intro2 ((uint16*)RomFixedPtr(0x8ce5e9))
-#define kPalettes_Intro4 ((uint16*)RomFixedPtr(0x8ce7e9))
-#define kPalettes_Intro5 ((uint16*)RomFixedPtr(0x8ce9e9))
-#define kPalettes_Intro6 ((uint16*)RomFixedPtr(0x8cebe9))
-#define kPalettes_Intro3 ((uint16*)RomFixedPtr(0x8cede9))
-#define g_word_8CD81B ((uint16*)RomFixedPtr(0x8cd81b))
-#define g_word_8BA72B ((uint16*)RomFixedPtr(0x8ba72b))
-#define kLevelData_MotherBrainRoomFromCutscene ((uint16*)RomFixedPtr(0x8cbec3))
-#define kLevelData_RoomWithBabyMetroidHatching ((uint16*)RomFixedPtr(0x8cc083))
-#define g_word_8CDC9B ((uint16*)RomFixedPtr(0x8cdc9b))
-#define g_word_8CDEDB ((uint16*)RomFixedPtr(0x8cdedb))
-#define g_word_8CEFE9 ((uint16*)RomFixedPtr(0x8cefe9))
-#define g_off_8BE70D ((uint16*)RomFixedPtr(0x8be70d))
-#define g_word_8BE717 ((uint16*)RomFixedPtr(0x8be717))
-#define g_word_8BE721 ((uint16*)RomFixedPtr(0x8be721))
-#define g_word_8BE737 ((uint16*)RomFixedPtr(0x8be737))
-#define g_word_8BE741 ((uint16*)RomFixedPtr(0x8be741))
-#define g_word_8BE9CF ((uint16*)RomFixedPtr(0x8be9cf))
-#define kCinematicFunction_Intro_Func142_Tab0 ((uint16*)RomFixedPtr(0x8be45a))
-#define kCinematicFunction_Intro_Func144_Tab0 ((uint16*)RomFixedPtr(0x8be5e7))
-#define g_word_8CDF5B ((uint16*)RomFixedPtr(0x8cdf5b))
-#define g_word_8BE9A7 ((uint16*)RomFixedPtr(0x8be9a7))
-#define g_word_8BF6B8 ((uint16*)RomFixedPtr(0x8bf6b8))
-#define g_word_8BF6D8 ((uint16*)RomFixedPtr(0x8bf6d8))
-#define g_word_8CE1E9 ((uint16*)RomFixedPtr(0x8ce1e9))
-#define g_off_8CBC5D ((uint16*)RomFixedPtr(0x8cbc5d))
 
 void CallCinematicFunction(uint32 ea);
 void CallCinematicSprPreInstr(uint32 ea, uint16 j);

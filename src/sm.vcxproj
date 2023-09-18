@@ -238,6 +238,11 @@
     <ClInclude Include="funcs.h" />
     <ClInclude Include="glsl_shader.h" />
     <ClInclude Include="ida_types.h" />
+    <ClInclude Include="sm_80.h" />
+    <ClInclude Include="sm_81.h" />
+    <ClInclude Include="sm_82.h" />
+    <ClInclude Include="sm_8b.h" />
+    <ClInclude Include="sm_92.h" />
     <ClInclude Include="sm_cpu_infra.h" />
     <ClInclude Include="sm_rtl.h" />
     <ClInclude Include="snes\apu.h" />
