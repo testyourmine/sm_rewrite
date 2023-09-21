@@ -2287,7 +2287,7 @@ void HandleFileSelectMapScrollArrows(void) {  // 0x81AECA
   if (sign16(map_min_y_scroll - 64 - reg_BG1VOFS))
     DrawMapScrollArrowAndCheckToScroll(0x81, addr_kUpMapScrollArrowData);
   if (sign16(map_max_y_scroll - 145 - reg_BG1VOFS)) {
-    if (map_scrolling_direction == kDownMapScrollArrowData.map_scroll_dir) {
+    if (map_scrolling_direction == kFileSelectDownMapScrollArrowData.map_scroll_dir) {
       map_scrolling_gear_switch_timer = 0;
       map_scrolling_direction = 0;
       map_scrolling_speed_index = 0;

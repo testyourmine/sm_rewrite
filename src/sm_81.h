@@ -173,10 +173,16 @@ MapIconDataPointers kMapIconDataPointers[] = { 0xc83b, 0xc89d, 0xc90b, 0xc981, 0
 uint16 gAreaSelectSpritemapOffset[] = { 0x38 };
 
 //#define kRoomState_aa82_aa8f (*(RoomDefRoomstate*)RomFixedPtr(0x8faa8f))
-#define kLeftMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af32))
-#define kRightMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af3c))
-#define kUpMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af46))
-#define kDownMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af50))
+//#define kFileSelectLeftMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af32))
+//#define kFileSelectRightMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af3c))
+//#define kFileSelectUpMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af46))
+//#define kFileSelectDownMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x81af50))
+
+MapScrollArrowData kFileSelectLeftMapScrollArrowData = { 16, 96, 9, 512, 1, };
+MapScrollArrowData kFileSelectRightMapScrollArrowData = { 240, 96, 8, 256, 2, };
+MapScrollArrowData kFileSelectUpMapScrollArrowData = { 128, 32, 6, 2048, 3, };
+MapScrollArrowData kFileSelectDownMapScrollArrowData = { 128, 160, 7, 1024, 4, };
+
 //#define gMenuSpritemapTable ((uint16*)RomFixedPtr(0x82c569))
 
 uint16 gMenuSpritemapTable[] = { 0xc22b, 0xc224, 0xc216, 0xc21d, 0xc256, 0xc24a, 0xc232, 0xc23e, 0xc385, 0xc38c, 0xc393, 0xc39a, 0xc3af, 0xc3b6, 0xc3bd, 0xc3c4, 

@@ -2238,9 +2238,9 @@ void UpdatePauseMenuLRStartVramTilemap(void) {  // 0x82A84D
 
 void DrawPauseScreenSpriteAnim(uint16 a, uint16 input_k, uint16 input_j) {  // 0x82A881
   int t = a - 1;
-  uint16 *v8 = (uint16*)RomPtr_RAM(kPauseScreenSpriteAnimationData_1.arr[t]);
-  uint16 *v5 = (uint16*)RomPtr_RAM(kPauseScreenSpriteAnimationData_0.arr[t]);
-  const uint8 *v3 = RomPtr_82(kPauseScreenSpriteAnimationData_3.arr[t]);
+  uint16 *v8 = (uint16*)RomPtr_RAM(kPauseScreenSpriteAnimationData_Frame.arr[t]);
+  uint16 *v5 = (uint16*)RomPtr_RAM(kPauseScreenSpriteAnimationData_Timer.arr[t]);
+  const uint8 *v3 = RomPtr_82(kPauseScreenSpriteAnimationData_Data.arr[t]);
   if ((int16)--(*v5) <= 0) {
     uint16 v10 = v3[3 * ++(*v8)];
     if (v10 == 255) {
@@ -2249,9 +2249,9 @@ void DrawPauseScreenSpriteAnim(uint16 a, uint16 input_k, uint16 input_j) {  // 0
     }
     *v5 = v10;
   }
-  uint16 r3 = kPAuseSpritePaletteIndexValues[3];
+  uint16 r3 = kPauseSpritePaletteIndexValues[3];
   int r24 = v3[3 * *v8 + 2];
-  int r26 = 2 * *RomPtr_RAM(kPauseScreenSpriteAnimationData_2.arr[t]);
+  int r26 = 2 * *RomPtr_RAM(kPauseScreenSpriteAnimationData_Mode.arr[t]);
   const uint8 *v11 = RomPtr_82(r26 + kPausePtsToAnimationSpritemapBaseIds[t]);
   DrawMenuSpritemap(r24 + GET_WORD(v11), input_k, input_j - 1, r3);
 }
@@ -2790,7 +2790,7 @@ uint16 EquipmentScreenDisplayReserves_PaletteSetup(void) {  // 0x82B3F9
       }
       pausemenu_reserve_tank_animation_timer = v1;
     }
-    return kPAuseSpritePaletteIndexValues[3];
+    return kPauseSpritePaletteIndexValues[3];
   } else {
     return 1536;
   }
@@ -2953,7 +2953,7 @@ void DrawFileSelectMapIcons(void) {  // 0x82B6DD
   DrawSimpleMapIcons(0xA, 0xC7EB, 3584);
   DrawSimpleMapIcons(0x4E, 0xC7FB, 3584);
   uint16 a = UpdateSamusPositionIndicatorAnimation();
-  const uint16 *data = (uint16 *)RomPtr_82(*(VoidP *)((uint8 *)&kMapIconDataPointers[4].crateria + 2 * area_index)) + load_station_index * 2;
+  const uint16 *data = (uint16 *)RomPtr_82(*(VoidP *)((uint8 *)&kMapIconDataPointers_82[4].crateria + 2 * area_index)) + load_station_index * 2;
   uint16 v1 = data[0] - reg_BG1HOFS;
   uint16 v2 = data[1] - reg_BG1VOFS;
   if ((samus_position_indicator_animation_loop_counter & 1) == 0)
@@ -3078,7 +3078,7 @@ void HandleMapScrollArrows(void) {  // 0x82B934
   if (sign16(map_min_y_scroll - 56 - reg_BG1VOFS))
     DrawMapScrollArrowAndCheckToScroll(0x82, addr_stru_82B9B4);
   if (sign16(map_max_y_scroll - 177 - reg_BG1VOFS)) {
-    if (map_scrolling_direction == g_stru_82B9BE.map_scroll_dir) {
+    if (map_scrolling_direction == kDownMapScrollArrowData.map_scroll_dir) {
       map_scrolling_gear_switch_timer = 0;
       map_scrolling_direction = 0;
       map_scrolling_speed_index = 0;
@@ -4452,7 +4452,7 @@ void GameOptionsMenu_1_LoadingOptionsScreen(void) {  // 0x82EC11
   reg_BG2VOFS = 0;
   debug_invincibility = 0;
   for (int i = 510; i >= 0; i -= 2)
-    palette_buffer[i >> 1] = kMenuPalettes[i >> 1];
+    palette_buffer[i >> 1] = kMenuPalettes_82[i >> 1];
   DecompressToMem(0x978DF4, g_ram + 0x1c000);
   DecompressToMem(0x978FCD, g_ram + 0x1c800);
   DecompressToMem(0x9791C4, g_ram + 0x1d000);
@@ -4841,7 +4841,7 @@ void sub_82F296(uint16 j) {  // 0x82F296
 void OptionsPreInstr_MenuSelectMissile(uint16 v0) {  // 0x82F2A9
   if (game_state == kGameState_2_GameOptionsMenu) {
     int v2 = game_options_screen_index;
-    uint16 v3 = off_82F2ED[v2];
+    uint16 v3 = kMenuMissilePtrsToStartPos[v2];
     if (v3) {
       const uint16 *v4 = (const uint16 *)RomPtr_82(v3 + 4 * menu_option_index);
       int v5 = v0 >> 1;
@@ -4945,7 +4945,7 @@ void LoadControllerOptionsFromControllerBindings(void) {  // 0x82F4DC
   uint16 v0 = 0;
   do {
     int v1 = v0 >> 1;
-    v2 = *(uint16 *)&g_ram[off_82F54A[v1]];
+    v2 = *(uint16 *)&g_ram[kControllerBindingRAMAddresses[v1]];
     if ((v2 & kButton_X) != 0) {
 LABEL_9:
       eproj_F[v1 + 13] = 0;
@@ -4985,7 +4985,7 @@ uint8 OptionsMenuFunc8(void) {
   int v0 = 0, v2;
   do {
     v2 = v0;
-    *(uint16 *)&g_ram[off_82F54A[v0 >> 1]] = word_82F575[eproj_F[(v0 >> 1) + 13]];
+    *(uint16 *)&g_ram[kControllerBindingRAMAddresses[v0 >> 1]] = word_82F575[eproj_F[(v0 >> 1) + 13]];
     v0 += 2;
   } while (v2 < 12);
   return 0;
@@ -5004,8 +5004,8 @@ void OptionsMenuFunc6_DrawControllerBindings(void) {
   do {
     v4 = v0;
     int v1 = v0 >> 1;
-    uint16 v2 = g_word_82F639[v1];
-    const uint16 *v3 = (const uint16 *)RomPtr_82(g_off_82F647[eproj_F[v1 + 13]]);
+    uint16 v2 = kOptionsMenuPtrsToTilemapOffsets[v1];
+    const uint16 *v3 = (const uint16 *)RomPtr_82(kOptionsMenuPtrsToButtonTilemaps[eproj_F[v1 + 13]]);
     *(uint16 *)((uint8 *)ram3000.pause_menu_map_tilemap + v2) = *v3;
     *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[1] + v2) = v3[1];
     *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[2] + v2) = v3[2];
