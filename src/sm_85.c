@@ -2,11 +2,11 @@
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"
+#include "sm_85.h"
 
 uint16 message_box_das0l_value;
 
 
-#define kMessageBoxDefs ((MsgBoxConfig*)RomFixedPtr(0x85869b))
 static const uint16 kMsgBoxSpecialButtonTilemapOffs[27] = {  // 0x8583D1
   0, 0x12a, 0x12a, 0x12c, 0x12c, 0x12c, 0, 0, 0, 0, 0, 0, 0x120, 0, 0, 0,
   0,     0, 0x12a,     0,     0,     0, 0, 0, 0, 0, 0,

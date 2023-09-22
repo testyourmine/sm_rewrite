@@ -278,8 +278,25 @@
     <ClInclude Include="sm_82.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_84.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_85.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_86.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="sm.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -4,44 +4,13 @@
 #include "sm_rtl.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_86.h"
 
 Rect16U eproj_spawn_rect;
 uint16 eproj_spawn_r22;
 Point16U eproj_spawn_pt; // R18/R20
 uint16 eproj_spawn_varE24;
 
-#define kScreenShakeOffsets ((uint16*)RomFixedPtr(0x86846b))
-#define kAlignYPos_Tab0 ((uint8*)RomFixedPtr(0x948b2b))
-#define kAlignPos_Tab1 ((uint8*)RomFixedPtr(0x94892b))
-#define off_868A75 ((uint16*)RomFixedPtr(0x868a75))
-#define word_869105 ((uint16*)RomFixedPtr(0x869105))
-#define off_86A64D ((uint16*)RomFixedPtr(0x86a64d))
-#define off_86BB1E ((uint16*)RomFixedPtr(0x86bb1e))
-#define kCommonEnemySpeeds_Quadratic_Copy ((uint16*)RomFixedPtr(0xa0cbc7))
-#define kCommonEnemySpeeds_Quadratic32 ((uint32*)RomFixedPtr(0xa0cbc7))
-#define off_86C040 ((uint16*)RomFixedPtr(0x86c040))
-#define off_86C929 ((uint16*)RomFixedPtr(0x86c929))
-#define CHECK_locret_868728(i) (unk_868729[i] & 0x80 ? -1 : 0)
-#define g_word_869059 ((uint16*)RomFixedPtr(0x869059))
-#define off_86A2E2 ((uint16*)RomFixedPtr(0x86a2e2))
-#define kEprojInit_BombTorizoStatueBreaking_InstrList ((uint16*)RomFixedPtr(0x86a7ab))
-#define off_86B209 ((uint16*)RomFixedPtr(0x86b209))
-#define kEproj_MotherBrainRoomTurrets_DirectionIndexes ((uint16*)RomFixedPtr(0x86bee1))
-#define kEproj_MotherBrainRoomTurrets_AllowedRotations ((uint16*)RomFixedPtr(0x86bec9))
-#define kEproj_MotherBrainRoomTurrets_InstrLists ((uint16*)RomFixedPtr(0x86beb9))
-#define g_off_86C040 ((uint16*)RomFixedPtr(0x86c040))
-#define kEprojInit_MotherBrainGlassShatteringShard_InstrPtrs ((uint16*)RomFixedPtr(0x86ce41))
-#define kEprojInit_N00bTubeShards_InstrPtrs ((uint16*)RomFixedPtr(0x86d760))
-#define off_86D96A ((uint16*)RomFixedPtr(0x86d96a))
-#define kSporeMovementData ((uint8*)RomFixedPtr(0x86dd6c))
-#define word_86DEB6 ((uint16*)RomFixedPtr(0x86deb6))
-#define off_86E42C ((uint16*)RomFixedPtr(0x86e42c))
-#define word_86E47E ((uint16*)RomFixedPtr(0x86e47e))
-#define kEprojInit_BotwoonsBody_InstrLists ((uint16*)RomFixedPtr(0x86e9f1))
-#define off_86EF04 ((uint16*)RomFixedPtr(0x86ef04))
-#define off_86EFD5 ((uint16*)RomFixedPtr(0x86efd5))
-#define kEnemyDef_F3D3 (*(EnemyDef_B2*)RomFixedPtr(0xa0f3d3))
-#define g_word_86F3D4 ((uint16*)RomFixedPtr(0x86f3d4))  // bug:: oob read
 
 typedef struct EprojCollInfo {
   uint16 eci_r20;
@@ -833,7 +802,7 @@ static void Eproj_Init_0x8aaf(uint16 j) {  // 0x868A39
   eproj_timers[v3] = v2 + 72;
   eproj_y_vel[v3] = v1->ai_var_D;
   eproj_x_pos[v3] = v1->x_pos + (random_number & 0x1F) - 16;
-  eproj_instr_list_ptr[v3] = off_868A75[(uint16)(HIBYTE(eproj_y_vel[v3]) & 6) >> 1];
+  eproj_instr_list_ptr[v3] = kGarbageInstrList[(uint16)(HIBYTE(eproj_y_vel[v3]) & 6) >> 1];
 }
 
 void Eproj_PreInit_0x8aaf(uint16 k) {  // 0x868A7D
@@ -1018,7 +987,7 @@ void EprojPreInstr_CrocomireProjectile(uint16 k) {  // 0x86906B
   eproj_gfx_idx[0] = 2560;
   eproj_timers[k >> 1] += eproj_x_vel[k >> 1];
   uint16 x = -64;
-  uint16 y = g_word_869059[enemy_data[0].ai_preinstr >> 1]; // bug: out of bounds read...
+  uint16 y = kCrocomireProjectile_Ypos[enemy_data[0].ai_preinstr >> 1]; // bug: out of bounds read...
   int v1 = CalculateAngleFromXY(x, y);
   int v2 = k >> 1;
   eproj_x_vel[v2] = 4 * kSinCosTable8bit_Sext[v1 + 64];
@@ -1033,7 +1002,7 @@ void MoveEprojHorizAndOrVert(uint16 k) {  // 0x8690B3
 
 static void EprojInit_CrocomireSpikeWallPieces(uint16 j) {  // 0x8690CF
   int v1 = j >> 1;
-  eproj_y_pos[v1] = word_869105[(uint16)(j - 20) >> 1];
+  eproj_y_pos[v1] = kCrocomireSpikeWallPieces_Ypos[(uint16)(j - 20) >> 1];
   eproj_x_pos[v1] = 528;
   eproj_x_vel[v1] = 0;
   eproj_y_vel[v1] = 0;
@@ -1880,9 +1849,9 @@ void EprojPreInstr_PirateClawThrownRight(uint16 k) {  // 0x86A124
     eproj_id[v1] = 0;
 }
 
-static const int16 word_86A2D6[6] = { 64, 72, 80, -64, -72, -80 };
+static const int16 kGunshipLiftoffDustCloudsXoffs[6] = { 64, 72, 80, -64, -72, -80 };
 
-static void EprojInit_A379(uint16 j) {  // 0x86A2A1
+static void EprojInit_GunshipLiftoffDustClouds(uint16 j) {  // 0x86A2A1
   int v1 = j >> 1;
   eproj_x_subpos[v1] = 0;
   eproj_y_subpos[v1] = 0;
@@ -1890,9 +1859,9 @@ static void EprojInit_A379(uint16 j) {  // 0x86A2A1
   eproj_y_vel[v1] = 0;
   uint16 v2 = eproj_init_param_1;
   int v3 = eproj_init_param_1 >> 1;
-  eproj_x_pos[v1] = word_86A2D6[v3] + samus_x_pos;
+  eproj_x_pos[v1] = kGunshipLiftoffDustCloudsXoffs[v3] + samus_x_pos;
   eproj_y_pos[v1] = samus_y_pos + 80;
-  eproj_instr_list_ptr[v1] = off_86A2E2[v3];
+  eproj_instr_list_ptr[v1] = kGunshipLiftoffDustCloudsInstrListPtrs[v3];
   eproj_E[v1] = v2;
 }
 
@@ -1969,7 +1938,7 @@ static void EprojInit_BombTorizoLowHealthDrool(uint16 j) {  // 0x86A5D3
   uint16 v4, v5, v8;
   int v1 = j >> 1;
   eproj_gfx_idx[v1] = 0;
-  eproj_instr_list_ptr[v1] = off_86A64D[(uint16)((NextRandom() >> 1) & 0xE) >> 1];
+  eproj_instr_list_ptr[v1] = kBombTorizoLowHealthDroolInstrlist[(uint16)((NextRandom() >> 1) & 0xE) >> 1];
   NextRandom();
   EnemyData *v2 = gEnemyData(cur_enemy_index);
   eproj_y_pos[v1] = v2->y_pos - 5;
@@ -2418,7 +2387,7 @@ static void EprojInit_GoldenTorizoSuperMissile(uint16 j) {  // 0x86B1CE
   int v4 = ((v3->parameter_1 & 0x8000) != 0) ? 1 : 0;
   eproj_x_pos[v2] = v3->x_pos + word_86B205[v4];
   eproj_y_pos[v2] = v3->y_pos - 52;
-  eproj_instr_list_ptr[v2] = off_86B209[v4];
+  eproj_instr_list_ptr[v2] = kGoldenTorizoSuperMissileInstrListPtrs[v4];
 }
 
 void EprojPreInstr_GoldenTorizoSuperMissile(uint16 k) {  // 0x86B20D
@@ -2756,7 +2725,7 @@ void sub_86BB30(uint16 j) {  // 0x86BB30
   int v2 = j >> 1;
   eproj_x_pos[v2] = *(uint16 *)&v1->pad[34];
   eproj_y_pos[v2] = *(uint16 *)&v1->pad[36];
-  eproj_instr_list_ptr[v2] = off_86BB1E[eproj_init_param_1];
+  eproj_instr_list_ptr[v2] = kBB50InstrListPtrs_UNUSED[eproj_init_param_1];
 }
 
 static void EprojInit_NuclearWaffleBody(uint16 j) {  // 0x86BB92
@@ -2947,7 +2916,7 @@ void EprojPreInstr_MotherBrainRoomTurrets(uint16 k) {  // 0x86BFDF
       Eproj_SetXvelRandom(k);
       Eproj_MotherBrainRoomTurretBullets_Func2(k);
       int v3 = k >> 1;
-      eproj_instr_list_ptr[v3] = g_off_86C040[LOBYTE(eproj_y_subpos[v3])];
+      eproj_instr_list_ptr[v3] = kMotherBrainRoomTurretsInstrList_FaceDir[LOBYTE(eproj_y_subpos[v3])];
       eproj_instr_timers[v3] = 1;
     }
     int v4 = k >> 1;
@@ -3397,7 +3366,7 @@ void EprojPreInit_MotherBrainsDeathExplosion_0(uint16 k) {  // 0x86C914
 
 static void EprojInit_MotherBrainsDeathExplosion(uint16 j) {  // 0x86C8F5
   int v1 = j >> 1;
-  eproj_instr_list_ptr[v1] = off_86C929[eproj_init_param_1];
+  eproj_instr_list_ptr[v1] = kMotherBrainsDeathExplosionInstrListPtrs[eproj_init_param_1];
   eproj_instr_timers[v1] = 1;
   eproj_gfx_idx[v1] = 0;
   eproj_x_vel[v1] = eproj_spawn_pt.x;
@@ -3957,7 +3926,7 @@ void sub_86D992(uint16 v0) {  // 0x86D992
   uint16 v1 = eproj_init_param_1;
   int v2 = v0 >> 1;
   eproj_E[v2] = eproj_init_param_1;
-  eproj_instr_list_ptr[v2] = off_86D96A[v1 >> 1];
+  eproj_instr_list_ptr[v2] = kEprojInit_SpikeShootingPlantSpikes_InstrList[v1 >> 1];
   EnemyData *v3 = gEnemyData(cur_enemy_index);
   eproj_x_pos[v2] = v3->x_pos;
   eproj_x_subpos[v2] = v3->x_subpos;
@@ -4192,8 +4161,8 @@ static void EprojInit_NamiFuneFireball(uint16 j) {  // 0x86DED6
   if ((v3->parameter_1 & 0xF) != 0)
     eproj_y_pos[v2] += 4;
   int v4 = (uint16)(4 * LOBYTE(v3->parameter_2)) >> 1;
-  eproj_y_vel[v2] = word_86DEB6[v4];
-  eproj_x_vel[v2] = word_86DEB6[v4 + 1];
+  eproj_y_vel[v2] = kEprojInit_NamiFuneFireball_XYvels[v4];
+  eproj_x_vel[v2] = kEprojInit_NamiFuneFireball_XYvels[v4 + 1];
 }
 
 static void EprojInit_NamiFuneFireball_MoveX1(uint16 k) {  // 0x86DF40
@@ -4293,17 +4262,17 @@ uint16 sub_86E0B0(uint16 k) {  // 0x86E0B0
 
 static void EprojInit_DustCloudOrExplosion(uint16 v0) {  // 0x86E468
   int v1 = v0 >> 1;
-  eproj_instr_list_ptr[v1] = off_86E42C[eproj_init_param_1];
+  eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[eproj_init_param_1];
   eproj_x_pos[v1] = eproj_spawn_pt.x;
   eproj_y_pos[v1] = eproj_spawn_pt.y;
 }
 
 static void EprojInit_EyeDoorSmoke(uint16 j) {  // 0x86E4A6
   int v1 = j >> 1;
-  eproj_instr_list_ptr[v1] = off_86E42C[(uint8)eproj_init_param_1];
+  eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[(uint8)eproj_init_param_1];
   int v2 = (8 * HIBYTE(eproj_init_param_1)) >> 1;
-  uint16 x = word_86E47E[v2 + 2] + (word_86E47E[v2] & random_number);
-  uint16 y = word_86E47E[v2 + 3] + (word_86E47E[v2 + 1] & (random_number >> 8));
+  uint16 x = EprojInit_EyeDoorSmoke_XYpos[v2 + 2] + (EprojInit_EyeDoorSmoke_XYpos[v2] & random_number);
+  uint16 y = EprojInit_EyeDoorSmoke_XYpos[v2 + 3] + (EprojInit_EyeDoorSmoke_XYpos[v2 + 1] & (random_number >> 8));
   CalculatePlmBlockCoords(plm_id);
   eproj_x_pos[v1] = x + 8 * (2 * plm_x_block + 1);
   eproj_y_pos[v1] = y + 8 * (2 * plm_y_block + 1);
@@ -4609,7 +4578,7 @@ const uint8 *EprojInstr_EEAF(uint16 k, const uint8 *epjp) {  // 0x86EEAF
     uint16 v3 = 2 * v2;
     int v4 = k >> 1;
     eproj_E[v4] = v3;
-    eproj_instr_list_ptr[v4] = off_86EF04[v3 >> 1];
+    eproj_instr_list_ptr[v4] = kEprojInit_Pickup_InstrLists[v3 >> 1];
     eproj_instr_timers[v4] = 1;
     eproj_F[v4] = 400;
     eproj_pre_instr[v4] = FUNC16(EprojPreInstr_Pickup);
@@ -4641,7 +4610,7 @@ static void EprojInit_F337(uint16 j) {  // 0x86EF29
   if (v3 != 0 && sign16(v3 - 6)) { // bug, why does it compare x here.
     uint16 v4 = 2 * v3;
     eproj_E[v2] = v4;
-    eproj_instr_list_ptr[v2] = off_86EF04[v4 >> 1];
+    eproj_instr_list_ptr[v2] = kEprojInit_Pickup_InstrLists[v4 >> 1];
     eproj_instr_timers[v2] = 1;
     eproj_F[v2] = 400;
     eproj_killed_enemy_index[j >> 1] = -1;
@@ -4665,7 +4634,7 @@ static void EprojInit_EnemyDeathExplosion(uint16 j) {  // 0x86EF89
     eproj_killed_enemy_index[v2] = cur_enemy_index | 0x8000;
   eproj_enemy_header_ptr[v2] = v1->enemy_ptr;
   eproj_gfx_idx[v2] = 0;
-  eproj_instr_list_ptr[v2] = off_86EFD5[eproj_init_param_1];
+  eproj_instr_list_ptr[v2] = kEprojInit_EnemyDeathExplosion_InstrLists[eproj_init_param_1];
   eproj_instr_timers[v2] = 1;
 }
 
@@ -4892,8 +4861,8 @@ static void EprojInit_Sparks(uint16 j) {  // 0x86F391
   eproj_x_vel[v2] = 0;
   eproj_y_vel[v2] = 0;
   uint16 v4 = (NextRandom() & 0x1C) >> 1;
-  eproj_F[v2] = g_word_86F3D4[v4 + 0];
-  eproj_E[v2] = g_word_86F3D4[v4 + 1];
+  eproj_F[v2] = kEprojInit_Sparks_EprojVars[v4 + 0];
+  eproj_E[v2] = kEprojInit_Sparks_EprojVars[v4 + 1];
 }
 
 void EprojPreInstr_Sparks(uint16 k) {  // 0x86F3F0
@@ -4957,7 +4926,7 @@ static void CallEprojInit(uint32 ea, uint16 j) {
   case fnEprojInit_WalkingLavaSeahorseFireball: EprojInit_WalkingLavaSeahorseFireball(j); return;
   case fnEprojInit_PirateMotherBrainLaser: EprojInit_PirateMotherBrainLaser(j); return;
   case fnEprojInit_PirateClaw: EprojInit_PirateClaw(j); return;
-  case fnEprojInit_A379: EprojInit_A379(j); return;
+  case fnEprojInit_A379: EprojInit_GunshipLiftoffDustClouds(j); return;
   case fnEprojInit_CeresElevatorPad: EprojInit_CeresElevatorPad(j); return;
   case fnEprojInit_CeresElevatorPlatform: EprojInit_CeresElevatorPlatform(j); return;
   case fnEprojPreInstr_PrePhantomRoom: EprojPreInstr_PrePhantomRoom(j); return;

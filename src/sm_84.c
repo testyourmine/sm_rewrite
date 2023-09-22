@@ -3,25 +3,9 @@
 #include "variables.h"
 #include "sm_rtl.h"
 #include "funcs.h"
+#include "sm_84.h"
 
 
-#define kGoldenTorizoPalette1 ((uint16*)RomFixedPtr(0x848032))
-#define kGoldenTorizoPalette2 ((uint16*)RomFixedPtr(0x848132))
-#define kXrayBlockDrawingInstrs ((uint16*)RomFixedPtr(0x84839d))
-#define kGrayDoorPreInstrs ((uint16*)RomFixedPtr(0x84be4b))
-#define kDowardGatePlmListPtrs ((uint16*)RomFixedPtr(0x84c70a))
-#define kDowardGateLeftBlockBts ((uint16*)RomFixedPtr(0x84c71a))
-#define kDowardGateRightBlockBts ((uint16*)RomFixedPtr(0x84c72a))
-#define kUpwardGatePlmListPtrs ((uint16*)RomFixedPtr(0x84c764))
-#define kUpwardGateLeftBlockBts ((uint16*)RomFixedPtr(0x84c774))
-#define kUpwardGateRightBlockBts ((uint16*)RomFixedPtr(0x84c784))
-#define off_84DB28 ((uint16*)RomFixedPtr(0x84db28))
-#define off_84E05F ((uint16*)RomFixedPtr(0x84e05f))
-#define off_84E077 ((uint16*)RomFixedPtr(0x84e077))
-#define fnPlmPreInstr_Empty4 0x848AA6
-#define kPlmVramAddresses ((uint16*)RomFixedPtr(0x8487cd))
-#define kPlmTileDataOffs ((uint16*)RomFixedPtr(0x8487d5))
-#define kPlmStartingTileNumber ((uint16*)RomFixedPtr(0x8487dd))
 
 void CallPlmPreInstr(uint32 ea, uint16 k);
 const uint8 *CallPlmInstr(uint32 ea, const uint8 *j, uint16 k);
@@ -2635,7 +2619,7 @@ void PlmPreInstr_SetMetroidsClearState_Ev0x13(uint16 k) {  // 0x84DB0E
 }
 
 uint8 PlmSetup_SetMetroidRequiredClearState(uint16 j) {  // 0x84DB1E
-  plm_pre_instrs[j >> 1] = off_84DB28[plm_room_arguments[j >> 1] >> 1];
+  plm_pre_instrs[j >> 1] = kSetMetroidsClearStatePreInstrs[plm_room_arguments[j >> 1] >> 1];
   return 0;
 }
 
@@ -2804,12 +2788,12 @@ const uint8 *PlmInstr_DrawItemFrame_Common(const uint8 *plmp, uint16 k) {  // 0x
 }
 
 const uint8 *PlmInstr_DrawItemFrame0(const uint8 *plmp, uint16 k) {  // 0x84E04F
-  plm_instruction_draw_ptr[k >> 1] = off_84E05F[plm_variables[k >> 1] >> 1];
+  plm_instruction_draw_ptr[k >> 1] = kDrawItemFrame0DrawInstrs[plm_variables[k >> 1] >> 1];
   return PlmInstr_DrawItemFrame_Common(plmp, k);
 }
 
 const uint8 *PlmInstr_DrawItemFrame1(const uint8 *plmp, uint16 k) {  // 0x84E067
-  plm_instruction_draw_ptr[k >> 1] = off_84E077[plm_variables[k >> 1] >> 1];
+  plm_instruction_draw_ptr[k >> 1] = kDrawItemFrame1DrawInstrs[plm_variables[k >> 1] >> 1];
   return PlmInstr_DrawItemFrame_Common(plmp, k);
 }
 
