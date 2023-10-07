@@ -2,7 +2,7 @@
 
 #define kScreenShakeOffsets ((uint16*)RomFixedPtr(0x86846b))
 #define kAlignYPos_Tab0 ((uint8*)RomFixedPtr(0x948b2b))
-#define kAlignPos_Tab1 ((uint8*)RomFixedPtr(0x94892b))
+#define kAlignXPos_Tab1 ((uint8*)RomFixedPtr(0x94892b))
 #define kGarbageInstrList ((uint16*)RomFixedPtr(0x868a75))
 #define kCrocomireSpikeWallPieces_Ypos ((uint16*)RomFixedPtr(0x869105))
 #define kBombTorizoLowHealthDroolInstrlist ((uint16*)RomFixedPtr(0x86a64d))

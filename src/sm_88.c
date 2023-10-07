@@ -3,20 +3,8 @@
 #include "variables.h"
 #include "sm_rtl.h"
 #include "funcs.h"
+#include "sm_88.h"
 
-
-#define g_byte_88A206 ((uint8*)RomFixedPtr(0x88a206))
-#define g_byte_88A286 ((uint8*)RomFixedPtr(0x88a286))
-#define kPowerBombExplosionColors ((uint8*)RomFixedPtr(0x888d85))
-#define g_byte_889079 ((uint8*)RomFixedPtr(0x889079))
-#define g_word_88A938 ((uint16*)RomFixedPtr(0x88a938))
-#define kHdmaScrollEntrys ((HdmaScrollEntry*)RomFixedPtr(0x88aec1))
-#define g_word_88B589 ((uint16*)RomFixedPtr(0x88b589))
-#define g_word_88B60A ((uint16*)RomFixedPtr(0x88b60a))
-#define g_word_88D992 ((uint16*)RomFixedPtr(0x88d992))
-#define g_byte_88E3C9 ((uint8*)RomFixedPtr(0x88e3c9))
-#define g_word_88E833 ((uint16*)RomFixedPtr(0x88e833))
-#define g_byte_88EA8B ((uint8*)RomFixedPtr(0x88ea8b))
 
 void CallHdmaobjPreInstr(uint32 ea, uint16 k);
 const uint8 *CallHdmaobjInstr(uint32 ea, uint16 k, const uint8 *j);
@@ -1029,9 +1017,9 @@ uint16 CalculatePowerBombHdmaScaled_LeftOfScreen(uint16 k, uint16 j, uint8 multv
   int8 v2;
   uint8 v6, v7;
   do {
-    uint8 r20 = Mult8x8(multval, g_byte_88A206[(uint8)j + 32]) >> 8;
+    uint8 r20 = Mult8x8(multval, kPowerBombExplosionFreeSpace[(uint8)j + 32]) >> 8;
     v2 = power_bomb_explosion_x_pos_plus_0x100;
-    uint8 Reg = Mult8x8(multval, g_byte_88A206[(uint8)j]) >> 8;
+    uint8 Reg = Mult8x8(multval, kPowerBombExplosionFreeSpace[(uint8)j]) >> 8;
     bool v4 = __CFADD__uint8(Reg, v2);
     uint8 v5 = Reg + v2;
     if (v4) {
@@ -1059,9 +1047,9 @@ uint16 CalculatePowerBombHdmaScaled_OnScreen(uint16 k, uint16 j, uint8 multval) 
   int8 v5;
   uint8 v6, v9;
   do {
-    uint8 r20 = Mult8x8(multval, g_byte_88A206[(uint8)j + 32]) >> 8;
+    uint8 r20 = Mult8x8(multval, kPowerBombExplosionFreeSpace[(uint8)j + 32]) >> 8;
     v2 = power_bomb_explosion_x_pos_plus_0x100;
-    uint8 Reg = Mult8x8(multval, g_byte_88A206[(uint8)j]) >> 8;
+    uint8 Reg = Mult8x8(multval, kPowerBombExplosionFreeSpace[(uint8)j]) >> 8;
     bool v4 = __CFADD__uint8(Reg, v2);
     v5 = Reg + v2;
     if (v4)
@@ -1093,9 +1081,9 @@ uint16 CalculatePowerBombHdmaScaled_RightOfScreen(uint16 k, uint16 j, uint8 mult
   int8 v10; // t2
   uint8 v8, v9;
   do {
-    uint8 r20 = Mult8x8(multval, g_byte_88A206[(uint8)j + 32]) >> 8;
+    uint8 r20 = Mult8x8(multval, kPowerBombExplosionFreeSpace[(uint8)j + 32]) >> 8;
     uint8 v2 = power_bomb_explosion_x_pos_plus_0x100;
-    uint8 Reg = Mult8x8(multval, g_byte_88A206[(uint8)j]) >> 8;
+    uint8 Reg = Mult8x8(multval, kPowerBombExplosionFreeSpace[(uint8)j]) >> 8;
     bool v4 = v2 < Reg;
     v5 = v2 - Reg;
     if (v4) {
@@ -1127,7 +1115,7 @@ void HdmaobjPreInstr_PowerBombExplode_ExplosionYellow(uint16 k) {  // 0x888DE9
   if ((power_bomb_explosion_status & 0x8000) == 0)
     return;
   CalculatePowerBombHdmaObjectTablePtrs(k);
-  int kk = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A286[0]) >> 8;
+  int kk = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionShapeTopOffset[0]) >> 8;
 
   if (GET_HIBYTE(power_bomb_explosion_x_pos_plus_0x100)) {
     if (GET_HIBYTE(power_bomb_explosion_x_pos_plus_0x100) == 1)
@@ -1217,7 +1205,7 @@ void HdmaobjPreInstr_PowerBombExplode_PreExplosionWhite(uint16 k) {  // 0x8890DF
     return;
   CalculatePowerBombHdmaTablePointers(k);
   uint16 v1 = 96, v2;
-  int kk = Mult8x8(HIBYTE(power_bomb_pre_explosion_flash_radius), g_byte_88A286[0]) >> 8;
+  int kk = Mult8x8(HIBYTE(power_bomb_pre_explosion_flash_radius), kPowerBombExplosionShapeTopOffset[0]) >> 8;
   if (HIBYTE(power_bomb_explosion_x_pos_plus_0x100)) {
     if (HIBYTE(power_bomb_explosion_x_pos_plus_0x100) == 1)
       v2 = CalculatePowerBombHdmaScaled_OnScreen(kk, v1, HIBYTE(power_bomb_pre_explosion_flash_radius));
@@ -1237,9 +1225,9 @@ void HdmaobjPreInstr_PowerBombExplode_PreExplosionWhite(uint16 k) {  // 0x8890DF
     power_bomb_explosion_right_hdma[v3] = 0;
   }
   int t = (HIBYTE(power_bomb_pre_explosion_flash_radius) >> 3) & 0xF;
-  reg_COLDATA[0] = g_byte_889079[t * 3 + 0] | 0x20;
-  reg_COLDATA[1] = g_byte_889079[t * 3 + 1] | 0x40;
-  reg_COLDATA[2] = g_byte_889079[t * 3 + 2] | 0x80;
+  reg_COLDATA[0] = kPowerBombPreExplosionColors[t * 3 + 0] | 0x20;
+  reg_COLDATA[1] = kPowerBombPreExplosionColors[t * 3 + 1] | 0x40;
+  reg_COLDATA[2] = kPowerBombPreExplosionColors[t * 3 + 2] | 0x80;
   power_bomb_pre_explosion_flash_radius += power_bomb_pre_explosion_radius_speed;
   if (power_bomb_pre_explosion_flash_radius < 0x9200) {
     power_bomb_pre_explosion_radius_speed -= kPowerBombPreExplosionRadiusAccel;
@@ -1264,9 +1252,9 @@ void HdmaobjPreInstr_PowerBombExplode_PreExplosionYellow(uint16 k) {  // 0x8891A
     CalculatePowerBombHdma_LeftOfScreen(0, v1);
   }
   int t = (GET_HIBYTE(power_bomb_pre_explosion_flash_radius) >> 3) & 0xF;
-  reg_COLDATA[0] = g_byte_889079[3 * t] | 0x20;
-  reg_COLDATA[1] = g_byte_889079[3 * t + 1] | 0x40;
-  reg_COLDATA[2] = g_byte_889079[3 * t + 2] | 0x80;
+  reg_COLDATA[0] = kPowerBombPreExplosionColors[3 * t] | 0x20;
+  reg_COLDATA[1] = kPowerBombPreExplosionColors[3 * t + 1] | 0x40;
+  reg_COLDATA[2] = kPowerBombPreExplosionColors[3 * t + 2] | 0x80;
   pre_scaled_power_bomb_explosion_shape_def_ptr += 192;
   if (pre_scaled_power_bomb_explosion_shape_def_ptr == 0xA206) {
     hdma_object_instruction_timers[k >> 1] = 1;
@@ -1361,8 +1349,8 @@ void CalculateCrystalFlashHdmaObjectTablePtrs(uint16 k) {  // 0x88A42F
 uint16 CalculateCrystalFlashHdmaDataTablesScaled_LeftOfScreen(uint16 k, uint16 j) {  // 0x88A493
   uint8 right, left;
   do {
-    uint8 r20 = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A206[(uint8)j + 32]) >> 8;
-    uint8 w = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A206[(uint8)j]) >> 8;
+    uint8 r20 = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionFreeSpace[(uint8)j + 32]) >> 8;
+    uint8 w = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionFreeSpace[(uint8)j]) >> 8;
     uint8 c = power_bomb_explosion_x_pos_plus_0x100;
     left = (w + c >= 256) ? 0 : 255;
     right = (w + c >= 256) ? w + c : 0;
@@ -1382,8 +1370,8 @@ uint16 CalculateCrystalFlashHdmaDataTablesScaled_LeftOfScreen(uint16 k, uint16 j
 uint16 CalculateCrystalFlashHdmaDataTablesScaled_OnScreen(uint16 k, uint16 j) {  // 0x88A4D1
   uint8 right, left;
   do {
-    uint8 r20 = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A206[(uint8)j + 32]) >> 8;
-    uint8 w = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A206[(uint8)j]) >> 8;
+    uint8 r20 = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionFreeSpace[(uint8)j + 32]) >> 8;
+    uint8 w = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionFreeSpace[(uint8)j]) >> 8;
     uint8 c = power_bomb_explosion_x_pos_plus_0x100;
     right = c + w < 256 ? c + w : 255;
     left = c - w >= 0 ? c - w : 0;
@@ -1403,8 +1391,8 @@ uint16 CalculateCrystalFlashHdmaDataTablesScaled_OnScreen(uint16 k, uint16 j) { 
 uint16 CalculateCrystalFlashHdmaDataTablesScaled_RightOfScreen(uint16 k, uint16 j) {  // 0x88A513
   uint8 left, right;
   do {
-    uint8 r20 = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A206[(uint8)j + 32]) >> 8;
-    uint8 w = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A206[(uint8)j]) >> 8;
+    uint8 r20 = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionFreeSpace[(uint8)j + 32]) >> 8;
+    uint8 w = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionFreeSpace[(uint8)j]) >> 8;
     uint8 c = power_bomb_explosion_x_pos_plus_0x100;
     right = (c < w) ? 255 : 0;
     left = (c < w) ? c - w : 255;
@@ -1427,7 +1415,7 @@ void HdmaobjPreInstr_CrystalFlash_Stage1_Explosion(uint16 k) {  // 0x88A552
   CalculateCrystalFlashHdmaObjectTablePtrs(k);
   
   uint16 v2;
-  int kk = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), g_byte_88A286[0]) >> 8;
+  int kk = Mult8x8(GET_HIBYTE(power_bomb_explosion_radius), kPowerBombExplosionShapeTopOffset[0]) >> 8;
   if (GET_HIBYTE(power_bomb_explosion_x_pos_plus_0x100)) {
     if (GET_HIBYTE(power_bomb_explosion_x_pos_plus_0x100) == 1)
       v2 = CalculateCrystalFlashHdmaDataTablesScaled_OnScreen(kk, 96);
@@ -1540,7 +1528,7 @@ void HdmaobjPreInstr_BG3Xscroll(uint16 k) {
     uint16 v1 = g_word_7E0596;
     uint16 v2 = 0;
     do {
-      g_word_7E9E80[v2 >> 1] = g_word_88A938[v1 >> 1];
+      g_word_7E9E80[v2 >> 1] = kBG3XscrollWave[v1 >> 1];
       v2 += 2;
       v1 += 2;
     } while ((int16)(v1 - 32) < 0);
@@ -2048,7 +2036,7 @@ void Handle_LavaAcidBG2YScroll_Func2(uint16 v0) {  // 0x88B53B
   uint8 v4 = 30;
   int n = 15;
   do {
-    g_word_7E9C46[v4 >> 1] = (g_word_88B589[v3 >> 1] + reg_BG2HOFS) & 0x1FF;
+    g_word_7E9C46[v4 >> 1] = (kLavaAcidBG2YScrollLongWave[v3 >> 1] + reg_BG2HOFS) & 0x1FF;
     v3 = (v3 - 2) & 0x1E;
     v4 = (v4 - 2) & 0x1E;
   } while (--n >= 0);
@@ -2064,7 +2052,7 @@ void Handle_LavaAcidBG2YScroll_Func3(uint16 v0) {  // 0x88B5A9
   uint8 v4 = (2 * (reg_BG2VOFS & 0xF) + 30) & 0x1E;
   int n = 15;
   do {
-    g_word_7E9C46[v4 >> 1] = (g_word_88B60A[v3 >> 1] + reg_BG2VOFS) & 0x1FF;
+    g_word_7E9C46[v4 >> 1] = (kLavaAcidBG2YScrollShortWave[v3 >> 1] + reg_BG2VOFS) & 0x1FF;
     v4 = (v4 - 2) & 0x1E;
     v3 = (v3 - 2) & 0x1E;
   } while (--n >= 0);
@@ -2254,7 +2242,7 @@ void FxTypeFunc_A_Rain(void) {  // 0x88D950
 
 
 const uint8 *HdmaobjInstr_1938_RandomNumber(uint16 k, const uint8 *hdp) {  // 0x88D981
-  hdma_object_D[k >> 1] = g_word_88D992[(uint16)((random_number >> 1) & 6) >> 1];
+  hdma_object_D[k >> 1] = kBG3RainXvels[(uint16)((random_number >> 1) & 6) >> 1];
   return hdp;
 }
 
@@ -2645,13 +2633,13 @@ uint8 VariaSuitPickup_2_LightBeamWidens_Curved(void) {  // 0x88E113
   v2 = 0;
   uint16 v3 = 0;
   do {
-    v4 = suit_pickup_light_beam_pos - g_byte_88E3C9[v3];
+    v4 = suit_pickup_light_beam_pos - kSuitPickupLightBeamCurveWidths[v3];
     if (v4 < 0)
       v4 = 0;
     *((uint8 *)hdma_table_1 + (uint16)v2) = v4;
     uint16 v5 = v2 + 1;
-    v6 = g_byte_88E3C9[v3] + HIBYTE(suit_pickup_light_beam_pos);
-    if (__CFADD__uint8(g_byte_88E3C9[v3], HIBYTE(suit_pickup_light_beam_pos)))
+    v6 = kSuitPickupLightBeamCurveWidths[v3] + HIBYTE(suit_pickup_light_beam_pos);
+    if (__CFADD__uint8(kSuitPickupLightBeamCurveWidths[v3], HIBYTE(suit_pickup_light_beam_pos)))
       v6 = -1;
     *((uint8 *)hdma_table_1 + v5) = v6;
     v2 = v5 + 1;
@@ -2659,13 +2647,13 @@ uint8 VariaSuitPickup_2_LightBeamWidens_Curved(void) {  // 0x88E113
   } while (v2 < 0x100);
   uint16 v7 = v3 - 1;
   do {
-    v8 = suit_pickup_light_beam_pos - g_byte_88E3C9[v7];
+    v8 = suit_pickup_light_beam_pos - kSuitPickupLightBeamCurveWidths[v7];
     if (v8 < 0)
       v8 = 0;
     *((uint8 *)hdma_table_1 + (uint16)v2) = v8;
     uint16 v9 = v2 + 1;
-    v10 = g_byte_88E3C9[v7] + HIBYTE(suit_pickup_light_beam_pos);
-    if (__CFADD__uint8(g_byte_88E3C9[v7], HIBYTE(suit_pickup_light_beam_pos)))
+    v10 = kSuitPickupLightBeamCurveWidths[v7] + HIBYTE(suit_pickup_light_beam_pos);
+    if (__CFADD__uint8(kSuitPickupLightBeamCurveWidths[v7], HIBYTE(suit_pickup_light_beam_pos)))
       v10 = -1;
     *((uint8 *)hdma_table_1 + v9) = v10;
     v2 = v9 + 1;
@@ -2988,7 +2976,7 @@ void HdmaobjPreInstr_E7BC(uint16 k) {  // 0x88E7BC
 
 
 void sub_88E7ED(void) {  // 0x88E7ED
-  uint16 v0 = g_word_88E833[hdma_object_A[0] >> 1];
+  uint16 v0 = kRainbowBeamHdmaValues[hdma_object_A[0] >> 1];
   if ((v0 & 0x8000) == 0) {
     ++hdma_object_A[0];
     ++hdma_object_A[0];
@@ -2996,7 +2984,7 @@ void sub_88E7ED(void) {  // 0x88E7ED
     ++hdma_object_A[0];
   } else {
     hdma_object_A[0] = 0;
-    v0 = g_word_88E833[0];
+    v0 = kRainbowBeamHdmaValues[0];
   }
   reg_COLDATA[0] = v0 & 0x1F | 0x20;
   reg_COLDATA[1] = (v0 >> 5) & 0x1F | 0x40;
@@ -3075,9 +3063,9 @@ void HdmaobjPreInstr_EA3C(uint16 k) {  // 0x88EA3C
   if (enemy_data[1].ai_var_C) {
     sub_88E987(k);
     uint16 v2 = 4 * g_word_7E9090;
-    *((uint8 *)hdma_object_A + k) = g_byte_88EA8B[(uint16)(4 * g_word_7E9090)];
-    *((uint8 *)hdma_object_A + k + 1) = g_byte_88EA8B[v2 + 1];
-    *((uint8 *)hdma_object_B + k) = g_byte_88EA8B[v2 + 2];
+    *((uint8 *)hdma_object_A + k) = kMorphBallEyeBeamHdmaValues[(uint16)(4 * g_word_7E9090)];
+    *((uint8 *)hdma_object_A + k + 1) = kMorphBallEyeBeamHdmaValues[v2 + 1];
+    *((uint8 *)hdma_object_B + k) = kMorphBallEyeBeamHdmaValues[v2 + 2];
     g_word_7E9090 = (g_word_7E9090 + 1) & 0xF;
   } else {
     int v1 = hdma_object_index >> 1;
