@@ -2916,7 +2916,7 @@ void EprojPreInstr_MotherBrainRoomTurrets(uint16 k) {  // 0x86BFDF
       Eproj_SetXvelRandom(k);
       Eproj_MotherBrainRoomTurretBullets_Func2(k);
       int v3 = k >> 1;
-      eproj_instr_list_ptr[v3] = kMotherBrainRoomTurretsInstrList_FaceDir[LOBYTE(eproj_y_subpos[v3])];
+      eproj_instr_list_ptr[v3] = kEproj_MotherBrainRoomTurrets_InstrLists_FaceDir[LOBYTE(eproj_y_subpos[v3])];
       eproj_instr_timers[v3] = 1;
     }
     int v4 = k >> 1;
@@ -4271,8 +4271,8 @@ static void EprojInit_EyeDoorSmoke(uint16 j) {  // 0x86E4A6
   int v1 = j >> 1;
   eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[(uint8)eproj_init_param_1];
   int v2 = (8 * HIBYTE(eproj_init_param_1)) >> 1;
-  uint16 x = EprojInit_EyeDoorSmoke_XYpos[v2 + 2] + (EprojInit_EyeDoorSmoke_XYpos[v2] & random_number);
-  uint16 y = EprojInit_EyeDoorSmoke_XYpos[v2 + 3] + (EprojInit_EyeDoorSmoke_XYpos[v2 + 1] & (random_number >> 8));
+  uint16 x = kEprojInit_EyeDoorSmoke_XYpos[v2 + 2] + (kEprojInit_EyeDoorSmoke_XYpos[v2] & random_number);
+  uint16 y = kEprojInit_EyeDoorSmoke_XYpos[v2 + 3] + (kEprojInit_EyeDoorSmoke_XYpos[v2 + 1] & (random_number >> 8));
   CalculatePlmBlockCoords(plm_id);
   eproj_x_pos[v1] = x + 8 * (2 * plm_x_block + 1);
   eproj_y_pos[v1] = y + 8 * (2 * plm_y_block + 1);

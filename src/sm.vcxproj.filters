@@ -293,6 +293,9 @@
     <ClInclude Include="sm_88.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="sm_89.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

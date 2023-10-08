@@ -3,14 +3,7 @@
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"
-
-
-#define g_word_89AA02 ((uint16*)RomFixedPtr(0x89aa02))
-#define kFxTypeTilemapPtrs ((uint16*)RomFixedPtr(0x83abf0))
-#define kAreaPalFxListPointers ((uint16*)RomFixedPtr(0x83ac46))
-#define kAreaAnimtilesListPtrs ((uint16*)RomFixedPtr(0x83ac56))
-#define g_word_89AD5F ((uint16*)RomFixedPtr(0x89ad5f))
-
+#include "sm_89.h"
 
 
 void LoadFxEntry(uint16 v0) {  // 0x89AB02
@@ -24,9 +17,9 @@ void LoadFxEntry(uint16 v0) {  // 0x89AB02
   fx_liquid_options = FD->fx_liquid_options_;
   if (FD->palette_blend) {
     int v2 = FD->palette_blend >> 1;
-    palette_buffer[25] = g_word_89AA02[v2];
-    palette_buffer[26] = g_word_89AA02[v2 + 1];
-    palette_buffer[27] = g_word_89AA02[v2 + 2];
+    palette_buffer[25] = kPaletteBlends[v2];
+    palette_buffer[26] = kPaletteBlends[v2 + 1];
+    palette_buffer[27] = kPaletteBlends[v2 + 2];
   } else {
     palette_buffer[27] = 0;
   }
@@ -83,9 +76,9 @@ void LoadFXHeader(void) {
   fx_liquid_options = FD->fx_liquid_options_;
   if (FD->palette_blend) {
     int v4 = FD->palette_blend >> 1;
-    target_palettes[25] = g_word_89AA02[v4];
-    target_palettes[26] = g_word_89AA02[v4 + 1];
-    target_palettes[27] = g_word_89AA02[v4 + 2];
+    target_palettes[25] = kPaletteBlends[v4];
+    target_palettes[26] = kPaletteBlends[v4 + 1];
+    target_palettes[27] = kPaletteBlends[v4 + 2];
   } else {
     target_palettes[27] = 0;
   }
@@ -130,10 +123,10 @@ void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
     -- *(uint16 *)&room_main_asm_variables[2];
     if (*(int16 *)&room_main_asm_variables[2] < 0) {
       int v0 = (uint16)(6 * *(uint16 *)room_main_asm_variables) >> 1;
-      *(uint16 *)&room_main_asm_variables[2] = g_word_89AD5F[v0];
-      reg_M7B = g_word_89AD5F[v0 + 1];
+      *(uint16 *)&room_main_asm_variables[2] = kCereElevatorShaftMode7TransformationMatrix[v0];
+      reg_M7B = kCereElevatorShaftMode7TransformationMatrix[v0 + 1];
       reg_M7C = -reg_M7B;
-      reg_M7A = g_word_89AD5F[v0 + 2];
+      reg_M7A = kCereElevatorShaftMode7TransformationMatrix[v0 + 2];
       reg_M7D = reg_M7A;
       if (*(int16 *)room_main_asm_variables < 0) {
         v1 = *(uint16 *)room_main_asm_variables - 1;
