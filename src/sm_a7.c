@@ -4,46 +4,9 @@
 #include "funcs.h"
 #include "enemy_types.h"
 #include "sm_rtl.h"
+#include "sm_a7.h"
 
 #undef r18
-
-#define kKraid_Palette2 ((uint16*)RomFixedPtr(0xa786c7))
-#define kKraid_Palette2 ((uint16*)RomFixedPtr(0xa786c7))
-#define kKraid_BgTargetPalette3 ((uint16*)RomFixedPtr(0xa7aaa6))
-#define g_word_A7ACB3 ((uint16*)RomFixedPtr(0xa7acb3))
-#define g_stru_A796D2 (*(KraidInstrList*)RomFixedPtr(0xa796d2))
-#define g_stru_A796DA (*(KraidInstrList*)RomFixedPtr(0xa796da))
-#define g_word_A7B161 ((uint16*)RomFixedPtr(0xa7b161))
-#define kKraid_BgPalette7 ((uint16*)RomFixedPtr(0xa7b3d3))
-#define kKraid_BgPalette7_KraidDeath ((uint16*)RomFixedPtr(0xa7b4f3))
-#define kKraid_SprPalette7_KraidDeath ((uint16*)RomFixedPtr(0xa7b513))
-#define g_stru_A7974A ((KraidInstrList*)RomFixedPtr(0xa7974a))
-#define g_stru_A79764 ((KraidInstrList*)RomFixedPtr(0xa79764))
-#define g_stru_A792B7 (*(Hitbox*)RomFixedPtr(0xa792b7))
-#define g_word_A7BA7D ((uint16*)RomFixedPtr(0xa7ba7d))
-#define g_word_A7BC65 ((uint16*)RomFixedPtr(0xa7bc65))
-#define kKraid_Ilist_8B0A (*(SpriteDrawInstr*)RomFixedPtr(0xa78b0a))
-#define g_off_A7BE3E ((uint16*)RomFixedPtr(0xa7be3e))
-#define g_off_A7BE46 ((uint16*)RomFixedPtr(0xa7be46))
-#define g_word_A7BF1D ((uint16*)RomFixedPtr(0xa7bf1d))
-#define kKraidSinkEntry ((KraidSinkTable*)RomFixedPtr(0xa7c5e7))
-#define g_off_A7CE8E ((uint16*)RomFixedPtr(0xa7ce8e))
-#define g_word_A7CDED ((uint16*)RomFixedPtr(0xa7cded))
-#define g_stru_A7902D ((ExtendedSpriteMap*)RomFixedPtr(0xa7902d))
-#define g_byte_A7CFC2 ((uint8*)RomFixedPtr(0xa7cfc2))
-#define g_off_A7CCFD ((uint16*)RomFixedPtr(0xa7ccfd))
-#define g_word_A7CD41 ((uint16*)RomFixedPtr(0xa7cd41))
-#define g_word_A7CD53 ((uint16*)RomFixedPtr(0xa7cd53))
-#define g_word_A7CD63 ((uint16*)RomFixedPtr(0xa7cd63))
-#define g_off_A7D40D ((uint16*)RomFixedPtr(0xa7d40d))
-#define g_word_A7CDAD ((uint16*)RomFixedPtr(0xa7cdad))
-#define g_byte_A7DA1D ((uint8*)RomFixedPtr(0xa7da1d))
-#define g_off_A7DC4A ((uint16*)RomFixedPtr(0xa7dc4a))
-#define g_off_A7F787 ((uint16*)RomFixedPtr(0xa7f787))
-#define g_off_A7F92D ((uint16*)RomFixedPtr(0xa7f92d))
-#define g_word_A7CA41 ((uint16*)RomFixedPtr(0xa7ca41))
-#define g_word_A7CA61 ((uint16*)RomFixedPtr(0xa7ca61))
-#define g_off_A7F55F ((uint16*)RomFixedPtr(0xa7f55f))
 
 static const uint16 g_word_A7A916 = 0x120;
 static const uint16 g_word_A7A918 = 0xa0;
@@ -220,7 +183,7 @@ void Kraid_Init(void) {  // 0xA7A959
     uint16 v0 = 192;
     uint16 v1 = 0;
     do {
-      target_palettes[v0 >> 1] = kKraid_Palette2[v1 >> 1];
+      target_palettes[v0 >> 1] = kKraid_BgTargetPalette6[v1 >> 1];
       v0 += 2;
       v1 += 2;
     } while ((int16)(v1 - 32) < 0);
@@ -394,7 +357,7 @@ void Kraid_GetsBig_BreakCeilingPlatforms(void) {  // 0xA7AC4D
   if ((E->base.y_pos & 3) != 0 || (kraid_var_F = E->kraid_var_F, (int16)(kraid_var_F - 18) >= 0)) {
 
   } else {
-    SpawnEprojWithGfx(g_word_A7ACB3[kraid_var_F >> 1], cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
+    SpawnEprojWithGfx(kEproj_RocksFallingKraidCeilingXPositions[kraid_var_F >> 1], cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
     switch (E->kraid_var_F >> 1) {
     case 0:
       SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x12, 0xb7b3 });
@@ -465,7 +428,7 @@ void Kraid_DrawRoomBg(void) {  // 0xA7AD9A
   uint16 v0 = 192;
   uint16 v1 = 0;
   do {
-    target_palettes[v0 >> 1] = kKraid_Palette2[v1 >> 1];
+    target_palettes[v0 >> 1] = kKraid_BgTargetPalette6[v1 >> 1];
     v0 += 2;
     v1 += 2;
   } while ((int16)(v1 - 32) < 0);
@@ -552,7 +515,7 @@ void Kraid_Mainloop_Thinking(void) {  // 0xA7AEA4
     if (!v2) {
       E->kraid_var_A = FUNC16(Kraid_Main_AttackWithMouthOpen);
       E->kraid_var_B = addr_stru_A796DA;
-      E->kraid_var_C = g_stru_A796D2.timer;
+      E->kraid_var_C = kKraid_InvulnerableRoarInstrLists.timer;
     }
   }
 }
@@ -566,7 +529,7 @@ void Kraid_GetsBig_Thinking(void) {  // 0xA7AEC4
     if (!v2) {
       E->kraid_var_A = FUNC16(Kraid_Shot_MouthIsOpen);
       E->kraid_var_B = addr_stru_A796DA;
-      E->kraid_var_C = g_stru_A796D2.timer;
+      E->kraid_var_C = kKraid_InvulnerableRoarInstrLists.timer;
     }
   }
 }
@@ -740,10 +703,10 @@ void Kraid_Enemy_Touch(void) {  // 0xA7B0F3
     int i;
     for (i = 0; ; i += 4) {
       int v3 = i >> 1;
-      if ((int16)(v1 - g_word_A7B161[v3]) >= 0 || (int16)(v1 - g_word_A7B161[v3 + 2]) >= 0)
+      if ((int16)(v1 - kKraid_BodyHitboxTable[v3]) >= 0 || (int16)(v1 - kKraid_BodyHitboxTable[v3 + 2]) >= 0)
         break;
     }
-    if ((int16)(E->base.x_pos + g_word_A7B161[(i >> 1) + 1] - r18) < 0) {
+    if ((int16)(E->base.x_pos + kKraid_BodyHitboxTable[(i >> 1) + 1] - r18) < 0) {
       if (!sign16(samus_x_pos - 40)) {
         samus_x_pos -= 8;
         samus_prev_x_pos = samus_x_pos;
@@ -789,10 +752,10 @@ void Kraid_Shot_Body(void) {  // 0xA7B181
           v11 = projectile_y_pos[v10] - E->base.y_pos;
           for (j = 0; ; j += 4) {
             int v13 = j >> 1;
-            if ((int16)(v11 - g_word_A7B161[v13]) >= 0 || (int16)(v11 - g_word_A7B161[v13 + 2]) >= 0)
+            if ((int16)(v11 - kKraid_BodyHitboxTable[v13]) >= 0 || (int16)(v11 - kKraid_BodyHitboxTable[v13 + 2]) >= 0)
               break;
           }
-          if ((int16)(E->base.x_pos + g_word_A7B161[(j >> 1) + 1] - r18) < 0) {
+          if ((int16)(E->base.x_pos + kKraid_BodyHitboxTable[(j >> 1) + 1] - r18) < 0) {
 LABEL_7:
             Kraid_SpawnExplosionEproj(i);
             int v6 = i >> 1;
@@ -842,7 +805,7 @@ void Kraid_HurtFlash_Handling(void) {  // 0xA7B371
     v0 = 32;
   uint16 v1 = 0;
   do {
-    palette_buffer[(v1 >> 1) + 240] = kKraid_SprPalette7_KraidDeath[v0 >> 1];
+    palette_buffer[(v1 >> 1) + 240] = kKraid_SprPalette7[v0 >> 1];
     v1 += 2;
     v0 += 2;
   } while ((int16)(v1 - 32) < 0);
@@ -866,7 +829,7 @@ void Kraid_HealthBasedPaletteHandling(void) {  // 0xA7B394
     int v5 = v0 >> 1;
     int v6 = v4 >> 1;
     palette_buffer[v6 + 112] = kKraid_BgPalette7[v5];
-    palette_buffer[v6 + 240] = kKraid_SprPalette7_KraidDeath[v5];
+    palette_buffer[v6 + 240] = kKraid_SprPalette7[v5];
     v0 += 2;
     v4 += 2;
   } while ((int16)(v4 - 32) < 0);
@@ -933,7 +896,7 @@ void Kraid_InitEyeGlowing(void) {  // 0xA7B6BF
   E->kraid_var_A = FUNC16(Kraid_Shot_MouthIsOpen);
   E->kraid_var_A = FUNC16(Kraid_Shot_GlowHisEye);
   E->kraid_var_B = addr_stru_A7974A + 8;
-  E->kraid_var_C = g_stru_A7974A[0].timer;
+  E->kraid_var_C = kKraid_EyeGlowingInstrLists[0].timer;
   Kraid_Shot_GlowHisEye();
 }
 
@@ -993,7 +956,7 @@ void Kraid_Shot_UnglowEye(void) {  // 0xA7B73D
   if (!r20) {
     E->kraid_var_A = FUNC16(Kraid_Shot_MouthIsOpen);
     E->kraid_var_B = addr_stru_A796DA;
-    E->kraid_var_C = g_stru_A796D2.timer;
+    E->kraid_var_C = kKraid_InvulnerableRoarInstrLists.timer;
   }
 }
 
@@ -1125,12 +1088,12 @@ void KraidEnemy_ProcessInstrEnemyTimer(uint16 k) {  // 0xA7B965
 void Kraid_EnemyTouch_Lint(uint16 k) {  // 0xA7B96A
   Enemy_Kraid *E = Get_Kraid(k);
   if ((E->base.properties & kEnemyProps_Tangible) == 0 && !samus_invincibility_timer) {
-    uint16 r18 = g_stru_A792B7.left + E->base.x_pos - 2;
+    uint16 r18 = kKraid_LintBoundary.left + E->base.x_pos - 2;
     if (!sign16(samus_x_radius + samus_x_pos - r18)) {
       if (sign16(samus_x_pos - samus_x_radius - r18)) {
-        uint16 r22 = g_stru_A792B7.top + E->base.y_pos + 2;
+        uint16 r22 = kKraid_LintBoundary.top + E->base.y_pos + 2;
         if (!sign16(samus_y_radius + samus_y_pos - r22)) {
-          uint16 r24 = g_stru_A792B7.bottom + E->base.y_pos - 2;
+          uint16 r24 = kKraid_LintBoundary.bottom + E->base.y_pos - 2;
           if (sign16(samus_y_pos - samus_y_radius - r24)) {
             uint16 v2 = extra_samus_x_displacement + ~(samus_x_radius + 16);
             if (!sign16(v2 - 16))
@@ -1194,7 +1157,7 @@ void KraidsFoot_SecondPhase_Thinking(void) {  // 0xA7BA2E
     Enemy_Kraid *E0;
     while (1) {
       E0 = Get_Kraid(0);
-      if (E0->base.x_pos == g_word_A7BA7D[v2 >> 1])
+      if (E0->base.x_pos == kKraid_XMovementTable[v2 >> 1])
         break;
       v2 += 4;
       if ((int16)(v2 - 24) >= 0) {
@@ -1205,7 +1168,7 @@ void KraidsFoot_SecondPhase_Thinking(void) {  // 0xA7BA2E
     v4 = random_number & 0x1C;
     if (!sign16(v4 - 16))
       v4 = 16;
-    const uint16 *v5 = (const uint16 *)RomPtr_A7(g_word_A7BA7D[(v2 >> 1) + 1] + v4);
+    const uint16 *v5 = (const uint16 *)RomPtr_A7(kKraid_XMovementTable[(v2 >> 1) + 1] + v4);
     uint16 v6 = v5[1];
     if ((int16)(*v5 - E0->base.x_pos) >= 0)
       Kraid_SetWalkingBackwards(v6, *v5);
@@ -1290,7 +1253,7 @@ void Kraid_Main_AttackWithMouthOpen(void) {  // 0xA7BBEA
     }
   } else {
     if (*((uint16 *)RomPtr_A7(E->kraid_var_B - 8) + 1) == addr_kKraidTilemaps_3 && (E->kraid_var_C & 0xF) == 0) {
-      SpawnEprojWithGfx(g_word_A7BC65[(random_number & 0xE) >> 1], random_number & 0xE, addr_kEproj_RocksKraidSpits);
+      SpawnEprojWithGfx(kEproj_RocksKraidSpits_RandomParameters[(random_number & 0xE) >> 1], random_number & 0xE, addr_kEproj_RocksKraidSpits);
       QueueSfx3_Max6(0x1E);
     }
   }
@@ -1318,8 +1281,8 @@ void KraidFingernailInit(uint16 k) {  // 0xA7BCF2
   E->kraid_var_B = 40;
   E->base.properties |= kEnemyProps_Invisible;
   E->base.instruction_timer = 0x7FFF;
-  E->base.current_instruction = addr_kKraid_Ilist_8B0A;
-  E->base.spritemap_pointer = kKraid_Ilist_8B0A.field_2;
+  E->base.current_instruction = addr_kKraid_GoodFingernailInstrLists;
+  E->base.spritemap_pointer = kKraid_GoodFingernailInstrLists.field_2;
   E->kraid_next = FUNC16(KraidsFingernail_Init);
   E->kraid_var_A = FUNC16(KraidEnemy_HandleFunctionTimer);
   E->kraid_var_F = 64;
@@ -1360,9 +1323,9 @@ void KraidsFingernail_Init(void) {  // 0xA7BD60
   if (cur_enemy_index == 384)
     kraid_var_E = Get_Kraid(0x1C0)->kraid_var_E;
   if (sign16(kraid_var_E))
-    v2 = g_off_A7BE3E[(random_number & 6) >> 1];
+    v2 = kKraidsFingernail_UpwardsVelocityTable[(random_number & 6) >> 1];
   else
-    v2 = g_off_A7BE46[(random_number & 6) >> 1];
+    v2 = kKraidsFingernail_DownwardsVelocityTable[(random_number & 6) >> 1];
   const uint8 *v3 = RomPtr_A7(v2);
   Enemy_Kraid *E = Get_Kraid(cur_enemy_index);
   E->kraid_var_B = GET_WORD(v3);
@@ -1372,7 +1335,7 @@ void KraidsFingernail_Init(void) {  // 0xA7BD60
   E->kraid_parameter_1 = 1;
   E->base.properties &= ~(kEnemyProps_Tangible | kEnemyProps_Invisible);
   E->base.instruction_timer = 1;
-  E->base.current_instruction = addr_kKraid_Ilist_8B0A;
+  E->base.current_instruction = addr_kKraid_GoodFingernailInstrLists;
   E->kraid_var_A = FUNC16(KraidsFingernail_Fire);
   if ((random_number & 1) == 0)
     goto LABEL_7;
@@ -1411,10 +1374,10 @@ void KraidsFingernail_Fire(uint16 k) {  // 0xA7BE8E
     for (i = 0; ; i += 4) {
       v3 = gEnemyData(0);
       v4 = gEnemyData(k);
-      if ((int16)(g_word_A7BF1D[(i >> 1) + 1] + v3->y_pos - v4->y_pos) < 0)
+      if ((int16)(kKraidsFingernail_BoundaryOffsets[(i >> 1) + 1] + v3->y_pos - v4->y_pos) < 0)
         break;
     }
-    uint16 r18 = g_word_A7BF1D[i >> 1] + v3->x_pos;
+    uint16 r18 = kKraidsFingernail_BoundaryOffsets[i >> 1] + v3->x_pos;
     if (!sign16(v4->x_width + v4->x_pos - r18) && (v4->ai_var_C & 0x8000) == 0) {
       v4->ai_var_B = -v4->ai_var_B;
       v4->ai_var_C = -v4->ai_var_C;
@@ -1500,7 +1463,7 @@ void Kraid_HandleFirstPhase(void) {  // 0xA7C005
       }
     }
     E0->kraid_var_B = v3 - 26918;
-    E0->kraid_var_C = *(uint16 *)((uint8 *)&g_stru_A796D2.timer + v3);
+    E0->kraid_var_C = *(uint16 *)((uint8 *)&kKraid_InvulnerableRoarInstrLists.timer + v3);
     earthquake_type = 4;
     earthquake_timer = 340;
     Enemy_Kraid *E5 = Get_Kraid(0x140);
@@ -1635,7 +1598,7 @@ void Kraid_Death_Init(void) {  // 0xA7C360
     E1->base.instruction_timer = 1;
     E0->kraid_var_A = FUNC16(Kraid_Death_Fadeout);
     E0->kraid_var_B = addr_stru_A79764 + 8;
-    E0->kraid_var_C = g_stru_A79764[0].timer;
+    E0->kraid_var_C = kKraid_DyingInstrLists[0].timer;
     uint16 v4 = cur_enemy_index;
     uint16 v7 = cur_enemy_index;
     Enemy_Kraid *E6 = Get_Kraid(0x180);
@@ -2133,7 +2096,7 @@ void Phantoon2_Init(void) {  // 0xA7CE55
   EnemyData *v7 = gEnemyData(0);
   v6->palette_index = v7->palette_index;
   v6->vram_tiles_index = v7->vram_tiles_index;
-  v6->current_instruction = g_off_A7CE8E[v6->parameter_2];
+  v6->current_instruction = kPhantoon_InstrListPtrs[v6->parameter_2];
   v6->ai_preinstr = FUNC16(Phantoon_Spawn8FireballsInCircleAtStart);
   v7[3].parameter_1 = 0;
   v7[3].ai_var_C = -1;
@@ -2167,7 +2130,7 @@ void Phantoon_Main(void) {  // 0xA7CEA6
 }
 
 void Phantoon_Func_1(void) {  // 0xA7CEED
-  QueueSfx2_Max6(g_word_A7CDED[g_word_7E9032]);
+  QueueSfx2_Max6(kPhantoon_MaterialisationSoundEffects[g_word_7E9032]);
   uint16 v0 = g_word_7E9032 + 1;
   if (!sign16(g_word_7E9032 - 2))
     v0 = 0;
@@ -2176,7 +2139,7 @@ void Phantoon_Func_1(void) {  // 0xA7CEED
 
 void Phantoon_Func_2(uint16 k) {  // 0xA7CF0C
   if (!k && (joypad1_newkeys & 0x4000) != 0)
-    *(uint16 *)((uint8 *)&g_stru_A7902D[0].ypos + 1) = *(uint16 *)((uint8 *)&g_stru_A7902D[0].ypos + 1) == 0;
+    *(uint16 *)((uint8 *)&kPhantoon_BrokenCode[0].ypos + 1) = *(uint16 *)((uint8 *)&kPhantoon_BrokenCode[0].ypos + 1) == 0;
 }
 
 uint8 Phantoon_Func_ChangeWaveAmplitude(int32 amt) {  // 0xA7CF27
@@ -2216,7 +2179,7 @@ void Phantoon_Func_6(uint16 k, uint16 a) {  // 0xA7CF8B
   int16 v2;
   int16 v3;
 
-  v2 = g_byte_A7CFC2[a];
+  v2 = kEproj_DestroyableFireballs_Positions[a];
   int n = 7;
   int r20 = 16;
   do {
@@ -2238,16 +2201,16 @@ void Phantoon_Func_7(uint16 k) {  // 0xA7CFCA
       bool v8 = (--E->phant_var_C & 0x8000) != 0;
       if (v3 || v8) {
         E->phant_var_C = -1;
-        E->phant_var_B = *((uint16 *)RomPtr_A7(g_off_A7CCFD[E->phant_var_A]) + 1);
+        E->phant_var_B = *((uint16 *)RomPtr_A7(kPhantoon_CasualFlameTimerPtrs[E->phant_var_A]) + 1);
       } else {
-        E->phant_var_B = *((uint16 *)RomPtr_A7(2 * E->phant_var_C + g_off_A7CCFD[E->phant_var_A]) + 1);
+        E->phant_var_B = *((uint16 *)RomPtr_A7(2 * E->phant_var_C + kPhantoon_CasualFlameTimerPtrs[E->phant_var_A]) + 1);
       }
       E->base.instruction_timer = 1;
-      E->base.current_instruction = addr_kKraid_Ilist_CCEB;
+      E->base.current_instruction = addr_kPhantoon_MouthSpawnFlame_InstrLists;
     } else {
       uint16 v5 = NextRandom() & 3;
       E->phant_var_A = v5;
-      uint16 v6 = g_off_A7CCFD[v5];
+      uint16 v6 = kPhantoon_CasualFlameTimerPtrs[v5];
       uint16 v7 = *(uint16 *)RomPtr_A7(v6);
       E->phant_var_C = v7;
       E->phant_var_B = *((uint16 *)RomPtr_A7(2 * v7 + v6) + 1);
@@ -2261,7 +2224,7 @@ void Phantoon_StartTrackingSamusAndInitEyeTimer(void) {  // 0xA7D03F
   E->base.instruction_timer = 1;
   E->base.current_instruction = addr_kKraid_Ilist_CC4D;
   E->base.properties &= ~kEnemyProps_Tangible;
-  E->phant_var_E = g_word_A7CD41[NextRandom() & 7];
+  E->phant_var_E = kPhantoon_Figure8VulnerabilityTimers[NextRandom() & 7];
   E->phant_var_F = FUNC16(Phantoon_EyeFollowsSamusUntilTimerRunsOut);
 
   Enemy_Phantoon *E1 = Get_Phantoon(0x40);
@@ -2274,7 +2237,7 @@ void Phantoon_PickPatternForRound2(void) {  // 0xA7D076
 
   Enemy_Phantoon *E = Get_Phantoon(0);
   E->phant_var_E = 60;
-  uint16 v1 = g_word_A7CD53[NextRandom() & 7];
+  uint16 v1 = kPhantoon_EyeClosedTimers[NextRandom() & 7];
   Enemy_Phantoon *E1 = Get_Phantoon(0x40);
   E1->phant_var_A = v1;
   if ((nmi_frame_counter_word & 1) != 0) {
@@ -2469,7 +2432,7 @@ void Phantoon_ChangeEyeSpriteBasedOnSamusDist(void) {  // 0xA7D3FA
   uint16 v0 = 2 * DetermineDirectionOfSamusFromEnemy();
   Enemy_Phantoon *E = Get_Phantoon(0x40);
   E->base.instruction_timer = 1;
-  E->base.current_instruction = g_off_A7D40D[v0 >> 1];
+  E->base.current_instruction = kPhantoon_EyeballDirectionInstrListPtrs[v0 >> 1];
 }
 
 void Phantoon_StartDeathSequence(uint16 k) {  // 0xA7D421
@@ -2592,7 +2555,7 @@ void Phantoon_PickPatternForRound1(uint16 k) {  // 0xA7D596
     Enemy_Phantoon *E1 = Get_Phantoon(0x40);
     E1->phant_parameter_1 = 0;
     EK->phant_var_F = FUNC16(Phantoon_MovePhantoonInFigure8ThenOpenEye);
-    E1->phant_var_A = g_word_A7CD53[(nmi_frame_counter_word >> 1) & 3];
+    E1->phant_var_A = kPhantoon_EyeClosedTimers[(nmi_frame_counter_word >> 1) & 3];
     if ((NextRandom() & 1) != 0) {
       Enemy_Phantoon *E = Get_Phantoon(0);
       E->phant_var_C = 0;
@@ -2779,7 +2742,7 @@ void Phantoon_FadeOutDuringFireballRain(uint16 k) {  // 0xA7D7D5
   if (Get_Phantoon(0x40)->phant_var_F) {
     Enemy_Phantoon *E = Get_Phantoon(k);
     E->phant_var_F = FUNC16(Phantoon_SpawnRainingFireballs);
-    E->phant_var_E = g_word_A7CD63[NextRandom() & 7];
+    E->phant_var_E = kPhantoon_FireballRainHidingTimers[NextRandom() & 7];
   }
 }
 
@@ -2791,9 +2754,9 @@ void Phantoon_SpawnRainingFireballs(uint16 k) {  // 0xA7D7F7
     uint16 a = NextRandom() & 7;
     int v4 = (8 * a) >> 1;
     Enemy_Phantoon *E0 = Get_Phantoon(0);
-    E0->phant_var_A = g_word_A7CDAD[v4];
-    E0->base.x_pos = g_word_A7CDAD[v4 + 1];
-    E0->base.y_pos = g_word_A7CDAD[v4 + 2];
+    E0->phant_var_A = kPhantoon_FlameRainSpawnPositions[v4];
+    E0->base.x_pos = kPhantoon_FlameRainSpawnPositions[v4 + 1];
+    E0->base.y_pos = kPhantoon_FlameRainSpawnPositions[v4 + 2];
     Get_Phantoon(0x40)->phant_var_C = 0;
     EK->phant_var_F = FUNC16(Phantoon_BecomeSolidAfterRainingFireballs);
     Phantoon_Func_6(k, a);
@@ -2932,14 +2895,14 @@ void Phantoon_DyingPhantoonExplosions(uint16 k) {  // 0xA7D98B
     Enemy_Phantoon *E2 = Get_Phantoon(0x80);
     uint16 v5 = 4 * E2->phant_var_F;
     Enemy_Phantoon *E0 = Get_Phantoon(0);
-    eproj_spawn_pt = (Point16U){ (int8)g_byte_A7DA1D[v5] + E0->base.x_pos, (int8)g_byte_A7DA1D[v5 + 1] + E0->base.y_pos };
-    uint16 v11 = g_byte_A7DA1D[v5 + 2];
+    eproj_spawn_pt = (Point16U){ (int8)kPhantoon_DyingExplosionsTable[v5] + E0->base.x_pos, (int8)kPhantoon_DyingExplosionsTable[v5 + 1] + E0->base.y_pos };
+    uint16 v11 = kPhantoon_DyingExplosionsTable[v5 + 2];
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v11);
     if (v11 == 29)
       QueueSfx2_Max6(0x24);
     else
       QueueSfx2_Max6(0x2B);
-    EK->phant_var_E = g_byte_A7DA1D[v5 + 3];
+    EK->phant_var_E = kPhantoon_DyingExplosionsTable[v5 + 3];
     uint16 v9 = E2->phant_var_F + 1;
     E2->phant_var_F = v9;
     if (!sign16(v9 - 13)) {
@@ -3041,7 +3004,7 @@ uint8 Phantoon_Func_8(void) {  // 0xA7DB9A
       palette_buffer[(i >> 1) + 112] =
         Phantoon_Func_10_CalculateNthTransitionColorFromXtoY(E->phant_var_E,
           palette_buffer[(i >> 1) + 112],
-          g_word_A7CA41[i >> 1]);
+          kPhantoon_FadeOutTargetPalettes[i >> 1]);
     }
     ++E->phant_var_E;
     return 0;
@@ -3083,7 +3046,7 @@ PairU16 Phantoon_SetColorBasedOnHp_FindEntry(uint16 k) {  // 0xA7DC0F
     r20 += r18;
     ++r22;
   } while (sign16(r22 - 7));
-  const uint16 *v1 = (const uint16 *)RomPtr_A7(r24 + g_off_A7DC4A[r22]);
+  const uint16 *v1 = (const uint16 *)RomPtr_A7(r24 + kPhantoon_HealthPalettePtrs[r22]);
   return MakePairU16(r24, *v1);
 }
 
@@ -3094,7 +3057,7 @@ uint8 Phantoon_Func_9(void) {  // 0xA7DC5A
       palette_buffer[i >> 1] = Phantoon_Func_10_CalculateNthTransitionColorFromXtoY(
         E->phant_var_E,
         palette_buffer[i >> 1],
-        g_word_A7CA61[i >> 1]);
+        kWreckedShipOn_Bg1AndBg2TargetPalettes[i >> 1]);
     }
     ++E->phant_var_E;
     return 0;
@@ -3668,7 +3631,7 @@ void Dachora_Main(void) {  // 0xA7F52E
 void Dachora_Func_1(uint16 j, uint16 k) {  // 0xA7F535
   Enemy_Dachora *E = Get_Dachora(k);
   uint16 v3 = swap16(E->base.palette_index);
-  memcpy(g_ram + g_off_A7F55F[v3 >> 1], RomPtr_A7(j), 32);
+  memcpy(g_ram + kSpritePaletteRamPtrs[v3 >> 1], RomPtr_A7(j), 32);
 }
 
 void Dachora_Func_2(uint16 k) {  // 0xA7F570
@@ -3751,7 +3714,7 @@ int32 Dachora_Func_6(uint16 k) {  // 0xA7F6D5
     uint16 v2 = E->dachor_var_E - 1;
     E->dachor_var_E = v2;
     if (!(uint8)v2) {
-      Dachora_Func_1(g_off_A7F787[HIBYTE(E->dachor_var_E)], k);
+      Dachora_Func_1(kDachora_PalettePtrs_1[HIBYTE(E->dachor_var_E)], k);
       uint16 v3 = E->dachor_var_E + 272;
       E->dachor_var_E = v3;
       if (!sign16(v3 - 1040))
@@ -3873,7 +3836,7 @@ void Dachora_Func_9(uint16 k) {  // 0xA7F89A
 
 void Dachora_Func_10(uint16 k) {  // 0xA7F90A
   Enemy_Dachora *E = Get_Dachora(k);
-  Dachora_Func_1(g_off_A7F92D[HIBYTE(E->dachor_var_E)], k);
+  Dachora_Func_1(kDachora_PalettePtrs_2[HIBYTE(E->dachor_var_E)], k);
   uint16 v2 = E->dachor_var_E + 256;
   E->dachor_var_E = v2;
   if (!sign16(v2 - 1024))

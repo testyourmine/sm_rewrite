@@ -2,17 +2,8 @@
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"
+#include "sm_93.h"
 
-
-#define kProjectileData_UnchargedBeams ((uint16*)RomFixedPtr(0x9383c1))
-#define kProjectileData_ChargedBeams ((uint16*)RomFixedPtr(0x9383d9))
-#define kProjectileData_NonBeams ((uint16*)RomFixedPtr(0x9383f1))
-#define kShinesparkEchoSpazer_ProjectileData ((uint16*)RomFixedPtr(0x938403))
-#define kRunInstrForSuperMissile ((uint16*)RomFixedPtr(0x93842b))
-#define g_stru_938691 (*(ProjectileDamagesAndInstrPtr*)RomFixedPtr(0x938691))
-#define g_stru_938679 (*(ProjectileDamagesAndInstrPtr*)RomFixedPtr(0x938679))
-#define kProjInstrList_Explosion (*(ProjectileDamagesAndInstrPtr*)RomFixedPtr(0x938681))
-#define g_off_938413 ((uint16*)RomFixedPtr(0x938413))
 
 void InitializeProjectile(uint16 k) {  // 0x938000
   int v1 = k >> 1;
@@ -67,17 +58,17 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
     uint16 v2 = projectile_type[v1];
     projectile_type[v1] = v2 & 0xF0FF | 0x800;
     if ((v2 & 0x200) != 0) {
-      projectile_bomb_instruction_ptr[v1] = HIWORD(g_stru_938691.damages);
+      projectile_bomb_instruction_ptr[v1] = HIWORD(kProjInstrList_SuperMissileExplosion.damages);
       earthquake_type = 20;
       earthquake_timer = 30;
     } else {
-      projectile_bomb_instruction_ptr[v1] = *(&g_stru_938679.instr_ptr + 1);
+      projectile_bomb_instruction_ptr[v1] = *(&kProjInstrList_BeamExplosion.instr_ptr + 1);
     }
     if (!sign16(cooldown_timer - 21))
       cooldown_timer = 20;
   } else {
     projectile_type[v1] = projectile_type[v1] & 0xF0FF | 0x700;
-    projectile_bomb_instruction_ptr[v1] = HIWORD(g_stru_938679.damages);
+    projectile_bomb_instruction_ptr[v1] = HIWORD(kProjInstrList_BeamExplosion.damages);
     QueueSfx2_Max6(0xC);
   }
   projectile_bomb_instruction_timers[v1] = 1;
@@ -86,7 +77,7 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
 
 void InitializeBombExplosion(uint16 k) {  // 0x93814E
   int v1 = k >> 1;
-  projectile_bomb_instruction_ptr[v1] = HIWORD(kProjInstrList_Explosion.damages);
+  projectile_bomb_instruction_ptr[v1] = HIWORD(kProjInstrList_BombExplosion.damages);
   projectile_bomb_instruction_timers[v1] = 1;
 }
 
@@ -103,7 +94,7 @@ void InitializeShinesparkEchoOrSpazerSba(uint16 k) {  // 0x938163
 
 void InitializeSbaProjectile(uint16 k) {  // 0x9381A4
   int v1 = k >> 1;
-  const uint8 *v2 = RomPtr_93(g_off_938413[projectile_type[v1] & 0xF]);
+  const uint8 *v2 = RomPtr_93(kProjectileData_SBA[projectile_type[v1] & 0xF]);
   uint16 v3 = GET_WORD(v2);
   projectile_damage[v1] = v3;
   if (sign16(v3))

@@ -3,31 +3,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_aa.h"
 
-
-#define g_off_AAC967 ((uint16*)RomFixedPtr(0xaac967))
-#define g_off_AAD810 ((uint16*)RomFixedPtr(0xaad810))
-#define g_word_AAD765 ((uint16*)RomFixedPtr(0xaad765))
-#define g_word_AAD785 ((uint16*)RomFixedPtr(0xaad785))
-#define g_off_AADF13 ((uint16*)RomFixedPtr(0xaadf13))
-#define g_off_AADF21 ((uint16*)RomFixedPtr(0xaadf21))
-#define kSine ((uint16*)RomFixedPtr(0xaae0bd))
-#define kCosine ((uint16*)RomFixedPtr(0xaae13d))
-#define kNegativeSine ((uint16*)RomFixedPtr(0xaae1bd))
-#define kNegativeCosine_0 ((uint16*)RomFixedPtr(0xaae23d))
-#define kNegativeCosine ((uint16*)RomFixedPtr(0xaae03d))
-#define g_off_AADD15 ((uint16*)RomFixedPtr(0xaadd15))
-#define g_word_AADE95 ((uint16*)RomFixedPtr(0xaade95))
-#define g_word_AADEA3 ((uint16*)RomFixedPtr(0xaadea3))
-#define g_word_AADEB1 ((uint16*)RomFixedPtr(0xaadeb1))
-#define g_off_AADEDB ((uint16*)RomFixedPtr(0xaadedb))
-#define g_word_AADEF7 ((uint16*)RomFixedPtr(0xaadef7))
-#define g_word_AADECD ((uint16*)RomFixedPtr(0xaadecd))
-#define g_word_AAE630 ((uint16*)RomFixedPtr(0xaae630))
-#define g_word_AAE670 ((uint16*)RomFixedPtr(0xaae670))
-#define g_word_AAE6B0 ((uint16*)RomFixedPtr(0xaae6b0))
-#define kN00bTubeCracks_Palette2 ((uint16*)RomFixedPtr(0xaae2dd))
-#define g_off_AAE7A2 ((uint16*)RomFixedPtr(0xaae7a2))
 
 
 
@@ -664,7 +641,7 @@ void Torizo_Init(void) {  // 0xAAC87F
     E->base.timer = 0;
     E->base.palette_index = 0;
     E->toriz_var_F = addr_locret_AAC95E;
-    E->base.current_instruction = g_off_AAC967[v2];
+    E->base.current_instruction = kEnemyInit_Torizo_InstrListPtrs[v2];
     E->base.spritemap_pointer = addr_kTorizo_ExtSprmap_87D0;
     E->base.x_pos = g_word_AAC95F[v2];
     E->base.y_pos = g_word_AAC963[v2];
@@ -1095,7 +1072,7 @@ void TourianEntranceStatue_Init(void) {  // 0xAAD7C8
   v0->palette_index = 0;
   v0->instruction_timer = 1;
   v0->timer = 0;
-  uint16 v1 = g_off_AAD810[v0->parameter_1 >> 1];
+  uint16 v1 = kEnemyInit_TourianEntranceStatue_InstrListPtrs[v0->parameter_1 >> 1];
   v0->current_instruction = v1;
   if (!v0->parameter_1) {
     SpawnEprojWithRoomGfx(addr_kEproj_TourianStatueBaseDecoration, 0);
@@ -1104,8 +1081,8 @@ void TourianEntranceStatue_Init(void) {  // 0xAAD7C8
   }
   for (int i = 30; i >= 0; i -= 2) {
     int v5 = i >> 1;
-    target_palettes[v5 + 240] = g_word_AAD785[v5];
-    target_palettes[v5 + 160] = g_word_AAD765[v5];
+    target_palettes[v5 + 240] = kEnemyInit_TourianEntranceStatue_PaletteTab1[v5];
+    target_palettes[v5 + 160] = kEnemyInit_TourianEntranceStatue_PaletteTab0[v5];
   }
 }
 
@@ -1151,13 +1128,13 @@ void Shaktool_Func_2(uint16 k) {  // 0xAAD9A0
 
 const uint16 *Shaktool_Instr_1(uint16 k, const uint16 *jp) {  // 0xAAD9BA
   uint16 shakt_var_E = Get_Shaktool(k)->shakt_var_E;
-  Get_Shaktool(shakt_var_E)->shakt_var_F = g_off_AADEDB[0];
-  Get_Shaktool(shakt_var_E + 64)->shakt_var_F = g_off_AADEDB[1];
-  Get_Shaktool(shakt_var_E + 128)->shakt_var_F = g_off_AADEDB[2];
-  Get_Shaktool(shakt_var_E + 192)->shakt_var_F = g_off_AADEDB[3];
-  Get_Shaktool(shakt_var_E + 256)->shakt_var_F = g_off_AADEDB[4];
-  Get_Shaktool(shakt_var_E + 320)->shakt_var_F = g_off_AADEDB[5];
-  Get_Shaktool(shakt_var_E + 384)->shakt_var_F = g_off_AADEDB[6];
+  Get_Shaktool(shakt_var_E)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[0];
+  Get_Shaktool(shakt_var_E + 64)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[1];
+  Get_Shaktool(shakt_var_E + 128)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[2];
+  Get_Shaktool(shakt_var_E + 192)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[3];
+  Get_Shaktool(shakt_var_E + 256)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[4];
+  Get_Shaktool(shakt_var_E + 320)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[5];
+  Get_Shaktool(shakt_var_E + 384)->shakt_var_F = kEnemyInit_Shaktool_FuncPtrs[6];
   return jp;
 }
 
@@ -1166,7 +1143,7 @@ void Shaktool_DAE5(uint16 k) {  // 0xAADAE5
     for (int i = 12; i >= 0; i -= 2) {
       Enemy_Shaktool *E = Get_Shaktool(k);
       E->shakt_var_F = FUNC16(nullsub_274);
-      E->base.current_instruction = g_off_AADF21[i >> 1];
+      E->base.current_instruction = kShaktool_InstrListPtrs1[i >> 1];
       E->base.instruction_timer = 1;
       k -= 64;
     }
@@ -1320,7 +1297,7 @@ void Shaktool_DCD7(uint16 k) {  // 0xAADCD7
     HIBYTE(v2) ^= 0x80;
   uint16 v3 = (HIBYTE(v2) + 8) & 0xE0;
   LOBYTE(E->shakt_var_D) = v3;
-  E->base.current_instruction = g_off_AADD15[(uint16)(v3 >> 4) >> 1];
+  E->base.current_instruction = kShaktool_InstrListPtrs2[(uint16)(v3 >> 4) >> 1];
   E->base.instruction_timer = 1;
 }
 
@@ -1359,7 +1336,7 @@ void Shaktool_DD25(uint16 k) {  // 0xAADD25
       Shaktool_DC07(k);
       Enemy_Shaktool *EK = Get_Shaktool(k);
       EK->shakt_var_F = FUNC16(nullsub_274);
-      EK->base.current_instruction = g_off_AADF13[i >> 1];
+      EK->base.current_instruction = kShaktool_InstrListPtrs0[i >> 1];
       EK->base.instruction_timer = 1;
       k -= 64;
     }
@@ -1391,13 +1368,13 @@ void Shaktool_Init(void) {  // 0xAADE43
   E->shakt_var_D = 0;
   uint16 shakto_parameter_2 = E->shakt_parameter_2;
   int v3 = shakto_parameter_2 >> 1;
-  E->base.properties |= g_word_AADE95[v3];
-  E->shakt_var_E = cur_enemy_index - g_word_AADEA3[v3];
-  E->shakt_var_F = *(uint16 *)((uint8 *)g_off_AADEDB + shakto_parameter_2);
-  E->shakt_var_C = *(uint16 *)((uint8 *)g_word_AADEE9 + shakto_parameter_2) - g_word_AADEF7[v3];
-  E->shakt_var_B = g_word_AADEB1[v3];
-  E->base.current_instruction = g_word_AADEB1[v3 + 7];
-  E->base.layer = g_word_AADECD[v3];
+  E->base.properties |= kEnemyInit_Shaktool_PropertiesIndices[v3];
+  E->shakt_var_E = cur_enemy_index - kEnemyInit_Shaktool_RamOffsetIndices[v3];
+  E->shakt_var_F = *(uint16 *)((uint8 *)kEnemyInit_Shaktool_FuncPtrs + shakto_parameter_2);
+  E->shakt_var_C = *(uint16 *)((uint8 *)g_word_AADEE9 + shakto_parameter_2) - kEnemyInit_Shaktool_ZeroIndices[v3];
+  E->shakt_var_B = kEnemyInit_Shaktool_InitialAnglesIndices[v3];
+  E->base.current_instruction = kEnemyInit_Shaktool_InitialAnglesIndices[v3 + 7];
+  E->base.layer = kEnemyInit_Shaktool_LayerControlIndices[v3];
   if (shakto_parameter_2)
     Shaktool_DC2A(cur_enemy_index);
 }
@@ -1470,12 +1447,12 @@ const uint16 *Shaktool_Instr_12(uint16 k, const uint16 *jp) {  // 0xAAE58F
 const uint16 *Shaktool_Instr_7(uint16 k, const uint16 *jp) {  // 0xAAE5D8
   Enemy_Shaktool *E = Get_Shaktool(k);
   E->shakt_var_C = jp[0];
-  Enemy_MoveRight_IgnoreSlopes(k, INT16_SHL8(g_word_AAE630[E->shakt_var_C >> 1]));
-  Enemy_MoveDown(k, INT16_SHL8(abs16(g_word_AAE630[E->shakt_var_C >> 1])));
+  Enemy_MoveRight_IgnoreSlopes(k, INT16_SHL8(kShaktool_XDirectionIndices[E->shakt_var_C >> 1]));
+  Enemy_MoveDown(k, INT16_SHL8(abs16(kShaktool_XDirectionIndices[E->shakt_var_C >> 1])));
   EnemyFunc_C8AD(k);
   int v6 = E->shakt_var_C >> 1;
-  samus_x_pos = g_word_AAE670[v6] + E->base.x_pos;
-  samus_y_pos = g_word_AAE6B0[v6] + E->base.y_pos;
+  samus_x_pos = kShaktool_SamusXPositionIndices[v6] + E->base.x_pos;
+  samus_y_pos = kShaktool_SamusYPositionIndices[v6] + E->base.y_pos;
   return jp + 1;
 }
 
@@ -1505,7 +1482,7 @@ void ChozoStatue_Init(void) {  // 0xAAE725
   v0->palette_index = 0;
   gEnemyData(0)->layer = 0;
   uint16 parameter_2 = v0->parameter_2;
-  v0->current_instruction = g_off_AAE7A2[parameter_2 >> 1];
+  v0->current_instruction = kEnemyInit_ChozoStatue_InstrListPtrs[parameter_2 >> 1];
   if (parameter_2) {
     sub_AAE784();
   } else {

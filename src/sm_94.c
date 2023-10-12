@@ -3,13 +3,8 @@
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"
+#include "sm_94.h"
 
-#define fnkPlmHeaderDefPtrs 0x949139
-#define off_9492D9 ((uint16*)RomFixedPtr(0x9492d9))
-#define off_9492E9 ((uint16*)RomFixedPtr(0x9492e9))
-#define kPlmHeaderDefPtrs ((uint16*)RomFixedPtr(0x949139))
-#define off_94936B ((uint16*)RomFixedPtr(0x94936b))
-#define kBlockShotBombedReactionShootablePlm ((uint16 *)RomPtr_94(0x9ea6))
 
 int32 *cur_coll_amt32;
 
@@ -767,7 +762,7 @@ static uint8 BlockColl_Vert_SpikeBlock(CollInfo *ci) {  // 0x94905D
 static uint8 BlockColl_Horiz_SpecialAir(CollInfo *ci) {  // 0x94906F
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) != 0) {
-    const uint16 *v2 = (const uint16 *)RomPtr_94(off_9492D9[area_index]);
+    const uint16 *v2 = (const uint16 *)RomPtr_94(kSpecialAirPtrs[area_index]);
     return SpawnPLM(v2[v0 & 0x7f]) & 1;
   } else {
     SpawnPLM(kPlmHeaderDefPtrs[v0]);
@@ -778,7 +773,7 @@ static uint8 BlockColl_Horiz_SpecialAir(CollInfo *ci) {  // 0x94906F
 static uint8 BlockColl_Vert_SpecialAir(CollInfo *ci) {  // 0x94909D
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) != 0) {
-    const uint16 *v2 = (const uint16 *)RomPtr_94(off_9492D9[area_index]);
+    const uint16 *v2 = (const uint16 *)RomPtr_94(kSpecialAirPtrs[area_index]);
     return SpawnPLM(v2[v0 & 0x7f]) & 1;
   } else {
     SpawnPLM(kPlmHeaderDefPtrs[v0]);
@@ -789,7 +784,7 @@ static uint8 BlockColl_Vert_SpecialAir(CollInfo *ci) {  // 0x94909D
 static uint8 BlockColl_Horiz_SpecialBlock(CollInfo *ci) {  // 0x9490CB
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) != 0) {
-    const uint16 *v2 = (const uint16 *)RomPtr_94(off_9492E9[area_index]);
+    const uint16 *v2 = (const uint16 *)RomPtr_94(kSpecialBlockPtrs[area_index]);
     uint8 v4 = SpawnPLM(v2[v0 & 0x7f]) & 1;
     if (v4)
       return BlockColl_Horiz_SolidShootGrappleBlock(ci);
@@ -805,7 +800,7 @@ static uint8 BlockColl_Horiz_SpecialBlock(CollInfo *ci) {  // 0x9490CB
 static uint8 BlockColl_Vert_SpecialBlock(CollInfo *ci) {  // 0x949102
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) != 0) {
-    const uint16 *v3 = (const uint16 *)RomPtr_94(off_9492E9[area_index]);
+    const uint16 *v3 = (const uint16 *)RomPtr_94(kSpecialBlockPtrs[area_index]);
     uint8 v4 = SpawnPLM(v3[v0 & 0x7F]) & 1;
     if (v4)
       return BlockColl_Vert_SolidShootGrappleBlock(ci);
@@ -822,14 +817,14 @@ static uint8 BlockColl_Vert_SpecialBlock(CollInfo *ci) {  // 0x949102
 static uint8 BlockColl_Horiz_BombableAir(CollInfo *ci) {  // 0x9492F9
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) == 0)
-    SpawnPLM(off_94936B[v0]);
+    SpawnPLM(kBombablePlmTable[v0]);
   return 0;
 }
 
 static uint8 BlockColl_Vert_BombableAir(CollInfo *ci) {  // 0x949313
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) == 0)
-    SpawnPLM(off_94936B[v0]);
+    SpawnPLM(kBombablePlmTable[v0]);
   return 0;
 }
 
@@ -837,7 +832,7 @@ static uint8 BlockColl_Horiz_BombBlock(CollInfo *ci) {  // 0x94932D
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) != 0)
     return BlockColl_Horiz_SolidShootGrappleBlock(ci);
-  uint8 v1 = SpawnPLM(off_94936B[v0]) & 1;
+  uint8 v1 = SpawnPLM(kBombablePlmTable[v0]) & 1;
   if (v1)
     return BlockColl_Horiz_SolidShootGrappleBlock(ci);
   else
@@ -848,7 +843,7 @@ static uint8 BlockColl_Vert_BombBlock(CollInfo *ci) {  // 0x94934C
   uint8 v0 = BTS[cur_block_index];
   if ((v0 & 0x80) != 0)
     return BlockColl_Vert_SolidShootGrappleBlock(ci);
-  uint8 v1 = SpawnPLM(off_94936B[v0]) & 1;
+  uint8 v1 = SpawnPLM(kBombablePlmTable[v0]) & 1;
   if (v1)
     return BlockColl_Vert_SolidShootGrappleBlock(ci);
   else

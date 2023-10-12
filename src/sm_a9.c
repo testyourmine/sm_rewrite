@@ -5,37 +5,8 @@
 #include "funcs.h"
 #include "enemy_types.h"
 #include "sm_rtl.h"
+#include "sm_a9.h"
 
-
-#define g_word_A98929 ((uint16*)RomFixedPtr(0xa98929))
-#define g_off_A98B7B ((uint16*)RomFixedPtr(0xa98b7b))
-#define g_word_A9B099 ((uint16*)RomFixedPtr(0xa9b099))
-#define g_word_A9B109 ((uint16*)RomFixedPtr(0xa9b109))
-#define g_word_A9B10F ((uint16*)RomFixedPtr(0xa9b10f))
-#define g_off_A9B6D4 ((uint16*)RomFixedPtr(0xa9b6d4))
-#define MotherBrain_RainbowBeamPalettes ((uint16*)RomFixedPtr(0xade434))
-#define g_off_A9C61E ((uint16*)RomFixedPtr(0xa9c61e))
-#define g_off_A9C664 ((uint16*)RomFixedPtr(0xa9c664))
-#define kShitroid_FadingToBlack ((uint16*)RomFixedPtr(0xade8e2))
-#define g_word_A9CDFC ((uint16*)RomFixedPtr(0xa9cdfc))
-#define kShitroid_HealthBasedPalettes_Shell ((uint16*)RomFixedPtr(0xade7e2))
-#define kShitroid_HealthBasedPalettes_Innards ((uint16*)RomFixedPtr(0xade882))
-#define g_off_A9D260 ((uint16*)RomFixedPtr(0xa9d260))
-#define g_word_A9D583 ((uint16*)RomFixedPtr(0xa9d583))
-#define g_word_A9D549 ((uint16*)RomFixedPtr(0xa9d549))
-#define g_word_A9D67C ((uint16*)RomFixedPtr(0xa9d67c))
-#define g_word_A9D69C ((uint16*)RomFixedPtr(0xa9d69c))
-#define kDeadTorizo_TileData ((uint16*)RomFixedPtr(0xb7a800))
-#define g_off_A9D86A ((uint16*)RomFixedPtr(0xa9d86a))
-#define g_off_A9D870 ((uint16*)RomFixedPtr(0xa9d870))
-#define g_off_A9D897 ((uint16*)RomFixedPtr(0xa9d897))
-#define g_off_A9D89B ((uint16*)RomFixedPtr(0xa9d89b))
-#define g_off_A9D8C0 ((uint16*)RomFixedPtr(0xa9d8c0))
-#define g_off_A9D8C6 ((uint16*)RomFixedPtr(0xa9d8c6))
-#define g_word_A9D951 ((uint16*)RomFixedPtr(0xa9d951))
-#define g_word_A9D959 ((uint16*)RomFixedPtr(0xa9d959))
-#define TILEMAP_ADDR(x) &g_ram[0x2000 + x]
-#define kDeadMonsters_TileData RomPtr_B7(addr_kDeadMonsters_TileData)
 
 
 
@@ -472,7 +443,7 @@ void MotherBrain_HandleFakeDeathExplosions(void) {  // 0xA988DD
       v2 = 7;
     E->mbn_var_39 = v2;
     int v3 = (uint16)(4 * v2) >> 1;
-    eproj_spawn_pt = (Point16U){ g_word_A98929[v3], g_word_A98929[v3 + 1] };
+    eproj_spawn_pt = (Point16U){ kMotherBrain_FakeDeathExplosionsXYPositions[v3], kMotherBrain_FakeDeathExplosionsXYPositions[v3 + 1] };
     uint16 v4 = (random_number < 0x4000) ? 12 : 3;
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v4);
     QueueSfx2_Max3(0x24);
@@ -635,7 +606,7 @@ void MotherBrainsTubesFalling_Init(void) {  // 0xA98B35
   E->mbtfg_var_D = 0;
   E->mbtfg_var_E = 0;
   E->mbtfg_var_C = 0;
-  E->mbtfg_var_A = g_off_A98B7B[v1];
+  E->mbtfg_var_A = kMotherBrainTubesFallingFuncPtrs[v1];
 }
 
 void CallMotherBrainsTubesFalling(uint32 ea, uint16 k) {
@@ -1726,7 +1697,7 @@ void MotherBrain_GenerateExplosions(uint16 a, uint16 r22, uint16 r24) {  // 0xA9
     do {
       v9 = v4;
       int v5 = v3 >> 1;
-      eproj_spawn_pt = (Point16U){ g_word_A9B099[v5], g_word_A9B099[v5 + 1] };
+      eproj_spawn_pt = (Point16U){ kMotherBrain_ExplosionsXYOffsets[v5], kMotherBrain_ExplosionsXYOffsets[v5 + 1] };
       const uint16 *v6 = (const uint16 *)RomPtr_A9(r22);
       uint16 v7 = *v6;
       uint16 Random = NextRandom();
@@ -2166,7 +2137,7 @@ void MotherBrain_Body_Phase2_TryAttack(void) {  // 0xA9B64B
           v4 = 6;
       }
     }
-    uint16 v6 = g_off_A9B6D4[v4 >> 1];
+    uint16 v6 = kMotherBrain_AttackInstrListPtrs[v4 >> 1];
     if (v6 == addr_kMotherBrain_Ilist_9ECC) {
       if (sign16(E1->mbn_var_05 - 1)) {
         E->mbn_var_A = FUNC16(MotherBrain_FiringBomb_DecideOnWalking);
@@ -2699,7 +2670,7 @@ void MotherBrain_WriteDefaultPalette(void) {  // 0xA9BCCE
 }
 
 void MotherBrain_WritePhase2DeathPalette(void) {  // 0xA9BCF6
-  MotherBrain_WritePalette(MotherBrain_RainbowBeamPalettes[6]);
+  MotherBrain_WritePalette(kMotherBrain_RainbowBeamPalettes[6]);
 }
 
 void MotherBrain_HandleRainbowBeamPalette(void) {  // 0xA9BCFD
@@ -2708,11 +2679,11 @@ void MotherBrain_HandleRainbowBeamPalette(void) {  // 0xA9BCFD
     uint16 v1;
     do {
       v1 = mbn_var_01;
-      mbn_var_01 = MotherBrain_RainbowBeamPalettes[mbn_var_01 >> 1];
+      mbn_var_01 = kMotherBrain_RainbowBeamPalettes[mbn_var_01 >> 1];
     } while (!mbn_var_01);
     uint16 v2 = v1 + 2;
     Get_MotherBrain(0x40)->mbn_var_01 = v2;
-    MotherBrain_WritePalette(*(uint16 *)((uint8 *)MotherBrain_RainbowBeamPalettes + v2 - 2));
+    MotherBrain_WritePalette(*(uint16 *)((uint8 *)kMotherBrain_RainbowBeamPalettes + v2 - 2));
   }
 }
 
@@ -3431,7 +3402,7 @@ uint8 MotherBrain_MakeWalkForwards(uint16 j, uint16 a) {  // 0xA9C601
     if (E->mbn_var_02)
       return 0;
     if (sign16(E->base.x_pos - 128)) {
-      MotherBrain_SetBodyInstrs(g_off_A9C61E[j >> 1]);
+      MotherBrain_SetBodyInstrs(kMotherBrain_WalkForwardsFuncPtrs[j >> 1]);
       return 0;
     }
   }
@@ -3444,7 +3415,7 @@ uint8 MotherBrain_MakeWalkBackwards(uint16 a, uint16 j) {  // 0xA9C647
     if (E->mbn_var_02)
       return 0;
     if (!sign16(E->base.x_pos - 48)) {
-      MotherBrain_SetBodyInstrs(g_off_A9C664[j >> 1]);
+      MotherBrain_SetBodyInstrs(kMotherBrain_WalkBackwardsFuncPtrs[j >> 1]);
       return 0;
     }
   }
@@ -4016,7 +3987,7 @@ void ShitroidInCutscene_HandleShitroidDeathExplosions(uint16 k) {  // 0xA9CDB1
       v3 = 0;
     E->sice_var_07 = v3;
     int v4 = (uint16)(4 * v3) >> 1;
-    eproj_spawn_pt = (Point16U){ E->base.x_pos + g_word_A9CDFC[v4], E->base.y_pos + g_word_A9CDFC[v4 + 1] };
+    eproj_spawn_pt = (Point16U){ E->base.x_pos + kShitroid_DeathExplosionsXYOffsets[v4], E->base.y_pos + kShitroid_DeathExplosionsXYOffsets[v4 + 1] };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 3);
     QueueSfx3_Max3(0x13);
   } else {
@@ -4238,7 +4209,7 @@ void MotherBrain_HandleBrainPal(void) {  // 0xA9D206
     if (mbn_var_D_high) {
       HIBYTE(E->mbn_var_D) = mbn_var_D_high - 1;
     } else {
-      uint16 r18 = g_off_A9D260[HIBYTE(E->mbn_var_E) >> 1];
+      uint16 r18 = kMotherBrain_PaletteSetPtrs[HIBYTE(E->mbn_var_E) >> 1];
       HIBYTE(E->mbn_var_D) = E->mbn_var_E;
       mbn_var_D = E->mbn_var_D;
       if (mbn_var_D || Get_MotherBrain(0x40)->mbn_var_A == FUNC16(MotherBrainsBrain_SetupBrainAndNeckToDraw)) {
@@ -4411,31 +4382,31 @@ void DeadTorizo_Func_1(void) {  // 0xA9D4CF
   uint16 v3 = vram_write_queue_tail;
   if (v1 & 1) {
     uint16 v8 = 0;
-    uint16 v9 = g_word_A9D583[0];
+    uint16 v9 = kDeadTorizo_VramWriteTableIndices_1[0];
     do {
       v10 = gVramWriteEntry(v3);
       v10->size = v9;
       int v11 = v8 >> 1;
-      *(VoidP *)((uint8 *)&v10->src.addr + 1) = g_word_A9D583[v11 + 1];
-      v10->src.addr = g_word_A9D583[v11 + 2];
-      v10->vram_dst = g_word_A9D583[v11 + 3];
+      *(VoidP *)((uint8 *)&v10->src.addr + 1) = kDeadTorizo_VramWriteTableIndices_1[v11 + 1];
+      v10->src.addr = kDeadTorizo_VramWriteTableIndices_1[v11 + 2];
+      v10->vram_dst = kDeadTorizo_VramWriteTableIndices_1[v11 + 3];
       v3 += 7;
       v8 += 8;
-      v9 = g_word_A9D583[v8 >> 1];
+      v9 = kDeadTorizo_VramWriteTableIndices_1[v8 >> 1];
     } while (v9);
   } else {
     uint16 v2 = 0;
-    uint16 v4 = g_word_A9D549[0];
+    uint16 v4 = kDeadTorizo_VramWriteTableIndices_2[0];
     do {
       v5 = gVramWriteEntry(v3);
       v5->size = v4;
       int v6 = v2 >> 1;
-      *(VoidP *)((uint8 *)&v5->src.addr + 1) = g_word_A9D549[v6 + 1];
-      v5->src.addr = g_word_A9D549[v6 + 2];
-      v5->vram_dst = g_word_A9D549[v6 + 3];
+      *(VoidP *)((uint8 *)&v5->src.addr + 1) = kDeadTorizo_VramWriteTableIndices_2[v6 + 1];
+      v5->src.addr = kDeadTorizo_VramWriteTableIndices_2[v6 + 2];
+      v5->vram_dst = kDeadTorizo_VramWriteTableIndices_2[v6 + 3];
       v3 += 7;
       v2 += 8;
-      v4 = g_word_A9D549[v2 >> 1];
+      v4 = kDeadTorizo_VramWriteTableIndices_2[v2 >> 1];
     } while (v4);
   }
   Get_DeadEnemy(0)->dey_var_22 = 0;
@@ -4450,8 +4421,8 @@ void DeadTorizo_CorpseRottingFinished(void) {  // 0xA9D5BD
 }
 
 void DeadTorizo_CopyLineOfSandHeapTileData(uint16 a) {  // 0xA9D5EA
-  uint16 v1 = g_word_A9D67C[a];
-  int v2 = g_word_A9D69C[a] >> 1;
+  uint16 v1 = kDeadTorizo_SandHeapDestinationOffsets[a];
+  int v2 = kDeadTorizo_SandHeapSourceOffsets[a] >> 1;
   *(uint16 *)(&g_byte_7E9500 + v1) = kDeadTorizo_TileData[v2];
   *(uint16 *)(&g_byte_7E9510 + v1) = kDeadTorizo_TileData[v2 + 8];
   *(uint16 *)(&g_byte_7E9520 + v1) = kDeadTorizo_TileData[v2 + 16];
@@ -4515,8 +4486,8 @@ void DeadZoomer_Init(void) {  // 0xA9D849
   v1->palette_index = 3584;
   v1->ai_var_A = FUNC16(DeadZoomer_WaitForSamusColl);
   int v2 = v1->parameter_1 >> 1;
-  Enemy_SetInstrList(cur_enemy_index, g_off_A9D86A[v2]);
-  InitializeEnemyCorpseRotting(cur_enemy_index, g_off_A9D870[v2]);
+  Enemy_SetInstrList(cur_enemy_index, kDeadZoomer_InstrListPtrs[v2]);
+  InitializeEnemyCorpseRotting(cur_enemy_index, kDeadZoomer_CorpseRottingDefinitionPtrs[v2]);
 }
 
 void DeadRipper_Init(void) {  // 0xA9D876
@@ -4524,8 +4495,8 @@ void DeadRipper_Init(void) {  // 0xA9D876
   v1->palette_index = 3584;
   v1->ai_var_A = FUNC16(DeadRipper_WaitForSamusColl);
   int v2 = v1->parameter_1 >> 1;
-  Enemy_SetInstrList(cur_enemy_index, g_off_A9D897[v2]);
-  InitializeEnemyCorpseRotting(cur_enemy_index, g_off_A9D89B[v2]);
+  Enemy_SetInstrList(cur_enemy_index, kDeadRipper_InstrListPtrs[v2]);
+  InitializeEnemyCorpseRotting(cur_enemy_index, kDeadRipper_CorpseRottingDefinitionPtrs[v2]);
 }
 
 void DeadSkree_Init(void) {  // 0xA9D89F
@@ -4533,8 +4504,8 @@ void DeadSkree_Init(void) {  // 0xA9D89F
   v1->palette_index = 3584;
   v1->ai_var_A = FUNC16(DeadSkree_WaitForSamusColl);
   int v2 = v1->parameter_1 >> 1;
-  Enemy_SetInstrList(cur_enemy_index, g_off_A9D8C0[v2]);
-  InitializeEnemyCorpseRotting(cur_enemy_index, g_off_A9D8C6[v2]);
+  Enemy_SetInstrList(cur_enemy_index, kDeadSkree_InstrListPtrs[v2]);
+  InitializeEnemyCorpseRotting(cur_enemy_index, kDeadSkree_CorpseRottingDefinitionPtrs[v2]);
 }
 
 void DeadSidehopper_Powerbomb(void) {  // 0xA9D8CC
@@ -4610,8 +4581,8 @@ void DeadMonsters_Func_2(uint16 k) {  // 0xA9D91D
       E->dms_var_A = FUNC16(DeadSidehopper_Activated);
       Enemy_SetInstrList(k, addr_kDeadMonsters_Ilist_ECE3);
       int v3 = E->dms_var_06;
-      E->dms_var_0B = g_word_A9D951[v3];
-      E->dms_var_0A = g_word_A9D959[v3];
+      E->dms_var_0B = kDeadMonsters_Tab0[v3];
+      E->dms_var_0A = kDeadMonsters_Tab1[v3];
     }
   }
 }

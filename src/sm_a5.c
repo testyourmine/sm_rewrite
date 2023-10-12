@@ -4,24 +4,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_a5.h"
 
-
-#define kDraygon_MorePalettes ((uint16*)RomFixedPtr(0xa5a217))
-#define kDraygon_MorePalettes2 ((uint16*)RomFixedPtr(0xa5a277))
-#define g_word_A5A297 ((uint16*)RomFixedPtr(0xa5a297))
-#define g_word_A587DC ((uint16*)RomFixedPtr(0xa587dc))
-#define g_word_A596AF ((uint16*)RomFixedPtr(0xa596af))
-#define g_word_A596EF ((uint16*)RomFixedPtr(0xa596ef))
-#define g_word_A5A19F ((uint16*)RomFixedPtr(0xa5a19f))
-#define g_word_A5A1AF ((uint16*)RomFixedPtr(0xa5a1af))
-#define g_word_A5A1C7 ((uint16*)RomFixedPtr(0xa5a1c7))
-#define g_word_A5A1DF ((uint16*)RomFixedPtr(0xa5a1df))
-#define g_byte_A5CE07 ((uint8*)RomFixedPtr(0xa5ce07))
-#define g_word_A5E379 ((uint16*)RomFixedPtr(0xa5e379))
-#define g_word_A5E3F9 ((uint16*)RomFixedPtr(0xa5e3f9))
-#define g_word_A5E4F9 ((uint16*)RomFixedPtr(0xa5e4f9))
-#define g_word_A5E5D9 ((uint16*)RomFixedPtr(0xa5e5d9))
-#define kSporeSpawn_Palette ((uint16*)RomFixedPtr(0xa5e359))
 
 
 
@@ -50,7 +34,7 @@ void Draygon_Init(void) {  // 0xA58687
   uint16 j;
 
   for (int i = 48; i >= 0; i -= 2)
-    target_palettes[(i >> 1) + 144] = kDraygon_MorePalettes[i >> 1];
+    target_palettes[(i >> 1) + 144] = kDraygon_Palette1[i >> 1];
   for (j = 4094; (j & 0x8000) == 0; j -= 2)
     tilemap_stuff[j >> 1] = 824;
   Get_Draygon(cur_enemy_index)->base.palette_index = 0xe00;
@@ -181,7 +165,7 @@ void Draygon_Func_3(void) {  // 0xA587AA
     uint16 result = 2 * ((Random & 3) + 2);
     if (!Get_Draygon(result)->draygon_var_40) {
       int v2 = (uint16)(4 * ((Random & 3) + 2)) >> 1;
-      eproj_spawn_pt = (Point16U){ g_word_A587DC[v2], g_word_A587DC[v2 + 1] };
+      eproj_spawn_pt = (Point16U){ kDraygonTurret_XYSpawnPositions[v2], kDraygonTurret_XYSpawnPositions[v2 + 1] };
       SpawnEprojWithGfx(3, result, addr_stru_868E5E);
     }
   }
@@ -888,7 +872,7 @@ void Draygon_Hurt(void) {  // 0xA5954D
   if ((Get_Draygon(cur_enemy_index)->base.flash_timer & 2) == 0) {
     uint16 v3 = 4 * Get_Draygon(0)->draygon_var_0E;
     for (int i = 0; i != 8; i += 2) {
-      palette_buffer[(i >> 1) + 89] = g_word_A596AF[v3 >> 1];
+      palette_buffer[(i >> 1) + 89] = kDraygon_HealthPaletteTable[v3 >> 1];
       v3 += 2;
     }
   }
@@ -962,14 +946,14 @@ void Draygon_Func_41(void) {  // 0xA59701
   uint16 j;
   Enemy_Draygon *E = Get_Draygon(0);
   for (i = 0; ; i += 2) {
-    if ((int16)(E->base.health - g_word_A596EF[i >> 1]) >= 0)
+    if ((int16)(E->base.health - kDraygon_HealthPaletteThreshold[i >> 1]) >= 0)
       break;
   }
   if (i != E->draygon_var_0E) {
     E->draygon_var_0E = i;
     uint16 v2 = 4 * E->draygon_var_0E;
     for (j = 0; j != 8; j += 2) {
-      palette_buffer[(j >> 1) + 89] = g_word_A596AF[v2 >> 1];
+      palette_buffer[(j >> 1) + 89] = kDraygon_HealthPaletteTable[v2 >> 1];
       v2 += 2;
     }
   }
@@ -1093,15 +1077,15 @@ void Draygon_Func_42(uint16 varE24) {  // 0xA59FE0
   for (int i = 20; i >= 0; i -= 4) {
     int v2 = i >> 1;
     int v3 = v0 >> 1;
-    if (((g_word_A5A1DF[v2] + 64) & 0x80) != 0)
-      AddToHiLo(&sprite_x_pos[v3], &sprite_x_subpos[v3], g_word_A5A1AF[v2]);
+    if (((kMiniDraygon_DeathSequenceAngles[v2] + 64) & 0x80) != 0)
+      AddToHiLo(&sprite_x_pos[v3], &sprite_x_subpos[v3], kMiniDraygon_DeathSequenceSubspeeds[v2]);
     else
-      AddToHiLo(&sprite_x_pos[v3], &sprite_x_subpos[v3], -g_word_A5A1AF[v2] - (varE24 << 16));
+      AddToHiLo(&sprite_x_pos[v3], &sprite_x_subpos[v3], -kMiniDraygon_DeathSequenceSubspeeds[v2] - (varE24 << 16));
     uint16 v8 = sprite_y_subpos[v3];
-    if (((g_word_A5A1DF[v2] + 128) & 0x80) != 0)
-      AddToHiLo(&sprite_y_pos[v3], &sprite_y_subpos[v3], g_word_A5A1AF[v2 + 1]);
+    if (((kMiniDraygon_DeathSequenceAngles[v2] + 128) & 0x80) != 0)
+      AddToHiLo(&sprite_y_pos[v3], &sprite_y_subpos[v3], kMiniDraygon_DeathSequenceSubspeeds[v2 + 1]);
     else
-      AddToHiLo(&sprite_y_pos[v3], &sprite_y_subpos[v3], -g_word_A5A1AF[v2 + 1]);
+      AddToHiLo(&sprite_y_pos[v3], &sprite_y_subpos[v3], -kMiniDraygon_DeathSequenceSubspeeds[v2 + 1]);
     v0 -= 2;
   }
 }
@@ -1116,12 +1100,12 @@ void Draygon_Func_43(void) {  // 0xA5A06C
   uint16 v2 = 20;
   do {
     int v3 = v2 >> 1;
-    CreateSpriteAtPos(g_word_A5A1C7[v3], g_word_A5A1C7[v3 + 1], 59, 0xe00);
+    CreateSpriteAtPos(kMiniDraygon_DeathSequenceSpawnPositions[v3], kMiniDraygon_DeathSequenceSpawnPositions[v3 + 1], 59, 0xe00);
     v2 -= 4;
   } while (--v1 >= 0);
   for (j = 2; j >= 0; --j) {
     int v5 = v2 >> 1;
-    CreateSpriteAtPos(g_word_A5A1C7[v5], g_word_A5A1C7[v5 + 1], 60, 0xe00);
+    CreateSpriteAtPos(kMiniDraygon_DeathSequenceSpawnPositions[v5], kMiniDraygon_DeathSequenceSpawnPositions[v5 + 1], 60, 0xe00);
     v2 -= 4;
   }
 }
@@ -1141,15 +1125,15 @@ void Draygon_Func_45(void) {  // 0xA5A0D9
 void Draygon_Func_46(void) {  // 0xA5A13E
   uint16 v0 = 62;
   do {
-    uint16 v1 = Get_Draygon(0)->draygon_var_46 + g_word_A5A19F[(uint16)(v0 - 56) >> 1];
+    uint16 v1 = Get_Draygon(0)->draygon_var_46 + kMiniDraygon_MovementLatency[(uint16)(v0 - 56) >> 1];
     if ((v1 & 0x8000) == 0) {
       uint16 v2 = v1;
-      if (*(uint16 *)&g_byte_A5CE07[v1] == 0x8080) {
+      if (*(uint16 *)&kMiniDraygonIntroDanceTable[v1] == 0x8080) {
         sprite_instr_list_ptrs[v0 >> 1] = 0;
       } else {
         int v3 = v0 >> 1;
-        sprite_x_pos[v3] += SignExtend8(g_byte_A5CE07[v1]);
-        sprite_y_pos[v3] += SignExtend8(g_byte_A5CE07[v2 + 1]);
+        sprite_x_pos[v3] += SignExtend8(kMiniDraygonIntroDanceTable[v1]);
+        sprite_y_pos[v3] += SignExtend8(kMiniDraygonIntroDanceTable[v2 + 1]);
       }
     }
     v0 -= 2;
@@ -1320,22 +1304,22 @@ const uint16 *Draygon_Instr_20(uint16 k, const uint16 *jp) {  // 0xA5E8BA
 const uint16 *Draygon_Instr_29(uint16 k, const uint16 *jp) {  // 0xA5E8CA
   uint16 v2 = jp[0];
   for (int i = 0; i != 32; i += 2)
-    palette_buffer[(i >> 1) + 144] = g_word_A5E3F9[(v2 + i) >> 1];
+    palette_buffer[(i >> 1) + 144] = kSporeSpawn_DeathSequencePalette1[(v2 + i) >> 1];
   for (int i = 0; i != 32; i += 2)
-    palette_buffer[(i >> 1) + 64] = g_word_A5E4F9[(v2 + i) >> 1];
+    palette_buffer[(i >> 1) + 64] = kSporeSpawn_DeathSequnceBg1AndBg2Palette4[(v2 + i) >> 1];
   for (int i = 0; i != 32; i += 2)
-    palette_buffer[(i >> 1) + 112] = g_word_A5E5D9[(v2 + i) >> 1];
+    palette_buffer[(i >> 1) + 112] = kSporeSpawn_DeathSequenceBg1AndBg2Palette7[(v2 + i) >> 1];
   return jp + 1;
 }
 
 const uint16 *Draygon_Instr_19(uint16 k, const uint16 *jp) {  // 0xA5E91C
   uint16 v2 = jp[0];
   for (int i = 0; i != 32; i += 2)
-    target_palettes[(i >> 1) + 144] = g_word_A5E3F9[(v2 + i) >> 1];
+    target_palettes[(i >> 1) + 144] = kSporeSpawn_DeathSequencePalette1[(v2 + i) >> 1];
   for (int i = 0; i != 32; i += 2)
-    target_palettes[(i >> 1) + 64] = g_word_A5E4F9[(v2 + i) >> 1];
+    target_palettes[(i >> 1) + 64] = kSporeSpawn_DeathSequnceBg1AndBg2Palette4[(v2 + i) >> 1];
   for (int i = 0; i != 32; i += 2)
-    target_palettes[(i >> 1) + 112] = g_word_A5E5D9[(v2 + i) >> 1];
+    target_palettes[(i >> 1) + 112] = kSporeSpawn_DeathSequenceBg1AndBg2Palette7[(v2 + i) >> 1];
   return jp + 1;
 }
 
@@ -1374,7 +1358,7 @@ void sub_A5E9F5(void) {  // 0xA5E9F5
 void SporeSpawn_Init(void) {  // 0xA5EA2A
   uint16 v0 = 0;
   for (int i = 0; i != 32; i += 2) {
-    target_palettes[(i >> 1) + 240] = kSporeSpawn_Palette[v0 >> 1];
+    target_palettes[(i >> 1) + 240] = kSporeSpawn_Palette7[v0 >> 1];
     v0 += 2;
   }
   SpawnEprojWithGfx(0, cur_enemy_index, addr_kEproj_SporeSpawnsStalk);
@@ -1597,7 +1581,7 @@ void SporeSpawn_Func_6(void) {  // 0xA5EDF3
 void SporeSpawn_Func_7(uint16 a) {  // 0xA5EE4A
   uint16 v1 = a;
   for (int i = 0; i != 32; i += 2) {
-    palette_buffer[(i >> 1) + 144] = g_word_A5E379[v1 >> 1];
+    palette_buffer[(i >> 1) + 144] = kSporeSpawn_HealthPaletteTable[v1 >> 1];
     v1 += 2;
   }
 }

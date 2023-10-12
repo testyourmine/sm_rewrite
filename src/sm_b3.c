@@ -3,22 +3,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_b3.h"
 
-
-#define g_off_B3882B ((uint16*)RomFixedPtr(0xb3882b))
-#define g_off_B38833 ((uint16*)RomFixedPtr(0xb38833))
-#define g_word_B3949B ((uint16*)RomFixedPtr(0xb3949b))
-#define g_word_B394BB ((uint16*)RomFixedPtr(0xb394bb))
-#define g_word_B39675 ((uint16*)RomFixedPtr(0xb39675))
-#define kBotwoonHealthThresForPalChange ((uint16*)RomFixedPtr(0xb3981b))
-#define kBotwoonHealthBasedPalette ((uint16*)RomFixedPtr(0xb3971b))
-#define g_off_B3946B ((uint16*)RomFixedPtr(0xb3946b))
-#define g_off_B3948B ((uint16*)RomFixedPtr(0xb3948b))
-#define g_word_B3E718 ((uint16*)RomFixedPtr(0xb3e718))
-#define g_word_B3E71E ((uint16*)RomFixedPtr(0xb3e71e))
-#define g_off_B3E72A ((uint16*)RomFixedPtr(0xb3e72a))
-#define g_off_B3E724 ((uint16*)RomFixedPtr(0xb3e724))
-#define g_word_B3E730 ((uint16*)RomFixedPtr(0xb3e730))
 
 
 
@@ -177,7 +163,7 @@ void BrinstarPipeBug_Func_SetInstrList(void) {  // 0xB3898B
   if (pbg_var_E != PipeBug->pbg_var_01) {
     PipeBug->pbg_var_01 = pbg_var_E;
     PipeBug->base.current_instruction = PipeBug->pbg_parameter_1 ?
-      g_off_B38833[pbg_var_E] : g_off_B3882B[pbg_var_E];
+      kBrinstarGreenPipeBug_InstrListPtrs[pbg_var_E] : kBrinstarRedPipeBug_InstrListPtrs[pbg_var_E];
     PipeBug->base.instruction_timer = 1;
     PipeBug->base.timer = 0;
   }
@@ -705,8 +691,8 @@ void Botwoon_Init(void) {  // 0xB39583
     E->botwoon_var_E = FUNC16(Botwoon_Func_MoveToTargetHole);
     E->botwoon_var_F = FUNC16(Botwoon_Func_MoveHeadAround);
     E->botwoon_var_20 = 256;
-    E->botwoon_var_38 = g_word_B394BB[0];
-    E->botwoon_var_C = g_word_B394BB[1];
+    E->botwoon_var_38 = kBotwoon_SpeedTable[0];
+    E->botwoon_var_C = kBotwoon_SpeedTable[1];
     E->botwoon_var_33 = 1;
     E->botwoon_var_34 = 1;
     E->botwoon_var_59 = 1;
@@ -763,7 +749,7 @@ void Botwoon_Main(void) {  // 0xB39668
 
 void Botwoon_Func_1(uint16 k) {  // 0xB3967B
   Enemy_Botwoon *E = Get_Botwoon(k);
-  if ((g_word_B39675[E->botwoon_var_3F] & NextRandom()) == 0)
+  if ((kBotwoon_9675PtrsUNUSED[E->botwoon_var_3F] & NextRandom()) == 0)
     E->botwoon_var_2E = 1;
 }
 
@@ -892,8 +878,8 @@ void Botwoon_Func_SetSpeed(uint16 k) {  // 0xB3995D
       else
         E->botwoon_var_3F = 1;
       int v3 = (uint16)(4 * E->botwoon_var_3F) >> 1;
-      E->botwoon_var_38 = g_word_B394BB[v3];
-      E->botwoon_var_C = g_word_B394BB[v3 + 1];
+      E->botwoon_var_38 = kBotwoon_SpeedTable[v3];
+      E->botwoon_var_C = kBotwoon_SpeedTable[v3 + 1];
     }
   }
 }
@@ -1029,7 +1015,7 @@ void Botwoon_Func_MoveToTargetHole(void) {  // 0xB39BB7
 Point16U Botwoon_Func_GetOffsetToHole(uint16 k) {  // 0xB39BF8
   Enemy_Botwoon *E = Get_Botwoon(k);
   int v2 = E->botwoon_var_37 >> 1;
-  uint16 v3 = g_word_B3949B[v2] + 4 - E->base.x_pos;
+  uint16 v3 = kBotwoon_HoleHitboxes[v2] + 4 - E->base.x_pos;
   uint16 r18 = v3;
   if (sign16(v3 - 256)) {
     if (sign16(v3 + 256))
@@ -1037,7 +1023,7 @@ Point16U Botwoon_Func_GetOffsetToHole(uint16 k) {  // 0xB39BF8
   } else {
     r18 = 255;
   }
-  uint16 v4 = g_word_B3949B[v2 + 2] + 4 - E->base.y_pos;
+  uint16 v4 = kBotwoon_HoleHitboxes[v2 + 2] + 4 - E->base.y_pos;
   uint16 r20 = v4;
   if (sign16(v4 - 256)) {
     if (sign16(v4 + 256))
@@ -1143,7 +1129,7 @@ void Botwoon_Func_MoveHeadAround(uint16 k) {  // 0xB39DC0
       E->base.properties &= ~kEnemyProps_Tangible;
       // Added hysteresis: Compute a weighted average
       E->botwoon_var_45 = (uint8)(E->botwoon_var_45 + (int8)(r22 - E->botwoon_var_45) * 3 / 4);
-      v1 = g_off_B3946B[E->botwoon_var_45 >> 5];
+      v1 = kBotwoon_MouthClosedDirectionInstrListPtrs[E->botwoon_var_45 >> 5];
     }
     if (v1 != E->botwoon_var_3B) {
       E->base.current_instruction = v1;
@@ -1167,7 +1153,7 @@ void Botwoon_Func_SetSpitAngle(uint16 k) {  // 0xB39E7D
   E->base.layer = 2;
   uint16 v2 = CalculateAngleOfSamusFromEnemy(cur_enemy_index);
   E->botwoon_var_3D = v2;
-  uint16 v3 = g_off_B3948B[(uint8)(v2 + 16) >> 5];
+  uint16 v3 = kBotwoon_SpitDirectionInstrListPtrs[(uint8)(v2 + 16) >> 5];
   E->base.current_instruction = v3;
   E->botwoon_var_3B = v3;
   E->base.instruction_timer = 1;
@@ -1223,10 +1209,10 @@ void Botwoon_Func_CollisionDetection(uint16 k) {  // 0xB39F93
     int n = 24;
     do {
       int v2 = n >> 1;
-      if ((int16)(E->base.x_pos - g_word_B3949B[v2]) >= 0
-          && (int16)(E->base.x_pos - g_word_B3949B[v2 + 1]) < 0
-          && (int16)(E->base.y_pos - g_word_B3949B[v2 + 2]) >= 0
-          && (int16)(E->base.y_pos - g_word_B3949B[v2 + 3]) < 0) {
+      if ((int16)(E->base.x_pos - kBotwoon_HoleHitboxes[v2]) >= 0
+          && (int16)(E->base.x_pos - kBotwoon_HoleHitboxes[v2 + 1]) < 0
+          && (int16)(E->base.y_pos - kBotwoon_HoleHitboxes[v2 + 2]) >= 0
+          && (int16)(E->base.y_pos - kBotwoon_HoleHitboxes[v2 + 3]) < 0) {
         E->botwoon_var_35 = 1;
         E->botwoon_var_33 ^= 1;
         E->botwoon_var_36 = E->botwoon_var_B;
@@ -1355,11 +1341,11 @@ void EscapeEtecoon_Init(void) {  // 0xB3E6CB
     E->base.timer = 0;
     E->base.palette_index = 0;
     int v3 = E->een_parameter_1 >> 1;
-    E->base.x_pos = g_word_B3E718[v3];
-    E->base.y_pos = g_word_B3E71E[v3];
-    E->een_var_F = g_off_B3E724[v3];
-    E->base.current_instruction = g_off_B3E72A[v3];
-    E->een_var_A = g_word_B3E730[v3];
+    E->base.x_pos = kEscapeEtecoon_XPositions[v3];
+    E->base.y_pos = kEscapeEtecoon_YPositions[v3];
+    E->een_var_F = kEscapeEtecoon_FuncPtrs[v3];
+    E->base.current_instruction = kEscapeEtecoon_InstrListPtrs[v3];
+    E->een_var_A = kEscapeEtecoon_XVelocities[v3];
   }
 }
 

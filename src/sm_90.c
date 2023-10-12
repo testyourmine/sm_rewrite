@@ -4,15 +4,8 @@
 #include "variables.h"
 #include "sm_rtl.h"
 #include "funcs.h"
+#include "sm_90.h"
 
-#define kSamusFramesForUnderwaterSfx ((uint8*)RomFixedPtr(0x90a514))
-#define kPauseMenuMapData ((uint16*)RomFixedPtr(0x829717))
-#define kPauseMenuMapTilemaps ((LongPtr*)RomFixedPtr(0x82964a))
-#define kBeamTilePtrs ((uint16*)RomFixedPtr(0x90c3b1))
-#define kBeamPalettePtrs ((uint16*)RomFixedPtr(0x90c3c9))
-#define off_90B5BB ((uint16*)RomFixedPtr(0x90b5bb))
-#define off_90B609 ((uint16*)RomFixedPtr(0x90b609))
-#define kFlareAnimDelays ((uint16*)RomFixedPtr(0x90c481))
 
 static Pair_Bool_Amt Samus_CalcBaseSpeed_NoDecel_X(uint16 k);
 
@@ -3175,8 +3168,8 @@ void SpawnProjectileTrail(uint16 k) {  // 0x90B657
   projectiletrail_left_instr_timer[v5] = 1;
   projectiletrail_right_instr_timer[v5] = 1;
   int v6 = v2;
-  projectiletrail_left_instr_list_ptr[v5] = off_90B5BB[v6];
-  projectiletrail_right_instr_list_ptr[v5] = off_90B609[v6];
+  projectiletrail_left_instr_list_ptr[v5] = kLeftProjTrailInstrListPtrs[v6];
+  projectiletrail_right_instr_list_ptr[v5] = kRightProjTrailInstrListPtrs[v6];
   SetProjectileTrailPosition(projectile_index, v4);
 }
 

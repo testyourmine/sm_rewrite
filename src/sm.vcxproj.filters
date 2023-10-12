@@ -296,6 +296,60 @@
     <ClInclude Include="sm_89.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="sm_9b.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_90.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_91.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_93.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_94.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a0.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a3.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a4.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a5.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a6.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a7.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a8.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_a9.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_aa.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_b2.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_b3.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_b4.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

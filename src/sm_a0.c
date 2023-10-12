@@ -4,15 +4,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_a0.h"
 
-#define kEnemyLayerToQueuePtr ((uint16*)RomFixedPtr(0xa0b133))
-#define kStandardSpriteTiles ((uint16*)RomFixedPtr(0x9ad200))
-#define kSine8bit ((uint8*)RomFixedPtr(0xa0b143))
-#define kEquationForQuarterCircle ((uint16*)RomFixedPtr(0xa0b7ee))
-#define g_off_A0C2DA ((uint16*)RomFixedPtr(0xa0c2da))
-#define CHECK_locret_A0C434(Ek) (byte_A0C435[Ek] & 0x80 ? -1 : 0)
-#define g_word_A0C49F ((uint16*)RomFixedPtr(0xa0c49f))
-#define kAlignYPos_Tab0 ((uint8*)RomFixedPtr(0x948b2b))
 
 typedef struct EnemyBlockCollInfo {
   int32 ebci_r18_r20;
@@ -3425,7 +3418,7 @@ static uint8 SetCarry_4(EnemyBlockCollInfo *ebci) {  // 0xA0C2BE
 }
 
 static uint8 EnemyBlockCollReact_Spike(EnemyBlockCollInfo *ebci) {  // 0xA0C2C0
-  uint16 v0 = g_off_A0C2DA[BTS[cur_block_index] & 0x7F];
+  uint16 v0 = kEnemyDestroySpikeBtsOffset[BTS[cur_block_index] & 0x7F];
   if (!v0)
     return 1;
   SpawnPLM(v0);
@@ -3498,9 +3491,9 @@ static uint8 EnemyBlockCollHorizReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) 
     return (ebci->ebci_r32 & 0x4000) != 0;
   int i = 2 * (current_slope_bts & 0x1F);
   if (ebci->ebci_r18_r20 >= 0) {
-    ebci->ebci_r18_r20 = (ebci->ebci_r18_r20 >> 8) * g_word_A0C49F[i + 1];
+    ebci->ebci_r18_r20 = (ebci->ebci_r18_r20 >> 8) * kEnemyXYSlopeOffsetMultiplicationIndices[i + 1];
   } else {
-    ebci->ebci_r18_r20 = -(-(int16)(ebci->ebci_r18_r20 >> 8) * g_word_A0C49F[i + 1]);
+    ebci->ebci_r18_r20 = -(-(int16)(ebci->ebci_r18_r20 >> 8) * kEnemyXYSlopeOffsetMultiplicationIndices[i + 1]);
   }
   return 0;
 }

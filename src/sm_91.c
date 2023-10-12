@@ -3,32 +3,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "sm_rtl.h"
+#include "sm_91.h"
 
-
-#define unk_91CAF2 (*(SpawnHdmaObject_Args*)RomFixedPtr(0x91caf2))
-#define stru_91D2D6 ((XrayBlockData*)RomFixedPtr(0x91d2d6))
-#define stru_91D2D6 ((XrayBlockData*)RomFixedPtr(0x91d2d6))
-#define off_91D727 ((uint16*)RomFixedPtr(0x91d727))
-#define kSamusPalette_HyperBeam ((uint16*)RomFixedPtr(0x91d829))
-#define kSamusPalette_NonPseudoScrew ((uint16*)RomFixedPtr(0x91d7d5))
-#define kSamusPalette_PseudoScrew ((uint16*)RomFixedPtr(0x91d7ff))
-#define word_9BA3C0 ((uint16*)RomFixedPtr(0x9ba3c0))
-#define kSamus_SpeedBoostingPalettes ((uint16*)RomFixedPtr(0x91d998))
-#define kSamus_HyperBeamPalettes ((uint16*)RomFixedPtr(0x91d99e))
-#define kSamusPal_ScrewAttack ((uint16*)RomFixedPtr(0x91da4a))
-#define kSamusPal_SpeedBoost ((uint16*)RomFixedPtr(0x91daa9))
-#define kSamusPal_SpeedBoostShine ((uint16*)RomFixedPtr(0x91db10))
-#define kSamusPal_Shinespark ((uint16*)RomFixedPtr(0x91db75))
-#define stru_91DC00 ((SamusCrystalFlashPalTable*)RomFixedPtr(0x91dc00))
-#define off_91DC28 ((uint16*)RomFixedPtr(0x91dc28))
-#define word_91E921 ((uint16*)RomFixedPtr(0x91e921))
-#define word_91E9F3 ((uint16*)RomFixedPtr(0x91e9f3))
-#define word_91EB74 ((uint16*)RomFixedPtr(0x91eb74))
-#define kSamusTurnPose_Standing ((uint8*)RomFixedPtr(0x91f9c2))
-#define kSamusTurnPose_Crouching ((uint8*)RomFixedPtr(0x91f9cc))
-#define kSamusTurnPose_Jumping ((uint8*)RomFixedPtr(0x91f9d6))
-#define kSamusTurnPose_Falling ((uint8*)RomFixedPtr(0x91f9e0))
-#define kSamusTurnPose_Moonwalk ((uint8*)RomFixedPtr(0x91f9ea))
 
 static void Xray_Func12(uint16 dst_r22, const uint8 *jp);
 static void Xray_Func13(uint16 dst_r22, uint16 j);
@@ -849,7 +825,7 @@ void CalculateXrayHdmaTableInner(uint16 k, uint16 j, uint16 r18, uint16 r20, boo
 void XrayRunHandler(void) {  // 0x91CAD6
   if (!time_is_frozen_flag && (button_config_run_b & joypad1_lastkeys) != 0) {
     if (Xray_Initialize() & 1)
-      SpawnHdmaObject(0x91, &unk_91CAF2);
+      SpawnHdmaObject(0x91, &kXrayHdmaWindow2Object);
   }
 }
 
@@ -975,11 +951,11 @@ static const uint8 *Xray_GetXrayedBlock(uint16 k) {  // 0x91CDD6
   uint16 bts = BTS[k];
   uint16 r40 = level_data[k] & 0xF000;
   for (int i = 0; ; ++i) {
-    value = stru_91D2D6[i].value;
+    value = kXrayBlockData[i].value;
     if (value == 0xFFFF)
       break;
     if (value == r40) {
-      for (const uint8 *p = RomPtr_91(stru_91D2D6[i].addr); ; p += 4) {
+      for (const uint8 *p = RomPtr_91(kXrayBlockData[i].addr); ; p += 4) {
         value = GET_WORD(p);
         if (value == 0xFFFF)
           break;
@@ -1046,8 +1022,8 @@ static void Xray_CombinedMove(uint16 dst_r22, uint16 r36, bool which_dir) {
     }
   }
 
-  if (stru_91D2D6[1].value == r48) {
-    uint16 *t = (uint16 *)RomPtr_91(stru_91D2D6[1].addr);
+  if (kXrayBlockData[1].value == r48) {
+    uint16 *t = (uint16 *)RomPtr_91(kXrayBlockData[1].addr);
     for (; t[0] != 0xffff; t += 2) {
       if (t[0] == 0xff00 || t[0] == (step & 0xff)) {
         Xray_Func12(dst_r22, RomPtr_91(t[1] + 2));
@@ -1393,7 +1369,7 @@ void Samus_HandlePalette(void) {
   if ((samus_special_super_palette_flags & 0x8000) == 0
       && (HandleBeamChargePalettes() & 1
           || !(off_91D72D[timer_for_shine_timer]() & 1))) {
-    CopyToSamusSuitPalette(off_91D727[samus_suit_palette_index >> 1]);
+    CopyToSamusSuitPalette(kSamusPalette_Normal[samus_suit_palette_index >> 1]);
   }
   HandleMiscSamusPalette();
 }
@@ -1447,7 +1423,7 @@ uint8 HandleVisorPalette(void) {  // 0x91D83F
     if ((uint8)v1)
       return 0;
     samus_visor_palette_timer_index = v1 | 5;
-    palette_buffer[196] = word_9BA3C0[HIBYTE(v1) >> 1];
+    palette_buffer[196] = kSamus_VisorColors[HIBYTE(v1) >> 1];
     int v2 = HIBYTE(v1) + 2;
     if (sign16(v2 - 12)) {
       samus_visor_palette_timer_index = swap16(v2) | (uint8)samus_visor_palette_timer_index;
@@ -1635,7 +1611,7 @@ uint8 Samus_HandleCrystalFlashPals(void) {  // 0x91DB93
   } else {
     if ((int16)--samus_shine_timer <= 0) {
       samus_shine_timer = 5;
-      Samus_Copy6PalColors(off_91DC28[special_samus_palette_frame >> 1]);
+      Samus_Copy6PalColors(kSamusPal_CrystalFlash10to15[special_samus_palette_frame >> 1]);
       uint16 v0 = special_samus_palette_frame + 2;
       if (!sign16(special_samus_palette_frame - 10))
         v0 = 0;
@@ -1643,8 +1619,8 @@ uint8 Samus_HandleCrystalFlashPals(void) {  // 0x91DB93
     }
     bool v1 = (int16)-- * (uint16 *)&suit_pickup_color_math_B < 0;
     if (!*(uint16 *)&suit_pickup_color_math_B || v1) {
-      *(uint16 *)&suit_pickup_color_math_B = *(uint16 *)((uint8 *)&stru_91DC00[0].timer + special_samus_palette_timer);
-      Samus_Copy10PalColors(*(VoidP *)((uint8 *)&stru_91DC00[0].ptr + special_samus_palette_timer));
+      *(uint16 *)&suit_pickup_color_math_B = *(uint16 *)((uint8 *)&kSamusPal_CrystalFlash0to9[0].timer + special_samus_palette_timer);
+      Samus_Copy10PalColors(*(VoidP *)((uint8 *)&kSamusPal_CrystalFlash0to9[0].ptr + special_samus_palette_timer));
       uint16 v2 = special_samus_palette_timer + 4;
       if (!sign16(special_samus_palette_timer - 36))
         v2 = 0;
@@ -1675,7 +1651,7 @@ uint8 Samus_HandleXrayPals(void) {  // 0x91DCB4
         bool v0 = (--special_samus_palette_timer & 0x8000) != 0;
         if (!special_samus_palette_timer || v0) {
           special_samus_palette_timer = 5;
-          palette_buffer[196] = word_9BA3C0[special_samus_palette_frame >> 1];
+          palette_buffer[196] = kSamus_VisorColors[special_samus_palette_frame >> 1];
           if (sign16(special_samus_palette_frame - 4))
             special_samus_palette_frame += 2;
         }
@@ -1689,7 +1665,7 @@ uint8 Samus_HandleXrayPals(void) {  // 0x91DCB4
     if (special_samus_palette_timer && !v2)
       return 1;
     special_samus_palette_timer = 5;
-    palette_buffer[196] = word_9BA3C0[special_samus_palette_frame >> 1];
+    palette_buffer[196] = kSamus_VisorColors[special_samus_palette_frame >> 1];
     uint16 v3 = special_samus_palette_frame + 2;
     if (!sign16(special_samus_palette_frame - 10))
       v3 = 6;
@@ -2331,9 +2307,9 @@ void Samus_HandleTransFromBlockColl_2(void) {
   if (HIBYTE(input_to_pose_calc) != 4) {
     uint16 v0 = 4 * HIBYTE(input_to_pose_calc);
     if (samus_pose_x_dir == 4)
-      samus_new_pose = word_91E921[(v0 >> 1) + 1];
+      samus_new_pose = kSamusPose_Falling[(v0 >> 1) + 1];
     else
-      samus_new_pose = word_91E921[v0 >> 1];
+      samus_new_pose = kSamusPose_Falling[v0 >> 1];
     samus_momentum_routine_index = 5;
   }
 }
@@ -2371,7 +2347,7 @@ uint8 Samus_HandleTransFromBlockColl_1_0(void) {  // 0x91E95D
       if ((button_config_shoot_x & joypad1_lastkeys) == 0) {
         v0 = kPoseParams[samus_pose].direction_shots_fired;
 LABEL_6:
-        samus_new_pose = word_91E9F3[v0];
+        samus_new_pose = kSamusPose_Landing[v0];
         return 0;
       }
       if (samus_pose_x_dir == 4)
@@ -2457,7 +2433,7 @@ void Samus_CheckWalkedIntoSomething(void) {  // 0x91EADE
   int32 amt;
 
   if (samus_collides_with_solid_enemy && samus_movement_type == 1) {
-    samus_new_pose = word_91EB74[*(&kPoseParams[0].direction_shots_fired + (8 * samus_pose))];
+    samus_new_pose = kSamusPose_RanIntoWall[*(&kPoseParams[0].direction_shots_fired + (8 * samus_pose))];
     samus_collides_with_solid_enemy = 0;
     return;
   }
@@ -2475,7 +2451,7 @@ void Samus_CheckWalkedIntoSomething(void) {  // 0x91EADE
       goto LABEL_10;
     }
 LABEL_11:
-    samus_new_pose = word_91EB74[*(&kPoseParams[0].direction_shots_fired + (8 * samus_new_pose))];
+    samus_new_pose = kSamusPose_RanIntoWall[*(&kPoseParams[0].direction_shots_fired + (8 * samus_new_pose))];
     samus_collides_with_solid_enemy = 0;
     return;
   }

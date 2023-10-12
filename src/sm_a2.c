@@ -4,45 +4,8 @@
 #include "funcs.h"
 #include "enemy_types.h"
 #include "variables.h"
+#include "sm_a2.h"
 
-
-#define kEnemyInit_BouncingGoofball_Tab0 ((uint16*)RomFixedPtr(0xa286df))
-#define kEnemyInit_BouncingGoofball_Tab1 ((uint16*)RomFixedPtr(0xa286ef))
-#define kBouncingGoofball_Tab0 ((uint8*)RomFixedPtr(0xa28701))
-#define g_word_A28D56 (*(uint16*)RomFixedPtr(0xa28d56))
-#define g_word_A28D58 (*(uint16*)RomFixedPtr(0xa28d58))
-#define g_word_A29A07 (*(uint16*)RomFixedPtr(0xa29a07))
-#define g_word_A29A09 (*(uint16*)RomFixedPtr(0xa29a09))
-#define g_word_A29A0B (*(uint16*)RomFixedPtr(0xa29a0b))
-#define g_word_A29A0D (*(uint16*)RomFixedPtr(0xa29a0d))
-#define g_word_A29F36 ((uint16*)RomFixedPtr(0xa29f36))
-#define g_off_A29F42 ((uint16*)RomFixedPtr(0xa29f42))
-#define g_word_A2A3DD ((uint16*)RomFixedPtr(0xa2a3dd))
-#define g_word_A2A3ED ((uint16*)RomFixedPtr(0xa2a3ed))
-#define g_byte_A2A7CF ((uint8*)RomFixedPtr(0xa2a7cf))
-#define g_word_A2A622 ((uint16*)RomFixedPtr(0xa2a622))
-#define g_word_A2AC07 ((uint16*)RomFixedPtr(0xa2ac07))
-#define g_word_A2AC11 ((uint16*)RomFixedPtr(0xa2ac11))
-#define g_word_A2B520 ((uint16*)RomFixedPtr(0xa2b520))
-#define g_word_A2B530 ((uint16*)RomFixedPtr(0xa2b530))
-#define g_word_A2B550 ((uint16*)RomFixedPtr(0xa2b550))
-#define g_word_A2B75B ((uint16*)RomFixedPtr(0xa2b75b))
-#define g_word_A2BBBB (*(uint16*)RomFixedPtr(0xa2bbbb))
-#define g_word_A2BBBF (*(uint16*)RomFixedPtr(0xa2bbbf))
-#define g_word_A2BE86 ((uint16*)RomFixedPtr(0xa2be86))
-#define g_word_A2C1C1 ((uint16*)RomFixedPtr(0xa2c1c1))
-#define g_word_A2C1C5 (*(uint16*)RomFixedPtr(0xa2c1c5))
-#define g_word_A2C6CA (*(uint16*)RomFixedPtr(0xa2c6ca))
-#define g_word_A2C6CE (*(uint16*)RomFixedPtr(0xa2c6ce))
-#define g_off_A2CB77 ((uint16*)RomFixedPtr(0xa2cb77))
-#define g_off_A2DF5E ((uint16*)RomFixedPtr(0xa2df5e))
-#define g_off_A2DF6A ((uint16*)RomFixedPtr(0xa2df6a))
-#define g_off_A2E5EF ((uint16*)RomFixedPtr(0xa2e5ef))
-#define g_word_A2EA56 ((uint16*)RomFixedPtr(0xa2ea56))
-#define g_off_A2EA4E ((uint16*)RomFixedPtr(0xa2ea4e))
-#define g_off_A2EC3A ((uint16*)RomFixedPtr(0xa2ec3a))
-#define g_off_A2EDFB ((uint16*)RomFixedPtr(0xa2edfb))
-#define g_off_A2F107 ((uint16*)RomFixedPtr(0xa2f107))
 
 
 
@@ -482,8 +445,8 @@ void MaridiaBeybladeTurtle_Func7(uint16 k) {  // 0xA28F8D
       uint16 v3 = 0;
       if ((int16)(E->base.x_pos - samus_x_pos) < 0)
         v3 = 4;
-      E->mte_var_01 = *(uint16 *)((uint8 *)&g_word_A28D56 + v3);
-      E->mte_var_02 = *(uint16 *)((uint8 *)&g_word_A28D58 + v3);
+      E->mte_var_01 = *(uint16 *)((uint8 *)&kMaridiaBeybladeTurtle_Tab0 + v3);
+      E->mte_var_02 = *(uint16 *)((uint8 *)&kMaridiaBeybladeTurtle_Tab1 + v3);
       E->mte_var_E = 0;
       E->mte_var_03 = 0;
       E->mte_var_A = FUNC16(MaridiaBeybladeTurtle_Func8);
@@ -873,7 +836,7 @@ void ThinHoppingBlobs_Func3(void) {  // 0xA29AAA
   }
   uint16 v3 = 8 * thbs_var_00;
   E->thbs_var_F = v3;
-  E->thbs_var_E = *(uint16 *)((uint8 *)&g_word_A29A0D + v3);
+  E->thbs_var_E = *(uint16 *)((uint8 *)&kThinHoppingBlobs_AirborneFuncPtrs + v3);
 }
 
 uint16 ThinHoppingBlobs_Func4(void) {  // 0xA29B06
@@ -888,10 +851,10 @@ void ThinHoppingBlobs_Func5(void) {  // 0xA29B1A
   uint16 r22 = 0;
   uint16 r24 = 0;
   do {
-    r22 += *(uint16 *)((uint8 *)&g_word_A29A09 + thbs_var_F);
+    r22 += *(uint16 *)((uint8 *)&kThinHoppingBlobs_XSpeedIndices + thbs_var_F);
     r24 += *(uint16 *)((uint8 *)kCommonEnemySpeeds_Quadratic + (8 * ((r22 & 0xFF00) >> 8)) + 1);
     thbs_var_F = E->thbs_var_F;
-    v2 = swap16(*(uint16 *)((uint8 *)&g_word_A29A07 + thbs_var_F));
+    v2 = swap16(*(uint16 *)((uint8 *)&kThinHoppingBlobs_JumpHeightIndices + thbs_var_F));
   } while (!sign16(v2 - r24));
   E->thbs_var_B = r22;
   E->thbs_var_03 = 0;
@@ -949,16 +912,16 @@ void ThinHoppingBlobs_Func8(void) {  // 0xA29B88
     uint16 thbs_var_F = E->thbs_var_F;
     if (E->thbs_var_03) {
       ThinHoppingBlobs_Func10();
-      E->thbs_var_B += *(uint16 *)((uint8 *)&g_word_A29A0B + thbs_var_F);
+      E->thbs_var_B += *(uint16 *)((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F);
     } else {
       ThinHoppingBlobs_Func9();
-      E->thbs_var_B -= *(uint16 *)((uint8 *)&g_word_A29A0B + thbs_var_F);
+      E->thbs_var_B -= *(uint16 *)((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F);
     }
     if (sign16(E->thbs_var_B)) {
       E->thbs_var_03 = 1;
       E->thbs_var_B = 0;
     }
-    uint16 R20 = (*(uint16 *)((uint8 *)&g_word_A29A09 + E->thbs_var_F) & 0xFF00) >> 8;
+    uint16 R20 = (*(uint16 *)((uint8 *)&kThinHoppingBlobs_XSpeedIndices + E->thbs_var_F) & 0xFF00) >> 8;
     if (E->thbs_var_02)
       R20 = -R20;
     if (Enemy_MoveRight_IgnoreSlopes(cur_enemy_index, INT16_SHL16(R20))) {
@@ -1068,8 +1031,8 @@ void ThinHoppingBlobs_Func14(void) {  // 0xA29D6B
 void ThinHoppingBlobs_Func15(void) {  // 0xA29D98
   Enemy_ThinHoppingBlobs *E = Get_ThinHoppingBlobs(cur_enemy_index);
   uint16 thbs_var_F = E->thbs_var_F;
-  uint16 R20 = (*(uint16 *)((uint8 *)&g_word_A29A0B + thbs_var_F) & 0xFF00) >> 8;
-  uint16 R18 = *((uint8 *)&g_word_A29A0B + thbs_var_F) << 8;
+  uint16 R20 = (*(uint16 *)((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F) & 0xFF00) >> 8;
+  uint16 R18 = *((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F) << 8;
   if (Enemy_MoveDown(cur_enemy_index, __PAIR32__(R20, R18))) {
     uint16 R28 = ThinHoppingBlobs_Func4();
     E->thbs_var_00 = (R28 & 1) + 5;
@@ -1103,10 +1066,10 @@ void SpikeShootingPlant_Init(void) {  // 0xA29F48
     SpikeShootingPlant_7();
   uint16 sspt_parameter_1_low = LOBYTE(E->sspt_parameter_1);
   E->sspt_var_E = sspt_parameter_1_low;
-  E->sspt_var_F = g_off_A29F42[sspt_parameter_1_low];
+  E->sspt_var_F = kEnemyInit_SpikeShootingPlant_FuncPtrs[sspt_parameter_1_low];
   int v2 = LOBYTE(E->sspt_parameter_2);
-  E->sspt_var_01 = g_word_A29F36[v2] + E->base.x_pos;
-  E->sspt_var_00 = E->base.x_pos - g_word_A29F36[v2];
+  E->sspt_var_01 = kEnemyInit_SpikeShootingPlant_XRadiusTravel[v2] + E->base.x_pos;
+  E->sspt_var_00 = E->base.x_pos - kEnemyInit_SpikeShootingPlant_XRadiusTravel[v2];
   int v3 = (8 * HIBYTE(E->sspt_parameter_2)) >> 1;
   E->sspt_var_B = kCommonEnemySpeeds_Linear[v3];
   E->sspt_var_A = kCommonEnemySpeeds_Linear[v3 + 1];
@@ -1214,9 +1177,9 @@ void MaridiaSpikeyShell_Init(void) {
   E->mssl_var_D = kCommonEnemySpeeds_Linear[v3 + 2];
   E->mssl_var_C = kCommonEnemySpeeds_Linear[v3 + 3];
   int v4 = HIBYTE(E->mssl_parameter_2);
-  E->mssl_var_02 = g_word_A2A3DD[v4] + E->base.x_pos;
-  E->mssl_var_01 = E->base.x_pos - g_word_A2A3DD[v4];
-  E->mssl_var_00 = g_word_A2A3ED[HIBYTE(E->mssl_parameter_1)];
+  E->mssl_var_02 = kEnemyInit_MaridiaSpikeyShell_XDistanceRanges[v4] + E->base.x_pos;
+  E->mssl_var_01 = E->base.x_pos - kEnemyInit_MaridiaSpikeyShell_XDistanceRanges[v4];
+  E->mssl_var_00 = kEnemyInit_MaridiaSpikeyShell_UndergroundTimers[HIBYTE(E->mssl_parameter_1)];
   E->mssl_var_F = 0;
   if (E->mssl_var_E == 2) {
     E->mssl_var_F = 16;
@@ -1272,7 +1235,7 @@ void MaridiaSpikeyShell_6(void) {  // 0xA2A517
   ++E->base.y_pos;
   if (!sign16(++E->mssl_var_F - 16)) {
     E->mssl_var_E = 2;
-    E->mssl_var_00 = g_word_A2A3ED[HIBYTE(E->mssl_parameter_1)];
+    E->mssl_var_00 = kEnemyInit_MaridiaSpikeyShell_UndergroundTimers[HIBYTE(E->mssl_parameter_1)];
   }
 }
 
@@ -1383,8 +1346,8 @@ void GunshipTop_1(uint16 k) {  // 0xA2A784
   bool v4 = (--E0->gtp_var_D & 0x8000) != 0;
   if (v3 || v4) {
     uint16 v5 = 2 * E0->gtp_var_C;
-    E0->gtp_var_D = g_byte_A2A7CF[v5];
-    uint16 v6 = (int8)g_byte_A2A7CF[v5 + 1];
+    E0->gtp_var_D = kGunshipTop_HoverValues[v5];
+    uint16 v6 = (int8)kGunshipTop_HoverValues[v5 + 1];
     E0->base.y_pos += v6;
     Enemy_GunshipTop *E1 = Get_GunshipTop(k + 64);
     E1->base.y_pos += v6;
@@ -1439,12 +1402,12 @@ void GunshipTop_4(uint16 k) {  // 0xA2A8D0
 
   Enemy_GunshipTop *GunshipTop = Get_GunshipTop(k);
   v2 = GunshipTop->gtp_var_E;
-  samus_y_pos += g_word_A2A622[v2];
+  samus_y_pos += kGunshipTop_YVelocitiesBrakeData[v2];
   Enemy_GunshipTop *v3 = Get_GunshipTop(k + 128);
-  v3->base.y_pos += g_word_A2A622[v2];
+  v3->base.y_pos += kGunshipTop_YVelocitiesBrakeData[v2];
   Enemy_GunshipTop *v4 = Get_GunshipTop(k + 64);
-  v4->base.y_pos += g_word_A2A622[v2];
-  GunshipTop->base.y_pos += g_word_A2A622[v2];
+  v4->base.y_pos += kGunshipTop_YVelocitiesBrakeData[v2];
+  GunshipTop->base.y_pos += kGunshipTop_YVelocitiesBrakeData[v2];
   v5 = GunshipTop->gtp_var_E + 1;
   GunshipTop->gtp_var_E = v5;
   if (!sign16(v5 - 17)) {
@@ -1643,10 +1606,10 @@ void GunshipTop_17(uint16 k) {  // 0xA2ABC7
   gVramWriteEntry(vram_write_queue_tail)->size = 1024;
   v2 += 2;
   int v3 = v1 >> 1;
-  gVramWriteEntry(v2)->size = g_word_A2AC07[v3];
+  gVramWriteEntry(v2)->size = kGunshipTop_DustCloudTilesSourceAddresses[v3];
   v2 += 2;
   LOBYTE(gVramWriteEntry(v2++)->size) = -108;
-  gVramWriteEntry(v2)->size = g_word_A2AC11[v3];
+  gVramWriteEntry(v2)->size = kGunshipTop_DustCloudTilesDestinationAddresses[v3];
   vram_write_queue_tail = v2 + 2;
   substate += 2;
   if (!sign16(substate - 10)) {
@@ -1912,12 +1875,12 @@ void LavaquakeRocks_1(void) {  // 0xA2B596
 }
 
 void LavaquakeRocks_2(void) {  // 0xA2B5B2
-  eproj_unk1995 = g_word_A2B550[(NextRandom() & 0x1E) >> 1];
+  eproj_unk1995 = kLavaquakeRocks_Tab2[(NextRandom() & 0x1E) >> 1];
   int v1 = (NextRandom() & 0x1E) >> 1;
-  SpawnEprojWithGfx(g_word_A2B530[v1], cur_enemy_index, addr_stru_86BD5A);
+  SpawnEprojWithGfx(kLavaquakeRocks_Tab1[v1], cur_enemy_index, addr_stru_86BD5A);
   Enemy_LavaquakeRocks *E = Get_LavaquakeRocks(cur_enemy_index);
   E->lrs_var_A = FUNC16(LavaquakeRocks_3);
-  E->lrs_var_B = g_word_A2B520[(uint16)(NextRandom() & 0xE) >> 1];
+  E->lrs_var_B = kLavaquakeRocks_Tab0[(uint16)(NextRandom() & 0xE) >> 1];
 }
 
 void LavaquakeRocks_3(void) {  // 0xA2B5EA
@@ -1978,15 +1941,15 @@ void Rinka_1(uint16 k) {  // 0xA2B69B
     uint16 v3 = 0;
     do {
       int v4 = v3 >> 1;
-      uint16 x = g_word_A2B75B[v4];
-      uint16 y = g_word_A2B75B[v4 + 1];
-      if (!Rinka_10(x, y) && !(gRam8000_Default(g_word_A2B75B[v4 + 2])[31].var_3F & 1)) {
+      uint16 x = kRinka_MotherBrainRoomSpawnTable[v4];
+      uint16 y = kRinka_MotherBrainRoomSpawnTable[v4 + 1];
+      if (!Rinka_10(x, y) && !(gRam8000_Default(kRinka_MotherBrainRoomSpawnTable[v4 + 2])[31].var_3F & 1)) {
         Enemy_Rinka *E = Get_Rinka(k);
         ES->x_pos = x;
         E->base.x_pos = x;
         ES->y_pos = y;
         E->base.y_pos = y;
-        uint16 v9 = g_word_A2B75B[(v3 >> 1) + 2];
+        uint16 v9 = kRinka_MotherBrainRoomSpawnTable[(v3 >> 1) + 2];
         gRam8000_Default(v9)[31].var_3F = -1;
         E->rinka_var_D = v9;
         return;
@@ -1994,20 +1957,20 @@ void Rinka_1(uint16 k) {  // 0xA2B69B
       v3 += 6;
     } while ((int16)(v3 - 66) < 0);
     uint16 v10 = 0;
-    while (gRam8000_Default(g_word_A2B75B[(v10 >> 1) + 2])[31].var_3F & 1) {
+    while (gRam8000_Default(kRinka_MotherBrainRoomSpawnTable[(v10 >> 1) + 2])[31].var_3F & 1) {
       v10 += 6;
       if ((int16)(v10 - 66) >= 0)
         return;
     }
     int v11 = v10 >> 1;
-    uint16 v12 = g_word_A2B75B[v11];
+    uint16 v12 = kRinka_MotherBrainRoomSpawnTable[v11];
     ES->x_pos = v12;
     Enemy_Rinka *E = Get_Rinka(k);
     E->base.x_pos = v12;
-    uint16 v15 = g_word_A2B75B[v11 + 1];
+    uint16 v15 = kRinka_MotherBrainRoomSpawnTable[v11 + 1];
     ES->y_pos = v15;
     E->base.y_pos = v15;
-    uint16 v16 = g_word_A2B75B[v11 + 2];
+    uint16 v16 = kRinka_MotherBrainRoomSpawnTable[v11 + 2];
     E->rinka_var_D = v16;
     gRam8000_Default(v16)[31].var_3F = -1;
   } else {
@@ -2023,15 +1986,15 @@ uint16 Rinka_2(uint16 k) {  // 0xA2B79D
   while (1) {
     int v2 = v1 >> 1;
     v3 = gEnemySpawnData(k);
-    if (g_word_A2B75B[v2] == v3->x_pos && g_word_A2B75B[v2 + 1] == v3->y_pos)
+    if (kRinka_MotherBrainRoomSpawnTable[v2] == v3->x_pos && kRinka_MotherBrainRoomSpawnTable[v2 + 1] == v3->y_pos)
       break;
     v1 += 6;
     if (!sign16(v1 - 66)) {
       v1 = 0;
-      return g_word_A2B75B[(v1 >> 1) + 2];
+      return kRinka_MotherBrainRoomSpawnTable[(v1 >> 1) + 2];
     }
   }
-  return g_word_A2B75B[(v1 >> 1) + 2];
+  return kRinka_MotherBrainRoomSpawnTable[(v1 >> 1) + 2];
 }
 
 void CallRinkaFunc(uint32 ea, uint16 k) {
@@ -2278,8 +2241,8 @@ void Rio_Main(void) {  // 0xA2BBE3
 void Rio_1(uint16 k) {  // 0xA2BBED
   if (!(CompareDistToSamus_X(k, 0xA0) & 1)) {
     Enemy_Rio *E = Get_Rio(k);
-    E->rio_var_C = g_word_A2BBBB;
-    E->rio_var_D = g_word_A2BBBF;
+    E->rio_var_C = kRio_Constant0;
+    E->rio_var_D = kRio_Constant1;
     if ((int16)(samus_x_pos - E->base.x_pos) < 0)
       E->rio_var_D = -E->rio_var_D;
     Rio_6(addr_kRio_Ilist_BB7F);
@@ -2407,7 +2370,7 @@ void NorfairLavajumpingEnemy_Func_1(uint16 k) {  // 0xA2BEDC
 
 void NorfairLavajumpingEnemy_Func_2(uint16 k) {  // 0xA2BF1A
   Enemy_NorfairLavajumpingEnemy *E = Get_NorfairLavajumpingEnemy(k);
-  E->nley_var_C = g_word_A2BE86[(uint16)(HIBYTE(random_number) & 6) >> 1];
+  E->nley_var_C = kNorfairLavajumpingEnemy_Tab0[(uint16)(HIBYTE(random_number) & 6) >> 1];
   E->nley_var_F = FUNC16(NorfairLavajumpingEnemy_Func_3);
   E->base.properties |= kEnemyProps_ProcessedOffscreen;
   QueueSfx2_Max6(0xD);
@@ -2570,8 +2533,8 @@ void NorfairRio_Func_1(uint16 k) {  // 0xA2C281
 void NorfairRio_Func_2(uint16 k) {  // 0xA2C2E7
   Enemy_NorfairRio *E = Get_NorfairRio(k);
   if ((random_number & 0x101) != 0 && !(CompareDistToSamus_X(k, 0xC0) & 1)) {
-    E->nro_var_A = g_word_A2C1C1[(uint16)((random_number >> 1) & 2) >> 1];
-    E->nro_var_B = g_word_A2C1C5;
+    E->nro_var_A = kNorfairRio_Tab0[(uint16)((random_number >> 1) & 2) >> 1];
+    E->nro_var_B = kNorfairRio_Constant0;
     if ((int16)(samus_x_pos - E->base.x_pos) < 0)
       E->nro_var_B = -E->nro_var_B;
     NorfairRio_Func_7(addr_kNorfairRio_Ilist_C107);
@@ -2693,8 +2656,8 @@ void LowerNorfairRio_Func_1(uint16 k) {  // 0xA2C72E
 void LowerNorfairRio_Func_2(uint16 k) {  // 0xA2C771
   Enemy_NorfairRio *E = Get_NorfairRio(k);
   if ((random_number & 0x101) != 0 && !(CompareDistToSamus_X(k, 0x70) & 1)) {
-    E->nro_var_C = g_word_A2C6CA;
-    E->nro_var_D = g_word_A2C6CE;
+    E->nro_var_C = kLowerNorfairRio_Constant0;
+    E->nro_var_D = kLowerNorfairRio_Constant1;
     if ((int16)(samus_x_pos - E->base.x_pos) < 0)
       E->nro_var_D = -E->nro_var_D;
     LowerNorfairRio_Func_7(addr_kLowerNorfairRio_Ilist_C630);
@@ -2997,7 +2960,7 @@ void MaridiaLargeSnail_Func_10(uint16 k) {  // 0xA2CFDF
   uint16 mlsl_var_00 = E->mlsl_var_00;
   if (mlsl_var_00 != E->mlsl_var_01) {
     E->mlsl_var_01 = mlsl_var_00;
-    E->base.current_instruction = g_off_A2CB77[mlsl_var_00];
+    E->base.current_instruction = kMaridiaLargeSnail_InstrListPtrs[mlsl_var_00];
     E->base.instruction_timer = 1;
     E->base.timer = 0;
   }
@@ -3046,8 +3009,8 @@ void HirisingSlowfalling_Init(void) {  // 0xA2DF76
   E->hsg_var_00 = E->base.x_pos;
   E->hsg_var_01 = E->base.y_pos;
   int v2 = HIBYTE(E->hsg_parameter_1);
-  E->hsg_var_E = g_off_A2DF5E[v2];
-  E->hsg_var_F = *(uint16 *)RomPtr_A2(g_off_A2DF6A[v2]);
+  E->hsg_var_E = kHirisingSlowFalling_Ptrs0[v2];
+  E->hsg_var_F = *(uint16 *)RomPtr_A2(kHirisingSlowFalling_Ptrs1[v2]);
   uint16 r18 = HirisingSlowfalling_Func_1(cur_enemy_index);
   HirisingSlowfalling_Func_2(cur_enemy_index, r18);
   E->hsg_var_03 = E->hsg_var_01 - r18;
@@ -3412,7 +3375,7 @@ void LavaSeahorse_Func_6(void) {  // 0xA2E782
   uint16 lse_var_00 = E->lse_var_00;
   if (lse_var_00 != E->lse_var_01) {
     E->lse_var_01 = lse_var_00;
-    E->base.current_instruction = g_off_A2E5EF[lse_var_00];
+    E->base.current_instruction = kLavaSeahorse_InstrListPtrs[lse_var_00];
     E->base.instruction_timer = 1;
     E->base.timer = 0;
   }
@@ -3423,7 +3386,7 @@ void LavaSeahorse_Func_7(void) {  // 0xA2E7A5
   uint16 lse_var_00 = E->lse_var_00;
   if (lse_var_00 != E->lse_var_01) {
     E->lse_var_01 = lse_var_00;
-    E->base.current_instruction = g_off_A2E5EF[lse_var_00];
+    E->base.current_instruction = kLavaSeahorse_InstrListPtrs[lse_var_00];
     E->base.instruction_timer = 1;
     E->base.timer = 0;
   }
@@ -3462,7 +3425,7 @@ void LavaSeahorse_E7DA(void) {  // 0xA2E7DA
 
 void TimedShutter_Init(void) {  // 0xA2E9DA
   Enemy_TimedShutter *E = Get_TimedShutter(cur_enemy_index);
-  E->tsr_var_A = g_off_A2EA4E[E->base.current_instruction + 2 * E->base.extra_properties];
+  E->tsr_var_A = kEnemyInit_TimedShutter_FuncPtrs[E->base.current_instruction + 2 * E->base.extra_properties];
   uint16 y_pos = E->base.y_pos;
   uint16 v3;
   if (E->base.extra_properties) {
@@ -3485,8 +3448,8 @@ void TimedShutter_Init(void) {  // 0xA2E9DA
   E->tsr_var_F = 0;
   E->base.current_instruction = addr_kTimedShutter_Ilist_E998;
   int v5 = (uint16)(4 * LOBYTE(E->tsr_parameter_2)) >> 1;
-  E->tsr_var_00 = g_word_A2EA56[v5];
-  E->tsr_var_01 = g_word_A2EA56[v5 + 1];
+  E->tsr_var_00 = kEnemyInit_TimedShutter_YPositionIndices[v5];
+  E->tsr_var_01 = kEnemyInit_TimedShutter_YPositionIndices[v5 + 1];
 }
 
 void CallTimedShutterFunc(uint32 ea, uint16 k) {

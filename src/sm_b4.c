@@ -3,9 +3,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_b4.h"
 
-
-#define kCreateSprite_Ilists ((uint16*)RomFixedPtr(0xb4bda8))
 
 
 
@@ -25,7 +24,7 @@ uint16 CreateSpriteAtPos(uint16 x_r18, uint16 y_r20, uint16 ilist_r22, uint16 pa
   sprite_x_pos[v1] = x_r18;
   sprite_y_pos[v1] = y_r20;
   sprite_palettes[v1] = pal_r24;
-  uint16 v2 = kCreateSprite_Ilists[ilist_r22];
+  uint16 v2 = kSpriteObject_InstrListPtrs[ilist_r22];
   sprite_instr_list_ptrs[v1] = v2;
   sprite_instr_timer[v1] = *(uint16 *)RomPtr_B4(v2);
 //  R18 = v0;

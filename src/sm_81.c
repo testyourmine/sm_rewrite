@@ -1508,7 +1508,7 @@ void DrawFileSelectionTime(uint16 a, uint16 k) {  // 0x81A14E
     uint16 v2 = r26;
     *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[769] + v2) = enemy_data[0].palette_index | (mod_val + 8288);
     *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[768] + v2) = enemy_data[0].palette_index | (div_val + 8288);
-    LoadMenuTilemap(r26 + 4, addr_word_81B4A8);
+    LoadMenuTilemap(r26 + 4, addr_kMenuTilemap_Colon);
 
     int div_min = game_time_minutes / 10;
     int mod_min = game_time_minutes % 10;

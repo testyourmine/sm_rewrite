@@ -4,63 +4,9 @@
 #include "sm_rtl.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_a6.h"
 
-#define g_byte_A6E269 ((uint8*)RomFixedPtr(0xa6e269))
-#define g_word_A6E2AA ((uint16*)RomFixedPtr(0xa6e2aa))
-#define g_word_A6E30A ((uint16*)RomFixedPtr(0xa6e30a))
-#define g_word_A6E46A ((uint16*)RomFixedPtr(0xa6e46a))
-#define g_off_A6A4EB ((uint16*)RomFixedPtr(0xa6a4eb))
-#define g_off_A6A743 ((uint16*)RomFixedPtr(0xa6a743))
-#define g_word_A6AE4D ((uint16*)RomFixedPtr(0xa6ae4d))
-#define g_word_A6AF2F ((uint16*)RomFixedPtr(0xa6af2f))
-#define g_word_A6B00F ((uint16*)RomFixedPtr(0xa6b00f))
-#define g_off_A6ACDA ((uint16*)RomFixedPtr(0xa6acda))
-#define g_off_A6AD45 ((uint16*)RomFixedPtr(0xa6ad45))
-#define g_word_A6B60D ((uint16*)RomFixedPtr(0xa6b60d))
-#define g_word_A6B63B ((uint16*)RomFixedPtr(0xa6b63b))
-#define g_word_A6B6C8 ((uint16*)RomFixedPtr(0xa6b6c8))
-#define g_word_A6B9D5 ((uint16*)RomFixedPtr(0xa6b9d5))
-#define g_word_A6B9DB ((uint16*)RomFixedPtr(0xa6b9db))
-#define g_off_A6B965 ((uint16*)RomFixedPtr(0xa6b965))
-#define g_off_A6B96D ((uint16*)RomFixedPtr(0xa6b96d))
-#define g_word_A6B9D5 ((uint16*)RomFixedPtr(0xa6b9d5))
-#define g_word_A6B9DB ((uint16*)RomFixedPtr(0xa6b9db))
-#define g_word_A6B94D ((uint16*)RomFixedPtr(0xa6b94d))
-#define g_word_A6B959 ((uint16*)RomFixedPtr(0xa6b959))
-#define g_word_A6BB48 ((uint16*)RomFixedPtr(0xa6bb48))
-#define g_word_A6BB4E ((uint16*)RomFixedPtr(0xa6bb4e))
-#define g_word_A6C1DF ((uint16*)RomFixedPtr(0xa6c1df))
-#define g_off_A6C7BA ((uint16*)RomFixedPtr(0xa6c7ba))
-#define g_word_A6C804 ((uint16*)RomFixedPtr(0xa6c804))
-#define g_off_A6C808 ((uint16*)RomFixedPtr(0xa6c808))
-#define g_word_A6C836 ((uint16*)RomFixedPtr(0xa6c836))
-#define g_off_A6C83A ((uint16*)RomFixedPtr(0xa6c83a))
-#define g_word_A6C868 ((uint16*)RomFixedPtr(0xa6c868))
-#define g_off_A6C86C ((uint16*)RomFixedPtr(0xa6c86c))
-#define g_word_A6C89A ((uint16*)RomFixedPtr(0xa6c89a))
-#define g_off_A6C89E ((uint16*)RomFixedPtr(0xa6c89e))
-#define g_word_A6C8CC ((uint16*)RomFixedPtr(0xa6c8cc))
-#define g_off_A6C8D0 ((uint16*)RomFixedPtr(0xa6c8d0))
-#define g_word_A6C6CE ((uint16*)RomFixedPtr(0xa6c6ce))
-#define g_off_A6C6E6 ((uint16*)RomFixedPtr(0xa6c6e6))
-#define g_word_A6CC12 ((uint16*)RomFixedPtr(0xa6cc12))
-#define g_word_A6CC18 ((uint16*)RomFixedPtr(0xa6cc18))
-#define g_off_A6DB02 ((uint16*)RomFixedPtr(0xa6db02))
-#define kRidley_Ilist_DCBA ((uint16*)RomFixedPtr(0xa6dcba))
-#define g_off_A6EFF5 ((uint16*)RomFixedPtr(0xa6eff5))
-#define g_off_A6F001 ((uint16*)RomFixedPtr(0xa6f001))
-#define g_off_A6F72B ((uint16*)RomFixedPtr(0xa6f72b))
-#define g_off_A6F52C ((uint16*)RomFixedPtr(0xa6f52c))
-#define g_word_A6F840 ((uint16*)RomFixedPtr(0xa6f840))
-#define g_off_A6F900 ((uint16*)RomFixedPtr(0xa6f900))
-#define g_word_A6FC03 ((uint16*)RomFixedPtr(0xa6fc03))
-#define g_word_A6FC0B ((uint16*)RomFixedPtr(0xa6fc0b))
-#define g_off_A6FC13 ((uint16*)RomFixedPtr(0xa6fc13))
-#define g_word_A6FC1B ((uint16*)RomFixedPtr(0xa6fc1b))
-#define g_word_A6FC23 ((uint16*)RomFixedPtr(0xa6fc23))
-#define g_word_A6FC2B ((uint16*)RomFixedPtr(0xa6fc2b))
-#define g_off_A6FD4A ((uint16*)RomFixedPtr(0xa6fd4a))
-#define g_off_A6FD54 ((uint16*)RomFixedPtr(0xa6fd54))
+
 
 static PairU16 NuclearWaffle_Func_6(uint16 a);
 
@@ -1313,7 +1259,7 @@ void CeresRidley_Func_4(void) {  // 0xA6A389
     uint16 cry_var_E = E->cry_var_E;
     if (++E->cry_var_F) {
       E->cry_var_F = 0;
-      v2 = g_byte_A6E269[cry_var_E];
+      v2 = kCeresRidley_Tab0[cry_var_E];
       if (v2 == 255) {
         E->cry_var_E = 0;
         E->cry_var_A = FUNC16(CeresRidley_Func_5);
@@ -1321,9 +1267,9 @@ void CeresRidley_Func_4(void) {  // 0xA6A389
       } else {
         E->cry_var_E = cry_var_E + 1;
         int v3 = (uint16)(6 * v2) >> 1;
-        palette_buffer[252] = g_word_A6E2AA[v3];
-        palette_buffer[253] = g_word_A6E2AA[v3 + 1];
-        palette_buffer[254] = g_word_A6E2AA[v3 + 2];
+        palette_buffer[252] = kCeresRidley_PaletteTab0[v3];
+        palette_buffer[253] = kCeresRidley_PaletteTab0[v3 + 1];
+        palette_buffer[254] = kCeresRidley_PaletteTab0[v3 + 2];
       }
     }
   }
@@ -1341,7 +1287,7 @@ void CeresRidley_Func_5(void) {  // 0xA6A3DF
     v2 = 11;
     do {
       v5 = v2;
-      uint16 v3 = g_word_A6E30A[cry_var_E >> 1];
+      uint16 v3 = kCeresRidley_PaletteTab1[cry_var_E >> 1];
       palette_buffer[r18 >> 1] = v3;
       palette_buffer[r20 >> 1] = v3;
       cry_var_E += 2;
@@ -1404,7 +1350,7 @@ void CeresRidley_Func_7(void) {  // 0xA6A478
 }
 
 uint8 CeresRidley_Func_8(uint16 a) {  // 0xA6A4D6
-  uint16 v1 = g_off_A6A4EB[a];
+  uint16 v1 = kCeresRidley_PalettePtrs0[a];
   if (!v1)
     return 1;
   WriteColorsToPalette(0xE2, 0xa6, v1, 0xE);
@@ -1443,7 +1389,7 @@ void CeresRidley_Func_11(void) {  // 0xA6A6E8
     CeresRidley_Func_22();
   } else if (!(CeresRidley_Func_12() & 1)
              || (v1 = E->cry_var_00 + 1, E->cry_var_00 = v1, v1 >= 0x7C)) {
-    E->cry_var_A = g_off_A6A743[random_number & 0xF];
+    E->cry_var_A = kCeresRidley_FuncPtrs0[random_number & 0xF];
     E->cry_var_00 = 0;
   }
 }
@@ -1656,7 +1602,7 @@ void CeresRidley_Func_28(void) {  // 0xA6AABD
     earthquake_timer = 64;
   }
   int v2 = cry_var_33 >> 1;
-  if (g_word_A6AE4D[v2] == 0xFFFF) {
+  if (kCeresRidley_Tab1[v2] == 0xFFFF) {
     ++E->cry_var_32;
     reg_BGMODE_fake = 9;
     reg_M7SEL = 0;
@@ -1671,11 +1617,11 @@ void CeresRidley_Func_28(void) {  // 0xA6AABD
     E->cry_var_A = FUNC16(Ridley_Func_54);
     E->cry_var_F = 0;
   } else {
-    E->cry_var_30 = g_word_A6AE4D[v2];
-    uint16 v3 = g_word_A6AF2F[v2] + E->cry_var_35;
+    E->cry_var_30 = kCeresRidley_Tab1[v2];
+    uint16 v3 = kCeresRidley_GetawayYVelocityIndices[v2] + E->cry_var_35;
     E->cry_var_35 = v3;
     reg_BG1VOFS = v3;
-    uint16 v4 = E->cry_var_34 - g_word_A6B00F[v2];
+    uint16 v4 = E->cry_var_34 - kCeresRidley_GetawayXVelocityIndices[v2];
     E->cry_var_34 = v4;
     reg_BG1HOFS = v4;
     CeresRidley_Func_35(E->cry_var_30);
@@ -1709,7 +1655,7 @@ void CeresRidley_Func_33(void) {  // 0xA6ACBC
     Enemy_CeresRidley *E = Get_CeresRidley(0);
     uint16 v1 = (E->cry_var_36 + 1) & 3;
     E->cry_var_36 = v1;
-    QueueMode7Transfers(0xA6, g_off_A6ACDA[v1]);
+    QueueMode7Transfers(0xA6, kCeresRidley_Mode7TransferPtrs0[v1]);
   }
 }
 
@@ -1718,7 +1664,7 @@ void CeresRidley_Func_34(void) {  // 0xA6AD27
     Enemy_CeresRidley *E = Get_CeresRidley(0);
     uint16 v1 = (E->cry_var_37 + 1) & 1;
     E->cry_var_37 = v1;
-    QueueMode7Transfers(0xA6, g_off_A6AD45[v1]);
+    QueueMode7Transfers(0xA6, kCeresRidley_Mode7TransferPtrs1[v1]);
   }
 }
 
@@ -1978,7 +1924,7 @@ void Ridley_Func_14(void) {  // 0xA6B5C4
 
 void Ridley_Func_15(void) {  // 0xA6B5E5
   Enemy_Ridley *E = Get_Ridley(0);
-  if (Ridley_Func_17(g_word_A6B60D[E->ridley_var_10]) & 1) {
+  if (Ridley_Func_17(kRidley_FlyToXPositionTab0[E->ridley_var_10]) & 1) {
     Ridley_Func_18();
   } else if ((--E->ridley_var_F & 0x8000) != 0) {
     E->ridley_var_A = FUNC16(Ridley_Func_16);
@@ -1989,7 +1935,7 @@ void Ridley_Func_15(void) {  // 0xA6B5E5
 
 void Ridley_Func_16(void) {  // 0xA6B613
   Enemy_Ridley *E = Get_Ridley(0);
-  if (Ridley_Func_17(g_word_A6B63B[E->ridley_var_10]) & 1) {
+  if (Ridley_Func_17(kRidley_FlyToXPositionTab1[E->ridley_var_10]) & 1) {
     Ridley_Func_18();
   } else if ((--E->ridley_var_F & 0x8000) != 0) {
     E->ridley_var_A = FUNC16(Ridley_Func_15);
@@ -2029,7 +1975,7 @@ void Ridley_Func_19(void) {  // 0xA6B6A7
     E->ridley_var_F = 32;
     Ridley_Func_20();
   } else {
-    Ridley_Func_104_0(0, 0, g_word_A6B6C8[E->ridley_var_10], 288);
+    Ridley_Func_104_0(0, 0, kRidley_FlyToXPositionTab2[E->ridley_var_10], 288);
   }
 }
 
@@ -2134,7 +2080,7 @@ uint8 Ridley_Func_25(void) {  // 0xA6B859
 uint8 Ridley_Func_26(uint16 k, uint16 j) {  // 0xA6B865
   Enemy_Ridley *E = Get_Ridley(0);
   Rect16U rect = {
-    E->base.x_pos + g_word_A6B9D5[E->ridley_var_10], E->base.y_pos + g_word_A6B9DB[E->ridley_var_1D >> 1],
+    E->base.x_pos + kRidley_HoldingSamusXPositionTab0[E->ridley_var_10], E->base.y_pos + kRidley_HoldingSamusYPositionTab0[E->ridley_var_1D >> 1],
     k, j
   };
   return Ridley_Func_124(rect);
@@ -2193,12 +2139,12 @@ LABEL_15:
 
 void Ridley_Func_29(void) {  // 0xA6B90F
   int v0 = random_number & 3;
-  uint16 r18 = g_off_A6B965[v0], r20 = g_off_A6B96D[v0];
+  uint16 r18 = kRidley_Ptrs0[v0], r20 = kRidley_Ptrs1[v0];
   Enemy_Ridley *E = Get_Ridley(0);
   uint16 v2 = 2 * (E->ridley_var_12 + 2);
   int v3 = v2 >> 1;
-  tilemap_stuff[7] = g_word_A6B94D[v3];
-  tilemap_stuff[6] = g_word_A6B959[v3];
+  tilemap_stuff[7] = kRidley_Tab0[v3];
+  tilemap_stuff[6] = kRidley_Tab1[v3];
   E->ridley_var_C = *(uint16 *)&RomPtr_A6(r20)[v2];
   const uint8 *v4 = RomPtr_A6(r18);
   uint16 t = *(uint16 *)&v4[v2];
@@ -2225,14 +2171,14 @@ void Ridley_Func_30(void) {  // 0xA6B9E1
       v6 = 0;
     E->ridley_var_15 = v6;
   }
-  samus_x_pos = E->ridley_var_14 + E->base.x_pos + g_word_A6B9D5[E->ridley_var_10];
-  samus_y_pos = E->ridley_var_15 + E->base.y_pos + g_word_A6B9DB[E->ridley_var_1D >> 1];
+  samus_x_pos = E->ridley_var_14 + E->base.x_pos + kRidley_HoldingSamusXPositionTab0[E->ridley_var_10];
+  samus_y_pos = E->ridley_var_15 + E->base.y_pos + kRidley_HoldingSamusYPositionTab0[E->ridley_var_1D >> 1];
 }
 
 void Ridley_Func_31(void) {  // 0xA6BA54
   Enemy_Ridley *E = Get_Ridley(0);
-  E->ridley_var_14 = samus_x_pos - (E->base.x_pos + g_word_A6B9D5[E->ridley_var_10]);
-  E->ridley_var_15 = samus_y_pos - (E->base.y_pos + g_word_A6B9DB[E->ridley_var_1D >> 1]);
+  E->ridley_var_14 = samus_x_pos - (E->base.x_pos + kRidley_HoldingSamusXPositionTab0[E->ridley_var_10]);
+  E->ridley_var_15 = samus_y_pos - (E->base.y_pos + kRidley_HoldingSamusYPositionTab0[E->ridley_var_1D >> 1]);
 }
 
 void Ridley_Func_32(void) {  // 0xA6BA85
@@ -2260,15 +2206,15 @@ void Ridley_Func_33(void) {  // 0xA6BAB7
 
   if ((Ridley_Func_40_Carry() & 1) != 0
       && (!E->ridley_var_1F)
-      && ((r18 = g_word_A6BB48[E->ridley_var_10], r20 = E->base.x_pos - samus_x_pos,
+      && ((r18 = kRidley_Tab2[E->ridley_var_10], r20 = E->base.x_pos - samus_x_pos,
            ((r18 ^ r20) & 0x8000) == 0)
           || (v1 = abs16(r20), sign16(v1 - 32)))
       && (int16)(E->base.y_pos + 35 - samus_y_pos) < 0) {
     v2 = -16;
     if (E->ridley_var_10)
       v2 = 16;
-    Ridley_Func_104_0(0, g_word_A6BB4E[E->ridley_var_12], samus_x_pos + v2, samus_y_pos - 4);
-    Rect16U rect = { E->base.x_pos + g_word_A6B9D5[E->ridley_var_10], E->base.y_pos + 35, 8, 12 };
+    Ridley_Func_104_0(0, kRidley_Tab3[E->ridley_var_12], samus_x_pos + v2, samus_y_pos - 4);
+    Rect16U rect = { E->base.x_pos + kRidley_HoldingSamusXPositionTab0[E->ridley_var_10], E->base.y_pos + 35, 8, 12 };
     if (Ridley_Func_124(rect)) {
       E->ridley_var_C = -E->ridley_var_C;
       if (E->base.health) {
@@ -2710,9 +2656,9 @@ void Ridley_Func_61(void) {  // 0xA6C19C
       v1 = 0;
     E->ridley_var_38 = v1;
     int v2 = E->ridley_var_38 + 2 * v1;
-    palette_buffer[97] = g_word_A6C1DF[v2];
-    palette_buffer[98] = g_word_A6C1DF[v2 + 1];
-    palette_buffer[99] = g_word_A6C1DF[v2 + 2];
+    palette_buffer[97] = kRidley_Bg1AndBg2Palette6[v2];
+    palette_buffer[98] = kRidley_Bg1AndBg2Palette6[v2 + 1];
+    palette_buffer[99] = kRidley_Bg1AndBg2Palette6[v2 + 2];
   }
 }
 
@@ -2939,7 +2885,7 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
   E->base.vram_tiles_index = 0;
   E->base.palette_index = 3584;
   uint16 ridley_parameter_1 = E->ridley_parameter_1;
-  E->ridley_var_F = g_word_A6C6CE[ridley_parameter_1 >> 1];
+  E->ridley_var_F = kRidleysExplosion_Tab0[ridley_parameter_1 >> 1];
   uint16 Random = NextRandom();
   E->ridley_var_B = sign16(Random) ? -(Random & 0x130) : (Random & 0x130);
   E->ridley_var_C = 0;
@@ -2973,7 +2919,7 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
     case 0xC:
       E->base.x_pos = tilemap_stuff[82];
       E->base.y_pos = tilemap_stuff[83];
-      E->base.current_instruction = g_off_A6C7BA[(uint8)((LOBYTE(tilemap_stuff[71]) + LOBYTE(tilemap_stuff[81]) + 8) & 0xF0) >> 4];
+      E->base.current_instruction = kRidley_InstrListPtrs0[(uint8)((LOBYTE(tilemap_stuff[71]) + LOBYTE(tilemap_stuff[81]) + 8) & 0xF0) >> 4];
       break;
     case 0xE: {
       uint16 v10 = 0;
@@ -2981,10 +2927,10 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
       if (E0->ridley_var_10)
         v10 = 2;
       int v13 = v10 >> 1;
-      uint16 v14 = E0->base.x_pos + g_word_A6C804[v13];
+      uint16 v14 = E0->base.x_pos + kRidley_XPositionIndices0[v13];
       E->base.x_pos = v14;
       E->base.y_pos = E0->base.y_pos;
-      E->base.current_instruction = g_off_A6C808[v13];
+      E->base.current_instruction = kRidley_InstrListPtrs1[v13];
       break;
     }
     case 0x10: {
@@ -2993,10 +2939,10 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
       if (E0->ridley_var_10)
         v16 = 2;
       int v19 = v16 >> 1;
-      uint16 v20 = E0->base.x_pos + g_word_A6C836[v19];
+      uint16 v20 = E0->base.x_pos + kRidley_XPositionIndices1[v19];
       E->base.x_pos = v20;
       E->base.y_pos = E0->base.y_pos + 22;
-      E->base.current_instruction = g_off_A6C83A[v19];
+      E->base.current_instruction = kRidley_InstrListPtrs2[v19];
       break;
     }
     case 0x12: {
@@ -3005,10 +2951,10 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
       if (E0->ridley_var_10)
         v22 = 2;
       int v25 = v22 >> 1;
-      uint16 v26 = E0->base.x_pos + g_word_A6C868[v25];
+      uint16 v26 = E0->base.x_pos + kRidley_XPositionIndices2[v25];
       E->base.x_pos = v26;
       E->base.y_pos = E0->base.y_pos - 24;
-      E->base.current_instruction = g_off_A6C86C[v25];
+      E->base.current_instruction = kRidley_InstrListPtrs3[v25];
       break;
     }
     case 0x14: {
@@ -3017,10 +2963,10 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
       if (E0->ridley_var_10)
         v28 = 2;
       int v31 = v28 >> 1;
-      uint16 v32 = E0->base.x_pos + g_word_A6C89A[v31];
+      uint16 v32 = E0->base.x_pos + kRidley_XPositionIndices3[v31];
       E->base.x_pos = v32;
       E->base.y_pos = E0->base.y_pos;
-      E->base.current_instruction = g_off_A6C89E[v31];
+      E->base.current_instruction = kRidley_InstrListPtrs4[v31];
       break;
     }
     case 0x16: {
@@ -3029,10 +2975,10 @@ void RidleysExplosion_Init(void) {  // 0xA6C696
       if (E0->ridley_var_10)
         v34 = 2;
       int v37 = v34 >> 1;
-      uint16 v38 = E0->base.x_pos + g_word_A6C8CC[v37];
+      uint16 v38 = E0->base.x_pos + kRidley_XPositionIndices4[v37];
       E->base.x_pos = v38;
       E->base.y_pos = E0->base.y_pos + 7;
-      E->base.current_instruction = g_off_A6C8D0[v37];
+      E->base.current_instruction = kRidley_InstrListPtrs5[v37];
       break;
     }
     default:
@@ -3168,8 +3114,8 @@ void Ridley_CBDC(void) {  // 0xA6CBDC
 
 void Ridley_Func_77(void) {  // 0xA6CBFE
   int v0 = Get_Ridley(0)->ridley_var_10;
-  tilemap_stuff[11] = g_word_A6CC12[v0];
-  tilemap_stuff[12] = g_word_A6CC18[v0];
+  tilemap_stuff[11] = kRidley_MinTailAngleIndices0[v0];
+  tilemap_stuff[12] = kRidley_MaxTailAngleIndices0[v0];
 }
 
 uint8 Ridley_Func_78(void) {  // 0xA6CC1E
@@ -4107,13 +4053,13 @@ void Ridley_Func_120(void) {  // 0xA6DAD8
       return;
     ridley_var_10 = 10;
   }
-  uint16 v2 = g_off_A6DB02[E->ridley_var_07 + ridley_var_10];
+  uint16 v2 = kRidley_TilemapPtrs0[E->ridley_var_07 + ridley_var_10];
   sub_A6DC13(v2, E->base.x_pos, E->base.y_pos, E->ridley_var_0C);
 }
 
 void sub_A6DB2A(void) {  // 0xA6DB2A
   if ((gEnemyData(0)->properties & kEnemyProps_Invisible) == 0) {
-    sub_A6DBC2(kRidley_Ilist_DCBA[(uint8)((LOBYTE(tilemap_stuff[71]) + LOBYTE(tilemap_stuff[81]) + 8) & 0xF0) >> 4],
+    sub_A6DBC2(kRidley_SpritemapPtrs0[(uint8)((LOBYTE(tilemap_stuff[71]) + LOBYTE(tilemap_stuff[81]) + 8) & 0xF0) >> 4],
         tilemap_stuff[82], tilemap_stuff[83]);
     sub_A6DBC2(0xDC9E, tilemap_stuff[72], tilemap_stuff[73]);
     sub_A6DBC2(0xDC9E, tilemap_stuff[62], tilemap_stuff[63]);
@@ -4527,8 +4473,8 @@ void CeresSteam_Init(void) {  // 0xA6EFB1
   E->base.palette_index = 2560;
   E->csm_var_D = (NextRandom() & 0x1F) + 1;
   int v1 = E->csm_parameter_1;
-  E->base.current_instruction = g_off_A6EFF5[v1];
-  E->csm_var_A = g_off_A6F001[v1];
+  E->base.current_instruction = kEnemyInit_CeresSteam_InstrListPtrs[v1];
+  E->csm_var_A = kEnemyInit_CeresSteam_FuncPtrs[v1];
 }
 
 void CallCeresSteamFunc(uint32 ea, uint16 k) {
@@ -4651,8 +4597,8 @@ void CeresDoor_Init(void) {  // 0xA6F6C5
   E->base.vram_tiles_index = 0;
   E->base.palette_index = 1024;
   int v2 = E->cdr_parameter_1;
-  E->cdr_var_A = g_off_A6F72B[v2];
-  E->base.current_instruction = g_off_A6F52C[v2];
+  E->cdr_var_A = kEnemyInit_CeresDoors_FuncPtrs[v2];
+  E->base.current_instruction = kEnemyInit_CeresDoors_InstrListPtrs[v2];
   E->cdr_var_B = 0;
   CeresDoor_Func_1(cur_enemy_index);
   uint16 v3;
@@ -4757,7 +4703,7 @@ void CeresDoor_Func_6(uint16 k) {  // 0xA6F7DC
       if (v3)
         E0->cdr_var_F = 3;
       int v5 = (uint16)(4 * E0->cdr_var_F) >> 1;
-      eproj_spawn_pt = (Point16U){ E->base.x_pos + g_word_A6F840[v5], E->base.y_pos + g_word_A6F840[v5 + 1] };
+      eproj_spawn_pt = (Point16U){ E->base.x_pos + kCeresDoor_RandomXYPositionIndices[v5], E->base.y_pos + kCeresDoor_RandomXYPositionIndices[v5 + 1] };
       uint16 v6 = 3;
       if (NextRandom() < 0x4000)
         v6 = 12;
@@ -4777,7 +4723,7 @@ void CeresDoor_Func_7(void) {  // 0xA6F850
 }
 
 void CeresDoor_Func_8(void) {  // 0xA6F8F1
-  QueueMode7Transfers(0xA6, g_off_A6F900[(nmi_frame_counter_word & 2) >> 1]);
+  QueueMode7Transfers(0xA6, kCeresDoor_Mode7TransferPtrs[(nmi_frame_counter_word & 2) >> 1]);
 }
 
 void Zebetites_Init(void) {  // 0xA6FB72
@@ -4800,15 +4746,15 @@ void Zebetites_Init(void) {  // 0xA6FB72
   E->zebet_var_D = r18;
   if (sign16(v2 - 4)) {
     int v3 = v2;
-    E->zebet_var_F = g_word_A6FC03[v3];
-    E->base.y_height = g_word_A6FC0B[v3];
-    E->base.current_instruction = g_off_A6FC13[v3];
-    E->base.x_pos = g_word_A6FC1B[v3];
+    E->zebet_var_F = kEnemyInit_Zebetites_DestroyedIndices[v3];
+    E->base.y_height = kEnemyInit_Zebetites_HeightIndices[v3];
+    E->base.current_instruction = kEnemyInit_Zebetites_InstrListPtrs[v3];
+    E->base.x_pos = kEnemyInit_Zebetites_XPositionIndices[v3];
     uint16 v4;
     if (E->zebet_parameter_1)
-      v4 = g_word_A6FC2B[v3];
+      v4 = kEnemyInit_Zebetites_YPositionIndices1[v3];
     else
-      v4 = g_word_A6FC23[v3];
+      v4 = kEnemyInit_Zebetites_YPositionIndices0[v3];
     E->base.y_pos = v4;
   } else {
     E->base.properties |= kEnemyProps_Deleted;
@@ -4913,9 +4859,9 @@ void Zebetites_Func_5(void) {  // 0xA6FD09
     }
   }
   int v3 = v0 >> 1;
-  uint16 v4 = g_off_A6FD4A[v3];
+  uint16 v4 = kZebetites_BigZebetiteInstrListPtrs[v3];
   if ((E->zebet_var_F & 0x8000) != 0)
-    v4 = g_off_A6FD54[v3];
+    v4 = kZebetites_SmallZebetitePairInstrListPtrs[v3];
   E->base.current_instruction = v4;
   E->base.instruction_timer = 1;
   E->base.timer = 0;

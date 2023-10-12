@@ -3,26 +3,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_a4.h"
 
-
-#define g_word_A4B89D ((uint16*)RomFixedPtr(0xa4b89d))
-#define g_word_A4B8BD ((uint16*)RomFixedPtr(0xa4b8bd))
-#define g_word_A4B8DD ((uint16*)RomFixedPtr(0xa4b8dd))
-#define g_word_A4B8FD ((uint16*)RomFixedPtr(0xa4b8fd))
-#define g_word_A4B91D ((uint16*)RomFixedPtr(0xa4b91d))
-#define g_off_A48B79 ((uint16*)RomFixedPtr(0xa48b79))
-#define g_word_A49156 ((uint16*)RomFixedPtr(0xa49156))
-#define g_word_A49C79 ((uint16*)RomFixedPtr(0xa49c79))
-#define g_word_A49E7B ((uint16*)RomFixedPtr(0xa49e7b))
-#define g_word_A49BC5 (*(uint16*)RomFixedPtr(0xa49bc5))
-#define g_word_A49BC7 (*(uint16*)RomFixedPtr(0xa49bc7))
-#define g_word_A49BC9 (*(uint16*)RomFixedPtr(0xa49bc9))
-#define g_word_A49BCB (*(uint16*)RomFixedPtr(0xa49bcb))
-#define kCrocoVlineRandomPos ((uint8*)RomFixedPtr(0xa49697))
-#define g_word_A49BBD ((uint16*)RomFixedPtr(0xa49bbd))
-#define g_word_A498CA ((uint16*)RomFixedPtr(0xa498ca))
-#define g_word_A499CB ((uint16*)RomFixedPtr(0xa499cb))
-#define g_word_A499D9 ((uint16*)RomFixedPtr(0xa499d9))
 
 
 
@@ -416,8 +398,8 @@ void Crocomire_Init(void) {  // 0xA48A5A
     *(uint16 *)scrolls = 0;
     for (int i = 32; i >= 0; i -= 2) {
       int v3 = i >> 1;
-      target_palettes[v3 + 160] = g_word_A4B8BD[v3];
-      target_palettes[v3 + 208] = g_word_A4B8DD[v3];
+      target_palettes[v3 + 160] = kEnemyInit_Crocomire_Palette2[v3];
+      target_palettes[v3 + 208] = kEnemyInit_Crocomire_Palette5[v3];
     }
     E->crocom_var_C = 4;
     UNUSED_word_7E179E = 16;
@@ -435,7 +417,7 @@ void Crocomire_Func_27(uint16 k) {  // 0xA48B5B
   uint16 spritemap_pointer;
   while (1) {
     spritemap_pointer = Get_Crocomire(0)->base.spritemap_pointer;
-    if (spritemap_pointer == g_off_A48B79[v1 >> 1])
+    if (spritemap_pointer == kCrocomire_SpritemapPtrs[v1 >> 1])
       break;
     v1 -= 2;
     if ((v1 & 0x8000) != 0) {
@@ -522,7 +504,7 @@ void Crocomire_Func_31(void) {  // 0xA48CCB
         palette_buffer[(i >> 1) + 112] = 0x7FFF;
     } else {
       for (j = 14; (j & 0x8000) == 0; j -= 2)
-        palette_buffer[(j >> 1) + 112] = g_word_A4B89D[j >> 1];
+        palette_buffer[(j >> 1) + 112] = kCrocomire_Bg1AndBg2Palette7[j >> 1];
     }
   }
 }
@@ -796,7 +778,7 @@ void Crocomire_Func_52(void) {  // 0xA49136
   if (sign16(*(uint16 *)((uint8 *)&g_word_7E9015 + 1) - 22)) {
     uint16 v1 = *(uint16 *)((uint8 *)&g_word_7E9015 + 1);
     *(uint16 *)((uint8 *)&g_word_7E9015 + 1) += 2;
-    SpawnEprojWithGfx(g_word_A49156[v0 >> 1], v1, addr_stru_868F9D);
+    SpawnEprojWithGfx(kCrocomire_BridgeCrumbleTab0[v0 >> 1], v1, addr_stru_868F9D);
   }
   Crocomire_Func_54();
 }
@@ -973,9 +955,9 @@ void Crocomire_Func_57(void) {  // 0xA49341
   } while ((int16)(v3 - 1024) < 0);
   for (i = 0; ; i += 2) {
     int v6 = i >> 1;
-    if (g_word_A49C79[v6] == 0xFFFF)
+    if (kCrocomire_Bg2TilemapIndices0[v6] == 0xFFFF)
       break;
-    tilemap_stuff[v6 + 32] = g_word_A49C79[v6];
+    tilemap_stuff[v6 + 32] = kCrocomire_Bg2TilemapIndices0[v6];
   }
   Crocomire_93BE(i + 1024);
 }
@@ -1016,9 +998,9 @@ void Crocomire_Func_59(void) {  // 0xA493ED
   } while ((int16)(v1 - 2048) < 0);
   for (i = 0; ; i += 2) {
     int v3 = i >> 1;
-    if (g_word_A49E7B[v3] == 0xFFFF)
+    if (kCrocomire_Bg2TilemapIndices1[v3] == 0xFFFF)
       break;
-    tilemap_stuff[v3 + 32] = g_word_A49E7B[v3];
+    tilemap_stuff[v3 + 32] = kCrocomire_Bg2TilemapIndices1[v3];
   }
   Crocomire_93BE(i + 1024);
 }
@@ -1030,18 +1012,18 @@ void Crocomire_Func_60(void) {  // 0xA4943D
   E->crocom_var_A += 2;
   g_word_7E0692 = 256;
   croco_cur_vline_idx = 0;
-  g_word_7E0698 = *(uint16 *)((uint8 *)&g_word_A49BC5 + croco_word_7E069A);
+  g_word_7E0698 = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + croco_word_7E069A);
   g_word_7E0694 = g_word_7E0698;
-  g_word_7E0696 = *(uint16 *)((uint8 *)&g_word_A49BC7 + croco_word_7E069A);
-  g_word_7E068E = *(uint16 *)((uint8 *)&g_word_A49BC9 + croco_word_7E069A);
-  uint8 bank = *(uint16 *)((uint8 *)&g_word_A49BCB + croco_word_7E069A);
+  g_word_7E0696 = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab1 + croco_word_7E069A);
+  g_word_7E068E = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab2 + croco_word_7E069A);
+  uint8 bank = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab3 + croco_word_7E069A);
   uint16 v6;
   for (i = croco_word_7E069A + 8; ; i = v6 + 4) {
-    uint16 v2 = *(uint16 *)((uint8 *)&g_word_A49BC5 + i);
+    uint16 v2 = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + i);
     if (v2 == 0xFFFF)
       break;
     v6 = i;
-    uint16 v3 = *(uint16 *)((uint8 *)&g_word_A49BC7 + i);
+    uint16 v3 = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab1 + i);
     int n = g_word_7E068E;
     do {
       *(uint16 *)&g_ram[v3] = GET_WORD(RomPtrWithBank(bank, v2));
@@ -1063,17 +1045,17 @@ void Crocomire_Func_62(void) {  // 0xA494B6
 
   uint16 v0 = g_word_7E068A;
   uint16 v1 = vram_write_queue_tail;
-  if (*(uint16 *)((uint8 *)&g_word_A49BC5 + g_word_7E068A) == 0xFFFF) {
+  if (*(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + g_word_7E068A) == 0xFFFF) {
     Enemy_Crocomire *E = Get_Crocomire(cur_enemy_index);
     ++E->crocom_var_A;
     ++E->crocom_var_A;
     g_word_7E068A = 0;
   } else {
     v2 = gVramWriteEntry(vram_write_queue_tail);
-    v2->size = *(uint16 *)((uint8 *)&g_word_A49BC5 + g_word_7E068A);
-    v2->src.addr = *(uint16 *)((uint8 *)&g_word_A49BCB + v0);
-    *(uint16 *)&v2->src.bank = *(uint16 *)((uint8 *)&g_word_A49BC9 + v0);
-    v2->vram_dst = *(uint16 *)((uint8 *)&g_word_A49BC7 + v0);
+    v2->size = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + g_word_7E068A);
+    v2->src.addr = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab3 + v0);
+    *(uint16 *)&v2->src.bank = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab2 + v0);
+    v2->vram_dst = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab1 + v0);
     g_word_7E068A = v0 + 8;
     vram_write_queue_tail = v1 + 7;
   }
@@ -1139,7 +1121,7 @@ void Crocomire_Func_65(void) {  // 0xA49580
 LABEL_4:;
       Enemy_Crocomire *EK = Get_Crocomire(cur_enemy_index);
       EK->crocom_var_A += 2;
-      for (i = croco_word_7E069A; *(uint16 *)((uint8 *)&g_word_A49BC5 + i) != 0xFFFF; i += 8)
+      for (i = croco_word_7E069A; *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + i) != 0xFFFF; i += 8)
         ;
       croco_word_7E069A = i + 2;
       hdma_object_channels_bitmask[E0->crocom_var_1F >> 1] = 0;
@@ -1232,15 +1214,15 @@ uint16 Crocomire_Func_67(void) {  // 0xA496C8
   while (1) {
     v7 = g_word_7E068A + croco_word_7E069A;
     v8 = vram_write_queue_tail;
-    if (*(uint16 *)((uint8 *)&g_word_A49BC5 + v7) != 0xFFFF)
+    if (*(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + v7) != 0xFFFF)
       break;
     g_word_7E068A = 0;
   }
   VramWriteEntry *v9 = gVramWriteEntry(vram_write_queue_tail);
-  v9->size = *(uint16 *)((uint8 *)&g_word_A49BC5 + v7);
-  v9->src.addr = *(uint16 *)((uint8 *)&g_word_A49BCB + v7);
-  *(uint16 *)&v9->src.bank = *(uint16 *)((uint8 *)&g_word_A49BC9 + v7);
-  v9->vram_dst = *(uint16 *)((uint8 *)&g_word_A49BC7 + v7);
+  v9->size = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab0 + v7);
+  v9->src.addr = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab3 + v7);
+  *(uint16 *)&v9->src.bank = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab2 + v7);
+  v9->vram_dst = *(uint16 *)((uint8 *)&kCrocomire_MeltingTilesTab1 + v7);
   vram_write_queue_tail = v8 + 7;
   g_word_7E068A += 8;
   return 1;
@@ -1284,18 +1266,18 @@ void Crocomire_Func_70(void) {  // 0xA49859
   Enemy_Crocomire *E1 = Get_Crocomire(0x40);
   Enemy_Crocomire *E2 = Get_Crocomire(0x80);
   Enemy_Crocomire *E3 = Get_Crocomire(0xc0);
-  if (g_word_A498CA[E0->crocom_var_D >> 1] == 0x8080) {
+  if (kCrocomire_Tab0[E0->crocom_var_D >> 1] == 0x8080) {
     E1->crocom_var_D = -32640;
     E0->crocom_var_D = 128;
     for (int i = 30; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 176] = g_word_A4B91D[i >> 1];
+      palette_buffer[(i >> 1) + 176] = kCrocomire_Palette3[i >> 1];
     Crocomire_9BB3();
   } else {
     uint16 crocom_var_D = E0->crocom_var_D;
     uint16 v3 = E1->crocom_var_D;
     int v4 = crocom_var_D >> 1;
-    if (v3 == g_word_A498CA[v4]) {
-      if ((g_word_A498CA[crocom_var_D >> 1] & 0x8000) != 0) {
+    if (v3 == kCrocomire_Tab0[v4]) {
+      if ((kCrocomire_Tab0[crocom_var_D >> 1] & 0x8000) != 0) {
         uint16 v7 = E2->crocom_var_D;
         if (v7) {
           E2->crocom_var_D = v7 - 1;
@@ -1304,14 +1286,14 @@ void Crocomire_Func_70(void) {  // 0xA49859
           return;
         }
         uint16 v8 = crocom_var_D + 2;
-        E2->crocom_var_D = g_word_A498CA[v8 >> 1];
+        E2->crocom_var_D = kCrocomire_Tab0[v8 >> 1];
         crocom_var_D = v8 + 2;
-        E3->crocom_var_D = g_word_A498CA[crocom_var_D >> 1];
+        E3->crocom_var_D = kCrocomire_Tab0[crocom_var_D >> 1];
       }
       E0->crocom_var_D = crocom_var_D + 2;
     } else {
       uint16 v5;
-      if ((int16)(v3 - g_word_A498CA[v4]) >= 0)
+      if ((int16)(v3 - kCrocomire_Tab0[v4]) >= 0)
         v5 = v3 - E3->crocom_var_D;
       else
         v5 = E3->crocom_var_D + v3;
@@ -1330,13 +1312,13 @@ void Crocomire_Func_71(void) {  // 0xA4990A
     E->crocom_var_D = crocom_var_D - 1;
     v3 = croco_target_0688;
     int v4 = croco_target_0688 >> 1;
-    if (g_word_A499CB[v4] != 0xFFFF) {
+    if (kCrocomire_TilesDestinationAddresses[v4] != 0xFFFF) {
       uint16 v5 = vram_write_queue_tail;
       v6 = gVramWriteEntry(vram_write_queue_tail);
       v6->size = 512;
-      v6->src.addr = g_word_A499D9[v4];
+      v6->src.addr = kCrocomire_TilesSourceAddresses[v4];
       *(uint16 *)&v6->src.bank = 173;
-      v6->vram_dst = g_word_A499CB[v4] + ((reg_OBSEL & 7) << 13);
+      v6->vram_dst = kCrocomire_TilesDestinationAddresses[v4] + ((reg_OBSEL & 7) << 13);
       vram_write_queue_tail = v5 + 7;
       croco_target_0688 = v3 + 2;
     }
@@ -1354,7 +1336,7 @@ void Crocomire_Func_71(void) {  // 0xA4990A
     E->base.instruction_timer = 1;
     E->base.palette_index = 0;
     for (int i = 30; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 144] = g_word_A4B8FD[i >> 1];
+      palette_buffer[(i >> 1) + 144] = kCrocomire_Palette1[i >> 1];
     ClearEprojs();
     uint16 v8 = 8;
     int n = 8;

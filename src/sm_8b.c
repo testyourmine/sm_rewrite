@@ -994,7 +994,7 @@ CoroutineRet InitializeIoDisplayLogo_Async(void) {  // 0x8B9146
   {
     uint16 v0 = 0;
     do {
-      palette_buffer[v0 >> 1] = g_word_8CE1E9[v0 >> 1];
+      palette_buffer[v0 >> 1] = kPalettes_TitleScreen[v0 >> 1];
       v0 += 2;
     } while ((int16)(v0 - 512) < 0);
   }
@@ -1608,7 +1608,7 @@ void HandleCinematicsTransitions_2(void) {  // 0x8B9A9C
   cinematic_var18 = 3;
   uint16 v2 = 256;
   do {
-    palette_buffer[v2 >> 1] = g_word_8CE1E9[v2 >> 1];
+    palette_buffer[v2 >> 1] = kPalettes_TitleScreen[v2 >> 1];
     v2 += 2;
   } while ((int16)(v2 - 512) < 0);
   palette_buffer[201] = 0x7FFF;
@@ -1678,7 +1678,7 @@ void LoadTitleSequenceGraphics(void) {  // 0x8B9B87
   irqhandler_next_handler = 0;
   uint16 v0 = 0;
   do {
-    palette_buffer[v0 >> 1] = g_word_8CE1E9[v0 >> 1];
+    palette_buffer[v0 >> 1] = kPalettes_TitleScreen[v0 >> 1];
     v0 += 2;
   } while ((int16)(v0 - 512) < 0);
   DecompressToMem(0x94E000, g_ram + 0x10000);
@@ -1986,7 +1986,7 @@ void CinematicFunc_Func9(void) {  // 0x8B9FAE
 }
 
 void ConfigureTitleSequenceGradientHDMA(void) {  // 0x8BA00A
-  uint16 v0 = g_off_8CBC5D[(cinematic_var6 & 0xF0) >> 4];
+  uint16 v0 = kTitleSequenceHdmaTablePtrs[(cinematic_var6 & 0xF0) >> 4];
   for (int i = 0; ; i += 2) {
     uint16 v2 = *(uint16 *)RomPtr_8C(v0);
     hdma_table_1[i >> 1] = v2;
@@ -2146,7 +2146,7 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
   for (j = 1023; (j & 0x8000) == 0; --j)
     ram3800.cinematic_bg_tilemap[j] = *(uint16 *)&BTS[j * 2 + 11262];
   for (k = 127; (k & 0x8000) == 0; --k)
-    ram3000.pause_menu_map_tilemap[k] = *(uint16 *)((uint8 *)g_word_8CD81B + k * 2);
+    ram3000.pause_menu_map_tilemap[k] = *(uint16 *)((uint8 *)kInitialIntro_JapaneseTextTilemap + k * 2);
   cinematic_var11 = -1;
   cinematic_function = FUNC16(CinematicFunction_Intro_FadeIn);
   QueueMusic_Delayed8(0);
@@ -2239,7 +2239,7 @@ void CinematicFunc_Intro_SetupTextPage2(void) {  // 0x8BA66F
   uint16 v1 = 768;
   uint16 v2 = 0;
   do {
-    ram3000.pause_menu_map_tilemap[v1] = g_word_8BA72B[v2 >> 1];
+    ram3000.pause_menu_map_tilemap[v1] = kPage1Intro_JapaneseTextRegion[v2 >> 1];
     v2 += 2;
     ++v1;
   } while ((int16)(v1 * 2 - 1792) < 0);
@@ -3468,7 +3468,7 @@ void CinematicFunction_Intro_Func54(void) {  // 0x8BBCA0
   irqhandler_next_handler = 0;
   uint16 v0 = 0;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_Intro2[v0 >> 1];
+    palette_buffer[v0 >> 1] = kPalettes_SpaceGunshipCeres[v0 >> 1];
     v0 += 2;
   } while ((int16)(v0 - 512) < 0);
   DecompressToMem(0x95A82F, g_ram + 0x10000);
@@ -3736,7 +3736,7 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
   layer1_y_pos = 0;
   uint16 v2 = 0;
   do {
-    palette_buffer[v2 >> 1] = kPalettes_Intro2[v2 >> 1];
+    palette_buffer[v2 >> 1] = kPalettes_SpaceGunshipCeres[v2 >> 1];
     v2 += 2;
   } while ((int16)(v2 - 512) < 0);
   DecompressToMem(0x95A82F, g_ram + 0x10000);
@@ -4287,7 +4287,7 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
     *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)j) = 0;
   uint16 v2 = 0;
   do {
-    palette_buffer[v2 >> 1] = kPalettes_Intro3[v2 >> 1];
+    palette_buffer[v2 >> 1] = kPalettes_ZebesExplosionClouds[v2 >> 1];
     v2 += 2;
   } while ((int16)(v2 - 512) < 0);
   DecompressToMem(0x98bcd6, g_ram + 0x10000);
@@ -4507,7 +4507,7 @@ void CinematicFunction_Intro_Func115(void) {  // 0x8BD837
   uint16 v0 = 256;
   do {
     int v1 = v0 >> 1;
-    uint16 v2 = kPalettes_Intro6[v1];
+    uint16 v2 = kPalettes_ZebesExplosion[v1];
     palette_buffer[v1] = v2;
     v0 += 2;
   } while ((int16)(v0 - 512) < 0);
@@ -4558,7 +4558,7 @@ void CinematicFunction_Intro_Func117(void) {  // 0x8BDA1A
   if ((--cinematic_var4 & 0x8000) != 0) {
     uint16 v0 = 0;
     do {
-      palette_buffer[v0 >> 1] = kPalettes_Intro6[v0 >> 1];
+      palette_buffer[v0 >> 1] = kPalettes_ZebesExplosion[v0 >> 1];
       v0 += 2;
     } while ((int16)(v0 - 256) < 0);
     reg_M7SEL = 0;
@@ -4773,7 +4773,7 @@ void CinematicFunction_Intro_Func126(void) {  // 0x8BDE80
   ClearPaletteFXObjects();
   uint16 v0 = 0;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_Intro5[v0 >> 1];
+    palette_buffer[v0 >> 1] = kPalettes_Credits[v0 >> 1];
     v0 += 2;
   } while ((int16)(v0 - 256) < 0);
   DecompressToMem(0x979803, g_ram + 0x10000);
@@ -4920,7 +4920,7 @@ void CinematicFunction_Intro_Func132(void) {  // 0x8BE190
   if (!cinematic_var4 || v0) {
     uint16 v1 = 0;
     do {
-      ram3000.pause_menu_map_tilemap[v1 + 288] = g_word_8CDC9B[v1];
+      ram3000.pause_menu_map_tilemap[v1 + 288] = kCredits_DeerForceTilemap[v1];
       ++v1;
     } while ((int16)(v1 * 2 - 576) < 0);
     CinematicUpdateSomeBg();
@@ -4988,7 +4988,7 @@ void CinematicFunction_Intro_Func135(void) {  // 0x8BE293
       *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[288] + (uint16)i) = 127;
     uint16 v1 = 0;
     do {
-      ram3000.pause_menu_map_tilemap[v1 + 384] = g_word_8CDEDB[v1];
+      ram3000.pause_menu_map_tilemap[v1 + 384] = kCredits_1994NintendoCredits[v1];
       ++v1;
     } while ((int16)(v1 * 2 - 128) < 0);
     CinematicUpdateSomeBg();
@@ -5119,7 +5119,7 @@ void CinematicFunction_Intro_Func141(void) {  // 0x8BE48A
     reg_BG12NBA = 84;
     uint16 v0 = 384;
     do {
-      palette_buffer[v0 >> 1] = kPalettes_Intro4[v0 >> 1];
+      palette_buffer[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
       v0 += 2;
     } while ((int16)(v0 - 416) < 0);
     cinematic_var8 = 0;
@@ -5158,7 +5158,7 @@ void CinematicFunction_Intro_Func143(void) {  // 0x8BE504
     for (int i = 30; i >= 0; i -= 2)
       palette_buffer[(i >> 1) + 16] = 0;
     for (j = 30; (j & 0x8000) == 0; j -= 2)
-      palette_buffer[(j >> 1) + 240] = g_word_8CEFE9[j >> 1];
+      palette_buffer[(j >> 1) + 240] = kPalettes_EndingSuperMetroidIconGlare[j >> 1];
   }
 }
 
@@ -5190,16 +5190,16 @@ uint16 CalcItemPercentageCount(uint16 k, uint16 instrp) {  // 0x8BE627
   uint16 v0 = 4;
   uint16 r18 = 0;
   do {
-    const uint16 *v1 = (const uint16 *)RomPtr_RAM(g_off_8BE70D[v0]);
-    r18 += SnesDivide(*v1, g_word_8BE717[v0]);
+    const uint16 *v1 = (const uint16 *)RomPtr_RAM(kCredits_ItemPercentageRamAddresses[v0]);
+    r18 += SnesDivide(*v1, kCredits_ItemPercentageDivisors[v0]);
     --v0;
   } while ((v0 & 0x8000) == 0);
   for (int i = 20; i >= 0; i -= 2) {
-    if ((g_word_8BE721[i >> 1] & collected_items) != 0)
+    if ((kCredits_ItemPercentageItemBits[i >> 1] & collected_items) != 0)
       ++r18;
   }
   for (j = 8; (j & 0x8000) == 0; j -= 2) {
-    if ((g_word_8BE737[j >> 1] & collected_beams) != 0)
+    if ((kCredits_ItemPercentageBeamBits[j >> 1] & collected_beams) != 0)
       ++r18;
   }
   uint16 RegWord = r18 / 10;
@@ -5208,8 +5208,8 @@ uint16 CalcItemPercentageCount(uint16 k, uint16 instrp) {  // 0x8BE627
   uint16 r20 = RegWord % 10;
   if (r18) {
     int v5 = (uint16)(4 * r18) >> 1;
-    ram3000.pause_menu_map_tilemap[462] = g_word_8BE741[v5];
-    ram3000.pause_menu_map_tilemap[494] = g_word_8BE741[v5 + 1];
+    ram3000.pause_menu_map_tilemap[462] = kCredits_ItemPercentageDigitsTilemap[v5];
+    ram3000.pause_menu_map_tilemap[494] = kCredits_ItemPercentageDigitsTilemap[v5 + 1];
   }
   uint16 v6 = r20;
   if (r20)
@@ -5218,12 +5218,12 @@ uint16 CalcItemPercentageCount(uint16 k, uint16 instrp) {  // 0x8BE627
     v6 = r20;
 LABEL_16:;
     int v7 = (uint16)(4 * v6) >> 1;
-    ram3000.pause_menu_map_tilemap[463] = g_word_8BE741[v7];
-    ram3000.pause_menu_map_tilemap[495] = g_word_8BE741[v7 + 1];
+    ram3000.pause_menu_map_tilemap[463] = kCredits_ItemPercentageDigitsTilemap[v7];
+    ram3000.pause_menu_map_tilemap[495] = kCredits_ItemPercentageDigitsTilemap[v7 + 1];
   }
   int v8 = (uint16)(4 * r22) >> 1;
-  ram3000.pause_menu_map_tilemap[464] = g_word_8BE741[v8];
-  ram3000.pause_menu_map_tilemap[496] = g_word_8BE741[v8 + 1];
+  ram3000.pause_menu_map_tilemap[464] = kCredits_ItemPercentageDigitsTilemap[v8];
+  ram3000.pause_menu_map_tilemap[496] = kCredits_ItemPercentageDigitsTilemap[v8 + 1];
   ram3000.pause_menu_map_tilemap[465] = 14442;
   ram3000.pause_menu_map_tilemap[497] = 14458;
 
@@ -5233,7 +5233,7 @@ LABEL_16:;
 uint16 CinematicFunction_Intro_Func146(uint16 k, uint16 j) {  // 0x8BE769
   if (japanese_text_flag) {
     for (int i = 63; i >= 0; --i)
-      ram3000.pause_menu_map_tilemap[i + 736] = g_word_8CDF5B[i];
+      ram3000.pause_menu_map_tilemap[i + 736] = kCredits_ItemPercentageJapaneseTextTilemap[i];
   }
   return j;
 }
@@ -5267,7 +5267,7 @@ void CinematicFunction_Intro_Func127(void) {  // 0x8BE7BB
     *(uint16 *)v2 = v1;
     *((uint16 *)v2 + 6) = 0;
     *((uint16 *)v2 + 7) = 0;
-    uint16 v3 = g_word_8BE9CF[((8 * v1) >> 1) + 3];
+    uint16 v3 = kShootingStarTable[((8 * v1) >> 1) + 3];
     if (v3) {
       *((uint16 *)v2 + 5) = v3;
       *(uint16 *)v2 |= 0x8000;
@@ -5310,13 +5310,13 @@ void CinematicFunction_Intro_Func149(void) {  // 0x8BE812
       } else {
         int v4 = (8 * (uint8) * (uint16 *)v3) >> 1;
         if (sign16((GET_WORD(v3) & 0xFF00) - 1024)) {
-          *((uint16 *)v3 + 6) += g_word_8BE9CF[v4];
+          *((uint16 *)v3 + 6) += kShootingStarTable[v4];
           v5 = GET_WORD(v3 + 14);
         } else {
-          *((uint16 *)v3 + 6) += g_word_8BE9CF[v4] + g_word_8BE9CF[v4];
-          v5 = g_word_8BE9CF[v4 + 1] + *((uint16 *)v3 + 7);
+          *((uint16 *)v3 + 6) += kShootingStarTable[v4] + kShootingStarTable[v4];
+          v5 = kShootingStarTable[v4 + 1] + *((uint16 *)v3 + 7);
         }
-        *((uint16 *)v3 + 7) = g_word_8BE9CF[v4 + 1] + v5;
+        *((uint16 *)v3 + 7) = kShootingStarTable[v4 + 1] + v5;
         uint16 v23 = GET_WORD(v3 + 12);
         uint16 r18 = (int8)HIBYTE(v23);
         uint16 r20 = (v23 << 8) & 0xFF00;
@@ -5361,11 +5361,11 @@ void CinematicFunction_Intro_Func149(void) {  // 0x8BE812
           *((uint16 *)v16 + 5) = v20;
           if (v20 <= 0) {
             v22 = GET_WORD(v16);
-            *((uint16 *)v16 + 5) = g_word_8BE9CF[((8 * (uint8) * (uint16 *)v16) >> 1) + 2];
+            *((uint16 *)v16 + 5) = kShootingStarTable[((8 * (uint8) * (uint16 *)v16) >> 1) + 2];
             *(uint16 *)v16 = v22 + 512;
           }
           if (v16[1]) {
-            *(uint16 *)&gOamEnt(v13)->charnum = g_word_8BE9A7[(uint16)GET_HIBYTE(GET_WORD(v16)) >> 1];
+            *(uint16 *)&gOamEnt(v13)->charnum = kShootingStarTileNumberAttributes[(uint16)GET_HIBYTE(GET_WORD(v16)) >> 1];
             v13 += 4;
           }
         }
@@ -5937,10 +5937,10 @@ void CinematicFunction_Intro_Func216(void) {  // 0x8BF682
     gVramWriteEntry(vram_write_queue_tail)->size = 2048;
     v1 += 2;
     int v2 = v0 >> 1;
-    gVramWriteEntry(v1)->size = g_word_8BF6B8[v2];
+    gVramWriteEntry(v1)->size = kCinematicFunction_Intro_Func216_SourceAddresses[v2];
     v1 += 2;
     LOBYTE(gVramWriteEntry(v1++)->size) = 127;
-    gVramWriteEntry(v1)->size = g_word_8BF6D8[v2];
+    gVramWriteEntry(v1)->size = kCinematicFunction_Intro_Func216_VramAddresses[v2];
     vram_write_queue_tail = v1 + 2;
     ++cinematic_var14;
   }
@@ -5950,7 +5950,7 @@ uint16 CinematicFunction_Intro_Func219(uint16 k, uint16 j) {  // 0x8BF6FE
   DisableTextGlowObjects_();
   uint16 v0 = 8;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_Intro4[v0 >> 1];
+    palette_buffer[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
     v0 += 2;
   } while ((int16)(v0 - 512) < 0);
   reg_TM = 0;

@@ -3,10 +3,8 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
+#include "sm_b2.h"
 
-
-#define kWallSpacePirates_Palette_3 ((uint16*)RomFixedPtr(0xb28727))
-#define g_off_B2F959 ((uint16*)RomFixedPtr(0xb2f959))
 
 
 
@@ -538,7 +536,7 @@ void SpacePirates_Func_16(void) {  // 0xB2F917
     v3 = 0;
     if (E->base.x_pos == E->sps_var_E)
       v3 = 4;
-    E->base.current_instruction = g_off_B2F959[v2 + v3];
+    E->base.current_instruction = kSpacePirate_InstrListPtrs[v2 + v3];
     E->base.instruction_timer = 1;
   }
 }

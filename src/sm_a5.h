@@ -1,0 +1,18 @@
+#pragma once
+
+#define kDraygon_Palette1 ((uint16*)RomFixedPtr(0xa5a217))
+#define kDraygon_Bg1AndBg2Palette5 ((uint16*)RomFixedPtr(0xa5a277))
+#define kDraygon_FlashPalette ((uint16*)RomFixedPtr(0xa5a297))
+#define kDraygonTurret_XYSpawnPositions ((uint16*)RomFixedPtr(0xa587dc))
+#define kDraygon_HealthPaletteTable ((uint16*)RomFixedPtr(0xa596af))
+#define kDraygon_HealthPaletteThreshold ((uint16*)RomFixedPtr(0xa596ef))
+#define kMiniDraygon_MovementLatency ((uint16*)RomFixedPtr(0xa5a19f))
+#define kMiniDraygon_DeathSequenceSubspeeds ((uint16*)RomFixedPtr(0xa5a1af))
+#define kMiniDraygon_DeathSequenceSpawnPositions ((uint16*)RomFixedPtr(0xa5a1c7))
+#define kMiniDraygon_DeathSequenceAngles ((uint16*)RomFixedPtr(0xa5a1df))
+#define kMiniDraygonIntroDanceTable ((uint8*)RomFixedPtr(0xa5ce07))
+#define kSporeSpawn_HealthPaletteTable ((uint16*)RomFixedPtr(0xa5e379))
+#define kSporeSpawn_DeathSequencePalette1 ((uint16*)RomFixedPtr(0xa5e3f9))
+#define kSporeSpawn_DeathSequnceBg1AndBg2Palette4 ((uint16*)RomFixedPtr(0xa5e4f9))
+#define kSporeSpawn_DeathSequenceBg1AndBg2Palette7 ((uint16*)RomFixedPtr(0xa5e5d9))
+#define kSporeSpawn_Palette7 ((uint16*)RomFixedPtr(0xa5e359))

@@ -1329,11 +1329,11 @@ void InitializeHud(void) {  // 0x809A79
   samus_prev_hud_item_index = 0;
   InitializeMiniMapBroken();
   if (samus_max_missiles)
-    DrawThreeHudDigits(addrl_kDigitTilesetsWeapon, samus_missiles, 0x94);
+    DrawThreeHudDigits(addr_kDigitTilesetsWeapon, samus_missiles, 0x94);
   if (samus_max_super_missiles)
-    DrawTwoHudDigits(addrl_kDigitTilesetsWeapon, samus_super_missiles, 0x9C);
+    DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_super_missiles, 0x9C);
   if (samus_max_power_bombs)
-    DrawTwoHudDigits(addrl_kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
+    DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
   ToggleHudItemHighlight(hud_item_index, 0x1000);
   ToggleHudItemHighlight(samus_prev_hud_item_index, 0x1400);
   HandleHudTilemap();
@@ -1371,22 +1371,22 @@ void HandleHudTilemap(void) {  // 0x809B44
       hud_tilemap[kEnergyTankIconTilemapOffsets[v2 >> 1] >> 1] = v3;
       v2 += 2;
     } while ((int16)(v2 - 28) < 0);
-    DrawTwoHudDigits(addrl_kDigitTilesetsHealth, r18, 0x8C);
+    DrawTwoHudDigits(addr_kDigitTilesetsHealth, r18, 0x8C);
   }
   if (samus_max_missiles && samus_missiles != samus_prev_missiles) {
     samus_prev_missiles = samus_missiles;
-    DrawThreeHudDigits(addrl_kDigitTilesetsWeapon, samus_missiles, 0x94);
+    DrawThreeHudDigits(addr_kDigitTilesetsWeapon, samus_missiles, 0x94);
   }
   if (samus_max_super_missiles && samus_super_missiles != samus_prev_super_missiles) {
     samus_prev_super_missiles = samus_super_missiles;
     if ((joypad_dbg_flags & 0x1F40) != 0)
-      DrawThreeHudDigits(addrl_kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
+      DrawThreeHudDigits(addr_kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
     else
-      DrawTwoHudDigits(addrl_kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
+      DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
   }
   if (samus_max_power_bombs && samus_power_bombs != samus_prev_power_bombs) {
     samus_prev_power_bombs = samus_power_bombs;
-    DrawTwoHudDigits(addrl_kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
+    DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
   }
   if (hud_item_index != samus_prev_hud_item_index) {
     ToggleHudItemHighlight(hud_item_index, 0x1000);
@@ -1566,7 +1566,7 @@ uint8 ProcessTimer_Decrement(void) {  // 0x809EA9
 }
 
 void DrawTimer(void) {  // 0x809F6C
-  DrawTimerSpritemap(0, addr_word_80A060);
+  DrawTimerSpritemap(0, addr_kTimerSpritemap);
   DrawTwoTimerDigits(*(uint16 *)&timer_minutes, 0xFFE4);
   DrawTwoTimerDigits(*(uint16 *)&timer_seconds, 0xFFFC);
   DrawTwoTimerDigits(*(uint16 *)&timer_centiseconds, 0x14);

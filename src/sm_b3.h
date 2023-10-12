@@ -1,0 +1,16 @@
+#pragma once
+
+#define kBrinstarRedPipeBug_InstrListPtrs ((uint16*)RomFixedPtr(0xb3882b))
+#define kBrinstarGreenPipeBug_InstrListPtrs ((uint16*)RomFixedPtr(0xb38833))
+#define kBotwoon_HoleHitboxes ((uint16*)RomFixedPtr(0xb3949b))
+#define kBotwoon_SpeedTable ((uint16*)RomFixedPtr(0xb394bb))
+#define kBotwoon_9675PtrsUNUSED ((uint16*)RomFixedPtr(0xb39675))
+#define kBotwoonHealthThresForPalChange ((uint16*)RomFixedPtr(0xb3981b))
+#define kBotwoonHealthBasedPalette ((uint16*)RomFixedPtr(0xb3971b))
+#define kBotwoon_MouthClosedDirectionInstrListPtrs ((uint16*)RomFixedPtr(0xb3946b))
+#define kBotwoon_SpitDirectionInstrListPtrs ((uint16*)RomFixedPtr(0xb3948b))
+#define kEscapeEtecoon_XPositions ((uint16*)RomFixedPtr(0xb3e718))
+#define kEscapeEtecoon_YPositions ((uint16*)RomFixedPtr(0xb3e71e))
+#define kEscapeEtecoon_InstrListPtrs ((uint16*)RomFixedPtr(0xb3e72a))
+#define kEscapeEtecoon_FuncPtrs ((uint16*)RomFixedPtr(0xb3e724))
+#define kEscapeEtecoon_XVelocities ((uint16*)RomFixedPtr(0xb3e730))
