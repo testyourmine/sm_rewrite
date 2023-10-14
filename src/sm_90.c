@@ -2251,7 +2251,7 @@ void UpdateMinimap(void) {  // 0x90A91B
   uint16 r24 = kShr0xFc00[v6] & swap16(*(uint16 *)&map_tiles_explored[v3]);
   uint16 r26 = kShr0xFc00[v6] & swap16(*(uint16 *)&map_tiles_explored[v3 + 4]);
   uint16 r28 = kShr0xFc00[v6] & swap16(*(uint16 *)&map_tiles_explored[v3 + 8]);
-  const uint8 *r9 = RomPtr_82(kPauseMenuMapData[area_index]);
+  const uint8 *r9 = RomPtr_82(kPauseMenuMapData_90[area_index]);
   const uint8 *r15 = r9;
   r9 += v3;
   uint16 r38 = swap16(GET_WORD(r9));
@@ -2326,7 +2326,7 @@ void UpdateMinimapInside(uint16 r18, uint16 r22, uint16 r34, uint16 r30, uint16 
   else
     v1 = t - 34;
   uint16 v2 = 2 * v1;
-  const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[area_index]));
+  const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps_90[area_index]));
   const uint16 *r3 = r0 + 32;
   const uint16 *r6 = r0 + 64;
   int n = 5;
