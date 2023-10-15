@@ -824,8 +824,10 @@ void CalculateXrayHdmaTableInner(uint16 k, uint16 j, uint16 r18, uint16 r20, boo
 
 void XrayRunHandler(void) {  // 0x91CAD6
   if (!time_is_frozen_flag && (button_config_run_b & joypad1_lastkeys) != 0) {
-    if (Xray_Initialize() & 1)
-      SpawnHdmaObject(0x91, &kXrayHdmaWindow2Object);
+    if (Xray_Initialize() & 1) {
+        static const SpawnHdmaObject_Args kXrayHdmaWindow2Object = { 0x41, 0x28, 0xd223 };
+        SpawnHdmaObject(0x91, &kXrayHdmaWindow2Object);
+    }
   }
 }
 

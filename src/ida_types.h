@@ -554,7 +554,7 @@ typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {
 
 /* 34 */
 typedef struct ProjectileDamagesAndInstrPtr {
-  unsigned int damages;
+  uint16 damages;
   VoidP instr_ptr;
 } ProjectileDamagesAndInstrPtr;
 
@@ -635,11 +635,11 @@ typedef struct ProjectileInstr {
 
 /* 46 */
 typedef struct GrappleBeamSpecialAngles {
-  uint16 field_0;
-  uint16 field_2;
-  uint16 field_4;
-  uint16 field_6;
-  VoidP field_8;
+  uint16 angle;
+  uint16 pose;
+  uint16 x_offset;
+  uint16 y_offset;
+  VoidP grapple_function;
 } GrappleBeamSpecialAngles;
 
 /* 47 */

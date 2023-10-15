@@ -353,14 +353,14 @@ void HandleConnectingGrapple_StuckInPlace(void) {  // 0x9BBA9B
 
 uint8 HandleSpecialGrappleBeamAngles(void) {  // 0x9BBAD5
   uint16 v0 = 7;
-  while (grapple_beam_end_angle16 != grapple_beam_special_angles[v0].field_0) {
+  while (grapple_beam_end_angle16 != grapple_beam_special_angles[v0].angle) {
     if ((--v0 & 0x8000) != 0)
       return 0;
   }
-  samus_new_pose_interrupted = grapple_beam_special_angles[v0].field_2;
-  samus_x_pos = grapple_beam_end_x_pos + grapple_beam_special_angles[v0].field_4;
-  samus_y_pos = grapple_beam_end_y_pos + grapple_beam_special_angles[v0].field_6;
-  grapple_beam_function = grapple_beam_special_angles[v0].field_8;
+  samus_new_pose_interrupted = grapple_beam_special_angles[v0].pose;
+  samus_x_pos = grapple_beam_end_x_pos + grapple_beam_special_angles[v0].x_offset;
+  samus_y_pos = grapple_beam_end_y_pos + grapple_beam_special_angles[v0].y_offset;
+  grapple_beam_function = grapple_beam_special_angles[v0].grapple_function;
   samus_special_transgfx_index = 0;
   slow_grabble_scrolling_flag = 0;
   int16 v2 = samus_x_pos - samus_prev_x_pos;

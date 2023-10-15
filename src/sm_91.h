@@ -1,26 +1,128 @@
 #pragma once
 
-#define kXrayHdmaWindow2Object (*(SpawnHdmaObject_Args*)RomFixedPtr(0x91caf2))
-#define kXrayBlockData ((XrayBlockData*)RomFixedPtr(0x91d2d6))
-#define kXrayBlockData ((XrayBlockData*)RomFixedPtr(0x91d2d6))
-#define kSamusPalette_Normal ((uint16*)RomFixedPtr(0x91d727))
-#define kSamusPalette_HyperBeam ((uint16*)RomFixedPtr(0x91d829))
-#define kSamusPalette_NonPseudoScrew ((uint16*)RomFixedPtr(0x91d7d5))
-#define kSamusPalette_PseudoScrew ((uint16*)RomFixedPtr(0x91d7ff))
-#define kSamus_VisorColors ((uint16*)RomFixedPtr(0x9ba3c0))
-#define kSamus_SpeedBoostingPalettes ((uint16*)RomFixedPtr(0x91d998))
-#define kSamus_HyperBeamPalettes ((uint16*)RomFixedPtr(0x91d99e))
-#define kSamusPal_ScrewAttack ((uint16*)RomFixedPtr(0x91da4a))
-#define kSamusPal_SpeedBoost ((uint16*)RomFixedPtr(0x91daa9))
-#define kSamusPal_SpeedBoostShine ((uint16*)RomFixedPtr(0x91db10))
-#define kSamusPal_Shinespark ((uint16*)RomFixedPtr(0x91db75))
-#define kSamusPal_CrystalFlash0to9 ((SamusCrystalFlashPalTable*)RomFixedPtr(0x91dc00))
-#define kSamusPal_CrystalFlash10to15 ((uint16*)RomFixedPtr(0x91dc28))
-#define kSamusPose_Falling ((uint16*)RomFixedPtr(0x91e921))
-#define kSamusPose_Landing ((uint16*)RomFixedPtr(0x91e9f3))
-#define kSamusPose_RanIntoWall ((uint16*)RomFixedPtr(0x91eb74))
-#define kSamusTurnPose_Standing ((uint8*)RomFixedPtr(0x91f9c2))
-#define kSamusTurnPose_Crouching ((uint8*)RomFixedPtr(0x91f9cc))
-#define kSamusTurnPose_Jumping ((uint8*)RomFixedPtr(0x91f9d6))
-#define kSamusTurnPose_Falling ((uint8*)RomFixedPtr(0x91f9e0))
-#define kSamusTurnPose_Moonwalk ((uint8*)RomFixedPtr(0x91f9ea))
+//#define kXrayBlockData ((XrayBlockData*)RomFixedPtr(0x91d2d6))
+//#define kSamusPalette_Normal ((uint16*)RomFixedPtr(0x91d727))
+//#define kSamusPalette_HyperBeam ((uint16*)RomFixedPtr(0x91d829))
+//#define kSamusPalette_NonPseudoScrew ((uint16*)RomFixedPtr(0x91d7d5))
+//#define kSamusPalette_PseudoScrew ((uint16*)RomFixedPtr(0x91d7ff))
+//#define kSamus_VisorColors ((uint16*)RomFixedPtr(0x9ba3c0))
+//#define kSamus_SpeedBoostingPalettes ((uint16*)RomFixedPtr(0x91d998))
+//#define kSamus_HyperBeamPalettes ((uint16*)RomFixedPtr(0x91d99e))
+//#define kSamusPal_ScrewAttack ((uint16*)RomFixedPtr(0x91da4a))
+//#define kSamusPal_SpeedBoost ((uint16*)RomFixedPtr(0x91daa9))
+//#define kSamusPal_SpeedBoostShine ((uint16*)RomFixedPtr(0x91db10))
+//#define kSamusPal_Shinespark ((uint16*)RomFixedPtr(0x91db75))
+//#define kSamusPal_CrystalFlash0to9 ((SamusCrystalFlashPalTable*)RomFixedPtr(0x91dc00))
+//#define kSamusPal_CrystalFlash10to15 ((uint16*)RomFixedPtr(0x91dc28))
+//#define kSamusPose_Falling ((uint16*)RomFixedPtr(0x91e921))
+//#define kSamusPose_Landing ((uint16*)RomFixedPtr(0x91e9f3))
+//#define kSamusPose_RanIntoWall ((uint16*)RomFixedPtr(0x91eb74))
+//#define kSamusTurnPose_Standing ((uint8*)RomFixedPtr(0x91f9c2))
+//#define kSamusTurnPose_Crouching ((uint8*)RomFixedPtr(0x91f9cc))
+//#define kSamusTurnPose_Jumping ((uint8*)RomFixedPtr(0x91f9d6))
+//#define kSamusTurnPose_Falling ((uint8*)RomFixedPtr(0x91f9e0))
+//#define kSamusTurnPose_Moonwalk ((uint8*)RomFixedPtr(0x91f9ea))
+XrayBlockData kXrayBlockData[] = {
+     0x0, 0xd2fc,
+  0x3000, 0xd306,
+  0x5000, 0xd310,
+  0xa000, 0xd318,
+  0xb000, 0xd322,
+  0xc000, 0xd3cc,
+  0xd000, 0xd462,
+  0xe000, 0xd46a,
+  0xf000, 0xd484,
+  0xff00,
+};
+
+uint16 kSamusPalette_Normal[] = {
+  0x9400, 0x9520, 0x9800,
+};
+
+uint16 kSamusPalette_HyperBeam[] = {
+     0x0, 0xa360, 0xa340, 0xa320, 0xa300, 0xa2e0, 0xa2c0, 0xa2a0, 0xa280, 0xa260, 0xa240,
+};
+
+uint16 kSamusPalette_NonPseudoScrew[] = {
+  0xd7db, 0xd7e7, 0xd7f3,
+};
+
+uint16 kSamusPalette_PseudoScrew[] = {
+  0xd805, 0xd811, 0xd81d,
+};
+
+uint16 kSamus_VisorColors[] = {
+  0x3be0, 0x5ff0, 0x7fff, 
+  0x43ff, 0x2f5a, 0x1ab5,
+};
+
+uint16 kSamus_SpeedBoostingPalettes[] = {
+  0x9b80, 0x9d80, 0x9f80,
+};
+
+uint16 kSamus_HyperBeamPalettes[] = {
+  0xa360, 0xa340, 0xa320, 0xa300, 0xa2e0, 0xa2c0, 0xa2a0, 0xa280, 0xa260, 0xa240,
+};
+
+uint16 kSamusPal_ScrewAttack[] = {
+  0xda50, 0xda5c, 0xda68,
+};
+
+uint16 kSamusPal_SpeedBoost[] = {
+  0xdaaf, 0xdab7, 0xdabf,
+};
+
+uint16 kSamusPal_SpeedBoostShine[] = {
+  0xdb16, 0xdb22, 0xdb2e,
+};
+
+uint16 kSamusPal_Shinespark[] = {
+  0xdb7b, 0xdb83, 0xdb8b,
+};
+
+SamusCrystalFlashPalTable kSamusPal_CrystalFlash0to9[] = {
+  0x96c0,10, 0x96e0,10, 0x9700,10, 0x9720,10, 0x9740,10, 0x9760,10, 0x9740,10, 0x9720,10, 0x9700,10, 0x96e0,10,
+};
+
+uint16 kSamusPal_CrystalFlash10to15[] = {
+  0x96d4, 0x96f4, 0x9714, 0x9734, 0x9754, 0x9774,
+};
+
+uint16 kSamusPose_Falling[] = {
+    0x29,  0x2a,
+    0x31,  0x32,
+    0x33,  0x34,
+    0x7d,  0x7e,
+};
+
+uint16 kSamusPose_Landing[] = {
+    0xe0,  0xe2,  0xa4,  0xe4,  0xa4,
+    0xa5,  0xe5,  0xa5,  0xe3,  0xe1,
+};
+
+uint16 kSamusPose_RanIntoWall[] = {
+     0x3,  0xcf,  0x89,  0xd1,  0x89,
+    0x8a,  0xd2,  0x8a,  0xd0,   0x4,
+};
+
+uint8 kSamusTurnPose_Standing[] = {
+  0x8b, 0x9c, 0x25, 0x8d, 0x8d, 0x8e, 0x8e, 0x26, 0x9d, 0x8c,
+};
+
+uint8 kSamusTurnPose_Crouching[] = {
+  0x97, 0xa2, 0x43, 0x99, 0x99, 0x9a, 0x9a, 0x44, 0xa3, 0x98,
+};
+
+uint8 kSamusTurnPose_Jumping[] = {
+  0x8f, 0x9e, 0x2f, 0x91, 0x91, 0x92, 0x92, 0x30, 0x9f, 0x90,
+};
+
+uint8 kSamusTurnPose_Falling[] = {
+  0x93, 0xa0, 0x87, 0x95, 0x95, 0x96, 0x96, 0x88, 0xa1, 0x94,
+};
+
+uint8 kSamusTurnPose_Moonwalk[] = {
+  0xc1, 0xc1, 0xbf, 0xc3, 0x8d, 0x8e, 0xc4, 0xc0, 0xc2, 0xc2,
+};
+
+
