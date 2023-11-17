@@ -31,24 +31,14 @@ uint16 kRunInstrForSuperMissile[] = {
      0x0,    0x0, 0x866d,
 };
 
-ProjectileDamagesAndInstrPtr kProjInstrList_SuperMissileExplosion[] = {
-     0x8, 0xa0c1,
-};
+ProjectileDamagesAndInstrPtr kProjInstrList_SuperMissileExplosion = {    0x8, 0xa0c1, };
 
-ProjectileDamagesAndInstrPtr kProjInstrList_MissileExplosion[] = {
-     0x8, 0xa039,
-};
+ProjectileDamagesAndInstrPtr kProjInstrList_MissileExplosion = {    0x8, 0xa039, };
 
-ProjectileDamagesAndInstrPtr kProjInstrList_BeamExplosion[] = {
-     0x8, 0xa007,
-};
+ProjectileDamagesAndInstrPtr kProjInstrList_BeamExplosion = {    0x8, 0xa007, };
 
-ProjectileDamagesAndInstrPtr kProjInstrList_BombExplosion[] = {
-     0x0, 0xa06b,
-};
+ProjectileDamagesAndInstrPtr kProjInstrList_BombExplosion = {    0x0, 0xa06b, };
 
 uint16 kProjectileData_SBA[] = {
      0x0, 0x8689,    0x0,    0x0, 0x868d, 0x868d,    0x0,    0x0, 0x8685, 0x8685,    0x0,    0x0,
 };
-
-

@@ -594,17 +594,17 @@ void sub_82A42A(void);
 void sub_82A47B(void);
 void sub_82A4A9(void);
 void sub_82B932(void);
-void sub_82BB7F(uint16 a);
-void sub_82BBDD(void);
-void sub_82DB41(void);
-void sub_82F296(uint16 j);
-void sub_82F34B(uint16 j);
-void sub_82F353(uint16 j);
-void sub_82F35B(uint16 j);
-void sub_82F363(uint16 j);
-void sub_82F369(uint16 j);
+void ProcessGameOverBabyMetroidInstructionList(uint16 a);
+void RestartGameOverBabyMetroidInstructionList(void);
+void AdvancePaletteFadeForPaletteInX_0x20(void);
+void OptionsInit_MenuSelectMissile(uint16 j);
+void OptionsInit_OptionModeBorder(uint16 j);
+void OptionsInit_ControllerSettingModeBorder(uint16 j);
+void OptionsInit_SpecialSettingModeBorder(uint16 j);
+void OptionsInit_SamusDataBorder(uint16 j);
+void OptionsInit_CommonBorder(uint16 j);
 void sub_82F404(uint16 k);
-void sub_82F419(uint16 j);
+void OptionsInit_FileSelectHelmet(uint16 j);
 
 // Bank 84
 uint16 SetBtsTo0x10AdvanceRow(uint16 k);
@@ -4363,16 +4363,16 @@ void VerifySRAM(void);
 #define fnDoorTransition_WaitForMusicToClear 0x82E664
 #define fnDoorTransition_HandleTransition 0x82E6A2
 #define fnDoorTransition_FadeInScreenAndFinish 0x82E737
-#define fnsub_82F296 0x82F296
+#define fnOptionsInit_MenuSelectMissile 0x82F296
 #define fnOptionsPreInstr_MenuSelectMissile 0x82F2A9
-#define fnsub_82F34B 0x82F34B
-#define fnsub_82F353 0x82F353
-#define fnsub_82F35B 0x82F35B
-#define fnsub_82F363 0x82F363
+#define fnOptionsInit_OptionModeBorder 0x82F34B
+#define fnOptionsInit_ControllerSettingModeBorder 0x82F353
+#define fnOptionsInit_SpecialSettingModeBorder 0x82F35B
+#define fnOptionsInit_SamusDataBorder 0x82F363
 #define fnOptionsPreInstr_OptionsModeBorder 0x82F376
 #define fnOptionsPreInstr_ControllerSettingModeBorder 0x82F3A0
 #define fnOptionsPreInstr_SpecialSettingModeBorder 0x82F3E2
-#define fnsub_82F419 0x82F419
+#define fnOptionsInit_FileSelectHelmet 0x82F419
 #define fnOptionsPreInstr_FileSelectHelmet 0x82F42C
 #define fnPlmPreInstr_nullsub_60 0x848469
 #define fnPlmPreInstr_Empty2 0x8484E6

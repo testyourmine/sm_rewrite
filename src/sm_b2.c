@@ -65,7 +65,7 @@ void WalkingSpacePirates_87C8(void) {  // 0xB287C8
     enemy_ptr = Get_SpacePirates(cur_enemy_index)->base.enemy_ptr;
     vulnerability_ptr = get_EnemyDef_A2(enemy_ptr)->vulnerability_ptr;
     if (!vulnerability_ptr)
-      vulnerability_ptr = addr_stru_B4EC1C;
+      vulnerability_ptr = addr_kEnemyVulnerability;
     uint16 r20 = vulnerability_ptr;
     if ((r18 & kProjectileType_TypeMask) != 0) {
       if ((r18 & kProjectileType_TypeMask) != kProjectileType_Missile && (r18 & kProjectileType_TypeMask) != kProjectileType_SuperMissile)

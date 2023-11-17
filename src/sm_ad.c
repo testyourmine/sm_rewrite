@@ -2,16 +2,7 @@
 #include "variables.h"
 #include "funcs.h"
 #include "enemy_types.h"
-
-
-#define kMotherBrain_HealthBasedPalettes_Brain ((uint16*)RomFixedPtr(0xade6a2))
-#define kMotherBrain_HealthBasedPalettes_BackLeg ((uint16*)RomFixedPtr(0xade742))
-#define kMotherBrain_FadePalToBlack ((uint16*)RomFixedPtr(0xade9e8))
-#define kMotherBrain_TransitionToFromGrey_Incr ((uint16*)RomFixedPtr(0xaded8a))
-#define kMotherBrain_TransitionToFromGrey_Decr ((uint16*)RomFixedPtr(0xaded9c))
-#define kMotherBrain_FadeToGray_Drained ((uint16*)RomFixedPtr(0xadef87))
-#define kMotherBrain_FadeToGray_RealDeath ((uint16*)RomFixedPtr(0xadf107))
-#define kMotherBrain_Phase3_TurnLightsBackOn ((uint16*)RomFixedPtr(0xadf273))
+#include "sm_ad.h"
 
 void nullsub_341(void) {}
 

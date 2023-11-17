@@ -2281,11 +2281,11 @@ void sub_81AEC8(void) {  // 0x81AEC8
 
 void HandleFileSelectMapScrollArrows(void) {  // 0x81AECA
   if (sign16(map_min_x_scroll - 24 - reg_BG1HOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kLeftMapScrollArrowData);
+    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kFileSelectLeftMapScrollArrowData);
   if (!sign16(map_max_x_scroll - 232 - reg_BG1HOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kRightMapScrollArrowData);
+    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kFileSelectRightMapScrollArrowData);
   if (sign16(map_min_y_scroll - 64 - reg_BG1VOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kUpMapScrollArrowData);
+    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kFileSelectUpMapScrollArrowData);
   if (sign16(map_max_y_scroll - 145 - reg_BG1VOFS)) {
     if (map_scrolling_direction == kFileSelectDownMapScrollArrowData.map_scroll_dir) {
       map_scrolling_gear_switch_timer = 0;
@@ -2293,7 +2293,7 @@ void HandleFileSelectMapScrollArrows(void) {  // 0x81AECA
       map_scrolling_speed_index = 0;
     }
   } else {
-    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kDownMapScrollArrowData);
+    DrawMapScrollArrowAndCheckToScroll(0x81, addr_kFileSelectDownMapScrollArrowData);
   }
 }
 

@@ -166,7 +166,7 @@ void Draygon_Func_3(void) {  // 0xA587AA
     if (!Get_Draygon(result)->draygon_var_40) {
       int v2 = (uint16)(4 * ((Random & 3) + 2)) >> 1;
       eproj_spawn_pt = (Point16U){ kDraygonTurret_XYSpawnPositions[v2], kDraygonTurret_XYSpawnPositions[v2 + 1] };
-      SpawnEprojWithGfx(3, result, addr_stru_868E5E);
+      SpawnEprojWithGfx(3, result, addr_kEproj_DraygonWallTurretProjectile);
     }
   }
 }
@@ -1060,7 +1060,7 @@ const uint16 *Draygon_Instr_12(uint16 k, const uint16 *jp) {  // 0xA59F7C
   Enemy_Draygon *E = Get_Draygon(0);
   eproj_spawn_pt = (Point16U){ E->base.x_pos - 28, E->base.y_pos - 16 };
   eproj_unk1995 = (NextRandom() & 0x3F) + 128;
-  SpawnEprojWithGfx(2, cur_enemy_index, addr_stru_868E50);
+  SpawnEprojWithGfx(2, cur_enemy_index, addr_kEproj_DraygonGoop);
   return jp;
 }
 
@@ -1068,7 +1068,7 @@ const uint16 *Draygon_Instr_18(uint16 k, const uint16 *jp) {  // 0xA59FAE
   Enemy_Draygon *E = Get_Draygon(0);
   eproj_spawn_pt = (Point16U){ E->base.x_pos + 24, E->base.y_pos - 16 };
   eproj_unk1995 = (NextRandom() & 0x3F) + 192;
-  SpawnEprojWithGfx(2, cur_enemy_index, addr_stru_868E50);
+  SpawnEprojWithGfx(2, cur_enemy_index, addr_kEproj_DraygonGoop);
   return jp;
 }
 

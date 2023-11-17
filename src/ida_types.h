@@ -656,8 +656,8 @@ typedef struct Hitbox {
   uint16 top;
   uint16 right;
   uint16 bottom;
-  VoidP func_ptr;
-  VoidP func_ptrA;
+  VoidP samus_coll_ptr;
+  VoidP proj_coll_ptr;
 } Hitbox;
 
 /* 49 */
@@ -785,8 +785,8 @@ typedef struct EnemyDropChances {
 } EnemyDropChances;
 
 typedef struct SpriteDrawInstr {
-  uint16 field_0;
-  VoidP field_2;
+  uint16 timer;
+  VoidP sprite_ptr;
 } SpriteDrawInstr;
 
 /* 70 */
@@ -831,9 +831,9 @@ typedef struct KraidMouthHitbox {
 
 /* 76 */
 typedef struct KraidSinkTable {
-  uint16 field_0;
-  uint16 field_2;
-  VoidP field_4;
+  uint16 kraid_y_pos;
+  uint16 vram_bg2_tilemap_offset;
+  VoidP func_ptr;
 } KraidSinkTable;
 
 /* 77 */
@@ -1373,10 +1373,10 @@ enum Consts_81 {
   addr_kMenuTilemap_TryAgain = 0x9334,
   addr_kMenuTilemap_YesReturnToGame = 0x934C,
   addr_kMenuTilemap_NoGoToTitle = 0x93A0,
-  addr_kLeftMapScrollArrowData = 0xAF32,
-  addr_kRightMapScrollArrowData = 0xAF3C,
-  addr_kUpMapScrollArrowData = 0xAF46,
-  addr_kDownMapScrollArrowData = 0xAF50,
+  addr_kFileSelectLeftMapScrollArrowData = 0xAF32,
+  addr_kFileSelectRightMapScrollArrowData = 0xAF3C,
+  addr_kFileSelectUpMapScrollArrowData = 0xAF46,
+  addr_kFileSelectDownMapScrollArrowData = 0xAF50,
   addr_kMenuTilemap_SamusData = 0xB40A,
   addr_kMenuTilemap_SamusA = 0xB436,
   addr_kMenuTilemap_SamusB = 0xB456,
@@ -1405,10 +1405,10 @@ enum Consts_81 {
 };
 enum Consts_82 {
   addr_kPauseMenuMapData = 0x9717,
-  addr_stru_82B9A0 = 0xB9A0,
-  addr_stru_82B9AA = 0xB9AA,
-  addr_stru_82B9B4 = 0xB9B4,
-  addr_stru_82B9BE = 0xB9BE,
+  addr_kLeftMapScrollArrowData = 0xB9A0,
+  addr_kRightMapScrollArrowData = 0xB9AA,
+  addr_kUpMapScrollArrowData = 0xB9B4,
+  addr_kDownMapScrollArrowData = 0xB9BE,
   addr_kgameOverBabyMetridInstructionList = 0xBC27,
   addr_kEquipmentScreenTilemap_MANUAL = 0xBF22,
   addr_kEquipmentScreenTilemap_AUTO = 0xBF2A,
@@ -1419,12 +1419,12 @@ enum Consts_82 {
   addr_kEquipmentTilemapOffs_Boots = 0xC082,
   addr_kDummySamusWireframeTilemap = 0xC639,
   addr_kMapIconDataPointers = 0xC7CB,
-  addr_off_82F4B6 = 0xF4B6,
-  addr_stru_82F4B8 = 0xF4B8,
-  addr_stru_82F4C4 = 0xF4C4,
-  addr_stru_82F4CA = 0xF4CA,
-  addr_stru_82F4D0 = 0xF4D0,
-  addr_stru_82F4D6 = 0xF4D6,
+  addr_kOptionsInstr_Destroy = 0xF4B6,
+  addr_kOptionsInit_MenuSelectMissile = 0xF4B8,
+  addr_kOptionsInit_OptionModeBorder = 0xF4C4,
+  addr_kOptionsInit_ControllerSettingModeBorder = 0xF4CA,
+  addr_kOptionsInit_SpecialSettingModeBorder = 0xF4D0,
+  addr_kOptionsInit_SamusDataBorder = 0xF4D6,
 };
 enum Consts_83 {
   addr_kDoorDef_947a = 0x947A,
@@ -1444,19 +1444,19 @@ enum Consts_84 {
   addr_locret_84D779 = 0xD779,
 };
 enum Consts_86 {
-  addr_stru_868BC2 = 0x8BC2,
-  addr_stru_868BD0 = 0x8BD0,
-  addr_stru_868BDE = 0x8BDE,
-  addr_stru_868BEC = 0x8BEC,
-  addr_stru_868BFA = 0x8BFA,
-  addr_stru_868C08 = 0x8C08,
-  addr_stru_868C16 = 0x8C16,
-  addr_stru_868C24 = 0x8C24,
-  addr_stru_868E50 = 0x8E50,
-  addr_stru_868E5E = 0x8E5E,
-  addr_word_868EDF = 0x8EDF,
-  addr_stru_868F8F = 0x8F8F,
-  addr_stru_868F9D = 0x8F9D,
+  addr_kEproj_SkreeParticles_DownRight = 0x8BC2,
+  addr_kEproj_SkreeParticles_UpRight = 0x8BD0,
+  addr_kEproj_SkreeParticles_DownLeft = 0x8BDE,
+  addr_kEproj_SkreeParticles_UpLeft = 0x8BEC,
+  addr_kEproj_MetaleeParticles_DownRight = 0x8BFA,
+  addr_kEproj_MetaleeParticles_UpRight = 0x8C08,
+  addr_kEproj_MetaleeParticles_DownLeft = 0x8C16,
+  addr_kEproj_MetaleeParticles_UpLeft = 0x8C24,
+  addr_kEproj_DraygonGoop = 0x8E50,
+  addr_kEproj_DraygonWallTurretProjectile = 0x8E5E,
+  //addr_word_868EDF = 0x8EDF,
+  addr_kEproj_CrocomireProjectile = 0x8F8F,
+  addr_kEproj_CrocomireBridgeCrumbling = 0x8F9D,
   addr_kEproj_CrocomireSpikeWallPieces = 0x90C1,
   addr_kRidleysFireball_Tab0 = 0x9408,
   addr_off_869574 = 0x9574,
@@ -2540,8 +2540,8 @@ enum Consts_B3 {
 enum Consts_B4 {
   addr_kSpriteObject_Ilist_C3BA = 0xC3BA,
   addr_kSpriteObject_Ilist_C4B6 = 0xC4B6,
-  addr_asc_B4DD89 = 0xDD89,
-  addr_stru_B4EC1C = 0xEC1C,
+  //addr_asc_B4DD89 = 0xDD89,
+  addr_kEnemyVulnerability = 0xEC1C,
 };
 enum Consts_B7 {
   addr_kDeadTorizo_TileData = 0xA800,

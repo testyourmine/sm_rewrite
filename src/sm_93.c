@@ -58,17 +58,17 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
     uint16 v2 = projectile_type[v1];
     projectile_type[v1] = v2 & 0xF0FF | 0x800;
     if ((v2 & 0x200) != 0) {
-      projectile_bomb_instruction_ptr[v1] = kProjInstrList_SuperMissileExplosion[0].instr_ptr;
+      projectile_bomb_instruction_ptr[v1] = kProjInstrList_SuperMissileExplosion.instr_ptr;
       earthquake_type = 20;
       earthquake_timer = 30;
     } else {
-      projectile_bomb_instruction_ptr[v1] = kProjInstrList_MissileExplosion[0].instr_ptr;
+      projectile_bomb_instruction_ptr[v1] = kProjInstrList_MissileExplosion.instr_ptr;
     }
     if (!sign16(cooldown_timer - 21))
       cooldown_timer = 20;
   } else {
     projectile_type[v1] = projectile_type[v1] & 0xF0FF | 0x700;
-    projectile_bomb_instruction_ptr[v1] = kProjInstrList_BeamExplosion[0].instr_ptr;
+    projectile_bomb_instruction_ptr[v1] = kProjInstrList_BeamExplosion.instr_ptr;
     QueueSfx2_Max6(0xC);
   }
   projectile_bomb_instruction_timers[v1] = 1;
@@ -77,7 +77,7 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
 
 void InitializeBombExplosion(uint16 k) {  // 0x93814E
   int v1 = k >> 1;
-  projectile_bomb_instruction_ptr[v1] = kProjInstrList_BombExplosion[0].instr_ptr;
+  projectile_bomb_instruction_ptr[v1] = kProjInstrList_BombExplosion.instr_ptr;
   projectile_bomb_instruction_timers[v1] = 1;
 }
 

@@ -264,6 +264,7 @@
     <ClInclude Include="sm_a8.h" />
     <ClInclude Include="sm_a9.h" />
     <ClInclude Include="sm_aa.h" />
+    <ClInclude Include="sm_ad.h" />
     <ClInclude Include="sm_b2.h" />
     <ClInclude Include="sm_b3.h" />
     <ClInclude Include="sm_b4.h" />

@@ -112,7 +112,7 @@ const uint16 *Crocomire_Func_7(uint16 k, const uint16 *jp) {  // 0xA4876C
     uint16 crocom_var_F = E->crocom_var_F;
     if (sign16(crocom_var_F - 18)) {
       E->crocom_var_F += 2;
-      SpawnEprojWithGfx(crocom_var_F, cur_enemy_index, addr_stru_868F8F);
+      SpawnEprojWithGfx(crocom_var_F, cur_enemy_index, addr_kEproj_CrocomireProjectile);
       QueueSfx3_Max6(0x1C);
     } else {
       jp = INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BBCA);
@@ -778,7 +778,7 @@ void Crocomire_Func_52(void) {  // 0xA49136
   if (sign16(*(uint16 *)((uint8 *)&g_word_7E9015 + 1) - 22)) {
     uint16 v1 = *(uint16 *)((uint8 *)&g_word_7E9015 + 1);
     *(uint16 *)((uint8 *)&g_word_7E9015 + 1) += 2;
-    SpawnEprojWithGfx(kCrocomire_BridgeCrumbleTab0[v0 >> 1], v1, addr_stru_868F9D);
+    SpawnEprojWithGfx(kCrocomire_BridgeCrumbleTab0[v0 >> 1], v1, addr_kEproj_CrocomireBridgeCrumbling);
   }
   Crocomire_Func_54();
 }

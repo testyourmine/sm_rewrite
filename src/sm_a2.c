@@ -446,7 +446,7 @@ void MaridiaBeybladeTurtle_Func7(uint16 k) {  // 0xA28F8D
       if ((int16)(E->base.x_pos - samus_x_pos) < 0)
         v3 = 4;
       E->mte_var_01 = *(uint16 *)((uint8 *)&kMaridiaBeybladeTurtle_Tab0 + v3);
-      E->mte_var_02 = *(uint16 *)((uint8 *)&kMaridiaBeybladeTurtle_Tab1 + v3);
+      E->mte_var_02 = *(uint16 *)((uint8 *)&kMaridiaBeybladeTurtle_Tab0 + 2 + v3);
       E->mte_var_E = 0;
       E->mte_var_03 = 0;
       E->mte_var_A = FUNC16(MaridiaBeybladeTurtle_Func8);
@@ -836,7 +836,7 @@ void ThinHoppingBlobs_Func3(void) {  // 0xA29AAA
   }
   uint16 v3 = 8 * thbs_var_00;
   E->thbs_var_F = v3;
-  E->thbs_var_E = *(uint16 *)((uint8 *)&kThinHoppingBlobs_AirborneFuncPtrs + v3);
+  E->thbs_var_E = *(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + 6 + v3);
 }
 
 uint16 ThinHoppingBlobs_Func4(void) {  // 0xA29B06
@@ -851,10 +851,10 @@ void ThinHoppingBlobs_Func5(void) {  // 0xA29B1A
   uint16 r22 = 0;
   uint16 r24 = 0;
   do {
-    r22 += *(uint16 *)((uint8 *)&kThinHoppingBlobs_XSpeedIndices + thbs_var_F);
+    r22 += *(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + 2 + thbs_var_F);
     r24 += *(uint16 *)((uint8 *)kCommonEnemySpeeds_Quadratic + (8 * ((r22 & 0xFF00) >> 8)) + 1);
     thbs_var_F = E->thbs_var_F;
-    v2 = swap16(*(uint16 *)((uint8 *)&kThinHoppingBlobs_JumpHeightIndices + thbs_var_F));
+    v2 = swap16(*(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + thbs_var_F));
   } while (!sign16(v2 - r24));
   E->thbs_var_B = r22;
   E->thbs_var_03 = 0;
@@ -912,16 +912,16 @@ void ThinHoppingBlobs_Func8(void) {  // 0xA29B88
     uint16 thbs_var_F = E->thbs_var_F;
     if (E->thbs_var_03) {
       ThinHoppingBlobs_Func10();
-      E->thbs_var_B += *(uint16 *)((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F);
+      E->thbs_var_B += *(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + 4 + thbs_var_F);
     } else {
       ThinHoppingBlobs_Func9();
-      E->thbs_var_B -= *(uint16 *)((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F);
+      E->thbs_var_B -= *(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + 4 + thbs_var_F);
     }
     if (sign16(E->thbs_var_B)) {
       E->thbs_var_03 = 1;
       E->thbs_var_B = 0;
     }
-    uint16 R20 = (*(uint16 *)((uint8 *)&kThinHoppingBlobs_XSpeedIndices + E->thbs_var_F) & 0xFF00) >> 8;
+    uint16 R20 = (*(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + 2 + E->thbs_var_F) & 0xFF00) >> 8;
     if (E->thbs_var_02)
       R20 = -R20;
     if (Enemy_MoveRight_IgnoreSlopes(cur_enemy_index, INT16_SHL16(R20))) {
@@ -1031,8 +1031,8 @@ void ThinHoppingBlobs_Func14(void) {  // 0xA29D6B
 void ThinHoppingBlobs_Func15(void) {  // 0xA29D98
   Enemy_ThinHoppingBlobs *E = Get_ThinHoppingBlobs(cur_enemy_index);
   uint16 thbs_var_F = E->thbs_var_F;
-  uint16 R20 = (*(uint16 *)((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F) & 0xFF00) >> 8;
-  uint16 R18 = *((uint8 *)&kThinHoppingBlobs_YSpeedIndices + thbs_var_F) << 8;
+  uint16 R20 = (*(uint16 *)((uint8 *)&kThinHoppingBlobs_HopTable + 4 + thbs_var_F) & 0xFF00) >> 8;
+  uint16 R18 = *((uint8 *)&kThinHoppingBlobs_HopTable + 4 + thbs_var_F) << 8;
   if (Enemy_MoveDown(cur_enemy_index, __PAIR32__(R20, R18))) {
     uint16 R28 = ThinHoppingBlobs_Func4();
     E->thbs_var_00 = (R28 & 1) + 5;

@@ -350,6 +350,9 @@
     <ClInclude Include="sm_b4.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="sm_ad.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

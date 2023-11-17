@@ -1282,7 +1282,7 @@ void KraidFingernailInit(uint16 k) {  // 0xA7BCF2
   E->base.properties |= kEnemyProps_Invisible;
   E->base.instruction_timer = 0x7FFF;
   E->base.current_instruction = addr_kKraid_GoodFingernailInstrLists;
-  E->base.spritemap_pointer = kKraid_GoodFingernailInstrLists.field_2;
+  E->base.spritemap_pointer = kKraid_GoodFingernailInstrLists.sprite_ptr;
   E->kraid_next = FUNC16(KraidsFingernail_Init);
   E->kraid_var_A = FUNC16(KraidEnemy_HandleFunctionTimer);
   E->kraid_var_F = 64;
@@ -1550,17 +1550,17 @@ CoroutineRet Kraid_UnpauseHook_IsSinking(void) {  // 0xA7C2A0
   WriteReg(VMAIN, 0x80);
   SetupDmaTransfer(&unk_A7C2BD);
   WriteReg(MDMAEN, 2);
-  if ((int16)(Get_Kraid(0)->base.y_pos - kKraidSinkEntry[0].field_0) >= 0) {
+  if ((int16)(Get_Kraid(0)->base.y_pos - kKraidSinkEntry[0].kraid_y_pos) >= 0) {
     my_counter = 0;
     my_counter2 = vram_write_queue_tail;
-    while (kKraidSinkEntry[my_counter].field_0 != 0xFFFF
-           && (int16)(Get_Kraid(0)->base.y_pos - kKraidSinkEntry[my_counter].field_0) >= 0) {
+    while (kKraidSinkEntry[my_counter].kraid_y_pos != 0xFFFF
+           && (int16)(Get_Kraid(0)->base.y_pos - kKraidSinkEntry[my_counter].kraid_y_pos) >= 0) {
       VramWriteEntry *v2;
       v2 = gVramWriteEntry(my_counter2);
       v2->size = 64;
       v2->src.addr = 0x2FC0;
       v2->src.bank = 0x7E;
-      v2->vram_dst = kKraidSinkEntry[my_counter].field_2 + ((reg_BG2SC & 0xFC) << 8);
+      v2->vram_dst = kKraidSinkEntry[my_counter].vram_bg2_tilemap_offset + ((reg_BG2SC & 0xFC) << 8);
       vram_write_queue_tail = my_counter2 + 7;
       COROUTINE_AWAIT(1, WaitForNMI_Async());
       my_counter++;
@@ -1693,20 +1693,20 @@ void Kraid_HandleSinking(void) {  // 0xA7C59F
   VramWriteEntry *v3;
 
   for (int i = 0; ; ++i) {
-    v1 = kKraidSinkEntry[i].field_0;
+    v1 = kKraidSinkEntry[i].kraid_y_pos;
     if (v1 < 0)
       break;
     if (v1 == Get_Kraid(0)->base.y_pos) {
-      if ((kKraidSinkEntry[i].field_2 & 0x8000) == 0) {
+      if ((kKraidSinkEntry[i].vram_bg2_tilemap_offset & 0x8000) == 0) {
         uint16 v2 = vram_write_queue_tail;
         v3 = gVramWriteEntry(vram_write_queue_tail);
         v3->size = 64;
         v3->src.addr = 12224;
         v3->src.bank = 126;
-        v3->vram_dst = kKraidSinkEntry[i].field_2 + ((reg_BG2SC & 0xFC) << 8);
+        v3->vram_dst = kKraidSinkEntry[i].vram_bg2_tilemap_offset + ((reg_BG2SC & 0xFC) << 8);
         vram_write_queue_tail = v2 + 7;
       }
-      CallKraidSinkTableFunc(kKraidSinkEntry[i].field_4 | 0xA70000);
+      CallKraidSinkTableFunc(kKraidSinkEntry[i].func_ptr | 0xA70000);
       return;
     }
   }

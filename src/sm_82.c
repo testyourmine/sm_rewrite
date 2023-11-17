@@ -843,12 +843,12 @@ void DeleteAllOptionsMenuObjects_(void) {
 
 void CallOptionsEntryFunc(uint32 ea, uint16 j) {
   switch (ea) {
-  case fnsub_82F296: sub_82F296(j); return;
-  case fnsub_82F34B: sub_82F34B(j); return;
-  case fnsub_82F353: sub_82F353(j); return;
-  case fnsub_82F35B: sub_82F35B(j); return;
-  case fnsub_82F363: sub_82F363(j); return;
-  case fnsub_82F419: sub_82F419(j); return;
+  case fnOptionsInit_MenuSelectMissile: OptionsInit_MenuSelectMissile(j); return;
+  case fnOptionsInit_OptionModeBorder: OptionsInit_OptionModeBorder(j); return;
+  case fnOptionsInit_ControllerSettingModeBorder: OptionsInit_ControllerSettingModeBorder(j); return;
+  case fnOptionsInit_SpecialSettingModeBorder: OptionsInit_SpecialSettingModeBorder(j); return;
+  case fnOptionsInit_SamusDataBorder: OptionsInit_SamusDataBorder(j); return;
+  case fnOptionsInit_FileSelectHelmet: OptionsInit_FileSelectHelmet(j); return;
   default: Unreachable();
   }
 }
@@ -3072,11 +3072,11 @@ void sub_82B932(void) {  // 0x82B932
 
 void HandleMapScrollArrows(void) {  // 0x82B934
   if (sign16(map_min_x_scroll - 24 - reg_BG1HOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_stru_82B9A0);
+    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kLeftMapScrollArrowData);
   if (!sign16(map_max_x_scroll - 232 - reg_BG1HOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_stru_82B9AA);
+    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kRightMapScrollArrowData);
   if (sign16(map_min_y_scroll - 56 - reg_BG1VOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_stru_82B9B4);
+    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kUpMapScrollArrowData);
   if (sign16(map_max_y_scroll - 177 - reg_BG1VOFS)) {
     if (map_scrolling_direction == kDownMapScrollArrowData.map_scroll_dir) {
       map_scrolling_gear_switch_timer = 0;
@@ -3084,7 +3084,7 @@ void HandleMapScrollArrows(void) {  // 0x82B934
       map_scrolling_speed_index = 0;
     }
   } else {
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_stru_82B9BE);
+    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kDownMapScrollArrowData);
   }
 }
 
@@ -3171,9 +3171,9 @@ void DisplayMapElevatorDestinations(void) {  // 0x82BB30
 
 void HandleGameOverBabyMetroid(void) {  // 0x82BB75
   if (enemy_data[0].instruction_timer)
-    sub_82BB7F(enemy_data[0].instruction_timer);
+    ProcessGameOverBabyMetroidInstructionList(enemy_data[0].instruction_timer);
   else
-    sub_82BBDD();
+    RestartGameOverBabyMetroidInstructionList();
 }
 
 void CallBabyMetroidPlaySfx(uint32 ea) {
@@ -3185,13 +3185,13 @@ void CallBabyMetroidPlaySfx(uint32 ea) {
   }
 }
 
-void sub_82BB7F(uint16 a) {  // 0x82BB7F
+void ProcessGameOverBabyMetroidInstructionList(uint16 a) {  // 0x82BB7F
   uint16 current_instruction = enemy_data[0].current_instruction;
   enemy_data[0].instruction_timer = a - 1;
   if (a == 1) {
     const uint8 *v2 = RomPtr_82(enemy_data[0].current_instruction);
     if (GET_WORD(v2 + 6) == 0xFFFF) {
-      sub_82BBDD();
+      RestartGameOverBabyMetroidInstructionList();
     } else if ((int16)(GET_WORD(v2 + 6) + 1) >= 0) {
       enemy_data[0].instruction_timer = GET_WORD(v2 + 6);
       enemy_data[0].current_instruction += 6;
@@ -3204,10 +3204,10 @@ void sub_82BB7F(uint16 a) {  // 0x82BB7F
   }
 }
 
-void sub_82BBDD(void) {  // 0x82BBDD
+void RestartGameOverBabyMetroidInstructionList(void) {  // 0x82BBDD
   enemy_data[0].current_instruction = addr_kgameOverBabyMetridInstructionList;
   enemy_data[0].instruction_timer = 10;
-  sub_82BB7F(0xA);
+  ProcessGameOverBabyMetroidInstructionList(0xA);
 }
 
 void DrawBabyMetroid(uint16 k) {  // 0x82BB9E
@@ -3224,7 +3224,7 @@ void FinishProcessingGameOverBabyMetroidAsm(void) {  // 0x82BBF0
   enemy_data[0].instruction_timer = t;
   enemy_data[0].current_instruction += 8;
   if (t == 0xFFFF)
-    sub_82BBDD();
+    RestartGameOverBabyMetroidInstructionList();
   else
     DrawBabyMetroid(enemy_data[0].current_instruction);
 }
@@ -3347,7 +3347,7 @@ uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a) {  // 0x82DB0C
       if (!(a & 1))
         g_word_7EC404 += 32;
       else
-        sub_82DB41();
+        AdvancePaletteFadeForPaletteInX_0x20();
       a >>= 1;
     }
     ++palette_change_num;
@@ -3359,7 +3359,7 @@ uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a) {  // 0x82DB0C
 }
 
 
-void sub_82DB41(void) {  // 0x82DB41
+void AdvancePaletteFadeForPaletteInX_0x20(void) {  // 0x82DB41
   uint16 v0 = g_word_7EC404;
   do {
     int v1 = v0 >> 1;
@@ -4425,7 +4425,7 @@ void GameOptionsMenuFunc_0(void) {  // 0x82EBDB
   } else if (reg_INIDISP == 14) {
     uint16 v0 = reg_TS;
     if ((reg_TS & 4) == 0)
-      CreateOptionsMenuObject_(v0, addr_stru_82F4D6);
+      CreateOptionsMenuObject_(v0, addr_kOptionsInit_SamusDataBorder);
   }
 }
 
@@ -4462,8 +4462,8 @@ void GameOptionsMenu_1_LoadingOptionsScreen(void) {  // 0x82EC11
     ram3000.pause_menu_map_tilemap[j] = custom_background[j + 5375];
   menu_option_index = 0;
   DeleteAllOptionsMenuObjects_();
-  CreateOptionsMenuObject_(0, addr_stru_82F4B8);
-  CreateOptionsMenuObject_(0, addr_stru_82F4C4);
+  CreateOptionsMenuObject_(0, addr_kOptionsInit_MenuSelectMissile);
+  CreateOptionsMenuObject_(0, addr_kOptionsInit_OptionModeBorder);
   ++game_options_screen_index;
   OptionsMenuFunc4_SetLanguageHighlight();
 }
@@ -4632,7 +4632,7 @@ void GameOptionsMenu_5_DissolveOutScreen(void) {  // 0x82EF18
         menu_option_index = 1;
         OptionsMenuFunc7_SetSpecialSettingsHighlight();
         menu_option_index = 4;
-        CreateOptionsMenuObject_(4, addr_stru_82F4D0);
+        CreateOptionsMenuObject_(4, addr_kOptionsInit_SpecialSettingModeBorder);
       } else {
         if (japanese_text_flag) {
           for (k = 1023; (k & 0x8000) == 0; --k) {
@@ -4645,7 +4645,7 @@ void GameOptionsMenu_5_DissolveOutScreen(void) {  // 0x82EF18
             ram3000.pause_menu_map_tilemap[m] = v1;
           }
         }
-        CreateOptionsMenuObject_(v1, addr_stru_82F4CA);
+        CreateOptionsMenuObject_(v1, addr_kOptionsInit_ControllerSettingModeBorder);
         LoadControllerOptionsFromControllerBindings();
         OptionsMenuFunc6_DrawControllerBindings();
       }
@@ -4654,7 +4654,7 @@ void GameOptionsMenu_5_DissolveOutScreen(void) {  // 0x82EF18
         ram3000.pause_menu_map_tilemap[n] = custom_background[n + 5375];
       OptionsMenuFunc4_SetLanguageHighlight();
       uint16 v6 = 0; // bug
-      CreateOptionsMenuObject_(v6, addr_stru_82F4C4);
+      CreateOptionsMenuObject_(v6, addr_kOptionsInit_OptionModeBorder);
     }
   }
 }
@@ -4832,7 +4832,7 @@ void GameOptionsMenu_A_ScrollControllerSettingsUp(void) {  // 0x82F285
     game_options_screen_index = 7;
 }
 
-void sub_82F296(uint16 j) {  // 0x82F296
+void OptionsInit_MenuSelectMissile(uint16 j) {  // 0x82F296
   int v1 = j >> 1;
   eproj_y_pos[v1 + 13] = 24;
   eproj_x_vel[v1 + 3] = 56;
@@ -4855,28 +4855,28 @@ void OptionsPreInstr_MenuSelectMissile(uint16 v0) {  // 0x82F2A9
   } else {
     int v1 = v0 >> 1;
     eproj_E[v1 + 15] = 1;
-    eproj_y_vel[v1 + 17] = addr_off_82F4B6;
+    eproj_y_vel[v1 + 17] = addr_kOptionsInstr_Destroy;
   }
 }
 
-void sub_82F34B(uint16 j) {  // 0x82F34B
+void OptionsInit_OptionModeBorder(uint16 j) {  // 0x82F34B
   eproj_y_pos[(j >> 1) + 13] = 124;
-  sub_82F369(j);
+  OptionsInit_CommonBorder(j);
 }
-void sub_82F353(uint16 j) {  // 0x82F353
+void OptionsInit_ControllerSettingModeBorder(uint16 j) {  // 0x82F353
   eproj_y_pos[(j >> 1) + 13] = 132;
-  sub_82F369(j);
+  OptionsInit_CommonBorder(j);
 }
-void sub_82F35B(uint16 j) {  // 0x82F35B
+void OptionsInit_SpecialSettingModeBorder(uint16 j) {  // 0x82F35B
   eproj_y_pos[(j >> 1) + 13] = 128;
-  sub_82F369(j);
+  OptionsInit_CommonBorder(j);
 }
-void sub_82F363(uint16 j) {  // 0x82F363
+void OptionsInit_SamusDataBorder(uint16 j) {  // 0x82F363
   eproj_y_pos[(j >> 1) + 13] = 128;
-  sub_82F369(j);
+  OptionsInit_CommonBorder(j);
 }
 
-void sub_82F369(uint16 j) {  // 0x82F369
+void OptionsInit_CommonBorder(uint16 j) {  // 0x82F369
   int v1 = j >> 1;
   eproj_x_vel[v1 + 3] = 16;
   eproj_x_vel[v1 + 11] = 3584;
@@ -4887,7 +4887,7 @@ void OptionsPreInstr_OptionsModeBorder(uint16 k) {  // 0x82F376
   if (game_state != kGameState_2_GameOptionsMenu || game_options_screen_index == 6 && reg_INIDISP == 0x80) {
     int v1 = k >> 1;
     eproj_E[v1 + 15] = 1;
-    eproj_y_vel[v1 + 17] = addr_off_82F4B6;
+    eproj_y_vel[v1 + 17] = addr_kOptionsInstr_Destroy;
   }
 }
 
@@ -4925,7 +4925,7 @@ void sub_82F404(uint16 k) {  // 0x82F404
   }
 }
 
-void sub_82F419(uint16 j) {  // 0x82F419
+void OptionsInit_FileSelectHelmet(uint16 j) {  // 0x82F419
   int v1 = j >> 1;
   eproj_y_pos[v1 + 13] = 216;
   eproj_x_vel[v1 + 3] = 16;
@@ -4936,7 +4936,7 @@ void OptionsPreInstr_FileSelectHelmet(uint16 k) {  // 0x82F42C
   if (game_state != 2) {
     int v1 = k >> 1;
     eproj_E[v1 + 15] = 1;
-    eproj_y_vel[v1 + 17] = addr_off_82F4B6;
+    eproj_y_vel[v1 + 17] = addr_kOptionsInstr_Destroy;
   }
 }
 void LoadControllerOptionsFromControllerBindings(void) {  // 0x82F4DC

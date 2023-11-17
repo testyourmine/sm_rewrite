@@ -2215,7 +2215,7 @@ void EnemySamusCollHandler_Multibox(void) {  // 0xA09A5A
           && (int16)(hb->right + coll_x_pos - samus_left_border_coll) >= 0
           && (int16)(hb->top + coll_y_pos - samus_bottom_border_coll) < 0
           && (int16)(hb->bottom + coll_y_pos - samus_top_border_coll) >= 0) {
-        CallHitboxTouch(E->bank << 16 | hb->func_ptr);
+        CallHitboxTouch(E->bank << 16 | hb->samus_coll_ptr);
         return;
       }
     }
@@ -2257,7 +2257,7 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
           if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & 8) == 0)
             projectile_dir[pidx] |= 0x10;
           collision_detection_index = pidx;
-          CallHitboxShot(E->bank << 16 | hb->func_ptrA, pidx * 2);
+          CallHitboxShot(E->bank << 16 | hb->proj_coll_ptr, pidx * 2);
           return;
         }
       }
@@ -2294,7 +2294,7 @@ void EnemyBombCollHandler_Multibox(void) {  // 0xA09D23
             (int16)(projectile_y_pos[pidx] - projectile_y_radius[pidx] - (coll_y_pos + hb->bottom)) < 0) {
           projectile_dir[pidx] |= 0x10;
           collision_detection_index = pidx;
-          CallHitboxShot(E->bank << 16 | hb->func_ptrA, pidx * 2);
+          CallHitboxShot(E->bank << 16 | hb->proj_coll_ptr, pidx * 2);
           return;
         }
       }
@@ -2497,7 +2497,7 @@ void ProcessEnemyPowerBombInteraction(void) {  // 0xA0A306
     if (E->invincibility_timer || !E->enemy_ptr || E->enemy_ptr == addr_kEnemyDef_DAFF)
       continue;
     EnemyDef *ED = get_EnemyDef_A2(E->enemy_ptr);
-    if ((get_Vulnerability(ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_stru_B4EC1C)->power_bomb & 0x7F) == 0)
+    if ((get_Vulnerability(ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_kEnemyVulnerability)->power_bomb & 0x7F) == 0)
       continue;
     if (abs16(power_bomb_explosion_x_pos - E->x_pos) < rx && abs16(power_bomb_explosion_y_pos - E->y_pos) < ry) {
       cur_enemy_index = i;
@@ -2583,7 +2583,7 @@ void NormalEnemyTouchAiSkipDeathAnim(void) {  // 0xA0A4A1
       CallSomeSamusCode(4);
     r22 = 200;
   }
-  uint16 vp = ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_stru_B4EC1C;
+  uint16 vp = ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_kEnemyVulnerability;
   last_enemy_power = *(uint16 *)&get_Vulnerability(r20 + vp)->power;
   uint16 varE32 = last_enemy_power & 0x7F;
   if ((last_enemy_power & 0x7F) != 0) {
@@ -2695,7 +2695,7 @@ uint16 NormalEnemyShotAiSkipDeathAnim(void) {  // 0xA0A6DE
   EnemyData *j = gEnemyData(cur_enemy_index);
   uint16 vulnerability_ptr = get_EnemyDef_A2(j->enemy_ptr)->vulnerability_ptr;
   if (!vulnerability_ptr)
-    vulnerability_ptr = addr_stru_B4EC1C;
+    vulnerability_ptr = addr_kEnemyVulnerability;
   uint16 r20 = vulnerability_ptr;
   if ((r18 & 0xF00) != 0) {
     v5 = r18 & 0xF00;
@@ -3523,7 +3523,7 @@ static uint8 EnemyBlockCollVertReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) {
     if (v12 < 0
         && ((v12 & 0x4000) != 0 ? (x_pos = E->x_pos ^ 0xF) : (x_pos = E->x_pos),
         (v14 = temp_collision_DD6 + (x_pos & 0xF),
-        v15 = (kAlignYPos_Tab0[v14] & 0x1F) - temp_collision_DD4 - 1, v15 <= 0))) {
+        v15 = (kAlignYPos_Tab0_a0[v14] & 0x1F) - temp_collision_DD4 - 1, v15 <= 0))) {
       E->y_pos = ebci->ebci_r24 - v15;
       E->y_subpos = 0;
       return 1;
@@ -3540,8 +3540,8 @@ static uint8 EnemyBlockCollVertReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) {
     if (v5 >= 0
       && ((v5 & 0x4000) != 0 ? (v6 = E->x_pos ^ 0xF) : (v6 = E->x_pos),
       (v7 = temp_collision_DD6 + (v6 & 0xF),
-      v8 = (kAlignYPos_Tab0[v7] & 0x1F) - temp_collision_DD4 - 1,
-      (kAlignYPos_Tab0[v7] & 0x1F) - temp_collision_DD4 == 1) || v8 < 0)) {
+      v8 = (kAlignYPos_Tab0_a0[v7] & 0x1F) - temp_collision_DD4 - 1,
+      (kAlignYPos_Tab0_a0[v7] & 0x1F) - temp_collision_DD4 == 1) || v8 < 0)) {
       E->y_pos = ebci->ebci_r24 + v8;
       E->y_subpos = -1;
       return 1;
@@ -3729,7 +3729,7 @@ uint8 EnemyFunc_C8AD(uint16 k) {  // 0xA0C8AD
     uint16 temp_collision_DD6 = 16 * (BTS[cur_block_index] & 0x1F);
     if ((BTS[cur_block_index] & 0x80) == 0) {
       uint16 j = (BTS[cur_block_index] & 0x40) != 0 ? E->x_pos ^ 0xF : E->x_pos;
-      int16 v4 = (kAlignYPos_Tab0[temp_collision_DD6 + (j & 0xF)] & 0x1F) - temp_collision_DD4 - 1;
+      int16 v4 = (kAlignYPos_Tab0_a0[temp_collision_DD6 + (j & 0xF)] & 0x1F) - temp_collision_DD4 - 1;
       if (v4 < 0)
         E->y_pos += v4;
     }
@@ -3741,7 +3741,7 @@ uint8 EnemyFunc_C8AD(uint16 k) {  // 0xA0C8AD
     uint16 temp_collision_DD6 = 16 * (BTS[cur_block_index] & 0x1F);
     if (BTS[cur_block_index] & 0x80) {
       uint16 j = (BTS[cur_block_index] & 0x40) != 0 ? E->x_pos ^ 0xF : E->x_pos;
-      int16 v7 = (kAlignYPos_Tab0[temp_collision_DD6 + (j & 0xF)] & 0x1F) - temp_collision_DD4 - 1;
+      int16 v7 = (kAlignYPos_Tab0_a0[temp_collision_DD6 + (j & 0xF)] & 0x1F) - temp_collision_DD4 - 1;
       if (v7 < 0)
         E->y_pos -= v7;
     }
