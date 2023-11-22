@@ -184,7 +184,7 @@ void Samus_Input_1B_ShinesparkEtc(void) {  // 0x9181A1
 void Samus_LookupTransitionTable(void) {  // 0x9181A9
   if (joypad1_lastkeys) {
     Pair_R18_R20 pair = TranslateCustomControllerBindingsToDefault();
-    PoseEntry *pe = get_PoseEntry(kPoseTransitionTable[samus_pose]);
+    PoseEntry *pe = (PoseEntry*)kPoseTransitionTable();
     if (pe->new_input == 0xFFFF)
       return;
     do {
