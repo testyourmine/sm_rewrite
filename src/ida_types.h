@@ -1138,7 +1138,7 @@ typedef struct TileTables {
 
 /* 112 */
 typedef struct ElevatorsUsedConf {
-  uint8 sourcce_area;
+  uint8 source_area;
   uint8 source_bit;
   uint8 dest_area;
   uint8 dest_bit;

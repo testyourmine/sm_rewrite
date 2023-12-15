@@ -647,7 +647,7 @@ void HandleMusicQueue(void) {  // 0x808F0C
     if ((music_entry & 0x8000) != 0) {
       music_data_index = (uint8)music_entry;
       cur_music_track = -1;
-      APU_UploadBank(Load24((LongPtr *)(uint8 *)&kMusicPointers[((uint8)music_entry) / 3]));
+      APU_UploadBank(Load24((LongPtr*)((uint8*)&kMusicPointers + (uint8)music_entry)));
       cur_music_track = 0;
       int v5 = music_queue_read_pos;
       music_queue_track[v5 >> 1] = 0;
