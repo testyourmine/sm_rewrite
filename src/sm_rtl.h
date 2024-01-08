@@ -391,3 +391,10 @@ typedef enum SnesRegs {
   UNUSED7 = 0x437B,
   MIRR7 = 0x437F,
 } SnesRegs;
+
+
+//MSU stuff
+extern bool msu_enabled;
+void PlayMsuAudioTrack();
+void OpenMsuFile();
+void MixInMsuAudioData(int16* audio_buffer, int audio_samples);

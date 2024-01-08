@@ -31,7 +31,7 @@ uint16 kMotherBrain_TransitionToFromGrey_Decr[] = {
 };
 
 uint16 kMotherBrain_FadeToGray_Drained[] = {
-  0xef99, 0xefc3, 0xefed, 0xf017, 0xf041,
+  0xef99, 0xefc3, 0xefed, 0xf017, 0xf041, 0xf06b, 0xf095, 0xf0bf,    0x0,
 };
 
 uint16 kMotherBrain_FadeToGray_RealDeath[] = {

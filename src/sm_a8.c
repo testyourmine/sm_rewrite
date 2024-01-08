@@ -986,8 +986,8 @@ void YappingMaw_Func_2(void) {  // 0xA8A28C
   E->base.current_instruction = kYappingMaw_InstrListPtrs[v2 >> 1];
   E->base.instruction_timer = 1;
   E->base.timer = 0;
-  E->ymw_var_32 = *(uint16 *)((uint8 *)&kYappingMaw_Constant0 + (uint16)(2 * v2));
-  E->ymw_var_33 = *(uint16 *)((uint8 *)&kYappingMaw_Constant1 + (uint16)(2 * v2));
+  E->ymw_var_32 = *(uint16 *)((uint8 *)&kYappingMaw_Constants + (uint16)(2 * v2));
+  E->ymw_var_33 = *(uint16 *)((uint8 *)&kYappingMaw_Constants + 2 + (uint16)(2 * v2));
   E->ymw_var_A = FUNC16(YappingMaw_Func_8);
 }
 

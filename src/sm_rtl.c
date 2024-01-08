@@ -251,6 +251,7 @@ void StateRecorder_Load(StateRecorder *sr, FILE *f, bool replay_mode) {
   // Temporarily fix reset state
 //  if (g_snes->cpu->k == 0x82 && g_snes->cpu->pc == 0xf716)
 //    g_snes->cpu->pc = 0xf71c;
+  OpenMsuFile();    //restore msu track after loading save state
 }
 
 void StateRecorder_Save(StateRecorder *sr, FILE *f, bool saving_with_bug) {
@@ -690,6 +691,7 @@ void RtlRenderAudio(int16 *audio_buffer, int samples, int channels) {
   } else {
     SpcPlayer_GenerateSamples(g_spc_player);
     dsp_getSamples(g_spc_player->dsp, audio_buffer, samples);
+    MixInMsuAudioData(audio_buffer, samples);
   }
 
   RtlApuUnlock();
@@ -733,3 +735,169 @@ void RtlWriteSram(void) {
     fprintf(stderr, "Unable to write saves/sm.srm\n");
   }
 }
+
+/*
+*   MSU1 Code
+*   HandleMusicQueue() calls PlayMsuAudioTrack(), which calls OpenMsuFile()
+*   MixInMsuAudioData() is called by RtlRenderAudio
+*   The MSU1 track indices don't line up with the game's track indices,
+*   so a special table must be used to get the correct MSU1 track (see the readme for the MSU1 patch)
+*/
+
+//MSU1 variables
+static uint32 msu_curr_sample0;
+static uint8 msu_volume0;
+static uint8 msu_track0;
+
+#define msu_curr_sample (*(uint32*)(g_ram+0xF500))
+#define msu_volume (*(uint8*)(g_ram+0xF504))
+#define msu_track (*(uint8*)(g_ram+0xF505))
+
+bool msu_enabled;
+static FILE *msu_file;
+static uint32 msu_loop_start;
+static uint32 msu_buffer_size;
+static uint32 msu_buffer_pos;
+static uint8  msu_buffer[0xFFFF + 1];
+
+static const uint8 kMsuTracksWithRepeat[] = {
+  1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+};
+
+//format is [track bank][song entry] 
+static const uint8 kMsuTrackIndices[25][4] ={
+  [0]  = { 4, 5 },         [1] = { 4, 5 },    [2] = { 6, 0, 7 },     [3] = { 8, 9 },       [4] = { 10 },
+  [5]  = { 11 },           [6] = { 12 },      [7] = { 13 },          [8] = { 14 },         [9] = { 15, 16 },
+  [10] = { 17, 0 },       [11] = { 18 },     [12] = { 19, 21, 20 }, [13] = { 22, 23 },    [14] = { 24 },
+  [15] = { 0, 25, 0, 0 }, [16] = { 26, 27 }, [17] = { 0, 0, 0 },    [18] = { 28 },        [19] = { 29 },
+  [20] = { 30 },          [21] = { 0 },      [22] = { 0 },          [23] = { 22, 23, 0 }, [24] = { 10 },
+};
+
+void PlayMsuAudioTrack() {
+  if (!msu_enabled || ((music_entry & 0x7F) == 4)) {   //if msu is not enabled, disable msu and write to APU as normal
+    msu_track = 0;
+    RtlApuWrite(APUI00, music_entry & 0x7F);
+    return;
+  }
+
+  //RtlApuLock();
+  if ((music_entry & 0x7F) != 0) {  //if playing a song that isn't the pre-statue hall, set the msu track to the spc track, set msu to max volume, clear msu sample
+    if (cur_music_track == (music_entry & 0x7F)) {  //if the msu track hasn't changed, do nothing
+      return;
+    }
+    else if ((music_entry & 0x7F) < 5) {  //if the music entry is track 1, 2, or 3, then set the msu track
+      msu_track = music_entry & 0x7F;
+    }
+    else  {
+      uint8 msu_track_bank = (music_data_index & 0x7F) / 3;
+      uint8 msu_track_index = (music_entry & 0x7F) - 5;
+      msu_track = kMsuTrackIndices[msu_track_bank][msu_track_index];
+    }
+    msu_volume = 100;
+    msu_curr_sample = 0;
+    OpenMsuFile();
+  }
+  if (msu_file == NULL || msu_track == 0) {  //if there is no msu file, disable msu and write to APU as normal
+    msu_track = 0;
+    RtlApuWrite(APUI00, music_entry & 0x7F);
+    return;
+  }
+
+  RtlApuWrite(APUI00, 0x0); //don't play the spc
+  //RtlApuUnlock();
+};
+
+void OpenMsuFile() {
+  if (msu_file) {       //if there is an msu file being played, then clear the msu file stream
+    fclose(msu_file);
+    msu_file = NULL;
+  }
+  if (msu_track == 0) { //if there is no song being played, then return
+      return;
+  }
+
+  char buf[40], hdr[8];
+  snprintf(buf, sizeof(buf), "msu/supermetroid_msu1-%d.pcm", msu_track); //transfer the msu file location into a buffer
+  msu_file = fopen(buf, "rb");  //open the msu track as "read binary file" from the buffer
+  if (msu_file == NULL || fread(hdr, 1, 8, msu_file) != 8 || *(uint32*)(hdr + 0) != '1USM') {   //if the msu file does not exist, or if the msu_file header is not 8, or does not contain the string "MSU1"
+    if (msu_file != NULL) { //if the msu file does not exist, then close it and set to null
+      fclose(msu_file);
+      msu_file = NULL;
+    }
+    RtlApuWrite(APUI00, msu_track); //write the msu track to audio and reset the msu track
+    msu_track = 0;
+    return;
+  }
+
+  if (msu_curr_sample != 0) {   //if in the middle of a track, set the msu file pointer to the beginning, offset by the current sample * 4 + 8
+    fseek(msu_file, msu_curr_sample * 4 + 8, SEEK_SET);
+  }
+  msu_loop_start = *(uint32*)(hdr + 4); //set the start of the loop to after the msu1 header
+  msu_buffer_size = msu_buffer_pos = 0; //initalize the msu file size and position
+};
+
+void MixInMsuAudioData(int16* audio_buffer, int audio_samples) {
+  if (msu_file == NULL || msu_volume == 0 || msu_track == 0) {   //if the msu is not playing or is muted then return
+    return;
+  }
+  if (msu_volume == 0) {    //if the msu is muted, then return
+    return;
+  }
+
+  int last_audio_samples = 0;
+  while (true) {
+    if (msu_buffer_pos >= msu_buffer_size) {    //if the msu exceeds the size of the buffer, set the size to the most recent buffer and reset the buffer size
+        msu_buffer_size = (int)fread(msu_buffer, 4, sizeof(msu_buffer) / 4, msu_file);
+        msu_buffer_pos = 0;
+    }
+
+    int nr = IntMin(audio_samples, msu_buffer_size - msu_buffer_pos);   //get the minimum of the amount of input samples and the remaining number of msu samples
+    uint8* buf = msu_buffer + msu_buffer_pos * 4; //get a pointer to the msu buffer at the current position
+    msu_buffer_pos += nr;   //go to the next sample
+    msu_curr_sample += nr;
+
+    int volume = msu_volume + 1;
+    if (volume == 256) {
+      for (int i = 0; i < nr; i++) {    //copy the msu audio buffer to the real audio buffer
+        audio_buffer[i * 2 + 0] += ((int16*)buf)[i * 2 + 0];
+        audio_buffer[i * 2 + 1] += ((int16*)buf)[i * 2 + 1];
+      }
+    }
+    else {
+      for (int i = 0; i < nr; i++) {    //clear the real audio buffer
+        audio_buffer[i * 2 + 0] += ((int16*)buf)[i * 2 + 0] * volume >> 8;
+        audio_buffer[i * 2 + 1] += ((int16*)buf)[i * 2 + 1] * volume >> 8;
+      }
+    }
+
+    audio_samples -= nr;    //decrease the amount of real samples
+    audio_buffer += nr * 2; //put the buffer to the next sample
+    if (audio_samples == 0) {   //if done playing every sample, then exit
+      break;
+    }
+    if (nr != 0) {  //if there are more samples, then continue playing them 
+      continue;
+    }
+
+    if (last_audio_samples == audio_samples) {  //handle an error
+      RtlApuWrite(APUI00, msu_track);
+      fclose(msu_file);
+      msu_file = NULL;
+      return;
+    }
+    last_audio_samples = audio_samples;
+
+    if (!kMsuTracksWithRepeat[msu_track]) { //if the track does not repeat, then stop playing the music
+      fclose(msu_file);
+      msu_file = NULL;
+      return;
+    }
+    fseek(msu_file, msu_loop_start * 4 + 8, SEEK_SET);  //repeat the track at the loop point
+    msu_curr_sample = msu_loop_start;
+  }
+};
+
+
+
+

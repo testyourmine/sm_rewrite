@@ -658,7 +658,7 @@ void HandleMusicQueue(void) {  // 0x808F0C
     }
     uint8 v1 = music_entry & 0x7F;
     music_track_index = music_entry & 0x7F;
-    RtlApuWrite(APUI00, music_entry & 0x7F);
+    PlayMsuAudioTrack();
     cur_music_track = v1;
     sound_handler_downtime = 8;
     int v2 = music_queue_read_pos;

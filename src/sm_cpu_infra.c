@@ -519,6 +519,8 @@ static void VerifySnapshotsEq(Snapshot *b, Snapshot *a, Snapshot *prev) {
   memcpy(&a->ram[0x99cc], &b->ram[0x99cc], 2);  // XrayHdmaFunc_BeamAimedL writes outside
   memcpy(&a->ram[0xEF74], &b->ram[0xEF74], 4);  // next_enemy_tiles_index
   memcpy(&a->ram[0xF37A], &b->ram[0xF37A], 6);  // word_7EF37A etc
+
+  memcpy(&a->ram[0xF500], &b->ram[0xF500], 6);  // msu1 variables
   
 
   if (memcmp(b->ram, a->ram, 0x20000)) {
@@ -880,7 +882,7 @@ Snes *SnesInit(const char *filename) {
   { uint8 t[] = { 0x18, 0x18, 0x18 }; PatchBytes(0x828A72, t, sizeof(t)); } // SfxHandlers_2_ClearRequest
   { uint8 t[] = { 0x18, 0x18, 0x18, 0x80 }; PatchBytes(0x828A80, t, sizeof(t)); } // SfxHandlers_3_WaitForAck
   { uint8 t[] = { 0x06 }; PatchBytes(0x828A67, t, sizeof(t)); } // sfx_clear_delay
-
+  
   // LoadStdBG3andSpriteTilesClearTilemaps does DMA from RAM
   { uint8 t[] = { 0x00, 0x2E }; PatchBytes(0x82831E, t, sizeof(t)); }
 
@@ -1036,7 +1038,7 @@ void RtlRunFrameCompare(uint16 input, int run_what) {
     RunOneFrameOfGame_Emulated();
     DrawFrameToPpu();
 
-  } else if (g_runmode == RM_MINE) {
+  } else if (g_runmode == RM_MINE || msu_enabled == true) {
     g_use_my_apu_code = true;
 
     g_snes->runningWhichVersion = 0xff;

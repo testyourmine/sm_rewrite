@@ -181,7 +181,7 @@ uint16 kCommonEnemySpeeds_Quadratic_Copy[] = {
 };*/
 
 uint16 kMotherBrainsDeathExplosionInstrListPtrs[] = {
-	0xf300, 0xbca4, 0x1086,
+  0xe138, 0xe1ea, 0xe208,
 };
 
 uint16 kCrocomireProjectile_Ypos[] = {
