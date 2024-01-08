@@ -1,10 +1,17 @@
 # sm
 
-Our discord server is: https://discord.gg/AJJbJAzNNJ
+The building instructions are the same as the original port. For more information about the original port, see: https://github.com/snesrev/sm.
 
-Early version. It has bugs and the code is messy.
+This is a fork of the Super Metroid PC Port meant to continue the work and add more features. There are various goals intended for this project, including:
+1. Giving all functions and variables proper names. (work has been made on functions, but not on variables as of yet)
+2. Removing all the calls to read code directly from rom. (some progress has been made removing RomPtrs, but much more work is to be done)
+3. Adding MSU-1 support. (early support has been added, but is not perfect and currently disables mismatch checking)
+4. Adding widescreen and overscan support. (no work yet)
 
-For building instructions, see: https://github.com/snesrev/sm/blob/main/BUILDING.md
+The fork is still very early in development and there is much to be done. Outside of early MSU-1 support, there is not much improvement on the player side.
+Any contributions, even as simple as giving a function or a variable a proper name, is welcome. The bank logs are a great resource for this: https://patrickjohnston.org/bank/.
 
-Put sm.smc (sha1 hash da957f0d63d14cb441d215462904c4fa8519c613) in the root folder. When running, it will run both versions and compare frame by frame. If it detects a mismatch, it saves a snapshot in saves/ and displays a counter on screen counting down from 300.
+Note about Port_Extraction folder:
+Port_Extraction is currently a scratchpad to manually extract assets from the rom and insert them into the port. 
+In the long run, this will be used to automatically extract all necessary assets from the game.
 
