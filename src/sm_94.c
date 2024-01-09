@@ -1092,7 +1092,7 @@ static uint8 BlockInsideReact_Slope(CollInfo *ci) {  // 0x9497BF
 }
 
 static uint8 BlockInsideReact_ShootableAir(CollInfo *ci) {  // 0x9497D0
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
   return 0;
 }
 
@@ -1109,7 +1109,7 @@ static void BlockInsideReact_SpikeAir_BTS2(void) {  // 0x949866
     samus_periodic_damage += 16;
     knockback_x_dir = ((*(uint16 *)&samus_pose_x_dir ^ 0xC) & 8) != 0;
   }
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
 
 static Func_V *const kBlockInsideReact_SpikeAir[16] = {  // 0x9498CC
@@ -1137,12 +1137,12 @@ static uint8 BlockInsideReact_SpikeAir(CollInfo *ci) {
 }
 
 static uint8 BlockInsideReact_Special_(CollInfo *ci) {  // 0x9498DC
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
   return 0;
 }
 
 static void BlockInsideReact_SpecialAir_Default(void) {  // 0x9498E3
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
 
 static void BlockInsideReact_SpecialAir_8(void) {  // 0x9498EA
@@ -1150,7 +1150,7 @@ static void BlockInsideReact_SpecialAir_8(void) {  // 0x9498EA
     extra_samus_x_subdisplacement = 0;
     extra_samus_x_displacement = 2;
   }
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
 
 static void BlockInsideReact_SpecialAir_9(void) {  // 0x949910
@@ -1158,19 +1158,19 @@ static void BlockInsideReact_SpecialAir_9(void) {  // 0x949910
     extra_samus_x_subdisplacement = 0;
     extra_samus_x_displacement = -2;
   }
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
 
 static void BlockInsideReact_SpecialAir_10(void) {  // 0x949936
   extra_samus_x_subdisplacement = 0;
   extra_samus_x_displacement = 2;
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
 
 static void BlockInsideReact_SpecialAir_11(void) {  // 0x949946
   extra_samus_x_subdisplacement = 0;
   extra_samus_x_displacement = -2;
-  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X + 12;
+  samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
 
 static void BlockInsideReact_SpecialAir_70(void) {  // 0x949956
@@ -2478,10 +2478,10 @@ uint8 BlockFunc_AEE3(void) {  // 0x94AEE3
 void GrappleFunc_AF87(void) {  // 0x94AF87
   for (int i = 30; i >= 0; i -= 8) {
     int v1 = i >> 1;
-    grapple_segment_anim_instr_ptrs[v1] = addr_word_94B197;
-    grapple_segment_anim_instr_timers[v1 + 15] = addr_word_94B193;
-    grapple_segment_anim_instr_timers[v1 + 14] = addr_word_94B18F;
-    grapple_segment_anim_instr_timers[v1 + 13] = addr_word_94B18B;
+    grapple_segment_anim_instr_ptrs[v1] = addr_kGrappleSegmentAnimInstrs3;
+    grapple_segment_anim_instr_timers[v1 + 15] = addr_kGrappleSegmentAnimInstrs2;
+    grapple_segment_anim_instr_timers[v1 + 14] = addr_kGrappleSegmentAnimInstrs1;
+    grapple_segment_anim_instr_timers[v1 + 13] = addr_kGrappleSegmentAnimInstrs0;
     grapple_segment_anim_instr_timers[v1] = 1;
     *(uint16 *)((uint8 *)&grapple_point_anim_ptr + i) = 1;
     *(uint16 *)((uint8 *)&grapple_point_anim_timer + i) = 1;

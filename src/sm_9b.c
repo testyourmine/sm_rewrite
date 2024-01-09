@@ -116,7 +116,7 @@ uint16 HandleSamusDeathSequence(void) {  // 0x9BB441
 void HandleSamusDeathSequence_Helper2(void) {  // 0x9BB4B6
   const uint16 *v0 = (const uint16 *)RomPtr_9B(kDeathSequencePals_SuitOffset_1[samus_suit_palette_index >> 1]);
   memcpy(&palette_buffer[192], RomPtr_9B(*v0), 32);
-  memcpy(&palette_buffer[240], RomPtr_9B(addr_word_9BA120), 32);
+  memcpy(&palette_buffer[240], RomPtr_9B(addr_kSamusPalette_DeathSequence_SuitlessSamus), 32);
   QueueTransferOfSamusDeathSequence(8);
   game_options_screen_index = kDeathSequencePalette_ExplosionTabs[0];
   g_word_7E0DE4 = 0;

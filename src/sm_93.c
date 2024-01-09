@@ -106,7 +106,7 @@ void InitializeSbaProjectile(uint16 k) {  // 0x9381A4
 uint16 ProjectileInsts_GetValue(uint16 k) {  // 0x9381D1
   int ip = projectile_bomb_instruction_ptr[k >> 1];
   int delta = (projectile_bomb_instruction_timers[k >> 1] == 1 && !sign16(get_ProjectileInstr(ip)->timer)) ? 0 : -8;
-  return get_ProjectileInstr(ip + delta)->field_6;
+  return get_ProjectileInstr(ip + delta)->trail_frame;
 }
 
 uint16 CallProj93Instr(uint32 ea, uint16 j, uint16 k) {

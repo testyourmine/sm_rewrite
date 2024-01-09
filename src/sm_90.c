@@ -922,7 +922,7 @@ LABEL_5:
     amt = Samus_CalcDisplacementMoveRight(amt);
     goto LABEL_7;
   }
-  amt = Samus_CalcBaseSpeed_X(addr_stru_909F25);
+  amt = Samus_CalcBaseSpeed_X(addr_kSamusSpeedTable_DuringDiagonalBombJump);
   if ((uint8)bomb_jump_dir != 1)
     goto LABEL_5;
 LABEL_6:
@@ -1656,16 +1656,16 @@ uint16 Samus_DetermineSpeedTableEntryPtr_X(void) {  // 0x909BD1
 
 uint16 Samus_DetermineGrappleSwingSpeed_X(void) {  // 0x909C21
   if ((equipped_items & 0x20) != 0)
-    return addr_stru_909F31;
+    return addr_kSamusSpeedTable_GrappleDisconnect_Air;
   uint16 r18 = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
     if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0)
-      return addr_stru_909F3D;
-    return addr_stru_909F31;
+      return addr_kSamusSpeedTable_GrappleDisconnect_Water;
+    return addr_kSamusSpeedTable_GrappleDisconnect_Air;
   }
   if ((lava_acid_y_pos & 0x8000) != 0 || !sign16(lava_acid_y_pos - r18))
-    return addr_stru_909F31;
-  return addr_kSamusSpeedTable_Normal_X;
+    return addr_kSamusSpeedTable_GrappleDisconnect_Air;
+  return addr_kSamusSpeedTable_GrappleDisconnect_LavaAcid;
 }
 
 void Samus_DetermineAccel_Y(void) {  // 0x909C5B
@@ -3034,10 +3034,10 @@ void AccelerateMissileOrSuperMissile(uint16 k) {  // 0x90B2F6
 
   int v1 = k >> 1;
   if ((projectile_variables[v1] & 0xFF00) != 0) {
-    if ((projectile_type[v1] & 0x200) != 0)
-      v3 = addr_kSuperMissileAccelerations2;
-    else
+    if ((projectile_type[v1] & kProjectileType_SuperMissile) != 0)
       v3 = addr_kSuperMissileAccelerations;
+    else
+      v3 = addr_kMissileAccelerations;
     const uint8 *v4 = RomPtr_90(v3 + 4 * (projectile_dir[v1] & 0xF));
     projectile_bomb_x_speed[v1] += GET_WORD(v4);
     projectile_bomb_y_speed[v1] += GET_WORD(v4 + 2);
@@ -4699,7 +4699,7 @@ void Samus_MoveHandler_ShinesparkCrashFinish(void) {  // 0x90D40D
       speed_echo_xspeed[2] = 64;
       speed_echo_xpos[2] = samus_x_pos;
       speed_echo_ypos[2] = samus_y_pos;
-      projectile_type[3] = addr_loc_908029;
+      projectile_type[3] = kProjectileType_DontInteractWithSamus | kProjectileType_ShinesparkEcho;
       InitializeShinesparkEchoOrSpazerSba(6);
       projectile_bomb_pre_instructions[3] = FUNC16(ProjPreInstr_SpeedEcho);
       projectile_variables[3] = kShinesparkCrashFinish_Tab0[(uint16)(2 * (samus_pose - 201))];
@@ -4709,7 +4709,7 @@ void Samus_MoveHandler_ShinesparkCrashFinish(void) {  // 0x90D40D
     speed_echo_xspeed[3] = 64;
     speed_echo_xpos[3] = samus_x_pos;
     speed_echo_ypos[3] = samus_y_pos;
-    projectile_type[4] = addr_loc_908029;
+    projectile_type[4] = kProjectileType_DontInteractWithSamus | kProjectileType_ShinesparkEcho;
     InitializeShinesparkEchoOrSpazerSba(8);
     projectile_bomb_pre_instructions[4] = FUNC16(ProjPreInstr_SpeedEcho);
     projectile_variables[4] = kShinesparkCrashFinish_Tab0[(uint16)(2 * (samus_pose - 201)) + 1];
@@ -7000,7 +7000,7 @@ uint8 SamusCode_1E(void) {  // 0x90F4A2
 }
 
 uint8 SamusCode_1F_KillGrappleBeam(void) {  // 0x90F4D0
-  if (grapple_beam_function != (uint16)addr_loc_90C4F0) {
+  if (grapple_beam_function != FUNC16(GrappleBeamFunc_Inactive)) {
     grapple_beam_unkD1E = 0;
     grapple_beam_unkD20 = 0;
     grapple_beam_direction = 0;
@@ -7010,7 +7010,7 @@ uint8 SamusCode_1F_KillGrappleBeam(void) {  // 0x90F4D0
     grapple_varCF6 = 0;
     grapple_beam_flags = 0;
     LoadProjectilePalette(equipped_beams);
-    grapple_beam_function = -15120;
+    grapple_beam_function = FUNC16(GrappleBeamFunc_Inactive);
     samus_draw_handler = FUNC16(SamusDrawHandler_Default);
   }
   return 0;

@@ -2711,7 +2711,7 @@ void EprojPreInstr_TourianStatueSoul(uint16 k) {  // 0x86B9FD
 static void EprojPreInstr_BA42(uint16 k) {  // 0x86BA42
   int v1 = k >> 1;
   eproj_x_pos[v1] = eproj_E[v1];
-  eproj_y_pos[v1] = eproj_F[v1] + layer1_y_pos - *(uint16 *)&hdma_window_1_left_pos[0].field_0;
+  eproj_y_pos[v1] = eproj_F[v1] + layer1_y_pos - *(uint16 *)&hdma_window_1_left_pos[0].height;
 }
 
 void EprojPreInstr_TourianStatueStuff(uint16 k) {  // 0x86BA37

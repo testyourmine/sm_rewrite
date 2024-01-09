@@ -412,7 +412,7 @@ void DemoPreInstr_864F(void) {  // 0x91864F
 void DemoPreInstr_866A(void) {  // 0x91866A
   if (!eproj_x_pos[0]) {
     demo_input_pre_instr = FUNC16(DemoPreInstr_nullsub_162);
-    demo_input_instr_ptr = addr_off_91864B;
+    demo_input_instr_ptr = addr_kDemoInstrs_BabyMetroidDiscovery_End;
     demo_input_instr_timer = 1;
   }
 }
@@ -598,7 +598,7 @@ void DemoPreInstr_CheckLeaveDemo(void) {  // 0x918A9B
 void DemoPreInstr_8AB0(void) {  // 0x918AB0
   if (samus_movement_type != kMovementType_1A_GrabbedByDraygon) {
     demo_input_pre_instr = FUNC16(DemoPreInstr_CheckLeaveDemo);
-    demo_input_instr_ptr = addr_stru_919346;
+    demo_input_instr_ptr = addr_kDemoInstrs_Shinespark_UnseenSection;
     demo_input_instr_timer = 1;
   }
 }
@@ -1178,7 +1178,7 @@ void Xray_SetupStage5(void) {  // 0x91D0D3
 }
 
 bool CanXrayShowBlocks(void) {  // 0x91D143
-  if (room_ptr == addr_kRoom_a66a || room_ptr == addr_kRoom_cefb)
+  if (room_ptr == addr_kRoom_TourianEntrance || room_ptr == addr_kRoom_n00bTube)
     return false;
   if (fx_type == 0x24)
     return false;
@@ -1457,12 +1457,12 @@ void HandleMiscSamusPalette(void) {  // 0x91D8A5
     if (!sign16(v0 - 7))
       goto LABEL_17;
     if ((v0 & 1) != 0) {
-      CopyToSamusSuitPalette(addr_word_9BA380);
+      CopyToSamusSuitPalette(addr_kSamusPalette_HurtFlash);
       goto LABEL_17;
     }
 LABEL_14:
     if (cinematic_function)
-      CopyToSamusSuitPalette(addr_word_9BA3A0);
+      CopyToSamusSuitPalette(addr_kSamusPalette_IntroSamus_Grayscale);
     else
       Samus_LoadSuitPalette();
 LABEL_17:;

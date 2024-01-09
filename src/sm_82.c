@@ -3919,7 +3919,7 @@ CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
     v0 = 22;
   irqhandler_next_handler = v0;
   WaitUntilEndOfVblankAndEnableIrq();
-  if ((cre_bitset & 2) != 0 && door_def_ptr != addr_kDoorDef_947a) {
+  if ((cre_bitset & 2) != 0 && door_def_ptr != addr_kDoorDef_PostCrocoShaft_DoorListIndex0) {
     DecompressToMem(0xb98000, g_ram + 0x7000);
   }
   DecompressToMem(Load24(&tileset_tiles_pointer), g_ram + 0x2000);
@@ -3927,7 +3927,7 @@ CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
   CopyToVramNow(0x0000, 0x7e2000, 0x2000);
   CopyToVramNow(0x1000, 0x7e4000, 0x2000);
   CopyToVramNow(0x2000, 0x7e6000, 0x1000);
-  if ((cre_bitset & 6) != 0 && door_def_ptr != addr_kDoorDef_947a) {
+  if ((cre_bitset & 6) != 0 && door_def_ptr != addr_kDoorDef_PostCrocoShaft_DoorListIndex0) {
     CopyToVramNow(0x2800, 0x7e7000, 0x1000);
     CopyToVramNow(0x3000, 0x7e8000, 0x2000);
     CopyToVramNow(0x4000, 0x9ab200, 0x1000);
@@ -4091,7 +4091,7 @@ CoroutineRet DoorTransition_HandleTransition(void) {  // 0x82E6A2
     samus_y_pos = (samus_y_pos | 0xF) + 8;
   for (int i = 510; i >= 0; i -= 2) {
     *(uint16 *)&mother_brain_indirect_hdma[i] = 0;
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_0 + i) = 0;
+    *(uint16 *)(&hdma_window_1_left_pos[0].height + i) = 0;
   }
   uint16 v1 = room_loading_irq_handler;
   if (!room_loading_irq_handler)
@@ -4278,7 +4278,7 @@ uint16 LoadLibraryBackgroundFunc_0_DONE(uint16 j) {  // 0x82E9E5
 }
 
 uint16 LoadLibraryBackgroundFunc_E_DoorDependentTransferToVram(uint16 j) {  // 0x82E9E7
-  if (door_def_ptr == get_LoadBg_E(j)->field_0)
+  if (door_def_ptr == get_LoadBg_E(j)->bg_ptr)
     return LoadLibraryBackgroundFunc_2_TransferToVram(j + 2);
   else
     return j + 9;

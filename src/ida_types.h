@@ -190,9 +190,9 @@ typedef struct HdmaScrollEntry {
 
 /* 16 */
 typedef struct SpawnHdmaObject_Args {
-  uint8 field_0;
-  uint8 field_1;
-  VoidP addr;
+  uint8 hdma_control;
+  uint8 hdma_target;
+  VoidP hdmr_instr_list;
 }SpawnHdmaObject_Args;
 
 /* 17 */
@@ -204,9 +204,9 @@ typedef struct CinematicSpriteObjectDef {
 
 /* 18 */
 typedef struct Mode7ObjectDef {
-  VoidP field_0;
-  VoidP field_2;
-  VoidP field_4;
+  VoidP object_def_ptr;
+  VoidP pre_instr;
+  VoidP instr_list;
 }Mode7ObjectDef;
 
 /* 19 */
@@ -234,7 +234,7 @@ typedef struct RoomDefStateSelect_E6E5_Finish {
 
 /* 23 */
 typedef struct LoadBg_E {
-  uint16 field_0;
+  uint16 bg_ptr;
   uint16 field_2;
 }LoadBg_E;
 
@@ -543,9 +543,9 @@ typedef struct SamusPoseParams {
   uint8 new_pose_unless_buttons;
   uint8 direction_shots_fired;
   uint8 y_offset_to_gfx;
-  uint8 field_5;
+  uint8 UNUSED_field_5;
   uint8 y_radius;
-  uint8 field_7;
+  uint8 UNUSED_field_7;
 } SamusPoseParams;
 
 /* 31 */
@@ -674,7 +674,7 @@ typedef struct ProjectileInstr {
   VoidP spritemap_ptr;
   uint8 x_radius;
   uint8 y_radius;
-  uint16 field_6;
+  uint16 trail_frame;
 } ProjectileInstr;
 
 /* 46 */
@@ -741,6 +741,13 @@ enum EnemyExtraProps {
 
 /* 52 */
 enum ProjectileType {
+  kProjectileType_Wave_NormalBombExplosion = 0x1,
+  kProjectileType_Ice = 0x2,
+  kProjectileType_Spazer = 0x4,
+  kProjectileType_Plasma = 0x8,
+  kProjectileType_Charged = 0x10,
+  kProjectileType_SpazerSbaTrail = 0x24,
+  kProjectileType_ShinesparkEcho = 0x29,
   kProjectileType_Missile = 0x100,
   kProjectileType_SuperMissile = 0x200,
   kProjectileType_PowerBomb = 0x300,
@@ -748,6 +755,7 @@ enum ProjectileType {
   kProjectileType_BeamExplosion = 0x700,
   kProjectileType_MissileExplosion = 0x800,
   kProjectileType_TypeMask = 0xF00,
+  kProjectileType_ChargeBeamEquipped = 0x1000,
   kProjectileType_DontInteractWithSamus = 0x8000,
 };
 
@@ -851,8 +859,8 @@ typedef struct MaridiaSnailData2 {
 
 /* 73 */
 typedef struct  Mode7VramWriteQueue {
-  uint8 field_0;
-  uint16 field_1;
+  uint8 control;
+  uint16 src_addr;
   uint8 gap3[2];
   uint16 field_5;
 } Mode7VramWriteQueue;
@@ -1118,9 +1126,9 @@ typedef struct  EnemyTileLoadData {
 
 /* 109 */
 typedef struct ExpandingSquareTransitionHdma {
-  uint8 field_0;
-  uint8 field_1;
-  uint8 field_2;
+  uint8 height;
+  uint8 addr_lo;
+  uint8 addr_hi;
 } ExpandingSquareTransitionHdma;
 
 /* 110 */
@@ -1471,13 +1479,13 @@ enum Consts_82 {
   addr_kOptionsInit_SamusDataBorder = 0xF4D6,
 };
 enum Consts_83 {
-  addr_kDoorDef_947a = 0x947A,
+  addr_kDoorDef_PostCrocoShaft_DoorListIndex0 = 0x947A,
 };
 enum Consts_84 {
   addr_PlmPreInstr_Empty4 = 0x8AA6,
   addr_locret_848AE0 = 0x8AE0,
   addr_kDefaultPlmDrawInstruction = 0x8DA0,
-  addr_word_84AD76 = 0xAD76,
+  addr_kPlmInstrList_MapStation = 0xAD76,
   addr_kPlmHeader_B6FF = 0xB6FF,
   addr_locret_84BB6A = 0xBB6A,
   addr_locret_84BBDC = 0xBBDC,
@@ -1678,40 +1686,40 @@ enum Consts_88 {
   addr_locret_88858A = 0x858A,
   addr_loc_889180 = 0x9180,
   addr_kPowerBombExplosionShapeDef0 = 0x9246,
-  addr_byte_889F06 = 0x9F06,
-  addr_word_88A8E8 = 0xA8E8,
-  addr_off_88AD9C = 0xAD9C,
-  addr_off_88ADA6 = 0xADA6,
-  addr_word_88DF5F = 0xDF5F,
-  addr_word_88DF65 = 0xDF65,
-  addr_word_88DF6B = 0xDF6B,
-  addr_word_88DF71 = 0xDF71,
+  addr_kPowerBombPreExplosionShapeDef0 = 0x9F06,
+  addr_kFxType34RepeatingBg3Strips = 0xA8E8,
+  addr_kScrollingSkyLandChunkPtrs = 0xAD9C,
+  addr_kScrollingSkyOceanChunkPtrs = 0xADA6,
+  addr_kDraygonMainScreenLayersInstrList_MiddleScreen = 0xDF5F,
+  addr_kDraygonMainScreenLayersInstrList_BottomScreen = 0xDF65,
+  addr_kDraygonMainScreenLayersInstrList_TopScreen = 0xDF6B,
+  addr_kDraygonMainScreenLayersInstrList_OffScreen = 0xDF71,
 };
 enum Consts_89 {
   addr_kIndirectHdmaTable_PowerBombExplodeLeft = 0x9800,
   addr_kIndirectHdmaTable_PowerBombExplodeRight = 0xA101,
 };
 enum Consts_8B {
-  addr_kCinematicSpriteObjectDef_8BA0EF = 0xA0EF,
-  addr_kCinematicSpriteObjectDef_8BA0F5 = 0xA0F5,
-  addr_kCinematicSpriteObjectDef_8BA0FB = 0xA0FB,
-  addr_kCinematicSpriteObjectDef_8BA101 = 0xA101,
-  addr_kCinematicSpriteObjectDef_8BA107 = 0xA107,
-  addr_kCinematicSpriteObjectDef_8BA113 = 0xA113,
-  addr_kCinematicSpriteObjectDef_8BA119 = 0xA119,
-  addr_kCinematicSpriteObjectDef_8BA125 = 0xA125,
+  addr_kCinematicSpriteObjectDef_ScrollingText_1994 = 0xA0EF,
+  addr_kCinematicSpriteObjectDef_ScrollingText_NINTENDO = 0xA0F5,
+  addr_kCinematicSpriteObjectDef_ScrollingText_PRESENTS = 0xA0FB,
+  addr_kCinematicSpriteObjectDef_ScrollingText_METROID3 = 0xA101,
+  addr_kCinematicSpriteObjectDef_TitleLogo_FadeIn = 0xA107,
+  addr_kCinematicSpriteObjectDef_NintendoCopyright_FadeIn = 0xA113,
+  addr_kCinematicSpriteObjectDef_TitleLogo_Immediate = 0xA119,
+  addr_kCinematicSpriteObjectDef_NintendoCopyright_Immediate = 0xA125,
   addr_kMode7ObjBabyMetroidInTitle = 0xA355,
-  addr_kCinematicFunction_Intro_Func56_M7 = 0xBE74,
-  addr_kCinematicFunction_Intro_Func76_M7_0 = 0xC3E6,
-  addr_kCinematicFunction_Intro_Func76_M7_1 = 0xC3F0,
-  addr_kCinematicFunction_Intro_Func76_M7_2 = 0xC3FA,
-  addr_off_8BCB19 = 0xCB19,
-  addr_word_8BCB3B = 0xCB3B,
-  addr_word_8BCBFB = 0xCBFB,
-  addr_unk_8BCC03 = 0xCC03,
-  addr_word_8BCC23 = 0xCC23,
-  addr_word_8BCD71 = 0xCD71,
-  addr_off_8BCE53 = 0xCE53,
+  addr_kCinematicFunction_Intro_BackOfGunship = 0xBE74,
+  addr_kCinematicFunction_Intro_FrontOfGunship = 0xC3E6,
+  addr_kCinematicFunction_Intro_ClearCeresLowerHalf = 0xC3F0,
+  addr_kCinematicFunction_Intro_ClearCeresUpperHalf = 0xC3FA,
+  addr_kCinematicSpriteObjectInstrList_IntroMotherBrain_StartPage2 = 0xCB19,
+  addr_kCinematicSpriteObjectInstrList_MetroidEggHatching = 0xCB3B,
+  addr_kCinematicSpriteObjectInstrList_IntroTextCaret = 0xCBFB,
+  addr_kCinematicSpriteObjectInstrList_IntroTextCaret_Blink = 0xCC03,
+  addr_kCinematicSpriteObjectInstrList_IntroJpTextNextPageArrow_Blink = 0xCC23,
+  addr_kCinematicSpriteObjectInstrList_MetroidEggSlimeDrops = 0xCD71,
+  addr_kCinematicSpriteObjectInstrList_CE52_Nothing = 0xCE53,
   addr_kCinematicSpriteObjectDef_8BCE55 = 0xCE55,
   addr_kCinematicSpriteObjectDef_8BCE5B = 0xCE5B,
   addr_kCinematicSpriteObjectDef_8BCE61 = 0xCE61,
@@ -1838,10 +1846,10 @@ enum Consts_8C {
 enum Consts_8D {
   addr_locret_8DC5E3 = 0xC5E3,
   addr_off_8DE192 = 0xE192,
-  addr_kPalfx_E194 = 0xE194,
-  addr_kPalfx_E198 = 0xE198,
-  addr_kPalfx_E19C = 0xE19C,
-  addr_kPalfx_E1A0 = 0xE1A0,
+  addr_kPalfx_TitleLogo_FadeIn = 0xE194,
+  addr_kPalfx_NintendoLogo_FadeIn_Unused = 0xE198,
+  addr_kPalfx_NintendoCopyright_FadeIn = 0xE19C,
+  addr_kPalfx_TitleScreen_BabyMetroidTubeLight = 0xE1A0,
   addr_kPalfx_E1A4 = 0xE1A4,
   addr_kPalfx_E1A8 = 0xE1A8,
   addr_kPalfx_E1AC = 0xE1AC,
@@ -1880,49 +1888,48 @@ enum Consts_8D {
   addr_kPalfx_FFD5 = 0xFFD5,
 };
 enum Consts_8F {
-  addr_kRoom_96ba = 0x96BA,
-  addr_kRoom_9804 = 0x9804,
-  addr_kRoom_a66a = 0xA66A,
-  addr_kRoom_b32e = 0xB32E,
-  addr_kRoom_b457 = 0xB457,
-  addr_kRoom_cefb = 0xCEFB,
-  addr_kRoom_dd58 = 0xDD58,
-  addr_kRoom_dede = 0xDEDE,
+  addr_kRoom_OldTourianEscapeShaft = 0x96BA,
+  addr_kRoom_BombTorizoRoom = 0x9804,
+  addr_kRoom_TourianEntrance = 0xA66A,
+  addr_kRoom_RidleyRoom = 0xB32E,
+  addr_kRoom_LowerNorfair_BreakablePillarsHall = 0xB457,
+  addr_kRoom_n00bTube = 0xCEFB,
+  addr_kRoom_MotherBrainRoom = 0xDD58,
+  addr_kRoom_EscapeRoom4 = 0xDEDE,
   addr_kDoorClosingPlmIds = 0xE68A,
 };
 enum Consts_90 {
-  addr_loc_908029 = 0x8029,
-  addr_stru_909F25 = 0x9F25,
-  addr_stru_909F31 = 0x9F31,
-  addr_stru_909F3D = 0x9F3D,
-  addr_kSamusSpeedTable_Normal_X = 0x9F49,
+  //addr_loc_908029 = 0x8029,
+  addr_kSamusSpeedTable_DuringDiagonalBombJump = 0x9F25,
+  addr_kSamusSpeedTable_GrappleDisconnect_Air = 0x9F31,
+  addr_kSamusSpeedTable_GrappleDisconnect_Water = 0x9F3D,
+  addr_kSamusSpeedTable_GrappleDisconnect_LavaAcid = 0x9F49,
+  addr_kSamusSpeedTable_Normal_X = 0x9F55,
   addr_kSamusSpeedTable_Water_X = 0xA08D,
   addr_kSamusSpeedTable_LavaAcid_X = 0xA1DD,
-  addr_kSuperMissileAccelerations = 0xc303,
-  addr_kSuperMissileAccelerations2 = 0xc32b,
-  addr_loc_90C4F0 = 0xC4F0,
+  addr_kMissileAccelerations = 0xC303,
+  addr_kSuperMissileAccelerations = 0xC32B,
 };
 enum Consts_91 {
-  addr_off_91864B = 0x864B,
+  addr_kDemoInstrs_BabyMetroidDiscovery_End = 0x864B,
   addr_kDemoInstrs_LeaveDemo = 0x8776,
-  addr_stru_91877E = 0x877E,
-  addr_stru_918784 = 0x8784,
-  addr_stru_919346 = 0x9346,
+  addr_kDemoInputObjects_BabyMetroidDiscovery = 0x877E,
+  addr_kDemoInputsObjects_OldMotherBrainFight = 0x8784,
+  addr_kDemoInstrs_Shinespark_UnseenSection = 0x9346,
 };
 enum Consts_94 {
-  addr_word_94B18B = 0xB18B,
-  addr_word_94B18F = 0xB18F,
-  addr_word_94B193 = 0xB193,
-  addr_word_94B197 = 0xB197,
+  addr_kGrappleSegmentAnimInstrs0 = 0xB18B,
+  addr_kGrappleSegmentAnimInstrs1 = 0xB18F,
+  addr_kGrappleSegmentAnimInstrs2 = 0xB193,
+  addr_kGrappleSegmentAnimInstrs3 = 0xB197,
 };
 enum Consts_9B {
   addr_kSamusPalette_PowerSuit = 0x9400,
   addr_kSamusPalette_VariaSuit = 0x9520,
   addr_kSamusPalette_GravitySuit = 0x9800,
-  addr_word_9BA120 = 0xA120,
-  addr_word_9BA380 = 0xA380,
-  addr_word_9BA3A0 = 0xA3A0,
-
+  addr_kSamusPalette_DeathSequence_SuitlessSamus = 0xA120,
+  addr_kSamusPalette_HurtFlash = 0xA380,
+  addr_kSamusPalette_IntroSamus_Grayscale = 0xA3A0,
 };
 enum Consts_A0 {
   addr_kSpritemap_Nothing_A0 = 0x804D,

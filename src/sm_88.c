@@ -194,7 +194,7 @@ void HandleLayerBlendingXrayCantShowBlocks(void) {  // 0x8881A4
   reg_TSW = 4;
   next_gameplay_CGWSEL = 34;
   next_gameplay_CGADSUB = next_gameplay_CGADSUB & 0x80 | 0x61;
-  if (room_ptr == addr_kRoom_cefb)
+  if (room_ptr == addr_kRoom_n00bTube)
     reg_TM = 17;
 }
 
@@ -304,7 +304,7 @@ static Func_V *const kLayerBlendPowerBombFuncs[4] = {  // 0x8881FE
 };
 
 void HandleLayerBlendingPowerBomb(uint16 j) {
-  if (room_ptr == addr_kRoom_a66a)
+  if (room_ptr == addr_kRoom_TourianEntrance)
     j = 6;
   kLayerBlendPowerBombFuncs[j >> 1]();
 }
@@ -334,12 +334,12 @@ void DeleteHdmaObjects(void) {  // 0x8882AC
 void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
   earthquake_sfx_index = 0;
   earthquake_sfx_timer = 0;
-  if (room_ptr == addr_kRoom_9804
-      || room_ptr == addr_kRoom_96ba
-      || room_ptr == addr_kRoom_b32e
-      || room_ptr == addr_kRoom_b457
-      || room_ptr == addr_kRoom_dd58
-      || room_ptr == addr_kRoom_dede) {
+  if (room_ptr == addr_kRoom_BombTorizoRoom
+      || room_ptr == addr_kRoom_OldTourianEscapeShaft
+      || room_ptr == addr_kRoom_RidleyRoom
+      || room_ptr == addr_kRoom_LowerNorfair_BreakablePillarsHall
+      || room_ptr == addr_kRoom_MotherBrainRoom
+      || room_ptr == addr_kRoom_EscapeRoom4) {
     earthquake_sfx_timer = -1;
   }
   debug_disable_minimap = 0;
@@ -898,7 +898,7 @@ void Hdmaobj_PreExplodeWhite(void) {  // 0x888B14
 }
 
 void Hdmaobj_PreExplodeYellow(void) {  // 0x888B32
-  pre_scaled_power_bomb_explosion_shape_def_ptr = addr_byte_889F06;
+  pre_scaled_power_bomb_explosion_shape_def_ptr = addr_kPowerBombPreExplosionShapeDef0;
 }
 
 void Hdmaobj_ExplodeYellow(void) {  // 0x888B39
@@ -1168,7 +1168,7 @@ void HdmaobjPreInstr_PowerBombExplode_ExplosionWhite(uint16 k) {  // 0x888EB2
   reg_COLDATA[1] = kPowerBombExplosionColors[t + 1] | 0x40;
   reg_COLDATA[2] = kPowerBombExplosionColors[t + 2] | 0x80;
   pre_scaled_power_bomb_explosion_shape_def_ptr += 192;
-  if (pre_scaled_power_bomb_explosion_shape_def_ptr == addr_byte_889F06) {
+  if (pre_scaled_power_bomb_explosion_shape_def_ptr == addr_kPowerBombPreExplosionShapeDef0) {
     int v3 = k >> 1;
     hdma_object_instruction_timers[v3] = 1;
     hdma_object_instruction_list_pointers[v3] += 2;
@@ -1506,7 +1506,7 @@ static uint16 SetupSomeHdmaTablesBG3(uint16 r24, uint16 r0, uint16 r3, uint16 r6
 
 void HdmaobjPreInstr_FxType22_BG3Yscroll(uint16 k) {  // 0x88A643
   DamageSamusInTopRow();
-  k = SetupSomeHdmaTablesBG3(78, addr_word_88A8E8, addr_word_88A8E8 + 2, addr_word_88A8E8 + 4, addr_word_88A8E8 + 6);
+  k = SetupSomeHdmaTablesBG3(78, addr_kFxType34RepeatingBg3Strips, addr_kFxType34RepeatingBg3Strips + 2, addr_kFxType34RepeatingBg3Strips + 4, addr_kFxType34RepeatingBg3Strips + 6);
   *(uint16 *)&mother_brain_indirect_hdma[k] = 0;
 }
 
@@ -1544,12 +1544,12 @@ void HdmaobjPreInstr_BG3Xscroll(uint16 k) {
       v5 = (v5 - 2) & 0x1F;
     }
   }
-  *(uint16 *)&hdma_window_1_left_pos[0].field_0 = 0;
+  *(uint16 *)&hdma_window_1_left_pos[0].height = 0;
   *(uint16 *)scrolling_sky_bg2_indirect_hdma = 0;
-  *(uint16 *)&hdma_window_1_left_pos[0].field_2 = 31;
+  *(uint16 *)&hdma_window_1_left_pos[0].addr_hi = 31;
   *(uint16 *)&scrolling_sky_bg2_indirect_hdma[2] = 31;
   uint16 r18 = 31;
-  *(uint16 *)&hdma_window_1_left_pos[1].field_0 = -25088;
+  *(uint16 *)&hdma_window_1_left_pos[1].height = -25088;
   *(uint16 *)&scrolling_sky_bg2_indirect_hdma[3] = -25088;
   if (sign16(layer1_y_pos - 1024)) {
     *(uint16 *)&scrolling_sky_bg2_indirect_hdma[2] = 0;
@@ -1561,20 +1561,20 @@ void HdmaobjPreInstr_BG3Xscroll(uint16 k) {
   v8 = 224 - r18;
   while ((int16)(v8 - 16) >= 0) {
     v8 -= 16;
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_0 + v7) = 144;
+    *(uint16 *)(&hdma_window_1_left_pos[0].height + v7) = 144;
     *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v7] = 144;
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_1 + v7) = -24960;
+    *(uint16 *)(&hdma_window_1_left_pos[0].addr_lo + v7) = -24960;
     *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v7 + 1] = -24960;
     v7 += 3;
   }
   v9 = v8;
   if (v8)
     v9 = v8 + 128;
-  *(uint16 *)(&hdma_window_1_left_pos[0].field_0 + v7) = v9;
+  *(uint16 *)(&hdma_window_1_left_pos[0].height + v7) = v9;
   *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v7] = v9;
-  *(uint16 *)(&hdma_window_1_left_pos[0].field_1 + v7) = -24960;
+  *(uint16 *)(&hdma_window_1_left_pos[0].addr_lo + v7) = -24960;
   *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v7 + 1] = -24960;
-  *(uint16 *)(&hdma_window_1_left_pos[1].field_0 + v7) = 0;
+  *(uint16 *)(&hdma_window_1_left_pos[1].height + v7) = 0;
   *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v7 + 3] = 0;
 }
 
@@ -1598,14 +1598,14 @@ uint16 HdmaFunc_A786(uint16 k, uint16 r18, uint16 r20, uint16 r22) {  // 0x88A78
         if (v2 < 0)
           break;
         r24 = v2;
-        *(uint16 *)(&hdma_window_1_left_pos[0].field_0 + v0) = r22 | 0x10;
-        *(uint16 *)(&hdma_window_1_left_pos[0].field_1 + v0) = r20;
+        *(uint16 *)(&hdma_window_1_left_pos[0].height + v0) = r22 | 0x10;
+        *(uint16 *)(&hdma_window_1_left_pos[0].addr_lo + v0) = r20;
         v1 = r24;
         v0 += 3;
       }
     }
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_0 + v0) = r22 | r24;
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_1 + v0) = r20;
+    *(uint16 *)(&hdma_window_1_left_pos[0].height + v0) = r22 | r24;
+    *(uint16 *)(&hdma_window_1_left_pos[0].addr_lo + v0) = r20;
   }
   return r18;
 }
@@ -1736,11 +1736,11 @@ void RoomMainAsm_ScrollingSky(const uint16 *src) {  // 0x88AFA3
 }
 
 void RoomCode_ScrollingSkyLand(void) {  // 0x88AF8D
-  RoomMainAsm_ScrollingSky((const uint16 *)RomPtr_88(addr_off_88AD9C));
+  RoomMainAsm_ScrollingSky((const uint16 *)RomPtr_88(addr_kScrollingSkyLandChunkPtrs));
 }
 
 void RoomMainAsm_ScrollingSkyOcean(void) {  // 0x88AF99
-  RoomMainAsm_ScrollingSky((const uint16 *)RomPtr_88(addr_off_88ADA6));
+  RoomMainAsm_ScrollingSky((const uint16 *)RomPtr_88(addr_kScrollingSkyOceanChunkPtrs));
 }
 
 static const SpawnHdmaObject_Args unk_88B08C = { 0x42, 0x11, 0xb0ac };
@@ -1752,7 +1752,7 @@ void FxTypeFunc_24_Fireflea(void) {  // 0x88B07C
   fireflea_flashing_timer = 6;
   fireflea_flashing_index = 0;
   SpawnHdmaObject(0x88, &unk_88B08C);
-  *(uint16 *)&hdma_window_1_left_pos[0].field_0 = 0;
+  *(uint16 *)&hdma_window_1_left_pos[0].height = 0;
   UNUSED_word_7E177C = 0;
   fireflea_darkness_level = 0;
   UNUSED_word_7E1780 = 24;
@@ -2318,7 +2318,7 @@ void FxTypeFunc_26_TourianEntranceStatue(void) {  // 0x88DB8A
 }
 
 void sub_88DBCB(uint16 k) {  // 0x88DBCB
-  *(uint16 *)&hdma_window_1_left_pos[0].field_0 = layer1_y_pos + hdma_object_B[k >> 1];
+  *(uint16 *)&hdma_window_1_left_pos[0].height = layer1_y_pos + hdma_object_B[k >> 1];
 }
 
 void HdmaobjPreInstr_CheckLotsOfEventsHappened(uint16 v0) {  // 0x88DBD7
@@ -2388,11 +2388,11 @@ const uint8 *HdmaobjInstr_GotoIfEventHappened(uint16 k, const uint8 *hdp) {  // 
   hdma_object_A[v2] = 0;
   if (CheckEventHappened(0xA)) {
     hdma_object_B[v2] = -240;
-    *(uint16 *)&hdma_window_1_left_pos[0].field_0 = -240;
+    *(uint16 *)&hdma_window_1_left_pos[0].height = -240;
     return INSTRB_RETURN_ADDR(GET_WORD(hdp));
   } else {
     hdma_object_B[v2] = 0;
-    *(uint16 *)&hdma_window_1_left_pos[0].field_0 = 0;
+    *(uint16 *)&hdma_window_1_left_pos[0].height = 0;
     *(uint16 *)scrolls = 1;
     return hdp + 2;
   }
@@ -2518,19 +2518,19 @@ void HdmaobjPreInstr_DF94(uint16 v0) {  // 0x88DF94
     if (sign16(v1 - 40)) {
       int v2 = v0 >> 1;
       hdma_object_instruction_timers[v2] = 1;
-      hdma_object_instruction_list_pointers[v2] = addr_word_88DF6B;
+      hdma_object_instruction_list_pointers[v2] = addr_kDraygonMainScreenLayersInstrList_TopScreen;
     } else {
       int v4 = v0 >> 1;
       hdma_object_instruction_timers[v4] = 1;
       if (sign16(v1 - 192))
-        hdma_object_instruction_list_pointers[v4] = addr_word_88DF5F;
+        hdma_object_instruction_list_pointers[v4] = addr_kDraygonMainScreenLayersInstrList_MiddleScreen;
       else
-        hdma_object_instruction_list_pointers[v4] = addr_word_88DF65;
+        hdma_object_instruction_list_pointers[v4] = addr_kDraygonMainScreenLayersInstrList_BottomScreen;
     }
   } else {
     int v3 = v0 >> 1;
     hdma_object_instruction_timers[v3] = 1;
-    hdma_object_instruction_list_pointers[v3] = addr_word_88DF71;
+    hdma_object_instruction_list_pointers[v3] = addr_kDraygonMainScreenLayersInstrList_OffScreen;
   }
 }
 

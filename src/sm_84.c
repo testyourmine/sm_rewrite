@@ -1174,7 +1174,7 @@ uint8 PlmSetup_B6D3_MapStation(uint16 j) {  // 0x84B18B
   int v2 = plm_block_indices[v1] >> 1;
   level_data[v2] = level_data[v2] & 0xFFF | 0x8000;
   if (map_station_byte_array[area_index]) {
-    plm_instr_list_ptrs[v1] = addr_word_84AD76;
+    plm_instr_list_ptrs[v1] = addr_kPlmInstrList_MapStation;
   } else {
     WriteLevelDataBlockTypeAndBts(plm_block_indices[v1] + 2, 0xB047);
     WriteLevelDataBlockTypeAndBts(plm_block_indices[v1] - 4, 0xB048);

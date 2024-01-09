@@ -1774,18 +1774,18 @@ void SetupInitialExpandingSquareHDMA(void) {  // 0x81A61C
   expand_sq_topbottom_margin_left_pos = -1;
   LOBYTE(expand_sq_left_pos) = 127;
   LOBYTE(expand_sq_right_pos) = -127;
-  hdma_window_1_left_pos[0].field_0 = 111;
-  hdma_window_1_left_pos[0].field_1 = 34;
-  hdma_window_1_left_pos[0].field_2 = -98;
-  hdma_window_1_left_pos[1].field_0 = 1;
-  hdma_window_1_left_pos[1].field_1 = 50;
-  hdma_window_1_left_pos[1].field_2 = -98;
-  hdma_window_1_left_pos[2].field_0 = 1;
-  hdma_window_1_left_pos[2].field_1 = 50;
-  hdma_window_1_left_pos[2].field_2 = -98;
-  hdma_window_1_left_pos[3].field_0 = 111;
-  hdma_window_1_left_pos[3].field_1 = 32;
-  hdma_window_1_left_pos[3].field_2 = -98;
+  hdma_window_1_left_pos[0].height = 111;
+  hdma_window_1_left_pos[0].addr_lo = 34;
+  hdma_window_1_left_pos[0].addr_hi = -98;
+  hdma_window_1_left_pos[1].height = 1;
+  hdma_window_1_left_pos[1].addr_lo = 50;
+  hdma_window_1_left_pos[1].addr_hi = -98;
+  hdma_window_1_left_pos[2].height = 1;
+  hdma_window_1_left_pos[2].addr_lo = 50;
+  hdma_window_1_left_pos[2].addr_hi = -98;
+  hdma_window_1_left_pos[3].height = 111;
+  hdma_window_1_left_pos[3].addr_lo = 32;
+  hdma_window_1_left_pos[3].addr_hi = -98;
   WriteReg(DMAP2, 0x40);
   WriteReg(BBAD2, 0x26);
   WriteReg(A1T2L, 0);
@@ -1797,18 +1797,18 @@ void SetupInitialExpandingSquareHDMA(void) {  // 0x81A61C
   WriteReg(A2A2L, 0);
   WriteReg(A2A2H, 0);
   WriteReg(NTRL2, 0);
-  hdma_window_1_right_pos[0].field_0 = 111;
-  hdma_window_1_right_pos[0].field_1 = 32;
-  hdma_window_1_right_pos[0].field_2 = -98;
-  hdma_window_1_right_pos[1].field_0 = 1;
-  hdma_window_1_right_pos[1].field_1 = 54;
-  hdma_window_1_right_pos[1].field_2 = -98;
-  hdma_window_1_right_pos[2].field_0 = 1;
-  hdma_window_1_right_pos[2].field_1 = 54;
-  hdma_window_1_right_pos[2].field_2 = -98;
-  hdma_window_1_right_pos[3].field_0 = 111;
-  hdma_window_1_right_pos[3].field_1 = 32;
-  hdma_window_1_right_pos[3].field_2 = -98;
+  hdma_window_1_right_pos[0].height = 111;
+  hdma_window_1_right_pos[0].addr_lo = 32;
+  hdma_window_1_right_pos[0].addr_hi = -98;
+  hdma_window_1_right_pos[1].height = 1;
+  hdma_window_1_right_pos[1].addr_lo = 54;
+  hdma_window_1_right_pos[1].addr_hi = -98;
+  hdma_window_1_right_pos[2].height = 1;
+  hdma_window_1_right_pos[2].addr_lo = 54;
+  hdma_window_1_right_pos[2].addr_hi = -98;
+  hdma_window_1_right_pos[3].height = 111;
+  hdma_window_1_right_pos[3].addr_lo = 32;
+  hdma_window_1_right_pos[3].addr_hi = -98;
   WriteReg(DMAP3, 0x40);
   WriteReg(BBAD3, 0x27);
   WriteReg(A1T3L, 0x10);
@@ -1828,8 +1828,8 @@ void FileSelectMap_5_ExpandingSquare(void) {  // 0x81A725
   VramWriteEntry *v5;
 
   DrawAreaSelectMapLabels();
-  uint8 v0 = hdma_window_1_left_pos[0].field_0 - kExpandingSquareTransitionSpeed;
-  if ((int8)(hdma_window_1_left_pos[0].field_0 - kExpandingSquareTransitionSpeed) < 0) {
+  uint8 v0 = hdma_window_1_left_pos[0].height - kExpandingSquareTransitionSpeed;
+  if ((int8)(hdma_window_1_left_pos[0].height - kExpandingSquareTransitionSpeed) < 0) {
     LOBYTE(menu_index) = menu_index + 1;
     reg_TM &= ~2;
     reg_TMW = 0;
@@ -1859,14 +1859,14 @@ void FileSelectMap_5_ExpandingSquare(void) {  // 0x81A725
     v5->vram_dst = (reg_BG2SC & 0xFC) << 8;
     vram_write_queue_tail = v4 + 7;
   } else {
-    hdma_window_1_left_pos[0].field_0 -= kExpandingSquareTransitionSpeed;
-    hdma_window_1_left_pos[3].field_0 = v0;
-    hdma_window_1_right_pos[0].field_0 = v0;
-    hdma_window_1_right_pos[3].field_0 = v0;
-    hdma_window_1_left_pos[1].field_0 += kExpandingSquareTransitionSpeed;
-    hdma_window_1_left_pos[2].field_0 = hdma_window_1_left_pos[1].field_0;
-    hdma_window_1_right_pos[1].field_0 = hdma_window_1_left_pos[1].field_0;
-    hdma_window_1_right_pos[2].field_0 = hdma_window_1_left_pos[1].field_0;
+    hdma_window_1_left_pos[0].height -= kExpandingSquareTransitionSpeed;
+    hdma_window_1_left_pos[3].height = v0;
+    hdma_window_1_right_pos[0].height = v0;
+    hdma_window_1_right_pos[3].height = v0;
+    hdma_window_1_left_pos[1].height += kExpandingSquareTransitionSpeed;
+    hdma_window_1_left_pos[2].height = hdma_window_1_left_pos[1].height;
+    hdma_window_1_right_pos[1].height = hdma_window_1_left_pos[1].height;
+    hdma_window_1_right_pos[2].height = hdma_window_1_left_pos[1].height;
     LOBYTE(expand_sq_left_pos) = expand_sq_left_pos - kExpandingSquareTransitionSpeed;
     LOBYTE(expand_sq_right_pos) = kExpandingSquareTransitionSpeed + expand_sq_right_pos;
   }
@@ -2059,8 +2059,8 @@ void FileSelectMap_7_PrepExpandSquareTransToRoomMap(void) {  // 0x81AAAC
   reg_WOBJSEL = 34;
   WriteReg(WOBJSEL, 0x22);
   reg_BG12NBA = 48;
-  hdma_window_1_left_pos[3].field_0 = 0;
-  hdma_window_1_right_pos[3].field_0 = 0;
+  hdma_window_1_left_pos[3].height = 0;
+  hdma_window_1_right_pos[3].height = 0;
   DrawRoomSelectMapAreaLabel(ram4000.bg2_room_select_map_tilemap + 170);
   uint16 v0 = vram_write_queue_tail;
   VramWriteEntry *v1 = gVramWriteEntry(vram_write_queue_tail);
@@ -2112,32 +2112,32 @@ void SetupRoomSelectMapExpandingSquareTransHDMA(void) {  // 0x81ABA7
     v4 = 1;
   AddExpandingSqTransLeftIndirHDMA(v4, k, 0x9E22);
   k = AddExpandingSqTransRightIndirHDMA(v4, k, 0x9E20);
-  *(&hdma_window_1_left_pos[0].field_0 + k) = 0;
-  *(&hdma_window_1_right_pos[0].field_0 + k) = 0;
+  *(&hdma_window_1_left_pos[0].height + k) = 0;
+  *(&hdma_window_1_right_pos[0].height + k) = 0;
 }
 
 void AddExpandingSqTransLeftIndirHDMA(uint16 a, uint16 k, uint16 j) {  // 0x81ABF7
   if ((a & 0x80) != 0) {
-    *(&hdma_window_1_left_pos[0].field_0 + k) = a - 127;
-    *(&hdma_window_1_left_pos[1].field_0 + k) = 127;
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_1 + k) = j;
-    *(uint16 *)(&hdma_window_1_left_pos[1].field_1 + k) = j;
+    *(&hdma_window_1_left_pos[0].height + k) = a - 127;
+    *(&hdma_window_1_left_pos[1].height + k) = 127;
+    *(uint16 *)(&hdma_window_1_left_pos[0].addr_lo + k) = j;
+    *(uint16 *)(&hdma_window_1_left_pos[1].addr_lo + k) = j;
   } else {
-    *(&hdma_window_1_left_pos[0].field_0 + k) = a;
-    *(uint16 *)(&hdma_window_1_left_pos[0].field_1 + k) = j;
+    *(&hdma_window_1_left_pos[0].height + k) = a;
+    *(uint16 *)(&hdma_window_1_left_pos[0].addr_lo + k) = j;
   }
 }
 
 uint16 AddExpandingSqTransRightIndirHDMA(uint16 a, uint16 k, uint16 j) {  // 0x81AC2D
   if ((a & 0x80) != 0) {
-    *(&hdma_window_1_right_pos[0].field_0 + k) = a - 127;
-    *(&hdma_window_1_right_pos[1].field_0 + k) = 127;
-    *(uint16 *)(&hdma_window_1_right_pos[0].field_1 + k) = j;
-    *(uint16 *)(&hdma_window_1_right_pos[1].field_1 + k) = j;
+    *(&hdma_window_1_right_pos[0].height + k) = a - 127;
+    *(&hdma_window_1_right_pos[1].height + k) = 127;
+    *(uint16 *)(&hdma_window_1_right_pos[0].addr_lo + k) = j;
+    *(uint16 *)(&hdma_window_1_right_pos[1].addr_lo + k) = j;
     return k + 6;
   } else {
-    *(&hdma_window_1_right_pos[0].field_0 + k) = a;
-    *(uint16 *)(&hdma_window_1_right_pos[0].field_1 + k) = j;
+    *(&hdma_window_1_right_pos[0].height + k) = a;
+    *(uint16 *)(&hdma_window_1_right_pos[0].addr_lo + k) = j;
     return k + 3;
   }
 }
@@ -2386,8 +2386,8 @@ void FileSelectMap_20_SetupContractingSquare(void) {  // 0x81AFF6
   WriteReg(W34SEL, 2);
   reg_BG12NBA = 48;
   reg_WOBJSEL = 34;
-  hdma_window_1_left_pos[3].field_0 = 0;
-  hdma_window_1_right_pos[3].field_0 = 0;
+  hdma_window_1_left_pos[3].height = 0;
+  hdma_window_1_right_pos[3].height = 0;
   reg_BG1VOFS = 0;
   reg_BG1HOFS = 0;
 }

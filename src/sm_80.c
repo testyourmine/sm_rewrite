@@ -432,7 +432,7 @@ void QueueMode7Transfers(uint8 db, uint16 k) {  // 0x808B4F
 void NMI_ProcessMode7Queue(void) {  // 0x808BBA
   if (mode7_vram_write_queue_tail) {
     NMI_ProcessMode7QueueInner(&g_ram[0x2D0]);
-    *(uint16 *)&mode7_write_queue[0].field_0 = 0;
+    *(uint16 *)&mode7_write_queue[0].control = 0;
     mode7_vram_write_queue_tail = 0;
   }
 }
