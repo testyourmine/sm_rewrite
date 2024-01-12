@@ -1249,25 +1249,7 @@ void Vector_IRQ(void) {
   kIrqHandlers[cur_irq_handler >> 1]();
 }
 
-static const uint16 kHudTilemaps[32] = {  // 0x8099CF
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f,
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c1d, 0x2c1d, 0x2c1d, 0x2c1d, 0x2c1d, 0x2c1c,
-};
-static const uint16 kHudTilemaps_Row1to3[96] = {
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f,
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c12, 0x2c12, 0x2c23, 0x2c12, 0x2c12, 0x2c1e,
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f,
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2822, 0x2822, 0x2823, 0x2813, 0x2c14, 0x2c1e,
-  0x2c0f, 0x2c0b, 0x2c0c, 0x2c0d, 0x2c32, 0x2c0f, 0x2c09, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f,
-  0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c12, 0x2c12, 0xa824, 0x2815, 0x2c16, 0x2c1e,
-};
-static const uint16 kHudTilemaps_AutoReserve[12] = { 0x3c33, 0x3c46, 0x3c47, 0x3c48, 0xbc33, 0xbc46, 0x2c33, 0x2c46, 0x2c47, 0x2c48, 0xac33, 0xac46 };
-static const uint16 kHudTilemaps_Missiles[22] = {
-  0x344b, 0x3449, 0x744b, 0x344c, 0x344a, 0x744c, 0x3434, 0x7434, 0x3435, 0x7435, 0x3436, 0x7436, 0x3437, 0x7437, 0x3438, 0x7438,
-  0x3439, 0x7439, 0x343a, 0x743a, 0x343b, 0x743b,
-};
-
-void AddMissilesToHudTilemap(void) {
+void AddMissilesToHudTilemap(void) {  // 0x8099CF
   if ((hud_tilemap[10] & 0x3FF) == 15) {
     hud_tilemap[10] = kHudTilemaps_Missiles[0];
     hud_tilemap[11] = kHudTilemaps_Missiles[1];
@@ -1279,19 +1261,19 @@ void AddMissilesToHudTilemap(void) {
 }
 
 void AddSuperMissilesToHudTilemap(void) {  // 0x809A0E
-  AddToTilemapInner(0x1C, (const uint16*)RomPtr_80(addr_kHudTilemaps_Missiles + 12));
+  AddToTilemapInner(0x1C, kHudTilemaps_SuperMissiles);
 }
 
 void AddPowerBombsToHudTilemap(void) {  // 0x809A1E
-  AddToTilemapInner(0x22, (const uint16 *)RomPtr_80(addr_kHudTilemaps_Missiles + 20));
+  AddToTilemapInner(0x22, kHudTilemaps_PowerBombs);
 }
 
 void AddGrappleToHudTilemap(void) {  // 0x809A2E
-  AddToTilemapInner(0x28, (const uint16 *)RomPtr_80(addr_kHudTilemaps_Missiles + 28));
+  AddToTilemapInner(0x28, kHudTilemaps_Grapple);
 }
 
 void AddXrayToHudTilemap(void) {  // 0x809A3E
-  AddToTilemapInner(0x2E, (const uint16 *)RomPtr_80(addr_kHudTilemaps_Missiles + 36));
+  AddToTilemapInner(0x2E, kHudTilemaps_Xray);
 }
 
 void AddToTilemapInner(uint16 k, const uint16 *j) {  // 0x809A4C
@@ -1329,11 +1311,11 @@ void InitializeHud(void) {  // 0x809A79
   samus_prev_hud_item_index = 0;
   InitializeMiniMapBroken();
   if (samus_max_missiles)
-    DrawThreeHudDigits(addr_kDigitTilesetsWeapon, samus_missiles, 0x94);
+    DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, 0x94);
   if (samus_max_super_missiles)
-    DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_super_missiles, 0x9C);
+    DrawTwoHudDigits(kDigitTilesetsWeapon, samus_super_missiles, 0x9C);
   if (samus_max_power_bombs)
-    DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
+    DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
   ToggleHudItemHighlight(hud_item_index, 0x1000);
   ToggleHudItemHighlight(samus_prev_hud_item_index, 0x1400);
   HandleHudTilemap();
@@ -1343,9 +1325,9 @@ static const uint16 kEnergyTankIconTilemapOffsets[14] = { 0x42, 0x44, 0x46, 0x48
 
 void HandleHudTilemap(void) {  // 0x809B44
   if (reserve_health_mode == 1) {
-    const uint16 *v1 = (const uint16 *)RomPtr_80(addr_kHudTilemaps_AutoReserve);
+    const uint16 *v1 = kHudTilemaps_AutoReserve;
     if (!samus_reserve_health)
-      v1 += 6;
+      v1 = kHudTilemaps_EmptyAutoReserve;
     hud_tilemap[8] = v1[0];
     hud_tilemap[9] = v1[1];
     hud_tilemap[40] = v1[2];
@@ -1371,22 +1353,22 @@ void HandleHudTilemap(void) {  // 0x809B44
       hud_tilemap[kEnergyTankIconTilemapOffsets[v2 >> 1] >> 1] = v3;
       v2 += 2;
     } while ((int16)(v2 - 28) < 0);
-    DrawTwoHudDigits(addr_kDigitTilesetsHealth, r18, 0x8C);
+    DrawTwoHudDigits(kDigitTilesetsHealth, r18, 0x8C);
   }
   if (samus_max_missiles && samus_missiles != samus_prev_missiles) {
     samus_prev_missiles = samus_missiles;
-    DrawThreeHudDigits(addr_kDigitTilesetsWeapon, samus_missiles, 0x94);
+    DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, 0x94);
   }
   if (samus_max_super_missiles && samus_super_missiles != samus_prev_super_missiles) {
     samus_prev_super_missiles = samus_super_missiles;
     if ((joypad_dbg_flags & 0x1F40) != 0)
-      DrawThreeHudDigits(addr_kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
+      DrawThreeHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
     else
-      DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
+      DrawTwoHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
   }
   if (samus_max_power_bombs && samus_power_bombs != samus_prev_power_bombs) {
     samus_prev_power_bombs = samus_power_bombs;
-    DrawTwoHudDigits(addr_kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
+    DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
   }
   if (hud_item_index != samus_prev_hud_item_index) {
     ToggleHudItemHighlight(hud_item_index, 0x1000);
@@ -1439,15 +1421,15 @@ void ToggleHudItemHighlight(uint16 a, uint16 k) {  // 0x809CEA
   }
 }
 
-void DrawThreeHudDigits(uint32 addr, uint16 a, uint16 k) {  // 0x809D78
-  hud_tilemap[k >> 1] = GET_WORD(RomPtr(addr + 2 * (a / 100)));
+void DrawThreeHudDigits(const uint16* addr, uint16 a, uint16 k) {  // 0x809D78
+  hud_tilemap[k >> 1] = addr[(2 * (a / 100)) >> 1];
   DrawTwoHudDigits(addr, a % 100, k + 2);
 }
 
-void DrawTwoHudDigits(uint32 addr, uint16 a, uint16 k) {  // 0x809D98
+void DrawTwoHudDigits(const uint16* addr, uint16 a, uint16 k) {  // 0x809D98
   int v3 = k >> 1;
-  hud_tilemap[v3] = GET_WORD(RomPtr(addr + 2 * (a / 10)));
-  hud_tilemap[v3 + 1] = GET_WORD(RomPtr(addr + 2 * (a % 10)));
+  hud_tilemap[v3] = addr[(2 * (a / 10)) >> 1];
+  hud_tilemap[v3 + 1] = addr[(2 * (a % 10)) >> 1];
 }
 
 static Func_U8 *const kTimerProcessFuncs[7] = {  // 0x809DE7
@@ -2621,16 +2603,17 @@ void DecompressToVRAM(uint32 src, uint16 dst_addr) {  // 0x80B271
 
 void LoadFromLoadStation(void) {  // 0x80C437
   save_station_lockout_flag = 1;
-  const LoadStationList *L = (LoadStationList *)RomPtr_80(kLoadStationLists[area_index] + 14 * load_station_index);
+  //const LoadStationList *L = (LoadStationList *)RomPtr_80(kLoadStationLists[area_index] + 14 * load_station_index);
+  const LoadStationList L = kLoadStationLists[area_index][load_station_index];
 
-  room_ptr = L->room_ptr_;
-  door_def_ptr = L->door_ptr;
+  room_ptr = L.room_ptr_;
+  door_def_ptr = L.door_ptr;
 //  door_bts = v0[2];
-  bg1_x_offset = layer1_x_pos = L->screen_x_pos;
-  bg1_y_offset = layer1_y_pos = L->screen_y_pos;
-  samus_y_pos = layer1_y_pos + L->samus_y_offset;
+  bg1_x_offset = layer1_x_pos = L.screen_x_pos;
+  bg1_y_offset = layer1_y_pos = L.screen_y_pos;
+  samus_y_pos = layer1_y_pos + L.samus_y_offset;
   samus_prev_y_pos = samus_y_pos;
-  samus_x_pos = layer1_x_pos + 128 + L->samus_x_offset;
+  samus_x_pos = layer1_x_pos + 128 + L.samus_x_offset;
   samus_prev_x_pos = samus_x_pos;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
@@ -2640,7 +2623,8 @@ void LoadFromLoadStation(void) {  // 0x80C437
 
 
 void SetElevatorsAsUsed(void) {  // 0x80CD07
-  const uint8 *v0 = RomPtr_80(kAreaElevatorBitsPtr[area_index] + 4 * ((elevator_door_properties_orientation & 0xF) - 1));
-  used_save_stations_and_elevators[v0[0]] |= v0[1];
-  used_save_stations_and_elevators[v0[2]] |= v0[3];
+  //const uint8 *v0 = RomPtr_80(kAreaElevatorBitsPtr[area_index] + 4 * ((elevator_door_properties_orientation & 0xF) - 1));
+  const ElevatorsUsedConf E = kAreaElevatorBits[area_index][(elevator_door_properties_orientation & 0xF) - 1];
+  used_save_stations_and_elevators[E.source_area] |= E.source_bit;
+  used_save_stations_and_elevators[E.dest_area] |= E.dest_bit;
 }

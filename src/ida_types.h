@@ -2613,7 +2613,7 @@ struct RoomPlmEntry; static inline RoomPlmEntry *get_RoomPlmEntry(uint16 a) { re
 struct EprojDef; static inline EprojDef *get_EprojDef(uint16 a) { return (EprojDef *)RomPtr(0x860000 | a); }
 struct Vulnerability; static inline Vulnerability *get_Vulnerability(uint16 a) { return (Vulnerability *)RomPtr(0xB40000 | a); }
 struct ExtendedSpriteMap; static inline ExtendedSpriteMap *get_ExtendedSpriteMap(uint8 db, uint16 a) { return (ExtendedSpriteMap *)RomPtr(db << 16 | a); }
-struct Hitbox; static inline Hitbox *get_Hitbox(uint8 db, uint16 a) { return (Hitbox *)RomPtr(db << 16 | a); }
+//struct Hitbox; static inline Hitbox *get_Hitbox(uint8 db, uint16 a) { return (Hitbox *)RomPtr(db << 16 | a); }
 struct Mode7CgvmWriteQueue; static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr(0x800000 | a); }
 //struct PoseEntry; static inline PoseEntry *get_PoseEntry(uint16 a) { return (PoseEntry *)RomPtr(0x910000 | a); }
 struct ProjectileDataTable; static inline ProjectileDataTable *get_ProjectileDataTable(uint16 a) { return (ProjectileDataTable *)RomPtr(0x930000 | a); }
