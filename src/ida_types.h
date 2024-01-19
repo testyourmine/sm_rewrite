@@ -1200,8 +1200,8 @@ typedef struct DemoRoomData {
   uint16 door_slot;
   uint16 screen_x_pos;
   uint16 screen_y_pos;
-  uint16 samus_x_offs;
   uint16 samus_y_offs;
+  uint16 samus_x_offs;
   uint16 demo_length;
   VoidP demo_code_ptr;
 } DemoRoomData;
@@ -2866,12 +2866,12 @@ struct Mode7CgvmWriteQueue; static inline Mode7CgvmWriteQueue *get_Mode7CgvmWrit
 //struct PoseEntry; static inline PoseEntry *get_PoseEntry(uint16 a) { return (PoseEntry *)RomPtr(0x910000 | a); }
 struct ProjectileDataTable; static inline ProjectileDataTable *get_ProjectileDataTable(uint16 a) { return (ProjectileDataTable *)RomPtr(0x930000 | a); }
 struct DemoInputObject; static inline DemoInputObject *get_DemoInputObject(uint16 a) { return (DemoInputObject *)RomPtr(0x910000 | a); }
-struct DemoRoomData; static inline DemoRoomData *get_DemoRoomData(uint16 a) { return (DemoRoomData *)RomPtr(0x820000 | a); }
+//struct DemoRoomData; static inline DemoRoomData *get_DemoRoomData(uint16 a) { return (DemoRoomData *)RomPtr(0x820000 | a); }
 struct DemoSetDef; static inline DemoSetDef *get_DemoSetDef(uint16 a) { return (DemoSetDef *)RomPtr(0x910000 | a); }
 struct EnemyPopulation; static inline EnemyPopulation *get_EnemyPopulation(uint8 db, uint16 a) { return (EnemyPopulation *)RomPtr(db << 16 | a); }
 struct FxDef; static inline FxDef *get_FxDef(uint16 a) { return (FxDef *)RomPtr(0x830000 | a); }
 struct LoadBg_E; static inline LoadBg_E *get_LoadBg_E(uint16 a) { return (LoadBg_E *)RomPtr(0x8F0000 | a); }
-struct Mode7VramWriteQueue; static inline Mode7VramWriteQueue *get_Mode7VramWriteQueue(uint16 a) { return (Mode7VramWriteQueue *)RomPtr(0xA60000 | a); }
+//struct Mode7VramWriteQueue; static inline Mode7VramWriteQueue *get_Mode7VramWriteQueue(uint16 a) { return (Mode7VramWriteQueue *)RomPtr(0xA60000 | a); }
 struct ProjectileInstr; static inline ProjectileInstr *get_ProjectileInstr(uint16 a) { return (ProjectileInstr *)RomPtr(0x930000 | a); }
 struct PlmHeader_Size4; static inline PlmHeader_Size4 *get_PlmHeader_Size4(uint16 a) { return (PlmHeader_Size4 *)RomPtr(0x840000 | a); }
 struct PlmHeader_Size6; static inline PlmHeader_Size6 *get_PlmHeader_Size6(uint16 a) { return (PlmHeader_Size6 *)RomPtr(0x840000 | a); }

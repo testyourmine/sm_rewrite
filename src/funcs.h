@@ -5605,7 +5605,7 @@ void VerifySRAM(void);
 #define fnRoomCode_GenRandomExplodes 0x8FC1A9
 #define fnRoomCode_ScrollRightDachora 0x8FC1E6
 #define fnnullsub_142 0x8FC8C7
-#define fnRoomCode_8FC8C8 0x8FC8C8
+#define fnRoomCode_SpawnPrePhantoonRoomEnemyProj 0x8FC8C8
 #define fnnullsub_143 0x8FC8D0
 #define fnnullsub_144 0x8FC8D1
 #define fnnullsub_145 0x8FC8D2

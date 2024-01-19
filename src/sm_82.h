@@ -2,7 +2,7 @@
 
 //#define kDemoRoomData ((uint16*)RomFixedPtr(0x82876c))
 
-uint16 kDemoRoomData[] = { 0x8774, 0x87e2, 0x8850, 0x88be, };
+//uint16 kDemoRoomData[] = { 0x8774, 0x87e2, 0x8850, 0x88be, };
 
 //#define kPauseScreenSpriteAnimationData_Timer (*(PauseScreenSpriteAnimationData*)RomFixedPtr(0x82c0b2))
 //#define kPauseScreenSpriteAnimationData_Frame (*(PauseScreenSpriteAnimationData*)RomFixedPtr(0x82c0c4))
@@ -230,3 +230,41 @@ uint16 kControllerBindingRAMAddresses[] = { 0x9b2, 0x9b4, 0x9b6, 0x9ba, 0x9b8, 0
 
 uint16 kOptionsMenuPtrsToTilemapOffsets[] = { 0x16e, 0x22e, 0x2ee, 0x3ae, 0x46e, 0x52e, 0x5ee, };
 uint16 kOptionsMenuPtrsToButtonTilemaps[] = { 0xf659, 0xf665, 0xf671, 0xf67d, 0xf689, 0xf695, 0xf6a1, 0xf6ad, 0xf6ad, };
+
+DemoRoomData kDemoRoomData[4][7] = {
+  [0] = {
+    [0] = { .room_ptr_ = 0x91f8, .door_ptr = 0x896a, .door_slot = 1, .screen_x_pos =  0x400, .screen_y_pos =  0x400, .samus_y_offs =   0x40, .samus_x_offs =    0x1, .demo_length = 1235, .demo_code_ptr = 0x8925 },
+    [1] = { .room_ptr_ = 0x9f11, .door_ptr = 0x8eaa, .door_slot = 1, .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offs =   0x6b, .samus_x_offs = 0xffd2, .demo_length =  337, .demo_code_ptr = 0x8924 },
+    [2] = { .room_ptr_ = 0x9d9c, .door_ptr = 0x8dc6, .door_slot = 0, .screen_x_pos =  0x100, .screen_y_pos =    0x0, .samus_y_offs =   0xbb, .samus_x_offs = 0xffe0, .demo_length =  378, .demo_code_ptr = 0x8924 },
+    [3] = { .room_ptr_ = 0xb106, .door_ptr = 0x970e, .door_slot = 0, .screen_x_pos =  0x700, .screen_y_pos =    0x0, .samus_y_offs =   0x8b, .samus_x_offs =   0x48, .demo_length =  420, .demo_code_ptr = 0x8924 },
+    [4] = { .room_ptr_ = 0xaffb, .door_ptr = 0x9792, .door_slot = 1, .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offs =   0x8b, .samus_x_offs = 0xffc2, .demo_length =  444, .demo_code_ptr = 0x8924 },
+    [5] = { .room_ptr_ = 0x9d19, .door_ptr = 0x8e7a, .door_slot = 0, .screen_x_pos =  0x200, .screen_y_pos =  0x600, .samus_y_offs =   0x99, .samus_x_offs =   0x27, .demo_length =  613, .demo_code_ptr = 0x891a },
+    [6] = { 0xffff },
+  },
+  [1] = {
+    [0] = { .room_ptr_ = 0xa408, .door_ptr = 0xa36c, .door_slot = 0, .screen_x_pos =  0x100, .screen_y_pos =  0x100, .samus_y_offs =   0x8b, .samus_x_offs =   0x56, .demo_length =  509, .demo_code_ptr = 0x8924 },
+    [1] = { .room_ptr_ = 0x9c5e, .door_ptr = 0x8cca, .door_slot = 3, .screen_x_pos =  0x200, .screen_y_pos =    0x0, .samus_y_offs =   0x8b, .samus_x_offs =   0x49, .demo_length =  410, .demo_code_ptr = 0x8924 },
+    [2] = { .room_ptr_ = 0x9e52, .door_ptr = 0x8dea, .door_slot = 3, .screen_x_pos =  0x500, .screen_y_pos =  0x300, .samus_y_offs =   0xab, .samus_x_offs = 0xffe2, .demo_length =  279, .demo_code_ptr = 0x8924 },
+    [3] = { .room_ptr_ = 0xaf14, .door_ptr = 0x967e, .door_slot = 2, .screen_x_pos =  0x300, .screen_y_pos =    0x0, .samus_y_offs =   0x8b, .samus_x_offs =   0x4b, .demo_length =  970, .demo_code_ptr = 0x8924 },
+    [4] = { .room_ptr_ = 0x9879, .door_ptr = 0x8982, .door_slot = 3, .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offs =   0xbb, .samus_x_offs = 0xfff1, .demo_length =  213, .demo_code_ptr = 0x8924 },
+    [5] = { .room_ptr_ = 0x9cb3, .door_ptr = 0x8dd2, .door_slot = 1, .screen_x_pos =  0x400, .screen_y_pos =  0x200, .samus_y_offs =   0x80, .samus_x_offs =    0x5, .demo_length =  791, .demo_code_ptr = 0x8924 },
+    [6] = { 0xffff },
+  },
+  [2] = {
+    [0] = { .room_ptr_ = 0xcc6f, .door_ptr = 0xa21c, .door_slot = 3, .screen_x_pos =  0x200, .screen_y_pos =    0x0, .samus_y_offs =   0x60, .samus_x_offs =    0x4, .demo_length =  751, .demo_code_ptr = 0x8924 },
+    [1] = { .room_ptr_ = 0x91f8, .door_ptr = 0x896a, .door_slot = 1, .screen_x_pos =  0x300, .screen_y_pos =  0x400, .samus_y_offs =   0xb0, .samus_x_offs =    0x0, .demo_length =  199, .demo_code_ptr = 0x8925 },
+    [2] = { .room_ptr_ = 0xa56b, .door_ptr = 0x919e, .door_slot = 1, .screen_x_pos =    0x0, .screen_y_pos =  0x100, .samus_y_offs =   0x8b, .samus_x_offs = 0xffd2, .demo_length =  723, .demo_code_ptr = 0x8924 },
+    [3] = { .room_ptr_ = 0xa322, .door_ptr = 0x90ea, .door_slot = 0, .screen_x_pos =    0x0, .screen_y_pos =  0x700, .samus_y_offs =   0x8b, .samus_x_offs = 0xffaa, .demo_length =  356, .demo_code_ptr = 0x8924 },
+    [4] = { .room_ptr_ = 0xa59f, .door_ptr = 0x91b6, .door_slot = 1, .screen_x_pos =    0x0, .screen_y_pos =  0x100, .samus_y_offs =   0x8b, .samus_x_offs = 0xffbf, .demo_length =  319, .demo_code_ptr = 0x892b },
+    [5] = { .room_ptr_ = 0xa66a, .door_ptr = 0x91f2, .door_slot = 1, .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offs =   0x8b, .samus_x_offs = 0xffb1, .demo_length =  407, .demo_code_ptr = 0x8932 },
+    [6] = { 0xffff },
+  },
+  [3] = {
+    [0] = { .room_ptr_ = 0x91f8, .door_ptr = 0x890a, .door_slot = 0, .screen_x_pos =  0x600, .screen_y_pos =  0x200, .samus_y_offs =   0x80, .samus_x_offs =   0x30, .demo_length =  256, .demo_code_ptr = 0x8925 },
+    [1] = { .room_ptr_ = 0xd0b9, .door_ptr = 0xa474, .door_slot = 0, .screen_x_pos =  0x200, .screen_y_pos =    0x0, .samus_y_offs =   0xab, .samus_x_offs =    0x0, .demo_length =  818, .demo_code_ptr = 0x8924 },
+    [2] = { .room_ptr_ = 0x91f8, .door_ptr = 0x890a, .door_slot = 0, .screen_x_pos =  0x600, .screen_y_pos =  0x200, .samus_y_offs =   0x7b, .samus_x_offs =   0x20, .demo_length =  389, .demo_code_ptr = 0x8925 },
+    [3] = { .room_ptr_ = 0x9ad9, .door_ptr = 0x8d42, .door_slot = 1, .screen_x_pos =    0x0, .screen_y_pos =  0x400, .samus_y_offs =   0x8b, .samus_x_offs = 0xffb7, .demo_length =  394, .demo_code_ptr = 0x8924 },
+    [4] = { .room_ptr_ = 0x91f8, .door_ptr = 0x890a, .door_slot = 0, .screen_x_pos =  0x600, .screen_y_pos =  0x200, .samus_y_offs =   0x8b, .samus_x_offs =    0x4, .demo_length =  512, .demo_code_ptr = 0x8925 },
+    [5] = { 0xffff },
+  },
+};

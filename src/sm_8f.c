@@ -381,7 +381,7 @@ void RoomCode_ScrollRightDachora(void) {  // 0x8FC1E6
     layer1_x_pos += (layer1_x_pos >= 0x380) + 3;
 }
 
-void RoomCode_8FC8C8(void) {  // 0x8FC8C8
+void RoomCode_SpawnPrePhantoonRoomEnemyProj(void) {  // 0x8FC8C8
   SpawnEprojWithRoomGfx(addr_kEproj_PrePhantomRoom, 0);
 }
 
@@ -751,7 +751,7 @@ void CallRoomSetupCode(uint32 ea) {
   case fnRoomSetup_ScrollingSkyLand: RoomSetup_ScrollingSkyLand(); return;
   case fnRoomSetup_ScrollingSkyOcean: RoomSetup_ScrollingSkyOcean(); return;
   case fnRoomSetup_RunStatueUnlockAnims: RoomSetup_RunStatueUnlockAnims(); return;
-  case fnRoomCode_8FC8C8: RoomCode_8FC8C8(); return;
+  case fnRoomCode_SpawnPrePhantoonRoomEnemyProj: RoomCode_SpawnPrePhantoonRoomEnemyProj(); return;
   case fnRoomCode_SetupShaktoolRoomPlm: RoomCode_SetupShaktoolRoomPlm(); return;
   case fnRoomCode_SetPauseCodeForDraygon: RoomCode_SetPauseCodeForDraygon(); return;
   case fnRoomCode_SetCollectedMap: RoomCode_SetCollectedMap(); return;

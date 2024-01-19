@@ -78,7 +78,8 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
       COROUTINE_AWAIT(2, WaitForNMI_Async());
       --loop_counter_transfer_enemies_to_vram;
     } while ((loop_counter_transfer_enemies_to_vram & 0x8000) == 0);
-    uint16 r18 = get_DemoRoomData(kDemoRoomData[demo_set] + 18 * (demo_scene - 1))->demo_code_ptr;
+    //uint16 r18 = get_DemoRoomData(kDemoRoomData[demo_set] + 18 * (demo_scene - 1))->demo_code_ptr;
+    uint16 r18 = kDemoRoomData[demo_set][demo_scene - 1].demo_code_ptr;
     CallDemoRoomDataFunc(r18 | 0x820000);
     ++game_state;
     v7 = 512;
@@ -471,7 +472,7 @@ CoroutineRet GameState_44_TransitionFromDemo(void) {  // 0x8285FB
 
 
 void CheckForNextDemo(void) {  // 0x828637
-  if (*(uint16 *)RomPtr_82(kDemoRoomData[demo_set] + 18 * demo_scene) == 0xFFFF) {
+  if (kDemoRoomData[demo_set][demo_scene].room_ptr_ == 0xFFFF) {
     substate = 0;
     uint16 v0 = demo_set + 1;
     if (v0 >= num_demo_sets)
@@ -484,22 +485,23 @@ void CheckForNextDemo(void) {  // 0x828637
 }
 
 void LoadDemoRoomData(void) {  // 0x828679
-  DemoRoomData *drd;
+  DemoRoomData drd;
 
   door_def_ptr = 0;
-  drd = get_DemoRoomData(18 * demo_scene + kDemoRoomData[demo_set]);
-  room_ptr = drd->room_ptr_;
-  door_def_ptr = drd->door_ptr;
-//  door_bts = drd->door_slot;
-  layer1_x_pos = drd->screen_x_pos;
+  //drd = get_DemoRoomData(18 * demo_scene + kDemoRoomData[demo_set]);
+  drd = kDemoRoomData[demo_set][demo_scene];
+  room_ptr = drd.room_ptr_;
+  door_def_ptr = drd.door_ptr;
+//  door_bts = drd.door_slot;
+  layer1_x_pos = drd.screen_x_pos;
   bg1_x_offset = layer1_x_pos;
-  layer1_y_pos = drd->screen_y_pos;
+  layer1_y_pos = drd.screen_y_pos;
   bg1_y_offset = layer1_y_pos;
-  samus_y_pos = layer1_y_pos + drd->samus_x_offs;
+  samus_y_pos = layer1_y_pos + drd.samus_y_offs;
   samus_prev_y_pos = samus_y_pos;
-  samus_x_pos = drd->samus_y_offs + layer1_x_pos + 128;
+  samus_x_pos = drd.samus_x_offs + layer1_x_pos + 128;
   samus_prev_x_pos = samus_x_pos;
-  demo_timer = drd->demo_length;
+  demo_timer = drd.demo_length;
   LOBYTE(area_index) = get_RoomDefHeader(room_ptr)->area_index_;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
