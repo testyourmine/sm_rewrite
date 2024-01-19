@@ -323,7 +323,7 @@ void GameOverMenu_0_FadeOutConfigGfx(void) {  // 0x818D0F
   HandleFadeOut();
   if ((reg_INIDISP & 0xF) == 0) {
     ScreenOff();
-    QueueSfx3_Max6(1);
+    QueueSfx3_Max6(kSfx3_Silence);
     DisableHdmaObjects();
     WaitUntilEndOfVblankAndClearHdma();
     uint16 v0 = 0;
@@ -370,26 +370,26 @@ void LoadInitialMenuTiles(void) {  // 0x818DDB
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_818DF1 = { 1, 1, 0x18, LONGPTR(0x8e8000), 0x5600 };
-  SetupDmaTransfer(&unk_818DF1);
+  static const StartDmaCopy kDmaCopy_MenuTiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x8e8000), .das = 0x5600 };
+  SetupDmaTransfer(&kDmaCopy_MenuTiles);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x30);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_818E11 = { 1, 1, 0x18, LONGPTR(0xb68000), 0x2000 };
-  SetupDmaTransfer(&unk_818E11);
+  static const StartDmaCopy kDmaCopy_FirstHalf_PauseScreenTiles_Bg1_Bg2 = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0xb68000), .das = 0x2000 };
+  SetupDmaTransfer(&kDmaCopy_FirstHalf_PauseScreenTiles_Bg1_Bg2);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x60);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_818E31 = { 1, 1, 0x18, LONGPTR(0xb6c000), 0x2000 };
-  SetupDmaTransfer(&unk_818E31);
+  static const StartDmaCopy kDmaCopy_MenuPauseScreenSpriteTiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0xb6c000), .das = 0x2000 };
+  SetupDmaTransfer(&kDmaCopy_MenuPauseScreenSpriteTiles);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x40);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_818E51 = { 1, 1, 0x18, LONGPTR(0x8ed600), 0x0600 };
-  SetupDmaTransfer(&unk_818E51);
+  static const StartDmaCopy kDmaCopy_AreaSelectMapTiles_Bg3 = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x8ed600), .das = 0x0600 };
+  SetupDmaTransfer(&kDmaCopy_AreaSelectMapTiles_Bg3);
   WriteReg(MDMAEN, 2);
 }
 
@@ -447,8 +447,8 @@ void GameOverMenu_5_Continue(void) {  // 0x81907E
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x40);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_819093 = { 1, 1, 0x18, LONGPTR(0x9ab200), 0x2000 };
-  SetupDmaTransfer(&unk_819093);
+  static const StartDmaCopy kDmaCopy_GameOver_StandardBg3Tiles_ClearBg2 = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ab200), .das = 0x2000 };
+  SetupDmaTransfer(&kDmaCopy_GameOver_StandardBg3Tiles_ClearBg2);
   WriteReg(MDMAEN, 2);
   game_state = 16;
   file_select_map_area_index = 0;
@@ -505,7 +505,7 @@ void GameOverMenu_4_Main(void) {  // 0x81912B
   if ((joypad1_newkeys & kButton_Select) != 0
       || (joypad1_newkeys & kButton_Up) != 0
       || (joypad1_newkeys & kButton_Down) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     file_select_map_area_index ^= 1;
   } else if ((joypad1_newkeys & kButton_A) != 0) {
     enemy_data[0].instruction_timer = 180;
@@ -627,7 +627,7 @@ void FileSelectMenu_0_FadeOutConfigGfx(void) {  // 0x81944E
   if ((reg_INIDISP & 0xF) != 0)
     return;
   ScreenOff();
-  QueueSfx3_Max6(1);
+  QueueSfx3_Max6(kSfx3_Silence);
   DisableHdmaObjects();
   WaitUntilEndOfVblankAndClearHdma();
   ++menu_index;
@@ -820,7 +820,7 @@ void FileSelectMenu_8(void) {
   DrawBorderAroundDataCopyMode();
   DrawMenuSelectionMissile();
   if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if (eproj_id[15] == 3) {
       menu_index += 7;
     } else {
@@ -829,7 +829,7 @@ void FileSelectMenu_8(void) {
     }
   } else if ((joypad1_newkeys & 0x8000) != 0) {
     menu_index += 7;
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   } else {
     if ((joypad1_newkeys & kButton_Up) != 0) {
       v0 = eproj_id[15];
@@ -837,7 +837,7 @@ void FileSelectMenu_8(void) {
         if ((kBitShl[v0] & nonempty_save_slots) != 0) {
 LABEL_16:
           LOBYTE(eproj_id[15]) = v0;
-          QueueSfx1_Max6(0x37);
+          QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
           SetFileCopyMenuSelectionMissilePosition();
           return;
         }
@@ -909,7 +909,7 @@ void FileSelectMenu_10_FileCopySelectDest(void) {  // 0x819813
   DrawBorderAroundDataCopyMode();
   DrawMenuSelectionMissile();
   if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if (eproj_id[15] != 3) {
       eproj_id[17] = eproj_id[15];
       ++menu_index;
@@ -922,7 +922,7 @@ LABEL_9:
   } else {
     if ((joypad1_newkeys & 0x8000) == 0) {
       if ((joypad1_newkeys & kButton_Up) != 0) {
-        QueueSfx1_Max6(0x37);
+        QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
         v0 = eproj_id[15];
         while ((--v0 & 0x8000) == 0) {
           if (v0 != eproj_id[16]) {
@@ -932,7 +932,7 @@ LABEL_8:
           }
         }
       } else if ((joypad1_newkeys & kButton_Down) != 0) {
-        QueueSfx1_Max6(0x37);
+        QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
         v0 = eproj_id[15];
         while (++v0 != 4) {
           if (v0 != eproj_id[16])
@@ -943,7 +943,7 @@ LABEL_8:
     }
     menu_index -= 2;
     eproj_id[15] = eproj_id[16];
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     FileSelectMenu_Func1();
   }
 }
@@ -1004,16 +1004,16 @@ void FileSelectMenu_12_FileCopyConfirm(void) {  // 0x819984
   DrawFileCopyArrow();
   if ((joypad1_newkeys & (kButton_Up | kButton_Down)) != 0) {
     eproj_id[15] ^= 1;
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   } else {
     if ((joypad1_newkeys & 0x8000) != 0) {
       menu_index -= 3;
       eproj_id[15] = eproj_id[17];
-      QueueSfx1_Max6(0x37);
+      QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
       return;
     }
     if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0) {
-      QueueSfx1_Max6(0x38);
+      QueueSfx1_Max6(kSfx1_MenuOptionSelected);
       if (eproj_id[15]) {
         menu_index -= 4;
         FileSelectMenu_Func1();
@@ -1088,7 +1088,7 @@ void FileSelectMenu_13_FileCopyDoIt(void) {  // 0x819A2C
 void FileSelectMenu_14_CopyCompleted(void) {  // 0x819AFA
   DrawBorderAroundDataCopyMode();
   if (joypad1_newkeys) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     ++menu_index;
     int slot = sram_save_slot_selected;
     if (sign16(slot) || !sign16(sram_save_slot_selected - 3) ||
@@ -1123,21 +1123,19 @@ void InitFileSelectMenuFileClear(void) {  // 0x819B3C
 
 void FileSelectMenu_22_FileClearSelectSlot(void) {  // 0x819B64
   static const uint8 kBitShl_[3] = { 1, 2, 4 };
-  uint16 v0;
   uint8 v1;
 
   DrawBorderAroundDataClearMode();
   DrawMenuSelectionMissile();
-  HIBYTE(v0) = HIBYTE(joypad1_newkeys);
   if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if (eproj_id[15] != 3) {
       eproj_id[16] = eproj_id[15];
       ++menu_index;
       return;
     }
 LABEL_11:
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     menu_index += 5;
     return;
   }
@@ -1149,8 +1147,7 @@ LABEL_11:
       if ((kBitShl_[v1] & nonempty_save_slots) != 0) {
 LABEL_16:
         LOBYTE(eproj_id[15]) = v1;
-        LOBYTE(v0) = 55;
-        QueueSfx1_Max6(v0);
+        QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
         SetFileClearMenuMissilePos();
         return;
       }
@@ -1188,7 +1185,7 @@ void FileSelectMenu_24_FileClearConfirm(void) {  // 0x819C36
   DrawMenuSelectionMissile();
   if ((joypad1_newkeys & (kButton_Up | kButton_Down)) != 0) {
     eproj_id[15] ^= 1;
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
 LABEL_8:
     v0 = 184;
     if (eproj_id[15])
@@ -1201,13 +1198,13 @@ LABEL_8:
 LABEL_5:
     menu_index -= 2;
     eproj_id[15] = eproj_id[16];
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     InitFileSelectMenuFileClear();
     return;
   }
   if ((joypad1_newkeys & (kButton_Start | kButton_A)) == 0)
     goto LABEL_8;
-  QueueSfx1_Max6(0x38);
+  QueueSfx1_Max6(kSfx1_MenuOptionSelected);
   if (eproj_id[15])
     goto LABEL_5;
   ++menu_index;
@@ -1246,7 +1243,7 @@ void FileSelectMenu_25_FileClearDoClear(void) {  // 0x819C9E
 void FileSelectMenu_26_ClearCompleted(void) {  // 0x819D26
   DrawBorderAroundDataClearMode();
   if (joypad1_newkeys) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     ++menu_index;
     if (!(LoadFromSram(0))) {
 LABEL_3:
@@ -1276,8 +1273,8 @@ void FileSelectMenu_31_TurnSamusHelmet(void) {  // 0x819D77
   DrawFileSelectSlotSamusHelmet(8);
   if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0
       || eproj_id[2] == 7 && !eproj_index
-      || eproj_id[3] == 7 && !eproj_init_param_1
-      || eproj_id[4] == 7 && !eproj_unk1995) {
+      || eproj_id[3] == 7 && !eproj_init_param_0
+      || eproj_id[4] == 7 && !eproj_init_param_1) {
     ++menu_index;
   }
 }
@@ -1285,9 +1282,9 @@ void FileSelectMenu_31_TurnSamusHelmet(void) {  // 0x819D77
 void DrawFileSelectSamusHelmets(void) {  // 0x819DC3
   eproj_index = 0;
   DrawFileSelectSlotSamusHelmet(4);
-  eproj_init_param_1 = 0;
+  eproj_init_param_0 = 0;
   DrawFileSelectSlotSamusHelmet(6);
-  eproj_unk1995 = 0;
+  eproj_init_param_1 = 0;
   DrawFileSelectSlotSamusHelmet(8);
 }
 
@@ -1421,8 +1418,8 @@ void FileSelectMenu_16(void) {  // 0x819EF3
   eproj_enable_flag = 1;
   eproj_unk198F = 0;
   eproj_index = 0;
+  eproj_init_param_0 = 0;
   eproj_init_param_1 = 0;
-  eproj_unk1995 = 0;
   eproj_id[0] = 0;
   eproj_id[1] = 0;
   eproj_id[2] = 0;
@@ -1548,9 +1545,9 @@ void FileSelectMenu_4_Main(void) {  // 0x81A1C2
     } else {
       if ((joypad1_newkeys & kButton_Down) == 0) {
         if ((joypad1_newkeys & kButton_B) != 0) {
-          QueueSfx1_Max6(0x37);
+          QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
           menu_index = 33;
-          QueueSfx1_Max6(0x37);
+          QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
         }
         goto LABEL_28;
       }
@@ -1569,7 +1566,7 @@ void FileSelectMenu_4_Main(void) {  // 0x81A1C2
       }
       selected_save_slot = v2;
     }
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
 LABEL_28:
     v3 = (uint16)(4 * selected_save_slot) >> 1;
     eproj_id[10] = kMenuSelectionMissileXY[v3];
@@ -1578,7 +1575,7 @@ LABEL_28:
   }
   v0 = selected_save_slot;
   if (sign16(selected_save_slot - 3)) {
-    QueueSfx1_Max6(0x2A);
+    QueueSfx1_Max6(kSfx1_SelectedSaveFile);
     menu_index += 27;
     *(uint16 *)((uint8 *)&eproj_enable_flag + (uint16)(2 * (selected_save_slot + 2))) = 1;
     *(uint16 *)&g_sram[0x1FEC] = selected_save_slot;
@@ -1593,12 +1590,12 @@ LABEL_28:
     goto LABEL_28;
   }
   if (selected_save_slot == 3) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     ++menu_index;
     *(uint16 *)&reg_MOSAIC = *(uint16 *)&reg_MOSAIC & 0xFF0C | 3;
   } else {
     if (selected_save_slot == 4) {
-      QueueSfx1_Max6(0x37);
+      QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
       menu_index += 15;
       v0 = *(uint16 *)&reg_MOSAIC & 0xFF0C | 3;
       *(uint16 *)&reg_MOSAIC = v0;
@@ -1884,7 +1881,7 @@ void FileSelectMap_6_AreaSelectMap(void) {  // 0x81A800
       if (CheckIfFileSelectMapAreaCanBeSelected(R28)
           || (R28 = DecAndWraparoundTo5(R28), CheckIfFileSelectMapAreaCanBeSelected(R28))
           || (R28 = DecAndWraparoundTo5(R28), CheckIfFileSelectMapAreaCanBeSelected(R28))) {
-        QueueSfx1_Max6(0x37);
+        QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
         SwitchActiveFileSelectMapArea(R28);
         DrawAreaSelectMapLabels();
         return;
@@ -1898,7 +1895,7 @@ LABEL_6:
       return;
     }
     if ((v0 & (kButton_Start | kButton_A)) != 0) {
-      QueueSfx1_Max6(0x38);
+      QueueSfx1_Max6(kSfx1_MenuOptionSelected);
       SelectFileSelectMapArea();
       return;
     }
@@ -1921,7 +1918,7 @@ LABEL_18:
       goto LABEL_18;
   }
   SwitchActiveFileSelectMapArea(R28);
-  QueueSfx1_Max6(0x37);
+  QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   DrawAreaSelectMapLabels();
 }
 
@@ -2094,7 +2091,7 @@ void FileSelectMap_7_PrepExpandSquareTransToRoomMap(void) {  // 0x81AAAC
   reg_HDMAEN = 12;
   WriteReg(HDMAEN, 0xC);
   ++menu_index;
-  QueueSfx1_Max6(0x3B);
+  QueueSfx1_Max6(kSfx1_HexagonMapToSquareMapTransition);
 }
 
 void SetupRoomSelectMapExpandingSquareTransHDMA(void) {  // 0x81ABA7
@@ -2204,7 +2201,7 @@ void FileSelectMap_10_RoomSelectMap(void) {  // 0x81AD7F
   MapScrolling();
   DisplayMapElevatorDestinations();
   if (enable_debug && (joypad2_new_keys & kButton_Select) != 0) {
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     
     uint16 r24 = *(uint16 *)&used_save_stations_and_elevators[2 * area_index];
     v1 = load_station_index;
@@ -2268,10 +2265,10 @@ LABEL_25:;
       }
     }
     file_select_map_area_index = v0 >> 1;
-    QueueSfx1_Max6(0x3C);
+    QueueSfx1_Max6(kSfx1_SquareMapToHexagonMapTransition);
   } else if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0) {
     ++menu_index;
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
   }
 }
 
@@ -2352,7 +2349,7 @@ void FileSelectMap_16_RoomSelectToAreaSelectLoadPalettes(void) {  // 0x81AFD3
 
 void FileSelectMap_20_SetupContractingSquare(void) {  // 0x81AFF6
   reg_HDMAEN = 0;
-  QueueSfx1_Max6(0x3C);
+  QueueSfx1_Max6(kSfx1_SquareMapToHexagonMapTransition);
   expand_sq_timer = kRoomSelectMapExpandingSquareTimers[area_index] - 12;
   expand_sq_left_subvel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].left_subvel
                                              + (uint16)(16 * area_index));

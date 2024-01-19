@@ -150,7 +150,8 @@ uint16 kBang_ShotDirectionIndices[] = {
 };
 
 uint16 kBang_ShotSoundIndices[] = {
-     23,    25,    24,    26,    30,    28,    29,    31,    34,    32,    33,     0,     0,     0,     0,     0,
+  kSfx1_ChargedPowerBeam, kSfx1_ChargedWaveBeam, kSfx1_ChargedIceBeam, kSfx1_ChargedIceWaveBeam, kSfx1_ChargedSpazerWaveBeam, kSfx1_ChargedSpazerIceBeam, kSfx1_ChargedSpazerIceWaveBeam, kSfx1_ChargedPlasmaBeamHyperBeam, kSfx1_ChargedPlasmaWaveBeam, kSfx1_ChargedPlasmaIceBeam, kSfx1_ChargedPlasmaIceWaveBeam,
+  0, 0, 0, 0, 0,
 };
 
 uint16 kEnemyInit_Bang_Tab1[] = {
@@ -296,7 +297,9 @@ uint16 kCommonZoomer_Tab0[] = {
 };
 
 uint16 kMetroid_CrySoundsIndices[] = {
-     80,    88,    90,    80,    88,    90,    88,    90,
+  kSfx2_MetroidDrainingSamus_RandomMetroidCry_HighPriority, kSfx2_ShotMochtroid_RandomMetroidCry, kSfx2_ShotMetroid_RandomMetroidCry,
+  kSfx2_MetroidDrainingSamus_RandomMetroidCry_HighPriority, kSfx2_ShotMochtroid_RandomMetroidCry, kSfx2_ShotMetroid_RandomMetroidCry,
+  kSfx2_ShotMochtroid_RandomMetroidCry, kSfx2_ShotMetroid_RandomMetroidCry,
 };
 
 uint16 kMetroid_SpeedIndices[] = {

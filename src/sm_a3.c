@@ -154,7 +154,7 @@ void Metalee_Func_3(uint16 k) {  // 0xA389D4
     ++E->metalee_var_C;
     Metalee_Func_6();
     E->metalee_var_B = FUNC16(Metalee_Func_4);
-    QueueSfx2_Max6(0x5B);
+    QueueSfx2_Max6(kSfx2_SkreeLaunchesAttack);
   }
 }
 
@@ -167,7 +167,7 @@ void Metalee_Func_4(void) {  // 0xA389F3
     E->base.instruction_timer = 1;
     E->base.timer = 0;
     E->metalee_var_B = FUNC16(Metalee_Func_5);
-    QueueSfx2_Max6(0x5C);
+    QueueSfx2_Max6(kSfx2_SkreeHitsTheGround);
   } else {
     E->base.y_pos += E->metalee_var_F;
     E->base.x_pos += ((int16)(E->base.x_pos - samus_x_pos) >= 0) ? -2 : 2;
@@ -462,8 +462,8 @@ void Elevator_Frozen(void) {  // 0xA3952A
 
 void Elevator_Func_1(void) {  // 0xA39548
   if ((kElevator_ControllerInputs[Get_Elevator(cur_enemy_index)->elevat_parameter_1 >> 1] & joypad1_newkeys) != 0) {
-    QueueSfx3_Max6(0xB);
-    QueueSfx1_Max6(0x32);
+    QueueSfx3_Max6(kSfx3_Elevator);
+    QueueSfx1_Max6(kSfx1_SpinJumpEnd_Silence);
     CallSomeSamusCode(7);
     ResetProjectileData();
     Elevator_Func_4();
@@ -507,7 +507,7 @@ void Elevator_Func3b(void) {  // 0xA395BC
   }
   elevator_status = 0;
   elevator_flags = 0;
-  QueueSfx3_Max6(0x25);
+  QueueSfx3_Max6(kSfx3_ClearSpeedBooster_ElevatorSound_Silence);
   E->base.y_pos = E->elevat_var_A;
   CallSomeSamusCode(0xB);
   Elevator_Func_4();
@@ -1149,7 +1149,7 @@ void Mochtroid_Touch(void) {  // 0xA3A953
   if (samus_contact_damage_index)
     goto LABEL_7;
   if ((random_enemy_counter & 7) == 7 && !sign16(samus_health - 30))
-    QueueSfx3_Max6(0x2D);
+    QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
   if (!sign16(E->mochtr_var_20 - 80)) {
     E->mochtr_var_20 = 0;
 LABEL_7:
@@ -1550,7 +1550,7 @@ void NorfairSlowFireball_Func_1(void) {  // 0xA3B6F9
 }
 
 const uint16 *Bang_Instr_1(uint16 k, const uint16 *jp) {  // 0xA3BA78
-  QueueSfx2_Max6(0x56);
+  QueueSfx2_Max6(kSfx2_AcquiredSuit);
   return jp;
 }
 
@@ -1838,7 +1838,7 @@ void Skree_Func_2(uint16 k) {  // 0xA3C6F7
     ++E->skree_var_C;
     Skree_Func_5();
     E->skree_var_B = FUNC16(Skree_Func_3);
-    QueueSfx2_Max6(0x5B);
+    QueueSfx2_Max6(kSfx2_SkreeLaunchesAttack);
   }
 }
 
@@ -1851,7 +1851,7 @@ void Skree_Func_3(void) {  // 0xA3C716
     E->base.instruction_timer = 1;
     E->base.timer = 0;
     E->skree_var_B = FUNC16(Skree_Func_4);
-    QueueSfx2_Max6(0x5C);
+    QueueSfx2_Max6(kSfx2_SkreeHitsTheGround);
   } else {
     E->base.y_pos += 6;
     E->base.x_pos += ((int16)(E->base.x_pos - samus_x_pos) >= 0) ? -1 : 1;
@@ -2095,7 +2095,7 @@ void MaridiaSnail_D002(uint16 k, const uint8 *j) {  // 0xA3D002
   MaridiaSnail_Func_11(k, j);
   if (rv) {
     E->msl_var_E = 0;
-    uint8 carry = EnemyFunc_C8AD(k);
+    uint8 carry = AlignEnemyYposToNonsquareSlope(k);
     MaridiaSnail_Func_12(k, carry);
     if (Enemy_MoveDown(k, INT16_SHL8(E->msl_var_B))) {
       E->msl_var_A = -E->msl_var_A;
@@ -2124,7 +2124,7 @@ void MaridiaSnail_D07E(uint16 k, const uint8 *j) {  // 0xA3D07E
       E->msl_var_B = -E->msl_var_B;
       MaridiaSnail_Func_13(k, GET_WORD(j + 6));
     } else {
-      uint8 carry = EnemyFunc_C8AD(k);
+      uint8 carry = AlignEnemyYposToNonsquareSlope(k);
       MaridiaSnail_Func_12(k, carry);
     }
   } else {
@@ -2196,7 +2196,7 @@ void MaridiaSnail_Func_15(uint16 k) {  // 0xA3D1B3
       E->msl_var_02 = -E->msl_var_02;
       E->msl_var_03 = -E->msl_var_03;
       E->msl_var_20 = 1;
-      QueueSfx2_Max3(0x70);
+      QueueSfx2_Max3(kSfx2_MaridiaSnailBounce);
     } else {
       uint32 delta;
       if ((E->msl_var_03 & 0x8000) != 0)
@@ -2300,7 +2300,7 @@ void MaridiaSnail_Touch(void) {  // 0xA3D3B0
       && (E->msl_var_F == 0xD1B3 || samus_has_momentum_flag)) {
     MaridiaSnail_Func_22(cur_enemy_index);
     if (E->msl_var_F == 0xD1B3)
-      QueueSfx2_Max3(0x70);
+      QueueSfx2_Max3(kSfx2_MaridiaSnailBounce);
   } else if (E->msl_var_F != 0xCF5F && E->msl_var_08 != 4 && E->msl_var_08 != 3) {
     Enemy_NormalTouchAI_A3();
     E->msl_parameter_1 = E->msl_var_06;
@@ -2335,7 +2335,7 @@ void MaridiaSnail_Shot(void) {  // 0xA3D469
     uint16 msl_var_08 = Get_MaridiaSnail(cur_enemy_index)->msl_var_08;
     if (msl_var_08 != 3 && msl_var_08 != 4)
       MaridiaSnail_Func_23(cur_enemy_index);
-    QueueSfx2_Max3(0x70);
+    QueueSfx2_Max3(kSfx2_MaridiaSnailBounce);
   }
 }
 
@@ -2432,7 +2432,7 @@ void Reflec_Shot(void) {
     projectile_dir[v5] = v4;
     projectile_type[v5] &= ~0x8000;
     ProjectileReflection(v0);
-    QueueSfx2_Max6(0x57);
+    QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   }
 }
 
@@ -2473,7 +2473,7 @@ void WreckedShipOrangeZoomer_Func_2(uint16 k) {  // 0xA3E091
   }
   if (Enemy_MoveRight_ProcessSlopes(k, Shift8AddMagn(E->wsozr_var_A, 1))) {
     E->wsozr_var_04 = 0;
-    EnemyFunc_C8AD(k);
+    AlignEnemyYposToNonsquareSlope(k);
     if (!(Enemy_MoveDown(k, INT16_SHL8(E->wsozr_var_B)))) {
       if ((int16)(samus_y_pos - E->base.y_pos) >= 0) {
         v7 = E->wsozr_var_B;
@@ -2524,7 +2524,7 @@ void sub_A3E168(uint16 k) {  // 0xA3E168
   if (Enemy_MoveDown(k, Shift8AddMagn(E->wsozr_var_B, 1))) {
     E->wsozr_var_04 = 0;
     if (!(Enemy_MoveRight_ProcessSlopes(k, INT16_SHL8(E->wsozr_var_A)))) {
-      EnemyFunc_C8AD(k);
+      AlignEnemyYposToNonsquareSlope(k);
       if ((int16)(samus_x_pos - E->base.x_pos) >= 0) {
         v7 = E->wsozr_var_A;
         if (v7 < 0)
@@ -2614,7 +2614,7 @@ void FireZoomer_Func_1(uint16 k) {  // 0xA3E6C8
   }
   if (Enemy_MoveRight_IgnoreSlopes(k, Shift8AddMagn(E->fzr_var_A, 1))) {
     E->fzr_var_04 = 0;
-    EnemyFunc_C8AD(k);
+    AlignEnemyYposToNonsquareSlope(k);
     if (Enemy_MoveDown(k, INT16_SHL8(E->fzr_var_B))) {
       E->fzr_var_A = -E->fzr_var_A;
       uint16 fzr_parameter_2 = E->fzr_parameter_2, v7;
@@ -2683,7 +2683,7 @@ void FireZoomer_Func_3(uint16 k) {  // 0xA3E7F2
       E->base.current_instruction = v6;
       E->base.instruction_timer = 1;
     } else {
-      EnemyFunc_C8AD(k);
+      AlignEnemyYposToNonsquareSlope(k);
     }
   } else {
     uint16 v7 = E->fzr_var_04 + 1;
@@ -2733,7 +2733,7 @@ void Metroid_Init(void) {  // 0xA3EA4F
 }
 
 const uint16 *Metroid_Instr_2(uint16 k, const uint16 *jp) {  // 0xA3EAA5
-  QueueSfx2_Max6(0x50);
+  QueueSfx2_Max6(kSfx2_MetroidDrainingSamus_RandomMetroidCry_HighPriority);
   return jp;
 }
 
@@ -2951,7 +2951,7 @@ void Metroid_Touch(void) {  // 0xA3EDEB
     uint16 v5 = cur_enemy_index;
     if (E->metroid_var_F != 3) {
       if ((random_enemy_counter & 7) == 7 && !sign16(samus_health - 30))
-        QueueSfx3_Max6(0x2D);
+        QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
       Metroid_Func_5(v5);
     }
     if (E->metroid_var_F < 2) {
@@ -3030,7 +3030,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
       E->base.instruction_timer = 1;
       int v10 = collision_detection_index;
       if ((projectile_type[v10] & 2) != 0) {
-        QueueSfx3_Max6(0xA);
+        QueueSfx3_Max6(kSfx3_EnemyFrozen_HighPriority);
         uint16 r18 = projectile_damage[v10];
         E->base.flash_timer = 4;
         uint16 metroid_parameter_2 = E->metroid_parameter_2;
@@ -3045,7 +3045,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
         }
         E->metroid_parameter_2 = v12;
       }
-      QueueSfx2_Max6(0x5A);
+      QueueSfx2_Max6(kSfx2_ShotMetroid_RandomMetroidCry);
     }
   }
 }

@@ -45,6 +45,6 @@ void Unused_SamusTileViewer(void) {  // 0x92ED7A
 }
 
 void DrawSamusSuitExploding(void) {  // 0x92EDBE
-  uint16 r18 = (samus_pose_x_dir == 4) ? g_word_7E0DE4 + 2085 : g_word_7E0DE4 + 2076;
+  uint16 r18 = (samus_pose_x_dir == 4) ? samus_death_anim_timer + 2085 : samus_death_anim_timer + 2076;
   DrawSamusSpritemap(r18, samus_x_pos, samus_y_pos);
 }

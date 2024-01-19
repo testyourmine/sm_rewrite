@@ -337,7 +337,7 @@ static CoroutineRet HandleMessageBoxInteraction_Async(void) {  // 0x85846D
       }
       if ((joypad1_newkeys & (kButton_Select | kButton_Left | kButton_Right)) != 0) {
         ToggleSaveConfirmationSelection();
-        QueueSfx1_Max6(0x37);
+        QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
       }
     }
   } else {
@@ -384,7 +384,7 @@ CoroutineRet DisplayMessageBox_Async(uint16 a) {  // 0x858080
   if (message_box_index == 28 && save_confirmation_selection != 2) {
     message_box_index = 24;
     ClearMessageBoxBg3Tilemap();
-    QueueSfx1_Max6(0x2E);
+    QueueSfx1_Max6(kSfx1_Saving);
 
     my_counter = 160;
     do {

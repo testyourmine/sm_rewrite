@@ -364,7 +364,7 @@ void RoomCode_GenRandomExplodes_4th(void) {  // 0x8FC183
 
 void RoomCode_GenRandomExplodes(uint16 x_r18, uint16 y_r20) {  // 0x8FC1A9
   static const uint8 kRoomCode_GenRandomExplodes_Sprite[8] = { 3, 3, 9, 12, 12, 18, 18, 21 };
-  static const uint8 kRoomCode_GenRandomExplodes_Sfx[8] = { 0x24, 0, 0, 0x25, 0, 0, 0, 0 };
+  static const uint8 kRoomCode_GenRandomExplodes_Sfx[8] = { kSfx2_SmallExplosion, 0, 0, kSfx2_BigExplosion, 0, 0, 0, 0 };
 
   // Bugfix, X is garbage
   uint16 v1 = NextRandom() & 0xF;

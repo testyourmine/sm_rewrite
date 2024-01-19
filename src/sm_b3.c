@@ -661,12 +661,12 @@ const uint16 *Botwoon_Instr_SetSpitting(uint16 k, const uint16 *jp) {  // 0xB395
 }
 
 const uint16 *Botwoon_Instr_QueueSpitSfx(uint16 k, const uint16 *jp) {  // 0xB39572
-  QueueSfx2_Max6(0x7C);
+  QueueSfx2_Max6(kSfx2_BotwoonSpit_HighPriority);
   return jp;
 }
 
 void Botwoon_QueueExplosionSfx(void) {  // 0xB3957B
-  QueueSfx2_Max6(0x24);
+  QueueSfx2_Max6(kSfx2_SmallExplosion);
 }
 
 void Botwoon_Init(void) {  // 0xB39583

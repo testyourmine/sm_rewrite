@@ -93,16 +93,16 @@ void SetupPpuForTitleSequence(void) {  // 0x8B8000
   UNUSED_word_7E0759 = 0;
   samus_reserve_health = 0;
   samus_reserve_missiles = 0;
-  cinematic_var5 = 0;
-  cinematic_var6 = 256;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199B = 0;
-  g_word_7E199D = 0;
-  g_word_7E199F = 0;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 256;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_x_subspeed = 0;
+  mode7_x_speed = 0;
+  mode7_y_subspeed = 0;
+  mode7_y_speed = 0;
 }
 
 void SetupPpu_Intro(void) {  // 0x8B80DA
@@ -148,16 +148,16 @@ void SetupPpu_Intro(void) {  // 0x8B80DA
   reg_MOSAIC = 0;
   memset7E((uint16*)(g_ram + 0x3000), 0x2F, 0x7FE);
   oam_next_ptr = 0;
-  cinematic_var5 = 0;
-  cinematic_var6 = 256;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199B = 0;
-  g_word_7E199D = 0;
-  g_word_7E199F = 0;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 256;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_x_subspeed = 0;
+  mode7_x_speed = 0;
+  mode7_y_subspeed = 0;
+  mode7_y_speed = 0;
   fx_layer_blending_config_a = 0;
   reg_BG2HOFS = 0;
   reg_BG2VOFS = 0;
@@ -204,14 +204,14 @@ void SetupPpu_3_Mode7(void) {  // 0x8B819B
   reg_COLDATA[1] = 64;
   reg_COLDATA[2] = 0x80;
   reg_MOSAIC = 0;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199B = 0;
-  g_word_7E199D = 0;
-  g_word_7E199F = 0;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_x_subspeed = 0;
+  mode7_x_speed = 0;
+  mode7_y_subspeed = 0;
+  mode7_y_speed = 0;
   fx_layer_blending_config_a = 0;
 }
 
@@ -294,16 +294,16 @@ void SetupPpu_5_Mode7(void) {  // 0x8B8293
   oam_next_ptr = 0;
   screen_fade_delay = 0;
   screen_fade_counter = 0;
-  cinematic_var5 = 0;
-  cinematic_var6 = 256;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199B = 0;
-  g_word_7E199D = 0;
-  g_word_7E199F = 0;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 256;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_x_subspeed = 0;
+  mode7_x_speed = 0;
+  mode7_y_subspeed = 0;
+  mode7_y_speed = 0;
 }
 
 void SetupPpu_6_Mode1(void) {  // 0x8B833A
@@ -345,14 +345,14 @@ void SetupPpu_6_Mode1(void) {  // 0x8B833A
   reg_COLDATA[1] = 64;
   reg_COLDATA[2] = 0x80;
   reg_MOSAIC = 0;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199B = 0;
-  g_word_7E199D = 0;
-  g_word_7E199F = 0;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_x_subspeed = 0;
+  mode7_x_speed = 0;
+  mode7_y_subspeed = 0;
+  mode7_y_speed = 0;
   fx_layer_blending_config_a = 0;
   reg_BG2HOFS = 0;
   reg_BG2VOFS = 0;
@@ -406,25 +406,25 @@ void SetupPpu_7_Mode1(void) {  // 0x8B83D3
   reg_M7X = 128;
   WriteRegWord(M7Y, 0x80);
   reg_M7Y = 128;
-  cinematic_var5 = 0;
-  cinematic_var6 = 1;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 1;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
   reg_BG2HOFS = 0;
   reg_BG2VOFS = 0;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
 }
 
 void HandleMode7TransformationNoRotation(void) {  // 0x8B8518
-  reg_M7A = cinematic_var6;
-  reg_M7D = cinematic_var6;
+  reg_M7A = mode7_transform_zoom;
+  reg_M7D = mode7_transform_zoom;
   reg_M7B = 0;
   reg_M7C = 0;
-  reg_BG1HOFS = cinematic_var8;
-  reg_BG1VOFS = cinematic_var10;
+  reg_BG1HOFS = mode7_x_pos;
+  reg_BG1VOFS = mode7_y_pos;
 }
 
 static uint32 Smult16x16(uint16 r38, uint16 r40) {  // 0x8B858F
@@ -433,12 +433,12 @@ static uint32 Smult16x16(uint16 r38, uint16 r40) {  // 0x8B858F
 }
 
 void HandleMode7TransformationMatrix(void) {  // 0x8B8532
-  reg_M7D = reg_M7A = Smult16x16(kSinCosTable8bit_Sext[((uint8)(cinematic_var5 + 64)) + 64], cinematic_var6) >> 8;
-  uint16 v1 = Smult16x16(kSinCosTable8bit_Sext[((uint8)cinematic_var5) + 64], cinematic_var6) >> 8;
+  reg_M7D = reg_M7A = Smult16x16(kSinCosTable8bit_Sext[((uint8)(mode7_transform_angle + 64)) + 64], mode7_transform_zoom) >> 8;
+  uint16 v1 = Smult16x16(kSinCosTable8bit_Sext[((uint8)mode7_transform_angle) + 64], mode7_transform_zoom) >> 8;
   reg_M7B = v1;
   reg_M7C = -v1;
-  reg_BG1HOFS = cinematic_var8;
-  reg_BG1VOFS = cinematic_var10;
+  reg_BG1HOFS = mode7_x_pos;
+  reg_BG1VOFS = mode7_y_pos;
 }
 
 void SetPpuBackdropSomeColor(void) {  // 0x8B866B
@@ -465,7 +465,7 @@ void UpdateCinematicBgTilemap(void) {  // 0x8B87A0
     gVramWriteEntry(v0)->size = 12288;
     v0 += 2;
     LOBYTE(gVramWriteEntry(v0++)->size) = 126;
-    gVramWriteEntry(v0)->size = cinematicbg_var3;
+    gVramWriteEntry(v0)->size = cinematicbg_vram_addr;
     vram_write_queue_tail = v0 + 2;
   }
 }
@@ -491,7 +491,7 @@ void CinematicUpdateSomeBg(void) {  // 0x8B8806
     gVramWriteEntry(v0)->size = ADDR16_OF_RAM(ram3000);
     v0 += 2;
     LOBYTE(gVramWriteEntry(v0++)->size) = 126;
-    gVramWriteEntry(v0)->size = cinematicbg_var3;
+    gVramWriteEntry(v0)->size = cinematicbg_vram_addr;
     vram_write_queue_tail = v0 + 2;
   }
 }
@@ -509,26 +509,26 @@ void CallProcessCinematicBgObject(uint32 ea, uint16 k, uint16 j, uint16 r18) {
 }
 
 void ProcessCinematicBgObject(uint16 v0, uint16 r18) {  // 0x8B8839
-  uint16 j = cinematicbg_arr1[v0 >> 1];
+  uint16 j = cinematicbg_indir_inst_ptr[v0 >> 1];
   CallProcessCinematicBgObject(*(uint16 *)RomPtr_8C(j) | 0x8B0000, v0, j, r18);
 }
 
 void ProcessCinematicBgObject_DrawChar(uint16 k, uint16 j, uint16 r18) {  // 0x8B884D
   int16 v3;
 
-  cinematicbg_var1 = cinematicbg_var1 == 0;
+  cinematicbg_text_click_flag = cinematicbg_text_click_flag == 0;
   SpawnTextGlowObject(j, r18);
   const uint8 *v2 = RomPtr_8C(cinematicbg_instr_ptr[k >> 1]);
   if (*((int16 *)v2 + 3) < 0) {
-    cinematicbg_arr7[15] = 8;
+    cinematicbg_x_pos[15] = 8;
     v3 = 8 * (v2[3] + 2);
   } else {
-    cinematicbg_arr7[15] = 8 * v2[8];
+    cinematicbg_x_pos[15] = 8 * v2[8];
     v3 = 8 * v2[9];
   }
-  cinematicbg_arr8[15] = v3 - 8;
-  if (GET_WORD(v2 + 4) != 0xD67D && cinematicbg_var1)
-    QueueSfx3_Max6(0xD);
+  cinematicbg_y_pos[15] = v3 - 8;
+  if (GET_WORD(v2 + 4) != 0xD67D && cinematicbg_text_click_flag)
+    QueueSfx3_Max6(kSfx3_IntroTypewriterStroke);
   ProcessCinematicBgObject_DrawToTextTilemap(0x1E, j, r18);
 }
 
@@ -769,7 +769,7 @@ void TransferJapaneseTextTilesToVram(void) {  // 0x8B8DE6
 }
 
 void HandleSamusDuringIntro(void) {  // 0x8B8E0D
-  if (cinematic_var15) {
+  if (cinematic_samus_display_flag) {
     HandleControllerInputForGamePhysics();
     HandleSamusMovementAndPause();
     if (samus_invincibility_timer)
@@ -780,8 +780,8 @@ void HandleSamusDuringIntro(void) {  // 0x8B8E0D
 }
 
 void DrawIntroSprites(void) {  // 0x8B8E2D
-  if (cinematic_var15) {
-    if ((cinematic_var15 & 0x8000) != 0) {
+  if (cinematic_samus_display_flag) {
+    if ((cinematic_samus_display_flag & 0x8000) != 0) {
       DrawSamusAndProjectiles();
       DrawPlayerExplosions2();
       DrawCinematicSpriteObjects_Intro();
@@ -986,8 +986,8 @@ CoroutineRet InitializeIoDisplayLogo_Async(void) {  // 0x8B9146
   WriteReg(VMADDH, 0x60);
   WriteReg(VMAIN, 0x80);
   {
-    static const StartDmaCopy unk_8B92B9 = { 1, 1, 0x18, LONGPTR(0x7f5000), 0x4000 };
-    SetupDmaTransfer(&unk_8B92B9);
+    static const StartDmaCopy kDmaCopy_TitleSpriteTiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7f5000), .das = 0x4000 };
+    SetupDmaTransfer(&kDmaCopy_TitleSpriteTiles);
   }
   WriteReg(MDMAEN, 2);
   reg_INIDISP = 0x80;
@@ -1278,10 +1278,10 @@ void ClearCinematicBgObjects(uint16 a) {  // 0x8B95CE
     *(uint16 *)((uint8 *)ram3000.pause_menu_map_tilemap + (uint16)i) = a;
   for (j = 6; (j & 0x8000) == 0; j -= 2) {
     int v3 = j >> 1;
-    cinematicbg_arr1[v3] = 0;
+    cinematicbg_indir_inst_ptr[v3] = 0;
     cinematicbg_instr_ptr[v3] = 0;
   }
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
 }
 
 
@@ -1292,7 +1292,7 @@ void CallCinematicBgObjectSetup(uint32 ea, uint16 j) {
   }
 }
 uint8 SpawnCinematicBgObject(uint16 j, uint16 a) {  // 0x8B95F0
-  cinematicbg_var3 = a;
+  cinematicbg_vram_addr = a;
   uint16 v3 = 6;
   while (cinematicbg_instr_ptr[v3 >> 1]) {
     v3 -= 2;
@@ -1304,8 +1304,8 @@ uint8 SpawnCinematicBgObject(uint16 j, uint16 a) {  // 0x8B95F0
   cinematicbg_preinstr[v6] = GET_WORD(v5 + 2);
   cinematicbg_instr_ptr[v6] = GET_WORD(v5 + 4);
   cinematicbg_instr_timer[v6] = 1;
-  cinematicbg_arr1[v6] = 0;
-  cinematicbg_arr6[v6] = 0;
+  cinematicbg_indir_inst_ptr[v6] = 0;
+  cinematicbg_goto_timer[v6] = 0;
   CallCinematicBgObjectSetup(GET_WORD(v5) | 0x8B0000, v3);
   return 0;
 }
@@ -1343,7 +1343,7 @@ void ProcessCinematicBgObjectsInstrs(uint16 k) {  // 0x8B9659
     int v7 = v1 >> 1;
     cinematicbg_instr_timer[v7] = v6;
     const uint8 *v8 = RomPtr_8C(v4);
-    cinematicbg_arr1[v7] = GET_WORD(v8 + 4);
+    cinematicbg_indir_inst_ptr[v7] = GET_WORD(v8 + 4);
     ProcessCinematicBgObject(v1, GET_WORD(v8 + 2));
     cinematicbg_instr_ptr[v7] = v4 + 6;
   }
@@ -1351,7 +1351,7 @@ void ProcessCinematicBgObjectsInstrs(uint16 k) {  // 0x8B9659
 
 uint16 CinematicBgInstr_Delete(uint16 k, uint16 j) {  // 0x8B9698
   int v2 = k >> 1;
-  cinematicbg_arr1[v2] = 0;
+  cinematicbg_indir_inst_ptr[v2] = 0;
   cinematicbg_instr_ptr[v2] = 0;
   return 0;
 }
@@ -1369,9 +1369,9 @@ void DrawCinematicSpriteObjects_Intro(void) {  // 0x8B9746
     int v1 = i >> 1;
     if (cinematicspr_whattodraw[v1]) {
       uint16 v2 = cinematicspr_whattodraw[v1];
-      uint16 chr = cinematicbg_arr9[v1];
-      uint16 x = cinematicbg_arr7[v1] - layer1_x_pos;
-      uint16 y = cinematicbg_arr8[v1] - layer1_y_pos;
+      uint16 chr = cinematicbg_palette_index[v1];
+      uint16 x = cinematicbg_x_pos[v1] - layer1_x_pos;
+      uint16 y = cinematicbg_y_pos[v1] - layer1_y_pos;
       if ((y & 0xFF00) != 0) {
         if ((uint16)(y + 128) < 0x1FF)
           DrawSpritemapOffScreen(v2, x, y, chr);
@@ -1387,9 +1387,9 @@ void DrawCinematicSpriteObjects_Ending(void) {  // 0x8B9799
     int v1 = i >> 1;
     if (cinematicspr_whattodraw[v1]) {
       uint16 v2 = cinematicspr_whattodraw[v1];
-      uint16 chr = cinematicbg_arr9[v1];
-      uint16 x = cinematicbg_arr7[v1] - layer1_x_pos;
-      uint16 y = cinematicbg_arr8[v1] - layer1_y_pos;
+      uint16 chr = cinematicbg_palette_index[v1];
+      uint16 x = cinematicbg_x_pos[v1] - layer1_x_pos;
+      uint16 y = cinematicbg_y_pos[v1] - layer1_y_pos;
       if ((y & 0xFF00) != 0) {
         if ((uint16)(y + 128) < 0x1FF)
           DrawSpritemapOffScreen(v2, x, y, chr);
@@ -1478,12 +1478,12 @@ void CinematicFunction_Intro_Func128(uint16 a) {  // 0x8B98F9
   cinematic_var22 = 0;
   cinematic_var23 = 0;
   cinematic_var24 = 0;
-  cinematicbg_var3 = 18432;
+  cinematicbg_vram_addr = 18432;
   eproj_pre_instr[0] = 0;
-  cinematic_var7 = 0;
-  cinematic_var8 = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
+  mode7_x_subpos = 0;
+  mode7_x_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
 }
 
 void CreditsObject_Init(uint16 j) {  // 0x8B9932
@@ -1507,9 +1507,9 @@ void CreditsObject_ProcessOne(void) {  // 0x8B996A
   int i;
 
   CallCreditsObjectFunc(cinematic_var24 | 0x8B0000, 0);
-  AddToHiLo(&cinematic_var10, &cinematic_var9, 0x8000);
-  if (!sign16(cinematic_var10 - eproj_pre_instr[0] - 8)) {
-    eproj_pre_instr[0] = cinematic_var10;
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, 0x8000);
+  if (!sign16(mode7_y_pos - eproj_pre_instr[0] - 8)) {
+    eproj_pre_instr[0] = mode7_y_pos;
     for (i = cinematic_var21; ; ) {
       const uint16 *v2 = (const uint16 *)RomPtr_8C(i);
       uint16 v3 = *v2;
@@ -1596,15 +1596,15 @@ void HandleCinematicsTransitions_2(void) {  // 0x8B9A9C
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_NintendoCopyright_Immediate, 0);
   screen_fade_delay = 0;
   screen_fade_counter = 2;
-  cinematic_var6 = 256;
-  cinematic_var8 = 0;
-  cinematic_var7 = 0;
-  cinematic_var10 = 0;
-  cinematic_var9 = 0;
-  g_word_7E199B = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199F = 0;
-  g_word_7E199D = 0;
+  mode7_transform_zoom = 256;
+  mode7_x_pos = 0;
+  mode7_x_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_x_speed = 0;
+  mode7_x_subspeed = 0;
+  mode7_y_speed = 0;
+  mode7_y_subspeed = 0;
   cinematic_var18 = 3;
   uint16 v2 = 256;
   do {
@@ -1623,23 +1623,23 @@ void HandleCinematicsTransitions_2(void) {  // 0x8B9A9C
 
 void CinematicSpriteInit_7(uint16 j) {  // 0x8B9B1A
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 48;
-  cinematicbg_arr9[v1] = 1024;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 48;
+  cinematicbg_palette_index[v1] = 1024;
 }
 
 void CinematicSpriteInit_8(uint16 j) {  // 0x8B9B2D
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 81;
-  cinematicbg_arr9[v1] = 0;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 81;
+  cinematicbg_palette_index[v1] = 0;
 }
 
 void CinematicSpriteInit_9(uint16 j) {  // 0x8B9B40
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 196;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 196;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void HandleCinematicsTransitions_3(void) {  // 0x8B9B53
@@ -1737,9 +1737,9 @@ void LoadTitleSequenceGraphics(void) {  // 0x8B9B87
 
 void CinematicSpriteInit_0(uint16 j) {  // 0x8B9CBC
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 129;
-  cinematicbg_arr8[v1] = 112;
-  cinematicbg_arr9[v1] = 512;
+  cinematicbg_x_pos[v1] = 129;
+  cinematicbg_y_pos[v1] = 112;
+  cinematicbg_palette_index[v1] = 512;
 }
 
 void CinematicSprPreInstr_1994ScrollingText(uint16 k) {  // 0x8B9CCF
@@ -1754,20 +1754,20 @@ void sub_8B9CDE(void) {  // 0x8B9CDE
 uint16 CinematicSprInstr_9CE1(uint16 k, uint16 j) {  // 0x8B9CE1
   reg_TM = 17;
   cinematic_function = FUNC16(CinematicFunc_Func2);
-  cinematic_var6 = 72;
-  cinematic_var8 = 315;
-  cinematic_var7 = 0;
-  cinematic_var10 = 225;
-  cinematic_var9 = 0;
-  g_word_7E199B = -2;
-  g_word_7E1999 = 0x8000;
+  mode7_transform_zoom = 72;
+  mode7_x_pos = 315;
+  mode7_x_subpos = 0;
+  mode7_y_pos = 225;
+  mode7_y_subpos = 0;
+  mode7_x_speed = -2;
+  mode7_x_subspeed = 0x8000;
   SetPpuBackdropSomeColor();
   return j;
 }
 
 void CinematicFunc_Func2(void) {  // 0x8B9D17
-  AddToHiLo(&cinematic_var8, &cinematic_var7, __PAIR32__(g_word_7E199B, g_word_7E1999));
-  if (sign16(cinematic_var8 + 7)) {
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, __PAIR32__(mode7_x_speed, mode7_x_subspeed));
+  if (sign16(mode7_x_pos + 7)) {
     reg_TM = 16;
     cinematic_function = FUNC16(CinematicFunctionNone);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_ScrollingText_NINTENDO, FUNC16(CinematicFunctionNone));
@@ -1778,27 +1778,27 @@ void CinematicFunc_Func2(void) {  // 0x8B9D17
 
 void CinematicSpriteInit_1(uint16 j) {  // 0x8B9D4A
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 129;
-  cinematicbg_arr8[v1] = 112;
-  cinematicbg_arr9[v1] = 512;
+  cinematicbg_x_pos[v1] = 129;
+  cinematicbg_y_pos[v1] = 112;
+  cinematicbg_palette_index[v1] = 512;
 }
 
 uint16 CinematicSprInstr_9D5D(uint16 k, uint16 j) {  // 0x8B9D5D
   reg_TM = 17;
   cinematic_function = FUNC16(CinematicFunc_Func4);
-  cinematic_var6 = 96;
-  cinematic_var8 = 44;
-  cinematic_var7 = 0;
-  cinematic_var10 = -155;
-  cinematic_var9 = 0;
-  g_word_7E199B = -2;
-  g_word_7E1999 = 0x8000;
+  mode7_transform_zoom = 96;
+  mode7_x_pos = 44;
+  mode7_x_subpos = 0;
+  mode7_y_pos = -155;
+  mode7_y_subpos = 0;
+  mode7_x_speed = -2;
+  mode7_x_subspeed = 0x8000;
   return j;
 }
 
 void CinematicFunc_Func4(void) {  // 0x8B9D90
-  AddToHiLo(&cinematic_var8, &cinematic_var7, __PAIR32__(g_word_7E199B, g_word_7E1999));
-  if (sign16(cinematic_var8 + 176)) {
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, __PAIR32__(mode7_x_speed, mode7_x_subspeed));
+  if (sign16(mode7_x_pos + 176)) {
     reg_TM = 16;
     cinematic_function = FUNC16(CinematicFunctionNone);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_ScrollingText_PRESENTS, FUNC16(CinematicFunctionNone));
@@ -1809,30 +1809,30 @@ void CinematicFunc_Func4(void) {  // 0x8B9D90
 
 void CinematicSpriteInit_2(uint16 j) {  // 0x8B9DC3
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 129;
-  cinematicbg_arr8[v1] = 112;
-  cinematicbg_arr9[v1] = 512;
+  cinematicbg_x_pos[v1] = 129;
+  cinematicbg_y_pos[v1] = 112;
+  cinematicbg_palette_index[v1] = 512;
 }
 
 uint16 CinematicSprInstr_9DD6(uint16 k, uint16 j) {  // 0x8B9DD6
   reg_TM = 17;
   cinematic_function = FUNC16(CinematicFunc_Func5);
-  cinematic_var6 = 96;
-  cinematic_var8 = -177;
-  cinematic_var7 = 0;
-  cinematic_var10 = -160;
-  cinematic_var9 = 0;
-  g_word_7E199B = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199F = 1;
-  g_word_7E199D = 0x8000;
+  mode7_transform_zoom = 96;
+  mode7_x_pos = -177;
+  mode7_x_subpos = 0;
+  mode7_y_pos = -160;
+  mode7_y_subpos = 0;
+  mode7_x_speed = 0;
+  mode7_x_subspeed = 0;
+  mode7_y_speed = 1;
+  mode7_y_subspeed = 0x8000;
   SetPpuBackdropSomeColor();
   return j;
 }
 
 void CinematicFunc_Func5(void) {  // 0x8B9E12
-  AddToHiLo(&cinematic_var10, &cinematic_var9, __PAIR32__(g_word_7E199F, g_word_7E199D));
-  if (!sign16(cinematic_var10 - 163)) {
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, __PAIR32__(mode7_y_speed, mode7_y_subspeed));
+  if (!sign16(mode7_y_pos - 163)) {
     reg_TM = 16;
     cinematic_function = FUNC16(CinematicFunctionNone);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_ScrollingText_METROID3, FUNC16(CinematicFunctionNone));
@@ -1843,23 +1843,23 @@ void CinematicFunc_Func5(void) {  // 0x8B9E12
 
 void CinematicSpriteInit_3(uint16 j) {  // 0x8B9E45
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 129;
-  cinematicbg_arr8[v1] = 112;
-  cinematicbg_arr9[v1] = 512;
+  cinematicbg_x_pos[v1] = 129;
+  cinematicbg_y_pos[v1] = 112;
+  cinematicbg_palette_index[v1] = 512;
 }
 
 uint16 CinematicSprInstr_Func8(uint16 k, uint16 j) {  // 0x8B9E58
   reg_TM = 17;
   cinematic_function = FUNC16(CinematicFunc_Func7);
-  cinematic_var6 = 67;
-  cinematic_var8 = 0;
-  cinematic_var7 = 0;
-  cinematic_var10 = 0;
-  cinematic_var9 = 0;
-  g_word_7E199B = 0;
-  g_word_7E1999 = 0;
-  g_word_7E199F = 0;
-  g_word_7E199D = 0;
+  mode7_transform_zoom = 67;
+  mode7_x_pos = 0;
+  mode7_x_subpos = 0;
+  mode7_y_pos = 0;
+  mode7_y_subpos = 0;
+  mode7_x_speed = 0;
+  mode7_x_subspeed = 0;
+  mode7_y_speed = 0;
+  mode7_y_subspeed = 0;
   SpawnTitleScreenGradientObjs();
   return j;
 }
@@ -1867,10 +1867,10 @@ uint16 CinematicSprInstr_Func8(uint16 k, uint16 j) {  // 0x8B9E58
 
 void CinematicFunc_Func7(void) {  // 0x8B9E8B
   if ((nmi_frame_counter_word & 1) == 0) {
-    if (sign16(cinematic_var6 - 256)) {
-      ++cinematic_var6;
+    if (sign16(mode7_transform_zoom - 256)) {
+      ++mode7_transform_zoom;
     } else {
-      cinematic_var6 = 256;
+      mode7_transform_zoom = 256;
       cinematic_function = FUNC16(nullsub_117);
       SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_TitleLogo_FadeIn, FUNC16(nullsub_117));
     }
@@ -1879,9 +1879,9 @@ void CinematicFunc_Func7(void) {  // 0x8B9E8B
 
 void CinematicSpriteInit_4(uint16 j) {  // 0x8B9EB3
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 48;
-  cinematicbg_arr9[v1] = 1024;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 48;
+  cinematicbg_palette_index[v1] = 1024;
   SpawnPalfxObject(addr_kPalfx_TitleLogo_FadeIn);
 }
 
@@ -1893,23 +1893,23 @@ uint16 CinematicSprInstr_Func9(uint16 k, uint16 j) {  // 0x8B9ECD
 
 void CinematicSpriteInit_5(uint16 j) {  // 0x8B9ED6
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 81;
-  cinematicbg_arr9[v1] = 512;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 81;
+  cinematicbg_palette_index[v1] = 512;
   SpawnPalfxObject(addr_kPalfx_NintendoLogo_FadeIn_Unused);
 }
 
 uint16 CinematicSprInstr_sub_8B9EF0(uint16 k, uint16 j) {  // 0x8B9EF0
-  cinematicbg_arr9[k >> 1] = 0;
+  cinematicbg_palette_index[k >> 1] = 0;
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_NintendoCopyright_FadeIn, 0);
   return j;
 }
 
 void CinematicSpriteInit_6(uint16 j) {  // 0x8B9EFF
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 196;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 196;
+  cinematicbg_palette_index[v1] = 2048;
   SpawnPalfxObject(addr_kPalfx_NintendoCopyright_FadeIn);
 }
 
@@ -1947,12 +1947,12 @@ void CinematicFunc_Func10(void) {  // 0x8B9F52
     reg_BG3HOFS = 0;
     reg_BG2VOFS = 0;
     reg_BG3VOFS = 0;
-    cinematic_var5 = 0;
+    mode7_transform_angle = 0;
     cinematic_function = FUNC16(CinematicFunctionOpening);
     DisablePaletteFx();
     ClearPaletteFXObjects();
     for (int i = 656; i >= 0; i -= 2)
-      *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+      *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
     for (j = 510; (j & 0x8000) == 0; j -= 2)
       hdma_table_1[j >> 1] = 0;
     game_state = 4;
@@ -1972,12 +1972,12 @@ void CinematicFunc_Func9(void) {  // 0x8B9FAE
     reg_BG3HOFS = 0;
     reg_BG2VOFS = 0;
     reg_BG3VOFS = 0;
-    cinematic_var5 = 0;
+    mode7_transform_angle = 0;
     cinematic_function = FUNC16(CinematicFunctionOpening);
     DisablePaletteFx();
     ClearPaletteFXObjects();
     for (int i = 656; i >= 0; i -= 2)
-      *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+      *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
     for (j = 510; (j & 0x8000) == 0; j -= 2)
       hdma_table_1[j >> 1] = 0;
     game_state = 40;
@@ -1986,7 +1986,7 @@ void CinematicFunc_Func9(void) {  // 0x8B9FAE
 }
 
 void ConfigureTitleSequenceGradientHDMA(void) {  // 0x8BA00A
-  uint16 v0 = kTitleSequenceHdmaTablePtrs[(cinematic_var6 & 0xF0) >> 4];
+  uint16 v0 = kTitleSequenceHdmaTablePtrs[(mode7_transform_zoom & 0xF0) >> 4];
   for (int i = 0; ; i += 2) {
     uint16 v2 = *(uint16 *)RomPtr_8C(v0);
     hdma_table_1[i >> 1] = v2;
@@ -1997,17 +1997,17 @@ void ConfigureTitleSequenceGradientHDMA(void) {  // 0x8BA00A
 }
 
 uint16 PlayBabyMetroidCry1(uint16 k, uint16 j) {  // 0x8BA25B
-  QueueSfx3_Max6(0x23);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCry1);
   return j;
 }
 
 uint16 PlayBabyMetroidCry2(uint16 k, uint16 j) {  // 0x8BA263
-  QueueSfx3_Max6(0x26);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCry2);
   return j;
 }
 
 uint16 PlayBabyMetroidCry3(uint16 k, uint16 j) {  // 0x8BA26B
-  QueueSfx3_Max6(0x27);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCry3);
   return j;
 }
 static const uint16 kCinematicPal1[16] = { 0x1000, 0x6bf5, 0x2e41, 0x2da1, 0x2d01, 0x5e5f, 0x183f, 0x1014, 0x80a, 0x404, 0x4f9f, 0x3ed8, 0x2e12, 0x6f70, 0x7fff, 0x5ee0 };
@@ -2041,9 +2041,9 @@ uint16 CinematicSetPal4(uint16 k, uint16 j) {  // 0x8BA2A6
 
 CoroutineRet GameState_37_CeresGoesBoomWithSamus_(void) {  // 0x8BA35B
   CallCinematicFunction(cinematic_function | 0x8B0000);
-  if ((cinematic_var11 & 0x8000) == 0)
-    ++cinematic_var11;
-  ++cinematic_var12;
+  if ((cinematic_intro_end_counter & 0x8000) == 0)
+    ++cinematic_intro_end_counter;
+  ++cinematic_frame_counter;
   HandleSamusDuringIntro();
   HandleCinematicSprites();
   HandleMode7Objects();
@@ -2072,13 +2072,13 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
   UpdateBeamTilesAndPalette();
   samus_max_missiles = 900;
   samus_missiles = 900;
-  cinematic_var15 = 0;
+  cinematic_samus_display_flag = 0;
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
   ResetButtonAssignmentsToDefault();
   samus_invincibility_timer = 0;
   samus_knockback_timer = 0;
   for (int i = 656; i >= 0; i -= 2)
-    *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+    *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
   uint16 v1 = 0;
   do {
     palette_buffer[v1 >> 1] = kPalettes_Intro[v1 >> 1];
@@ -2142,12 +2142,12 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
   door_def_ptr = 0;
   layer1_x_pos = 0;
   layer1_y_pos = 0;
-  cinematic_var16 = 0;
+  cinematic_jp_text_timer = 0;
   for (j = 1023; (j & 0x8000) == 0; --j)
     ram3800.cinematic_bg_tilemap[j] = *(uint16 *)&BTS[j * 2 + 11262];
   for (k = 127; (k & 0x8000) == 0; --k)
     ram3000.pause_menu_map_tilemap[k] = *(uint16 *)((uint8 *)kInitialIntro_JapaneseTextTilemap + k * 2);
-  cinematic_var11 = -1;
+  cinematic_intro_end_counter = -1;
   cinematic_function = FUNC16(CinematicFunction_Intro_FadeIn);
   QueueMusic_Delayed8(0);
   QueueMusic_Delayed8(0xFF3F);
@@ -2164,7 +2164,7 @@ void CinematicFunction_Intro_FadeIn(void) {  // 0x8BA5A7
 void CinematicFunction_Intro_DrawInitJpn(void) {  // 0x8BA5BD
   if (AdvanceSlowScreenFadeIn() & 1) {
     cinematic_function = FUNC16(CinematicFunction_Intro_LastMetroidCaptivity);
-    cinematic_var4 = 60;
+    cinematic_func_timer = 60;
     if (japanese_text_flag) {
       uint16 v0 = vram_write_queue_tail;
       gVramWriteEntry(vram_write_queue_tail)->size = 256;
@@ -2179,17 +2179,17 @@ void CinematicFunction_Intro_DrawInitJpn(void) {  // 0x8BA5BD
 }
 
 void CinematicFunction_Intro_LastMetroidCaptivity(void) {  // 0x8BA5F8
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     cinematic_function = FUNC16(CinematicFunc_Intro_QueueGalaxyIsAtPeace);
-    cinematic_var4 = 200;
+    cinematic_func_timer = 200;
     QueueMusic_Delayed8(5);
   }
 }
 
 void CinematicFunc_Intro_QueueGalaxyIsAtPeace(void) {  // 0x8BA613
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     QueueMusic_Delayed8(0);
     QueueMusic_Delayed8(0xFF42);
     QueueMusic_DelayedY(5, 0xE);
@@ -2200,13 +2200,13 @@ void CinematicFunc_Intro_QueueGalaxyIsAtPeace(void) {  // 0x8BA613
 void CinematicFunc_Intro_WaitForQueueWait4secs(void) {  // 0x8BA639
   if (!(HasQueuedMusic() & 1)) {
     cinematic_function = FUNC16(CinematicFunc_Intro_FadeOut);
-    cinematic_var4 = 240;
+    cinematic_func_timer = 240;
   }
 }
 
 void CinematicFunc_Intro_FadeOut(void) {  // 0x8BA64C
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     cinematic_function = FUNC16(CinematicFunc_Intro_WaitForFadeOut);
     screen_fade_delay = 2;
     screen_fade_counter = 2;
@@ -2231,7 +2231,7 @@ void CinematicFunc_Intro_SetupTextPage2(void) {  // 0x8BA66F
   ClearCinematicBgObjects(0x2F);
   EnableCinematicBgObjects();
   EnableCinematicBgTilemapUpdates();
-  cinematicbg_var3 = addr_unk_604C00;
+  cinematicbg_vram_addr = addr_unk_604C00;
   for (int i = 127; i >= 0; --i) {
     ram3000.pause_menu_map_tilemap[i] = 15401;
     ram3000.pause_menu_map_tilemap[i + 896] = 15401;
@@ -2245,9 +2245,9 @@ void CinematicFunc_Intro_SetupTextPage2(void) {  // 0x8BA66F
   } while ((int16)(v1 * 2 - 1792) < 0);
   *(uint32 *)&ram3000.menu.menu_tilemap[286] = 472456233;
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE6D, 0x1C29);
-  cinematic_var4 = 127;
+  cinematic_func_timer = 127;
   SpawnCinematicBgObject(addr_kCinematicBgObjectDef_8BCF63, 0x4C00);
-  cinematic_var10 = 8;
+  mode7_y_pos = 8;
   reg_BG2VOFS = 8;
   reg_BG3VOFS = 8;
   ClearEnglishTextTilemap();
@@ -2296,16 +2296,16 @@ void ClearJapaneseTextTiles(void) {  // 0x8BA86A
 
 void SetSomeStuffForSpriteObject_2(uint16 v0) {  // 0x8BA8C1
   int v1 = v0 >> 1;
-  cinematicbg_arr7[v1] = 8;
-  cinematicbg_arr8[v1] = 24;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 8;
+  cinematicbg_y_pos[v1] = 24;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void SetSomeStuffForSpriteObject_3(uint16 j) {  // 0x8BA8D5
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 112;
-  cinematicbg_arr8[v1] = 155;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 112;
+  cinematicbg_y_pos[v1] = 155;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void SetSomeStuffForSpriteObject_4_MetroidEgg(uint16 k) {  // 0x8BA8E8
@@ -2322,7 +2322,7 @@ void CinematicSprPreInstr_A903(uint16 k) {  // 0x8BA903
     int v1 = k >> 1;
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
-    cinematic_var15 = 0;
+    cinematic_samus_display_flag = 0;
   }
 }
 
@@ -2333,7 +2333,7 @@ uint16 CinematicSprInstr_SpawnMetroidEggParticles(uint16 k, uint16 j) {  // 0x8B
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEDF, 3);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEE5, 4);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEEB, 5);
-  QueueSfx2_Max6(0xB);
+  QueueSfx2_Max6(kSfx2_EnemyKilledByContactDamage);
   return j;
 }
 static const int16 kSetSomeStuffForSpriteObject_6_Tab[12] = { 0x5c, 0x58, 0x63, 0x58, 0x59, 0x5d, 0x60, 0x5b, 0x66, 0x5e, 0x63, 0x60 };
@@ -2342,9 +2342,9 @@ void SetSomeStuffForSpriteObject_6(uint16 j) {  // 0x8BA958
   int v2 = j >> 1;
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   int v3 = (uint16)(4 * v1) >> 1;
-  cinematicbg_arr7[v2] = kSetSomeStuffForSpriteObject_6_Tab[v3] + 16;
-  cinematicbg_arr8[v2] = kSetSomeStuffForSpriteObject_6_Tab[v3 + 1] + 59;
-  cinematicbg_arr9[v2] = 3584;
+  cinematicbg_x_pos[v2] = kSetSomeStuffForSpriteObject_6_Tab[v3] + 16;
+  cinematicbg_y_pos[v2] = kSetSomeStuffForSpriteObject_6_Tab[v3 + 1] + 59;
+  cinematicbg_palette_index[v2] = 3584;
 }
 static const int16 kSetSomeStuffForSpriteObject_7_Tab0[12] = { -1, 0x4000, 0, 0x4000, -1, -0x8000, -1, 0x2000, 0, -0x8000, 0, 0x2000 };
 static const uint16 kSetSomeStuffForSpriteObject_7_Tab1[82] = {  // 0x8BA994
@@ -2360,11 +2360,11 @@ void SetSomeStuffForSpriteObject_7(uint16 k) {
   int v1 = k >> 1;
   int v3 = 2 * LOBYTE(cinematicspr_goto_timer[v1]);
   assert(v3 + 1 < 12);
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], __PAIR32__(kSetSomeStuffForSpriteObject_7_Tab0[v3], kSetSomeStuffForSpriteObject_7_Tab0[v3 + 1]));
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], __PAIR32__(kSetSomeStuffForSpriteObject_7_Tab0[v3], kSetSomeStuffForSpriteObject_7_Tab0[v3 + 1]));
   int v6 = 2 * HIBYTE(cinematicspr_goto_timer[v1]);
   assert(v6 + 1 < 82);
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], __PAIR32__(kSetSomeStuffForSpriteObject_7_Tab1[v6], kSetSomeStuffForSpriteObject_7_Tab1[v6 + 1]));
-  if (sign16(cinematicbg_arr8[v1] - 168)) {
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], __PAIR32__(kSetSomeStuffForSpriteObject_7_Tab1[v6], kSetSomeStuffForSpriteObject_7_Tab1[v6 + 1]));
+  if (sign16(cinematicbg_y_pos[v1] - 168)) {
     cinematicspr_goto_timer[v1] += 256;
   } else {
     cinematicspr_instr_timer[v1] = 1;
@@ -2375,9 +2375,9 @@ void SetSomeStuffForSpriteObject_7(uint16 k) {
 void SetSomeStuffForSpriteObject_8(uint16 j) {  // 0x8BAA9A
   int v1 = j >> 1;
   cinematicspr_goto_timer[v1] = cinematic_spawn_param;
-  cinematicbg_arr7[v1] = cinematicbg_arr7[13];
-  cinematicbg_arr8[v1] = cinematicbg_arr8[13];
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = cinematicbg_x_pos[13];
+  cinematicbg_y_pos[v1] = cinematicbg_y_pos[13];
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 static const int16 kSetSomeStuffForSpriteObject_9_Tab0[10] = { -1, 0, -1, -0x8000, 1, 0, 0, -0x8000, -1, -0x8000 };
@@ -2413,17 +2413,17 @@ void SetSomeStuffForSpriteObject_9(uint16 k) {
   int v1 = k >> 1;
   int v3 = 2 * LOBYTE(cinematicspr_goto_timer[v1]);
   assert(v3 + 1 < 10);
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], __PAIR32__(kSetSomeStuffForSpriteObject_9_Tab0[v3], kSetSomeStuffForSpriteObject_9_Tab0[v3 + 1]));
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], __PAIR32__(kSetSomeStuffForSpriteObject_9_Tab0[v3], kSetSomeStuffForSpriteObject_9_Tab0[v3 + 1]));
   if ((cinematicspr_goto_timer[v1] & 1) != 0) {
     int v12 = 2 * HIBYTE(cinematicspr_goto_timer[v1]);
     assert(v12 + 1 < 124);
-    AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], __PAIR32__(kSetSomeStuffForSpriteObject_9_Tab2[v12], kSetSomeStuffForSpriteObject_9_Tab2[v12 + 1]));
+    AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], __PAIR32__(kSetSomeStuffForSpriteObject_9_Tab2[v12], kSetSomeStuffForSpriteObject_9_Tab2[v12 + 1]));
   } else {
     int v6 = 2 * HIBYTE(cinematicspr_goto_timer[v1]);
     assert(v6 + 1 < 138);
-    AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], __PAIR32__(kSetSomeStuffForSpriteObject_9_Tab1[v6], kSetSomeStuffForSpriteObject_9_Tab1[v6 + 1]));
+    AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], __PAIR32__(kSetSomeStuffForSpriteObject_9_Tab1[v6], kSetSomeStuffForSpriteObject_9_Tab1[v6 + 1]));
   }
-  if (!sign16(cinematicbg_arr8[v1] - 168)) {
+  if (!sign16(cinematicbg_y_pos[v1] - 168)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_MetroidEggSlimeDrops;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
@@ -2434,17 +2434,17 @@ void SetSomeStuffForSpriteObject_9(uint16 k) {
 
 void SetSomeStuffForSpriteObject_10(uint16 j) {  // 0x8BAD55
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 84;
-  cinematicbg_arr8[v1] = 139;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 84;
+  cinematicbg_y_pos[v1] = 139;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void SetSomeStuffForSpriteObject_11(uint16 k) {  // 0x8BAD68
   if (cinematic_var13) {
-    if ((cinematic_var4 & 3) == 0) {
-      if (cinematic_var8) {
-        --cinematic_var8;
-        ++cinematicbg_arr7[k >> 1];
+    if ((cinematic_func_timer & 3) == 0) {
+      if (mode7_x_pos) {
+        --mode7_x_pos;
+        ++cinematicbg_x_pos[k >> 1];
       }
     }
   } else {
@@ -2456,17 +2456,17 @@ void SetSomeStuffForSpriteObject_11(uint16 k) {  // 0x8BAD68
 
 void SetSomeStuffForSpriteObject_12(uint16 j) {  // 0x8BAD93
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 112;
-  cinematicbg_arr8[v1] = 111;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 112;
+  cinematicbg_y_pos[v1] = 111;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void SetSomeStuffForSpriteObject_13(uint16 k) {  // 0x8BADA6
   if (cinematic_var13) {
-    if ((cinematic_var4 & 3) == 0) {
-      if (sign16(cinematic_var10 - 8)) {
-        ++cinematic_var10;
-        --cinematicbg_arr8[k >> 1];
+    if ((cinematic_func_timer & 3) == 0) {
+      if (sign16(mode7_y_pos - 8)) {
+        ++mode7_y_pos;
+        --cinematicbg_y_pos[k >> 1];
       }
     }
   } else {
@@ -2483,26 +2483,26 @@ uint16 CinematicBgInstr_SetSomeStuffForSpriteObject_14(uint16 k, uint16 j) {  //
 }
 
 void SetSomeStuffForSpriteObject_15(void) {  // 0x8BADE1
-  cinematicbg_arr7[15] = 8;
-  cinematicbg_arr8[15] = 248;
+  cinematicbg_x_pos[15] = 8;
+  cinematicbg_y_pos[15] = 248;
 }
 
 void SetSomeStuffForSpriteObject_16(void) {  // 0x8BADEE
-  cinematicbg_arr7[15] = 8;
-  cinematicbg_arr8[15] = 24;
+  cinematicbg_x_pos[15] = 8;
+  cinematicbg_y_pos[15] = 24;
   cinematicspr_instr_ptr[15] = addr_kCinematicSpriteObjectInstrList_IntroTextCaret;
   cinematicspr_instr_timer[15] = 1;
 }
 
 void SetSomeStuffForSpriteObject_17(uint16 j) {  // 0x8BAE07
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 216;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 216;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void SetSomeStuffForSpriteObject_18(uint16 k) {  // 0x8BAE1A
-  if (cinematic_var16 == 59) {
+  if (cinematic_jp_text_timer == 59) {
     int v1 = k >> 1;
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_IntroJpTextNextPageArrow_Blink;
@@ -2515,7 +2515,7 @@ void SetSomeStuffForSpriteObject_18(uint16 k) {  // 0x8BAE1A
 }
 
 uint16 CinematicBgInstr_HandleCreateJpnText_Page1(uint16 k, uint16 j) {  // 0x8BAE43
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
     SpawnMode7Object(addr_kMode7ObjectDef_8BD401, japanese_text_flag);
   return j;
@@ -2530,7 +2530,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page1(uint16 k, uint16 j) {  // 0x8
 }
 
 uint16 CinematicBgInstr_HandleCreateJpnText_Page2(uint16 k, uint16 j) {  // 0x8BAE79
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
     SpawnMode7Object(addr_kMode7ObjectDef_8BD407, japanese_text_flag);
   return j;
@@ -2548,8 +2548,8 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page2(uint16 k, uint16 j) {  // 0x8
 }
 
 void CinematicFunction_Intro_WaitInputSetupMotherBrainFight(void) {  // 0x8BAEB8
-  if (cinematic_var16) {
-    --cinematic_var16;
+  if (cinematic_jp_text_timer) {
+    --cinematic_jp_text_timer;
   } else if (joypad1_newkeys) {
     reg_BG1SC = 80;
     samus_pose = kPose_02_FaceL_Normal;
@@ -2563,7 +2563,7 @@ void CinematicFunction_Intro_WaitInputSetupMotherBrainFight(void) {  // 0x8BAEB8
     samus_prev_x_pos = 155;
     samus_y_pos = 115;
     samus_prev_y_pos = 115;
-    cinematic_var8 = 0;
+    mode7_x_pos = 0;
     cinematic_var13 = 127;
     SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE55, 0);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF27, 0);
@@ -2583,14 +2583,14 @@ void CinematicFunction_Intro_WaitInputSetupMotherBrainFight(void) {  // 0x8BAEB8
     ResetDemoData();
     EnableDemoInput();
     LoadDemoInputObject(0, addr_kDemoInputsObjects_OldMotherBrainFight);  // undefined
-    cinematic_var15 = -1;
+    cinematic_samus_display_flag = -1;
     CinematicFunction_Intro_SetupTransitionToGameplay();
   }
 }
 
 void CinematicFunction_Intro_WaitInputSetupBabyMetroid(void) {  // 0x8BAF6C
-  if (cinematic_var16) {
-    --cinematic_var16;
+  if (cinematic_jp_text_timer) {
+    --cinematic_jp_text_timer;
   } else if (joypad1_newkeys) {
     reg_BG1SC = 84;
     room_width_in_blocks = 32;
@@ -2606,11 +2606,11 @@ void CinematicFunction_Intro_WaitInputSetupBabyMetroid(void) {  // 0x8BAF6C
     samus_prev_x_pos = 376;
     samus_y_pos = 147;
     samus_prev_y_pos = 147;
-    cinematic_var8 = 0;
+    mode7_x_pos = 0;
     cinematic_var13 = 127;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE5B, 0x7F);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE79, 0);
-    cinematic_var11 = 0;
+    cinematic_intro_end_counter = 0;
     uint16 v1 = 0;
     do {
       level_data[v1 >> 1] = kLevelData_RoomWithBabyMetroidHatching[v1 >> 1];
@@ -2622,7 +2622,7 @@ void CinematicFunction_Intro_WaitInputSetupBabyMetroid(void) {  // 0x8BAF6C
     ResetDemoData();
     EnableDemoInput();
     LoadDemoInputObject(0, addr_kDemoInputObjects_BabyMetroidDiscovery);  // a undefined
-    cinematic_var15 = 1;
+    cinematic_samus_display_flag = 1;
     CinematicFunction_Intro_SetupTransitionToGameplay();
   }
 }
@@ -2649,7 +2649,7 @@ void CinematicFunction_Intro_SetupTransitionToGameplay(void) {  // 0x8BB018
 }
 
 uint16 CinematicBgInstr_HandleCreateJpnText_Page3(uint16 k, uint16 j) {  // 0x8BB074
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
     SpawnMode7Object(addr_kMode7ObjectDef_8BD413, japanese_text_flag);
   return j;
@@ -2667,7 +2667,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page3(uint16 k, uint16 j) {  // 0x8
 }
 
 uint16 CinematicBgInstr_HandleCreateJpnText_Page4(uint16 k, uint16 j) {  // 0x8BB0B3
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
     SpawnMode7Object(addr_kMode7ObjectDef_8BD41F, japanese_text_flag);
   return j;
@@ -2685,12 +2685,12 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page4(uint16 k, uint16 j) {  // 0x8
 }
 
 void CinematicFunction_Intro_Func11(void) {  // 0x8BB0F2
-  if (cinematic_var16) {
-    --cinematic_var16;
+  if (cinematic_jp_text_timer) {
+    --cinematic_jp_text_timer;
   } else if (joypad1_newkeys) {
     reg_BG1SC = 88;
-    cinematic_var8 = 32;
-    cinematic_var10 = 8;
+    mode7_x_pos = 32;
+    mode7_y_pos = 8;
     cinematic_var13 = 127;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE61, 0x7F);
     CinematicFunction_Intro_Func13();
@@ -2698,12 +2698,12 @@ void CinematicFunction_Intro_Func11(void) {  // 0x8BB0F2
 }
 
 void CinematicFunction_Intro_Func12(void) {  // 0x8BB123
-  if (cinematic_var16) {
-    --cinematic_var16;
+  if (cinematic_jp_text_timer) {
+    --cinematic_jp_text_timer;
   } else if (joypad1_newkeys) {
     reg_BG1SC = 92;
-    cinematic_var8 = 0;
-    cinematic_var10 = -24;
+    mode7_x_pos = 0;
+    mode7_y_pos = -24;
     cinematic_var13 = 127;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE67, 0x7F);
     CinematicFunction_Intro_Func13();
@@ -2730,7 +2730,7 @@ void CinematicFunction_Intro_Func13(void) {  // 0x8BB151
 }
 
 uint16 CinematicBgInstr_HandleCreateJpnText_Page5(uint16 k, uint16 j) {  // 0x8BB19B
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
     SpawnMode7Object(addr_kMode7ObjectDef_8BD42B, japanese_text_flag);
   return j;
@@ -2757,8 +2757,8 @@ void CinematicFunction_Intro_Func15b(void) {  // 0x8BB207
 }
 
 void CinematicFunction_Intro_Func15(void) {  // 0x8BB1DA
-  if (cinematic_var16) {
-    --cinematic_var16;
+  if (cinematic_jp_text_timer) {
+    --cinematic_jp_text_timer;
   } else if (joypad1_newkeys) {
     cinematic_var13 = 127;
     if (japanese_text_flag) {
@@ -2773,7 +2773,7 @@ void CinematicFunction_Intro_Func15(void) {  // 0x8BB1DA
 }
 
 uint16 CinematicBgInstr_Func16(uint16 k, uint16 j) {  // 0x8BB228
-  cinematicbg_var1 = 0;
+  cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
     SpawnMode7Object(addr_kMode7ObjectDef_8BD437, japanese_text_flag);
   return j;
@@ -2787,7 +2787,7 @@ uint16 CinematicBgInstr_Func17(uint16 k, uint16 j) {  // 0x8BB240
 }
 
 void CinematicFunction_Intro_XfadeGameplayFade(void) {  // 0x8BB250
-  if ((cinematic_var4 & 3) == 0) {
+  if ((cinematic_func_timer & 3) == 0) {
     FadeOutYColorsFromIndexX(0, 0x14);
     FadeOutYColorsFromIndexX(0x60, 0x10);
     FadeOutYColorsFromIndexX(0x1D2, 6);
@@ -2797,7 +2797,7 @@ void CinematicFunction_Intro_XfadeGameplayFade(void) {  // 0x8BB250
     FadeInYColorsFromIndexX(0x1E0, 0x10);
     ComposeFadingPalettes();
   }
-  if ((--cinematic_var4 & 0x8000) != 0) {
+  if ((--cinematic_func_timer & 0x8000) != 0) {
     reg_TM = 21;
     reg_TS = 0;
     reg_CGWSEL = 0;
@@ -2807,13 +2807,13 @@ void CinematicFunction_Intro_XfadeGameplayFade(void) {  // 0x8BB250
     while ((int16)(v0 * 2 - 1536) < 0);
     ClearJapaneseTextTiles();
     cinematic_function = FUNC16(CinematicFunc_Nothing);
-    if ((cinematic_var15 & 0x8000) != 0)
+    if ((cinematic_samus_display_flag & 0x8000) != 0)
       SpawnPalfxObject(addr_kPalfx_E1BC);
   }
 }
 
 void CinematicFunction_Intro_XfadeScientistFade(void) {  // 0x8BB2D2
-  if ((cinematic_var4 & 3) == 0) {
+  if ((cinematic_func_timer & 3) == 0) {
     FadeOutYColorsFromIndexX(0, 0x14);
     FadeOutYColorsFromIndexX(0x60, 0x10);
     FadeOutYColorsFromIndexX(0x1D2, 6);
@@ -2821,7 +2821,7 @@ void CinematicFunction_Intro_XfadeScientistFade(void) {  // 0x8BB2D2
     FadeInYColorsFromIndexX(0x1C0, 9);
     ComposeFadingPalettes();
   }
-  if ((--cinematic_var4 & 0x8000) != 0) {
+  if ((--cinematic_func_timer & 0x8000) != 0) {
     reg_TM = 21;
     reg_TS = 0;
     reg_CGWSEL = 0;
@@ -2879,7 +2879,7 @@ void CinematicFunction_Intro_SetupStuff(void) {  // 0x8BB3A1
   ClearYColorsFromIndexX(0x60, 0x10);
   ClearYColorsFromIndexX(0x1D2, 6);
   ComposeFadingPalettes();
-  cinematic_var4 = 127;
+  cinematic_func_timer = 127;
   EnableCinematicBgTilemapUpdates();
   SetSomeStuffForSpriteObject_16();
 }
@@ -3025,7 +3025,7 @@ void CinematicFunction_Intro_Func22(uint16 k) {  // 0x8BB585
     CinematicFunction_Intro_Func20(addr_word_8BD085);
     CinematicFunction_Intro_Func20(addr_word_8BD0E1);
     TransferJapaneseTextTilesToVram();
-    cinematic_var16 = 60;
+    cinematic_jp_text_timer = 60;
   }
 }
 
@@ -3056,7 +3056,7 @@ void CinematicFunction_Intro_Func24(uint16 k) {  // 0x8BB5EE
     ClearJapaneseTextTiles();
     CinematicFunction_Intro_Func20(addr_word_8BD15D);
     TransferJapaneseTextTilesToVram();
-    cinematic_var16 = 60;
+    cinematic_jp_text_timer = 60;
   }
 }
 
@@ -3089,7 +3089,7 @@ void CinematicFunction_Intro_Func27(uint16 k) {  // 0x8BB657
     CinematicFunction_Intro_Func20(addr_word_8BD259);
     CinematicFunction_Intro_Func20(addr_word_8BD2A5);
     TransferJapaneseTextTilesToVram();
-    cinematic_var16 = 60;
+    cinematic_jp_text_timer = 60;
   }
 }
 
@@ -3120,7 +3120,7 @@ void CinematicFunction_Intro_Func30(uint16 k) {  // 0x8BB6C0
     ClearJapaneseTextTiles();
     CinematicFunction_Intro_Func20(addr_word_8BD30D);
     TransferJapaneseTextTilesToVram();
-    cinematic_var16 = 60;
+    cinematic_jp_text_timer = 60;
   }
 }
 
@@ -3160,9 +3160,9 @@ void CinematicFunction_Intro_Func34(void) {  // 0x8BB72F
     reg_BG3HOFS = 0;
     reg_BG2VOFS = 0;
     reg_BG3VOFS = 0;
-    cinematic_var5 = 0;
+    mode7_transform_angle = 0;
     for (int i = 656; i >= 0; i -= 2)
-      *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+      *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func54);
     RevertButtonConfig();
     samus_max_missiles = 0;
@@ -3172,9 +3172,9 @@ void CinematicFunction_Intro_Func34(void) {  // 0x8BB72F
 
 void CinematicFunction_Intro_Func35(uint16 j) {  // 0x8BB773
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 56;
-  cinematicbg_arr8[v1] = 111;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 56;
+  cinematicbg_y_pos[v1] = 111;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func36(uint16 k) {  // 0x8BB786
@@ -3224,7 +3224,7 @@ void CinematicSprPreInstr_B82E(uint16 k) {  // 0x8BB82E
     int v1 = k >> 1;
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
-    cinematic_var15 = 0;
+    cinematic_samus_display_flag = 0;
   }
 }
 
@@ -3246,10 +3246,10 @@ void CinematicFunction_Intro_Func37(uint16 k) {  // 0x8BB846
 }
 
 void CinematicFunction_Intro_Func40(void) {  // 0x8BB877
-  if ((cinematic_var12 & 1) != 0)
-    cinematic_var10 -= 4;
+  if ((cinematic_frame_counter & 1) != 0)
+    mode7_y_pos -= 4;
   else
-    cinematic_var10 += 4;
+    mode7_y_pos += 4;
 }
 
 static const uint16 kCinematicFunction_Intro_Func42_Tab0[4] = { 0x70, 0xc0, 0x80, 0xe8 };
@@ -3260,9 +3260,9 @@ void CinematicFunction_Intro_Func42(uint16 j) {  // 0x8BB896
   int v2 = j >> 1;
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   int v3 = v1;
-  cinematicbg_arr7[v2] = kCinematicFunction_Intro_Func42_Tab0[v3];
-  cinematicbg_arr8[v2] = kCinematicFunction_Intro_Func42_Tab1[v3] - 8;
-  cinematicbg_arr9[v2] = 3584;
+  cinematicbg_x_pos[v2] = kCinematicFunction_Intro_Func42_Tab0[v3];
+  cinematicbg_y_pos[v2] = kCinematicFunction_Intro_Func42_Tab1[v3] - 8;
+  cinematicbg_palette_index[v2] = 3584;
 }
 
 uint16 CinematicSprInstr_Func43(uint16 k, uint16 j) {  // 0x8BB8C5
@@ -3276,9 +3276,9 @@ uint16 CinematicSprInstr_Func43(uint16 k, uint16 j) {  // 0x8BB8C5
 
 void CinematicFunction_Intro_Func44(uint16 k) {  // 0x8BB8D8
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], 0x8000);
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], 0x8000);
-  if (sign16(cinematicbg_arr7[v1] + 8 - (samus_x_pos - 5))) {
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], 0x8000);
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], 0x8000);
+  if (sign16(cinematicbg_x_pos[v1] + 8 - (samus_x_pos - 5))) {
     if (cinematicspr_preinstr_func[0] != FUNC16(CinematicFunction_Intro_Func39))
       return;
   } else {
@@ -3294,9 +3294,9 @@ static const uint16 kCinematicFunction_Intro_Func45_Tab0[4] = { 0, 0xffff, 0, 0x
 void CinematicFunction_Intro_Func45(uint16 k) {  // 0x8BB93B
   int v1 = k >> 1;
   int v2 = cinematicspr_goto_timer[v1];
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], __PAIR32__(kCinematicFunction_Intro_Func45_Tab0[v2], 0x8000));
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], 0x8000);
-  if (sign16(cinematicbg_arr8[v1] - 16) || !sign16(cinematicbg_arr8[v1] - 208) || cinematicspr_preinstr_func[0] == FUNC16(CinematicFunction_Intro_Func39)) {
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], __PAIR32__(kCinematicFunction_Intro_Func45_Tab0[v2], 0x8000));
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], 0x8000);
+  if (sign16(cinematicbg_y_pos[v1] - 16) || !sign16(cinematicbg_y_pos[v1] - 208) || cinematicspr_preinstr_func[0] == FUNC16(CinematicFunction_Intro_Func39)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
   }
@@ -3309,10 +3309,10 @@ void CinematicFunction_Intro_Func46(uint16 j) {  // 0x8BB98D
   int v2 = j >> 1;
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   int v3 = v1;
-  cinematicbg_arr7[v2] = kCinematicFunction_Intro_Func46_Tab0[v3] + 56;
-  cinematicbg_arr8[v2] = kCinematicFunction_Intro_Func46_Tab1[v3] + 111;
+  cinematicbg_x_pos[v2] = kCinematicFunction_Intro_Func46_Tab0[v3] + 56;
+  cinematicbg_y_pos[v2] = kCinematicFunction_Intro_Func46_Tab1[v3] + 111;
   cinematicspr_instr_timer[v2] = kCinematicFunction_Intro_Func46_Tab2[v3];
-  cinematicbg_arr9[v2] = 2560;
+  cinematicbg_palette_index[v2] = 2560;
 }
 static const uint16 kCinematicFunction_Intro_Func47_Tab0[3] = { 0x10, 0xfff0, 0xfff0 };
 static const uint16 kCinematicFunction_Intro_Func47_Tab1[3] = { 0, 4, 0xfff8 };
@@ -3322,10 +3322,10 @@ void CinematicFunction_Intro_Func47(uint16 j) {  // 0x8BB9D4
   int v2 = j >> 1;
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   int v3 = v1;
-  cinematicbg_arr7[v2] = kCinematicFunction_Intro_Func47_Tab0[v3] + 56;
-  cinematicbg_arr8[v2] = kCinematicFunction_Intro_Func47_Tab1[v3] + 111;
+  cinematicbg_x_pos[v2] = kCinematicFunction_Intro_Func47_Tab0[v3] + 56;
+  cinematicbg_y_pos[v2] = kCinematicFunction_Intro_Func47_Tab1[v3] + 111;
   cinematicspr_instr_timer[v2] = kCinematicFunction_Intro_Func47_Tab2[v3];
-  cinematicbg_arr9[v2] = 2560;
+  cinematicbg_palette_index[v2] = 2560;
 }
 
 void CinematicFunction_Intro_Func48(uint16 k) {  // 0x8BBA0F
@@ -3350,9 +3350,9 @@ uint16 CinematicSprInstr_SpawnIntroRinkas23(uint16 k, uint16 j) {  // 0x8BBA36
 
 void CinematicFunction_Intro_Func49(uint16 j) {  // 0x8BBA4B
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 112;
-  cinematicbg_arr8[v1] = 155;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 112;
+  cinematicbg_y_pos[v1] = 155;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func50(uint16 k) {  // 0x8BBA5E
@@ -3366,20 +3366,20 @@ void CinematicFunction_Intro_Func50(uint16 k) {  // 0x8BBA5E
 
 void CinematicFunction_Intro_Func51(uint16 k) {  // 0x8BBA73
   int v1 = k >> 1;
-  if (cinematicbg_arr8[v1] == 145) {
+  if (cinematicbg_y_pos[v1] == 145) {
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEF1, 0);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEF1, 1);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEF1, 2);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEF1, 3);
-    QueueSfx3_Max6(0x23);
+    QueueSfx3_Max6(kSfx3_BabyMetroidCry1);
   }
-  if ((int16)(samus_y_pos - 32 - cinematicbg_arr8[v1]) < 0) {
+  if ((int16)(samus_y_pos - 32 - cinematicbg_y_pos[v1]) < 0) {
     if (!sign16(cinematic_var17 + 543))
       cinematic_var17 -= 32;
   } else if (sign16(cinematic_var17 - 544)) {
     cinematic_var17 += 32;
   }
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], INT16_SHL8(cinematic_var17));
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], INT16_SHL8(cinematic_var17));
   if ((cinematic_var17 & 0x8000) == 0) {
     cinematic_var14 = 128;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_Intro_Func52);
@@ -3404,27 +3404,27 @@ void CinematicFunction_Intro_Func53(uint16 k) {  // 0x8BBB24
       uint16 v3 = cinematicspr_goto_timer[kh] + 1;
       cinematicspr_goto_timer[kh] = v3;
       if ((v3 & 0x3F) == 0)
-        QueueSfx3_Max6(0x23);
+        QueueSfx3_Max6(kSfx3_BabyMetroidCry1);
     }
-    if ((int16)(samus_x_pos - cinematicbg_arr7[kh]) < 0) {
+    if ((int16)(samus_x_pos - cinematicbg_x_pos[kh]) < 0) {
       if (!sign16(cinematic_var14 + 639))
         cinematic_var14 -= 32;
     } else if (sign16(cinematic_var14 - 640)) {
       cinematic_var14 += 32;
     }
-    cinematic_var15 = sign16(cinematic_var14) ? 1 : -1;
-    AddToHiLo(&cinematicbg_arr7[kh], &cinematicspr_arr6[kh], INT16_SHL8(cinematic_var14));
-    if ((int16)(samus_y_pos - 8 - cinematicbg_arr8[kh]) < 0) {
+    cinematic_samus_display_flag = sign16(cinematic_var14) ? 1 : -1;
+    AddToHiLo(&cinematicbg_x_pos[kh], &cinematicspr_arr6[kh], INT16_SHL8(cinematic_var14));
+    if ((int16)(samus_y_pos - 8 - cinematicbg_y_pos[kh]) < 0) {
       if (!sign16(cinematic_var17 + 543))
         cinematic_var17 -= 32;
     } else if (sign16(cinematic_var17 - 544)) {
       cinematic_var17 += 32;
     }
-    AddToHiLo(&cinematicbg_arr8[kh], &cinematicspr_arr7[kh], INT16_SHL8(cinematic_var17));
+    AddToHiLo(&cinematicbg_y_pos[kh], &cinematicspr_arr7[kh], INT16_SHL8(cinematic_var17));
   } else {
     cinematicspr_instr_timer[kh] = 1;
     cinematicspr_instr_ptr[kh] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
-    cinematic_var15 = 0;
+    cinematic_samus_display_flag = 0;
   }
 }
 
@@ -3512,14 +3512,14 @@ void CinematicFunction_Intro_Func54(void) {  // 0x8BBCA0
   reg_M7X = 56;
   WriteRegWord(M7Y, 0x18);
   reg_M7Y = 24;
-  cinematic_var8 = -72;
-  cinematic_var10 = -104;
-  cinematic_var5 = 224;
-  cinematic_var6 = 512;
+  mode7_x_pos = -72;
+  mode7_y_pos = -104;
+  mode7_transform_angle = 224;
+  mode7_transform_zoom = 512;
   ClearPaletteFXObjects();
   EnablePaletteFx();
   ClearCinematicBgObjects(0);
-  cinematicbg_var3 = 23552;
+  cinematicbg_vram_addr = 23552;
   EnableNMI();
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF0F, 0);
   cinematic_function = FUNC16(CinematicFunction_Intro_Func55);
@@ -3535,7 +3535,7 @@ void CinematicFunction_Intro_Func55(void) {  // 0x8BBDE4
 }
 
 void CinematicFunction_Intro_Func56(void) {  // 0x8BBDF9
-  if (sign16(cinematic_var6 - 32)) {
+  if (sign16(mode7_transform_zoom - 32)) {
     reg_CGWSEL = 0;
     reg_CGADSUB = 49;
     reg_COLDATA[0] = 63;
@@ -3543,9 +3543,9 @@ void CinematicFunction_Intro_Func56(void) {  // 0x8BBDF9
     reg_COLDATA[2] = -97;
     ClearCinematicSprites();
     QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_BackOfGunship);
-    cinematic_var8 = -32;
-    cinematic_var10 = -128;
-    cinematic_var5 = 32;
+    mode7_x_pos = -32;
+    mode7_y_pos = -128;
+    mode7_transform_angle = 32;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF39, 0);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE85, 0);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE8B, 0);
@@ -3555,7 +3555,7 @@ void CinematicFunction_Intro_Func56(void) {  // 0x8BBDF9
     SpawnPalfxObject(addr_kPalfx_E1A8);
     SpawnPalfxObject(addr_kPalfx_E1AC);
   } else {
-    cinematic_var6 -= 16;
+    mode7_transform_zoom -= 16;
   }
 }
 
@@ -3563,13 +3563,13 @@ void CinematicFunction_Intro_Func57(uint16 j) {  // 0x8BBE7E
   int v1 = j >> 1;
   if (cinematic_spawn_param) {
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_Intro_Func66);
-    cinematicbg_arr7[v1] = -32;
+    cinematicbg_x_pos[v1] = -32;
   } else {
     cinematicspr_goto_timer[v1] = -1024;
-    cinematicbg_arr7[v1] = 112;
+    cinematicbg_x_pos[v1] = 112;
   }
-  cinematicbg_arr8[v1] = 87;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_y_pos[v1] = 87;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func58(uint16 k) {  // 0x8BBEB5
@@ -3577,68 +3577,68 @@ void CinematicFunction_Intro_Func58(uint16 k) {  // 0x8BBEB5
     int v1 = k >> 1;
     cinematicspr_goto_timer[v1] += 128;
     int32 d = INT16_SHL8(cinematicspr_goto_timer[v1]);
-    AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], d);
-    AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], d);
-    AddToHiLo(&cinematic_var8, &cinematic_var7, d);
-    AddToHiLo(&cinematic_var10, &cinematic_var9, d);
+    AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], d);
+    AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], d);
+    AddToHiLo(&mode7_x_pos, &mode7_x_subpos, d);
+    AddToHiLo(&mode7_y_pos, &mode7_y_subpos, d);
   }
 }
 
 void CinematicFunction_Intro_Func59(uint16 j) {  // 0x8BBF22
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 80;
-  cinematicbg_arr8[v1] = 159;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 80;
+  cinematicbg_y_pos[v1] = 159;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func60(uint16 k) {  // 0x8BBF35
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], 0x4000);
-  cinematicbg_arr7[v1] &= 0x1ff;
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], 0x4000);
+  cinematicbg_x_pos[v1] &= 0x1ff;
 }
 
 void CinematicFunction_Intro_Func61(uint16 j) {  // 0x8BBF4C
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 116;
-  cinematicbg_arr8[v1] = 160;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 116;
+  cinematicbg_y_pos[v1] = 160;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void CinematicFunction_Intro_Func62(uint16 k) {  // 0x8BBF5F
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], 4096);
-  cinematicbg_arr7[v1] &= 0x1ff;
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], 4096);
+  cinematicbg_x_pos[v1] &= 0x1ff;
 }
 
 void CinematicFunction_Intro_Func63(uint16 j) {  // 0x8BBF76
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 96;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 96;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func64(uint16 k) {  // 0x8BBF89
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], 2048);
-  cinematicbg_arr7[v1] &= 0x1ff;
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], 2048);
+  cinematicbg_x_pos[v1] &= 0x1ff;
 }
 
 void CinematicFunction_Intro_Func65(uint16 j) {  // 0x8BBFA0
   if (cinematic_spawn_param) {
-    cinematicbg_arr7[j >> 1] = 224;
+    cinematicbg_x_pos[j >> 1] = 224;
   } else {
     int v1 = j >> 1;
-    cinematicbg_arr7[v1] = 112;
+    cinematicbg_x_pos[v1] = 112;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicSprPreInstr_nullsub_300);
   }
   int v2 = j >> 1;
-  cinematicbg_arr8[v2] = 87;
-  cinematicbg_arr9[v2] = 2048;
+  cinematicbg_y_pos[v2] = 87;
+  cinematicbg_palette_index[v2] = 2048;
 }
 
 void CinematicFunction_Intro_Func66(uint16 k) {  // 0x8BBFC6
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], -0x2000);
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], -0x2000);
 }
 
 void CinematicFunction_Intro_Func67(void) {  // 0x8BBFDA
@@ -3648,23 +3648,23 @@ void CinematicFunction_Intro_Func67(void) {  // 0x8BBFDA
     reg_COLDATA[1] = 64;
   if (sign8(--reg_COLDATA[2] + 0x80))
     reg_COLDATA[2] = 0x80;
-  AddToHiLo(&cinematic_var8, &cinematic_var7, -0x2000);
-  if (sign16(cinematic_var6 - 3072)) {
-    cinematic_var6 += 16;
-  } else if (sign16(cinematic_var6 - 0x2000)) {
-    cinematic_var6 += 32;
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, -0x2000);
+  if (sign16(mode7_transform_zoom - 3072)) {
+    mode7_transform_zoom += 16;
+  } else if (sign16(mode7_transform_zoom - 0x2000)) {
+    mode7_transform_zoom += 32;
   } else {
     reg_TM = 17;
     reg_BGMODE = 1;
     reg_M7SEL = 0;
     reg_BG1SC = 92;
     reg_BG12NBA = 6;
-    cinematic_var6 = 256;
-    cinematic_var5 = 0;
-    cinematic_var7 = 0;
-    cinematic_var8 = 0;
-    cinematic_var9 = 0;
-    cinematic_var10 = 0;
+    mode7_transform_zoom = 256;
+    mode7_transform_angle = 0;
+    mode7_x_subpos = 0;
+    mode7_x_pos = 0;
+    mode7_y_subpos = 0;
+    mode7_y_pos = 0;
     EnableCinematicBgObjects();
     EnableCinematicBgTilemapUpdates();
     SpawnCinematicBgObject(addr_kCinematicBgObjectDef_8BCF69, 0x5C00);
@@ -3674,9 +3674,9 @@ void CinematicFunction_Intro_Func67(void) {  // 0x8BBFDA
 
 void CinematicFunction_Intro_Func68(uint16 j) {  // 0x8BC083
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 124;
-  cinematicbg_arr8[v1] = 186;
-  cinematicbg_arr9[v1] = 0;
+  cinematicbg_x_pos[v1] = 124;
+  cinematicbg_y_pos[v1] = 186;
+  cinematicbg_palette_index[v1] = 0;
 }
 
 uint16 CinematicCommonInstr_Func69(uint16 k, uint16 j) {  // 0x8BC096
@@ -3694,9 +3694,9 @@ uint16 CinematicCommonInstr_Func70(uint16 k, uint16 j) {  // 0x8BC0A2
 
 void CinematicFunction_Intro_Func71(uint16 j) {  // 0x8BC0B2
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 124;
-  cinematicbg_arr8[v1] = 204;
-  cinematicbg_arr9[v1] = 0;
+  cinematicbg_x_pos[v1] = 124;
+  cinematicbg_y_pos[v1] = 204;
+  cinematicbg_palette_index[v1] = 0;
 }
 
 void CinematicFunction_Intro_Func72(void) {  // 0x8BC0C5
@@ -3709,9 +3709,9 @@ void CinematicFunction_Intro_Func72(void) {  // 0x8BC0C5
     reg_BG3HOFS = 0;
     reg_BG2VOFS = 0;
     reg_BG3VOFS = 0;
-    cinematic_var5 = 0;
+    mode7_transform_angle = 0;
     for (int i = 656; i >= 0; i -= 2)
-      *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+      *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func73);
   }
 }
@@ -3730,7 +3730,7 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
 
   SetupPpu_3_Mode7();
   for (j = 656; j >= 0; j -= 2)
-    *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)j) = 0;
+    *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)j) = 0;
   door_def_ptr = 0;
   layer1_x_pos = 0;
   layer1_y_pos = 0;
@@ -3786,16 +3786,16 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
   reg_M7X = 52;
   WriteRegWord(M7Y, 0x30);
   reg_M7Y = 48;
-  cinematic_var8 = -44;
-  cinematic_var10 = -112;
-  cinematic_var5 = 0;
-  cinematic_var6 = 256;
+  mode7_x_pos = -44;
+  mode7_y_pos = -112;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 256;
   DisableHdmaObjects();
   WaitUntilEndOfVblankAndClearHdma();
   ClearPaletteFXObjects();
   EnablePaletteFx();
   ClearCinematicBgObjects(0x2f);
-  cinematicbg_var3 = 0;
+  cinematicbg_vram_addr = 0;
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE7F, 0);
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE8B, 2);
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE91, 0);
@@ -3819,32 +3819,32 @@ void CinematicFunction_Intro_Func74(void) {  // 0x8BC2E4
 }
 
 void CinematicFunction_Intro_Func75(void) {  // 0x8BC2F1
-  AddToHiLo(&cinematic_var10, &cinematic_var9, 4096);
-  AddToHiLo(&cinematic_var8, &cinematic_var7, -0x4000);
-  ++cinematic_var6;
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, 4096);
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, -0x4000);
+  ++mode7_transform_zoom;
   HandleFadeIn();
   if (reg_INIDISP == 15) {
     screen_fade_delay = 0;
     screen_fade_counter = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func76);
-    cinematic_var4 = 1;
+    cinematic_func_timer = 1;
     cinematic_var13 = 0;
   }
 }
 
 void CinematicFunction_Intro_Func76(void) {  // 0x8BC345
-  AddToHiLo(&cinematic_var10, &cinematic_var9, 4096);
-  AddToHiLo(&cinematic_var8, &cinematic_var7, -0x4000);
-  if (sign16(cinematic_var6 - 640)) {
-    ++cinematic_var6;
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, 4096);
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, -0x4000);
+  if (sign16(mode7_transform_zoom - 640)) {
+    ++mode7_transform_zoom;
   } else {
-    power_bomb_explosion_x_pos = reg_M7X - cinematic_var8;
-    power_bomb_explosion_y_pos = reg_M7Y - cinematic_var10;
+    power_bomb_explosion_x_pos = reg_M7X - mode7_x_pos;
+    power_bomb_explosion_y_pos = reg_M7Y - mode7_y_pos;
     EnableHdmaObjects();
     SpawnPowerBombExplosion();
     reg_CGWSEL = 16;
     reg_CGADSUB = 55;
-    cinematic_var6 = 768;
+    mode7_transform_zoom = 768;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF2D, 0);
     if (game_state == 37)
       QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_ClearCeresUpperHalf);
@@ -3874,19 +3874,19 @@ void CinematicFunction_Intro_Func78(uint16 j) {  // 0x8BC434
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   int v3 = v1;
   cinematicspr_instr_timer[v2] = kCinematicFunction_Intro_Func78_Tab0[v3];
-  cinematicbg_arr7[v2] = kCinematicFunction_Intro_Func78_Tab1[v3] + reg_M7X - cinematic_var8;
-  cinematicbg_arr8[v2] = kCinematicFunction_Intro_Func78_Tab2[v3] + reg_M7Y - cinematic_var10;
-  cinematicbg_arr9[v2] = 2560;
+  cinematicbg_x_pos[v2] = kCinematicFunction_Intro_Func78_Tab1[v3] + reg_M7X - mode7_x_pos;
+  cinematicbg_y_pos[v2] = kCinematicFunction_Intro_Func78_Tab2[v3] + reg_M7Y - mode7_y_pos;
+  cinematicbg_palette_index[v2] = 2560;
 }
 
 void CinematicSprPreInstr_C489(uint16 k) {  // 0x8BC489
   if (cinematic_function == FUNC16(CinematicFunction_Intro_Func77)) {
     cinematicspr_preinstr_func[k >> 1] = FUNC16(CinematicFunction_nullsub_116);
   } else {
-    bool v1 = (--cinematic_var4 & 0x8000) != 0;
-    if (!cinematic_var4 || v1) {
+    bool v1 = (--cinematic_func_timer & 0x8000) != 0;
+    if (!cinematic_func_timer || v1) {
       SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEC1, cinematic_var13);
-      cinematic_var4 = 12;
+      cinematic_func_timer = 12;
       cinematic_var13 = (cinematic_var13 + 1) & 7;
     }
   }
@@ -3905,9 +3905,9 @@ void CinematicFunction_Intro_Func80(uint16 j) {
   int v2 = j >> 1;
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   int v3 = 2 * v1;
-  cinematicbg_arr7[v2] = g_word_8BC4EB[v3] + reg_M7X - cinematic_var8;
-  cinematicbg_arr8[v2] = g_word_8BC4EB[v3 + 1] + reg_M7Y - cinematic_var10;
-  cinematicbg_arr9[v2] = 2560;
+  cinematicbg_x_pos[v2] = g_word_8BC4EB[v3] + reg_M7X - mode7_x_pos;
+  cinematicbg_y_pos[v2] = g_word_8BC4EB[v3 + 1] + reg_M7Y - mode7_y_pos;
+  cinematicbg_palette_index[v2] = 2560;
 }
 
 uint16 CinematicSprInstr_SpawnCeresExplosions3(uint16 k, uint16 j) {  // 0x8BC50C
@@ -3923,40 +3923,40 @@ void CinematicFunction_Intro_Func81(uint16 j) {  // 0x8BC533
   int v2 = j >> 1;
   cinematicspr_goto_timer[v2] = cinematic_spawn_param;
   cinematicspr_instr_timer[v2] = kCinematicFunction_Intro_Func81_Tab0[v1];
-  cinematicbg_arr7[v2] = kCinematicFunction_Intro_Func81_Tab1[v1] + reg_M7X - cinematic_var8;
-  cinematicbg_arr8[v2] = kCinematicFunction_Intro_Func81_Tab2[v1] + reg_M7Y - cinematic_var10;
-  cinematicbg_arr9[v2] = 2560;
+  cinematicbg_x_pos[v2] = kCinematicFunction_Intro_Func81_Tab1[v1] + reg_M7X - mode7_x_pos;
+  cinematicbg_y_pos[v2] = kCinematicFunction_Intro_Func81_Tab2[v1] + reg_M7Y - mode7_y_pos;
+  cinematicbg_palette_index[v2] = 2560;
 }
 
 void CinematicFunction_Intro_Func82(uint16 k) {  // 0x8BC582
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], -4096);
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], 0x4000);
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], -4096);
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], 0x4000);
 }
 
 void CinematicFunction_Intro_Func83(uint16 j) {  // 0x8BC5A9
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = reg_M7X - cinematic_var8;
-  cinematicbg_arr8[v1] = reg_M7Y - cinematic_var10;
-  cinematicbg_arr9[v1] = 2560;
+  cinematicbg_x_pos[v1] = reg_M7X - mode7_x_pos;
+  cinematicbg_y_pos[v1] = reg_M7Y - mode7_y_pos;
+  cinematicbg_palette_index[v1] = 2560;
 }
 
 void CinematicFunction_Intro_Func77(void) {  // 0x8BC5CA
   reg_CGWSEL = 16;
   reg_CGADSUB = 55;
-  cinematic_var8 += 2;
-  cinematic_var5 = (uint8)(cinematic_var5 - 1);
-  if (sign16(cinematic_var6 - 16)) {
+  mode7_x_pos += 2;
+  mode7_transform_angle = (uint8)(mode7_transform_angle - 1);
+  if (sign16(mode7_transform_zoom - 16)) {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func84);
-    cinematic_var4 = 192;
+    cinematic_func_timer = 192;
   } else {
-    cinematic_var6 -= 16;
+    mode7_transform_zoom -= 16;
   }
 }
 
 void CinematicFunction_Intro_Func84(void) {  // 0x8BC610
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     screen_fade_delay = 1;
     screen_fade_counter = 1;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func85);
@@ -3988,7 +3988,7 @@ void CinematicFunction_Intro_Func85(void) {  // 0x8BC627
       game_options_screen_index = 0;
       menu_index = 0;
       for (int i = 254; i >= 0; i -= 2)
-        cinematicbg_arr7[(i >> 1) + 8] = 0;
+        cinematicbg_x_pos[(i >> 1) + 8] = 0;
       game_state = kGameState_25_SamusNoHealth;
     } else {
       cinematic_function = FUNC16(CinematicFunction_Intro_Func86);
@@ -3999,7 +3999,7 @@ void CinematicFunction_Intro_Func85(void) {  // 0x8BC627
 void CinematicFunction_Intro_Func86(void) {  // 0x8BC699
   SetupPpu_4_Mode1();
   for (int i = 656; i >= 0; i -= 2)
-    *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+    *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
   DecompressToMem(0x978ADB, g_ram + 0x19000);
   DecompressToMem(0x96EC76, g_ram + 0x15000);
   WriteReg(VMADDL, 0);
@@ -4032,10 +4032,10 @@ void CinematicFunction_Intro_Func86(void) {  // 0x8BC699
   reg_M7X = 56;
   WriteRegWord(M7Y, 0x18);
   reg_M7Y = 24;
-  cinematic_var8 = 0;
-  cinematic_var10 = 0;
-  cinematic_var5 = 0;
-  cinematic_var6 = 256;
+  mode7_x_pos = 0;
+  mode7_y_pos = 0;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 256;
   DisableHdmaObjects();
   WaitUntilEndOfVblankAndClearHdma();
   ClearPaletteFXObjects();
@@ -4049,7 +4049,7 @@ void CinematicFunction_Intro_Func86(void) {  // 0x8BC699
 }
 
 void CinematicFunction_Intro_Func87(void) {  // 0x8BC79C
-  if ((cinematic_var12 & 3) == 0)
+  if ((cinematic_frame_counter & 3) == 0)
     reg_MOSAIC -= 16;
   HandleFadeIn();
   if (reg_INIDISP == 15) {
@@ -4060,7 +4060,7 @@ void CinematicFunction_Intro_Func87(void) {  // 0x8BC79C
 }
 
 void CinematicFunction_Intro_Func88(void) {  // 0x8BC7CA
-  if ((cinematic_var12 & 3) == 0) {
+  if ((cinematic_frame_counter & 3) == 0) {
     reg_MOSAIC -= 16;
     if ((reg_MOSAIC & 0xF0) == 0) {
       reg_BGMODE = 7;
@@ -4068,10 +4068,10 @@ void CinematicFunction_Intro_Func88(void) {  // 0x8BC7CA
       reg_BG1SC = 0;
       reg_BG12NBA = 0;
       reg_TM = 17;
-      cinematic_var8 = 128;
-      cinematic_var10 = -104;
-      cinematic_var5 = 32;
-      cinematic_var6 = 256;
+      mode7_x_pos = 128;
+      mode7_y_pos = -104;
+      mode7_transform_angle = 32;
+      mode7_transform_zoom = 256;
       SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEA3, 0);
       SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEF7, 0);
       SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCEFD, 0);
@@ -4085,9 +4085,9 @@ void CinematicFunction_Intro_Func88(void) {  // 0x8BC7CA
 
 void CinematicFunction_Intro_Func89(uint16 j) {  // 0x8BC83B
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 136;
-  cinematicbg_arr8[v1] = 111;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 136;
+  cinematicbg_y_pos[v1] = 111;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func90(uint16 k) {  // 0x8BC84E
@@ -4098,8 +4098,8 @@ void CinematicFunction_Intro_Func90(uint16 k) {  // 0x8BC84E
 void CinematicFunction_Intro_Func91(uint16 k) {  // 0x8BC85D
   int v1 = k >> 1;
   cinematicspr_goto_timer[v1] += 64;
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], -INT16_SHL8(cinematicspr_goto_timer[v1]));
-  if (sign16(cinematicbg_arr8[v1] + 128)) {
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], -INT16_SHL8(cinematicspr_goto_timer[v1]));
+  if (sign16(cinematicbg_y_pos[v1] + 128)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
   }
@@ -4107,9 +4107,9 @@ void CinematicFunction_Intro_Func91(uint16 k) {  // 0x8BC85D
 
 void CinematicFunction_Intro_Func92(uint16 j) {  // 0x8BC897
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 127;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 127;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func93(uint16 k) {  // 0x8BC8AA
@@ -4120,8 +4120,8 @@ void CinematicFunction_Intro_Func93(uint16 k) {  // 0x8BC8AA
 void CinematicFunction_Intro_Func94(uint16 k) {  // 0x8BC8B9
   int v1 = k >> 1;
   cinematicspr_goto_timer[v1] += 32;
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], -INT16_SHL8(cinematicspr_goto_timer[v1]));
-  if (sign16(cinematicbg_arr8[v1] + 128)) {
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], -INT16_SHL8(cinematicspr_goto_timer[v1]));
+  if (sign16(cinematicbg_y_pos[v1] + 128)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func95);
@@ -4136,8 +4136,8 @@ void CinematicFunction_Intro_Func96(uint16 k) {  // 0x8BC8F9
 void CinematicFunction_Intro_Func97(uint16 k) {  // 0x8BC908
   int v1 = k >> 1;
   cinematicspr_goto_timer[v1] += 32;
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], -INT16_SHL8(cinematicspr_goto_timer[v1]));
-  if (sign16(cinematicbg_arr8[v1] + 128)) {
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], -INT16_SHL8(cinematicspr_goto_timer[v1]));
+  if (sign16(cinematicbg_y_pos[v1] + 128)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
   }
@@ -4145,37 +4145,37 @@ void CinematicFunction_Intro_Func97(uint16 k) {  // 0x8BC908
 
 void CinematicFunction_Intro_Func98(uint16 j) {  // 0x8BC942
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 48;
-  cinematicbg_arr8[v1] = 47;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 48;
+  cinematicbg_y_pos[v1] = 47;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func99(uint16 j) {  // 0x8BC956
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 208;
-  cinematicbg_arr8[v1] = 47;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 208;
+  cinematicbg_y_pos[v1] = 47;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func100(uint16 j) {  // 0x8BC96A
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 48;
-  cinematicbg_arr8[v1] = 207;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 48;
+  cinematicbg_y_pos[v1] = 207;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func101(uint16 j) {  // 0x8BC97E
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 208;
-  cinematicbg_arr8[v1] = 207;
-  cinematicbg_arr9[v1] = 2048;
+  cinematicbg_x_pos[v1] = 208;
+  cinematicbg_y_pos[v1] = 207;
+  cinematicbg_palette_index[v1] = 2048;
 }
 
 void CinematicFunction_Intro_Func102(uint16 j) {  // 0x8BC992
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 186;
-  cinematicbg_arr9[v1] = 0;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 186;
+  cinematicbg_palette_index[v1] = 0;
 }
 
 uint16 CinematicSprInstr_C9A5(uint16 k, uint16 j) {  // 0x8BC9A5
@@ -4195,73 +4195,73 @@ uint16 CinematicSprInstr_C9BD(uint16 k, uint16 j) {  // 0x8BC9BD
 }
 
 uint16 CinematicSprInstr_C9C7(uint16 k, uint16 j) {  // 0x8BC9C7
-  cinematic_var8 = 62;
-  cinematic_var10 = -112;
-  cinematic_var5 = 32;
-  cinematic_var6 = 16;
+  mode7_x_pos = 62;
+  mode7_y_pos = -112;
+  mode7_transform_angle = 32;
+  mode7_transform_zoom = 16;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func105);
   return j;
 }
 
 void CinematicFunction_Intro_Func104(uint16 j) {  // 0x8BC9E6
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 204;
-  cinematicbg_arr9[v1] = 0;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 204;
+  cinematicbg_palette_index[v1] = 0;
 }
 
 void CinematicFunction_Intro_Func105(void) {  // 0x8BC9F9
-  AddToHiLo(&cinematic_var10, &cinematic_var9, 0x2000);
-  AddToHiLo(&cinematic_var8, &cinematic_var7, -0x8000);
-  if (sign16(cinematic_var6 - 1152))
-    cinematic_var6 += 4;
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, 0x2000);
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, -0x8000);
+  if (sign16(mode7_transform_zoom - 1152))
+    mode7_transform_zoom += 4;
   else
     cinematic_function = FUNC16(CinematicFunction_Intro_Func106);
 }
 
 void CinematicFunction_Intro_Func106(void) {  // 0x8BCA36
-  AddToHiLo(&cinematic_var10, &cinematic_var9, 0x2000);
-  AddToHiLo(&cinematic_var8, &cinematic_var7, -0x8000);
-  if (sign16(cinematic_var8 + 128)) {
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, 0x2000);
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, -0x8000);
+  if (sign16(mode7_x_pos + 128)) {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func107);
   } else {
-    cinematic_var6 += 16;
-    if (cinematic_var5 != 224)
-      cinematic_var5 = (uint8)(cinematic_var5 - 1);
+    mode7_transform_zoom += 16;
+    if (mode7_transform_angle != 224)
+      mode7_transform_angle = (uint8)(mode7_transform_angle - 1);
   }
 }
 
 void CinematicFunction_Intro_Func107(void) {  // 0x8BCA85
-  AddToHiLo(&cinematic_var10, &cinematic_var9, 0x2000);
-  AddToHiLo(&cinematic_var8, &cinematic_var7, 0x2000);
-  if (sign16(cinematic_var6 - 0x2000)) {
-    cinematic_var6 += 32;
+  AddToHiLo(&mode7_y_pos, &mode7_y_subpos, 0x2000);
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, 0x2000);
+  if (sign16(mode7_transform_zoom - 0x2000)) {
+    mode7_transform_zoom += 32;
   } else {
     reg_TM = 16;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func108);
-    cinematic_var4 = 64;
+    cinematic_func_timer = 64;
   }
 }
 
 void CinematicFunction_Intro_Func108(void) {  // 0x8BCAD0
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0)
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0)
     cinematic_function = FUNC16(nullsub_124);
 }
 
 void CinematicFunction_Intro_Func95(void) {  // 0x8BCADF
   reg_INIDISP = 0x80;
   for (int i = 656; i >= 0; i -= 2)
-    *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)i) = 0;
+    *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
   game_state = kGameState_6_LoadingGameData;
   samus_health = samus_max_health;
 }
 
 CoroutineRet GameState_39_EndingAndCredits_(void) {  // 0x8BD443
   CallCinematicFunction(cinematic_function | 0x8B0000);
-  if ((cinematic_var11 & 0x8000) == 0)
-    ++cinematic_var11;
-  ++cinematic_var12;
+  if ((cinematic_intro_end_counter & 0x8000) == 0)
+    ++cinematic_intro_end_counter;
+  ++cinematic_frame_counter;
   HandleCinematicSprites();
   MaybeHandleCinematicBgObjects();
   CreditsObject_Process();
@@ -4284,7 +4284,7 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
   irqhandler_next_handler = 0;
   SetupPpu_5_Mode7();
   for (j = 656; j >= 0; j -= 2)
-    *(uint16 *)((uint8 *)&cinematic_var5 + (uint16)j) = 0;
+    *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)j) = 0;
   uint16 v2 = 0;
   do {
     palette_buffer[v2 >> 1] = kPalettes_ZebesExplosionClouds[v2 >> 1];
@@ -4344,10 +4344,10 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
   reg_M7X = 128;
   WriteRegWord(M7Y, 0x80);
   reg_M7Y = 128;
-  cinematic_var5 = 32;
-  cinematic_var6 = 64;
-  cinematic_var8 = 0;
-  cinematic_var10 = 0;
+  mode7_transform_angle = 32;
+  mode7_transform_zoom = 64;
+  mode7_x_pos = 0;
+  mode7_y_pos = 0;
   door_def_ptr = 0;
   layer1_x_pos = 0;
   layer1_y_pos = 0;
@@ -4386,10 +4386,10 @@ void CinematicFunction_Intro_Func110(void) {  // 0x8BD6F2
 }
 
 void CinematicFunction_Intro_Func111(void) {  // 0x8BD701
-  if ((cinematic_var12 & 1) == 0)
-    cinematic_var5 = (uint8)(cinematic_var5 - 1);
-  cinematic_var6 += 2;
-  if (!sign16(cinematic_var6 - 384)) {
+  if ((cinematic_frame_counter & 1) == 0)
+    mode7_transform_angle = (uint8)(mode7_transform_angle - 1);
+  mode7_transform_zoom += 2;
+  if (!sign16(mode7_transform_zoom - 384)) {
     if (AdvanceFastScreenFadeOut() & 1)
       cinematic_function = FUNC16(CinematicFunction_Intro_Func112);
   }
@@ -4422,18 +4422,18 @@ void CinematicFunction_Intro_Func112(void) {  // 0x8BD731
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEED9, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEDF, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEE5, 0);
-  cinematic_var5 = 32;
-  cinematic_var6 = 64;
-  cinematic_var8 = 0;
-  cinematic_var10 = 0;
+  mode7_transform_angle = 32;
+  mode7_transform_zoom = 64;
+  mode7_x_pos = 0;
+  mode7_y_pos = 0;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func113);
 }
 
 void CinematicFunction_Intro_Func114(void) {  // 0x8BD807
-  if ((cinematic_var12 & 1) == 0)
-    cinematic_var5 = (uint8)(cinematic_var5 - 1);
-  cinematic_var6 += 3;
-  if (!sign16(cinematic_var6 - 384)) {
+  if ((cinematic_frame_counter & 1) == 0)
+    mode7_transform_angle = (uint8)(mode7_transform_angle - 1);
+  mode7_transform_zoom += 3;
+  if (!sign16(mode7_transform_zoom - 384)) {
     if (AdvanceFastScreenFadeOut() & 1)
       cinematic_function = FUNC16(CinematicFunction_Intro_Func115);
   }
@@ -4515,16 +4515,16 @@ void CinematicFunction_Intro_Func115(void) {  // 0x8BD837
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEAF, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEA3, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEA9, 0);
-  cinematic_var5 = 0;
-  cinematic_var6 = 64;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 64;
   reg_M7A = 256;
   reg_M7B = 0;
   reg_M7C = 0;
   reg_M7D = 256;
   reg_M7X = 128;
   reg_M7Y = 128;
-  cinematic_var8 = 0;
-  cinematic_var10 = 0;
+  mode7_x_pos = 0;
+  mode7_y_pos = 0;
   reg_TM = 1;
   reg_TS = 16;
   reg_CGWSEL = 2;
@@ -4534,7 +4534,7 @@ void CinematicFunction_Intro_Func115(void) {  // 0x8BD837
   ClearYColorsFromIndexX(0x1A0, 0x10);
   ClearYColorsFromIndexX(0x1E0, 0x10);
   ComposeFadingPalettes();
-  cinematic_var4 = 63;
+  cinematic_func_timer = 63;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func116);
 }
 
@@ -4548,14 +4548,14 @@ void CinematicFunction_Intro_Func116(void) {  // 0x8BDA02
 }
 
 void CinematicFunction_Intro_Func117(void) {  // 0x8BDA1A
-  cinematic_var6 += 4;
-  if ((cinematic_var4 & 1) == 0) {
+  mode7_transform_zoom += 4;
+  if ((cinematic_func_timer & 1) == 0) {
     FadeOutYColorsFromIndexX(0xE0, 0x10);
     FadeInYColorsFromIndexX(0x1A0, 0x10);
     FadeInYColorsFromIndexX(0x1E0, 0x10);
     ComposeFadingPalettes();
   }
-  if ((--cinematic_var4 & 0x8000) != 0) {
+  if ((--cinematic_func_timer & 0x8000) != 0) {
     uint16 v0 = 0;
     do {
       palette_buffer[v0 >> 1] = kPalettes_ZebesExplosion[v0 >> 1];
@@ -4581,21 +4581,21 @@ void CinematicFunction_Intro_Func117(void) {  // 0x8BDA1A
     reg_COLDATA[1] = 64;
     reg_COLDATA[2] = 0x80;
     reg_MOSAIC = 0;
-    cinematic_var7 = 0;
-    cinematic_var8 = 0;
-    cinematic_var9 = 0;
-    cinematic_var10 = 0;
-    g_word_7E1999 = 0;
-    g_word_7E199B = 0;
-    g_word_7E199D = 0;
-    g_word_7E199F = 0;
+    mode7_x_subpos = 0;
+    mode7_x_pos = 0;
+    mode7_y_subpos = 0;
+    mode7_y_pos = 0;
+    mode7_x_subspeed = 0;
+    mode7_x_speed = 0;
+    mode7_y_subspeed = 0;
+    mode7_y_speed = 0;
     fx_layer_blending_config_a = 0;
     reg_BG2HOFS = 0;
     reg_BG2VOFS = 0;
     screen_fade_delay = 0;
     screen_fade_counter = 2;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func118);
-    cinematic_var4 = 0;
+    cinematic_func_timer = 0;
   }
 }
 static const uint16 kCinematicFunction_Intro_Func118_Tab0[16] = {  // 0x8BDAD3
@@ -4613,10 +4613,10 @@ static const uint16 kCinematicFunction_Intro_Func118_Tab1[16] = {
 void CinematicFunction_Intro_Func118(void) {
   unsigned int v2;
 
-  uint16 v0 = cinematic_var4;
+  uint16 v0 = cinematic_func_timer;
   uint16 v1 = mode7_vram_write_queue_tail;
   v2 = mode7_vram_write_queue_tail;
-  if (sign16(cinematic_var4 - 8)) {
+  if (sign16(cinematic_func_timer - 8)) {
     *(uint16 *)(&mode7_write_queue[0].control + mode7_vram_write_queue_tail) = 192;
     int v3 = v0;
     *(uint16 *)((uint8 *)&mode7_write_queue[0].src_addr + v2) = kCinematicFunction_Intro_Func118_Tab0[v3];
@@ -4634,16 +4634,16 @@ void CinematicFunction_Intro_Func118(void) {
     *(uint16 *)((uint8 *)&mode7_write_queue[1].src_addr + v1) = 0;
   }
   mode7_vram_write_queue_tail = v1 + 9;
-  if (!sign16(++cinematic_var4 - 16)) {
+  if (!sign16(++cinematic_func_timer - 16)) {
     reg_BGMODE = 1;
-    cinematic_var4 = 0;
+    cinematic_func_timer = 0;
     cinematic_function = FUNC16(nullsub_125);
   }
 }
 
 void CinematicFunction_Intro_Func119(void) {  // 0x8BDB9E
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     QueueMusic_Delayed8(0);
     QueueMusic_Delayed8(0xFF3C);
     QueueMusic_DelayedY(5, 0xE);
@@ -4671,11 +4671,11 @@ void CinematicFunction_Intro_Func120(void) {  // 0x8BDBC4
     SpawnPalfxObject(addr_kPalfx_E1E4);
     reg_M7X = 56;
     reg_M7Y = 24;
-    cinematic_var8 = -72;
-    cinematic_var10 = -104;
-    cinematic_var6 = 3072;
-    cinematic_var5 = -112;
-    cinematic_var4 = 1;
+    mode7_x_pos = -72;
+    mode7_y_pos = -104;
+    mode7_transform_zoom = 3072;
+    mode7_transform_angle = -112;
+    cinematic_func_timer = 1;
     cinematic_var13 = 192;
     cinematic_var14 = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func121);
@@ -4683,8 +4683,8 @@ void CinematicFunction_Intro_Func120(void) {  // 0x8BDBC4
 }
 
 void CinematicFunction_Intro_Func122(void) {  // 0x8BDC4C
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     if (sign8(--reg_COLDATA[0] - 32))
       reg_COLDATA[0] = 32;
     if (sign8(--reg_COLDATA[1] - 64))
@@ -4695,7 +4695,7 @@ void CinematicFunction_Intro_Func122(void) {  // 0x8BDC4C
       reg_CGWSEL = 0;
       reg_CGADSUB = 0;
     }
-    cinematic_var4 = 8;
+    cinematic_func_timer = 8;
   }
 }
 static const uint16 kCinematicFunction_Intro_Func121_Tab0[32] = {  // 0x8BDCA5
@@ -4707,12 +4707,12 @@ void CinematicFunction_Intro_Func121(void) {
     --cinematic_var13;
   else
     CinematicFunction_Intro_Func122();
-  cinematic_var5 = (uint8)(cinematic_var5 - 4);
+  mode7_transform_angle = (uint8)(mode7_transform_angle - 4);
   int v0 = 2 * cinematic_var14;
-  AddToHiLo(&cinematic_var8, &cinematic_var7, __PAIR32__(kCinematicFunction_Intro_Func121_Tab0[v0], kCinematicFunction_Intro_Func121_Tab0[v0 + 1]));
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, __PAIR32__(kCinematicFunction_Intro_Func121_Tab0[v0], kCinematicFunction_Intro_Func121_Tab0[v0 + 1]));
   cinematic_var14 = (cinematic_var14 + 1) & 0xF;
-  cinematic_var6 -= 8;
-  if (sign16(cinematic_var6 - 1456)) {
+  mode7_transform_zoom -= 8;
+  if (sign16(mode7_transform_zoom - 1456)) {
     cinematic_var13 = 1;
     cinematic_var14 = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func123);
@@ -4723,13 +4723,13 @@ static const uint16 kCinematicFunction_Intro_Func123_Tab0[16] = { 1, 0, 1, 0, 1,
 
 void CinematicFunction_Intro_Func123(void) {  // 0x8BDD42
   CinematicFunction_Intro_Func122();
-  if (cinematic_var5 != 224)
-    cinematic_var5 = (uint8)(cinematic_var5 - 1);
+  if (mode7_transform_angle != 224)
+    mode7_transform_angle = (uint8)(mode7_transform_angle - 1);
   int v0 = 2 * cinematic_var14;
-  AddToHiLo(&cinematic_var8, &cinematic_var7, __PAIR32__(kCinematicFunction_Intro_Func123_Tab0[v0], kCinematicFunction_Intro_Func123_Tab0[v0 + 1]));
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, __PAIR32__(kCinematicFunction_Intro_Func123_Tab0[v0], kCinematicFunction_Intro_Func123_Tab0[v0 + 1]));
   cinematic_var14 = (cinematic_var14 + 1) & 7;
-  cinematic_var6 -= 2;
-  if (sign16(cinematic_var6 - 1184)) {
+  mode7_transform_zoom -= 2;
+  if (sign16(mode7_transform_zoom - 1184)) {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func124);
     cinematic_var14 = 0x8000;
     cinematic_var13 = 0;
@@ -4744,16 +4744,16 @@ static const uint16 g_word_8BDE43[16] = { 0, 0x6f7b, 0x4a52, 0x1ce7, 0, 0x5ad6, 
 void CinematicFunction_Intro_Func124(void) {  // 0x8BDDCD
   CinematicFunction_Intro_Func122();
   AddToHiLo(&cinematic_var13, &cinematic_var14, -256);
-  AddToHiLo(&cinematic_var8, &cinematic_var7, __PAIR32__(cinematic_var13, cinematic_var14));
-  if (sign16(cinematic_var6 - 384) && (cinematic_var12 & 3) == 0 && cinematic_var5 != 16)
-    cinematic_var5 = (uint8)(cinematic_var5 + 2);
-  if (sign16(cinematic_var6 - 32)) {
-    SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEC7, cinematic_var6);
+  AddToHiLo(&mode7_x_pos, &mode7_x_subpos, __PAIR32__(cinematic_var13, cinematic_var14));
+  if (sign16(mode7_transform_zoom - 384) && (cinematic_frame_counter & 3) == 0 && mode7_transform_angle != 16)
+    mode7_transform_angle = (uint8)(mode7_transform_angle + 2);
+  if (sign16(mode7_transform_zoom - 32)) {
+    SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEC7, mode7_transform_zoom);
     cinematic_function = FUNC16(nullsub_126);
     for (int i = 30; i >= 0; i -= 2)
       palette_buffer[(i >> 1) + 80] = g_word_8BDE43[i >> 1];
   } else {
-    cinematic_var6 -= 4;
+    mode7_transform_zoom -= 4;
   }
 }
 
@@ -4850,10 +4850,10 @@ void CinematicFunction_Intro_Func126(void) {  // 0x8BDE80
   reg_M7X = 104;
   WriteRegWord(M7Y, 0x70);
   reg_M7Y = 112;
-  cinematic_var8 = -8;
-  cinematic_var10 = -24;
-  cinematic_var5 = 0;
-  cinematic_var6 = 2304;
+  mode7_x_pos = -8;
+  mode7_y_pos = -24;
+  mode7_transform_angle = 0;
+  mode7_transform_zoom = 2304;
   EnableNMI();
   reg_INIDISP = 15;
   layer1_x_pos = 0;
@@ -4873,10 +4873,10 @@ void CinematicFunction_Intro_Func126(void) {  // 0x8BDE80
 }
 
 void CinematicFunction_Intro_Func129(void) {  // 0x8BE0F4
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func130);
-    cinematic_var4 = 120;
+    cinematic_func_timer = 120;
     reg_TM = 16;
   }
 }
@@ -4894,7 +4894,7 @@ void CinematicFunction_Intro_Func130(void) {  // 0x8BE110
     DecomposePaletteDataForFading();
     ClearYColorsFromIndexX(0x40, 0x10);
     ComposeFadingPalettes();
-    cinematic_var4 = 32;
+    cinematic_func_timer = 32;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func131);
   }
 }
@@ -4902,13 +4902,13 @@ void CinematicFunction_Intro_Func130(void) {  // 0x8BE110
 void CinematicFunction_Intro_Func131(void) {  // 0x8BE158
   FadeInYColorsFromIndexX(0x40, 0x10);
   ComposeFadingPalettes();
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     reg_TM = 18;
     reg_TS = 4;
     reg_CGWSEL = 2;
     reg_CGADSUB = 2;
-    cinematic_var4 = 180;
+    cinematic_func_timer = 180;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func132);
     CinematicFunction_Intro_Func133();
   }
@@ -4916,8 +4916,8 @@ void CinematicFunction_Intro_Func131(void) {  // 0x8BE158
 
 void CinematicFunction_Intro_Func132(void) {  // 0x8BE190
   reg_BG3VOFS += 2;
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     uint16 v1 = 0;
     do {
       ram3000.pause_menu_map_tilemap[v1 + 288] = kCredits_DeerForceTilemap[v1];
@@ -4928,15 +4928,15 @@ void CinematicFunction_Intro_Func132(void) {  // 0x8BE190
     reg_TS = 0;
     reg_CGWSEL = 0;
     reg_CGADSUB = 0;
-    cinematic_var4 = 180;
+    cinematic_func_timer = 180;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func134);
     g_word_7E0D9C = 0;
   }
 }
 
 void CinematicFunction_Intro_Func134(void) {  // 0x8BE1D2
-  if (!--cinematic_var4) {
-    cinematic_var4 = 127;
+  if (!--cinematic_func_timer) {
+    cinematic_func_timer = 127;
     if (sign16(game_time_hours - 3)) {
       CopyPalettesToFadingPalettes();
       DecomposePaletteDataForFading();
@@ -4970,7 +4970,7 @@ void CinematicFunction_Intro_Func134(void) {  // 0x8BE1D2
 }
 
 void CinematicFunction_Intro_Func136(void) {  // 0x8BE265
-  if ((cinematic_var4 & 3) != 0) {
+  if ((cinematic_func_timer & 3) != 0) {
     CinematicFunction_Intro_Func135();
   } else {
     FadeOutYColorsFromIndexX(0x40, 0x10);
@@ -4983,7 +4983,7 @@ void CinematicFunction_Intro_Func136(void) {  // 0x8BE265
 }
 
 void CinematicFunction_Intro_Func135(void) {  // 0x8BE293
-  if (sign16(--cinematic_var4 - 65)) {
+  if (sign16(--cinematic_func_timer - 65)) {
     for (int i = 574; i >= 0; i -= 2)
       *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[288] + (uint16)i) = 127;
     uint16 v1 = 0;
@@ -5017,7 +5017,7 @@ void CinematicFunction_Intro_Func137(void) {  // 0x8BE2DD
 }
 
 void CinematicFunction_Intro_Func138(void) {  // 0x8BE314
-  if ((cinematic_var4 & 3) != 0) {
+  if ((cinematic_func_timer & 3) != 0) {
     CinematicFunction_Intro_Func145();
   } else {
     FadeOutYColorsFromIndexX(0x40, 0x10);
@@ -5030,7 +5030,7 @@ void CinematicFunction_Intro_Func138(void) {  // 0x8BE314
 }
 
 void CinematicFunction_Intro_Func145(void) {  // 0x8BE342
-  if ((--cinematic_var4 & 0x8000) != 0) {
+  if ((--cinematic_func_timer & 0x8000) != 0) {
     reg_TM = 16;
     reg_TS = 0;
     reg_CGWSEL = 0;
@@ -5067,19 +5067,19 @@ void CinematicFunction_Intro_Func139(void) {  // 0x8BE3AE
   if (cinematic_var14) {
     --cinematic_var14;
     FadeOutYColorsFromIndexX(0x180, 0x10);
-    if (cinematic_var4)
+    if (cinematic_func_timer)
       ComposeFadingPalettes();
   }
-  if (cinematic_var4)
-    --cinematic_var4;
+  if (cinematic_func_timer)
+    --cinematic_func_timer;
   else
     CinematicFunction_Intro_Func140();
-  cinematic_var5 = (uint8)(cinematic_var5 - 8);
-  cinematic_var6 -= 64;
-  if (sign16(cinematic_var6 - 24)) {
-    cinematic_var6 = 24;
+  mode7_transform_angle = (uint8)(mode7_transform_angle - 8);
+  mode7_transform_zoom -= 64;
+  if (sign16(mode7_transform_zoom - 24)) {
+    mode7_transform_zoom = 24;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func141);
-    cinematic_var4 = 180;
+    cinematic_func_timer = 180;
     cinematic_var14 = 0;
   }
 }
@@ -5105,7 +5105,7 @@ void CinematicFunction_Intro_Func142(void) {  // 0x8BE41F
 void CinematicFunction_Intro_Func141(void) {  // 0x8BE48A
   CinematicFunction_Intro_Func140();
   CinematicFunction_Intro_Func142();
-  if (!--cinematic_var4) {
+  if (!--cinematic_func_timer) {
     reg_BGMODE = 1;
     reg_TM = 17;
     reg_TS = 0;
@@ -5122,13 +5122,13 @@ void CinematicFunction_Intro_Func141(void) {  // 0x8BE48A
       palette_buffer[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
       v0 += 2;
     } while ((int16)(v0 - 416) < 0);
-    cinematic_var8 = 0;
-    cinematic_var10 = 0;
+    mode7_x_pos = 0;
+    mode7_y_pos = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func143);
-    cinematic_var4 = 32;
+    cinematic_func_timer = 32;
     EnableCinematicBgObjects();
     EnableCinematicBgTilemapUpdates();
-    cinematicbg_var3 = 19456;
+    cinematicbg_vram_addr = 19456;
     for (int i = 126; i >= 0; i -= 2)
       *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[384] + (uint16)i) = 127;
     CinematicUpdateSomeBg();
@@ -5144,10 +5144,10 @@ void CinematicFunction_Intro_Func143(void) {  // 0x8BE504
     reg_COLDATA[1] = 64;
   if (sign8(--reg_COLDATA[2] + 0x80))
     reg_COLDATA[2] = 0x80;
-  bool v0 = (--cinematic_var4 & 0x8000) != 0;
-  if (!cinematic_var4 || v0) {
+  bool v0 = (--cinematic_func_timer & 0x8000) != 0;
+  if (!cinematic_func_timer || v0) {
     cinematic_function = FUNC16(nullsub_127);
-    cinematicbg_var3 = 20480;
+    cinematicbg_vram_addr = 20480;
     CinematicUpdateSomeBg();
     layer1_x_pos = 256;
     layer1_y_pos = 256;
@@ -5165,7 +5165,7 @@ void CinematicFunction_Intro_Func143(void) {  // 0x8BE504
 void CinematicFunction_Intro_Func144(void) {  // 0x8BE58A
   uint16 j;
 
-  int v0 = (uint16)(4 * cinematic_var4) >> 1;
+  int v0 = (uint16)(4 * cinematic_func_timer) >> 1;
   uint16 v5 = kCinematicFunction_Intro_Func144_Tab0[v0 + 1];
   uint16 v1 = kCinematicFunction_Intro_Func144_Tab0[v0];
   for (int i = 30; i >= 0; i -= 2) {
@@ -5177,7 +5177,7 @@ void CinematicFunction_Intro_Func144(void) {  // 0x8BE58A
     palette_buffer[(j >> 1) + 240] = *(uint16 *)RomPtr_8C(v3);
     v3 -= 2;
   }
-  if (!sign16(++cinematic_var4 - 16)) {
+  if (!sign16(++cinematic_func_timer - 16)) {
     cinematic_function = FUNC16(nullsub_127);
     ClearCinematicSprites();
     SpawnCinematicBgObject(addr_kCinematicBgObjectDef_8BF74E, 0x4C00);
@@ -5246,8 +5246,8 @@ uint16 CinematicFunction_Intro_Func147(uint16 k, uint16 j) {  // 0x8BE780
 }
 
 void CinematicFunction_Intro_Func148(void) {  // 0x8BE797
-  cinematic_var10 -= 2;
-  if (sign16(cinematic_var10 + 79)) {
+  mode7_y_pos -= 2;
+  if (sign16(mode7_y_pos + 79)) {
     SpawnCinematicBgObject(addr_kCinematicBgObjectDef_8BF748, 0x4C00);
     cinematic_function = FUNC16(nullsub_127);
     CopySuperMetroidString();
@@ -5258,7 +5258,7 @@ void CinematicFunction_Intro_Func127(void) {  // 0x8BE7BB
   int16 v1;
   int16 v4;
 
-  uint16 v0 = ADDR16_OF_RAM(*g_byte_7E0E0C);
+  uint16 v0 = ADDR16_OF_RAM(*ending_shooting_stars);
   v1 = 0;
 //  R18 = 0;
   do {
@@ -5378,17 +5378,17 @@ void CinematicFunction_Intro_Func149(void) {  // 0x8BE812
 
 void CinematicFunction_Intro_Func150(uint16 j) {  // 0x8BEF99
   int v1 = j >> 1;
-  cinematicbg_arr8[v1] = 128;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_y_pos[v1] = 128;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_palette_index[v1] = 3584;
   cinematicspr_goto_timer[v1] = 260;
 }
 
 void CinematicFunction_Intro_Func151(uint16 k) {  // 0x8BEFB2
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], 128);
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], 128);
   cinematicspr_arr6[v1] = cinematicspr_arr6[v1];
-  if (!sign16(++cinematicbg_arr7[v1] - 272)) {
+  if (!sign16(++cinematicbg_x_pos[v1] - 272)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_off_8BEE9B;
   }
@@ -5396,78 +5396,78 @@ void CinematicFunction_Intro_Func151(uint16 k) {  // 0x8BEFB2
 
 void CinematicFunction_Intro_Func152(uint16 j) {  // 0x8BEFEA
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 128;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 128;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func153(uint16 j) {  // 0x8BEFFD
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = -128;
-  cinematicbg_arr8[v1] = 128;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = -128;
+  cinematicbg_y_pos[v1] = 128;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func154(uint16 j) {  // 0x8BF005
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 128;
-  cinematicbg_arr9[v1] = 2560;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 128;
+  cinematicbg_palette_index[v1] = 2560;
 }
 
 void CinematicFunction_Intro_Func155(uint16 j) {  // 0x8BF018
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 128;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 128;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void CinematicFunction_Intro_Func156(uint16 j) {  // 0x8BF02B
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 96;
-  cinematicbg_arr9[v1] = 1024;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 96;
+  cinematicbg_palette_index[v1] = 1024;
 }
 
 void CinematicFunction_Intro_Func157(uint16 j) {  // 0x8BF03E
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 128;
-  cinematicbg_arr8[v1] = 160;
-  cinematicbg_arr9[v1] = 512;
+  cinematicbg_x_pos[v1] = 128;
+  cinematicbg_y_pos[v1] = 160;
+  cinematicbg_palette_index[v1] = 512;
 }
 
 void CinematicFunction_Intro_Func158(uint16 j) {  // 0x8BF051
   int v1 = j >> 1;
-  cinematicbg_arr8[v1] = 160;
-  cinematicbg_arr9[v1] = 0;
+  cinematicbg_y_pos[v1] = 160;
+  cinematicbg_palette_index[v1] = 0;
 }
 
 void CinematicFunction_Intro_Func159(uint16 j) {  // 0x8BF05E
   CinematicFunction_Intro_Func160(j, substate);
-  cinematicbg_arr7[j >> 1] = 156;
+  cinematicbg_x_pos[j >> 1] = 156;
   CinematicFunction_Intro_Func158(j);
 }
 
 void CinematicFunction_Intro_Func161(uint16 j) {  // 0x8BF06D
   CinematicFunction_Intro_Func160(j, suit_pickup_light_beam_pos);
-  cinematicbg_arr7[j >> 1] = 164;
+  cinematicbg_x_pos[j >> 1] = 164;
   CinematicFunction_Intro_Func158(j);
 }
 
 void CinematicFunction_Intro_Func162(uint16 j) {  // 0x8BF07C
-  cinematicbg_arr7[j >> 1] = 172;
+  cinematicbg_x_pos[j >> 1] = 172;
   CinematicFunction_Intro_Func158(j);
 }
 
 void CinematicFunction_Intro_Func163(uint16 j) {  // 0x8BF085
   CinematicFunction_Intro_Func160(j, *(uint16 *)&suit_pickup_color_math_R);
-  cinematicbg_arr7[j >> 1] = 180;
+  cinematicbg_x_pos[j >> 1] = 180;
   CinematicFunction_Intro_Func158(j);
 }
 
 void CinematicFunction_Intro_Func164(uint16 j) {  // 0x8BF094
   CinematicFunction_Intro_Func160(j, *(uint16 *)&suit_pickup_color_math_B);
-  cinematicbg_arr7[j >> 1] = 188;
+  cinematicbg_x_pos[j >> 1] = 188;
   CinematicFunction_Intro_Func158(j);
 }
 
@@ -5476,123 +5476,123 @@ void CinematicFunction_Intro_Func160(uint16 j, uint16 a) {  // 0x8BF0A3
 }
 
 void CinematicFunction_Intro_Func165(uint16 j) {  // 0x8BF0B2
-  cinematicbg_arr8[j >> 1] = -96;
+  cinematicbg_y_pos[j >> 1] = -96;
   CinematicFunction_F0B8(j);
 }
 
 void CinematicFunction_F0B8(uint16 j) {  // 0x8BF0B8
   int v1 = j >> 1;
   if (cinematic_spawn_param) {
-    cinematicbg_arr7[v1] = 384;
-    cinematicbg_arr9[v1] = 2560;
+    cinematicbg_x_pos[v1] = 384;
+    cinematicbg_palette_index[v1] = 2560;
     cinematicspr_instr_ptr[v1] += 4;
   } else {
-    cinematicbg_arr7[v1] = 128;
-    cinematicbg_arr9[v1] = 2560;
+    cinematicbg_x_pos[v1] = 128;
+    cinematicbg_palette_index[v1] = 2560;
   }
 }
 
 void CinematicFunction_Intro_Func166(uint16 j) {  // 0x8BF0E1
-  cinematicbg_arr8[j >> 1] = -32;
+  cinematicbg_y_pos[j >> 1] = -32;
   CinematicFunction_F0B8(j);
 }
 
 void CinematicFunction_Intro_Func167(uint16 j) {  // 0x8BF0E9
-  cinematicbg_arr8[j >> 1] = 288;
+  cinematicbg_y_pos[j >> 1] = 288;
   CinematicFunction_F0B8(j);
 }
 
 void CinematicFunction_Intro_Func168(uint16 j) {  // 0x8BF0F1
-  cinematicbg_arr8[j >> 1] = 352;
+  cinematicbg_y_pos[j >> 1] = 352;
   CinematicFunction_F0B8(j);
 }
 
 void CinematicFunction_Intro_Func169(uint16 j) {  // 0x8BF0F9
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 320;
+  cinematicbg_x_pos[v1] = 320;
   if (cinematic_spawn_param)
-    cinematicbg_arr8[v1] = 448;
+    cinematicbg_y_pos[v1] = 448;
   else
-    cinematicbg_arr8[v1] = 192;
-  cinematicbg_arr9[v1] = 2560;
+    cinematicbg_y_pos[v1] = 192;
+  cinematicbg_palette_index[v1] = 2560;
 }
 
 void CinematicFunction_Intro_Func170(uint16 j) {  // 0x8BF11E
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = -64;
+  cinematicbg_x_pos[v1] = -64;
   if (cinematic_spawn_param)
-    cinematicbg_arr8[v1] = -192;
+    cinematicbg_y_pos[v1] = -192;
   else
-    cinematicbg_arr8[v1] = 64;
-  cinematicbg_arr9[v1] = 2560;
+    cinematicbg_y_pos[v1] = 64;
+  cinematicbg_palette_index[v1] = 2560;
 }
 
 void CinematicFunction_Intro_Func171(uint16 j) {  // 0x8BF143
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 120;
-  cinematicbg_arr8[v1] = 136;
-  cinematicbg_arr9[v1] = 2560;
+  cinematicbg_x_pos[v1] = 120;
+  cinematicbg_y_pos[v1] = 136;
+  cinematicbg_palette_index[v1] = 2560;
 }
 
 void CinematicFunction_Intro_Func172(uint16 j) {  // 0x8BF156
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 120;
-  cinematicbg_arr8[v1] = 152;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 120;
+  cinematicbg_y_pos[v1] = 152;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void CinematicFunction_Intro_Func173(uint16 j) {  // 0x8BF169
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 124;
-  cinematicbg_arr8[v1] = 108;
-  cinematicbg_arr9[v1] = 3072;
+  cinematicbg_x_pos[v1] = 124;
+  cinematicbg_y_pos[v1] = 108;
+  cinematicbg_palette_index[v1] = 3072;
 }
 
 void CinematicFunction_Intro_Func174(uint16 j) {  // 0x8BF17C
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 121;
-  cinematicbg_arr8[v1] = 107;
-  cinematicbg_arr9[v1] = 2560;
+  cinematicbg_x_pos[v1] = 121;
+  cinematicbg_y_pos[v1] = 107;
+  cinematicbg_palette_index[v1] = 2560;
 }
 
 void CinematicFunction_Intro_Func175(uint16 j) {  // 0x8BF18F
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 530;
-  cinematicbg_arr8[v1] = 231;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 530;
+  cinematicbg_y_pos[v1] = 231;
+  cinematicbg_palette_index[v1] = 3584;
   cinematicspr_goto_timer[v1] = 8;
 }
 
 void CinematicFunction_Intro_Func176(uint16 j) {  // 0x8BF1A8
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 246;
-  cinematicbg_arr8[v1] = 519;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 246;
+  cinematicbg_y_pos[v1] = 519;
+  cinematicbg_palette_index[v1] = 3584;
   cinematicspr_goto_timer[v1] = 8;
 }
 
 void CinematicFunction_Intro_Func177(uint16 j) {  // 0x8BF1C1
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 385;
-  cinematicbg_arr8[v1] = 366;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 385;
+  cinematicbg_y_pos[v1] = 366;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func178(uint16 j) {  // 0x8BF1D4
   int v1 = j >> 1;
-  cinematicbg_arr7[v1] = 391;
-  cinematicbg_arr8[v1] = 384;
-  cinematicbg_arr9[v1] = 3584;
+  cinematicbg_x_pos[v1] = 391;
+  cinematicbg_y_pos[v1] = 384;
+  cinematicbg_palette_index[v1] = 3584;
 }
 
 void CinematicFunction_Intro_Func179(uint16 k) {  // 0x8BF1E7
   int v1 = k >> 1;
-  cinematicbg_arr8[v1] += cinematicspr_goto_timer[v1];
-  uint16 v2 = cinematicbg_arr7[v1] - cinematicspr_goto_timer[v1];
-  cinematicbg_arr7[v1] = v2;
+  cinematicbg_y_pos[v1] += cinematicspr_goto_timer[v1];
+  uint16 v2 = cinematicbg_x_pos[v1] - cinematicspr_goto_timer[v1];
+  cinematicbg_x_pos[v1] = v2;
   if (sign16(v2 - 395)) {
-    cinematicbg_arr7[v1] = 394;
-    cinematicbg_arr8[v1] = 367;
+    cinematicbg_x_pos[v1] = 394;
+    cinematicbg_y_pos[v1] = 367;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
     SpawnPalfxObject(addr_kPalfx_E200);
   } else {
@@ -5602,14 +5602,14 @@ void CinematicFunction_Intro_Func179(uint16 k) {  // 0x8BF1E7
 
 void CinematicFunction_Intro_Func180(uint16 k) {  // 0x8BF227
   int v1 = k >> 1;
-  cinematicbg_arr8[v1] -= cinematicspr_goto_timer[v1];
-  uint16 v2 = cinematicspr_goto_timer[v1] + cinematicbg_arr7[v1];
-  cinematicbg_arr7[v1] = v2;
+  cinematicbg_y_pos[v1] -= cinematicspr_goto_timer[v1];
+  uint16 v2 = cinematicspr_goto_timer[v1] + cinematicbg_x_pos[v1];
+  cinematicbg_x_pos[v1] = v2;
   if (sign16(v2 - 382)) {
     cinematicspr_goto_timer[v1] += 2;
   } else {
-    cinematicbg_arr7[v1] = 382;
-    cinematicbg_arr8[v1] = 383;
+    cinematicbg_x_pos[v1] = 382;
+    cinematicbg_y_pos[v1] = 383;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
   }
 }
@@ -5621,7 +5621,7 @@ uint16 CinematicSprInstr_Func181(uint16 k, uint16 j) {  // 0x8BF25E
   reg_CGADSUB = 34;
   reg_BG12NBA = 100;
   reg_BG2SC = 84;
-  cinematic_var4 = 0;
+  cinematic_func_timer = 0;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func144);
   return j;
 }
@@ -5684,7 +5684,7 @@ uint16 CinematicSprInstr_Func187(uint16 k, uint16 j) {  // 0x8BF32B
   for (int i = 30; i >= 0; i -= 2)
     palette_buffer[(i >> 1) + 16] = 0x7FFF;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func119);
-  cinematic_var4 = 120;
+  cinematic_func_timer = 120;
   return j;
 }
 
@@ -5701,7 +5701,7 @@ void CinematicSprPreInstr_F35A(uint16 k) {  // 0x8BF35A
 void CinematicFunction_Intro_Func189(uint16 k) {  // 0x8BF375
   int v1 = k >> 1;
   AddToHiLo(&cinematicspr_goto_timer[v1], &cinematicspr_arr7[v1], -32);
-  AddToHiLo(&cinematicbg_arr7[v1], &cinematicspr_arr6[v1], __PAIR32__(cinematicspr_goto_timer[v1], cinematicspr_arr7[v1]));
+  AddToHiLo(&cinematicbg_x_pos[v1], &cinematicspr_arr6[v1], __PAIR32__(cinematicspr_goto_timer[v1], cinematicspr_arr7[v1]));
   CinematicFunction_Intro_Func189b(k);
 }
 
@@ -5776,51 +5776,51 @@ uint16 CinematicSprInstr_Func198(uint16 k, uint16 j) {  // 0x8BF448
 }
 
 void CinematicFunction_Intro_Func199(uint16 k) {  // 0x8BF455
-  if (sign16(cinematic_var6 - 176))
+  if (sign16(mode7_transform_zoom - 176))
     cinematicspr_preinstr_func[k >> 1] = FUNC16(CinematicFunction_Intro_Func200);
 }
 
 void CinematicFunction_Intro_Func200(uint16 k) {  // 0x8BF464
   int v1 = k >> 1;
   cinematicspr_arr7[v1] = cinematicspr_arr7[v1];
-  ++cinematicbg_arr8[v1];
+  ++cinematicbg_y_pos[v1];
 }
 
 void CinematicFunction_Intro_Func201(uint16 k) {  // 0x8BF478
-  if (sign16(cinematic_var6 - 176))
+  if (sign16(mode7_transform_zoom - 176))
     cinematicspr_preinstr_func[k >> 1] = FUNC16(CinematicFunction_Intro_Func202);
 }
 
 void CinematicFunction_Intro_Func202(uint16 k) {  // 0x8BF487
   int v1 = k >> 1;
   cinematicspr_arr7[v1] = cinematicspr_arr7[v1];
-  --cinematicbg_arr8[v1];
+  --cinematicbg_y_pos[v1];
 }
 
 void CinematicFunction_Intro_Func203(uint16 k) {  // 0x8BF49B
-  if (!sign16(cinematic_var6 - 96))
+  if (!sign16(mode7_transform_zoom - 96))
     cinematicspr_preinstr_func[k >> 1] = FUNC16(CinematicFunction_Intro_Func204);
 }
 
 void CinematicFunction_Intro_Func204(uint16 k) {  // 0x8BF4AA
   int v1 = k >> 1;
   cinematicspr_arr7[v1] = cinematicspr_arr7[v1];
-  cinematicbg_arr8[v1] -= 2;
+  cinematicbg_y_pos[v1] -= 2;
   cinematicspr_arr6[v1] = cinematicspr_arr6[v1];
-  --cinematicbg_arr7[v1];
+  --cinematicbg_x_pos[v1];
 }
 
 void CinematicFunction_Intro_Func205(uint16 k) {  // 0x8BF4D1
-  if (!sign16(cinematic_var6 - 96))
+  if (!sign16(mode7_transform_zoom - 96))
     cinematicspr_preinstr_func[k >> 1] = FUNC16(CinematicFunction_Intro_Func206);
 }
 
 void CinematicFunction_Intro_Func206(uint16 k) {  // 0x8BF4E0
   int v1 = k >> 1;
   cinematicspr_arr7[v1] = cinematicspr_arr7[v1];
-  cinematicbg_arr8[v1] += 2;
+  cinematicbg_y_pos[v1] += 2;
   cinematicspr_arr6[v1] = cinematicspr_arr6[v1];
-  ++cinematicbg_arr7[v1];
+  ++cinematicbg_x_pos[v1];
 }
 
 void CinematicFunction_Intro_Func207(uint16 k) {  // 0x8BF507
@@ -5839,12 +5839,12 @@ uint16 CinematicSprInstr_Func208(uint16 k, uint16 j) {  // 0x8BF51D
 void CinematicSprPreInstr_F528(uint16 k) {  // 0x8BF528
   CinematicFunction_Intro_Func210_EndingSamusFall(k);
   int v1 = k >> 1;
-  if (sign16(cinematicbg_arr8[v1] + 80)) {
+  if (sign16(cinematicbg_y_pos[v1] + 80)) {
     reg_OBSEL = 3;
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_word_8BED95;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_Intro_Func215);
-    cinematicbg_arr9[v1] = 3072;
+    cinematicbg_palette_index[v1] = 3072;
   }
 }
 
@@ -5860,7 +5860,7 @@ uint16 CinematicSprInstr_Func211(uint16 k, uint16 j) {  // 0x8BF554
 void CinematicSprPreInstr_F57F(uint16 k) {  // 0x8BF57F
   CinematicFunction_Intro_Func210_EndingSamusFall(k);
   int v1 = k >> 1;
-  if (sign16(cinematicbg_arr8[v1] + 80)) {
+  if (sign16(cinematicbg_y_pos[v1] + 80)) {
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_off_8BEE9B;
   }
@@ -5869,21 +5869,21 @@ void CinematicSprPreInstr_F57F(uint16 k) {  // 0x8BF57F
 uint16 CinematicSprInstr_Func213(uint16 k, uint16 j) {  // 0x8BF597
   int v1 = k >> 1;
   if (sign16(game_time_hours - 10))
-    cinematicbg_arr7[v1 + 1] = 120;
+    cinematicbg_x_pos[v1 + 1] = 120;
   else
-    cinematicbg_arr7[v1 + 1] = 118;
-  cinematicbg_arr8[v1 + 1] = 120;
+    cinematicbg_x_pos[v1 + 1] = 118;
+  cinematicbg_y_pos[v1 + 1] = 120;
   return j;
 }
 
 uint16 CinematicSprInstr_Func214(uint16 k, uint16 j) {  // 0x8BF5BA
   int v1 = k >> 1;
   if (sign16(game_time_hours - 10)) {
-    cinematicbg_arr7[v1 + 1] = 121;
-    cinematicbg_arr8[v1 + 1] = 116;
+    cinematicbg_x_pos[v1 + 1] = 121;
+    cinematicbg_y_pos[v1 + 1] = 116;
   } else {
-    cinematicbg_arr7[v1 + 1] = 120;
-    cinematicbg_arr8[v1 + 1] = 114;
+    cinematicbg_x_pos[v1 + 1] = 120;
+    cinematicbg_y_pos[v1 + 1] = 114;
   }
   return j;
 }
@@ -5892,8 +5892,8 @@ void CinematicFunction_Intro_Func215(uint16 k) {  // 0x8BF5DD
   CinematicFunction_Intro_Func216();
   CinematicFunction_Intro_Func210_EndingSamusFall(k);
   int v1 = k >> 1;
-  if (!sign16(cinematicbg_arr8[v1] - 136)) {
-    cinematicbg_arr8[v1] = 136;
+  if (!sign16(cinematicbg_y_pos[v1] - 136)) {
+    cinematicbg_y_pos[v1] = 136;
     cinematicspr_instr_timer[v1] = 1;
     cinematicspr_instr_ptr[v1] = addr_word_8BED9D;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
@@ -5901,20 +5901,20 @@ void CinematicFunction_Intro_Func215(uint16 k) {  // 0x8BF5DD
 }
 
 uint16 CinematicSprInstr_Func217(uint16 k, uint16 j) {  // 0x8BF604
-  cinematicbg_arr9[k >> 1] = 3584;
+  cinematicbg_palette_index[k >> 1] = 3584;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func139);
   reg_TM = 17;
   reg_TS = 16;
   reg_CGWSEL = 2;
   reg_CGADSUB = -127;
-  cinematic_var8 = -4;
-  cinematic_var10 = -8;
-  cinematic_var4 = 16;
+  mode7_x_pos = -4;
+  mode7_y_pos = -8;
+  cinematic_func_timer = 16;
   cinematic_var14 = 32;
   cinematic_var17 = 32;
   CopyPalettesToFadingPalettes();
   DecomposePaletteDataForFading();
-  QueueSfx1_Max15(0x22);
+  QueueSfx1_Max15(kSfx1_ChargedPlasmaWaveBeam);
   return j;
 }
 
@@ -5927,7 +5927,7 @@ uint16 CinematicSprInstr_Func218(uint16 k, uint16 j) {  // 0x8BF651
 void CinematicFunction_Intro_Func210_EndingSamusFall(uint16 k) {  // 0x8BF65B
   AddToHiLo(&samus_y_speed, &samus_y_subspeed, 0x3800);
   int v1 = k >> 1;
-  AddToHiLo(&cinematicbg_arr8[v1], &cinematicspr_arr7[v1], __PAIR32__(samus_y_speed, samus_y_subspeed));
+  AddToHiLo(&cinematicbg_y_pos[v1], &cinematicspr_arr7[v1], __PAIR32__(samus_y_speed, samus_y_subspeed));
 }
 
 void CinematicFunction_Intro_Func216(void) {  // 0x8BF682
@@ -5957,11 +5957,11 @@ uint16 CinematicFunction_Intro_Func219(uint16 k, uint16 j) {  // 0x8BF6FE
   reg_INIDISP = 0x80;
   screen_fade_delay = 0;
   screen_fade_counter = 0;
-  cinematic_var9 = 0;
-  cinematic_var10 = 0;
+  mode7_y_subpos = 0;
+  mode7_y_pos = 0;
   eproj_pre_instr[1] = 1;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func129);
-  cinematic_var4 = 60;
+  cinematic_func_timer = 60;
   return j;
 }
 

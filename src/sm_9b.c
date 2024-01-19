@@ -68,7 +68,7 @@ void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
 void StartSamusDeathAnimation(void) {  // 0x9BB3A7
   uint16 v0 = samus_movement_type;
   if (samus_movement_type == 3)
-    QueueSfx1_Max6(0x32);
+    QueueSfx1_Max6(kSfx1_SpinJumpEnd_Silence);
   uint16 v1 = kDeathAnimationFrames[v0];
   if (samus_pose_x_dir == 4)
     samus_pose = kPose_D8_FaceL_CrystalFlashEnd;
@@ -91,19 +91,19 @@ void DrawSamusStartingDeathAnim_(void) {  // 0x9BB43C
 }
 
 uint16 HandleSamusDeathSequence(void) {  // 0x9BB441
-  if (sign16(g_word_7E0DE6 - 4))
-    QueueTransferOfSamusDeathSequence(2 * g_word_7E0DE6);
-  if (sign16(++g_word_7E0DE6 - 60)) {
+  if (sign16(samus_death_anim_counter - 4))
+    QueueTransferOfSamusDeathSequence(2 * samus_death_anim_counter);
+  if (sign16(++samus_death_anim_counter - 60)) {
     bool v0 = (--game_options_screen_index & 0x8000) != 0;
     if (!game_options_screen_index || v0) {
-      if (g_word_7E0DE4) {
-        g_word_7E0DE4 = 0;
+      if (samus_death_anim_timer) {
+        samus_death_anim_timer = 0;
         game_options_screen_index = 3;
       } else {
-        g_word_7E0DE4 = 1;
+        samus_death_anim_timer = 1;
         game_options_screen_index = 1;
       }
-      CopyPalettesForSamusDeath(g_word_7E0DE4 * 2);
+      CopyPalettesForSamusDeath(samus_death_anim_timer * 2);
     }
     return 0;
   } else {
@@ -119,8 +119,8 @@ void HandleSamusDeathSequence_Helper2(void) {  // 0x9BB4B6
   memcpy(&palette_buffer[240], RomPtr_9B(addr_kSamusPalette_DeathSequence_SuitlessSamus), 32);
   QueueTransferOfSamusDeathSequence(8);
   game_options_screen_index = kDeathSequencePalette_ExplosionTabs[0];
-  g_word_7E0DE4 = 0;
-  g_word_7E0DE6 = 0;
+  samus_death_anim_timer = 0;
+  samus_death_anim_counter = 0;
   GameState_24_SamusNoHealth_Explosion_2();
 }
 
@@ -149,32 +149,32 @@ uint16 GameState_24_SamusNoHealth_Explosion_Helper(void) {  // 0x9BB701
 }
 
 void GameState_24_SamusNoHealth_Explosion_1(void) {  // 0x9BB710
-  if (!substate && g_word_7E0DE4) {
-    int v0 = g_word_7E0DE6;
+  if (!substate && samus_death_anim_timer) {
+    int v0 = samus_death_anim_counter;
     uint16 *dst = (uint16*)(g_ram + 0xc000);
     for(int i = 0; i < 384/2; i++)
       dst[i] = kShadesOfWhite[v0];
     for(int i = 416/2; i < 480/2; i++)
       dst[i] = kShadesOfWhite[v0];
-    if (sign16(g_word_7E0DE6 - 20))
-      ++g_word_7E0DE6;
+    if (sign16(samus_death_anim_counter - 20))
+      ++samus_death_anim_counter;
   }
 }
 
 uint16 GameState_24_SamusNoHealth_Explosion_2(void) {  // 0x9BB758
   bool v0 = (--game_options_screen_index & 0x8000) != 0;
   if (!game_options_screen_index || v0) {
-    if (!sign16(++g_word_7E0DE4 - 9)) {
-      g_word_7E0DE6 = 21;
+    if (!sign16(++samus_death_anim_timer - 9)) {
+      samus_death_anim_counter = 21;
       GameState_24_SamusNoHealth_Explosion_1();
       substate = 0;
       return 1;
     }
-    if (!substate || sign16(g_word_7E0DE4 - 2)) {
-      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * g_word_7E0DE4)];
-      CopyPalettesForSamusDeath(2 * kDeathSequencePalette_ExplosionTabs[(2 * g_word_7E0DE4) + 1]);
+    if (!substate || sign16(samus_death_anim_timer - 2)) {
+      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_timer)];
+      CopyPalettesForSamusDeath(2 * kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_timer) + 1]);
     } else {
-      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * g_word_7E0DE4)];
+      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_timer)];
     }
   }
   DrawSamusSuitExploding();
@@ -197,7 +197,7 @@ LABEL_2:
       if (v0 == grapple_beam_direction)
         return;
       if (grapple_varCF6) {
-        QueueSfx1_Max6(7);
+        QueueSfx1_Max6(kSfx1_GrappleEnd);
         grapple_beam_function = FUNC16(GrappleBeamFunc_FireGoToCancel);
         return;
       }
@@ -735,7 +735,7 @@ void GrappleBeamFunc_FireGoToCancel(void) {  // 0x9BC51E
   LoadProjectilePalette(2);
   palette_buffer[223] = 32657;
   grapple_beam_function = FUNC16(GrappleBeamFunc_Firing);
-  QueueSfx1_Max1(5);
+  QueueSfx1_Max1(kSfx1_GrappleStart);
   flare_counter = 1;
   play_resume_charging_beam_sfx = 0;
   if (samus_movement_handler == FUNC16(Samus_MoveHandler_ReleaseFromGrapple))
@@ -791,7 +791,7 @@ void GrappleBeamFunc_Firing(void) {  // 0x9BC703
       return;
     }
   }
-  QueueSfx1_Max6(6);
+  QueueSfx1_Max6(kSfx1_Grappling);
   HandleConnectingGrapple();
   grapple_beam_length_delta = -8;
   samus_grapple_flags |= 1;
@@ -854,7 +854,7 @@ void GrappleBeamFunc_C832(void) {  // 0x9BC832
 }
 
 void GrappleBeamFunc_Cancel(void) {  // 0x9BC856
-  QueueSfx1_Max15(7);
+  QueueSfx1_Max15(kSfx1_GrappleEnd);
   if (samus_movement_type == kMovementType_16_Grappling)
     Samus_Pose_CancelGrapple();
   else
@@ -885,7 +885,7 @@ void GrappleBeamFunc_Cancel(void) {  // 0x9BC856
 }
 
 void GrappleBeam_Func2(void) {  // 0x9BC8C5
-  QueueSfx1_Max15(7);
+  QueueSfx1_Max15(kSfx1_GrappleEnd);
   if (samus_pose == kPose_B2_FaceR_Grapple_Air)
     goto LABEL_5;
   if (samus_pose == kPose_B3_FaceL_Grapple_Air) {
@@ -948,7 +948,7 @@ LABEL_15:
 }
 
 void GrappleBeamFunc_C9CE(void) {  // 0x9BC9CE
-  QueueSfx1_Max15(7);
+  QueueSfx1_Max15(kSfx1_GrappleEnd);
   if (samus_pose_x_dir == 8)
     samus_new_pose_transitional = kPose_84_FaceL_Walljump;
   else
@@ -1024,7 +1024,7 @@ void PropelSamusFromGrappleSwing(void) {  // 0x9BCA65
 }
 
 void GrappleBeamFunc_ReleaseFromSwing(void) {  // 0x9BCB8B
-  QueueSfx1_Max15(7);
+  QueueSfx1_Max15(kSfx1_GrappleEnd);
   if ((grapple_beam_unkD26 & 0x8000) == 0)
     samus_new_pose_transitional = kPose_52_FaceL_Jump_NoAim_MoveF;
   else

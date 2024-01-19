@@ -54,7 +54,7 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
   int v1 = k >> 1;
   if ((projectile_type[v1] & 0xF00) != 0) {
     if (!cinematic_function)
-      QueueSfx2_Max6(7);
+      QueueSfx2_Max6(kSfx2_SuperOrMissileHitWall);
     uint16 v2 = projectile_type[v1];
     projectile_type[v1] = v2 & 0xF0FF | 0x800;
     if ((v2 & 0x200) != 0) {
@@ -69,7 +69,7 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
   } else {
     projectile_type[v1] = projectile_type[v1] & 0xF0FF | 0x700;
     projectile_bomb_instruction_ptr[v1] = kProjInstrList_BeamExplosion.instr_ptr;
-    QueueSfx2_Max6(0xC);
+    QueueSfx2_Max6(kSfx2_BeamHitWall_TorizoStatueCrumbles);
   }
   projectile_bomb_instruction_timers[v1] = 1;
   projectile_damage[v1] = 8;

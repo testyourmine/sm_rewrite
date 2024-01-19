@@ -1289,8 +1289,8 @@ void AddToTilemapInner(uint16 k, const uint16 *j) {  // 0x809A4C
 void InitializeHud(void) {  // 0x809A79
   WriteRegWord(VMADDL, addr_unk_605800);
   WriteRegWord(VMAIN, 0x80);
-  static const StartDmaCopy unk_809A8F = { 1, 1, 0x18, LONGPTR(0x80988b), 0x0040 };
-  SetupDmaTransfer(&unk_809A8F);
+  static const StartDmaCopy kDmaCopy_HudTilemaps_TopRow = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x80988b), .das = 0x0040 };
+  SetupDmaTransfer(&kDmaCopy_HudTilemaps_TopRow);
   WriteReg(MDMAEN, 2);
   for (int i = 0; i != 192; i += 2)
     hud_tilemap[i >> 1] = kHudTilemaps_Row1to3[i >> 1];
@@ -1378,7 +1378,7 @@ void HandleHudTilemap(void) {  // 0x809B44
         && samus_movement_type != 20
         && grapple_beam_function == 0xC4F0
         && !time_is_frozen_flag) {
-      QueueSfx1_Max6(0x39);
+      QueueSfx1_Max6(kSfx1_SwitchHudItem);
     }
   }
   uint16 v4 = 5120;

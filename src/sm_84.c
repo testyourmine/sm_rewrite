@@ -44,7 +44,7 @@ void ClearSoundsWhenGoingThroughDoor(void) {  // 0x848250
 
 void UNUSED_sub_848258(void) {  // 0x848258
   if (samus_movement_type << 8 == 768 || samus_movement_type << 8 == 5120)
-    QueueSfx1_Max15(0x32);
+    QueueSfx1_Max15(kSfx1_SpinJumpEnd_Silence);
 }
 
 void PlaySpinJumpSoundIfSpinJumping(void) {  // 0x848270
@@ -53,7 +53,7 @@ void PlaySpinJumpSoundIfSpinJumping(void) {  // 0x848270
 
 void UNUSED_sub_848278(void) {  // 0x848278
   if (samus_movement_type << 8 == 768 || samus_movement_type << 8 == 5120)
-    QueueSfx1_Max15(0x30);
+    QueueSfx1_Max15(kSfx1_ResumedSpinJump);
 }
 
 void CalculatePlmBlockCoords(uint16 k) {  // 0x848290
@@ -124,9 +124,9 @@ void SpawnHardcodedPlm(SpawnHardcodedPlmArgs p) {  // 0x8483D7
       return;
     }
   }
-  uint16 prod = Mult8x8(pp->field_1, room_width_in_blocks);
-  plm_block_indices[v1 >> 1] = 2 * (prod + pp->field_0);
-  uint16 v3 = pp->field_2;
+  uint16 prod = Mult8x8(pp->y_pos, room_width_in_blocks);
+  plm_block_indices[v1 >> 1] = 2 * (prod + pp->x_pos);
+  uint16 v3 = pp->plm_id_;
   plm_header_ptr[v1 >> 1] = v3;
   int v4 = v1 >> 1;
   plm_room_arguments[v4] = 0;
@@ -1814,7 +1814,7 @@ void PlmPreInstr_GoToLinkInstrIfShotWithPowerBomb(uint16 k) {  // 0x84BD26
       plm_instruction_timer[v2] = 1;
       return;
     }
-    QueueSfx2_Max6(0x57);
+    QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   }
   plm_timers[v2] = 0;
 }
@@ -1837,7 +1837,7 @@ LABEL_4:;
       plm_instruction_timer[v4] = 1;
       return;
     }
-    QueueSfx2_Max6(0x57);
+    QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   }
   plm_timers[k >> 1] = 0;
 }
@@ -1852,7 +1852,7 @@ void PlmPreInstr_GoToLinkInstrIfShotWithSuperMissile(uint16 k) {  // 0x84BD88
       plm_instruction_timer[v2] = 1;
       return;
     }
-    QueueSfx2_Max6(0x57);
+    QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   }
   plm_timers[v2] = 0;
 }
@@ -1867,7 +1867,7 @@ void PlmPreInstr_GoToLinkInstruction(uint16 k) {  // 0x84BDB2
 void PlmPreInstr_PlayDudSound(uint16 k) {  // 0x84BE1C
   int v2 = k >> 1;
   if (plm_timers[v2])
-    QueueSfx2_Max6(0x57);
+    QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_timers[v2] = 0;
 }
 
@@ -1923,7 +1923,7 @@ const uint8 *PlmInstr_SetGreyDoorPreInstr(const uint8 *plmp, uint16 k) {  // 0x8
 uint8 PlmSetup_C806_LeftGreenGateTrigger(uint16 j) {  // 0x84C54D
   if ((projectile_type[projectile_index >> 1] & 0xFFF) == 512)
     return TriggerPlmOfBlockToTheRight(j);
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1931,7 +1931,7 @@ uint8 PlmSetup_C806_LeftGreenGateTrigger(uint16 j) {  // 0x84C54D
 uint8 PlmSetup_C80A_RightGreenGateTrigger(uint16 j) {  // 0x84C56C
   if ((projectile_type[projectile_index >> 1] & 0xFFF) == 512)
     return TriggerPlmOfBlockToTheLeft(j);
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1942,7 +1942,7 @@ uint8 PlmSetup_C80E_LeftRedGateTrigger(uint16 j) {  // 0x84C58B
   v1 = projectile_type[projectile_index >> 1] & 0xFFF;
   if (v1 == 256 || v1 == 512)
     return TriggerPlmOfBlockToTheRight(j);
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1953,7 +1953,7 @@ uint8 PlmSetup_C812_RightRedGateTrigger(uint16 j) {  // 0x84C5AF
   v1 = projectile_type[projectile_index >> 1] & 0xFFF;
   if (v1 == 256 || v1 == 512)
     return TriggerPlmOfBlockToTheLeft(j);
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1961,7 +1961,7 @@ uint8 PlmSetup_C812_RightRedGateTrigger(uint16 j) {  // 0x84C5AF
 uint8 PlmSetup_C822_RightYellowGateTrigger(uint16 j) {  // 0x84C5F1
   if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
     return TriggerPlmOfBlockToTheLeft(j);
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1969,7 +1969,7 @@ uint8 PlmSetup_C822_RightYellowGateTrigger(uint16 j) {  // 0x84C5F1
 uint8 PlmSetup_C81E_LeftYellowGateTrigger(uint16 j) {  // 0x84C5D3
   if ((projectile_type[projectile_index >> 1] & 0xFFF) == 768)
     return TriggerPlmOfBlockToTheRight(j);
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   int v1 = j >> 1;
   plm_header_ptr[v1] = 0;
   return PlmSetup_C822_RightYellowGateTrigger(j);
@@ -2357,7 +2357,7 @@ const uint8 *PlmInstr_GotoIfRoomArgLess(const uint8 *plmp, uint16 k) {  // 0x84D
 }
 
 const uint8 *PlmInstr_SpawnFourMotherBrainGlass(const uint8 *plmp, uint16 k) {  // 0x84D30B
-  QueueSfx3_Max15(0x2E);
+  QueueSfx3_Max15(kSfx3_MotherBrainsGlassShattering_HighPriority);
   SpawnMotherBrainGlassShatteringShard(GET_WORD(plmp + 0));
   SpawnMotherBrainGlassShatteringShard(GET_WORD(plmp + 2));
   SpawnMotherBrainGlassShatteringShard(GET_WORD(plmp + 4));
@@ -2537,7 +2537,7 @@ void PlmPreInstr_WakePlmIfRoomArgumentDoorIsSet(uint16 k) {  // 0x84D753
 
 const uint8 *PlmInstr_ShootEyeDoorProjectileWithProjectileArg(const uint8 *plmp, uint16 k) {  // 0x84D77A
   SpawnEprojWithRoomGfx(addr_kEproj_EyeDoorProjectile, GET_WORD(plmp));
-  QueueSfx2_Max6(0x4C);
+  QueueSfx2_Max6(kSfx2_KiHunterSpit_EyeDoorAcidSpit_DraygonGoop);
   return plmp + 2;
 }
 

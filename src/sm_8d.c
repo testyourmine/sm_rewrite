@@ -208,7 +208,7 @@ void PalPreInstr_SamusInHeat(uint16 k) {  // 0x8DE379
   if ((equipped_items & 0x21) == 0) {
     AddToHiLo(&samus_periodic_damage, &samus_periodic_subdamage, 0x4000);
     if ((nmi_frame_counter_word & 7) == 0 && samus_health > 0x46)
-      QueueSfx3_Max6(0x2D);
+      QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
   }
   if (samus_in_heat_palfx_index != samus_in_heat_palettefx_prev_index) {
     samus_in_heat_palettefx_prev_index = samus_in_heat_palfx_index;

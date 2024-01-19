@@ -8,12 +8,12 @@
 
 
 typedef struct EnemyBlockCollInfo {
-  int32 ebci_r18_r20;
-  uint16 ebci_r24;
-  uint16 ebci_r26;
-  uint16 ebci_r28;
-  uint16 ebci_r30;
-  uint16 ebci_r32;
+  int32 dist_to_coll;
+  uint16 target_pos;
+  uint16 target_boundary_pos;
+  uint16 blocks_left;
+  uint16 enemy_block_span;
+  uint16 slope_coll;
 } EnemyBlockCollInfo;
 
 typedef uint8 Func_EnemyBlockCollInfo_U8(EnemyBlockCollInfo *ebci);
@@ -2112,7 +2112,7 @@ void HandleEprojCollWithProj(uint16 k, uint16 j) {  // 0xA099F9
   if (eproj_flags[k >> 1] == 1) {
     int v4 = k >> 1;
     CreateSpriteAtPos(projectile_x_pos[v4], projectile_y_pos[v4], 6, 0);
-    QueueSfx1_Max6(0x3D);
+    QueueSfx1_Max6(kSfx1_DudShot);
   } else {
     int j = k >> 1;
     eproj_G[j] = projectile_type[i];
@@ -2594,7 +2594,7 @@ void NormalEnemyTouchAiSkipDeathAnim(void) {  // 0xA0A4A1
       samus_invincibility_timer = 0;
       samus_knockback_timer = 0;
       E->health = (int16)(E->health - dmg) < 0 ? 0 : (int16)(E->health - dmg);
-      QueueSfx2_Max1(0xB);
+      QueueSfx2_Max1(kSfx2_EnemyKilledByContactDamage);
     }
   }
 }
@@ -2746,7 +2746,7 @@ LABEL_9:;
           v16->frozen_timer = v20;
           v16->ai_handler_bits |= 4;
           v16->invincibility_timer = 10;
-          QueueSfx3_Max3(0xA);
+          QueueSfx3_Max3(kSfx3_EnemyFrozen_HighPriority);
           return varE2E;
         }
         v18 = 0;
@@ -2758,7 +2758,7 @@ LABEL_18:;
     int v7 = collision_detection_index;
     projectile_dir[v7] |= 0x10;
     CreateSpriteAtPos(projectile_x_pos[v7], projectile_y_pos[v7], 6, 0);
-    QueueSfx1_Max3(0x3D);
+    QueueSfx1_Max3(kSfx1_DudShot);
     return varE2E;
   }
   last_enemy_power = get_Vulnerability(r20 + (r18 & 0xF))->power;
@@ -2777,7 +2777,7 @@ LABEL_18:;
   }
   EnemyData *v8 = gEnemyData(cur_enemy_index);
   if (!v8->frozen_timer)
-    QueueSfx3_Max3(0xA);
+    QueueSfx3_Max3(kSfx3_EnemyFrozen_HighPriority);
   v9 = 400;
   if (area_index == 2)
     v9 = 300;
@@ -2790,7 +2790,7 @@ LABEL_18:;
 void CreateDudShot(void) {  // 0xA0A8BC
   int v0 = collision_detection_index;
   CreateSpriteAtPos(projectile_x_pos[v0], projectile_y_pos[v0], 6, 0);
-  QueueSfx1_Max3(0x3D);
+  QueueSfx1_Max3(kSfx1_DudShot);
   projectile_dir[collision_detection_index] |= 0x10;
 }
 
@@ -2993,7 +2993,7 @@ uint16 CheckIfEnemyIsOnScreen(void) {  // 0xA0AD70
       (int16)(v0->y_pos - layer1_y_pos) < 0 || (int16)(layer1_y_pos + 256 - v0->y_pos) < 0;
 }
 
-uint16 EnemyFunc_ADA3(uint16 a) {  // 0xA0ADA3
+uint16 CheckIfEnemyIsOverAPixelsOffScreen(uint16 a) {  // 0xA0ADA3
   EnemyData *E = gEnemyData(cur_enemy_index);
   return (int16)(a + E->x_pos - layer1_x_pos) < 0 || (int16)(a + layer1_x_pos + 256 - E->x_pos) < 0 ||
       (int16)(a + E->y_pos - layer1_y_pos) < 0 || (int16)(a + layer1_y_pos + 256 - E->y_pos) < 0;
@@ -3317,41 +3317,41 @@ uint16 CalculateAngleOfEnemyXfromEnemyY(uint16 k, uint16 j) {  // 0xA0C096
   return CalculateAngleFromXY(Ek->x_pos - Ej->x_pos, Ek->y_pos - Ej->y_pos);
 }
 
-static uint8 CalculateAngleFromXY_0(uint16 div) {  // 0xA0C112
+static uint8 CalculateAngleFromXY_BottomRight_UpperOctant(uint16 div) {  // 0xA0C112
   return (div >> 3) + 64;
 }
 
-static uint8 CalculateAngleFromXY_1(uint16 div) {  // 0xA0C120
+static uint8 CalculateAngleFromXY_BottomRight_LowerOctant(uint16 div) {  // 0xA0C120
   return 0x80 - (div >> 3);
 }
 
-static uint8 CalculateAngleFromXY_2(uint16 div) {  // 0xA0C132
+static uint8 CalculateAngleFromXY_TopRight_UpperOctant(uint16 div) {  // 0xA0C132
   return div >> 3;
 }
 
-static uint8 CalculateAngleFromXY_3(uint16 div) {  // 0xA0C13C
+static uint8 CalculateAngleFromXY_TopRight_LowerOctant(uint16 div) {  // 0xA0C13C
   return 64 - (div >> 3);
 }
 
-static uint8 CalculateAngleFromXY_4(uint16 div) {  // 0xA0C14E
+static uint8 CalculateAngleFromXY_BottomLeft_LowerOctant(uint16 div) {  // 0xA0C14E
   return (div >> 3) + 0x80;
 }
 
-static uint8 CalculateAngleFromXY_5(uint16 div) {  // 0xA0C15C
+static uint8 CalculateAngleFromXY_BottomLeft_UpperOctant(uint16 div) {  // 0xA0C15C
   return -64 - (div >> 3);
 }
 
-static uint8 CalculateAngleFromXY_6(uint16 div) {  // 0xA0C16E
+static uint8 CalculateAngleFromXY_TopLeft_LowerOctant(uint16 div) {  // 0xA0C16E
   return (div >> 3) - 64;
 }
 
-static uint8 CalculateAngleFromXY_7(uint16 div) {  // 0xA0C17C
+static uint8 CalculateAngleFromXY_TopLeft_UpperOctant(uint16 div) {  // 0xA0C17C
   return 0 - (div >> 3);
 }
 
 typedef uint8 CalculateAngleFromXYFunc(uint16 j);
-static CalculateAngleFromXYFunc *const funcs_758EE[4] = { CalculateAngleFromXY_1, CalculateAngleFromXY_2, CalculateAngleFromXY_4, CalculateAngleFromXY_7 };
-static CalculateAngleFromXYFunc *const funcs_7587D[4] = { CalculateAngleFromXY_0, CalculateAngleFromXY_3, CalculateAngleFromXY_5, CalculateAngleFromXY_6 };
+static CalculateAngleFromXYFunc *const funcs_inner_edges[4] = { CalculateAngleFromXY_BottomRight_LowerOctant, CalculateAngleFromXY_TopRight_UpperOctant, CalculateAngleFromXY_BottomLeft_LowerOctant, CalculateAngleFromXY_TopLeft_UpperOctant };
+static CalculateAngleFromXYFunc *const funcs_outter_edges[4] = { CalculateAngleFromXY_BottomRight_UpperOctant, CalculateAngleFromXY_TopRight_LowerOctant, CalculateAngleFromXY_BottomLeft_UpperOctant, CalculateAngleFromXY_TopLeft_LowerOctant };
 uint16 CalculateAngleFromXY(uint16 x_r18, uint16 y_r20) {  // 0xA0C0B1
   int idx = 0;
   if ((x_r18 & 0x8000) != 0) {
@@ -3364,10 +3364,10 @@ uint16 CalculateAngleFromXY(uint16 x_r18, uint16 y_r20) {  // 0xA0C0B1
   }
   if (y_r20 < x_r18) {
     uint16 div = SnesDivide(y_r20 << 8, x_r18);
-    return funcs_7587D[idx](div);
+    return funcs_outter_edges[idx](div);
   } else {
     uint16 div = SnesDivide(x_r18 << 8, y_r20);
-    return funcs_758EE[idx](div);
+    return funcs_inner_edges[idx](div);
   }
 }
 
@@ -3441,7 +3441,7 @@ static uint8 EnemyBlockCollVertReact_Slope(EnemyBlockCollInfo *ebci) {  // 0xA0C
     return EnemyBlockCollVertReact_Slope_Square(ebci, BTS[cur_block_index] & 0x1F, cur_block_index);
 }
 
-static const uint8 byte_A0C435[20] = {  // 0xA0C32E
+static const uint8 kSquareSlopeDef_EnemyDef[20] = {  // 0xA0C32E
      0,    1, 0x82, 0x83,
      0, 0x81,    2, 0x83,
      0,    1,    2, 0x83,
@@ -3454,46 +3454,46 @@ static uint8 EnemyBlockCollHorizReact_Slope_Square(EnemyBlockCollInfo *ebci, uin
 
   uint16 temp_collision_DD4 = 4 * a;
   uint16 temp_collision_DD6 = BTS[k] >> 6;
-  uint16 i = 4 * a + (temp_collision_DD6 ^ ((ebci->ebci_r26 & 8) >> 3));
-  if (!ebci->ebci_r28) {
+  uint16 i = 4 * a + (temp_collision_DD6 ^ ((ebci->target_boundary_pos & 8) >> 3));
+  if (!ebci->blocks_left) {
     if (((LOBYTE(E->y_height) + LOBYTE(E->y_pos) - 1) & 8) == 0)
-      return CHECK_locret_A0C434(i) < 0;
+      return CHECK_halfBlockIsSolid(i) < 0;
     goto LABEL_7;
   }
-  if (ebci->ebci_r28 != ebci->ebci_r30 || ((E->y_pos - E->y_height) & 8) == 0) {
+  if (ebci->blocks_left != ebci->enemy_block_span || ((E->y_pos - E->y_height) & 8) == 0) {
 LABEL_7:
-    if (CHECK_locret_A0C434(i) < 0)
+    if (CHECK_halfBlockIsSolid(i) < 0)
       return 1;
   }
-  return CHECK_locret_A0C434(i ^ 2) < 0;
+  return CHECK_halfBlockIsSolid(i ^ 2) < 0;
 }
 
 static uint8 EnemyBlockCollVertReact_Slope_Square(EnemyBlockCollInfo *ebci, uint16 a, uint16 k) {  // 0xA0C3B2
   EnemyData *E = gEnemyData(cur_enemy_index);
   uint16 temp_collision_DD4 = 4 * a;
   uint16 temp_collision_DD6 = BTS[k] >> 6;
-  uint16 i = 4 * a + (temp_collision_DD6 ^ ((ebci->ebci_r26 & 8) >> 2));
-  if (!ebci->ebci_r28) {
+  uint16 i = 4 * a + (temp_collision_DD6 ^ ((ebci->target_boundary_pos & 8) >> 2));
+  if (!ebci->blocks_left) {
     if (((LOBYTE(E->x_width) + LOBYTE(E->x_pos) - 1) & 8) == 0)
-      return CHECK_locret_A0C434(i) < 0;
+      return CHECK_halfBlockIsSolid(i) < 0;
     goto LABEL_7;
   }
-  if (ebci->ebci_r28 != ebci->ebci_r30 || ((E->x_pos - E->x_width) & 8) == 0) {
+  if (ebci->blocks_left != ebci->enemy_block_span || ((E->x_pos - E->x_width) & 8) == 0) {
 LABEL_7:
-    if (CHECK_locret_A0C434(i) < 0)
+    if (CHECK_halfBlockIsSolid(i) < 0)
       return 1;
   }
-  return CHECK_locret_A0C434(i ^ 1) < 0;
+  return CHECK_halfBlockIsSolid(i ^ 1) < 0;
 }
 
 static uint8 EnemyBlockCollHorizReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) {  // 0xA0C449
-  if ((ebci->ebci_r32 & 0x8000) == 0)
-    return (ebci->ebci_r32 & 0x4000) != 0;
+  if ((ebci->slope_coll & 0x8000) == 0)
+    return (ebci->slope_coll & 0x4000) != 0;
   int i = 2 * (current_slope_bts & 0x1F);
-  if (ebci->ebci_r18_r20 >= 0) {
-    ebci->ebci_r18_r20 = (ebci->ebci_r18_r20 >> 8) * kEnemyXYSlopeOffsetMultiplicationIndices[i + 1];
+  if (ebci->dist_to_coll >= 0) {
+    ebci->dist_to_coll = (ebci->dist_to_coll >> 8) * kEnemyXYSlopeOffsetMultiplicationIndices[i + 1];
   } else {
-    ebci->ebci_r18_r20 = -(-(int16)(ebci->ebci_r18_r20 >> 8) * kEnemyXYSlopeOffsetMultiplicationIndices[i + 1]);
+    ebci->dist_to_coll = -(-(int16)(ebci->dist_to_coll >> 8) * kEnemyXYSlopeOffsetMultiplicationIndices[i + 1]);
   }
   return 0;
 }
@@ -3513,18 +3513,18 @@ static uint8 EnemyBlockCollVertReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) {
   EnemyData *E = gEnemyData(cur_enemy_index);
   uint16 v1 = cur_block_index;
 
-  if (ebci->ebci_r18_r20 < 0) {
+  if (ebci->dist_to_coll < 0) {
     v11 = E->x_pos >> 4;
     if (v11 != mod)
       return 0;
-    uint16 temp_collision_DD4 = (ebci->ebci_r24 - E->y_height) & 0xF ^ 0xF;
+    uint16 temp_collision_DD4 = (ebci->target_pos - E->y_height) & 0xF ^ 0xF;
     uint16 temp_collision_DD6 = 16 * (BTS[v1] & 0x1F);
     v12 = BTS[v1] << 8;
     if (v12 < 0
         && ((v12 & 0x4000) != 0 ? (x_pos = E->x_pos ^ 0xF) : (x_pos = E->x_pos),
         (v14 = temp_collision_DD6 + (x_pos & 0xF),
         v15 = (kAlignYPos_Tab0_a0[v14] & 0x1F) - temp_collision_DD4 - 1, v15 <= 0))) {
-      E->y_pos = ebci->ebci_r24 - v15;
+      E->y_pos = ebci->target_pos - v15;
       E->y_subpos = 0;
       return 1;
     } else {
@@ -3534,7 +3534,7 @@ static uint8 EnemyBlockCollVertReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) {
     v3 = E->x_pos >> 4;
     if (v3 != mod)
       return 0;
-    uint16 temp_collision_DD4 = (E->y_height + ebci->ebci_r24 - 1) & 0xF;
+    uint16 temp_collision_DD4 = (E->y_height + ebci->target_pos - 1) & 0xF;
     uint16 temp_collision_DD6 = 16 * (BTS[v1] & 0x1F);
     v5 = BTS[v1] << 8;
     if (v5 >= 0
@@ -3542,7 +3542,7 @@ static uint8 EnemyBlockCollVertReact_Slope_NonSquare(EnemyBlockCollInfo *ebci) {
       (v7 = temp_collision_DD6 + (v6 & 0xF),
       v8 = (kAlignYPos_Tab0_a0[v7] & 0x1F) - temp_collision_DD4 - 1,
       (kAlignYPos_Tab0_a0[v7] & 0x1F) - temp_collision_DD4 == 1) || v8 < 0)) {
-      E->y_pos = ebci->ebci_r24 + v8;
+      E->y_pos = ebci->target_pos + v8;
       E->y_subpos = -1;
       return 1;
     } else {
@@ -3595,23 +3595,23 @@ static uint8 Enemy_MoveRight_IgnoreSlopes_Inner(uint16 k, int32 amount32, uint16
     v5 = (new_pos >> 16) - E->x_width;
   else
     v5 = E->x_width + (new_pos >> 16) - 1;
-  EnemyBlockCollInfo ebci = { .ebci_r18_r20 = amount32, .ebci_r24 = r24, .ebci_r26 = v5, .ebci_r28 = r28, .ebci_r30 = r30, .ebci_r32 = r32};
+  EnemyBlockCollInfo ebci = { .dist_to_coll = amount32, .target_pos = r24, .target_boundary_pos = v5, .blocks_left = r28, .enemy_block_span = r30, .slope_coll = r32};
   uint16 v6 = 2 * (prod + (v5 >> 4));
   while (!(EnemyBlockCollReact_Horiz(&ebci, v6) & 1)) {
     v6 += room_width_in_blocks * 2;
-    if ((--ebci.ebci_r28 & 0x8000) != 0) {
-      AddToHiLo(&E->x_pos, &E->x_subpos, ebci.ebci_r18_r20);
+    if ((--ebci.blocks_left & 0x8000) != 0) {
+      AddToHiLo(&E->x_pos, &E->x_subpos, ebci.dist_to_coll);
       return 0;
     }
   }
   if (sign32(amount32)) {
-    uint16 v12 = E->x_width + 1 + (ebci.ebci_r26 | 0xF);
+    uint16 v12 = E->x_width + 1 + (ebci.target_boundary_pos | 0xF);
     if (v12 <= E->x_pos)
       E->x_pos = v12;
     E->x_subpos = 0;
     return 1;
   } else {
-    uint16 v10 = (ebci.ebci_r26 & 0xFFF0) - E->x_width;
+    uint16 v10 = (ebci.target_boundary_pos & 0xFFF0) - E->x_width;
     if (v10 >= E->x_pos)
       E->x_pos = v10;
     E->x_subpos = -1;
@@ -3635,21 +3635,21 @@ uint8 Enemy_MoveDown(uint16 k, int32 amount32) {  // 0xA0C786
     v5 = E->y_height + (new_pos >> 16) - 1;
   uint16 prod = Mult8x8(v5 >> 4, room_width_in_blocks);
   v6 = (uint16)(E->x_pos - E->x_width) >> 4;
-  EnemyBlockCollInfo ebci = { .ebci_r18_r20 = amount32, .ebci_r24 = r24, .ebci_r26 = v5, .ebci_r28 = r28, .ebci_r30 = r30, .ebci_r32 = 0 };
+  EnemyBlockCollInfo ebci = { .dist_to_coll = amount32, .target_pos = r24, .target_boundary_pos = v5, .blocks_left = r28, .enemy_block_span = r30, .slope_coll = 0 };
   for (int i = 2 * (prod + v6); !(EnemyBlockCollReact_Vert(&ebci, i) & 1); i += 2) {
-    if ((--ebci.ebci_r28 & 0x8000) != 0) {
+    if ((--ebci.blocks_left & 0x8000) != 0) {
       E->y_subpos = new_pos, E->y_pos = new_pos >> 16;
       return 0;
     }
   }
   if (sign32(amount32)) {
-    uint16 v13 = E->y_height + 1 + (ebci.ebci_r26 | 0xF);
+    uint16 v13 = E->y_height + 1 + (ebci.target_boundary_pos | 0xF);
     if (v13 <= E->y_pos)
       E->y_pos = v13;
     E->y_subpos = 0;
     return 1;
   } else {
-    uint16 v10 = (ebci.ebci_r26 & 0xFFF0) - E->y_height;
+    uint16 v10 = (ebci.target_boundary_pos & 0xFFF0) - E->y_height;
     if (v10 >= E->y_pos)
       E->y_pos = v10;
     E->y_subpos = -1;
@@ -3718,7 +3718,7 @@ void CalculateBlockContainingPixelPos(uint16 xpos, uint16 ypos) {
   cur_block_index = prod + (xpos >> 4);
 }
 
-uint8 EnemyFunc_C8AD(uint16 k) {  // 0xA0C8AD
+uint8 AlignEnemyYposToNonsquareSlope(uint16 k) {  // 0xA0C8AD
   uint8 result = 0;
 
   EnemyData *E = gEnemyData(k);

@@ -1059,7 +1059,7 @@ const uint16 *Draygon_Instr_4(uint16 k, const uint16 *jp) {  // 0xA59F6E
 const uint16 *Draygon_Instr_12(uint16 k, const uint16 *jp) {  // 0xA59F7C
   Enemy_Draygon *E = Get_Draygon(0);
   eproj_spawn_pt = (Point16U){ E->base.x_pos - 28, E->base.y_pos - 16 };
-  eproj_unk1995 = (NextRandom() & 0x3F) + 128;
+  eproj_init_param_1 = (NextRandom() & 0x3F) + 128;
   SpawnEprojWithGfx(2, cur_enemy_index, addr_kEproj_DraygonGoop);
   return jp;
 }
@@ -1067,7 +1067,7 @@ const uint16 *Draygon_Instr_12(uint16 k, const uint16 *jp) {  // 0xA59F7C
 const uint16 *Draygon_Instr_18(uint16 k, const uint16 *jp) {  // 0xA59FAE
   Enemy_Draygon *E = Get_Draygon(0);
   eproj_spawn_pt = (Point16U){ E->base.x_pos + 24, E->base.y_pos - 16 };
-  eproj_unk1995 = (NextRandom() & 0x3F) + 192;
+  eproj_init_param_1 = (NextRandom() & 0x3F) + 192;
   SpawnEprojWithGfx(2, cur_enemy_index, addr_kEproj_DraygonGoop);
   return jp;
 }
@@ -1332,7 +1332,7 @@ const uint16 *Draygon_Instr_28(uint16 k, const uint16 *jp) {  // 0xA5E96E
   r20 += E->base.y_pos;
   eproj_spawn_pt = (Point16U){ r18, r20 };
   SpawnEprojWithRoomGfx(0xE509, 0x15);
-  QueueSfx2_Max6(0x29);
+  QueueSfx2_Max6(kSfx2_MotherBrainRisingIntoPhase2_CrocomiresWallExplodes_SporeSpawnGetsHard);
   return jp;
 }
 
@@ -1342,7 +1342,7 @@ const uint16 *Draygon_Instr_26(uint16 k, const uint16 *jp) {  // 0xA5E9B1
   uint16 x = E->base.x_pos + (random_number & 0x7F) - 64;
   uint16 y = E->base.y_pos + ((uint16)(random_number & 0x3F00) >> 8) - 32;
   CreateSpriteAtPos(x, y, 3, 0);
-  QueueSfx2_Max6(0x25);
+  QueueSfx2_Max6(kSfx2_BigExplosion);
   return jp;
 }
 

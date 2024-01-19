@@ -80,7 +80,7 @@ void Samus_Input_07_Unused(void) {  // 0x918086
 
 void Samus_Input_05_Crouching(void) {  // 0x918087
   if (time_is_frozen_flag) {
-    Samus_Func20();
+    XraySamusPostInputHandler();
   } else {
     Samus_LookupTransitionTable();
     if (!samus_movement_type) {
@@ -152,7 +152,7 @@ void Samus_Input_14_WallJumping(void) {  // 0x918167
 
 void Samus_Input_15_RanIntoWall(void) {  // 0x91816F
   if (time_is_frozen_flag)
-    Samus_Func20();
+    XraySamusPostInputHandler();
   else
     Samus_LookupTransitionTable();
 }
@@ -1278,7 +1278,7 @@ void VariaSuitPickup(void) {  // 0x91D4E4
   for (int i = 510; i >= 0; i -= 2)
     hdma_table_1[i >> 1] = 255;
   if (samus_movement_type == 3 || samus_movement_type == 20)
-    QueueSfx1_Max9(0x32);
+    QueueSfx1_Max9(kSfx1_SpinJumpEnd_Silence);
   if ((equipped_items & 0x20) != 0)
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   else
@@ -1290,7 +1290,7 @@ void VariaSuitPickup(void) {  // 0x91D4E4
   samus_prev_x_pos = layer1_x_pos + 120;
   samus_y_pos = layer1_y_pos + 136;
   samus_prev_y_pos = layer1_y_pos + 136;
-  QueueSfx2_Max6(0x56);
+  QueueSfx2_Max6(kSfx2_AcquiredSuit);
   static const SpawnHdmaObject_Args unk_91D59B = { 0x41, 0x26, 0xd5a2 };
   SpawnHdmaObject(0x91, &unk_91D59B);
 }
@@ -1316,7 +1316,7 @@ void GravitySuitPickup(void) {  // 0x91D5BA
   for (int i = 510; i >= 0; i -= 2)
     hdma_table_1[i >> 1] = 255;
   if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)
-    QueueSfx1_Max9(0x32);
+    QueueSfx1_Max9(kSfx1_SpinJumpEnd_Silence);
   if ((equipped_items & 1) != 0)
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   else
@@ -1328,7 +1328,7 @@ void GravitySuitPickup(void) {  // 0x91D5BA
   samus_prev_x_pos = layer1_x_pos + 120;
   samus_y_pos = layer1_y_pos + 136;
   samus_prev_y_pos = layer1_y_pos + 136;
-  QueueSfx2_Max6(0x56);
+  QueueSfx2_Max6(kSfx2_AcquiredSuit);
   static const SpawnHdmaObject_Args unk_91D673 = { 0x41, 0x26, 0xd67a };
   SpawnHdmaObject(0x91, &unk_91D673);
 }
@@ -1449,7 +1449,7 @@ void HandleMiscSamusPalette(void) {  // 0x91D8A5
       if (!cinematic_function
           && (frame_handler_beta != FUNC16(j_HandleDemoRecorder_2_0)
               || samus_pose != kPose_54_FaceL_Knockback)) {
-        QueueSfx1_Max6(0x35);
+        QueueSfx1_Max6(kSfx1_SamusDamaged_HighPriority);
         goto LABEL_14;
       }
       v0 = samus_hurt_flash_counter;
@@ -1476,7 +1476,7 @@ LABEL_17:;
           play_resume_charging_beam_sfx = 1;
         }
       } else if (sign16(grapple_beam_function + 0x37AA)) {
-        QueueSfx1_Max9(6);
+        QueueSfx1_Max9(kSfx1_Grappling);
       }
     } else if (!sign16(v1 - 60)) {
       samus_hurt_flash_counter = 0;
@@ -1564,7 +1564,7 @@ uint8 Samus_SpeedBoosterShinePals(void) {  // 0x91DAC7
   uint16 v0 = samus_shine_timer;
   if (samus_shine_timer == 170) {
     uint16 v4 = samus_shine_timer;
-    QueueSfx3_Max9(0xC);
+    QueueSfx3_Max9(kSfx3_StoredShinespark);
     v0 = v4;
   }
   samus_shine_timer = v0 - 1;
@@ -2159,7 +2159,7 @@ void SamusFunc_E633(void) {
   if (grapple_beam_function == FUNC16(GrappleBeamFunc_Inactive)) {
     if ((equipped_beams & 0x1000) != 0) {
       if (!sign16(flare_counter - 16))
-        QueueSfx1_Max6(0x41);
+        QueueSfx1_Max6(kSfx1_ResumeChargingBeam);
     } else {
       flare_counter = 0;
       flare_animation_frame = 0;
@@ -2171,11 +2171,11 @@ void SamusFunc_E633(void) {
     }
   } else {
     LoadProjectilePalette(2);
-    QueueSfx1_Max6(6);
+    QueueSfx1_Max6(kSfx1_Grappling);
   }
   Samus_LoadSuitPalette();
   if (sign16(samus_health - 31))
-    QueueSfx3_Max6(2);
+    QueueSfx3_Max6(kSfx3_LowHealthBeep);
 }
 
 void Samus_UpdatePreviousPose_0(void) {  // 0x91E719
@@ -2760,7 +2760,7 @@ LABEL_11:
     flare_animation_timer = 0;
     flare_slow_sparks_anim_timer = 0;
     flare_fast_sparks_anim_timer = 0;
-    QueueSfx1_Max6(9);
+    QueueSfx1_Max6(kSfx1_XRay);
     break;
   }
 }
@@ -2895,23 +2895,23 @@ void HandleLandingSoundEffectsAndGfx(void) {  // 0x91F046
        || samus_prev_movement_type2 == kMovementType_14_WallJumping)
       && !cinematic_function) {
     if (samus_prev_pose == kPose_81_FaceR_Screwattack || samus_prev_pose == kPose_82_FaceL_Screwattack)
-      QueueSfx1_Max6(0x34);
+      QueueSfx1_Max6(kSfx1_ScrewAttackEnd_Silence);
     else
-      QueueSfx1_Max6(0x32);
+      QueueSfx1_Max6(kSfx1_SpinJumpEnd_Silence);
   }
   if (samus_y_speed && !sign16(samus_y_speed - 5)) {
     if (!cinematic_function)
-      QueueSfx3_Max6(4);
+      QueueSfx3_Max6(kSfx3_SamusLandedHard);
   } else {
     if (!samus_y_subspeed)
       return;
     if (!cinematic_function)
-      QueueSfx3_Max6(5);
+      QueueSfx3_Max6(kSfx3_SamusLanded_WallJumped);
   }
   HandleLandingGraphics();
 }
 
-static Func_V *const off_91F0AE[8] = {  // 0x91F0A5
+static Func_V *const kHandleLandingGraphicsAreaFuncs[8] = {  // 0x91F0A5
   HandleLandingGraphics_Crateria,
   HandleLandingGraphics_Brinstar,
   HandleLandingGraphics_Norfair,
@@ -2922,14 +2922,14 @@ static Func_V *const off_91F0AE[8] = {  // 0x91F0A5
   HandleLandingGraphics_Ceres,
 };
 void HandleLandingGraphics(void) {
-  off_91F0AE[(area_index)]();
+  kHandleLandingGraphicsAreaFuncs[(area_index)]();
 }
 
 void HandleLandingGraphics_Ceres(void) {  // 0x91F0BE
   atmospheric_gfx_frame_and_type[2] = 0;
   atmospheric_gfx_frame_and_type[3] = 0;
 }
-static const uint8 g_byte_91F0F3[17] = {  // 0x91F0C5
+static const uint8 kWetRooms[17] = {  // 0x91F0C5
   1, 0, 0, 0, 0, 2, 0, 4,
   0, 4, 4, 4, 4, 0, 4, 0,
   0,
@@ -2943,11 +2943,11 @@ void HandleLandingGraphics_Crateria(void) {
   }
   if ((int16)(room_index - 16) >= 0)
     goto LABEL_13;
-  if ((g_byte_91F0F3[room_index] & 1) == 0) {
-    if ((g_byte_91F0F3[room_index] & 2) != 0) {
+  if ((kWetRooms[room_index] & 1) == 0) {
+    if ((kWetRooms[room_index] & 2) != 0) {
       if (!sign16(samus_y_pos - 944))
         goto LABEL_14;
-    } else if ((g_byte_91F0F3[room_index] & 4) != 0) {
+    } else if ((kWetRooms[room_index] & 4) != 0) {
       goto LABEL_14;
     }
 LABEL_13:
@@ -3032,8 +3032,8 @@ uint8 Samus_HandleTransitionsA_5_1_0(void) {  // 0x91F1EC
     samus_input_handler = FUNC16(HandleAutoJumpHack);
   return 0;
 }
-static const uint16 g_word_909EB5 = 1;
-static const uint16 g_word_909EB7 = 0;
+static const uint16 kSamusMorphBounceYSpeed = 1;
+static const uint16 kSamusMorphBounceYSubspeed = 0;
 uint8 Samus_MorphBallBounceNoSpringballTrans(void) {  // 0x91F1FC
   int16 v0;
 
@@ -3042,8 +3042,8 @@ uint8 Samus_MorphBallBounceNoSpringballTrans(void) {  // 0x91F1FC
     if (v0 == 2) {
       ++used_for_ball_bounce_on_landing;
       samus_y_dir = 1;
-      samus_y_subspeed = g_word_909EB7;
-      samus_y_speed = g_word_909EB5 - 1;
+      samus_y_subspeed = kSamusMorphBounceYSubspeed;
+      samus_y_speed = kSamusMorphBounceYSpeed - 1;
       return 1;
     }
     if (v0 != 4)
@@ -3051,8 +3051,8 @@ uint8 Samus_MorphBallBounceNoSpringballTrans(void) {  // 0x91F1FC
   } else if (!sign16(samus_y_speed - 3)) {
     ++used_for_ball_bounce_on_landing;
     samus_y_dir = 1;
-    samus_y_subspeed = g_word_909EB7;
-    samus_y_speed = g_word_909EB5;
+    samus_y_subspeed = kSamusMorphBounceYSubspeed;
+    samus_y_speed = kSamusMorphBounceYSpeed;
     return 1;
   }
   used_for_ball_bounce_on_landing = 0;
@@ -3081,8 +3081,8 @@ uint8 Samus_MorphBallBounceSpringballTrans(void) {  // 0x91F25E
     if (v1 == 2) {
       used_for_ball_bounce_on_landing = 1538;
       samus_y_dir = 1;
-      samus_y_subspeed = g_word_909EB7;
-      samus_y_speed = g_word_909EB5 - 1;
+      samus_y_subspeed = kSamusMorphBounceYSubspeed;
+      samus_y_speed = kSamusMorphBounceYSpeed - 1;
       return 1;
     }
     if (v1 != 4)
@@ -3090,8 +3090,8 @@ uint8 Samus_MorphBallBounceSpringballTrans(void) {  // 0x91F25E
   } else if (!sign16(samus_y_speed - 3)) {
     used_for_ball_bounce_on_landing = 1537;
     samus_y_dir = 1;
-    samus_y_subspeed = g_word_909EB7;
-    samus_y_speed = g_word_909EB5;
+    samus_y_subspeed = kSamusMorphBounceYSubspeed;
+    samus_y_speed = kSamusMorphBounceYSpeed;
     return 1;
   }
   used_for_ball_bounce_on_landing = 0;
@@ -3114,7 +3114,7 @@ void Samus_HandleTransitionsA_5_5(void) {  // 0x91F2D3
   samus_x_base_speed = 0;
   samus_x_base_subspeed = 0;
   UNUSED_word_7E0A18 = 0;
-  QueueSfx3_Max6(5);
+  QueueSfx3_Max6(kSfx3_SamusLanded_WallJumped);
 }
 
 void Samus_HandleTransitionsA_5_6(void) {  // 0x91F2F0
@@ -3374,13 +3374,13 @@ LABEL_9:
       goto LABEL_40;
     }
     if ((equipped_items & 0x200) != 0) {
-      QueueSfx1_Max6(0x3E);
+      QueueSfx1_Max6(kSfx1_SpaceJump);
       samus_pose = kPose_1C_FaceL_SpaceJump;
       return 0;
     }
     if (!samus_anim_frame_skip && !cinematic_function) {
 LABEL_22:
-      QueueSfx1_Max6(0x31);
+      QueueSfx1_Max6(kSfx1_SpinJump);
       return 0;
     }
     return 0;
@@ -3398,7 +3398,7 @@ LABEL_22:
     samus_pose = kPose_81_FaceR_Screwattack;
 LABEL_40:
     if (!samus_anim_frame_skip)
-      QueueSfx1_Max6(0x33);
+      QueueSfx1_Max6(kSfx1_ScrewAttack);
     return 0;
   }
   if ((equipped_items & 0x200) == 0) {
@@ -3406,7 +3406,7 @@ LABEL_40:
       return 0;
     goto LABEL_22;
   }
-  QueueSfx1_Max6(0x3E);
+  QueueSfx1_Max6(kSfx1_SpaceJump);
   samus_pose = kPose_1B_FaceR_SpaceJump;
   return 0;
 }
@@ -3643,7 +3643,7 @@ uint8 SamusFunc_F468_Shinespark(void) {
     speed_echo_xspeed[1] = 0;
     speed_echo_xpos[0] = 0;
     speed_echo_xpos[1] = 0;
-    QueueSfx3_Max9(0xF);
+    QueueSfx3_Max9(kSfx3_Shinespark);
   }
   return 0;
 }
@@ -3678,7 +3678,7 @@ void SamusFunc_EC80(void) {  // 0x91FB8E
   }
 }
 
-void UNUSED_sub_91FC42(void);
+void UNUSED_HandleJumpTransition_MovementTypeD(void);
 
 void nullsub_24(void) {}
 void nullsub_25(void) {}
@@ -3697,7 +3697,7 @@ static Func_V *const kHandleJumpTrans[28] = {  // 0x91FBBB
   nullsub_24,
   nullsub_24,
   nullsub_24,
-  UNUSED_sub_91FC42,
+  UNUSED_HandleJumpTransition_MovementTypeD,
   nullsub_24,
   nullsub_24,
   nullsub_24,
@@ -3736,7 +3736,7 @@ LABEL_6:
     goto LABEL_6;
 }
 
-void UNUSED_sub_91FC42(void) {  // 0x91FC42
+void UNUSED_HandleJumpTransition_MovementTypeD(void) {  // 0x91FC42
   if (samus_pose == (kPose_44_FaceL_Turn_Crouch | kPose_01_FaceR_Normal | 0x20)) {
     if (samus_prev_pose != 100)
       return;
@@ -3765,7 +3765,7 @@ void HandleJumpTransition_SpinJump(void) {  // 0x91FC99
   }
 }
 
-void Samus_Func20(void) {  // 0x91FCAF
+void XraySamusPostInputHandler(void) {  // 0x91FCAF
   if (samus_movement_type == 14) {
     if (samus_anim_frame == 2 && samus_anim_frame_timer == 1) {
       if (samus_pose_x_dir == 4) {
@@ -3812,13 +3812,13 @@ void Samus_Func20(void) {  // 0x91FCAF
   }
 }
 
-static Func_U8 *const off_91FE8A[4] = {  // 0x91FDAE
+static Func_U8 *const kSolidEnemyCollFuncs[4] = {  // 0x91FDAE
   HandleCollDueToChangedPose_Solid_NoColl,
   HandleCollDueToChangedPose_Solid_CollAbove,
   HandleCollDueToChangedPose_Solid_CollBelow,
   HandleCollDueToChangedPose_Solid_CollBoth,
 };
-static Func_U8 *const off_91FE92[4] = {
+static Func_U8 *const kBlockCollFuncs[4] = {
   HandleCollDueToChangedPose_Block_NoColl,
   HandleCollDueToChangedPose_Block_CollAbove,
   HandleCollDueToChangedPose_Block_CollBelow,
@@ -3851,7 +3851,7 @@ void HandleCollDueToChangedPose(void) {
   if (samus_collision_flag)
     solid_enemy_collision_flags |= 2;
   samus_space_to_move_down_enemy = (amt >> 16);
-  if (off_91FE8A[solid_enemy_collision_flags]()) {
+  if (kSolidEnemyCollFuncs[solid_enemy_collision_flags]()) {
     samus_pose = samus_prev_pose;
     return;
   }
@@ -3864,7 +3864,7 @@ void HandleCollDueToChangedPose(void) {
   if (samus_collision_flag)
     block_collision_flags |= 2;
   samus_space_to_move_down_blocks = (amt >> 16);
-  if (off_91FE92[block_collision_flags]()) {
+  if (kBlockCollFuncs[block_collision_flags]()) {
     samus_pose = samus_prev_pose;
   }
 }

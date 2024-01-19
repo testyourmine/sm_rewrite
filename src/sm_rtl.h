@@ -156,8 +156,8 @@ PairU16 MakePairU16(uint16 k, uint16 j);
 #define kPoseParams ((SamusPoseParams*)RomFixedPtr(0x91b629))
 #define kAtmosphericGraphicAnimationTimers ((uint16*)RomFixedPtr(0x908b93))
 #define kAtmosphericTypeNumFrames ((uint16*)RomFixedPtr(0x908bef))
-#define g_off_908BFF ((uint16*)RomFixedPtr(0x908bff))
-#define g_stru_90A83A ((DisableMinimapAndMarkBossRoomAsExploredEnt*)RomFixedPtr(0x90a83a))
+#define kAtmosphericTypeTileNumAndAttributes ((uint16*)RomFixedPtr(0x908bff))
+#define kBossRoomMapTile ((DisableMinimapAndMarkBossRoomAsExploredEnt*)RomFixedPtr(0x90a83a))
 #define kPlayerPoseToPtr ((uint16*)RomFixedPtr(0x90c7df))
 #define kDrawArmCannon_Tab2 ((uint16*)RomFixedPtr(0x90c7a5))
 extern const int16 kSinCosTable8bit_Sext[320];

@@ -344,7 +344,7 @@ const uint16 *Torizo_Instr_16(uint16 k, const uint16 *jp) {  // 0xAAC470
     else
       return INSTR_RETURN_ADDR(addr_kTorizo_Ilist_BDD8);
   } else {
-    EnemyFunc_C8AD(k);
+    AlignEnemyYposToNonsquareSlope(k);
     if (((E->toriz_parameter_1 ^ (samus_x_pos - E->base.x_pos)) & 0x8000) == 0) {
       if (!E->toriz_var_03)
         E->toriz_var_03 = 72;
@@ -365,7 +365,7 @@ const uint16 *Torizo_Instr_27(uint16 k, const uint16 *jp) {  // 0xAAC4E5
     else
       return INSTR_RETURN_ADDR(addr_kTorizo_Ilist_C188);
   } else {
-    EnemyFunc_C8AD(k);
+    AlignEnemyYposToNonsquareSlope(k);
     if (((E->toriz_parameter_1 ^ (samus_x_pos - E->base.x_pos)) & 0x8000) == 0) {
       if (!E->toriz_var_03)
         E->toriz_var_03 = 72;
@@ -432,12 +432,12 @@ const uint16 *Torizo_Instr_21(uint16 k, const uint16 *jp) {  // 0xAAC601
 }
 
 const uint16 *Torizo_Instr_17(uint16 k, const uint16 *jp) {  // 0xAAC610
-  QueueSfx2_Max6(0x27);
+  QueueSfx2_Max6(kSfx2_ShotTorizo_HighPriority);
   return jp;
 }
 
 const uint16 *Torizo_Instr_13(uint16 k, const uint16 *jp) {  // 0xAAC618
-  QueueSfx2_Max6(0x4B);
+  QueueSfx2_Max6(kSfx2_ChozoTorizoFootsteps);
   return jp;
 }
 
@@ -614,7 +614,7 @@ void Torizo_Func_6(uint16 k) {  // 0xAAC828
 void Torizo_Func_7(uint16 k) {  // 0xAAC82C
   Enemy_Torizo *E = Get_Torizo(k);
   Enemy_MoveRight_IgnoreSlopes(k, INT16_SHL8(E->toriz_var_A));
-  EnemyFunc_C8AD(k);
+  AlignEnemyYposToNonsquareSlope(k);
   if (Enemy_MoveDown(k, INT16_SHL8(E->toriz_var_B))) {
     E->base.current_instruction = E->toriz_var_00;
     E->base.instruction_timer = 1;
@@ -779,17 +779,17 @@ void GoldTorizo_Main(void) {  // 0xAAD369
 }
 
 const uint16 *Torizo_Instr_56(uint16 k, const uint16 *jp) {  // 0xAAD38F
-  QueueSfx2_Max6(0x34);
+  QueueSfx2_Max6(kSfx2_SpikeShootingPlantSpikes);
   return jp;
 }
 
 const uint16 *Torizo_Instr_60(uint16 k, const uint16 *jp) {  // 0xAAD397
-  QueueSfx2_Max6(0x67);
+  QueueSfx2_Max6(kSfx2_SpacePirate_MotherBrain_Torizo_RobotLaser);
   return jp;
 }
 
 const uint16 *Torizo_Instr_46(uint16 k, const uint16 *jp) {  // 0xAAD39F
-  QueueSfx2_Max6(0x48);
+  QueueSfx2_Max6(kSfx2_TorizoSonicBoom);
   return jp;
 }
 
@@ -918,7 +918,7 @@ const uint16 *Torizo_Instr_54(uint16 k, const uint16 *jp) {  // 0xAAD54D
     else
       return INSTR_RETURN_ADDR(addr_kTorizo_Ilist_D2BF);
   } else {
-    EnemyFunc_C8AD(k);
+    AlignEnemyYposToNonsquareSlope(k);
     if (((E->toriz_parameter_1 ^ (samus_x_pos - E->base.x_pos)) & 0x8000) == 0) {
       if (!E->toriz_var_03)
         E->toriz_var_03 = 16;
@@ -1423,12 +1423,12 @@ void sub_AAE445(uint16 k) {  // 0xAAE445
 }
 
 const uint16 *Shaktool_Instr_8(uint16 k, const uint16 *jp) {  // 0xAAE57F
-  QueueSfx2_Max6(0x1C);
+  QueueSfx2_Max6(kSfx2_ChozoGrabsSamus_HighPriority);
   return jp;
 }
 
 const uint16 *Shaktool_Instr_13(uint16 k, const uint16 *jp) {  // 0xAAE587
-  QueueSfx2_Max6(0x4B);
+  QueueSfx2_Max6(kSfx2_ChozoTorizoFootsteps);
   return jp;
 }
 
@@ -1449,7 +1449,7 @@ const uint16 *Shaktool_Instr_7(uint16 k, const uint16 *jp) {  // 0xAAE5D8
   E->shakt_var_C = jp[0];
   Enemy_MoveRight_IgnoreSlopes(k, INT16_SHL8(kShaktool_XDirectionIndices[E->shakt_var_C >> 1]));
   Enemy_MoveDown(k, INT16_SHL8(abs16(kShaktool_XDirectionIndices[E->shakt_var_C >> 1])));
-  EnemyFunc_C8AD(k);
+  AlignEnemyYposToNonsquareSlope(k);
   int v6 = E->shakt_var_C >> 1;
   samus_x_pos = kShaktool_SamusXPositionIndices[v6] + E->base.x_pos;
   samus_y_pos = kShaktool_SamusYPositionIndices[v6] + E->base.y_pos;

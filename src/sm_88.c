@@ -35,24 +35,24 @@ uint16 LayerBlendFunc_4_PhantoonIntro(uint16 j) {  // 0x888090
   return j;
 }
 
-uint16 LayerBlendFunc_6(uint16 j) {  // 0x888099
+uint16 LayerBlendFunc_6_Unused(uint16 j) {  // 0x888099
   reg_TS = 20;
   next_gameplay_CGADSUB = 39;
   return j;
 }
 
-uint16 LayerBlendFunc_8(uint16 j) {  // 0x8880A2
+uint16 LayerBlendFunc_8_WreckedShipOff(uint16 j) {  // 0x8880A2
   reg_TS = 20;
   next_gameplay_CGADSUB = 34;
   return j;
 }
 
-uint16 LayerBlendFunc_A(uint16 j) {  // 0x8880AB
+uint16 LayerBlendFunc_A_Spores(uint16 j) {  // 0x8880AB
   next_gameplay_CGADSUB = 50;
   return j;
 }
 
-uint16 LayerBlendFunc_C(uint16 j) {  // 0x8880B0
+uint16 LayerBlendFunc_C_Fireflea(uint16 j) {  // 0x8880B0
   next_gameplay_CGWSEL = 0;
   next_gameplay_CGADSUB = -94;
   return j;
@@ -62,19 +62,19 @@ uint16 nullsub_10(uint16 j) {  // 0x8880B7
   return j;
 }
 
-uint16 LayerBlendFunc_10(uint16 j) {  // 0x8880B8
+uint16 LayerBlendFunc_10_MorphEye_12_SuitPickup(uint16 j) {  // 0x8880B8
   reg_W34SEL = 2;
   reg_WOBJSEL = 32;
   reg_TSW = 4;
   return j;
 }
 
-uint16 LayerBlendFunc_14(uint16 j) {  // 0x8880C5
+uint16 LayerBlendFunc_14_22_Water(uint16 j) {  // 0x8880C5
   next_gameplay_CGADSUB = -77;
   return j;
 }
 
-uint16 LayerBlendFunc_16(uint16 j) {  // 0x8880CA
+uint16 LayerBlendFunc_16_Water(uint16 j) {  // 0x8880CA
   LOBYTE(j) = 4;
   reg_TM = 17;
   reg_TS = 6;
@@ -82,7 +82,7 @@ uint16 LayerBlendFunc_16(uint16 j) {  // 0x8880CA
   return j;
 }
 
-uint16 LayerBlendFunc_1A(uint16 j) {  // 0x8880D9
+uint16 LayerBlendFunc_1A_Phantoon(uint16 j) {  // 0x8880D9
   LOBYTE(j) = 4;
   reg_TM = 21;
   reg_TS = 2;
@@ -250,21 +250,21 @@ static Func_Y_Y *const kLayerBlendFuncTable[27] = {
   nullsub_9,
   nullsub_9,
   LayerBlendFunc_4_PhantoonIntro,
-  LayerBlendFunc_6,
-  LayerBlendFunc_8,
-  LayerBlendFunc_A,
-  LayerBlendFunc_C,
+  LayerBlendFunc_6_Unused,
+  LayerBlendFunc_8_WreckedShipOff,
+  LayerBlendFunc_A_Spores,
+  LayerBlendFunc_C_Fireflea,
   nullsub_10,
-  LayerBlendFunc_10,
-  LayerBlendFunc_10,
-  LayerBlendFunc_14,
-  LayerBlendFunc_16,
+  LayerBlendFunc_10_MorphEye_12_SuitPickup,
+  LayerBlendFunc_10_MorphEye_12_SuitPickup,
+  LayerBlendFunc_14_22_Water,
+  LayerBlendFunc_16_Water,
   LayerBlendFunc_18,
-  LayerBlendFunc_1A,
+  LayerBlendFunc_1A_Phantoon,
   LayerBlendFunc_1C,
   LayerBlendFunc_18,
   nullsub_11,
-  LayerBlendFunc_14,
+  LayerBlendFunc_14_22_Water,
   LayerBlendFunc_24,
   LayerBlendFunc_26,
   LayerBlendFunc_28,
@@ -829,7 +829,7 @@ void HdmaobjPreInstr_XrayFunc5_DeactivateBeam(uint16 k) {  // 0x888A08
     demo_backup_prev_controller_input = 0;
     ResponsibleForXrayStandupGlitch();
     hdma_object_channels_bitmask[hdma_object_index >> 1] = 0;
-    QueueSfx1_Max6(0xA);
+    QueueSfx1_Max6(kSfx1_XRayEnd_Silence);
     if ((uint8)fx_type != 36) {
       reg_COLDATA[2] = 0x80;
       reg_COLDATA[1] = 64;
@@ -874,7 +874,7 @@ void SpawnPowerBombExplosion(void) {  // 0x888AA4
   if (time_is_frozen_flag) {
     power_bomb_explosion_status = 0x4000;
   } else {
-    QueueSfx1_Max15(1);
+    QueueSfx1_Max15(kSfx1_PowerBombExplosion);
     power_bomb_explosion_status = 0x8000;
 
     static const SpawnHdmaObject_Args unk_888ABA = { 0x40, 0x28, 0x8ace };
@@ -886,7 +886,7 @@ void SpawnPowerBombExplosion(void) {  // 0x888AA4
 
 static const uint16 kPowerBombPreExplosionRadiusSpeed = 0x3000;
 static const uint16 kPowerBombPreExplosionRadiusAccel = 0x80;
-static const uint16 g_word_888B96 = 3;
+static const uint16 kPowerBombAfterGlowHdmaTimer = 3;
 static const uint16 kPowerBombExplosionRadiusSpeed = 0;
 static const uint16 kPowerBombExplosionRadiusAccel = 0x30;
 
@@ -943,7 +943,7 @@ void HdmaobjPreInstr_PowerBombExplode_Stage5_Afterglow(uint16 k) {  // 0x888B98
           reg_COLDATA[1] = ((reg_COLDATA[1] & 0x1F) - 1) | 0x40;
         if ((reg_COLDATA[2] & 0x1F) != 0)
           reg_COLDATA[2] = ((reg_COLDATA[2] & 0x1F) - 1) | 0x80;
-        *((uint8 *)hdma_object_timers + (uint8)k) = g_word_888B96;
+        *((uint8 *)hdma_object_timers + (uint8)k) = kPowerBombAfterGlowHdmaTimer;
       }
     }
   }
@@ -1280,7 +1280,7 @@ void CrystalFlashSetupPart1(void) {  // 0x88A2E4
   offscreen_power_bomb_right_hdma = 0;
   power_bomb_pre_explosion_flash_radius = 1024;
   power_bomb_pre_explosion_radius_speed = kPowerBombPreExplosionRadiusSpeed;
-  QueueSfx1_Max6(1);
+  QueueSfx1_Max6(kSfx1_PowerBombExplosion);
 }
 
 void CrystalFlashSetupPart2(void) {  // 0x88A309
@@ -1321,7 +1321,7 @@ void HdmaobjPreInstr_CrystalFlash_Stage2_AfterGlow(uint16 k) {  // 0x88A35D
           reg_COLDATA[1] = ((reg_COLDATA[1] & 0x1F) - 1) | 0x40;
         if ((reg_COLDATA[2] & 0x1F) != 0)
           reg_COLDATA[2] = ((reg_COLDATA[2] & 0x1F) - 1) | 0x80;
-        *((uint8 *)hdma_object_timers + k) = g_word_888B96;
+        *((uint8 *)hdma_object_timers + k) = kPowerBombAfterGlowHdmaTimer;
       } else {
         hdma_object_instruction_timers[v1] = 1;
         hdma_object_instruction_list_pointers[v1] += 2;
@@ -1464,7 +1464,7 @@ void FxTypeFunc_22_ScrollingSky(void) {  // 0x88A61B
 static uint16 SetupSomeHdmaTablesBG3(uint16 r24, uint16 r0, uint16 r3, uint16 r6, uint16 r9) {  // 0x88A81C
   int16 v1;
 
-  g_word_7E0598 = 32;
+  fx_type_34_bg3_y_pos = 32;
   *(uint16 *)mother_brain_indirect_hdma = 31;
   *(uint16 *)&mother_brain_indirect_hdma[1] = 0;
   uint16 v0 = 3;
@@ -1484,13 +1484,13 @@ static uint16 SetupSomeHdmaTablesBG3(uint16 r24, uint16 r0, uint16 r3, uint16 r6
     v3 = r18 & 0x1F;
   uint16 R22_ = v3;
   *(uint16 *)&mother_brain_indirect_hdma[3] = *(uint16 *)&RomPtr_88(r3)[v2] - v3;
-  *(uint16 *)&mother_brain_indirect_hdma[4] = R22_ + *(uint16 *)&RomPtr_88(r6)[v2] - g_word_7E0598;
+  *(uint16 *)&mother_brain_indirect_hdma[4] = R22_ + *(uint16 *)&RomPtr_88(r6)[v2] - fx_type_34_bg3_y_pos;
   while (1) {
     uint16 r20 = mother_brain_indirect_hdma[v0];
     r18 += r20;
     v0 += 3;
-    g_word_7E0598 += r20;
-    if (!sign16(g_word_7E0598 - 224))
+    fx_type_34_bg3_y_pos += r20;
+    if (!sign16(fx_type_34_bg3_y_pos - 224))
       break;
     while ((int16)(r18 - *(uint16 *)&RomPtr_88(r0)[v2]) < 0
       || (int16)(r18 - *(uint16 *)&RomPtr_88(r9)[v2]) >= 0) {
@@ -1499,7 +1499,7 @@ static uint16 SetupSomeHdmaTablesBG3(uint16 r24, uint16 r0, uint16 r3, uint16 r6
         return v0;
     }
     *(uint16 *)&mother_brain_indirect_hdma[v0] = *(uint16 *)&RomPtr_88(r3)[v2];
-    *(uint16 *)&mother_brain_indirect_hdma[v0 + 1] = *(uint16 *)&RomPtr_88(r6)[v2] - g_word_7E0598;
+    *(uint16 *)&mother_brain_indirect_hdma[v0 + 1] = *(uint16 *)&RomPtr_88(r6)[v2] - fx_type_34_bg3_y_pos;
   }
   return v0;
 }
@@ -1524,8 +1524,8 @@ void HdmaobjPreInstr_BG3Xscroll(uint16 k) {
 
   if (sign16(layer1_y_pos - 1024)) {
     if ((nmi_frame_counter_byte & 1) == 0)
-      g_word_7E0596 = (g_word_7E0596 + 2) & 0x1E;
-    uint16 v1 = g_word_7E0596;
+      bg3_x_scroll_hdma_data_table_size_for_fx_type_34 = (bg3_x_scroll_hdma_data_table_size_for_fx_type_34 + 2) & 0x1E;
+    uint16 v1 = bg3_x_scroll_hdma_data_table_size_for_fx_type_34;
     uint16 v2 = 0;
     do {
       g_word_7E9E80[v2 >> 1] = kBG3XscrollWave[v1 >> 1];
@@ -1618,14 +1618,14 @@ void FxTypeFunc_20_ScrollingSkyLand(void) {  // 0x88A7D8
   layer2_scroll_y |= 1;
   SpawnHdmaObject(0x88, &unk_88A7EF);
   set_to_e0_by_scrolling_sky = 224;
-  UNUSED_word_7E059C = 0;
+  set_to_0_by_scrolling_sky = 0;
 }
 
 void RoomSetupAsm_ScrollingSkyOcean(void) {  // 0x88A800
   reg_BG2SC = 74;
   SpawnHdmaObject(0x88, &unk_88A80B);
   set_to_e0_by_scrolling_sky = 224;
-  UNUSED_word_7E059C = 0;
+  set_to_0_by_scrolling_sky = 0;
 }
 
 void DamageSamusInTopRow(void) {  // 0x88A8C4
@@ -1822,20 +1822,24 @@ void ExpandingContractingHdmaEffect(void) {  // 0x88B17F
   } while (--r20);
 }
 
-static const uint16 g_word_88B256[17] = { 0x46, 1, 0x46, 3, 0x46, 2, 0x46, 1, 0x46, 1, 0x46, 2, 0x46, 2, 0x46, 1, 0x8000 };
+static const uint16 kEarthquakeSfxTimer[17] = { 
+  kSfx2_Lavaquake_HighPriority, 1, kSfx2_Lavaquake_HighPriority, 3, kSfx2_Lavaquake_HighPriority, 2, kSfx2_Lavaquake_HighPriority, 1, 
+  kSfx2_Lavaquake_HighPriority, 1, kSfx2_Lavaquake_HighPriority, 2, kSfx2_Lavaquake_HighPriority, 2, kSfx2_Lavaquake_HighPriority, 1, 
+  0x8000 
+};
 
 void HandleEarthquakeSoundEffect(void) {  // 0x88B21D
   int16 v1;
 
   if ((earthquake_sfx_timer & 0x8000) == 0 && (--earthquake_sfx_timer & 0x8000) != 0) {
     uint16 v0 = earthquake_sfx_index;
-    v1 = g_word_88B256[earthquake_sfx_index >> 1];
+    v1 = kEarthquakeSfxTimer[earthquake_sfx_index >> 1];
     if (v1 < 0) {
       v0 = 0;
-      v1 = g_word_88B256[0];
+      v1 = kEarthquakeSfxTimer[0];
     }
     QueueSfx2_Max6(v1);
-    earthquake_sfx_timer = g_word_88B256[(v0 >> 1) + 1] + (v0 & 1) + (random_number & 3);
+    earthquake_sfx_timer = kEarthquakeSfxTimer[(v0 >> 1) + 1] + (v0 & 1) + (random_number & 3);
     earthquake_sfx_index = v0 + 4;
   }
 }
@@ -1926,7 +1930,7 @@ void FxRisingFunction_LavaAcid_Raising(void) {  // 0x88B382
   }
 }
 
-const uint8 *HdmaobjInstr_B3A9(uint16 k, const uint8 *hdp) {  // 0x88B3A9
+const uint8 *HdmaobjInstr_LavaSoundTimer_112(uint16 k, const uint8 *hdp) {  // 0x88B3A9
   hdma_object_C[k >> 1] = 112;
   return hdp;
 }
@@ -1943,7 +1947,11 @@ void CallFxRisingFunc(uint32 ea) {
   }
 }
 
-static const uint8 kLavaSoundEffects[8] = { 0x12, 0x13, 0x14, 0x12, 0x13, 0x14, 0x12, 0x13 };
+static const uint8 kLavaSoundEffects[8] = { 
+  kSfx2_LavaBubbling1, kSfx2_LavaBubbling2, kSfx2_LavaBubbling3, 
+  kSfx2_LavaBubbling1, kSfx2_LavaBubbling2, kSfx2_LavaBubbling3, 
+  kSfx2_LavaBubbling1, kSfx2_LavaBubbling2 
+};
 
 void HdmaobjPreInstr_LavaAcidBG3YScroll(uint16 k) {  // 0x88B3B0
   int16 v2;
@@ -2004,7 +2012,7 @@ const uint8 *HdmaobjInstr_SetFlagB_Copy(uint16 k, const uint8 *hdp) {  // 0x88B4
 }
 
 void HdmaobjPreInstr_LavaAcidBG2YScroll(uint16 k) {  // 0x88B4D5
-  g_word_7E9C44 = reg_BG2VOFS;
+  UNUSED_bg2_lava_acid_y_scroll = reg_BG2VOFS;
   if (!time_is_frozen_flag && (fx_liquid_options & 6) != 0) {
     if ((fx_liquid_options & 2) != 0)
       Handle_LavaAcidBG2YScroll_Func3(k);
@@ -2021,7 +2029,7 @@ void Handle_LavaAcidBG2YScroll_Func1(uint16 v0) {  // 0x88B51D
   uint8 v1 = 30;
   uint16 v2 = reg_BG2VOFS & 0x1FF;
   do {
-    g_word_7E9C46[v1 >> 1] = v2;
+    lava_acid_bg2_y_scroll_hdma_data_table_entry[v1 >> 1] = v2;
     v1 -= 2;
   } while ((v1 & 0x80) == 0);
 }
@@ -2036,7 +2044,7 @@ void Handle_LavaAcidBG2YScroll_Func2(uint16 v0) {  // 0x88B53B
   uint8 v4 = 30;
   int n = 15;
   do {
-    g_word_7E9C46[v4 >> 1] = (kLavaAcidBG2YScrollLongWave[v3 >> 1] + reg_BG2HOFS) & 0x1FF;
+    lava_acid_bg2_y_scroll_hdma_data_table_entry[v4 >> 1] = (kLavaAcidBG2YScrollLongWave[v3 >> 1] + reg_BG2HOFS) & 0x1FF;
     v3 = (v3 - 2) & 0x1E;
     v4 = (v4 - 2) & 0x1E;
   } while (--n >= 0);
@@ -2052,7 +2060,7 @@ void Handle_LavaAcidBG2YScroll_Func3(uint16 v0) {  // 0x88B5A9
   uint8 v4 = (2 * (reg_BG2VOFS & 0xF) + 30) & 0x1E;
   int n = 15;
   do {
-    g_word_7E9C46[v4 >> 1] = (kLavaAcidBG2YScrollShortWave[v3 >> 1] + reg_BG2VOFS) & 0x1FF;
+    lava_acid_bg2_y_scroll_hdma_data_table_entry[v4 >> 1] = (kLavaAcidBG2YScrollShortWave[v3 >> 1] + reg_BG2VOFS) & 0x1FF;
     v4 = (v4 - 2) & 0x1E;
     v3 = (v3 - 2) & 0x1E;
   } while (--n >= 0);
@@ -2160,7 +2168,7 @@ const uint8 *HdmaobjInstr_SetFlagB_Copy3(uint16 k, const uint8 *hdp) {  // 0x88C
 }
 
 void HdmaobjPreInstr_WaterBG2XScroll(uint16 k) {  // 0x88C589
-  g_word_7E9C44 = reg_BG2HOFS;
+  UNUSED_bg2_lava_acid_y_scroll = reg_BG2HOFS;
   if (time_is_frozen_flag) {
     HdmaobjPreInstr_WaterBG2XScroll_Func1(k);
   } else if ((fx_liquid_options & 2) == 0) {
@@ -2191,7 +2199,7 @@ void HdmaobjPreInstr_WaterBG2XScroll_Func2(uint16 k) {  // 0x88C5E4
   uint8 v4 = (2 * (reg_BG2VOFS & 0xF) + 30) & 0x1E;
   int n = 15;
   do {
-    g_word_7E9C46[(v4 >> 1) + 1] = g_word_88C46E[v3 >> 1] + reg_BG2HOFS;
+    lava_acid_bg2_y_scroll_hdma_data_table_entry[(v4 >> 1) + 1] = g_word_88C46E[v3 >> 1] + reg_BG2HOFS;
     v4 = (v4 - 2) & 0x1E;
     v3 = (v3 - 2) & 0x1E;
   } while (--n >= 0);
@@ -2201,7 +2209,7 @@ void HdmaobjPreInstr_WaterBG2XScroll_Func1(uint16 k) {  // 0x88C636
   uint8 v1 = 30;
   uint16 v2 = reg_BG2HOFS;
   do {
-    g_word_7E9C46[(v1 >> 1) + 1] = v2;
+    lava_acid_bg2_y_scroll_hdma_data_table_entry[(v1 >> 1) + 1] = v2;
     v1 -= 2;
   } while ((v1 & 0x80) == 0);
 }
@@ -2241,7 +2249,7 @@ void FxTypeFunc_A_Rain(void) {  // 0x88D950
 }
 
 
-const uint8 *HdmaobjInstr_1938_RandomNumber(uint16 k, const uint8 *hdp) {  // 0x88D981
+const uint8 *HdmaobjInstr_RandomBg3XVel(uint16 k, const uint8 *hdp) {  // 0x88D981
   hdma_object_D[k >> 1] = kBG3RainXvels[(uint16)((random_number >> 1) & 6) >> 1];
   return hdp;
 }
@@ -2825,7 +2833,7 @@ void SpawnWavyPhantoonHdmaObject(uint16 v0, uint16 r22) {  // 0x88E487
   SpawnHdmaObject(0x88, &unk_88E4A0);
 }
 
-const uint8 *HdmaobjInstr_E4BD(uint16 k, const uint8 *hdp) {  // 0x88E4BD
+const uint8 *HdmaobjInstr_SetUpWavyPhantoon(uint16 k, const uint8 *hdp) {  // 0x88E4BD
   unsigned int v2; // kr00_4
   unsigned int v3; // kr04_4
   unsigned int v4; // kr08_4
@@ -3153,7 +3161,7 @@ void CinematicFunction_Intro_Func133(void) {  // 0x88EC3B
   unsigned int v1; // kr04_4
 
   g_word_7E0D9C = 1;
-  *(uint16 *)&g_byte_7E0D9E = 0x4000;
+  *(uint16 *)&hdma_wavy_samus_amplitude_low = 0x4000;
   loop_counter_transfer_enemies_to_vram = 8;
   button_config_shoot_x_saved = 192;
   button_config_itemcancel_y_saved = 192;
@@ -3170,7 +3178,7 @@ void CinematicFunction_Intro_Func133(void) {  // 0x88EC3B
   SpawnHdmaObject(0x88, &unk_88EC82);
 }
 
-const uint8 *HdmaobjInstr_EC9F_ClearVars(uint16 k, const uint8 *hdp) {  // 0x88EC9F
+const uint8 *HdmaobjInstr_SetUpWavySamus(uint16 k, const uint8 *hdp) {  // 0x88EC9F
   int v2 = k >> 1;
   hdma_object_A[v2] = -2;
   hdma_object_B[v2] = 1;
@@ -3197,10 +3205,10 @@ void HdmaobjPreInstr_ECB6(uint16 k) {  // 0x88ECB6
       v7 = kSinCosTable8bit_Sext[v6 + 64];
       if (v7 < 0) {
         uint16 r18 = -v7;
-        uint16 r22 = Mult8x8(-(int8)v7, g_byte_7E0D9E) >> 8;
-        r22 += Mult8x8(HIBYTE(r18), g_byte_7E0D9E);
-        uint16 r24 = Mult8x8(r18, g_byte_7E0D9F);
-        uint8 mult = Mult8x8(HIBYTE(r18), g_byte_7E0D9F);
+        uint16 r22 = Mult8x8(-(int8)v7, hdma_wavy_samus_amplitude_low) >> 8;
+        r22 += Mult8x8(HIBYTE(r18), hdma_wavy_samus_amplitude_low);
+        uint16 r24 = Mult8x8(r18, hdma_wavy_samus_amplitude_high);
+        uint8 mult = Mult8x8(HIBYTE(r18), hdma_wavy_samus_amplitude_high);
         r22 += r24;
         r18 = ((r22 + (mult << 8)) & 0xFF00) >> 8;
         r20 = (r28 + v5) & 0x1FF;
@@ -3208,10 +3216,10 @@ void HdmaobjPreInstr_ECB6(uint16 k) {  // 0x88ECB6
         hdma_table_1[v10 >> 1] = reg_BG3HOFS - r18;
       } else {
         uint16 r18 = kSinCosTable8bit_Sext[v6 + 64];
-        uint16 r22 = Mult8x8(v7, g_byte_7E0D9E) >> 8;
-        r22 += Mult8x8(HIBYTE(r18), g_byte_7E0D9E);
-        uint16 r24 = Mult8x8(r18, g_byte_7E0D9F);
-        uint8 mult = Mult8x8(HIBYTE(r18), g_byte_7E0D9F);
+        uint16 r22 = Mult8x8(v7, hdma_wavy_samus_amplitude_low) >> 8;
+        r22 += Mult8x8(HIBYTE(r18), hdma_wavy_samus_amplitude_low);
+        uint16 r24 = Mult8x8(r18, hdma_wavy_samus_amplitude_high);
+        uint8 mult = Mult8x8(HIBYTE(r18), hdma_wavy_samus_amplitude_high);
         r22 += r24;
         r18 = ((r22 + (mult << 8)) & 0xFF00) >> 8;
         r20 = (r28 + v5) & 0x1FF;
@@ -3317,12 +3325,12 @@ const uint8 *CallHdmaobjInstr(uint32 ea, uint16 k, const uint8 *j) {
   case fnHdmaobjInstr_SetFlagB_Copy2: return HdmaobjInstr_SetFlagB_Copy2(k, j);
   case fnHdmaobjInstr_SetFlagB_Copy3: return HdmaobjInstr_SetFlagB_Copy3(k, j);
   case fnHdmaobjInstr_SetVideoMode1: return HdmaobjInstr_SetVideoMode1(k, j);
-  case fnHdmaobjInstr_1938_RandomNumber: return HdmaobjInstr_1938_RandomNumber(k, j);
+  case fnHdmaobjInstr_RandomBg3XVel: return HdmaobjInstr_RandomBg3XVel(k, j);
   case fnHdmaobjInstr_GotoIfEventHappened: return HdmaobjInstr_GotoIfEventHappened(k, j);
-  case fnHdmaobjInstr_E4BD: return HdmaobjInstr_E4BD(k, j);
+  case fnHdmaobjInstr_SetUpWavyPhantoon: return HdmaobjInstr_SetUpWavyPhantoon(k, j);
   case fnHdmaobjInstr_InitMorphBallEyeBeamHdma: return HdmaobjInstr_InitMorphBallEyeBeamHdma(k, j);
-  case fnHdmaobjInstr_EC9F_ClearVars: return HdmaobjInstr_EC9F_ClearVars(k, j);
-  case fnHdmaobjInstr_B3A9: return HdmaobjInstr_B3A9(k, j);
+  case fnHdmaobjInstr_SetUpWavySamus: return HdmaobjInstr_SetUpWavySamus(k, j);
+  case fnHdmaobjInstr_LavaSoundTimer_112: return HdmaobjInstr_LavaSoundTimer_112(k, j);
   case fnHdmaobjInsr_ConfigTitleSequenceGradientHDMA: return HdmaobjInsr_ConfigTitleSequenceGradientHDMA(k, j);
   case fnsub_88D916: sub_88D916(); return j;
   default: Unreachable(); return NULL;

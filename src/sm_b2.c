@@ -111,7 +111,7 @@ void WalkingSpacePirates_883E(void) {  // 0xB2883E
   }
   projectile_dir[v1] = v2;
   ProjectileReflection(v0);
-  QueueSfx2_Max6(0x66);
+  QueueSfx2_Max6(kSfx2_ShotKiHunter_WalkingSpacePirate);
 }
 
 const uint16 *SpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight(uint16 k, const uint16 *jp) {  // 0xB2EE40
@@ -172,7 +172,7 @@ const uint16 *SpacePirates_Instr_PrepareWallJumpL(uint16 k, const uint16 *jp) { 
 
 const uint16 *SpacePirates_Instr_FireLaserL(uint16 k, const uint16 *jp) {  // 0xB2EF2A
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
-  eproj_init_param_1 = *((uint16 *)RomPtr_A0(E->base.enemy_ptr) + 3);
+  eproj_init_param_0 = *((uint16 *)RomPtr_A0(E->base.enemy_ptr) + 3);
   eproj_spawn_pt = (Point16U){ E->base.x_pos - 24, E->base.y_pos - 16 };
   eproj_spawn_r22 = 0;
   SpawnEprojWithRoomGfx(addr_stru_86A17B, 0);
@@ -193,7 +193,7 @@ const uint16 *SpacePirates_Instr_SetEnemyFunc(uint16 k, const uint16 *jp) {  // 
 }
 
 const uint16 *SpacePirates_Instr_PlaySfx(uint16 k, const uint16 *jp) {  // 0xB2EF93
-  QueueSfx2_Max6(0x66);
+  QueueSfx2_Max6(kSfx2_ShotKiHunter_WalkingSpacePirate);
   return jp;
 }
 

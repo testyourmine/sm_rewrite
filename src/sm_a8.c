@@ -113,7 +113,7 @@ void Enemy_NormalFrozenAI_A8(void) {  // 0xA88041
 }
 
 const uint16 *MiniDraygon_Instr_2(uint16 k, const uint16 *jp) {  // 0xA8878F
-  QueueSfx2_Max6(0x5E);
+  QueueSfx2_Max6(kSfx2_SidehopperLanded_NuclearWafflePartSpawns_MiniDraygonSpit_WalkingLavaSeahorseSpawns);
   return jp;
 }
 
@@ -315,7 +315,7 @@ void MiniDraygon_Func_10(void) {  // 0xA88A78
 }
 
 void MiniDraygon_Func_11(void) {  // 0xA88AB1
-  if (EnemyFunc_ADA3(0x100)) {
+  if (CheckIfEnemyIsOverAPixelsOffScreen(0x100)) {
     if (!enemy_drawing_queue[(cur_enemy_index >> 1) + 77]) {
       Enemy_MiniDraygon *E = Get_MiniDraygon(cur_enemy_index);
       E->mdn_var_0B = 0;
@@ -421,7 +421,7 @@ void MorphBallEye_Func_2(uint16 k) {  // 0xA8912E
   bool v2 = E->mbee_var_E == 1;
   bool v3 = (--E->mbee_var_E & 0x8000) != 0;
   if (v2 || v3) {
-    QueueSfx2_Max6(0x17);
+    QueueSfx2_Max6(kSfx2_MorphBallEyesRay_HighPriority);
     SpawnMorphBallEyeBeamHdma();
     E->mbee_var_F = FUNC16(MorphBallEye_Func_3);
     E->mbee_var_D = CalculateAngleFromXY(samus_x_pos - E->base.x_pos, samus_y_pos - E->base.y_pos);
@@ -435,7 +435,7 @@ void MorphBallEye_Func_3(uint16 k) {  // 0xA89160
     E->mbee_var_D = v3;
     E->base.current_instruction = ((v3 & 0xF0) >> 2) - 28756;
   } else {
-    QueueSfx2_Max6(0x71);
+    QueueSfx2_Max6(kSfx2_Silence);
     E->mbee_var_C = 0;
     E->mbee_var_E = 32;
     if ((E->mbee_parameter_1 & 1) != 0)
@@ -456,30 +456,30 @@ void MorphBallEye_Func_4(uint16 k) {  // 0xA891CE
 }
 
 const uint16 *Fune_Instr_2(uint16 k, const uint16 *jp) {  // 0xA89625
-  QueueSfx2_Max9(0x1F);
+  QueueSfx2_Max9(kSfx2_FuneSpits_HighPriority);
   return jp;
 }
 
 const uint16 *Fune_Instr_6(uint16 k, const uint16 *jp) {  // 0xA89631
-  eproj_unk1995 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
+  eproj_init_param_1 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
   SpawnEprojWithGfx(0, cur_enemy_index, addr_stru_86DFBC);
   return jp;
 }
 
 const uint16 *Fune_Instr_7(uint16 k, const uint16 *jp) {  // 0xA8964A
-  eproj_unk1995 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
+  eproj_init_param_1 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
   SpawnEprojWithGfx(1, cur_enemy_index, addr_stru_86DFBC);
   return jp;
 }
 
 const uint16 *Fune_Instr_1(uint16 k, const uint16 *jp) {  // 0xA89663
-  eproj_unk1995 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
+  eproj_init_param_1 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
   SpawnEprojWithGfx(0, cur_enemy_index, addr_stru_86DFCA);
   return jp;
 }
 
 const uint16 *Fune_Instr_4(uint16 k, const uint16 *jp) {  // 0xA8967C
-  eproj_unk1995 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
+  eproj_init_param_1 = LOBYTE(Get_Fune(cur_enemy_index)->fune_parameter_2);
   SpawnEprojWithGfx(1, cur_enemy_index, addr_stru_86DFCA);
   return jp;
 }
@@ -887,7 +887,7 @@ const uint16 *YappingMaw_Instr_6(uint16 k, const uint16 *jp) {  // 0xA8A121
 
 const uint16 *YappingMaw_Instr_1(uint16 k, const uint16 *jp) {  // 0xA8A133
   if (!Get_YappingMaw(cur_enemy_index)->ymw_var_36)
-    QueueSfx2_Max6(0x2F);
+    QueueSfx2_Max6(kSfx2_YappingMaw);
   return jp;
 }
 
@@ -2230,7 +2230,7 @@ void Beetom_Touch(void) {  // 0xA8BE2E
   if (samus_contact_damage_index)
     goto LABEL_11;
   if ((random_enemy_counter & 7) == 7 && !sign16(samus_health - 30))
-    QueueSfx3_Max6(0x2D);
+    QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
   if ((E->base.frame_counter & 0x3F) == 63) {
 LABEL_11:
     Enemy_NormalTouchAI_A8();
@@ -2846,7 +2846,7 @@ const uint16 *WreckedShipRobot_Instr_3(uint16 k, const uint16 *jp) {  // 0xA8D09
       && (int16)(layer1_x_pos + 256 - E->base.x_pos) >= 0
       && (int16)(layer1_y_pos - E->base.y_pos) < 0
       && (int16)(layer1_y_pos + 224 - E->base.y_pos) >= 0) {
-    QueueSfx2_Max6(0x68);
+    QueueSfx2_Max6(kSfx2_WreckedShipRobot);
   }
   return jp;
 }
@@ -3182,7 +3182,7 @@ void WalkingLavaSeahorse_Func_3(uint16 k) {  // 0xA8DD71
     E->base.current_instruction = v4;
     E->base.instruction_timer = 1;
     E->wlse_var_A = FUNC16(WalkingLavaSeahorse_Func_4);
-    QueueSfx2_Max6(0x5E);
+    QueueSfx2_Max6(kSfx2_SidehopperLanded_NuclearWafflePartSpawns_MiniDraygonSpit_WalkingLavaSeahorseSpawns);
   }
 }
 
@@ -3290,7 +3290,7 @@ const uint16 *WalkingLavaSeahorse_Instr_4(uint16 k, const uint16 *jp) {  // 0xA8
 
 void WalkingLavaSeahorse_DF20(uint16 a) {  // 0xA8DF20
   SpawnEprojWithGfx(a, cur_enemy_index, addr_loc_A89E90);
-  QueueSfx2_Max6(0x3F);
+  QueueSfx2_Max6(kSfx2_WalkingLavaSeahorseSpit_FakeKraidLint);
 }
 
 const uint16 *WalkingLavaSeahorse_Instr_3(uint16 k, const uint16 *jp) {  // 0xA8DF33
@@ -3336,7 +3336,7 @@ const uint16 *WalkingLavaSeahorse_Instr_1(uint16 k, const uint16 *jp) {  // 0xA8
       jp = INSTR_RETURN_ADDR(addr_stru_A8DC59);
     E->wlse_var_D = -wlse_var_D;
   } else {
-    EnemyFunc_C8AD(cur_enemy_index);
+    AlignEnemyYposToNonsquareSlope(cur_enemy_index);
   }
   return jp;
 }
@@ -3662,7 +3662,7 @@ LABEL_8:
     E->base.instruction_timer = 1;
     E1->base.instruction_timer = 1;
   }
-  EnemyFunc_C8AD(k);
+  AlignEnemyYposToNonsquareSlope(k);
   uint16 r18 = samus_x_pos - E->base.x_pos;
   uint16 r20 = abs16(r18);
   if ((int16)(r20 - g_word_A8F180) < 0 && !sign16(samus_y_pos - E->base.y_pos - 32)) {
@@ -3751,7 +3751,7 @@ LABEL_9:
     }
     goto LABEL_24;
   }
-  EnemyFunc_C8AD(k);
+  AlignEnemyYposToNonsquareSlope(k);
   r20 = E->khr_var_C + SineMult8bit(E->khr_var_F, E->khr_var_12) - E->base.y_pos;
   if (Enemy_MoveDown(k, INT16_SHL16(r20))) {
 LABEL_24:
@@ -3764,7 +3764,7 @@ LABEL_24:
 void KiHunter_Func_3(uint16 k) {  // 0xA8F4ED
   Enemy_KiHunter *E = Get_KiHunter(k);
   if (Enemy_MoveRight_IgnoreSlopes(k, __PAIR32__(E->khr_var_07, E->khr_var_06))
-      || (EnemyFunc_C8AD(k), Enemy_MoveDown(k, __PAIR32__(E->khr_var_09, E->khr_var_08)))
+      || (AlignEnemyYposToNonsquareSlope(k), Enemy_MoveDown(k, __PAIR32__(E->khr_var_09, E->khr_var_08)))
       || (int16)(E->base.y_pos - E->khr_var_0D) < 0) {
     E->khr_var_A = FUNC16(KiHunter_Func_1);
   }
@@ -3839,7 +3839,7 @@ void KiHunter_Func_6(uint16 k) {  // 0xA8F5F0
     if (Enemy_MoveRight_IgnoreSlopes(k, __PAIR32__(E->khr_var_07, E->khr_var_06))) {
       E->khr_var_07 = -E->khr_var_07;
     } else {
-      EnemyFunc_C8AD(k);
+      AlignEnemyYposToNonsquareSlope(k);
       AddToHiLo(&E->khr_var_09, &E->khr_var_08, __PAIR32__(g_word_A8F184, g_word_A8F182));
     }
   }
@@ -3884,7 +3884,7 @@ const uint16 *KiHunter_Instr_5(uint16 k, const uint16 *jp) {  // 0xA8F6D8
 }
 
 void sub_A8F6DC(uint16 k, uint16 j) {  // 0xA8F6DC
-  QueueSfx2_Max6(0x4C);
+  QueueSfx2_Max6(kSfx2_KiHunterSpit_EyeDoorAcidSpit_DraygonGoop);
   SpawnEprojWithGfx(0, cur_enemy_index, j);
   Get_KiHunter(cur_enemy_index)->khr_var_0F = 24;
 }

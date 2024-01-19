@@ -419,7 +419,7 @@ uint8 MotherBrain_Phase3_TurnLightsBackOn(uint16 a) {  // 0xADF24B
 void EnableEarthquakeAframes(uint16 a) {  // 0xADF40B
   earthquake_type = a;
   earthquake_timer = 20;
-  QueueSfx2_Max6(0x25);
+  QueueSfx2_Max6(kSfx2_BigExplosion);
 }
 
 void HandleMotherBrainBodyFlickering(void) {  // 0xADF41C

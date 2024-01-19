@@ -212,12 +212,12 @@ void Boulder_Func_4(void) {  // 0xA6888B
   Enemy_Boulder *E = Get_Boulder(cur_enemy_index);
   int v1 = (8 * HIBYTE(E->boulder_var_C)) >> 1;
   if (Enemy_MoveDown(cur_enemy_index, kCommonEnemySpeeds_Quadratic32[v1 >> 1])) {
-    QueueSfx2_Max6(0x42);
+    QueueSfx2_Max6(kSfx2_BoulderExplodesInitial);
     if (E->boulder_var_E == 2) {
       E->base.properties |= kEnemyProps_Deleted;
       eproj_spawn_pt = (Point16U){ E->base.x_pos, E->base.y_pos };
       SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x11);
-      QueueSfx2_Max6(0x43);
+      QueueSfx2_Max6(kSfx2_BoulderExplodesContinued);
     } else {
       E->boulder_var_A = FUNC16(Boulder_Func_3);
       E->boulder_var_C = g_word_A686F1[E->boulder_var_D - 1];
@@ -252,10 +252,10 @@ void Boulder_Func_5(void) {  // 0xA68942
   if (Enemy_MoveRight_IgnoreSlopes(cur_enemy_index, kCommonEnemySpeeds_Quadratic32[v4 >> 1])) {
     E->base.properties |= 0x300;
     E->boulder_var_A = FUNC16(Boulder_Func_6);
-    QueueSfx2_Max6(0x42);
+    QueueSfx2_Max6(kSfx2_BoulderExplodesInitial);
     eproj_spawn_pt = (Point16U){ E->base.x_pos, E->base.y_pos };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x11);
-    QueueSfx2_Max6(0x43);
+    QueueSfx2_Max6(kSfx2_BoulderExplodesContinued);
   } else {
     uint16 v5 = E->boulder_var_B + 64;
     E->boulder_var_B = v5;
@@ -354,7 +354,7 @@ void SpikeyPlatform_Func_2(void) {  // 0xA68BDC
     E->spm_var_03 = 64;
     E->spm_var_A = FUNC16(SpikeyPlatform_Func_3);
     E->base.y_pos = E->spm_var_D;
-    QueueSfx2_Max6(0x1B);
+    QueueSfx2_Max6(kSfx2_SpikeyPlatformStops_MaridiaBeybladeTurtleHitsWall);
   }
   if (SpikeyPlatform_Func_5(cur_enemy_index))
     extra_samus_y_displacement += E->base.y_pos - E->spm_var_01;
@@ -402,7 +402,7 @@ uint16 SpikeyPlatform_Func_5(uint16 k) {  // 0xA68CA1
 }
 
 const uint16 *FireGeyser_Instr_1(uint16 k, const uint16 *jp) {  // 0xA68DAF
-  QueueSfx2_Max6(0x61);
+  QueueSfx2_Max6(kSfx2_LavaSeahorse_LavamanSpit_FireGeyser);
   return jp;
 }
 
@@ -862,7 +862,7 @@ static PairU16 NuclearWaffle_Func_6(uint16 a) {  // 0xA698E7
 
 void NuclearWaffle_Func_7(uint16 r30) {  // 0xA6993F
   if (r30 != 2)
-    QueueSfx2_Max6(0x5E);
+    QueueSfx2_Max6(kSfx2_SidehopperLanded_NuclearWafflePartSpawns_MiniDraygonSpit_WalkingLavaSeahorseSpawns);
 }
 
 void FakeKraid_Init(void) {  // 0xA69A58
@@ -915,7 +915,7 @@ void FakeKraid_Func_1(uint16 k, uint16 j) {  // 0xA69ADC
       v6 = addr_kEproj_MiniKraidSpikesRight;
     SpawnEprojWithGfx(0, k, v6);
     if (!CheckIfEnemyIsOnScreen())
-      QueueSfx2_Max6(0x3F);
+      QueueSfx2_Max6(kSfx2_WalkingLavaSeahorseSpit_FakeKraidLint);
   }
 }
 
@@ -959,7 +959,7 @@ const uint16 *FakeKraid_Instr_1(uint16 k, const uint16 *jp) {  // 0xA69B74
 
 const uint16 *FakeKraid_Instr_3(uint16 k, const uint16 *jp) {  // 0xA69BB2
   if (CheckIfEnemyIsOnScreen() == 0)
-    QueueSfx2_Max6(0x16);
+    QueueSfx2_Max6(kSfx2_FakeKraidCry_HighPriority);
   return jp;
 }
 
@@ -1595,7 +1595,7 @@ void CeresRidley_Func_28(void) {  // 0xA6AABD
   uint16 cry_var_33 = E->cry_var_33;
   E->cry_var_33 = cry_var_33 + 2;
   if (!cry_var_33)
-    QueueSfx2_Max6(0x4E);
+    QueueSfx2_Max6(kSfx2_CeresRidleyGetaway_HighPriority);
   if (cry_var_33 == 208) {
     Samus_SetPushedOutOfCeresRidley();
     earthquake_type = 35;
@@ -2005,7 +2005,7 @@ void Ridley_Func_21(void) {  // 0xA6B70E
     if (Ridley_Func_23() & 1) {
       eproj_spawn_pt = (Point16U) { tilemap_stuff[82], tilemap_stuff[83] + 12 };
       SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
-      QueueSfx2_Max6(0x76);
+      QueueSfx2_Max6(kSfx2_Quake);
       earthquake_type = 13;
       earthquake_timer = 4;
       Ridley_Func_28();
@@ -2489,7 +2489,7 @@ void DrawBabyMetroid_0(void) {  // 0xA6BF1A
 uint16 BabyMetroid_Instr_2(uint16 k) {  // 0xA6BFC9
   if (!Get_Ridley(0)->ridley_var_46 && (random_number & 1) != 0)
     return BabyMetroid_Goto(k);
-  QueueSfx3_Max6(0x24);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCryCeres_HighPriority);
   return k + 2;
 }
 
@@ -2752,9 +2752,9 @@ uint8 HandleTypewriterText_Ext(uint16 a) {  // 0xA6C2A7
       if (!sign16(v14 - 2)) {
         E->mbn_var_3F = 0;
         if (area_index == 6)
-          QueueSfx2_Max3(0x45);
+          QueueSfx2_Max3(kSfx2_TypewriterStroke_CeresSelfDestructSequence);
         else
-          QueueSfx3_Max3(0xD);
+          QueueSfx3_Max3(kSfx3_IntroTypewriterStroke);
       }
       return 0;
     }
@@ -2872,7 +2872,7 @@ void Ridley_Func_69(void) {  // 0xA6C623
     int v3 = (uint16)(4 * v2) >> 1;
     eproj_spawn_pt = (Point16U){ E->base.x_pos + g_word_A6C66E[v3], E->base.y_pos + g_word_A6C66E[v3 + 1] };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 3);
-    QueueSfx2_Max3(0x24);
+    QueueSfx2_Max3(kSfx2_SmallExplosion);
   } else {
     E->ridley_var_27 = v1;
   }
@@ -3522,7 +3522,7 @@ void Ridley_Func_91(void) {  // 0xA6D2AA
     if (sign16(v1 - 16))
       return;
     if (!E->ridley_var_0F)
-      QueueSfx3_Max6(0x21);
+      QueueSfx3_Max6(kSfx3_RidleyWhipsItsTail_HighPriority);
   }
   E->ridley_var_0E = 0;
 }
@@ -4307,7 +4307,7 @@ void Ridley_Func_129(void) {  // 0xA6E088
     eproj_spawn_pt = (Point16U){ projectile_x_pos[v1], projectile_y_pos[v1] };
     uint16 v2 = 12;
     if ((HIBYTE(projectile_type[v1]) & 0xF) == 1) {
-      QueueSfx1_Max6(0x3D);
+      QueueSfx1_Max6(kSfx1_DudShot);
       v2 = 6;
     }
     SpawnEprojWithRoomGfx(0xE509, v2);
@@ -4316,7 +4316,7 @@ void Ridley_Func_129(void) {  // 0xA6E088
 
 const uint16 *Ridley_Instr_5(uint16 k, const uint16 *jp) {  // 0xA6E4BE
   Get_Ridley(0)->ridley_var_0F = 89;
-  QueueSfx2_Max6(0x59);
+  QueueSfx2_Max6(kSfx2_RidleysRoar_HighPriority);
   return jp;
 }
 
@@ -4442,7 +4442,7 @@ const uint16 *Ridley_Instr_13(uint16 k, const uint16 *jp) {  // 0xA6E909
 }
 
 const uint16 *Ridley_E90C(uint16 k, const uint16 *jp, uint16 a) {  // 0xA6E90C
-  eproj_unk1995 = a;
+  eproj_init_param_1 = a;
   Enemy_Ridley *E = Get_Ridley(0);
   SpawnEprojWithRoomGfx(0x9642, E->ridley_var_10);
   return jp;
@@ -4585,7 +4585,7 @@ const uint16 *CeresDoor_Instr_2(uint16 k, const uint16 *jp) {  // 0xA6F6B3
 }
 
 const uint16 *CeresDoor_Instr_7(uint16 k, const uint16 *jp) {  // 0xA6F6BD
-  QueueSfx3_Max6(0x2C);
+  QueueSfx3_Max6(kSfx3_CeresDoorOpening_HighPriority);
   return jp;
 }
 
@@ -4708,7 +4708,7 @@ void CeresDoor_Func_6(uint16 k) {  // 0xA6F7DC
       if (NextRandom() < 0x4000)
         v6 = 12;
       SpawnEprojWithRoomGfx(0xE509, v6);
-      QueueSfx2_Max6(0x25);
+      QueueSfx2_Max6(kSfx2_BigExplosion);
     }
   }
 }
@@ -4881,7 +4881,7 @@ void Zebetites_Touch(void) {  // 0xA6FDA7
 }
 
 void Zebetites_Shot(void) {  // 0xA6FDAC
-  QueueSfx3_Max6(9);
+  QueueSfx3_Max6(kSfx3_MissileDoorShotWithMissile_ShotZebetite);
   NormalEnemyShotAiSkipDeathAnim_CurEnemy();
   Enemy_Zebetites *E = Get_Zebetites(cur_enemy_index);
   Enemy_Zebetites *G = Get_Zebetites(E->zebet_parameter_2);

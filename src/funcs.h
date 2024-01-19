@@ -650,9 +650,9 @@ void SetGoldenTorizoPalette(uint16 a);
 void SkipDebugDrawInstructionsForScrollPlms(uint16 j);
 
 typedef struct SpawnHardcodedPlmArgs {
-  uint8 field_0;
-  uint8 field_1;
-  VoidP field_2;
+  uint8 x_pos;
+  uint8 y_pos;
+  VoidP plm_id_;
 } SpawnHardcodedPlmArgs;
 
 void SpawnHardcodedPlm(SpawnHardcodedPlmArgs p);
@@ -1557,7 +1557,7 @@ void Samus_CancelSpeedBoost(void);
 void Samus_Copy10PalColors(uint16 j);
 void Samus_Copy6PalColors(uint16 j);
 void Samus_DealDamage(uint16 a);
-void Samus_Func20(void);
+void XraySamusPostInputHandler(void);
 void Samus_HandlePalette(void);
 void Samus_HandleTransFromBlockColl(void);
 void Samus_HandleTransFromBlockColl_1(void);
@@ -1690,7 +1690,7 @@ int32 Samus_MoveRight_NoSolidColl(int32 amt);
 int32 WallJumpBlockCollDetect(int32 amt);
 void BlockFunc_AC11(void);
 void BlockInsideDetection(void);
-void BombOrPowerBomb_Func1(uint16 k);
+void BombOrPowerBomb_ExplosionBlockCollHandling(uint16 k);
 void GrappleFunc_AF87(void);
 void HandleGrappleBeamGfx(void);
 void PostGrappleCollisionDetect_X(void);
@@ -1746,7 +1746,7 @@ uint16 CheckIfEnemyTouchesSamus(uint16 k);
 uint16 DetermineDirectionOfSamusFromEnemy(void);
 uint16 EnemyFunc_AC67(uint16 k);
 PairU16 EnemyFunc_ACA8(Point16U base_pt, Point16U samus_pt);
-uint16 EnemyFunc_ADA3(uint16 a);
+uint16 CheckIfEnemyIsOverAPixelsOffScreen(uint16 a);
 uint16 EnemyWithNormalSpritesIsOffScreen(void);
 uint16 GetSamusEnemyDelta_X(uint16 k);
 uint16 GetSamusEnemyDelta_Y(uint16 k);
@@ -1780,7 +1780,7 @@ uint8 CompareDistToSamus_Y(uint16 k, uint16 a);
 uint8 EnemyFunc_BBBF(uint16 k, int32 amt);
 uint8 EnemyFunc_BC76(uint16 k, int32 amt);
 uint8 EnemyFunc_BF8A(uint16 k, uint16 a, int32 amt);
-uint8 EnemyFunc_C8AD(uint16 k);
+uint8 AlignEnemyYposToNonsquareSlope(uint16 k);
 uint8 Enemy_MoveDown(uint16 k, int32 amt);
 uint8 Enemy_MoveRight_IgnoreSlopes(uint16 k, int32 amt);
 uint8 Enemy_MoveRight_ProcessSlopes(uint16 k, int32 amt);
@@ -5100,7 +5100,7 @@ void VerifySRAM(void);
 #define fnFxRisingFunction_LavaAcid 0x88B343
 #define fnFxRisingFunction_LavaAcid_WaitToRise 0x88B367
 #define fnFxRisingFunction_LavaAcid_Raising 0x88B382
-#define fnHdmaobjInstr_B3A9 0x88B3A9
+#define fnHdmaobjInstr_LavaSoundTimer_112 0x88B3A9
 #define fnHdmaobjPreInstr_LavaAcidBG3YScroll 0x88B3B0
 #define fnHdmaobjInstr_SetFlagB_Copy 0x88B4CE
 #define fnHdmaobjPreInstr_LavaAcidBG2YScroll 0x88B4D5
@@ -5115,7 +5115,7 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_WaterBG2XScroll_Func1 0x88C636
 #define fnsub_88D916 0x88D916
 #define fnHdmaobjInstr_SetVideoMode1 0x88D949
-#define fnHdmaobjInstr_1938_RandomNumber 0x88D981
+#define fnHdmaobjInstr_RandomBg3XVel 0x88D981
 #define fnHdmaobjPreInstr_RainBg3Scroll 0x88D9A1
 #define fnHdmaobjPreInstr_SporesBG3Xscroll 0x88DA47
 #define fnnullsub_112 0x88DB2E
@@ -5137,7 +5137,7 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_VariaSuitPickup 0x88E026
 #define fnHdmaobjPreInstr_GravitySuitPickup 0x88E05C
 #define fnHdmaobjPreInstr_E449 0x88E449
-#define fnHdmaobjInstr_E4BD 0x88E4BD
+#define fnHdmaobjInstr_SetUpWavyPhantoon 0x88E4BD
 #define fnHdmaobjPreInstr_E567 0x88E567
 #define fnnullsub_357 0x88E726
 #define fnInitializeRainbowBeam 0x88E767
@@ -5150,7 +5150,7 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_Backdrop_TitleSequenceGradient 0x88EBB0
 #define fnHdmaobjPreInstr_ColorMathControlB_TitleGradient 0x88EBD2
 #define fnHdmaobjPreInstr_IntroCutsceneCrossfade 0x88EC1D
-#define fnHdmaobjInstr_EC9F_ClearVars 0x88EC9F
+#define fnHdmaobjInstr_SetUpWavySamus 0x88EC9F
 #define fnHdmaobjPreInstr_ECB6 0x88ECB6
 #define fnRoomCode_CeresElevatorShaft 0x89ACC3
 #define fnnullsub_5 0x8B8697

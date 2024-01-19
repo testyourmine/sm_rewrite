@@ -565,11 +565,11 @@ uint16 Kraid_ProcessKraidInstr(void) {  // 0xA7AF32
 }
 
 void KraidInstr_PlayRoarSfx(void) {  // 0xA7AF94
-  QueueSfx2_Max6(0x2D);
+  QueueSfx2_Max6(kSfx2_KraidsRoar_CrocomireDyingCry_HighPriority);
 }
 
 void KraidInstr_PlayDyingSfx(void) {  // 0xA7AF9F
-  QueueSfx2_Max15(0x2E);
+  QueueSfx2_Max15(kSfx2_KraidsDyingCry_HighPriority);
 }
 
 void CallKraidInstr(uint32 ea) {
@@ -690,7 +690,7 @@ void Kraid_SpawnExplosionEproj(uint16 k) {  // 0xA7B0CB
   eproj_spawn_pt = (Point16U){ projectile_x_pos[v1], projectile_y_pos[v1] };
   uint16 v2 = ((projectile_type[v1] & 0x200) == 0) ? 6 : 29;
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v2);
-  QueueSfx1_Max6(0x3D);
+  QueueSfx1_Max6(kSfx1_DudShot);
 }
 
 void Kraid_Enemy_Touch(void) {  // 0xA7B0F3
@@ -854,7 +854,7 @@ const uint16 *Kraid_Instr_IncrYpos_Shake(uint16 k, const uint16 *jp) {  // 0xA7B
 }
 
 const uint16 *Kraid_Instr_PlayEarthQuakeSfx(uint16 k, const uint16 *jp) {  // 0xA7B64E
-  QueueSfx2_Max6(0x76);
+  QueueSfx2_Max6(kSfx2_Quake);
   return jp;
 }
 
@@ -1019,7 +1019,7 @@ void KraidLint_ChargeLint(uint16 k) {  // 0xA7B868
   E->x_pos = E->ai_var_C + gEnemyData(0)->x_pos - E->ai_var_B;
   if (E->ai_preinstr-- == 1) {
     E->ai_var_A = FUNC16(KraidLint_FireLint);
-    QueueSfx3_Max6(0x1F);
+    QueueSfx3_Max6(kSfx3_KraidFiresLint);
   }
 }
 
@@ -1254,7 +1254,7 @@ void Kraid_Main_AttackWithMouthOpen(void) {  // 0xA7BBEA
   } else {
     if (*((uint16 *)RomPtr_A7(E->kraid_var_B - 8) + 1) == addr_kKraidTilemaps_3 && (E->kraid_var_C & 0xF) == 0) {
       SpawnEprojWithGfx(kEproj_RocksKraidSpits_RandomParameters[(random_number & 0xE) >> 1], random_number & 0xE, addr_kEproj_RocksKraidSpits);
-      QueueSfx3_Max6(0x1E);
+      QueueSfx3_Max6(kSfx3_KraidsEarthquake);
     }
   }
 }
@@ -1500,32 +1500,32 @@ void Kraid_ClearSomeSpikes(void) {  // 0xA7C171
 }
 
 CoroutineRet UnpauseHook_Kraid_IsDead(void) {  // 0xA7C1FB
-  static const StartDmaCopy unk_A7C21E = { 1, 1, 0x18, LONGPTR(0xa7a716), 0x0200 };
-  static const StartDmaCopy unk_A7C23E = { 1, 1, 0x18, LONGPTR(0x9ab200), 0x0800 };
+  static const StartDmaCopy kDmaCopy_KraidDead_RoomBg = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0xa7a716), .das = 0x0200 };
+  static const StartDmaCopy kDmaCopy_KraidDead_RoomStandardBg3Tiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ab200), .das = 0x0800 };
   ScreenOff();
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 16 * (reg_BG12NBA & 0xF) + 63);
   WriteReg(VMAIN, 0x80);
-  SetupDmaTransfer(&unk_A7C21E);
+  SetupDmaTransfer(&kDmaCopy_KraidDead_RoomBg);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x40);
   WriteReg(VMAIN, 0x80);
-  SetupDmaTransfer(&unk_A7C23E);
+  SetupDmaTransfer(&kDmaCopy_KraidDead_RoomStandardBg3Tiles);
   WriteReg(MDMAEN, 2);
   Kraid_TransferTopHalfToVram();
   return kCoroutineNone;
 }
 
-static const StartDmaCopy unk_A7C26B = { 1, 1, 0x18, LONGPTR(0x7e5000), 0x0400 };
-static const StartDmaCopy unk_A7C28D = { 1, 1, 0x18, LONGPTR(0x7e2000), 0x0800 };
+static const StartDmaCopy kDmaCopy_KraidAlive_RoomBg2Tiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e5000), .das = 0x0400 };
+static const StartDmaCopy kDmaCopy_KraidTopHalf = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e2000), .das = 0x0800 };
 
 CoroutineRet UnpauseHook_Kraid_IsAlive(void) {  // 0xA7C24E
   ScreenOff();
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, reg_BG12NBA + 62);
   WriteReg(VMAIN, 0x80);
-  SetupDmaTransfer(&unk_A7C26B);
+  SetupDmaTransfer(&kDmaCopy_KraidAlive_RoomBg2Tiles);
   WriteReg(MDMAEN, 2);
   Kraid_TransferTopHalfToVram();
   return kCoroutineNone;
@@ -1535,12 +1535,12 @@ void Kraid_TransferTopHalfToVram(void) {  // 0xA7C278
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, reg_BG2SC & 0xFC);
   WriteReg(VMAIN, 0x80);
-  SetupDmaTransfer(&unk_A7C28D);
+  SetupDmaTransfer(&kDmaCopy_KraidTopHalf);
   WriteReg(MDMAEN, 2);
   ScreenOn();
 }
 
-static const StartDmaCopy unk_A7C2BD = { 1, 1, 0x18, LONGPTR(0x7e5000), 0x0400 };
+static const StartDmaCopy kDmaCopy_KraidSinking_RoomBg2Tiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e5000), .das = 0x0400 };
 
 CoroutineRet Kraid_UnpauseHook_IsSinking(void) {  // 0xA7C2A0
   COROUTINE_BEGIN(coroutine_state_2, 0);
@@ -1548,7 +1548,7 @@ CoroutineRet Kraid_UnpauseHook_IsSinking(void) {  // 0xA7C2A0
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, reg_BG12NBA + 62);
   WriteReg(VMAIN, 0x80);
-  SetupDmaTransfer(&unk_A7C2BD);
+  SetupDmaTransfer(&kDmaCopy_KraidSinking_RoomBg2Tiles);
   WriteReg(MDMAEN, 2);
   if ((int16)(Get_Kraid(0)->base.y_pos - kKraidSinkEntry[0].kraid_y_pos) >= 0) {
     my_counter = 0;
@@ -1683,7 +1683,7 @@ void Kraid_Death_UpdateBG2TilemapBottomHalf(void) {  // 0xA7C4C8
 
 void Kraid_PlaySoundEveryHalfSecond(void) {  // 0xA7C51D
   if (!--kraid_unk9000) {
-    QueueSfx3_Max6(0x1E);
+    QueueSfx3_Max6(kSfx3_KraidsEarthquake);
     kraid_unk9000 = 30;
   }
 }
@@ -2166,13 +2166,13 @@ uint8 Phantoon_Func_ChangeWaveAmplitude(int32 amt) {  // 0xA7CF27
 
 void Phantoon_Func_4(uint16 k) {  // 0xA7CF5E
   SpawnEprojWithGfx(0, k, addr_kEproj_DestroyableFireballs);
-  QueueSfx3_Max6(0x1D);
+  QueueSfx3_Max6(kSfx3_PhantoonFlame);
 }
 
 void Phantoon_Func_5(uint16 k) {  // 0xA7CF70
   for (int i = 7; i >= 0; --i)
     SpawnEprojWithGfx(i | 0x600, k, addr_kEproj_DestroyableFireballs);
-  QueueSfx3_Max6(0x28);
+  QueueSfx3_Max6(kSfx3_PhantoonMaterialisesAttack);
 }
 
 void Phantoon_Func_6(uint16 k, uint16 a) {  // 0xA7CF8B
@@ -2488,7 +2488,7 @@ void Phantoon_Spawn8FireballsInCircleAtStart(uint16 k) {  // 0xA7D4A9
   if (v2 || v3) {
     Enemy_Phantoon *E0 = Get_Phantoon(0);
     SpawnEprojWithGfx(E0->phant_var_A, k, addr_kEproj_StartingFireballs);
-    QueueSfx3_Max6(0x1D);
+    QueueSfx3_Max6(kSfx3_PhantoonFlame);
     EK->phant_var_E = 30;
     uint16 v5 = E0->phant_var_A + 1;
     E0->phant_var_A = v5;
@@ -2830,7 +2830,7 @@ void Phantoon_Enraged(uint16 k) {  // 0xA7D8AC
       for (int i = 6; i >= 0; --i)
         SpawnEprojWithGfx(i | 0x200, k, addr_kEproj_DestroyableFireballs);
     }
-    QueueSfx3_Max6(0x29);
+    QueueSfx3_Max6(kSfx3_PhantoonsSuperMissiledAttack);
     Enemy_Phantoon *E1 = Get_Phantoon(0x40);
     uint16 v7 = E1->phant_var_F + 1;
     E1->phant_var_F = v7;
@@ -2899,9 +2899,9 @@ void Phantoon_DyingPhantoonExplosions(uint16 k) {  // 0xA7D98B
     uint16 v11 = kPhantoon_DyingExplosionsTable[v5 + 2];
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v11);
     if (v11 == 29)
-      QueueSfx2_Max6(0x24);
+      QueueSfx2_Max6(kSfx2_SmallExplosion);
     else
-      QueueSfx2_Max6(0x2B);
+      QueueSfx2_Max6(kSfx2_RidleysFireballHitSurface_CrocomirePostDeathRumble_PhantoonExploding);
     EK->phant_var_E = kPhantoon_DyingExplosionsTable[v5 + 3];
     uint16 v9 = E2->phant_var_F + 1;
     E2->phant_var_F = v9;
@@ -2927,7 +2927,7 @@ void Phantoon_WavyDyingPhantoonAndCry(uint16 k) {  // 0xA7DA51
   Phantoon->base.properties = v2;
   Get_Phantoon(0x80)->base.properties = v2;
   Get_Phantoon(0xC0)->base.properties = v2;
-  QueueSfx2_Max6(0x7E);
+  QueueSfx2_Max6(kSfx2_MotherBrainsCryHighPitch_PhantoonsDyingCry_HighPriority);
 }
 
 void Phantoon_DyingFadeOut(uint16 k) {  // 0xA7DA86
@@ -3131,14 +3131,14 @@ void Phantoon_Shot(void) {  // 0xA7DD9B
   uint16 health = EK->base.health;
   NormalEnemyShotAiSkipDeathAnim_CurEnemy();
   if (!EK->base.health) {
-    QueueSfx2_Max6(0x73);
+    QueueSfx2_Max6(kSfx2_PhantoonsCry_DraygonsCry_HighPriority);
     Get_Phantoon(0x80)->phant_parameter_2 = 1;
     E0->base.properties |= kEnemyProps_Tangible;
     Phantoon_StartDeathSequence(v1);
     return;
   }
   if ((EK->base.ai_handler_bits & 2) != 0) {
-    QueueSfx2_Max6(0x73);
+    QueueSfx2_Max6(kSfx2_PhantoonsCry_DraygonsCry_HighPriority);
     uint16 phanto_var_F = EK->phant_var_F;
     if (phanto_var_F != FUNC16(Phantoon_EyeFollowsSamusUntilTimerRunsOut)
         && phanto_var_F != FUNC16(Phantoon_FollowSamusWithEyeDuringFireballRain)) {
@@ -3252,7 +3252,7 @@ void Etecoon_Func_4(uint16 k) {  // 0xA7E9AF
       }
     } else if (IsSamusWithinEnemy_Y(k, 0x80)) {
       if ((E->etecoon_parameter_2 & 3) == 0)
-        QueueSfx2_Max15(0x35);
+        QueueSfx2_Max15(kSfx2_EtecoonsTheme_HighPriority);
       E->base.instruction_timer = 1;
       E->base.current_instruction = addr_kEtecoon_Ilist_E8D6;
       E->etecoon_var_E = 256;
@@ -3271,7 +3271,7 @@ void Etecoon_Func_5(uint16 k) {  // 0xA7EA00
     E->base.instruction_timer = 1;
     E->etecoon_var_F = FUNC16(Etecoon_Func_6);
     if (!sign16(samus_x_pos - 256))
-      QueueSfx2_Max6(0x33);
+      QueueSfx2_Max6(kSfx2_EtecoonCry);
   }
 }
 
@@ -3365,7 +3365,7 @@ void Etecoon_Func_10(uint16 k) {  // 0xA7EB50
     E->etecoon_var_F = FUNC16(Etecoon_Func_11);
     E->etecoon_var_E = 8;
     if (!sign16(samus_x_pos - 256))
-      QueueSfx2_Max6(0x32);
+      QueueSfx2_Max6(kSfx2_EtecoonWallJump);
   } else if (Etecoon_Func_3(k) & 1) {
     Enemy_Etecoon *E = Get_Etecoon(k);
     if (E->etecoon_parameter_1)
@@ -3551,7 +3551,7 @@ void Etecoon_Func_23(uint16 k) {  // 0xA7EDC7
     E->etecoon_var_B = g_word_A7E902;
     E->base.instruction_timer = 1;
     if (!sign16(samus_x_pos - 256))
-      QueueSfx2_Max6(0x33);
+      QueueSfx2_Max6(kSfx2_EtecoonCry);
   }
 }
 
@@ -3570,7 +3570,7 @@ void Etecoon_Func_24(uint16 k) {  // 0xA7EE3E
       E->base.current_instruction += 2;
       E->etecoon_var_F = FUNC16(Etecoon_Func_22);
       if (!sign16(samus_x_pos - 256))
-        QueueSfx2_Max6(0x33);
+        QueueSfx2_Max6(kSfx2_EtecoonCry);
     }
     E->base.instruction_timer = 1;
   }
@@ -3645,7 +3645,7 @@ void Dachora_Func_2(uint16 k) {  // 0xA7F570
     E->base.instruction_timer = 1;
     E->dachor_var_F = FUNC16(Dachora_Func_3);
     E->dachor_var_A = g_word_A7F4CD;
-    QueueSfx2_Max15(0x1D);
+    QueueSfx2_Max15(kSfx2_DachoraCry);
   }
 }
 
@@ -3667,7 +3667,7 @@ void Dachora_Func_3(uint16 k) {  // 0xA7F5BC
 void Dachora_Func_4(uint16 k) {  // 0xA7F5ED
   int32 amt = -Dachora_Func_6(k);
   Enemy_Dachora *E = Get_Dachora(k);
-  if (Enemy_MoveRight_IgnoreSlopes(k, amt) || (EnemyFunc_C8AD(k), sign16(E->base.x_pos - 96))) {
+  if (Enemy_MoveRight_IgnoreSlopes(k, amt) || (AlignEnemyYposToNonsquareSlope(k), sign16(E->base.x_pos - 96))) {
     E->base.current_instruction = addr_kDachora_Ilist_F407;
     E->dachor_var_F = FUNC16(Dachora_Func_5);
     E->dachor_var_E = 1;
@@ -3683,7 +3683,7 @@ void Dachora_Func_5(uint16 k) {  // 0xA7F65E
   int32 amt = Dachora_Func_6(k);
   Enemy_Dachora *E = Get_Dachora(k);
   if (Enemy_MoveRight_IgnoreSlopes(k, amt)) {
-    QueueSfx2_Max15(0x71);
+    QueueSfx2_Max15(kSfx2_Silence);
     E->base.current_instruction = addr_kDachora_Ilist_F345;
     E->dachor_var_F = FUNC16(Dachora_Func_4);
     E->dachor_parameter_1 = 0;
@@ -3695,13 +3695,13 @@ LABEL_4:
     E->base.instruction_timer = 1;
     return;
   }
-  EnemyFunc_C8AD(k);
+  AlignEnemyYposToNonsquareSlope(k);
   if (!sign16(E->base.x_pos - 1152)) {
     E->base.current_instruction = addr_kDachora_Ilist_F4B3;
     E->dachor_var_F = FUNC16(Dachora_Func_7);
     E->dachor_var_A = g_word_A7F4CF;
     E->base.y_pos += 8;
-    QueueSfx2_Max6(0x3D);
+    QueueSfx2_Max6(kSfx2_DachoraStoredShinespark);
     goto LABEL_4;
   }
 }
@@ -3710,7 +3710,7 @@ int32 Dachora_Func_6(uint16 k) {  // 0xA7F6D5
   Enemy_Dachora *E = Get_Dachora(k);
   if ((int16)(E->dachor_var_A - g_word_A7F4D5) >= 0) {
     if (E->dachor_var_E == 1)
-      QueueSfx2_Max6(0x39);
+      QueueSfx2_Max6(kSfx2_DachoraSpeedBooster);
     uint16 v2 = E->dachor_var_E - 1;
     E->dachor_var_E = v2;
     if (!(uint8)v2) {
@@ -3749,7 +3749,7 @@ void Dachora_Func_7(uint16 k) {  // 0xA7F78F
     E->dachor_var_C = 0;
     E->dachor_var_D = 0;
     E->base.y_pos -= 8;
-    QueueSfx2_Max6(0x3B);
+    QueueSfx2_Max6(kSfx2_DachoraShinespark);
     if (E->dachor_parameter_1) {
       Get_Dachora(k + 64)->base.current_instruction = addr_kDachora_Ilist_F4B9;
       Get_Dachora(k + 128)->base.current_instruction = addr_kDachora_Ilist_F4B9;
@@ -3792,7 +3792,7 @@ void Dachora_Func_8(uint16 k) {  // 0xA7F806
     E->dachor_var_B = 0;
     E->dachor_var_E = 0;
     Dachora_Func_1(addr_kDachora_Palette, k);
-    QueueSfx2_Max6(0x3C);
+    QueueSfx2_Max6(kSfx2_DachoraShinesparkEnded);
   }
 }
 

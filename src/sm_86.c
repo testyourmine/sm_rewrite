@@ -104,13 +104,13 @@ static void SpawnEprojInner(uint16 j, uint16 gfx_idx) {  // 0x868027
 }
 
 void SpawnEprojWithGfx(uint16 a, uint16 k, uint16 j) {  // 0x868027
-  eproj_init_param_1 = a;
+  eproj_init_param_0 = a;
   EnemyData *E = gEnemyData(k);
   SpawnEprojInner(j, E->vram_tiles_index | E->palette_index);
 }
 
 void SpawnEprojWithRoomGfx(uint16 j, uint16 a) {  // 0x868097
-  eproj_init_param_1 = a;
+  eproj_init_param_0 = a;
   SpawnEprojInner(j, 0);
 }
 
@@ -881,8 +881,8 @@ static void EprojInit_DraygonsGunk(uint16 j) {  // 0x868D04
   int v1 = j >> 1;
   eproj_x_pos[v1] = eproj_spawn_pt.x;
   eproj_y_pos[v1] = eproj_spawn_pt.y;
-  g_word_7E97DC[v1] = eproj_unk1995;
-  Point32 pt = ConvertAngleToXy(eproj_unk1995, eproj_init_param_1);
+  eproj_angles[v1] = eproj_init_param_1;
+  Point32 pt = ConvertAngleToXy(eproj_init_param_1, eproj_init_param_0);
   eproj_x_vel[v1] = pt.x >> 16;
   eproj_E[v1] = pt.x;
   eproj_y_vel[v1] = pt.y >> 16;
@@ -1065,11 +1065,11 @@ void EprojPreInstr_CrocomireSpikeWallPieces(uint16 k) {
   if (eproj_y_pos[v1] >= 0xA8) {
     eproj_id[v1] = 0;
     if ((k & 2) == 0)
-      QueueSfx2_Max6(0x29);
+      QueueSfx2_Max6(kSfx2_MotherBrainRisingIntoPhase2_CrocomiresWallExplodes_SporeSpawnGetsHard);
     int v12 = k >> 1;
     eproj_spawn_pt = (Point16U) { eproj_x_pos[v12], eproj_y_pos[v12] };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x15);
-    QueueSfx2_Max6(0x25);
+    QueueSfx2_Max6(kSfx2_BigExplosion);
   }
 }
 
@@ -1082,7 +1082,7 @@ const uint8 *EprojInstr_9270(uint16 k, const uint8 *epjp) {  // 0x869270
 
 static void EprojInit_CrocomireBridgeCrumbling(uint16 j) {  // 0x869286
   int v1 = j >> 1;
-  eproj_x_pos[v1] = eproj_init_param_1;
+  eproj_x_pos[v1] = eproj_init_param_0;
   eproj_y_pos[v1] = 187;
   eproj_y_subpos[v1] = 0;
   eproj_x_subpos[v1] = 0;
@@ -1166,7 +1166,7 @@ void EprojPreInstr_9634(uint16 k) {  // 0x869392
       eproj_x_vel[v1] = 0;
       eproj_y_vel[v1] = 0;
       eproj_gfx_idx[v1] = 2560;
-      QueueSfx2_Max6(0x2B);
+      QueueSfx2_Max6(kSfx2_RidleysFireballHitSurface_CrocomirePostDeathRumble_PhantoonExploding);
     }
   } else {
     ++eproj_E[v1];
@@ -1175,8 +1175,8 @@ void EprojPreInstr_9634(uint16 k) {  // 0x869392
 
 static void EprojInit_9642_RidleysFireball(uint16 j) {  // 0x8693CA
   int v1 = j >> 1;
-  eproj_F[v1] = eproj_unk1995;
-  int16 v2 = eproj_init_param_1 ? 25 : -25;
+  eproj_F[v1] = eproj_init_param_1;
+  int16 v2 = eproj_init_param_0 ? 25 : -25;
   eproj_x_pos[v1] = enemy_data[0].x_pos + v2;
   eproj_y_pos[v1] = enemy_data[0].y_pos - 43;
   eproj_gfx_idx[v1] = 2560;
@@ -1205,7 +1205,7 @@ void EprojPreInstr_9642_RidleysFireball(uint16 k) {  // 0x86940E
   if (!eproj_F[v2]) {
     eproj_spawn_pt = (Point16U){ eproj_x_pos[v2], eproj_y_pos[v2] };
     SpawnEprojWithRoomGfx(v1, 3);
-    QueueSfx2_Max6(0x2B);
+    QueueSfx2_Max6(kSfx2_RidleysFireballHitSurface_CrocomirePostDeathRumble_PhantoonExploding);
   }
 }
 
@@ -1219,7 +1219,7 @@ static void EprojInit_9660_FireballExplosion(uint16 j) {  // 0x86947F
   eproj_gfx_idx[v1] = 2560;
   eproj_x_pos[v1] = eproj_spawn_pt.x;
   eproj_y_pos[v1] = eproj_spawn_pt.y;
-  eproj_E[v1] = eproj_init_param_1;
+  eproj_E[v1] = eproj_init_param_0;
   eproj_F[v1] = 0;
   eproj_x_vel[v1] = 0;
   eproj_y_vel[v1] = 0;
@@ -1237,7 +1237,7 @@ static void EprojInit_Common(uint16 j, uint16 k, uint16 a) {  // 0x8694EE
 }
 
 static void EprojInit_9688(uint16 j) {  // 0x8694A0
-  uint16 v1 = eproj_init_param_1;
+  uint16 v1 = eproj_init_param_0;
   int v2 = j >> 1;
   eproj_x_vel[v2] = 0;
   eproj_y_vel[v2] = -3584;
@@ -1245,7 +1245,7 @@ static void EprojInit_9688(uint16 j) {  // 0x8694A0
 }
 
 static void EprojInit_9696(uint16 j) {  // 0x8694B4
-  uint16 v1 = eproj_init_param_1;
+  uint16 v1 = eproj_init_param_0;
   int v2 = j >> 1;
   eproj_x_vel[v2] = 0;
   eproj_y_vel[v2] = 3584;
@@ -1253,7 +1253,7 @@ static void EprojInit_9696(uint16 j) {  // 0x8694B4
 }
 
 static void EprojInit_966C(uint16 j) {  // 0x8694C8
-  uint16 v1 = eproj_init_param_1;
+  uint16 v1 = eproj_init_param_0;
   int v2 = j >> 1;
   eproj_x_vel[v2] = 3584;
   eproj_y_vel[v2] = 0;
@@ -1261,7 +1261,7 @@ static void EprojInit_966C(uint16 j) {  // 0x8694C8
 }
 
 static void EprojInit_967A(uint16 j) {  // 0x8694DC
-  uint16 v1 = eproj_init_param_1;
+  uint16 v1 = eproj_init_param_0;
   int v2 = j >> 1;
   eproj_x_vel[v2] = -3584;
   eproj_y_vel[v2] = 0;
@@ -1302,17 +1302,17 @@ void EprojPreInstr_96CE(uint16 k) {  // 0x869549
 }
 
 const uint8 *EprojInstr_95BA(uint16 k, const uint8 *epjp) {  // 0x8695BA
-  eproj_unk1995 = 0;
+  eproj_init_param_1 = 0;
   SpawnEprojWithRoomGfx(addr_stru_86966C, k);
-  eproj_unk1995 = 0;
+  eproj_init_param_1 = 0;
   SpawnEprojWithRoomGfx(addr_stru_86967A, k);
   return epjp;
 }
 
 const uint8 *EprojInstr_95ED(uint16 k, const uint8 *epjp) {  // 0x8695ED
-  eproj_unk1995 = 0;
+  eproj_init_param_1 = 0;
   SpawnEprojWithRoomGfx(addr_stru_869688, k);
-  eproj_unk1995 = 0;
+  eproj_init_param_1 = 0;
   SpawnEprojWithRoomGfx(addr_stru_869696, k);
   return epjp;
 }
@@ -1329,7 +1329,7 @@ static void EprojInit_9734_CeresFallingDebris(uint16 j) {  // 0x8696DC
   eproj_F[v1] = 0;
   eproj_x_vel[v1] = 0;
   eproj_gfx_idx[v1] = 3584;
-  eproj_x_pos[v1] = eproj_init_param_1;
+  eproj_x_pos[v1] = eproj_init_param_0;
   eproj_y_pos[v1] = 42;
   eproj_y_vel[v1] = 16;
 }
@@ -1341,7 +1341,7 @@ void EprojPreInstr_9734_CeresFallingDebris(uint16 k) {  // 0x869701
     eproj_id[v1] = 0;
     eproj_spawn_pt = (Point16U) { eproj_x_pos[v1], eproj_y_pos[v1] };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
-    QueueSfx2_Max6(0x6D);
+    QueueSfx2_Max6(kSfx2_CeresTilesFallingFromCeiling);
   }
 }
 
@@ -1360,7 +1360,7 @@ static const uint8 byte_869979[8] = { 0, 0x20, 0x40, 0x60, 0x80, 0xa0, 0xc0, 0xe
 static void EprojInit_PhantoonDestroyableFireballs(uint16 j) {  // 0x869824
   int8 v1;
 
-  v1 = (uint16)(eproj_init_param_1 & 0xFF00) >> 8;
+  v1 = (uint16)(eproj_init_param_0 & 0xFF00) >> 8;
   switch (v1) {
   case 0: {
     int v2 = j >> 1;
@@ -1379,8 +1379,8 @@ static void EprojInit_PhantoonDestroyableFireballs(uint16 j) {  // 0x869824
     eproj_x_subpos[v3] = 0;
     eproj_y_subpos[v3] = 0;
     eproj_y_vel[v3] = 0;
-    uint16 v4 = (uint8)eproj_init_param_1;
-    if ((int16)((uint8)eproj_init_param_1 - 8) >= 0)
+    uint16 v4 = (uint8)eproj_init_param_0;
+    if ((int16)((uint8)eproj_init_param_0 - 8) >= 0)
       eproj_x_vel[v3] = -2;
     else
       eproj_x_vel[v3] = 2;
@@ -1395,8 +1395,8 @@ static void EprojInit_PhantoonDestroyableFireballs(uint16 j) {  // 0x869824
     eproj_x_subpos[v5] = 0;
     eproj_y_subpos[v5] = 0;
     eproj_y_vel[v5] = 0;
-    eproj_x_vel[v5] = (eproj_init_param_1 & 0xF0) >> 1;
-    eproj_x_pos[v5] = byte_8698F7[eproj_init_param_1 & 0xF];
+    eproj_x_vel[v5] = (eproj_init_param_0 & 0xF0) >> 1;
+    eproj_x_pos[v5] = byte_8698F7[eproj_init_param_0 & 0xF];
     eproj_y_pos[v5] = 40;
     eproj_pre_instr[v5] = FUNC16(EprojPreInstr_PhantoonDestroyableFireballs_2);
     break;
@@ -1407,7 +1407,7 @@ static void EprojInit_PhantoonDestroyableFireballs(uint16 j) {  // 0x869824
     eproj_y_subpos[v7] = 0;
     eproj_y_vel[v7] = 0;
     eproj_x_vel[v7] = 128;
-    eproj_E[v7] = byte_869979[(uint8)eproj_init_param_1];
+    eproj_E[v7] = byte_869979[(uint8)eproj_init_param_0];
     eproj_x_pos[v7] = enemy_data[0].x_pos;
     eproj_y_pos[v7] = enemy_data[0].y_pos + 16;
     eproj_pre_instr[v7] = FUNC16(EprojPreInstr_PhantoonDestroyableFireballs_3);
@@ -1424,7 +1424,7 @@ static void EprojInit_PhantoonStartingFireballs(uint16 j) {  // 0x86993A
   eproj_y_subpos[v1] = 0;
   eproj_x_vel[v1] = 0;
   eproj_y_vel[v1] = 0;
-  uint16 v2 = byte_869979[eproj_init_param_1];
+  uint16 v2 = byte_869979[eproj_init_param_0];
   eproj_E[v1] = v2;
   Point16U pt = Eproj_PhantoonFireballs_GetXYRadius(v2, 0x30);
   eproj_x_pos[v1] = pt.x + enemy_data[0].x_pos;
@@ -1515,7 +1515,7 @@ void EprojPreInstr_PhantoonDestroyableFireballs_2(uint16 k) {  // 0x869A94
   v2 = eproj_x_vel[v1] == 1;
   v3 = (--eproj_x_vel[v1] & 0x8000) != 0;
   if (v2 || v3) {
-    QueueSfx3_Max6(0x1D);
+    QueueSfx3_Max6(kSfx3_PhantoonFlame);
 LABEL_5:
     eproj_y_vel[v1] += 16;
     if (EprojBlockCollision_Vertical(k) & 1) {
@@ -1523,7 +1523,7 @@ LABEL_5:
       eproj_instr_timers[v1] = 1;
       eproj_y_pos[v1] += 8;
       eproj_pre_instr[v1] = FUNC16(nullsub_86);
-      QueueSfx3_Max6(0x1D);
+      QueueSfx3_Max6(kSfx3_PhantoonFlame);
     }
   }
 }
@@ -1618,14 +1618,14 @@ static void EprojInit_RocksKraidSpits(uint16 j) {  // 0x869CA3
   eproj_y_pos[v2] = v1->y_pos - 96;
   eproj_y_subpos[v2] = 0;
   eproj_x_subpos[v2] = 0;
-  eproj_x_vel[v2] = eproj_init_param_1;
+  eproj_x_vel[v2] = eproj_init_param_0;
   eproj_y_vel[v2] = -1024;
   eproj_gfx_idx[v2] = 1536;
 }
 
 static void EprojInit_RocksFallingKraidCeiling(uint16 j) {  // 0x869CD8
   int v1 = j >> 1;
-  eproj_x_pos[v1] = eproj_init_param_1;
+  eproj_x_pos[v1] = eproj_init_param_0;
   eproj_y_pos[v1] = 312;
   eproj_y_subpos[v1] = 0;
   eproj_x_subpos[v1] = 0;
@@ -1645,10 +1645,10 @@ static void EprojInit_RocksWhenKraidRises(uint16 j) {  // 0x869D0C
   eproj_y_pos[v2] = 432;
   eproj_y_subpos[v2] = 0;
   eproj_x_subpos[v2] = 0;
-  eproj_x_vel[v2] = eproj_init_param_1;
+  eproj_x_vel[v2] = eproj_init_param_0;
   eproj_y_vel[v2] = -1280;
   eproj_gfx_idx[v2] = 1536;
-  QueueSfx3_Max6(0x1E);
+  QueueSfx3_Max6(kSfx3_KraidsEarthquake);
 }
 
 void EprojPreInstr_KraidRocks(uint16 k) {  // 0x869D56
@@ -1743,7 +1743,7 @@ static void EprojInit_WalkingLavaSeahorseFireball(uint16 j) {  // 0x869EB2
     eproj_x_vel[v2] = 1024;
     eproj_x_pos[v2] = v1->x_pos + 16;
   }
-  eproj_y_vel[v2] = word_869EF9[eproj_init_param_1 >> 1];
+  eproj_y_vel[v2] = word_869EF9[eproj_init_param_0 >> 1];
   eproj_y_subpos[v2] = 0;
   eproj_x_subpos[v2] = 0;
 }
@@ -1778,7 +1778,7 @@ static void EprojInit_PirateMotherBrainLaser(uint16 j) {  // 0x86A009
   EnemyData *v3 = gEnemyData(cur_enemy_index);
   eproj_properties[v2] = *((uint16 *)RomPtr_A0(v3->enemy_ptr) + 3) | 0x1000;
   eproj_E[v2] = v3->parameter_1;
-  QueueSfx2_Max6(0x67);
+  QueueSfx2_Max6(kSfx2_SpacePirate_MotherBrain_Torizo_RobotLaser);
 }
 
 const uint8 *EprojInstr_SetPreInstrAndRun(uint16 k, const uint8 *epjp) {  // 0x86A050
@@ -1809,7 +1809,7 @@ static void EprojInit_PirateClaw(uint16 j) {  // 0x86A098
   int v1 = j >> 1;
   eproj_y_pos[v1] = r.y + r.h;
   eproj_x_pos[v1] = r.x + r.w;
-  eproj_instr_list_ptr[v1] = eproj_init_param_1 ? addr_off_869FE1 : addr_off_869FB9;
+  eproj_instr_list_ptr[v1] = eproj_init_param_0 ? addr_off_869FE1 : addr_off_869FB9;
   eproj_pre_instr[v1] = FUNC16(nullsub_87);
   eproj_E[v1] = 2048;
   eproj_F[v1] = 1;
@@ -1857,8 +1857,8 @@ static void EprojInit_GunshipLiftoffDustClouds(uint16 j) {  // 0x86A2A1
   eproj_y_subpos[v1] = 0;
   eproj_x_vel[v1] = 0;
   eproj_y_vel[v1] = 0;
-  uint16 v2 = eproj_init_param_1;
-  int v3 = eproj_init_param_1 >> 1;
+  uint16 v2 = eproj_init_param_0;
+  int v3 = eproj_init_param_0 >> 1;
   eproj_x_pos[v1] = kGunshipLiftoffDustCloudsXoffs[v3] + samus_x_pos;
   eproj_y_pos[v1] = samus_y_pos + 80;
   eproj_instr_list_ptr[v1] = kGunshipLiftoffDustCloudsInstrListPtrs[v3];
@@ -2010,12 +2010,12 @@ static const int16 kEprojInit_BombTorizoLowHealthExplode_Y[6] = { -8, -8, -8, -2
 static void EprojInit_BombTorizoExplosiveSwipe(uint16 j) {  // 0x86A6F6
   EnemyData *v1 = gEnemyData(cur_enemy_index);
   if ((v1->parameter_1 & 0x8000) != 0) {
-    int v4 = eproj_init_param_1 >> 1;
+    int v4 = eproj_init_param_0 >> 1;
     int v5 = j >> 1;
     eproj_x_pos[v5] = v1->x_pos - kEprojInit_BombTorizoExplosiveSwipe_Tab0[v4];
     eproj_y_pos[v5] = v1->y_pos + kEprojInit_BombTorizoExplosiveSwipe_Tab1[v4];
   } else {
-    int v2 = eproj_init_param_1 >> 1;
+    int v2 = eproj_init_param_0 >> 1;
     int v3 = j >> 1;
     eproj_x_pos[v3] = v1->x_pos + kEprojInit_BombTorizoExplosiveSwipe_Tab0[v2];
     eproj_y_pos[v3] = v1->y_pos + kEprojInit_BombTorizoExplosiveSwipe_Tab1[v2];
@@ -2026,8 +2026,8 @@ static void EprojInit_BombTorizoStatueBreaking(uint16 j) {  // 0x86A764
   int8 v1;
 
   CalculatePlmBlockCoords(plm_id);
-  v1 = eproj_init_param_1;
-  int v2 = eproj_init_param_1 >> 1;
+  v1 = eproj_init_param_0;
+  int v2 = eproj_init_param_0 >> 1;
   int v3 = j >> 1;
   eproj_instr_list_ptr[v3] = kEprojInit_BombTorizoStatueBreaking_InstrList[v2];
   eproj_x_pos[v3] = kEprojInit_BombTorizoStatueBreaking_Xpos[v2] + 16 * plm_x_block;
@@ -2044,9 +2044,9 @@ static void EprojInit_BombTorizoLowHealthExplode(uint16 j) {  // 0x86A81B
   eproj_x_pos[v2] = v1->x_pos;
   eproj_y_pos[v2] = v1->y_pos;
   if ((v1->parameter_1 & 0x8000) == 0)
-    eproj_init_param_1 += 2;
-  eproj_init_param_1 += 2;
-  int v3 = eproj_init_param_1 >> 1;
+    eproj_init_param_0 += 2;
+  eproj_init_param_0 += 2;
+  int v3 = eproj_init_param_0 >> 1;
   uint16 v4 = kEprojInit_BombTorizoLowHealthExplode_X[v3] + eproj_x_pos[v2];
   eproj_x_pos[v2] = v4;
   eproj_E[v2] = v4;
@@ -2281,7 +2281,7 @@ void EprojPreInstr_TorizoSonicBoom(uint16 k) {  // 0x86AE6C
 static void EprojInit_WreckedShipChozoSpikeFootsteps(uint16 j) {  // 0x86AEFC
   EnemyData *v1 = gEnemyData(cur_enemy_index);
   int v2 = j >> 1;
-  eproj_x_pos[v2] = eproj_init_param_1 + v1->x_pos;
+  eproj_x_pos[v2] = eproj_init_param_0 + v1->x_pos;
   eproj_y_pos[v2] = v1->y_pos + 28;
 }
 
@@ -2533,7 +2533,7 @@ static void EprojInit_EyeDoorProjectile(uint16 j) {
   int v2 = j >> 1;
   eproj_F[v2] = plm_room_arguments[plm_id >> 1];
   CalculatePlmBlockCoords(v1);
-  int v3 = eproj_init_param_1 >> 1;
+  int v3 = eproj_init_param_0 >> 1;
   eproj_x_pos[v2] = word_86B65B[v3] + 8 * (2 * plm_x_block + 1);
   eproj_y_pos[v2] = word_86B65B[v3 + 1] + 16 * plm_y_block;
 }
@@ -2545,7 +2545,7 @@ static void EprojInit_EyeDoorSweat(uint16 j) {  // 0x86B683
   int v1 = j >> 1;
   eproj_x_pos[v1] = 8 * (2 * (plm_x_block - 1) + 1);
   eproj_y_pos[v1] = 16 * (plm_y_block + 1);
-  int v2 = eproj_init_param_1 >> 1;
+  int v2 = eproj_init_param_0 >> 1;
   eproj_x_vel[v1] = word_86B6B1[v2];
   eproj_y_vel[v1] = word_86B6B1[v2 + 1];
 }
@@ -2603,7 +2603,7 @@ const uint8 *EprojInstr_AddToYpos(uint16 k, const uint8 *epjp) {  // 0x86B841
 
 static void EprojInit_TourianStatueUnlockingParticleWaterSplash(uint16 j) {  // 0x86B87A
   int v1 = j >> 1;
-  eproj_x_pos[v1] = eproj_x_pos[eproj_init_param_1 >> 1];
+  eproj_x_pos[v1] = eproj_x_pos[eproj_init_param_0 >> 1];
   eproj_y_pos[v1] = fx_y_pos - 4;
 }
 
@@ -2612,8 +2612,8 @@ static const uint16 kEprojInit_TourianStatueEyeGlow_Y[4] = { 0x90, 0x51, 0x80, 0
 static const uint16 kEprojInit_TourianStatueEyeGlow_Colors[16] = { 0x6bff, 0x33b, 0x216, 0x173, 0x7f5f, 0x7c1f, 0x5816, 0x300c, 0x7f5a, 0x7ec0, 0x6de0, 0x54e0, 0x6bfa, 0x3be0, 0x2680, 0x1580 };
 
 static void EprojInit_TourianStatueEyeGlow(uint16 j) {  // 0x86B88E
-  uint16 v1 = eproj_init_param_1;
-  int v2 = eproj_init_param_1 >> 1;
+  uint16 v1 = eproj_init_param_0;
+  int v2 = eproj_init_param_0 >> 1;
   int v3 = j >> 1;
   eproj_x_pos[v3] = kEprojInit_TourianStatueEyeGlow_X[v2];
   eproj_y_pos[v3] = kEprojInit_TourianStatueEyeGlow_Y[v2];
@@ -2625,7 +2625,7 @@ static void EprojInit_TourianStatueEyeGlow(uint16 j) {  // 0x86B88E
 }
 
 static void EprojInit_TourianStatueUnlockingParticle(uint16 j) {  // 0x86B8B5
-  int v1 = eproj_init_param_1 >> 1;
+  int v1 = eproj_init_param_0 >> 1;
   int v2 = j >> 1;
   eproj_x_pos[v2] = eproj_x_pos[v1];
   eproj_y_pos[v2] = eproj_y_pos[v1];
@@ -2637,14 +2637,14 @@ static void EprojInit_TourianStatueUnlockingParticle(uint16 j) {  // 0x86B8B5
 }
 
 void EprojIni_TourianStatueUnlockingParticleTail(uint16 v0) {  // 0x86B8E8
-  int v1 = eproj_init_param_1 >> 1;
+  int v1 = eproj_init_param_0 >> 1;
   int v2 = v0 >> 1;
   eproj_x_pos[v2] = eproj_x_pos[v1];
   eproj_y_pos[v2] = eproj_y_pos[v1];
 }
 
 static void EprojInit_TourianStatueSoul(uint16 j) {  // 0x86B8F8
-  int v1 = eproj_init_param_1 >> 1;
+  int v1 = eproj_init_param_0 >> 1;
   int v2 = j >> 1;
   eproj_x_pos[v2] = kEprojInit_TourianStatueEyeGlow_X[v1];
   eproj_y_pos[v2] = kEprojInit_TourianStatueEyeGlow_Y[v1];
@@ -2725,7 +2725,7 @@ void sub_86BB30(uint16 j) {  // 0x86BB30
   int v2 = j >> 1;
   eproj_x_pos[v2] = *(uint16 *)&v1->pad[34];
   eproj_y_pos[v2] = *(uint16 *)&v1->pad[36];
-  eproj_instr_list_ptr[v2] = kBB50InstrListPtrs_UNUSED[eproj_init_param_1];
+  eproj_instr_list_ptr[v2] = kBB50InstrListPtrs_UNUSED[eproj_init_param_0];
 }
 
 static void EprojInit_NuclearWaffleBody(uint16 j) {  // 0x86BB92
@@ -2744,8 +2744,8 @@ static void EprojInit_NorfairLavaquakeRocks(uint16 j) {  // 0x86BBDB
   int v1 = j >> 1;
   eproj_instr_list_ptr[v1] = addr_word_86BBD5;
   eproj_E[v1] = FUNC16(Eproj_NorfairLavaquakeRocks_Func1);
-  eproj_y_vel[v1] = eproj_init_param_1;
-  eproj_x_vel[v1] = eproj_unk1995;
+  eproj_y_vel[v1] = eproj_init_param_0;
+  eproj_x_vel[v1] = eproj_init_param_1;
   EnemyData *v2 = gEnemyData(cur_enemy_index);
   eproj_x_pos[v1] = v2->x_pos;
   eproj_x_subpos[v1] = v2->x_subpos;
@@ -2842,7 +2842,7 @@ static void EprojInit_BDA2(uint16 j) {  // 0x86BDA2
 }
 
 static void EprojInit_ShaktoolAttackMiddleBackCircle(uint16 j) {  // 0x86BD9C
-  eproj_E[j >> 1] = eproj_init_param_1;
+  eproj_E[j >> 1] = eproj_init_param_0;
   EprojInit_BDA2(j);
 }
 
@@ -2867,8 +2867,8 @@ static const int16 EprojInit_MotherBrainRoomTurrets_Y[12] = { 0x30, 0x40, 0x40, 
 static void EprojInit_MotherBrainRoomTurrets(uint16 j) {  // 0x86BE4F
   int v1 = j >> 1;
   eproj_gfx_idx[v1] = 1024;
-  uint16 v2 = 2 * eproj_init_param_1;
-  uint16 v3 = kEproj_MotherBrainRoomTurrets_DirectionIndexes[eproj_init_param_1] | 0x100;
+  uint16 v2 = 2 * eproj_init_param_0;
+  uint16 v3 = kEproj_MotherBrainRoomTurrets_DirectionIndexes[eproj_init_param_0] | 0x100;
   eproj_y_subpos[v1] = v3;
   eproj_instr_list_ptr[v1] = kEproj_MotherBrainRoomTurrets_InstrLists[(uint16)(2
                                                                                           * (uint8)v3) >> 1];
@@ -2889,13 +2889,13 @@ static void EprojInit_MotherBrainRoomTurretBullets(uint16 j) {  // 0x86BF59
   int v1 = j >> 1;
   eproj_F[v1] = 0;
   eproj_gfx_idx[v1] = 1024;
-  uint16 v2 = 2 * LOBYTE(eproj_y_subpos[eproj_init_param_1 >> 1]);
+  uint16 v2 = 2 * LOBYTE(eproj_y_subpos[eproj_init_param_0 >> 1]);
   eproj_E[v1] = v2;
   int v3 = v2 >> 1;
   Point16U pt = { kEproj_MotherBrainRoomTurretBullets_X[v3], kEproj_MotherBrainRoomTurretBullets_Y[v3] };
   eproj_x_vel[v1] = kEproj_MotherBrainRoomTurretBullets_Xvel[v3];
   eproj_y_vel[v1] = kEproj_MotherBrainRoomTurretBullets_Yvel[v3];
-  int v4 = eproj_init_param_1 >> 1;
+  int v4 = eproj_init_param_0 >> 1;
   eproj_x_pos[v1] = pt.x + eproj_x_pos[v4];
   eproj_y_pos[v1] = pt.y + eproj_y_pos[v4];
 }
@@ -3009,7 +3009,7 @@ void EprojPreInstr_MotherBrainBomb(uint16 k) {  // 0x86C4C8
       SpawnEprojWithRoomGfx(addr_stru_869650, LOBYTE(eproj_x_subpos[v4]));
       eproj_spawn_pt = (Point16U){ eproj_x_pos[v4], eproj_y_pos[v4] };
       SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 3);
-      QueueSfx3_Max6(0x13);
+      QueueSfx3_Max6(kSfx3_MotherBrain_TorizoProjectileHitsSurface_ShitroidExploding);
       return;
     }
     if (MoveMotherBrainBomb(k, v5) & 1)
@@ -3094,7 +3094,7 @@ void Eproj_MotherBrainsBlueRingLasers(uint16 j) {  // 0x86C2F3
   eproj_E[v1] = 8;
   eproj_F[v1] = 0;
   eproj_gfx_idx[v1] = 1024;
-  uint16 r18 = eproj_init_param_1;
+  uint16 r18 = eproj_init_param_0;
   eproj_x_vel[v1] = Math_MultBySin(0x450, r18);
   eproj_y_vel[v1] = Math_MultByCos(0x450, r18);
   eproj_x_pos[v1] = enemy_data[1].x_pos + 10;
@@ -3192,7 +3192,7 @@ void BlueRingContactExplosion(uint16 k) {  // 0x86C410
   eproj_id[v1] = 0;
   eproj_spawn_pt = (Point16U){ eproj_x_pos[v1], eproj_y_pos[v1] };
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 3);
-  QueueSfx3_Max6(0x13);
+  QueueSfx3_Max6(kSfx3_MotherBrain_TorizoProjectileHitsSurface_ShitroidExploding);
   sub_86C42E(k);
 }
 
@@ -3201,7 +3201,7 @@ void sub_86C42E(uint16 k) {  // 0x86C42E
 }
 
 static void EprojInit_MotherBrainBomb(uint16 j) {  // 0x86C482
-  *((uint8 *)eproj_x_subpos + j) = eproj_init_param_1;
+  *((uint8 *)eproj_x_subpos + j) = eproj_init_param_0;
   int v1 = j >> 1;
   eproj_y_vel[v1] = 256;
   eproj_x_vel[v1] = 224;
@@ -3296,7 +3296,7 @@ static void EprojInit_MotherBrainDeathBeemFired(uint16 j) {  // 0x86C684
     eproj_id[v1] = 0;
     eproj_spawn_pt = (Point16U){ eproj_x_pos[v1], eproj_y_pos[v1] };
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x1D);
-    QueueSfx3_Max6(0x13);
+    QueueSfx3_Max6(kSfx3_MotherBrain_TorizoProjectileHitsSurface_ShitroidExploding);
     earthquake_timer = 10;
     earthquake_type = 5;
   } else {
@@ -3339,7 +3339,7 @@ void EprojPreInstr_C84D(uint16 k) {  // 0x86C84D
 static void EprojInit_MotherBrainsDrool(uint16 j) {  // 0x86C843
   int v1 = j >> 1;
   eproj_gfx_idx[v1] = 0;
-  eproj_E[v1] = eproj_init_param_1;
+  eproj_E[v1] = eproj_init_param_0;
   EprojPreInstr_C84D(j);
 }
 
@@ -3366,7 +3366,7 @@ void EprojPreInit_MotherBrainsDeathExplosion_0(uint16 k) {  // 0x86C914
 
 static void EprojInit_MotherBrainsDeathExplosion(uint16 j) {  // 0x86C8F5
   int v1 = j >> 1;
-  eproj_instr_list_ptr[v1] = kMotherBrainsDeathExplosionInstrListPtrs[eproj_init_param_1];
+  eproj_instr_list_ptr[v1] = kMotherBrainsDeathExplosionInstrListPtrs[eproj_init_param_0];
   eproj_instr_timers[v1] = 1;
   eproj_gfx_idx[v1] = 0;
   eproj_x_vel[v1] = eproj_spawn_pt.x;
@@ -3402,7 +3402,7 @@ static void EprojInit_MotherBrainEscapeDoorParticles(uint16 j) {  // 0x86C961
 
   int v1 = j >> 1;
   eproj_gfx_idx[v1] = 0;
-  int v2 = (4 * eproj_init_param_1) >> 1;
+  int v2 = (4 * eproj_init_param_0) >> 1;
   eproj_x_pos[v1] = kEprojInit_MotherBrainEscapeDoorParticles_X[v2] + 16;
   eproj_y_pos[v1] = kEprojInit_MotherBrainEscapeDoorParticles_X[v2 + 1] + 128;
   eproj_x_vel[v1] = kEprojInit_MotherBrainEscapeDoorParticles_Xvel[v2];
@@ -3515,7 +3515,7 @@ static void EprojInit_MotherBrainGlassShatteringShard(uint16 j) {  // 0x86CDC5
   eproj_instr_list_ptr[v2] = kEprojInit_MotherBrainGlassShatteringShard_InstrPtrs[(uint16)((v1 >> 4) & 0x1E) >> 1];
   eproj_gfx_idx[v2] = 1600;
   CalculatePlmBlockCoords(plm_id);
-  int v4 = eproj_init_param_1 >> 1;
+  int v4 = eproj_init_param_0 >> 1;
   eproj_x_pos[v2] = kEprojInit_MotherBrainGlassShatteringShard_X[v4] + 16 * plm_x_block;
   eproj_y_pos[v2] = kEprojInit_MotherBrainGlassShatteringShard_Y[v4] + 16 * plm_y_block;
   eproj_x_pos[v2] += (NextRandom() & 0xF) - 8;
@@ -3523,7 +3523,7 @@ static void EprojInit_MotherBrainGlassShatteringShard(uint16 j) {  // 0x86CDC5
 }
 
 static void EprojInit_MotherBrainGlassShatteringSparkle(uint16 j) {  // 0x86CE6D
-  int v1 = eproj_init_param_1 >> 1;
+  int v1 = eproj_init_param_0 >> 1;
   int v2 = j >> 1;
   eproj_x_pos[v2] = eproj_x_pos[v1] + (NextRandom() & 0x1F) - 16;
   eproj_y_pos[v2] = eproj_y_pos[v1] + (NextRandom() & 0x1F) - 16;
@@ -3615,7 +3615,7 @@ void EprojPreInstr_KagosBugs_Func1(uint16 k) {  // 0x86D0B3
     uint16 v3 = v2 - 1;
     eproj_E[v1] = v3;
     if (!v3)
-      QueueSfx2_Max6(0x6C);
+      QueueSfx2_Max6(kSfx2_KagoBug);
   }
 }
 
@@ -3732,7 +3732,7 @@ static void EprojInit_MaridiaFloatersSpikes(uint16 j) {  // 0x86D23A
   EnemyData *v2 = gEnemyData(cur_enemy_index);
   eproj_x_pos[v1] = v2->x_pos;
   eproj_y_pos[v1] = v2->y_pos;
-  eproj_E[v1] = eproj_init_param_1;
+  eproj_E[v1] = eproj_init_param_0;
 }
 
 static const int16 word_86D21A[8] = { 0, 32, 32, 32, 0, -32, -32, -32 };
@@ -3759,7 +3759,7 @@ static void EprojInit_WreckedShipRobotLaserCommon(uint16 k, uint16 j) {  // 0x86
     && (int16)(v2->x_pos - v2->x_width - 257 - layer1_x_pos) < 0
     && (int16)(v2->y_height + v2->y_pos - layer1_y_pos) >= 0
     && (int16)(v2->y_pos - v2->y_height - 224) < 0) {
-    QueueSfx2_Max6(0x67);
+    QueueSfx2_Max6(kSfx2_SpacePirate_MotherBrain_Torizo_RobotLaser);
   }
 }
 
@@ -3846,7 +3846,7 @@ static const int16 kEprojInit_N00bTubeShards_Yvel[10] = { 320, -256, -416, -288,
 
 static void EprojInit_N00bTubeShards(uint16 j) {  // 0x86D6C9
   CalculatePlmBlockCoords(plm_id);
-  int v1 = eproj_init_param_1 >> 1;
+  int v1 = eproj_init_param_0 >> 1;
   int v2 = j >> 1;
   eproj_F[v2] = kEprojInit_N00bTubeShards_X[v1] + 16 * plm_x_block + 96;
   eproj_E[v2] = 0;
@@ -3861,7 +3861,7 @@ static const uint16 kEprojInit_N00bTubeReleasedAirBubbles_Y[6] = { 80, 72, 84, 3
 
 static void EprojInit_N00bTubeReleasedAirBubbles(uint16 j) {  // 0x86D774
   CalculatePlmBlockCoords(plm_id);
-  int v1 = eproj_init_param_1 >> 1;
+  int v1 = eproj_init_param_0 >> 1;
   int v2 = j >> 1;
   eproj_F[v2] = kEprojInit_N00bTubeReleasedAirBubbles_X[v1] + 16 * plm_x_block;
   eproj_E[v2] = 0;
@@ -3923,9 +3923,9 @@ void sub_86D8DF(uint16 k) {  // 0x86D8DF
 }
 
 void sub_86D992(uint16 v0) {  // 0x86D992
-  uint16 v1 = eproj_init_param_1;
+  uint16 v1 = eproj_init_param_0;
   int v2 = v0 >> 1;
-  eproj_E[v2] = eproj_init_param_1;
+  eproj_E[v2] = eproj_init_param_0;
   eproj_instr_list_ptr[v2] = kEprojInit_SpikeShootingPlantSpikes_InstrList[v1 >> 1];
   EnemyData *v3 = gEnemyData(cur_enemy_index);
   eproj_x_pos[v2] = v3->x_pos;
@@ -3934,7 +3934,7 @@ void sub_86D992(uint16 v0) {  // 0x86D992
   eproj_y_subpos[v2] = v3->y_subpos;
   eproj_y_vel[v2] = -512;
   eproj_x_vel[v2] = 512;
-  if (!sign16(eproj_init_param_1 - 12)) {
+  if (!sign16(eproj_init_param_0 - 12)) {
     eproj_y_vel[v2] = -384;
     eproj_x_vel[v2] = 384;
   }
@@ -4031,7 +4031,7 @@ static void EprojInit_DBF2(uint16 j) {  // 0x86DB18
   int v2 = j >> 1;
   eproj_instr_list_ptr[v2] = addr_word_86DB0C;
   eproj_E[v2] = FUNC16(EprojPreInstr_DBF2_MoveX1);
-  if (eproj_init_param_1)
+  if (eproj_init_param_0)
     eproj_E[v2] = FUNC16(EprojPreInstr_DBF2_MoveX2);
   EnemyData *v3 = gEnemyData(cur_enemy_index);
   eproj_x_pos[v2] = v3->x_pos;
@@ -4100,7 +4100,7 @@ static const int16 word_86DCB9[5] = { -64, -56, -48, -40, -32 };
 
 static void EprojInit_SporeSpawnStalk(uint16 j) {  // 0x86DCA3
   int v1 = j >> 1;
-  eproj_y_pos[v1] = enemy_data[0].y_pos + word_86DCB9[eproj_init_param_1];
+  eproj_y_pos[v1] = enemy_data[0].y_pos + word_86DCB9[eproj_init_param_0];
   eproj_x_pos[v1] = enemy_data[0].x_pos;
 }
 
@@ -4114,7 +4114,7 @@ static const int16 kEprojInit_SporeSpawners_X[4] = { 0x20, 0x60, 0xa0, 0xe0 };
 
 static void EprojInit_SporeSpawners(uint16 j) {  // 0x86DCD4
   int v1 = j >> 1;
-  eproj_x_pos[v1] = kEprojInit_SporeSpawners_X[eproj_init_param_1];
+  eproj_x_pos[v1] = kEprojInit_SporeSpawners_X[eproj_init_param_0];
   eproj_y_pos[v1] = 520;
 }
 
@@ -4149,7 +4149,7 @@ static void EprojInit_NamiFuneFireball(uint16 j) {  // 0x86DED6
   int v2 = j >> 1;
   eproj_instr_list_ptr[v2] = addr_word_86DE96;
   eproj_E[v2] = FUNC16(EprojInit_NamiFuneFireball_MoveX1);
-  if (eproj_init_param_1) {
+  if (eproj_init_param_0) {
     eproj_instr_list_ptr[v2] = addr_word_86DEA6;
     eproj_E[v2] = FUNC16(EprojInit_NamiFuneFireball_MoveX2);
   }
@@ -4210,7 +4210,7 @@ static void EprojInit_LavaThrownByLavaman(uint16 j) {  // 0x86E000
   int v2 = j >> 1;
   eproj_instr_list_ptr[v2] = addr_word_86DFD8;
   eproj_E[v2] = FUNC16(Eproj_LavaThrownByLavaman_MoveX1);
-  if (eproj_init_param_1) {
+  if (eproj_init_param_0) {
     eproj_instr_list_ptr[v2] = addr_word_86DFDE;
     eproj_E[v2] = FUNC16(Eproj_LavaThrownByLavaman_MoveX2);
   }
@@ -4262,15 +4262,15 @@ uint16 sub_86E0B0(uint16 k) {  // 0x86E0B0
 
 static void EprojInit_DustCloudOrExplosion(uint16 v0) {  // 0x86E468
   int v1 = v0 >> 1;
-  eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[eproj_init_param_1];
+  eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[eproj_init_param_0];
   eproj_x_pos[v1] = eproj_spawn_pt.x;
   eproj_y_pos[v1] = eproj_spawn_pt.y;
 }
 
 static void EprojInit_EyeDoorSmoke(uint16 j) {  // 0x86E4A6
   int v1 = j >> 1;
-  eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[(uint8)eproj_init_param_1];
-  int v2 = (8 * HIBYTE(eproj_init_param_1)) >> 1;
+  eproj_instr_list_ptr[v1] = kEprojInit_DustCloudOrExplosion_InstrLists[(uint8)eproj_init_param_0];
+  int v2 = (8 * HIBYTE(eproj_init_param_0)) >> 1;
   uint16 x = kEprojInit_EyeDoorSmoke_XYpos[v2 + 2] + (kEprojInit_EyeDoorSmoke_XYpos[v2] & random_number);
   uint16 y = kEprojInit_EyeDoorSmoke_XYpos[v2 + 3] + (kEprojInit_EyeDoorSmoke_XYpos[v2 + 1] & (random_number >> 8));
   CalculatePlmBlockCoords(plm_id);
@@ -4364,12 +4364,12 @@ uint16 CheckForEprojInDraygonRoom(uint16 k) {  // 0x86E722
 
 void MoveEprojWithAngleAndSpeed(uint16 k) {  // 0x86E73E
   int v1 = k >> 1;
-  if (((g_word_7E97DC[v1] + 64) & 0x80) != 0) {
+  if (((eproj_angles[v1] + 64) & 0x80) != 0) {
     AddToHiLo(&eproj_x_pos[v1], &eproj_x_subpos[v1], -IPAIR32(eproj_x_vel[v1], eproj_E[v1]));
   } else {
     AddToHiLo(&eproj_x_pos[v1], &eproj_x_subpos[v1], __PAIR32__(eproj_x_vel[v1], eproj_E[v1]));
   }
-  if (((g_word_7E97DC[v1] + 128) & 0x80) != 0) {
+  if (((eproj_angles[v1] + 128) & 0x80) != 0) {
     AddToHiLo(&eproj_y_pos[v1], &eproj_y_subpos[v1], -IPAIR32(eproj_y_vel[v1], eproj_F[v1]));
   } else {
     AddToHiLo(&eproj_y_pos[v1], &eproj_y_subpos[v1], __PAIR32__(eproj_y_vel[v1], eproj_F[v1]));
@@ -4381,8 +4381,8 @@ void Eproj_AngleToSamus(uint16 j, uint16 r18, uint16 r20) {  // 0x86E7AB
   eproj_x_pos[v1] = r18;
   eproj_y_pos[v1] = r20;
   uint16 v2 = (uint8)(64 - CalculateAngleFromXY(samus_x_pos - eproj_x_pos[v1], samus_y_pos - eproj_y_pos[v1]));
-  g_word_7E97DC[v1] = v2;
-  Point32 pt = ConvertAngleToXy(v2, eproj_init_param_1);
+  eproj_angles[v1] = v2;
+  Point32 pt = ConvertAngleToXy(v2, eproj_init_param_0);
   eproj_x_vel[v1] = pt.x >> 16;
   eproj_E[v1] = pt.x;
   eproj_y_vel[v1] = pt.y >> 16;
@@ -4494,7 +4494,7 @@ void Eproj_BotwonsBodyFunction_DyingFalling(uint16 v0) {  // 0x86EB1F
 }
 
 void QueueSmallExplosionSfx(void) {  // 0x86EB94
-  QueueSfx2_Max6(0x24);
+  QueueSfx2_Max6(kSfx2_SmallExplosion);
 }
 
 static void EprojInit_BotwoonsSpit(uint16 j) {  // 0x86EBC6
@@ -4503,8 +4503,8 @@ static void EprojInit_BotwoonsSpit(uint16 j) {  // 0x86EBC6
   eproj_x_pos[v2] = v1->x_pos;
   eproj_y_pos[v2] = v1->y_pos;
   eproj_instr_list_ptr[v2] = addr_word_86EBAE;
-  g_word_7E97DC[v2] = eproj_init_param_3;
-  Point32 pt = ConvertAngleToXy(eproj_init_param_3, eproj_init_param_1);
+  eproj_angles[v2] = eproj_init_param_3;
+  Point32 pt = ConvertAngleToXy(eproj_init_param_3, eproj_init_param_0);
   eproj_x_vel[v2] = pt.x >> 16;
   eproj_E[v2] = pt.x;
   eproj_y_vel[v2] = pt.y >> 16;
@@ -4558,17 +4558,17 @@ const uint8 *EprojInstr_ED17(uint16 k, const uint8 *epjp) {  // 0x86ED17
 }
 
 const uint8 *EprojInstr_QueueSfx2_9(uint16 k, const uint8 *epjp) {  // 0x86EE8B
-  QueueSfx2_Max1(9);
+  QueueSfx2_Max1(kSfx2_EnemyKilled);
   return epjp;
 }
 
 const uint8 *EprojInstr_QueueSfx2_24(uint16 k, const uint8 *epjp) {  // 0x86EE97
-  QueueSfx2_Max1(0x24);
+  QueueSfx2_Max1(kSfx2_SmallExplosion);
   return epjp;
 }
 
 const uint8 *EprojInstr_QueueSfx2_B(uint16 k, const uint8 *epjp) {  // 0x86EEA3
-  QueueSfx2_Max1(0xB);
+  QueueSfx2_Max1(kSfx2_EnemyKilledByContactDamage);
   return epjp;
 }
 
@@ -4634,7 +4634,7 @@ static void EprojInit_EnemyDeathExplosion(uint16 j) {  // 0x86EF89
     eproj_killed_enemy_index[v2] = cur_enemy_index | 0x8000;
   eproj_enemy_header_ptr[v2] = v1->enemy_ptr;
   eproj_gfx_idx[v2] = 0;
-  eproj_instr_list_ptr[v2] = kEprojInit_EnemyDeathExplosion_InstrLists[eproj_init_param_1];
+  eproj_instr_list_ptr[v2] = kEprojInit_EnemyDeathExplosion_InstrLists[eproj_init_param_0];
   eproj_instr_timers[v2] = 1;
 }
 
@@ -4694,27 +4694,27 @@ LABEL_7:;
 
 void Eproj_Pickup_SmallHealth(void) {  // 0x86F0BB
   Samus_RestoreHealth(5);
-  QueueSfx2_Max1(1);
+  QueueSfx2_Max1(kSfx2_CollectSmallHealthDrop_HighPriority);
 }
 
 void Eproj_Pickup_BigHealth(void) {  // 0x86F0CA
   Samus_RestoreHealth(0x14);
-  QueueSfx2_Max1(2);
+  QueueSfx2_Max1(kSfx2_CollectBigHealthDrop_HighPriority);
 }
 
 void Eproj_Pickup_PowerBombs(void) {  // 0x86F0D9
   Samus_RestorePowerBombs(1);
-  QueueSfx2_Max1(5);
+  QueueSfx2_Max1(kSfx2_CollectPowerBombDrop_HighPriority);
 }
 
 void Eproj_Pickup_Missiles(void) {  // 0x86F0E8
   Samus_RestoreMissiles(2);
-  QueueSfx2_Max1(3);
+  QueueSfx2_Max1(kSfx2_CollectMissileDrop_HighPriority);
 }
 
 void Eproj_Pickup_SuperMissiles(void) {  // 0x86F0F7
   Samus_RestoreSuperMissiles(1);
-  QueueSfx2_Max1(4);
+  QueueSfx2_Max1(kSfx2_CollectSuperMissileDrop_HighPriority);
 }
 
 static const uint8 byte_86F25E[6] = { 1, 2, 4, 6, 5, 3 };

@@ -177,7 +177,7 @@ const uint16 *BouncingGoofball_Instr_88C5(uint16 k, const uint16 *jp) {  // 0xA2
 
 const uint16 *BouncingGoofball_Instr_88C6(uint16 k, const uint16 *jp) {  // 0xA288C6
   Get_BouncingGoofball(cur_enemy_index)->bgl_var_02 = 0;
-  QueueSfx2_Max6(0xE);
+  QueueSfx2_Max6(kSfx2_SplashedOutOfWater);
   return jp;
 }
 
@@ -462,7 +462,7 @@ void MaridiaBeybladeTurtle_Func8(uint16 k) {  // 0xA28FEB
     SetHiLo(&E->mte_var_02, &E->mte_var_01, -IPAIR32(E->mte_var_02, E->mte_var_01));
     earthquake_type = 0;
     earthquake_timer = 16;
-    QueueSfx2_Max6(0x1B);
+    QueueSfx2_Max6(kSfx2_SpikeyPlatformStops_MaridiaBeybladeTurtleHitsWall);
   } else {
     MaridiaBeybladeTurtle_Func6(k);
     AddToHiLo(&E->mte_var_E, &E->mte_var_03, __PAIR32__(E->mte_var_02, E->mte_var_01));
@@ -769,7 +769,7 @@ const uint16 *MaridiaBeybladeTurtle_Instr_94C7(uint16 k, const uint16 *jp) {  //
 }
 
 const uint16 *MaridiaBeybladeTurtle_Instr_94D1(uint16 k, const uint16 *jp) {  // 0xA294D1
-  QueueSfx2_Max6(0x3A);
+  QueueSfx2_Max6(kSfx2_MaridiaBeybladeTurtleSpinning);
   return jp;
 }
 
@@ -1053,7 +1053,7 @@ void ThinHoppingBlobs_Func16(void) {  // 0xA29DCD
 }
 
 const uint16 *SpikeShootingPlant_Instr_9F2A(uint16 k, const uint16 *jp) {  // 0xA29F2A
-  QueueSfx2_Max6(0x34);
+  QueueSfx2_Max6(kSfx2_SpikeShootingPlantSpikes);
   return jp;
 }
 
@@ -1331,7 +1331,7 @@ void GunshipTop_Main(void) {  // 0xA2A759
   bool v2 = E1->gtp_var_D == 1;
   bool v3 = (--E1->gtp_var_D & 0x8000) != 0;
   if (v2 || v3) {
-    QueueSfx2_Max6(0x4D);
+    QueueSfx2_Max6(kSfx2_GunshipHover);
     E1->gtp_var_D = 70;
   }
   Enemy_GunshipTop *E0 = Get_GunshipTop(cur_enemy_index);
@@ -1422,7 +1422,7 @@ void GunshipTop_4(uint16 k) {  // 0xA2A8D0
     v7->base.instruction_timer = 1;
     v7->base.current_instruction = addr_kGunshipTop_Ilist_A5BE;
     v6->gtp_var_A = 144;
-    QueueSfx3_Max6(0x14);
+    QueueSfx3_Max6(kSfx3_GunshipElevatorActivated_HighPriority);
   }
 }
 
@@ -1443,7 +1443,7 @@ void GunshipTop_6(uint16 k) {  // 0xA2A950
     E2->base.instruction_timer = 1;
     E2->base.current_instruction = addr_kGunshipTop_Ilist_A5EE;
     Get_GunshipTop(0)->gtp_var_A = 144;
-    QueueSfx3_Max6(0x15);
+    QueueSfx3_Max6(kSfx3_GunshipElevatorDeactivated_HighPriority);
   }
 }
 
@@ -1485,7 +1485,7 @@ void GunshipTop_8(uint16 k) {  // 0xA2A9BD
       E2->base.instruction_timer = 1;
       E2->base.current_instruction = addr_kGunshipTop_Ilist_A5BE;
       Get_GunshipTop(0)->gtp_var_A = 144;
-      QueueSfx3_Max6(0x14);
+      QueueSfx3_Max6(kSfx3_GunshipElevatorActivated_HighPriority);
     }
   }
 }
@@ -1508,7 +1508,7 @@ void GunshipTop_10(uint16 k) {  // 0xA2AA5D
     E2->base.instruction_timer = 1;
     E2->base.current_instruction = addr_kGunshipTop_Ilist_A5EE;
     Get_GunshipTop(0)->gtp_var_A = 144;
-    QueueSfx3_Max6(0x15);
+    QueueSfx3_Max6(kSfx3_GunshipElevatorDeactivated_HighPriority);
   }
 }
 
@@ -1562,7 +1562,7 @@ void GunshipTop_13(uint16 k) {  // 0xA2AB1F
   E->base.instruction_timer = 1;
   E->base.current_instruction = addr_kGunshipTop_Ilist_A5BE;
   Get_GunshipTop(0)->gtp_var_A = 144;
-  QueueSfx3_Max6(0x14);
+  QueueSfx3_Max6(kSfx3_GunshipElevatorActivated_HighPriority);
 }
 
 void GunshipTop_14(uint16 k) {  // 0xA2AB60
@@ -1583,7 +1583,7 @@ void GunshipTop_15(uint16 k) {  // 0xA2AB6E
     E2->base.instruction_timer = 1;
     E2->base.current_instruction = addr_kGunshipTop_Ilist_A5EE;
     Get_GunshipTop(0)->gtp_var_A = 144;
-    QueueSfx3_Max6(0x15);
+    QueueSfx3_Max6(kSfx3_GunshipElevatorDeactivated_HighPriority);
   }
 }
 
@@ -1875,7 +1875,7 @@ void LavaquakeRocks_1(void) {  // 0xA2B596
 }
 
 void LavaquakeRocks_2(void) {  // 0xA2B5B2
-  eproj_unk1995 = kLavaquakeRocks_Tab2[(NextRandom() & 0x1E) >> 1];
+  eproj_init_param_1 = kLavaquakeRocks_Tab2[(NextRandom() & 0x1E) >> 1];
   int v1 = (NextRandom() & 0x1E) >> 1;
   SpawnEprojWithGfx(kLavaquakeRocks_Tab1[v1], cur_enemy_index, addr_stru_86BD5A);
   Enemy_LavaquakeRocks *E = Get_LavaquakeRocks(cur_enemy_index);
@@ -2248,7 +2248,7 @@ void Rio_1(uint16 k) {  // 0xA2BBED
     Rio_6(addr_kRio_Ilist_BB7F);
     E->rio_var_B = FUNC16(Rio_3);
     if (!CheckIfEnemyIsOnScreen())
-      QueueSfx2_Max6(0x65);
+      QueueSfx2_Max6(kSfx2_RioCry);
   }
 }
 
@@ -2373,7 +2373,7 @@ void NorfairLavajumpingEnemy_Func_2(uint16 k) {  // 0xA2BF1A
   E->nley_var_C = kNorfairLavajumpingEnemy_Tab0[(uint16)(HIBYTE(random_number) & 6) >> 1];
   E->nley_var_F = FUNC16(NorfairLavajumpingEnemy_Func_3);
   E->base.properties |= kEnemyProps_ProcessedOffscreen;
-  QueueSfx2_Max6(0xD);
+  QueueSfx2_Max6(kSfx2_SplashedIntoWater);
 }
 
 void NorfairLavajumpingEnemy_Func_3(uint16 k) {  // 0xA2BF3E
@@ -2553,7 +2553,7 @@ void NorfairRio_Func_3(uint16 k) {  // 0xA2C33F
     E->nro_var_01 = 0;
     NorfairRio_Func_7(addr_kNorfairRio_Ilist_C12F);
     E->nro_var_F = FUNC16(NorfairRio_Func_4);
-    QueueSfx2_Max6(0x65);
+    QueueSfx2_Max6(kSfx2_RioCry);
   }
 }
 
@@ -2687,7 +2687,7 @@ void LowerNorfairRio_Func_4(uint16 k) {  // 0xA2C7D6
     E->lnro_var_C = -1;
     LowerNorfairRio_Func_7(addr_kLowerNorfairRio_Ilist_C662);
     E->lnro_var_F = FUNC16(LowerNorfairRio_Func_5);
-    QueueSfx2_Max6(0x64);
+    QueueSfx2_Max6(kSfx2_LowerNorfairRioCry);
   }
 }
 
@@ -2727,7 +2727,7 @@ void LowerNorfairRio_Func_7(uint16 a) {  // 0xA2C8A3
 }
 
 const uint16 *MaridiaLargeSnail_Instr_CB6B(uint16 k, const uint16 *jp) {  // 0xA2CB6B
-  QueueSfx2_Max6(0xE);
+  QueueSfx2_Max6(kSfx2_SplashedOutOfWater);
   return jp;
 }
 
@@ -2952,7 +2952,7 @@ void MaridiaLargeSnail_Func_8(uint16 k) {  // 0xA2CFA9
 // 7DD25: mask 0xFF00 is shortened because ax.2 <= 0x7FFF
 
 void MaridiaLargeSnail_Func_9(void) {  // 0xA2CFD7
-  QueueSfx2_Max6(0x63);
+  QueueSfx2_Max6(kSfx2_MotherBrainsDeathBeam);
 }
 
 void MaridiaLargeSnail_Func_10(uint16 k) {  // 0xA2CFDF
@@ -2994,7 +2994,7 @@ void MaridiaLargeSnail_Touch() {  // 0xA2D38C
 
 void MaridiaLargeSnail_Shot(void) {  // 0xA2D3B4
   NormalEnemyShotAi();
-  QueueSfx2_Max6(0x57);
+  QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
 }
 
 static uint16 HirisingSlowfalling_Func_1(uint16 k) {  // 0xA2DFCE
@@ -3341,7 +3341,7 @@ void LavaSeahorse_Func_3(uint16 k) {  // 0xA2E6F1
     E->lse_var_02 = 0;
     E->lse_var_01 = -1;
     SpawnEprojWithGfx(0xFFFF, k, addr_kEproj_LavaSeahorseFireball);
-    QueueSfx2_Max6(0x61);
+    QueueSfx2_Max6(kSfx2_LavaSeahorse_LavamanSpit_FireGeyser);
     if (E->lse_var_D-- == 1) {
       E->lse_var_00 -= 4;
       E->lse_var_D = 96;
@@ -3768,7 +3768,7 @@ void RisingFallingPlatform_Func_7(uint16 k) {  // 0xA2EF44
 
 void RisingFallingPlatform_Func_8(void) {  // 0xA2EF5A
   if (!CheckIfEnemyIsOnScreen())
-    QueueSfx3_Max6(0xE);
+    QueueSfx3_Max6(kSfx3_GateOpeningClosing_HighPriority);
 }
 
 void RisingFallingPlatform_Func_9(void) {  // 0xA2EF68

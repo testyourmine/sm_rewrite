@@ -241,27 +241,27 @@ void LoadStdBG3andSpriteTilesClearTilemaps(void) {  // 0x8282E2
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x40);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_8282F8 = { 1, 1, 0x18, LONGPTR(0x9ab200), 0x2000 };
-  SetupDmaTransfer(&unk_8282F8);
+  static const StartDmaCopy kDmaCopy_GameStart_StandardBg3Tiles_ClearBg2 = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ab200), .das = 0x2000 };
+  SetupDmaTransfer(&kDmaCopy_GameStart_StandardBg3Tiles_ClearBg2);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x60);
   WriteReg(VMAIN, 0x80);
   // Bug fix: Asm code does DMA from RAM here.
-  static const StartDmaCopy unk_828318 = { 1, 1, 0x18, LONGPTR(0x9ad200), 0x2e00 };
-  SetupDmaTransfer(&unk_828318);
+  static const StartDmaCopy kDmaCopy_StandardSpriteTiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ad200), .das = 0x2e00 };
+  SetupDmaTransfer(&kDmaCopy_StandardSpriteTiles);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x50);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828338 = { 1, 1, 0x18, LONGPTR(0x7e4000), 0x1000 };
-  SetupDmaTransfer(&unk_828338);
+  static const StartDmaCopy kDmaCopy_ClearBg1Tilemap = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e4000), .das = 0x1000 };
+  SetupDmaTransfer(&kDmaCopy_ClearBg1Tilemap);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x58);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828358 = { 1, 1, 0x18, LONGPTR(0x7e4000), 0x0800 };
-  SetupDmaTransfer(&unk_828358);
+  static const StartDmaCopy kDmaCopy_ClearBg3Tilemap = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e4000), .das = 0x0800 };
+  SetupDmaTransfer(&kDmaCopy_ClearBg3Tilemap);
   WriteReg(MDMAEN, 2);
 }
 
@@ -305,9 +305,9 @@ CoroutineRet GameState_33_BlackoutFromCeres(void) {  // 0x828388
     ceres_status = 0;
     timer_status = 0;
     QueueMusic_Delayed8(0);
-    QueueSfx1_Max15(2);
-    QueueSfx2_Max15(0x71);
-    QueueSfx3_Max15(1);
+    QueueSfx1_Max15(kSfx1_Silence);
+    QueueSfx2_Max15(kSfx2_Silence);
+    QueueSfx3_Max15(kSfx3_Silence);
   }
   return kCoroutineNone;
 }
@@ -342,9 +342,9 @@ CoroutineRet GameState_36_WhitingOutFromTimeUp(void) {  // 0x828431
     screen_fade_counter = 0;
     ceres_status = 0;
     timer_status = 0;
-    QueueSfx1_Max15(2);
-    QueueSfx2_Max15(0x71);
-    QueueSfx3_Max15(1);
+    QueueSfx1_Max15(kSfx1_Silence);
+    QueueSfx2_Max15(kSfx2_Silence);
+    QueueSfx3_Max15(kSfx3_Silence);
     if (CheckEventHappened(0xE)) {
       game_options_screen_index = 0;
       menu_index = 0;
@@ -380,9 +380,9 @@ CoroutineRet GameState_38_SamusEscapesFromZebes(void) {  // 0x8284BD
     cinematic_function = FUNC16(CinematicFunctionEscapeFromCebes);
     timer_status = 0;
     QueueMusic_Delayed8(0);
-    QueueSfx1_Max15(2);
-    QueueSfx2_Max15(0x71);
-    QueueSfx3_Max15(1);
+    QueueSfx1_Max15(kSfx1_Silence);
+    QueueSfx2_Max15(kSfx2_Silence);
+    QueueSfx3_Max15(kSfx3_Silence);
   }
   return kCoroutineNone;
 }
@@ -854,7 +854,7 @@ void CallOptionsEntryFunc(uint32 ea, uint16 j) {
 }
 
 uint8 CreateOptionsMenuObject_(uint16 a, uint16 j) {
-  options_menu_init_param = a;
+  optionsmenu_init_param = a;
   uint16 v3 = 14;
   while (optionsmenu_instr_ptr[v3 >> 1]) {
     v3 -= 2;
@@ -863,13 +863,13 @@ uint8 CreateOptionsMenuObject_(uint16 a, uint16 j) {
   }
   const uint8 *v5 = RomPtr_82(j);
   int v6 = v3 >> 1;
-  optionsmenu_arr1[v6] = GET_WORD(v5 + 2);
+  optionsmenu_preinstr_func[v6] = GET_WORD(v5 + 2);
   optionsmenu_instr_ptr[v6] = GET_WORD(v5 + 4);
   optionsmenu_instr_timer[v6] = 1;
   optionsmenu_cur_data[v6] = 0;
-  optionsmenu_arr5[v6] = 0;
-  optionsmenu_arr6[v6] = 0;
-  optionsmenu_arr7[v6] = 0;
+  optionsmenu_goto_timer[v6] = 0;
+  UNUSED_optionsmenu_var0[v6] = 0;
+  UNUSED_optionsmenu_var1[v6] = 0;
   CallOptionsEntryFunc(GET_WORD(v5) | 0x820000, v3);
   return 0;
 }
@@ -914,7 +914,7 @@ uint16 CallOptionsInstr(uint32 ea, uint16 k, uint16 j) {
 }
 
 void OptionsMenuFunc2_ProcessObject(uint16 k) {  // 0x828C2B
-  CallOptionsPreInstr(optionsmenu_arr1[k >> 1] | 0x820000, k);
+  CallOptionsPreInstr(optionsmenu_preinstr_func[k >> 1] | 0x820000, k);
   uint16 v1 = optionsmenu_index;
   int v2 = optionsmenu_index >> 1;
   if (optionsmenu_instr_timer[v2]-- == 1) {
@@ -948,12 +948,12 @@ uint16 OptionsInstr_Sleep(uint16 k, uint16 j) {  // 0x828C64
 }
 
 uint16 OptionsInstr_SetPreInstr(uint16 k, uint16 j) {  // 0x828C6E
-  optionsmenu_arr1[k >> 1] = *(uint16 *)RomPtr_82(j);
+  optionsmenu_preinstr_func[k >> 1] = *(uint16 *)RomPtr_82(j);
   return j + 2;
 }
 
 uint16 OptionsInstr_ClearPreInstr(uint16 k, uint16 j) {  // 0x828C79
-  optionsmenu_arr1[k >> 1] = FUNC16(locret_828C81);
+  optionsmenu_preinstr_func[k >> 1] = FUNC16(locret_828C81);
   return j;
 }
 
@@ -963,14 +963,14 @@ uint16 OptionsInstr_Goto(uint16 k, uint16 j) {  // 0x828C82
 
 uint16 OptionsInstr_DecrementTimerAndGoto(uint16 k, uint16 j) {  // 0x828C89
   int v2 = k >> 1;
-  if (optionsmenu_arr5[v2]-- == 1)
+  if (optionsmenu_goto_timer[v2]-- == 1)
     return j + 2;
   else
     return OptionsInstr_Goto(k, j);
 }
 
 uint16 OptionsInstr_SetTimer(uint16 k, uint16 j) {  // 0x828C93
-  optionsmenu_arr5[k >> 1] = *(uint16 *)RomPtr_82(j);
+  optionsmenu_goto_timer[k >> 1] = *(uint16 *)RomPtr_82(j);
   return j + 2;
 }
 
@@ -979,7 +979,7 @@ void DrawOptionsMenuSpritemaps(void) {  // 0x828CA1
     int v1 = i >> 1;
     if (optionsmenu_cur_data[v1]) {
       uint16 v2 = optionsmenu_cur_data[v1];
-      DrawSpritemap(0x82, v2, optionsmenu_arr8[v1], optionsmenu_arr9[v1], optionsmenu_arr10[v1]);
+      DrawSpritemap(0x82, v2, optionsmenu_x_pos[v1], optionsmenu_y_pos[v1], optionsmenu_palette_index[v1]);
     }
   }
 }
@@ -1060,8 +1060,8 @@ void BackupBG2TilemapForPauseMenu(void) {  // 0x828D51
 void RestoreBG2TilemapFromPauseScreen(void) {  // 0x828D96
   WriteRegWord(VMADDL, (reg_BG2SC & 0xFC) << 8);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828DAE = { 1, 1, 0x18, LONGPTR(0x7edf5c), 0x1000 };
-  SetupDmaTransfer(&unk_828DAE);
+  static const StartDmaCopy kDmaCopy_RestoreBg2Backup = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7edf5c), .das = 0x1000 };
+  SetupDmaTransfer(&kDmaCopy_RestoreBg2Backup);
   WriteReg(MDMAEN, 2);
 }
 
@@ -1109,20 +1109,20 @@ void LoadPauseMenuTilesAndClearBG2(void) {  // 0x828E75
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828E8B = { 1, 1, 0x18, LONGPTR(0xb68000), 0x4000 };
-  SetupDmaTransfer(&unk_828E8B);
+  static const StartDmaCopy kDmaCopy_PauseMenu_Bg1_Bg2_Tiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0xb68000), .das = 0x4000 };
+  SetupDmaTransfer(&kDmaCopy_PauseMenu_Bg1_Bg2_Tiles);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x20);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828EAB = { 1, 1, 0x18, LONGPTR(0xb6c000), 0x2000 };
-  SetupDmaTransfer(&unk_828EAB);
+  static const StartDmaCopy kDmaCopy_PauseMenu_SpriteTiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0xb6c000), .das = 0x2000 };
+  SetupDmaTransfer(&kDmaCopy_PauseMenu_SpriteTiles);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x40);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828ECB = { 1, 1, 0x18, LONGPTR(0x9ab200), 0x2000 };
-  SetupDmaTransfer(&unk_828ECB);
+  static const StartDmaCopy kDmaCopy_StandardBg3Tiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ab200), .das = 0x2000 };
+  SetupDmaTransfer(&kDmaCopy_StandardBg3Tiles);
   WriteReg(MDMAEN, 2);
 }
 
@@ -1130,20 +1130,20 @@ void LoadPauseScreenBaseTilemaps(void) {  // 0x828EDA
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x38);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_828EF0 = { 1, 1, 0x18, LONGPTR(0xb6e000), 0x0800 };
-  SetupDmaTransfer(&unk_828EF0);
+  static const StartDmaCopy kDmaCopy_PauseMenuMap_Bg2Tilemap = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0xb6e000), .das = 0x0800 };
+  SetupDmaTransfer(&kDmaCopy_PauseMenuMap_Bg2Tilemap);
   WriteReg(MDMAEN, 2);
   WriteReg(WMADDL, 0);
   WriteReg(WMADDM, 0x34);
   WriteReg(WMADDH, 0x7E);
-  static const StartDmaCopy unk_828F10 = { 1, 0, 0x80, LONGPTR(0xb6e400), 0x0400 };
-  SetupDmaTransfer(&unk_828F10);
+  static const StartDmaCopy kDmaCopy_MapBg2Tilemap_LowerHalf = { .chan = 1, .dmap = 0, .bbad = 0x80, .a1 = LONGPTR(0xb6e400), .das = 0x0400 };
+  SetupDmaTransfer(&kDmaCopy_MapBg2Tilemap_LowerHalf);
   WriteReg(MDMAEN, 2);
   WriteReg(WMADDL, 0);
   WriteReg(WMADDM, 0x38);
   WriteReg(WMADDH, 0x7E);
-  static const StartDmaCopy unk_828F30 = { 1, 0, 0x80, LONGPTR(0xb6e800), 0x0800 };
-  SetupDmaTransfer(&unk_828F30);
+  static const StartDmaCopy kDmaCopy_EquipmentScreenTilemap = { .chan = 1, .dmap = 0, .bbad = 0x80, .a1 = LONGPTR(0xb6e800), .das = 0x0800 };
+  SetupDmaTransfer(&kDmaCopy_EquipmentScreenTilemap);
   WriteReg(MDMAEN, 2);
   uint16 v0 = addr_kDummySamusWireframeTilemap;
   uint16 v1 = 236;
@@ -1406,7 +1406,7 @@ void MapScrolling_1_Left(void) {
 void MapScrolling_Common(void) {  // 0x829299
   ++map_scrolling_speed_index;
   if ((++map_scrolling_speed_index & 0xF) == 0) {
-    QueueSfx1_Max6(0x36);
+    QueueSfx1_Max6(kSfx1_ScrollingMap);
     map_scrolling_direction = 0;
     map_scrolling_speed_index = 0;
     if (map_scrolling_gear_switch_timer)
@@ -1489,8 +1489,8 @@ void LoadPauseMenuMapTilemapAndAreaLabel(void) {  // 0x8293C3
   WriteReg(VMADDH, 0x30);
   WriteReg(VMAIN, 0x80);
   LoadPauseMenuMapTilemap();
-  static const StartDmaCopy unk_8293E9 = { 1, 1, 0x18, LONGPTR(0x7e4000), 0x1000 };
-  SetupDmaTransfer(&unk_8293E9);
+  static const StartDmaCopy kDmaCopy_Bg1Tilemap = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e4000), .das = 0x1000 };
+  SetupDmaTransfer(&kDmaCopy_Bg1Tilemap);
   WriteReg(MDMAEN, 2);
   WriteReg(VMADDL, 0xAA);
   WriteReg(VMADDH, 0x38);
@@ -1864,8 +1864,8 @@ void ClearSamusBeamTiles(void) {  // 0x82A2BE
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x60);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_82A2D4 = { 1, 1, 0x18, LONGPTR(0x9ad200), 0x1000 };
-  SetupDmaTransfer(&unk_82A2D4);
+  static const StartDmaCopy kDmaCopy_ReloadStandardSpriteTiles = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ad200), .das = 0x1000 };
+  SetupDmaTransfer(&kDmaCopy_ReloadStandardSpriteTiles);
   WriteReg(MDMAEN, 2);
 }
 
@@ -2015,7 +2015,7 @@ void HandlePauseScreenLrInput(void) {  // 0x82A50C
     pausemenu_button_label_mode = 2;
     SetPauseScreenButtonLabelPalettes();
 LABEL_7:
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
   }
 }
 static const uint16 kPauseLrButtonPressedHighlight_Spritemap[2] = { 0x28, 0x29 };
@@ -2041,7 +2041,7 @@ void DrawLrHighlight(void) {  // 0x82A59A
 
 void HandlePauseScreenStart(void) {  // 0x82A5B7
   if ((newly_held_down_timed_held_input & kButton_Start) != 0) {
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     screen_fade_delay = 1;
     screen_fade_counter = 1;
     uint16 v0 = pausemenu_button_label_mode;
@@ -2268,7 +2268,7 @@ void HandlePauseScreenPaletteAnimation(void) {  // 0x82A92B
         v1 = kPauseLrHighlightAnimData[3 * i];
         if (v1 != 0xFF)
           break;
-        QueueSfx3_Max6(0x2A);
+        QueueSfx3_Max6(kSfx3_PauseMenuAmbientBeep);
       }
       LOBYTE(pausemenu_palette_animation_timer) = v1;
       LOBYTE(v2) = 0;
@@ -2343,8 +2343,8 @@ void EquipmentScreenTransferBG1Tilemap(void) {  // 0x82AC22
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x30);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_82AC3B = { 1, 1, 0x18, LONGPTR(0x7e3800), 0x0800 };
-  SetupDmaTransfer(&unk_82AC3B);
+  static const StartDmaCopy kDmaCopy_TransferBg1Tilemap = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x7e3800), .das = 0x0800 };
+  SetupDmaTransfer(&kDmaCopy_TransferBg1Tilemap);
   WriteReg(MDMAEN, 2);
   reg_BG1VOFS = 0;
 }
@@ -2377,7 +2377,7 @@ void EquipmentScreenHandleDpad(void) {  // 0x82AC8B
       EquipmentScreenMoveToHighJumpOrLowerInBoots(0, r18);
   } else if ((joypad1_newkeys & kButton_Up) != 0) {
     if ((pausemenu_equipment_category_item & 0xFF00) != 0) {
-      QueueSfx1_Max6(0x37);
+      QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
       pausemenu_equipment_category_item -= 256;
     }
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
@@ -2386,7 +2386,7 @@ void EquipmentScreenHandleDpad(void) {  // 0x82AC8B
         || (pausemenu_equipment_category_item += 256, !samus_reserve_health)) {
       EquipmentScreenMoveToBeams(0, r18);
     } else {
-      QueueSfx1_Max6(0x37);
+      QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     }
   }
 }
@@ -2502,7 +2502,7 @@ void EquipmentScreenCategory_Tanks_0(void) {
   int16 v2;
 
   if ((joypad1_newkeys & kButton_A) != 0 && samus_max_reserve_health) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if (reserve_health_mode == 1) {
       reserve_health_mode = 2;
       EquipmentScreenHudReserveAutoTilemap_Off();
@@ -2549,6 +2549,7 @@ void EquipmentScreenHudReserveAutoTilemap_Off(void) {  // 0x82AF33
   hud_tilemap[72] = 11279;
   hud_tilemap[73] = 11279;
 }
+
 static const uint16 kReserveTankEnergyTransferPerFrame = 1;
 void EquipmentScreenCategory_Tanks_1(void) {  // 0x82AF4F
   if (!pausemenu_reserve_tank_delay_ctr) {
@@ -2557,7 +2558,7 @@ void EquipmentScreenCategory_Tanks_1(void) {  // 0x82AF4F
     pausemenu_reserve_tank_delay_ctr = (samus_reserve_health + 7) & 0xFFF8;
   }
   if ((--pausemenu_reserve_tank_delay_ctr & 7) == 7)
-    QueueSfx3_Max6(0x2D);
+    QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
   samus_health += kReserveTankEnergyTransferPerFrame;
   if ((int16)(samus_health - samus_max_health) < 0) {
     samus_reserve_health -= kReserveTankEnergyTransferPerFrame;
@@ -2800,7 +2801,7 @@ uint16 EquipmentScreenMoveToReserveTanks(void) {  // 0x82B43F
   uint16 result = samus_max_reserve_health;
   if (samus_max_reserve_health) {
     pausemenu_equipment_category_item = 0;
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     return 1;
   }
   return result;
@@ -2821,7 +2822,7 @@ LABEL_4:
     LOBYTE(v1) = (uint16)(v0 >> 1) >> 8;
     HIBYTE(v1) = v0 >> 1;
     pausemenu_equipment_category_item = v1 & 0xFF00 | 1;
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   }
 }
 
@@ -2833,7 +2834,7 @@ uint16 EquipmentScreenMoveToBottomOfBeams(uint16 k) {  // 0x82B489
     if ((k & 0x8000) != 0)
       return -1;
   }
-  QueueSfx1_Max6(0x37);
+  QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   uint16 result = (k >> 1) << 8 | 1;
   pausemenu_equipment_category_item = result;
   return result;
@@ -2847,7 +2848,7 @@ uint16 EquipmentScreenMoveLowerOnSuitsMisc(uint16 v0) {  // 0x82B4B7
     if ((int16)(v0 - 10) >= 0)
       return -1;
   }
-  QueueSfx1_Max6(0x37);
+  QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   LOBYTE(v1) = (uint16)(v0 >> 1) >> 8;
   HIBYTE(v1) = v0 >> 1;
   pausemenu_equipment_category_item = v1 & 0xFF00 | 2;
@@ -2862,7 +2863,7 @@ void EquipmentScreenMoveToScrewOrHigherOnSuits(uint16 v0, uint16 r18) {  // 0x82
       return;
     }
   }
-  QueueSfx1_Max6(0x37);
+  QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   pausemenu_equipment_category_item = (v0 >> 1) << 8 | 2;
 }
 
@@ -2874,7 +2875,7 @@ void EquipmentScreenMoveToHighJumpOrLowerInBoots(uint16 v0, uint16 r18) {  // 0x
       return;
     }
   }
-  QueueSfx1_Max6(0x37);
+  QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   pausemenu_equipment_category_item = (v0 >> 1) << 8 | 3;
 }
 
@@ -2884,7 +2885,7 @@ uint16 EquipmentScreenCategory_Boots_MoveUpInBoots(uint16 k) {  // 0x82B53F
     if ((k & 0x8000) != 0)
       return -1;
   }
-  QueueSfx1_Max6(0x37);
+  QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   uint16 result = (k >> 1) << 8 | 3;
   pausemenu_equipment_category_item = result;
   return result;
@@ -2892,7 +2893,7 @@ uint16 EquipmentScreenCategory_Boots_MoveUpInBoots(uint16 k) {  // 0x82B53F
 
 void EquipmentScreenCategory_ButtonResponse(uint16 r24) {  // 0x82B568
   if ((joypad1_newkeys & kButton_A) != 0) {
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     int item = HIBYTE(pausemenu_equipment_category_item);
     int category = (uint8)pausemenu_equipment_category_item;
     uint8 *target = g_ram + *(uint16 *)RomPtr_82(kEquipmentPtrsToRamTilemapOffsets[category] + item * 2);
@@ -3230,31 +3231,31 @@ void FinishProcessingGameOverBabyMetroidAsm(void) {  // 0x82BBF0
 }
 
 void BabyMetroidCry1PlaySfx(void) {  // 0x82BC0C
-  QueueSfx3_Max6(0x23);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCry1);
   FinishProcessingGameOverBabyMetroidAsm();
 }
 
 void BabyMetroidCry2PlaySfx(void) {  // 0x82BC15
-  QueueSfx3_Max6(0x26);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCry2);
   FinishProcessingGameOverBabyMetroidAsm();
 }
 
 void BabyMetroidCry3PlaySfx(void) {  // 0x82BC1E
-  QueueSfx3_Max6(0x27);
+  QueueSfx3_Max6(kSfx3_BabyMetroidCry3);
   FinishProcessingGameOverBabyMetroidAsm();
 }
 
 void CancelSoundEffects(void) {  // 0x82BE17
-  QueueSfx1_Max6(2);
-  QueueSfx2_Max6(0x71);
-  QueueSfx3_Max6(1);
+  QueueSfx1_Max6(kSfx1_Silence);
+  QueueSfx2_Max6(kSfx2_Silence);
+  QueueSfx3_Max6(kSfx3_Silence);
 }
 
 void QueueSamusMovementSfx(void) {  // 0x82BE2F
   if ((speed_boost_counter & 0xFF00) == 1024)
-    QueueSfx3_Max6(0x2B);
+    QueueSfx3_Max6(kSfx3_ResumeSpeedBooster_Shinespark);
   if (!sign16(flare_counter - 16))
-    QueueSfx1_Max6(0x41);
+    QueueSfx1_Max6(kSfx1_ResumeChargingBeam);
   CallSomeSamusCode(0x14);
 }
 
@@ -3302,12 +3303,12 @@ uint8 AdvanceGradualColorChangeOfPalette(uint16 k, uint16 j) {  // 0x82D9B8
 uint8 AdvancePaletteFadeForAllPalettes(void) {  // 0x82DA02
   if ((uint16)(palette_change_denom + 1) >= palette_change_num) {
     for (int i = 0; i < 0x200; i += 2) {
-      g_word_7EC404 = i;
+      palette_change_color_index = i;
       int v2 = i >> 1;
       if (target_palettes[v2] != palette_buffer[v2]) {
         uint16 v3 = CalculateNthTransitionColorFromXtoY(palette_change_num, palette_buffer[v2], target_palettes[v2]);
-        i = g_word_7EC404;
-        palette_buffer[g_word_7EC404 >> 1] = v3;
+        i = palette_change_color_index;
+        palette_buffer[palette_change_color_index >> 1] = v3;
       }
     }
     ++palette_change_num;
@@ -3342,10 +3343,10 @@ uint8 AdvancePaletteFadeForAllPalettesInA(uint16 a) {  // 0x82DAF7
 
 uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a) {  // 0x82DB0C
   if ((uint16)(palette_change_denom + 1) >= palette_change_num) {
-    g_word_7EC404 = 0;
+    palette_change_color_index = 0;
     while (a) {
       if (!(a & 1))
-        g_word_7EC404 += 32;
+        palette_change_color_index += 32;
       else
         AdvancePaletteFadeForPaletteInX_0x20();
       a >>= 1;
@@ -3360,16 +3361,16 @@ uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a) {  // 0x82DB0C
 
 
 void AdvancePaletteFadeForPaletteInX_0x20(void) {  // 0x82DB41
-  uint16 v0 = g_word_7EC404;
+  uint16 v0 = palette_change_color_index;
   do {
     int v1 = v0 >> 1;
     if (target_palettes[v1] != palette_buffer[v1]) {
       uint16 v2 = CalculateNthTransitionColorFromXtoY(palette_change_num, palette_buffer[v1], target_palettes[v1]);
-      v0 = g_word_7EC404;
-      palette_buffer[g_word_7EC404 >> 1] = v2;
+      v0 = palette_change_color_index;
+      palette_buffer[palette_change_color_index >> 1] = v2;
     }
     v0 += 2;
-    g_word_7EC404 = v0;
+    palette_change_color_index = v0;
   } while ((v0 & 0x1F) != 0);
 }
 
@@ -3420,7 +3421,7 @@ CoroutineRet GameState_27_ReserveTanksAuto(void) {  // 0x82DC10
 uint8 RefillHealthFromReserveTanks(void) {  // 0x82DC31
   if (samus_reserve_health) {
     if ((nmi_frame_counter_word & 7) == 0)
-      QueueSfx3_Max3(0x2D);
+      QueueSfx3_Max3(kSfx3_GainingLosingIncrementalHealth);
     if ((int16)(++samus_health - samus_max_health) >= 0) {
       samus_health = samus_max_health;
 LABEL_9:
@@ -3449,9 +3450,9 @@ CoroutineRet GameState_19_SamusNoHealth(void) {  // 0x82DC80
   for (int m = 30; (m & 0x8000) == 0; m -= 2)
     target_palettes[(m >> 1) + 192] = palette_buffer[(m >> 1) + 192];
   game_options_screen_index = 3;
-  g_word_7E0DE4 = 0;
-  g_word_7E0DE6 = 0;
-  g_word_7E0DE8 = 0;
+  samus_death_anim_timer = 0;
+  samus_death_anim_counter = 0;
+  samus_death_anim_pre_flash_timer = 0;
   hud_item_index = 0;
   samus_auto_cancel_hud_item_index = 0;
   samus_invincibility_timer = 0;
@@ -3481,15 +3482,15 @@ CoroutineRet GameState_20_SamusNoHealth_BlackOut(void) {  // 0x82DCE0
     screen_fade_counter = 0;
     for (int i = 254; i >= 0; i -= 2)
       eproj_y_subpos[(i >> 1) + 15] = 0;
-    g_word_7E0DE8 = 16;
+    samus_death_anim_pre_flash_timer = 16;
     game_options_screen_index = 3;
-    g_word_7E0DE4 = 0;
-    g_word_7E0DE6 = 0;
+    samus_death_anim_timer = 0;
+    samus_death_anim_counter = 0;
     ++game_state;
     power_bomb_explosion_status = 0;
-    QueueSfx1_Max15(2);
-    QueueSfx2_Max15(0x71);
-    QueueSfx3_Max15(1);
+    QueueSfx1_Max15(kSfx1_Silence);
+    QueueSfx2_Max15(kSfx2_Silence);
+    QueueSfx3_Max15(kSfx3_Silence);
     QueueMusic_Delayed8(0);
     QueueMusic_Delayed8(0xFF39);
     QueueMusic_DelayedY(5, 0xE);
@@ -3508,8 +3509,8 @@ CoroutineRet GameState_21_SamusNoHealth(void) {  // 0x82DD71
 
 CoroutineRet GameState_22_SamusNoHealth_Dying(void) {  // 0x82DD87
   DrawSamusStartingDeathAnim_();
-  bool v0 = (--g_word_7E0DE8 & 0x8000) != 0;
-  if (!g_word_7E0DE8 || v0)
+  bool v0 = (--samus_death_anim_pre_flash_timer & 0x8000) != 0;
+  if (!samus_death_anim_pre_flash_timer || v0)
     ++game_state;
   return kCoroutineNone;
 }
@@ -3803,7 +3804,7 @@ CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
     }
   }
   ClearSoundsWhenGoingThroughDoor();
-  QueueSfx2_Max15(0x71);
+  QueueSfx2_Max15(kSfx2_Silence);
   debug_disable_sounds = -1;
   door_transition_function = FUNC16(DoorTransitionFunction_WaitForSoundsToFinish);
   ++game_state;
@@ -4443,8 +4444,8 @@ void GameOptionsMenu_1_LoadingOptionsScreen(void) {  // 0x82EC11
   WriteReg(VMADDL, 0);
   WriteReg(VMADDH, 0x58);
   WriteReg(VMAIN, 0x80);
-  static const StartDmaCopy unk_82EC3D = { 1, 1, 0x18, LONGPTR(0x8edc00), 0x0800 };
-  SetupDmaTransfer(&unk_82EC3D);
+  static const StartDmaCopy kDmaCopy_ZebesStarsTilemap = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x8edc00), .das = 0x0800 };
+  SetupDmaTransfer(&kDmaCopy_ZebesStarsTilemap);
   WriteReg(MDMAEN, 2);
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
@@ -4504,18 +4505,18 @@ static Func_V *const kGameOptionsMenuItemFuncs[5] = {  // 0x82ED42
 };
 void GameOptionsMenu_3_OptionsScreen(void) {
   if ((joypad1_newkeys & kButton_Up) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if ((--menu_option_index & 0x8000) != 0)
       menu_option_index = 4;
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if (++menu_option_index == 5)
       menu_option_index = 0;
   }
   if ((joypad1_newkeys & 0x8000) != 0) {
     game_options_screen_index = 11;
   } else if ((joypad1_newkeys & kButton_A) != 0 || (joypad1_newkeys & kButton_Start) != 0) {
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     kGameOptionsMenuItemFuncs[menu_option_index]();
   }
 }
@@ -4685,21 +4686,21 @@ static Func_V *const kGameOptionsMenuSpecialSettings[3] = {  // 0x82F024
 };
 void GameOptionsMenu_8_SpecialSettings(void) {
   if ((joypad1_newkeys & kButton_Up) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if ((--menu_option_index & 0x8000) != 0)
       menu_option_index = 2;
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     if (++menu_option_index == 3)
       menu_option_index = 0;
   }
   if ((joypad1_newkeys & 0x8000) == 0) {
     if ((joypad1_newkeys & (kButton_Start | kButton_Left | kButton_Right | kButton_A)) != 0) {
-      QueueSfx1_Max6(0x38);
+      QueueSfx1_Max6(kSfx1_MenuOptionSelected);
       kGameOptionsMenuSpecialSettings[menu_option_index]();
     }
   } else {
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     menu_option_index = 0;
     GameOptionsMenuItemFunc_4();
   }
@@ -4752,7 +4753,7 @@ static const uint16 word_82F204[16] = {  // 0x82F159
 void GameOptionsMenu_7_ControllerSettings(void) {
 
   if ((joypad1_newkeys & kButton_Up) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     uint16 v0 = --menu_option_index;
     if ((menu_option_index & 0x8000) == 0) {
       if (v0 != 6)
@@ -4765,7 +4766,7 @@ void GameOptionsMenu_7_ControllerSettings(void) {
     return;
   }
   if ((joypad1_newkeys & kButton_Down) != 0) {
-    QueueSfx1_Max6(0x37);
+    QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     uint16 v1 = menu_option_index + 1;
     menu_option_index = v1;
     if (v1 == 7) {
@@ -4778,7 +4779,7 @@ void GameOptionsMenu_7_ControllerSettings(void) {
       return;
     }
   } else if (joypad1_newkeys) {
-    QueueSfx1_Max6(0x38);
+    QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     static Func_V *const kOptionsMenuControllerFuncs[9] = {
       OptionsMenuControllerFunc_SetBinding,
       OptionsMenuControllerFunc_SetBinding,

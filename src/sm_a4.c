@@ -113,7 +113,7 @@ const uint16 *Crocomire_Func_7(uint16 k, const uint16 *jp) {  // 0xA4876C
     if (sign16(crocom_var_F - 18)) {
       E->crocom_var_F += 2;
       SpawnEprojWithGfx(crocom_var_F, cur_enemy_index, addr_kEproj_CrocomireProjectile);
-      QueueSfx3_Max6(0x1C);
+      QueueSfx3_Max6(kSfx3_CrocomireSpit);
     } else {
       jp = INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BBCA);
       E->crocom_var_C = 6;
@@ -223,7 +223,7 @@ const uint16 *Crocomire_Func_17(uint16 k, const uint16 *jp) {  // 0xA4889A
     E->crocom_var_D = 1;
     E->crocom_var_E = 10;
     E->crocom_var_C = 12;
-    QueueSfx2_Max6(0x54);
+    QueueSfx2_Max6(kSfx2_CrocomireRelated_SeeminglyUnused_HighPriority);
   } else {
     Get_Crocomire(cur_enemy_index)->crocom_var_C = 10;
     return INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BD8E);
@@ -342,7 +342,7 @@ const uint16 *Crocomire_Func_26(uint16 k, const uint16 *jp) {  // 0xA489F9
     uint16 crocom_var_B = E->crocom_var_B;
     if ((crocom_var_B & 0x4000) != 0) {
       --E->crocom_var_D;
-      QueueSfx2_Max6(0x3B);
+      QueueSfx2_Max6(kSfx2_DachoraShinespark);
       return INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BCD8);
     } else {
       E->crocom_var_B = crocom_var_B & 0xBFFF;
@@ -510,17 +510,17 @@ void Crocomire_Func_31(void) {  // 0xA48CCB
 }
 
 const uint16 *Crocomire_Instr_11(uint16 k, const uint16 *jp) {  // 0xA48CFB
-  QueueSfx2_Max6(0x74);
+  QueueSfx2_Max6(kSfx2_CrocomiresCry_HighPriority);
   return jp;
 }
 
 const uint16 *Crocomire_Instr_7(uint16 k, const uint16 *jp) {  // 0xA48D07
-  QueueSfx2_Max6(0x25);
+  QueueSfx2_Max6(kSfx2_BigExplosion);
   return jp;
 }
 
 const uint16 *Crocomire_Instr_19(uint16 k, const uint16 *jp) {  // 0xA48D13
-  QueueSfx2_Max6(0x75);
+  QueueSfx2_Max6(kSfx2_CrocomiresSkeletonCollapses_HighPriority);
   return jp;
 }
 
@@ -532,7 +532,7 @@ void Crocomire_Func_35(void) {  // 0xA48D1F
     E->crocom_var_20 = v2;
     if (!v2) {
       E->crocom_var_20 = 32;
-      QueueSfx3_Max6(0x22);
+      QueueSfx3_Max6(kSfx3_CrocomireAcidDamage);
     }
   }
 }
@@ -612,7 +612,7 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
       Get_Crocomire(0xC0)->crocom_var_01 = 0;
       Get_Crocomire(0x100)->crocom_var_01 = 0;
       Get_Crocomire(0x140)->crocom_var_01 = 0;
-      QueueSfx2_Max6(0x3B);
+      QueueSfx2_Max6(kSfx2_DachoraShinespark);
       *(uint16 *)((uint8 *)&g_word_7E9015 + 1) = 0;
       SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x4e, 0x03, 0xb757 });
       EK->base.current_instruction = addr_kCrocomire_Ilist_BFB0;
@@ -660,7 +660,7 @@ void Crocomire_8EE5(void) {  // 0xA48EE5
 const uint16 *Crocomire_Instr_2(uint16 k, const uint16 *jp) {  // 0xA48FC7
   earthquake_type = 4;
   earthquake_timer = 5;
-  QueueSfx2_Max6(0x76);
+  QueueSfx2_Max6(kSfx2_Quake);
   return jp;
 }
 
@@ -1062,12 +1062,12 @@ void Crocomire_Func_62(void) {  // 0xA494B6
 }
 
 void Crocomire_Func_64(void) {  // 0xA494FB
-  QueueSfx2_Max6(0x77);
+  QueueSfx2_Max6(kSfx2_CrocomireMeltingCry_HighPriority);
   Crocomire_950F();
 }
 
 void Crocomire_9506(void) {  // 0xA49506
-  QueueSfx2_Max6(0x2D);
+  QueueSfx2_Max6(kSfx2_KraidsRoar_CrocomireDyingCry_HighPriority);
   Crocomire_950F();
 }
 
@@ -1282,7 +1282,7 @@ void Crocomire_Func_70(void) {  // 0xA49859
         if (v7) {
           E2->crocom_var_D = v7 - 1;
           E0->crocom_var_D = crocom_var_D - 2;
-          QueueSfx2_Max6(0x2B);
+          QueueSfx2_Max6(kSfx2_RidleysFireballHitSurface_CrocomirePostDeathRumble_PhantoonExploding);
           return;
         }
         uint16 v8 = crocom_var_D + 2;
@@ -1331,7 +1331,7 @@ void Crocomire_Func_71(void) {  // 0xA4990A
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x20, 0x03, 0xb753 });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1e, 0x03, 0xb757 });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x70, 0x0b, 0xb747 });
-    QueueSfx2_Max6(0x29);
+    QueueSfx2_Max6(kSfx2_MotherBrainRisingIntoPhase2_CrocomiresWallExplodes_SporeSpawnGetsHard);
     E->base.current_instruction = addr_kCrocomire_Ilist_E158;
     E->base.instruction_timer = 1;
     E->base.palette_index = 0;
@@ -1343,7 +1343,7 @@ void Crocomire_Func_71(void) {  // 0xA4990A
     do {
       SpawnEprojWithGfx(v8, cur_enemy_index, addr_kEproj_CrocomireSpikeWallPieces);
     } while (--n);
-    QueueSfx2_Max6(0x30);
+    QueueSfx2_Max6(kSfx2_ShotSuperDesgeega_CrocomireDestroysWall);
     Crocomire_9BB3();
   }
 }
@@ -1375,7 +1375,7 @@ void Crocomire_Func_73(void) {  // 0xA49A38
   AddToHiLo(&E->base.y_pos, &E->base.y_subpos, 0xe000);
   AddToHiLo(&E->base.x_pos, &E->base.x_subpos, t);
   if (!sign16(E->base.x_pos - 576)) {
-    QueueSfx2_Max6(0x25);
+    QueueSfx2_Max6(kSfx2_BigExplosion);
     Get_Crocomire(0x40)->base.palette_index = E->base.palette_index;
     E->base.current_instruction = addr_kCrocomire_Ilist_E158;
     E->base.instruction_timer = 1;

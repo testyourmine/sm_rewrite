@@ -160,7 +160,7 @@ uint16 kPhantoon_InstrListPtrs[] = {
 };
 
 uint16 kPhantoon_MaterialisationSoundEffects[] = {
-    0x79,   0x7a,   0x7b,
+  kSfx2_PhantoonAppears1, kSfx2_PhantoonAppears2, kSfx2_PhantoonAppears3,
 };
 
 ExtendedSpriteMap kPhantoon_BrokenCode[] = {
