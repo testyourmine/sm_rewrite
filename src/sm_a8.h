@@ -35,29 +35,29 @@ uint16 kYappingMaw_Constants[] = {
     0x0, 0xFFF0, 0x8, 0xFFF8, 0x10, 0x0, 0x8, 0x8, 0x0, 0x10, 0xFFF8, 0x8, 0xFFF0, 0x0, 0xFFF8, 0xFFF8,
 };
 
-uint16 kYappingMaw_Constant0 = {    0x0, };
+uint16 kYappingMaw_Constant0 = {    0x0 };
 
-uint16 kYappingMaw_Constant1 = { 0xfff0, };
+uint16 kYappingMaw_Constant1 = { 0xfff0 };
 
-uint16 kYappingMaw_Constant2 = {    0x8, };
+uint16 kYappingMaw_Constant2 = {    0x8 };
 
-uint16 kYappingMaw_Constant3 = { 0xfff8, };
+uint16 kYappingMaw_Constant3 = { 0xfff8 };
 
-uint16 kYappingMaw_Constant4 = {    0x8, };
+uint16 kYappingMaw_Constant4 = {    0x8 };
 
-uint16 kYappingMaw_Constant5 = {    0x8, };
+uint16 kYappingMaw_Constant5 = {    0x8 };
 
-uint16 kYappingMaw_Constant6 = {    0x0, };
+uint16 kYappingMaw_Constant6 = {    0x0 };
 
-uint16 kYappingMaw_Constant7 = {   0x10, };
+uint16 kYappingMaw_Constant7 = {   0x10 };
 
-uint16 kYappingMaw_Constant8 = { 0xfff8, };
+uint16 kYappingMaw_Constant8 = { 0xfff8 };
 
-uint16 kYappingMaw_Constant9 = {    0x8, };
+uint16 kYappingMaw_Constant9 = {    0x8 };
 
-uint16 kYappingMaw_Constant10 = { 0xfff8, };
+uint16 kYappingMaw_Constant10 = { 0xfff8 };
 
-uint16 kYappingMaw_Constant11 = { 0xfff8, };
+uint16 kYappingMaw_Constant11 = { 0xfff8 };
 
 uint16 kYappingMaw_InstrListPtrs[] = {
   0x9f6f, 0x9f85, 0x9f9b, 0x9fb1, 0x9fc7, 0x9fdd, 0x9ff3, 0xa009,

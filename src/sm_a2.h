@@ -129,9 +129,9 @@ uint16 kRinka_MotherBrainRoomSpawnTable[] = {
     0x80,   0xa8,   0x16,
 };
 
-uint16 kRio_Constant0 = {  0x580, };
+uint16 kRio_Constant0 = {  0x580 };
 
-uint16 kRio_Constant1 = {  0x180, };
+uint16 kRio_Constant1 = {  0x180 };
 
 uint16 kNorfairLavajumpingEnemy_Tab0[] = {
   0xf7ff, 0xf8fe, 0xf9bf, 0xfaff,
@@ -141,11 +141,11 @@ uint16 kNorfairRio_Tab0[] = {
    0x700,  0x5c0,
 };
 
-uint16 kNorfairRio_Constant0 = {  0x100, };
+uint16 kNorfairRio_Constant0 = {  0x100 };
 
-uint16 kLowerNorfairRio_Constant0 = {  0x700, };
+uint16 kLowerNorfairRio_Constant0 = {  0x700 };
 
-uint16 kLowerNorfairRio_Constant1 = {  0x100, };
+uint16 kLowerNorfairRio_Constant1 = {  0x100 };
 
 uint16 kMaridiaLargeSnail_InstrListPtrs[] = {
   0xcadb, 0xca4b, 0xcb1b, 0xca8b, 0xcae1, 0xca51, 0xcb43, 0xcab3,
