@@ -1171,8 +1171,8 @@ void sub_8B94E1(void) {  // 0x8B94E1
   ;
 }
 
-uint8 SpawnMode7Object(uint16 j, uint16 a) {  // 0x8B94E4
-  Mode7ObjectDef *Mode7ObjectDef;
+uint8 SpawnMode7Object(Mode7ObjectDef j, uint16 a) {  // 0x8B94E4
+  Mode7ObjectDef mode7ObjectDef;
 
   mode7_spawn_param = a;
   uint16 v3 = 2;
@@ -1181,13 +1181,14 @@ uint8 SpawnMode7Object(uint16 j, uint16 a) {  // 0x8B94E4
     if ((v3 & 0x8000) != 0)
       return 1;
   }
-  Mode7ObjectDef = get_Mode7ObjectDef(j);
+  //Mode7ObjectDef = get_Mode7ObjectDef(j);
+  mode7ObjectDef = j;
   int v6 = v3 >> 1;
-  mode7_obj_preinstr_func[v6] = Mode7ObjectDef->pre_instr;
-  mode7_obj_instr_ptr[v6] = Mode7ObjectDef->instr_list;
+  mode7_obj_preinstr_func[v6] = mode7ObjectDef.pre_instr;
+  mode7_obj_instr_ptr[v6] = mode7ObjectDef.instr_list;
   mode7_obj_instr_timer[v6] = 1;
   mode7_obj_goto_timer[v6] = 0;
-  CallCinematicSpriteInit(Mode7ObjectDef->object_def_ptr | 0x8B0000, v6);
+  CallCinematicSpriteInit(mode7ObjectDef.object_def_ptr | 0x8B0000, v6);
   return 0;
 }
 
@@ -1732,7 +1733,7 @@ void LoadTitleSequenceGraphics(void) {  // 0x8B9B87
   SpawnPalfxObject(addr_kPalfx_TitleScreen_BabyMetroidTubeLight);
   SpawnPalfxObject(addr_kPalfx_E1A4);
   uint16 v2 = 0;  // undefined
-  SpawnMode7Object(addr_kMode7ObjBabyMetroidInTitle, v2);
+  SpawnMode7Object(kMode7ObjBabyMetroidInTitle, v2);
 }
 
 void CinematicSpriteInit_0(uint16 j) {  // 0x8B9CBC
@@ -2517,7 +2518,7 @@ void SetSomeStuffForSpriteObject_18(uint16 k) {  // 0x8BAE1A
 uint16 CinematicBgInstr_HandleCreateJpnText_Page1(uint16 k, uint16 j) {  // 0x8BAE43
   cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD401, japanese_text_flag);
+    SpawnMode7Object(kMode7ObjectDef_8BD401, japanese_text_flag);
   return j;
 }
 
@@ -2532,7 +2533,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page1(uint16 k, uint16 j) {  // 0x8
 uint16 CinematicBgInstr_HandleCreateJpnText_Page2(uint16 k, uint16 j) {  // 0x8BAE79
   cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD407, japanese_text_flag);
+    SpawnMode7Object(kMode7ObjectDef_8BD407, japanese_text_flag);
   return j;
 }
 
@@ -2540,7 +2541,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page2(uint16 k, uint16 j) {  // 0x8
   j = CinematicBgInstr_SetSomeStuffForSpriteObject_14(k, j);
   if (japanese_text_flag) {
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE73, japanese_text_flag);
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD40D, 0);  // a undefined
+    SpawnMode7Object(kMode7ObjectDef_8BD40D, 0);  // a undefined
   } else {
     cinematic_function = FUNC16(CinematicFunction_Intro_WaitInputSetupBabyMetroid);
   }
@@ -2651,7 +2652,7 @@ void CinematicFunction_Intro_SetupTransitionToGameplay(void) {  // 0x8BB018
 uint16 CinematicBgInstr_HandleCreateJpnText_Page3(uint16 k, uint16 j) {  // 0x8BB074
   cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD413, japanese_text_flag);
+    SpawnMode7Object(kMode7ObjectDef_8BD413, japanese_text_flag);
   return j;
 }
 
@@ -2659,7 +2660,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page3(uint16 k, uint16 j) {  // 0x8
   j = CinematicBgInstr_SetSomeStuffForSpriteObject_14(k, j);
   if (japanese_text_flag) {
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE73, japanese_text_flag);
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD419, 0);
+    SpawnMode7Object(kMode7ObjectDef_8BD419, 0);
   } else {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func11);
   }
@@ -2669,7 +2670,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page3(uint16 k, uint16 j) {  // 0x8
 uint16 CinematicBgInstr_HandleCreateJpnText_Page4(uint16 k, uint16 j) {  // 0x8BB0B3
   cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD41F, japanese_text_flag);
+    SpawnMode7Object(kMode7ObjectDef_8BD41F, japanese_text_flag);
   return j;
 }
 
@@ -2677,7 +2678,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page4(uint16 k, uint16 j) {  // 0x8
   j = CinematicBgInstr_SetSomeStuffForSpriteObject_14(k, j);
   if (japanese_text_flag) {
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE73, japanese_text_flag);
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD425, 0);
+    SpawnMode7Object(kMode7ObjectDef_8BD425, 0);
   } else {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func12);
   }
@@ -2732,7 +2733,7 @@ void CinematicFunction_Intro_Func13(void) {  // 0x8BB151
 uint16 CinematicBgInstr_HandleCreateJpnText_Page5(uint16 k, uint16 j) {  // 0x8BB19B
   cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD42B, japanese_text_flag);
+    SpawnMode7Object(kMode7ObjectDef_8BD42B, japanese_text_flag);
   return j;
 }
 
@@ -2740,7 +2741,7 @@ uint16 CinematicBgInstr_SpawnMarkerWaitInput_Page5(uint16 k, uint16 j) {  // 0x8
   j = CinematicBgInstr_SetSomeStuffForSpriteObject_14(k, j);
   if (japanese_text_flag) {
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE73, japanese_text_flag);
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD431, 0);
+    SpawnMode7Object(kMode7ObjectDef_8BD431, 0);
   } else {
     cinematic_function = FUNC16(CinematicFunction_Intro_Func15);
   }
@@ -2775,7 +2776,7 @@ void CinematicFunction_Intro_Func15(void) {  // 0x8BB1DA
 uint16 CinematicBgInstr_Func16(uint16 k, uint16 j) {  // 0x8BB228
   cinematicbg_text_click_flag = 0;
   if (japanese_text_flag)
-    SpawnMode7Object(addr_kMode7ObjectDef_8BD437, japanese_text_flag);
+    SpawnMode7Object(kMode7ObjectDef_8BD437, japanese_text_flag);
   return j;
 }
 

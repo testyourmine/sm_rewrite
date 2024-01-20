@@ -907,7 +907,7 @@ uint8 SpawnCimenaticSpriteObjectInner(uint16 k, uint16 j);
 uint8 SpawnCinematicBgObject(uint16 j, uint16 a);
 uint8 SpawnCinematicSpriteObject(uint16 j, uint16 a);
 uint8 SpawnCinematicSpriteObjectToR18(uint16 j, uint16 r18);
-uint8 SpawnMode7Object(uint16 j, uint16 a);
+uint8 SpawnMode7Object(Mode7ObjectDef j, uint16 a);
 void AddNintentoLogoToOam(void);
 Point16U CalcCeresSteamPos_Mode7(Point16U pt);
 Point16U CalcExplosion_Mode7(uint16 k);

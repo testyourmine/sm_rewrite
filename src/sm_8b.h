@@ -354,4 +354,15 @@ uint16 kTitleSequenceHdmaTablePtrs[] = {
   0xbc7d, 0xbc7d, 0xbc7d, 0xbc7d, 0xbcbf, 0xbce5, 0xbd0b, 0xbd31, 0xbd57, 0xbd81, 0xbdab, 0xbdd5, 0xbdff, 0xbe2d, 0xbe5b, 0xbe8f,
 };
 
+Mode7ObjectDef kMode7ObjBabyMetroidInTitle = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xa12b };
+Mode7ObjectDef kMode7ObjectDef_8BD401 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xd389 };
+Mode7ObjectDef kMode7ObjectDef_8BD407 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xd393 };
+Mode7ObjectDef kMode7ObjectDef_8BD40D = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_Intro_Func22), .instr_list = 0xd39d };
+Mode7ObjectDef kMode7ObjectDef_8BD413 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xd3a9 };
+Mode7ObjectDef kMode7ObjectDef_8BD419 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_Intro_Func24), .instr_list = 0xd3b3 };
+Mode7ObjectDef kMode7ObjectDef_8BD41F = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xd3bf };
+Mode7ObjectDef kMode7ObjectDef_8BD425 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_Intro_Func27), .instr_list = 0xd3c9 };
+Mode7ObjectDef kMode7ObjectDef_8BD42B = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xd3d5 };
+Mode7ObjectDef kMode7ObjectDef_8BD431 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_Intro_Func30), .instr_list = 0xd3df };
+Mode7ObjectDef kMode7ObjectDef_8BD437 = { .object_def_ptr = FUNC16(CinematicFunction_nullsub_116), .pre_instr = FUNC16(CinematicFunction_nullsub_116), .instr_list = 0xd3eb };
 

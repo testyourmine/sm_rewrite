@@ -111,6 +111,15 @@ typedef uint8_t CoroutineRet;
 
 #define kCoroutineNone 0
 
+/* 18 */
+#pragma pack(push, 1)
+typedef struct Mode7ObjectDef {
+    VoidP object_def_ptr;
+    VoidP pre_instr;
+    VoidP instr_list;
+}Mode7ObjectDef;
+#pragma pack (pop)
+
 /* 90 */
 #pragma pack(push, 1)
 typedef struct LongPtr {

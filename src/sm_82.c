@@ -3598,10 +3598,11 @@ void LoadRoomHeader(void) {  // 0x82DE6F
 
 void LoadStateHeader(void) {  // 0x82DEF2
   RoomDefRoomstate *RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
-  TileSet *TS = get_TileSet(kStateHeaderTileSets[RD->graphics_set]);
-  tileset_tile_table_pointer = TS->tile_table_ptr;
-  tileset_tiles_pointer = TS->tiles_ptr;
-  tileset_compr_palette_ptr = TS->palette_ptr;
+  //TileSet *TS = get_TileSet(kStateHeaderTileSets[RD->graphics_set]);
+  TileSet TS = kTileSetTable[RD->graphics_set];
+  tileset_tile_table_pointer = TS.tile_table_ptr;
+  tileset_tiles_pointer = TS.tiles_ptr;
+  tileset_compr_palette_ptr = TS.palette_ptr;
   room_compr_level_data_ptr = RD->compressed_room_map_ptr;
   room_music_data_index = RD->music_track;
   room_music_track_index = RD->music_control;

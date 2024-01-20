@@ -202,12 +202,12 @@ typedef struct CinematicSpriteObjectDef {
   VoidP instr_list;
 }CinematicSpriteObjectDef;
 
-/* 18 */
-typedef struct Mode7ObjectDef {
-  VoidP object_def_ptr;
-  VoidP pre_instr;
-  VoidP instr_list;
-}Mode7ObjectDef;
+///* 18 */
+//typedef struct Mode7ObjectDef {
+//  VoidP object_def_ptr;
+//  VoidP pre_instr;
+//  VoidP instr_list;
+//}Mode7ObjectDef;
 
 /* 19 */
 typedef struct Mode7TransferData {
@@ -2854,7 +2854,7 @@ static inline VramWriteEntry *gVramWriteEntry(int a) { return (VramWriteEntry *)
 struct DoorDef; static inline DoorDef *get_DoorDef(uint16 a) { return (DoorDef *)RomPtr(0x830000 | a); }
 struct RoomDefHeader; static inline RoomDefHeader *get_RoomDefHeader(uint16 a) { return (RoomDefHeader *)RomPtr(0x8F0000 | a); }
 struct RoomDefRoomstate; static inline RoomDefRoomstate *get_RoomDefRoomstate(uint16 a) { return (RoomDefRoomstate *)RomPtr(0x8F0000 | a); }
-struct TileSet; static inline TileSet *get_TileSet(uint16 a) { return (TileSet *)RomPtr(0x8F0000 | a); }
+//struct TileSet; static inline TileSet *get_TileSet(uint16 a) { return (TileSet *)RomPtr(0x8F0000 | a); }
 struct EnemyDef; static inline EnemyDef *get_EnemyDef_A2(uint16 a) { return (EnemyDef *)RomPtr(0xA00000 | a); }
 struct EnemyTileset; static inline EnemyTileset *get_EnemyTileset(uint16 a) { return (EnemyTileset *)RomPtr(0xB40000 | a); }
 struct RoomPlmEntry; static inline RoomPlmEntry *get_RoomPlmEntry(uint16 a) { return (RoomPlmEntry *)RomPtr(0x8F0000 | a); }
@@ -2879,8 +2879,8 @@ struct RoomDefStateSelect_E6E5_Finish; static inline RoomDefStateSelect_E6E5_Fin
 struct SamusSpeedTableEntry; static inline SamusSpeedTableEntry *get_SamusSpeedTableEntry(uint16 a) { return (SamusSpeedTableEntry *)RomPtr(0x900000 | a); }
 struct SamusTileAnimationDefs; static inline SamusTileAnimationDefs *get_SamusTileAnimationDefs(uint16 a) { return (SamusTileAnimationDefs *)RomPtr(0x920000 | a); }
 struct PalFxDef; static inline PalFxDef *get_PalFxDef(uint16 a) { return (PalFxDef *)RomPtr(0x8D0000 | a); }
-struct Mode7ObjectDef; static inline Mode7ObjectDef *get_Mode7ObjectDef(uint16 a) { return (Mode7ObjectDef *)RomPtr(0x8B0000 | a); }
+//struct Mode7ObjectDef; static inline Mode7ObjectDef *get_Mode7ObjectDef(uint16 a) { return (Mode7ObjectDef *)RomPtr(0x8B0000 | a); }
 static inline Ram7800_Default *gRam7800_Default(uint16 a) { return (Ram7800_Default *)&g_ram[0x7800 + a]; }
-static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue_RAM(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr_RAM(a); }
+//static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue_RAM(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr_RAM(a); }
 
 #pragma pack(pop)

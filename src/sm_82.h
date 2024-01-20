@@ -182,10 +182,42 @@ uint16 kMapElevatorDests[] = { 0xc759, 0xc779, 0xc799, 0xc7a1, 0xc7af, 0xc7c3, }
 
 //#define kStateHeaderTileSets ((uint16*)RomFixedPtr(0x8fe7a7))
 
-uint16 kStateHeaderTileSets[] = { 0xe6a2, 0xe6ab, 0xe6b4, 0xe6bd, 0xe6c6, 0xe6cf, 0xe6d8, 0xe6e1, 0xe6ea, 
-								  0xe6f3, 0xe6fc, 0xe705, 0xe70e, 0xe717, 0xe720, 0xe729, 0xe732, 0xe73b, 
-								  0xe744, 0xe74d, 0xe756, 0xe75f, 0xe768, 0xe771, 0xe77a, 0xe783, 0xe78c, 
-								  0xe795, 0xe79e, };
+//uint16 kStateHeaderTileSets[] = { 0xe6a2, 0xe6ab, 0xe6b4, 0xe6bd, 0xe6c6, 0xe6cf, 0xe6d8, 0xe6e1, 0xe6ea, 
+//								  0xe6f3, 0xe6fc, 0xe705, 0xe70e, 0xe717, 0xe720, 0xe729, 0xe732, 0xe73b, 
+//								  0xe744, 0xe74d, 0xe756, 0xe75f, 0xe768, 0xe771, 0xe77a, 0xe783, 0xe78c, 
+//								  0xe795, 0xe79e, };
+
+TileSet kTileSetTable[] = {
+  [0] = { .tile_table_ptr = { .addr = 0xb6f6, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xc629, .bank = 0xba }, .palette_ptr = { .addr = 0xad7c, .bank = 0xc2 }, },
+  [1] = { .tile_table_ptr = { .addr = 0xb6f6, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xc629, .bank = 0xba }, .palette_ptr = { .addr = 0xae5d, .bank = 0xc2 }, },
+  [2] = { .tile_table_ptr = { .addr = 0xbeee, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xf911, .bank = 0xba }, .palette_ptr = { .addr = 0xaf43, .bank = 0xc2 }, },
+  [3] = { .tile_table_ptr = { .addr = 0xbeee, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xf911, .bank = 0xba }, .palette_ptr = { .addr = 0xb015, .bank = 0xc2 }, },
+  [4] = { .tile_table_ptr = { .addr = 0xc5cf, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xae9e, .bank = 0xbb }, .palette_ptr = { .addr = 0xb0e7, .bank = 0xc2 }, },
+  [5] = { .tile_table_ptr = { .addr = 0xc5cf, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xae9e, .bank = 0xbb }, .palette_ptr = { .addr = 0xb1a6, .bank = 0xc2 }, },
+  [6] = { .tile_table_ptr = { .addr = 0xcfa6, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xe6b0, .bank = 0xbb }, .palette_ptr = { .addr = 0xb264, .bank = 0xc2 }, },
+  [7] = { .tile_table_ptr = { .addr = 0xd8dc, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xa5aa, .bank = 0xbc }, .palette_ptr = { .addr = 0xb35f, .bank = 0xc2 }, },
+  [8] = { .tile_table_ptr = { .addr = 0xd8dc, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xa5aa, .bank = 0xbc }, .palette_ptr = { .addr = 0xb447, .bank = 0xc2 }, },
+  [9] = { .tile_table_ptr = { .addr = 0xe361, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xc3f9, .bank = 0xbd }, .palette_ptr = { .addr = 0xb5e4, .bank = 0xc2 }, },
+  [10] = { .tile_table_ptr = { .addr = 0xe361, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xc3f9, .bank = 0xbd }, .palette_ptr = { .addr = 0xb6bb, .bank = 0xc2 }, },
+  [11] = { .tile_table_ptr = { .addr = 0xf4b1, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xb130, .bank = 0xbe }, .palette_ptr = { .addr = 0xb83c, .bank = 0xc2 }, },
+  [12] = { .tile_table_ptr = { .addr = 0x855f, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xe78d, .bank = 0xbe }, .palette_ptr = { .addr = 0xb92e, .bank = 0xc2 }, },
+  [13] = { .tile_table_ptr = { .addr = 0x9b01, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xd414, .bank = 0xbf }, .palette_ptr = { .addr = 0xbaed, .bank = 0xc2 }, },
+  [14] = { .tile_table_ptr = { .addr = 0x9b01, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xd414, .bank = 0xbf }, .palette_ptr = { .addr = 0xbbc1, .bank = 0xc2 }, },
+  [15] = { .tile_table_ptr = { .addr = 0xa75e, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xb004, .bank = 0xc0 }, .palette_ptr = { .addr = 0xc104, .bank = 0xc2 }, },
+  [16] = { .tile_table_ptr = { .addr = 0xa75e, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xb004, .bank = 0xc0 }, .palette_ptr = { .addr = 0xc1e3, .bank = 0xc2 }, },
+  [17] = { .tile_table_ptr = { .addr = 0xa75e, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xe22a, .bank = 0xc0 }, .palette_ptr = { .addr = 0xc104, .bank = 0xc2 }, },
+  [18] = { .tile_table_ptr = { .addr = 0xa75e, .bank = 0xc2 }, .tiles_ptr = { .addr = 0xe22a, .bank = 0xc0 }, .palette_ptr = { .addr = 0xc1e3, .bank = 0xc2 }, },
+  [19] = { .tile_table_ptr = { .addr = 0xa75e, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x8da9, .bank = 0xc1 }, .palette_ptr = { .addr = 0xc104, .bank = 0xc2 }, },
+  [20] = { .tile_table_ptr = { .addr = 0xa75e, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x8da9, .bank = 0xc1 }, .palette_ptr = { .addr = 0xc1e3, .bank = 0xc2 }, },
+  [21] = { .tile_table_ptr = { .addr = 0xa27b, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x860b, .bank = 0xc0 }, .palette_ptr = { .addr = 0xbc9c, .bank = 0xc2 }, },
+  [22] = { .tile_table_ptr = { .addr = 0xa27b, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x860b, .bank = 0xc0 }, .palette_ptr = { .addr = 0xbd7b, .bank = 0xc2 }, },
+  [23] = { .tile_table_ptr = { .addr = 0xa27b, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x860b, .bank = 0xc0 }, .palette_ptr = { .addr = 0xbe58, .bank = 0xc2 }, },
+  [24] = { .tile_table_ptr = { .addr = 0xa27b, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x860b, .bank = 0xc0 }, .palette_ptr = { .addr = 0xbf3d, .bank = 0xc2 }, },
+  [25] = { .tile_table_ptr = { .addr = 0xa27b, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x860b, .bank = 0xc0 }, .palette_ptr = { .addr = 0xc021, .bank = 0xc2 }, },
+  [26] = { .tile_table_ptr = { .addr = 0xe189, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xdff0, .bank = 0xbc }, .palette_ptr = { .addr = 0xb510, .bank = 0xc2 }, },
+  [27] = { .tile_table_ptr = { .addr = 0xf3af, .bank = 0xc1 }, .tiles_ptr = { .addr = 0xfe2a, .bank = 0xbd }, .palette_ptr = { .addr = 0xb798, .bank = 0xc2 }, },
+  [28] = { .tile_table_ptr = { .addr = 0x960d, .bank = 0xc2 }, .tiles_ptr = { .addr = 0x9dea, .bank = 0xbf }, .palette_ptr = { .addr = 0xba2c, .bank = 0xc2 }, },
+};
 
 //#define kCommonSpritesPalette1 ((uint16*)RomFixedPtr(0x9afc00))
 
