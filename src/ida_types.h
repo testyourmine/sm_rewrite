@@ -1295,7 +1295,7 @@ typedef struct Ram3000_MsgBox {
   uint8 indirect_hdma[7];
   uint8 field_387[99];
   uint8 backup_of_enabled_hdma_channels;
-  uint16 backup_of_bg3_tilemap_and_size;
+  uint8 backup_of_bg3_tilemap_and_size;
 } Ram3000_MsgBox;
 
 /* 134 */

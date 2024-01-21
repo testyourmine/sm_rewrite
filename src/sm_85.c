@@ -6,13 +6,6 @@
 
 uint16 message_box_das0l_value;
 
-
-static const uint16 kMsgBoxSpecialButtonTilemapOffs[27] = {  // 0x8583D1
-  0, 0x12a, 0x12a, 0x12c, 0x12c, 0x12c, 0, 0, 0, 0, 0, 0, 0x120, 0, 0, 0,
-  0,     0, 0x12a,     0,     0,     0, 0, 0, 0, 0, 0,
-};
-static const uint16 kTileNumbersForButtonLetters[8] = { 0x28e0, 0x3ce1, 0x2cf7, 0x38f8, 0x38d0, 0x38eb, 0x38f1, 0x284e };
-
 static void InitializePpuForMessageBoxes(void) {  // 0x858143
   save_confirmation_selection = 0;
   WriteReg(HDMAEN, 0);
@@ -22,7 +15,7 @@ static void InitializePpuForMessageBoxes(void) {  // 0x858143
   WriteReg(CGDATA, 0x1F);
   WriteReg(CGDATA, 0);
   ram3000.msgbox.backup_of_enabled_hdma_channels = reg_HDMAEN;
-  ram3000.misc.field_3E8[3] = gameplay_BG3SC;
+  ram3000.msgbox.backup_of_bg3_tilemap_and_size = gameplay_BG3SC;
   gameplay_BG3SC = 88;
   gameplay_TM = 23;
   gameplay_CGWSEL = 0;
@@ -68,15 +61,6 @@ static void ClearMessageBoxBg3Tilemap(void) {  // 0x8581F3
   WriteReg(MDMAEN, 2);
 }
 
-static const uint16 kLargeMsgBoxTopBottomBorderTilemap[32] = {  // 0x85825A
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f,
-  0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x284e, 0x284e,    0xe,    0xe,    0xe,
-};
-static const uint16 kSmallMsgBoxTopBottomBorderTilemap[32] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,
-  0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
-
 static uint16 WriteMessageTilemap(void) {  // 0x8582B8
   message_box_animation_y1 = 112;
   message_box_animation_y0 = 124;
@@ -91,14 +75,15 @@ static uint16 WriteMessageTilemap(void) {  // 0x8582B8
   uint16 v1 = 32;
   uint16 v2 = 0;
   do {
-    ram3000.pause_menu_map_tilemap[v1 + 256] = *(uint16 *)&RomPtr_85(r0)[v2];
+    //ram3000.pause_menu_map_tilemap[v1 + 256] = *(uint16 *)&RomPtr_85(r0)[v2];
+    ram3000.pause_menu_map_tilemap[v1 + 256] = getMessageTilemap(r0)[v2 >> 1];
     ++v1;
     v2 += 2;
   } while (--n);
   return v1;
 }
 
-static void WriteLargeMessageBoxTilemap(void) {
+static void WriteLargeMessageBoxTilemap(void) {  // 0x85825A
   for (int i = 0; i != 32; ++i)
     ram3000.pause_menu_map_tilemap[i + 256] = kLargeMsgBoxTopBottomBorderTilemap[i];
   uint16 i = WriteMessageTilemap();
@@ -190,7 +175,7 @@ static void SetupPpuForActiveMessageBox(uint16 r52) {  // 0x85831E
   WriteReg(MDMAEN, 2);
 }
 
-static void DrawSpecialButtonAndSetupPpuForLargeMessageBox(uint16 a) {
+static void DrawSpecialButtonAndSetupPpuForLargeMessageBox(uint16 a) {  // 0x8583D1
   uint16 v1 = 0;
   if ((a & kButton_A) == 0) {
     v1 = 2;
@@ -248,17 +233,7 @@ static void InitializeMessageBox(void) {  // 0x858241
   CallMsgBoxModify(kMessageBoxDefs[v0].modify_box_func | 0x850000);
 }
 
-
-static const uint16 kSaveConfirmationSelectionTilemap[96] = {  // 0x858507
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x38cc, 0x38cd, 0x3cf8, 0x3ce4, 0x3cf2, 0x3c4e, 0x3c4e, 0x3c4e,
-  0x3c4e, 0x3c4e, 0x3c4e, 0x2ced, 0x2cee, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x38cc, 0x38cd, 0x3cf8, 0x3ce4, 0x3cf2, 0x3c4e, 0x3c4e, 0x3c4e,
-  0x3c4e, 0x3c4e, 0x3c4e, 0x2ced, 0x2cee, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x2cf8, 0x2ce4, 0x2cf2, 0x3c4e, 0x3c4e, 0x3c4e,
-  0x3c4e, 0x38cc, 0x38cd, 0x3ced, 0x3cee, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
-
-static void ToggleSaveConfirmationSelection(void) {
+static void ToggleSaveConfirmationSelection(void) {  // 0x858507
   save_confirmation_selection ^= 2;
   uint16 v0 = 64;
   if (save_confirmation_selection == 2)
@@ -293,7 +268,7 @@ static void RestorePpuForMessageBox(void) {  // 0x85861A
   WriteReg(MDMAEN, 2);
   reg_HDMAEN = ram3000.msgbox.backup_of_enabled_hdma_channels;
   WriteReg(HDMAEN, ram3000.msgbox.backup_of_enabled_hdma_channels);
-  gameplay_BG3SC = ram3000.misc.field_3E8[3];
+  gameplay_BG3SC = ram3000.msgbox.backup_of_bg3_tilemap_and_size;
   gameplay_TM = reg_TM;
   gameplay_CGWSEL = next_gameplay_CGWSEL;
   gameplay_CGADSUB = next_gameplay_CGADSUB;
