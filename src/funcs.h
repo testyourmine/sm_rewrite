@@ -1660,17 +1660,18 @@ void Unused_SamusTileViewer(void);
 uint16 Proj93Instr_Delete(uint16 k, uint16 j);
 uint16 Proj93Instr_Goto(uint16 k, uint16 j);
 void DrawBombAndProjectileExplosions(void);
-void DrawPlayerExplosions2(void);
+void DrawProjectiles(void);
 void InitializeBombExplosion(uint16 k);
-void InitializeInstrForMissile(uint16 k);
+void InitializeInstrForBombOrPowerBomb(uint16 k);
 void InitializeInstrForSuperMissile(uint16 k);
 void InitializeProjectile(uint16 k);
 void InitializeSbaProjectile(uint16 k);
 void InitializeShinesparkEchoOrSpazerSba(uint16 k);
 void KillProjectileInner(uint16 k);
-uint16 ProjectileInsts_GetValue(uint16 k);
+uint16 GetProjectileTrailFrame(uint16 k);
 void RunProjectileInstructions(void);
-void sub_9382FD(void);
+void Unused_PartialDrawProjectiles(void);
+ProjectileInstr get_ProjectileInstr(uint16 instr_ptr);
 
 // Bank 94
 uint8 BlockCollGrappleBeam(void);

@@ -329,8 +329,8 @@ uint32 PatchBugs(uint32 mode, uint32 addr) {
     g_cpu->a = layer2_x_pos;
   } else if (FixBugHook(0x9381db)) {  // ProjectileInsts_GetValue reading from invalid memory for newly started ones
     int k = g_cpu->x;
-    int ip = projectile_bomb_instruction_ptr[k >> 1];
-    int delta = (projectile_bomb_instruction_timers[k >> 1] == 1 && !sign16(get_ProjectileInstr(ip)->timer)) ? 0 : -8;
+    int ip = projectile_instruction_ptr[k >> 1];
+    int delta = (projectile_instruction_timers[k >> 1] == 1 && !sign16(get_ProjectileInstr(ip).timer)) ? 0 : -8;
     g_cpu->a += 8 + delta;
   } else if (FixBugHook(0x86b701)) { // EprojPreInstr_EyeDoorProjectile using destroyed X
     g_cpu->x = g_cpu->y;

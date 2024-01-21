@@ -36,7 +36,7 @@ static const uint8 kIsGrappleBannedForMovementType[28] = {
 };
 
 void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
-  uint16 R22 = ProjectileInsts_GetValue(k);
+  uint16 R22 = GetProjectileTrailFrame(k);
   uint16 r18, r20;
   if ((ceres_status & 0x8000) == 0) {
     int v2 = k >> 1;

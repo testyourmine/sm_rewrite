@@ -1717,11 +1717,11 @@ uint8 BlockCollNoWaveBeamHoriz(uint16 k) {  // 0x94A23B
   uint16 v7;
 
   int v1 = k >> 1;
-  int32 amt = INT16_SHL8(projectile_bomb_x_speed[v1]);
+  int32 amt = INT16_SHL8(projectile_x_speed[v1]);
   uint16 some_pos = BlockGetSomePos1(k);
   uint16 prod = Mult8x8((uint16)(projectile_y_pos[v1] - projectile_y_radius[v1]) >> 4, room_width_in_blocks);
 
-  AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], amt);
+  AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], amt);
   //r22 = projectile_bomb_x_subpos[v1];
   uint16 r24 = projectile_x_pos[v1];
   if (amt < 0)
@@ -1747,9 +1747,9 @@ uint8 BlockCollNoWaveBeamVert(uint16 k) {  // 0x94A2CA
   uint16 v7;
 
   int v1 = k >> 1;
-  int32 amt = INT16_SHL8(projectile_bomb_y_speed[v1]);
+  int32 amt = INT16_SHL8(projectile_y_speed[v1]);
   uint16 some_pos = BlockGetSomePos2(k);
-  AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], amt);
+  AddToHiLo(&projectile_y_pos[v1], &projectile_y_subpos[v1], amt);
   //r22 = projectile_bomb_y_subpos[v1];
   uint16 r24 = projectile_y_pos[v1];
   if (amt < 0)
@@ -1776,10 +1776,10 @@ uint8 BlockCollWaveBeamHoriz(uint16 k) {  // 0x94A352
   uint16 v7;
 
   int v1 = k >> 1;
-  int32 amt = INT16_SHL8(projectile_bomb_x_speed[v1]);
+  int32 amt = INT16_SHL8(projectile_x_speed[v1]);
   uint16 some_pos = BlockGetSomePos1(k);
   uint16 prod = Mult8x8((uint16)(projectile_y_pos[v1] - projectile_y_radius[v1]) >> 4, room_width_in_blocks);
-  AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], amt);
+  AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], amt);
   //r22 = projectile_bomb_x_subpos[v1];
   uint16 r24 = projectile_x_pos[v1];
   if (amt < 0)
@@ -1806,9 +1806,9 @@ uint8 BlockCollWaveBeamVert(uint16 k) {  // 0x94A3E4
   uint16 v7;
 
   int v1 = k >> 1;
-  int32 amt = INT16_SHL8(projectile_bomb_y_speed[v1]);
+  int32 amt = INT16_SHL8(projectile_y_speed[v1]);
   uint16 some_pos = BlockGetSomePos2(k);
-  AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], amt);
+  AddToHiLo(&projectile_y_pos[v1], &projectile_y_subpos[v1], amt);
   //r22 = projectile_bomb_y_subpos[v1];
   uint16 r24 = projectile_y_pos[v1];
   if (amt < 0)
@@ -1834,10 +1834,10 @@ uint8 BlockCollWaveBeamVert(uint16 k) {  // 0x94A3E4
 
 uint8 BlockCollMissileHoriz(uint16 k) {  // 0x94A46F
   int v1 = k >> 1;
-  int32 amt = INT16_SHL8(projectile_bomb_x_speed[v1]);
+  int32 amt = INT16_SHL8(projectile_x_speed[v1]);
   uint16 prod = Mult8x8(projectile_y_pos[v1] >> 4, room_width_in_blocks);
-  AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], amt);
-  uint16 v3 = projectile_bomb_x_subpos[v1];
+  AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], amt);
+  uint16 v3 = projectile_x_subpos[v1];
   //r22 = projectile_bomb_x_subpos[v1];
   uint16 r24 = projectile_x_pos[v1];
   uint16 r28 = r24;
@@ -1851,8 +1851,8 @@ uint8 BlockCollMissileHoriz(uint16 k) {  // 0x94A46F
 
 uint8 BlockCollMissileVert(uint16 k) {  // 0x94A4D9
   int v1 = k >> 1;
-  int32 amt = INT16_SHL8(projectile_bomb_y_speed[v1]);
-  AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], amt);
+  int32 amt = INT16_SHL8(projectile_y_speed[v1]);
+  AddToHiLo(&projectile_y_pos[v1], &projectile_y_subpos[v1], amt);
   //2r22 = projectile_bomb_y_subpos[v1];
   uint16 r24 = projectile_y_pos[v1];
   uint16 r28 = r24;

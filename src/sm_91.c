@@ -1838,7 +1838,7 @@ void Samus_Initialize(void) {  // 0x91E00D
   samus_visor_palette_timer_index = 1537;
   uint16 v1 = 0;
   do {
-    projectile_bomb_pre_instructions[v1 >> 1] = FUNC16(ProjPreInstr_Empty);
+    projectile_pre_instructions[v1 >> 1] = FUNC16(ProjPreInstr_Empty);
     v1 += 2;
   } while ((int16)(v1 - 20) < 0);
   grapple_beam_function = FUNC16(GrappleBeamFunc_Inactive);

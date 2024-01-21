@@ -120,6 +120,23 @@ typedef struct Mode7ObjectDef {
 }Mode7ObjectDef;
 #pragma pack (pop)
 
+/* 45 */
+#pragma pack(push, 1)
+typedef union ProjectileInstr {
+    struct {
+        uint16 timer;
+        VoidP spritemap_ptr;
+        uint8 x_radius;
+        uint8 y_radius;
+        uint16 trail_frame;
+    };
+    struct {
+        VoidP func_ptr;
+        VoidP instr_list_ptr;
+    };
+} ProjectileInstr;
+#pragma pack (pop)
+
 /* 90 */
 #pragma pack(push, 1)
 typedef struct LongPtr {

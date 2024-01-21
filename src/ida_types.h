@@ -598,7 +598,7 @@ typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {
 
 /* 34 */
 typedef struct ProjectileDamagesAndInstrPtr {
-  uint16 damages;
+  uint16 damage;
   VoidP instr_ptr;
 } ProjectileDamagesAndInstrPtr;
 
@@ -665,17 +665,37 @@ typedef struct SamusTileAnimationTileDefs {
 /* 44 */
 typedef struct ProjectileDataTable {
   uint16 damage;
-  uint16 instr_ptrs[10];
+  union { 
+    uint16 instr_ptrs[10];
+    struct {
+      uint16 up_face_right;
+      uint16 up_right;
+      uint16 right;
+      uint16 down_right;
+      uint16 down_face_right;
+      uint16 down_face_left;
+      uint16 down_left;
+      uint16 left;
+      uint16 up_left;
+      uint16 up_face_left;
+    };
+  };
 } ProjectileDataTable;
 
-/* 45 */
-typedef struct ProjectileInstr {
-  uint16 timer;
-  VoidP spritemap_ptr;
-  uint8 x_radius;
-  uint8 y_radius;
-  uint16 trail_frame;
-} ProjectileInstr;
+///* 45 */
+//typedef union ProjectileInstr {
+//  struct {
+//    uint16 timer;
+//    VoidP spritemap_ptr;
+//    uint8 x_radius;
+//    uint8 y_radius;
+//    uint16 trail_frame;
+//  };
+//  struct {
+//    VoidP func_ptr;
+//    VoidP instr_list_ptr;
+//  };
+//} ProjectileInstr;
 
 /* 46 */
 typedef struct GrappleBeamSpecialAngles {
@@ -2862,9 +2882,9 @@ struct EprojDef; static inline EprojDef *get_EprojDef(uint16 a) { return (EprojD
 struct Vulnerability; static inline Vulnerability *get_Vulnerability(uint16 a) { return (Vulnerability *)RomPtr(0xB40000 | a); }
 struct ExtendedSpriteMap; static inline ExtendedSpriteMap *get_ExtendedSpriteMap(uint8 db, uint16 a) { return (ExtendedSpriteMap *)RomPtr(db << 16 | a); }
 //struct Hitbox; static inline Hitbox *get_Hitbox(uint8 db, uint16 a) { return (Hitbox *)RomPtr(db << 16 | a); }
-struct Mode7CgvmWriteQueue; static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr(0x800000 | a); }
+//struct Mode7CgvmWriteQueue; static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr(0x800000 | a); }
 //struct PoseEntry; static inline PoseEntry *get_PoseEntry(uint16 a) { return (PoseEntry *)RomPtr(0x910000 | a); }
-struct ProjectileDataTable; static inline ProjectileDataTable *get_ProjectileDataTable(uint16 a) { return (ProjectileDataTable *)RomPtr(0x930000 | a); }
+//struct ProjectileDataTable; static inline ProjectileDataTable *get_ProjectileDataTable(uint16 a) { return (ProjectileDataTable *)RomPtr(0x930000 | a); }
 struct DemoInputObject; static inline DemoInputObject *get_DemoInputObject(uint16 a) { return (DemoInputObject *)RomPtr(0x910000 | a); }
 //struct DemoRoomData; static inline DemoRoomData *get_DemoRoomData(uint16 a) { return (DemoRoomData *)RomPtr(0x820000 | a); }
 struct DemoSetDef; static inline DemoSetDef *get_DemoSetDef(uint16 a) { return (DemoSetDef *)RomPtr(0x910000 | a); }
@@ -2872,7 +2892,7 @@ struct EnemyPopulation; static inline EnemyPopulation *get_EnemyPopulation(uint8
 struct FxDef; static inline FxDef *get_FxDef(uint16 a) { return (FxDef *)RomPtr(0x830000 | a); }
 struct LoadBg_E; static inline LoadBg_E *get_LoadBg_E(uint16 a) { return (LoadBg_E *)RomPtr(0x8F0000 | a); }
 //struct Mode7VramWriteQueue; static inline Mode7VramWriteQueue *get_Mode7VramWriteQueue(uint16 a) { return (Mode7VramWriteQueue *)RomPtr(0xA60000 | a); }
-struct ProjectileInstr; static inline ProjectileInstr *get_ProjectileInstr(uint16 a) { return (ProjectileInstr *)RomPtr(0x930000 | a); }
+//struct ProjectileInstr; static inline ProjectileInstr *get_ProjectileInstr(uint16 a) { return (ProjectileInstr *)RomPtr(0x930000 | a); }
 struct PlmHeader_Size4; static inline PlmHeader_Size4 *get_PlmHeader_Size4(uint16 a) { return (PlmHeader_Size4 *)RomPtr(0x840000 | a); }
 struct PlmHeader_Size6; static inline PlmHeader_Size6 *get_PlmHeader_Size6(uint16 a) { return (PlmHeader_Size6 *)RomPtr(0x840000 | a); }
 struct RoomDefStateSelect_E6E5_Finish; static inline RoomDefStateSelect_E6E5_Finish *get_RoomDefStateSelect_E6E5_Finish(uint16 a) { return (RoomDefStateSelect_E6E5_Finish *)RomPtr(0x8F0000 | a); }

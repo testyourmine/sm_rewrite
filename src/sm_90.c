@@ -2462,17 +2462,17 @@ void ResetProjectileData(void) {  // 0x90AD22
     projectile_x_pos[v1] = 0;
     projectile_y_pos[v1] = 0;
     projectile_dir[v1] = 0;
-    projectile_bomb_x_speed[v1] = 0;
-    projectile_bomb_y_speed[v1] = 0;
+    projectile_x_speed[v1] = 0;
+    projectile_y_speed[v1] = 0;
     projectile_x_radius[v1] = 0;
     projectile_y_radius[v1] = 0;
     projectile_type[v1] = 0;
     projectile_damage[v1] = 0;
-    projectile_bomb_instruction_ptr[v1] = 0;
-    projectile_bomb_instruction_timers[v1] = 0;
+    projectile_instruction_ptr[v1] = 0;
+    projectile_instruction_timers[v1] = 0;
     projectile_variables[v1] = 0;
     projectile_spritemap_pointers[v1] = 0;
-    projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_Empty);
+    projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_Empty);
     v0 += 2;
   } while ((int16)(v0 - 20) < 0);
   bomb_counter = 0;
@@ -2508,20 +2508,20 @@ void ClearProjectile(uint16 k) {  // 0x90ADB7
   int v1 = k >> 1;
   projectile_x_pos[v1] = 0;
   projectile_y_pos[v1] = 0;
-  projectile_bomb_x_subpos[v1] = 0;
-  projectile_bomb_y_subpos[v1] = 0;
+  projectile_x_subpos[v1] = 0;
+  projectile_y_subpos[v1] = 0;
   projectile_dir[v1] = 0;
-  projectile_bomb_x_speed[v1] = 0;
-  projectile_bomb_y_speed[v1] = 0;
+  projectile_x_speed[v1] = 0;
+  projectile_y_speed[v1] = 0;
   projectile_x_radius[v1] = 0;
   projectile_y_radius[v1] = 0;
   projectile_type[v1] = 0;
   projectile_damage[v1] = 0;
-  projectile_bomb_instruction_ptr[v1] = 0;
-  projectile_bomb_instruction_timers[v1] = 0;
+  projectile_instruction_ptr[v1] = 0;
+  projectile_instruction_timers[v1] = 0;
   projectile_variables[v1] = 0;
   projectile_spritemap_pointers[v1] = 0;
-  projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_Empty);
+  projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_Empty);
   if ((int16)(k - 10) >= 0) {
     if ((--bomb_counter & 0x8000) != 0)
       bomb_counter = 0;
@@ -2555,7 +2555,7 @@ void KillProjectile(uint16 k) {
     kKillProjectileFuncs[projectile_dir[v1] & 0xF](k);
   }
   KillProjectileInner(k);
-  projectile_bomb_pre_instructions[k >> 1] = FUNC16(ProjPreInstr_Empty);
+  projectile_pre_instructions[k >> 1] = FUNC16(ProjPreInstr_Empty);
 }
 
 void KillProjectileFunc_0_Up(uint16 j) {  // 0x90AE4E
@@ -2643,8 +2643,8 @@ void HandleProjectile(void) {  // 0x90AECE
   projectile_index = 18;
   for (int i = 18; i >= 0; projectile_index = i) {
     int v1 = i >> 1;
-    if (projectile_bomb_instruction_ptr[v1]) {
-      CallProjPreInstr(projectile_bomb_pre_instructions[v1] | 0x900000, i);
+    if (projectile_instruction_ptr[v1]) {
+      CallProjPreInstr(projectile_pre_instructions[v1] | 0x900000, i);
       RunProjectileInstructions();
       i = projectile_index;
     }
@@ -2682,8 +2682,8 @@ void ProjPreInstr_Beam_NoWaveBeam(uint16 k) {
     int v3 = k >> 1;
     uint16 v4 = 2 * (projectile_dir[v3] & 0xF);
     int v5 = v4 >> 1;
-    projectile_bomb_x_speed[v3] += kDirToVelMult16_X[v5];
-    projectile_bomb_y_speed[v3] += kDirToVelMult16_Y[v5];
+    projectile_x_speed[v3] += kDirToVelMult16_X[v5];
+    projectile_y_speed[v3] += kDirToVelMult16_Y[v5];
     kProjPreInstr_Beam_Funcs[v5](v4);
     DeleteProjectileIfFarOffScreen();
   }
@@ -2730,8 +2730,8 @@ void ProjPreInstr_Missile(uint16 k) {
     int v3 = k >> 1;
     uint16 v4 = 2 * (projectile_dir[v3] & 0xF);
     int v5 = v4 >> 1;
-    projectile_bomb_x_speed[v3] += kDirToVelMult16_X[v5];
-    projectile_bomb_y_speed[v3] += kDirToVelMult16_Y[v5];
+    projectile_x_speed[v3] += kDirToVelMult16_X[v5];
+    projectile_y_speed[v3] += kDirToVelMult16_Y[v5];
     AccelerateMissileOrSuperMissile(k);
     kProjPreInstr_Missile_Funcs[v4 >> 1](v4);
     DeleteProjectileIfFarOffScreen();
@@ -2883,8 +2883,8 @@ void ProjPreInstr_Wave_Shared(uint16 k) {
   int v1 = k >> 1;
   uint16 v2 = 2 * (projectile_dir[v1] & 0xF);
   int v3 = v2 >> 1;
-  projectile_bomb_x_speed[v1] += kDirToVelMult16_X[v3];
-  projectile_bomb_y_speed[v1] += kDirToVelMult16_Y[v3];
+  projectile_x_speed[v1] += kDirToVelMult16_X[v3];
+  projectile_y_speed[v1] += kDirToVelMult16_Y[v3];
   kProjPreInstr_WavePlasmaEtcFuncs[v3](v2);
   DeleteProjectileIfFarOffScreen();
 }
@@ -2966,8 +2966,8 @@ void InitializeProjectileSpeed(uint16 k, uint16 r22) {  // 0x90B1F3
   uint16 r18;
 
   int kh = k >> 1;
-  projectile_bomb_x_subpos[kh] = 0;
-  projectile_bomb_y_subpos[kh] = 0;
+  projectile_x_subpos[kh] = 0;
+  projectile_y_subpos[kh] = 0;
   switch (2 * (projectile_dir[kh] & 0xF)) {
   case 0:
   case 18: {
@@ -2975,8 +2975,8 @@ void InitializeProjectileSpeed(uint16 k, uint16 r22) {  // 0x90B1F3
       r18 = (*(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_right_fract + 1) >> 2) | 0xC000;
     else
       r18 = 0;
-    projectile_bomb_y_speed[kh] = r18 - r22;
-    projectile_bomb_x_speed[kh] = 0;
+    projectile_y_speed[kh] = r18 - r22;
+    projectile_x_speed[kh] = 0;
     break;
   }
   case 2: {
@@ -2984,34 +2984,34 @@ void InitializeProjectileSpeed(uint16 k, uint16 r22) {  // 0x90B1F3
       r18 = (*(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_right_fract + 1) >> 2) | 0xC000;
     else
       r18 = 0;
-    projectile_bomb_y_speed[kh] = r18 - r22;
-    projectile_bomb_x_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_left_fract + 1) + r22;
+    projectile_y_speed[kh] = r18 - r22;
+    projectile_x_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_left_fract + 1) + r22;
     break;
   }
   case 4: {
-    projectile_bomb_y_speed[kh] = 0;
-    projectile_bomb_x_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_left_fract + 1) + r22;
+    projectile_y_speed[kh] = 0;
+    projectile_x_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_left_fract + 1) + r22;
     break;
   }
   case 6: {
-    projectile_bomb_y_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_up_fract + 1) + r22;
-    projectile_bomb_x_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_left_fract + 1) + r22;
+    projectile_y_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_up_fract + 1) + r22;
+    projectile_x_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_left_fract + 1) + r22;
     break;
   }
   case 8:
   case 10: {
-    projectile_bomb_y_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_up_fract + 1) + r22;
-    projectile_bomb_x_speed[kh] = 0;
+    projectile_y_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_up_fract + 1) + r22;
+    projectile_x_speed[kh] = 0;
     break;
   }
   case 12: {
-    projectile_bomb_y_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_up_fract + 1) + r22;
-    projectile_bomb_x_speed[kh] = *(uint16 *)((uint8 *)&absolute_moved_last_frame_y_fract + 1) - r22;
+    projectile_y_speed[kh] = *(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_up_fract + 1) + r22;
+    projectile_x_speed[kh] = *(uint16 *)((uint8 *)&absolute_moved_last_frame_y_fract + 1) - r22;
     break;
   }
   case 14: {
-    projectile_bomb_y_speed[kh] = 0;
-    projectile_bomb_x_speed[kh] = *(uint16 *)((uint8 *)&absolute_moved_last_frame_y_fract + 1) - r22;
+    projectile_y_speed[kh] = 0;
+    projectile_x_speed[kh] = *(uint16 *)((uint8 *)&absolute_moved_last_frame_y_fract + 1) - r22;
     break;
   }
   case 16: {
@@ -3019,8 +3019,8 @@ void InitializeProjectileSpeed(uint16 k, uint16 r22) {  // 0x90B1F3
       r18 = (*(uint16 *)((uint8 *)&projectile_init_speed_samus_moved_right_fract + 1) >> 2) | 0xC000;
     else
       r18 = 0;
-    projectile_bomb_y_speed[kh] = r18 - r22;
-    projectile_bomb_x_speed[kh] = *(uint16 *)((uint8 *)&absolute_moved_last_frame_y_fract + 1) - r22;
+    projectile_y_speed[kh] = r18 - r22;
+    projectile_x_speed[kh] = *(uint16 *)((uint8 *)&absolute_moved_last_frame_y_fract + 1) - r22;
     break;
   }
   default:
@@ -3039,8 +3039,8 @@ void AccelerateMissileOrSuperMissile(uint16 k) {  // 0x90B2F6
     else
       v3 = addr_kMissileAccelerations;
     const uint8 *v4 = RomPtr_90(v3 + 4 * (projectile_dir[v1] & 0xF));
-    projectile_bomb_x_speed[v1] += GET_WORD(v4);
-    projectile_bomb_y_speed[v1] += GET_WORD(v4 + 2);
+    projectile_x_speed[v1] += GET_WORD(v4);
+    projectile_y_speed[v1] += GET_WORD(v4 + 2);
   } else {
     uint16 v2 = word_90C301 + projectile_variables[v1];
     projectile_variables[v1] = v2;
@@ -3057,7 +3057,7 @@ void SuperMissileBlockCollDetect_Y(void) {  // 0x90B366
   if ((projectile_type[v0] & 0xF00) == 512 || (projectile_type[v0] & 0xF00) == 2048) {
     uint8 v5 = projectile_variables[v0];
     if (*((uint8 *)projectile_variables + projectile_index + 1)) {
-      uint16 v1 = abs16(projectile_bomb_y_speed[v0]) & 0xFF00;
+      uint16 v1 = abs16(projectile_y_speed[v0]) & 0xFF00;
       if (sign16(v1 - 2816)) {
         int v4 = projectile_index >> 1;
         if ((projectile_type[v4] & 0xF00) != 2048) {
@@ -3066,7 +3066,7 @@ void SuperMissileBlockCollDetect_Y(void) {  // 0x90B366
         }
       } else {
         uint16 r18 = (v1 >> 8) - 10;
-        if ((projectile_bomb_y_speed[v0] & 0x8000) == 0) {
+        if ((projectile_y_speed[v0] & 0x8000) == 0) {
           uint16 v6 = projectile_index;
           projectile_y_pos[v5 >> 1] = projectile_y_pos[v0] - r18;
           projectile_index = v5;
@@ -3102,7 +3102,7 @@ void SuperMissileBlockCollDetect_X(void) {  // 0x90B406
   if ((projectile_type[v0] & 0xF00) == 512 || (projectile_type[v0] & 0xF00) == 2048) {
     uint8 v5 = projectile_variables[v0];
     if (*((uint8 *)projectile_variables + projectile_index + 1)) {
-      uint16 v1 = abs16(projectile_bomb_x_speed[v0]) & 0xFF00;
+      uint16 v1 = abs16(projectile_x_speed[v0]) & 0xFF00;
       if (sign16(v1 - 2816)) {
         int v4 = projectile_index >> 1;
         if ((projectile_type[v4] & 0xF00) != 2048) {
@@ -3111,7 +3111,7 @@ void SuperMissileBlockCollDetect_X(void) {  // 0x90B406
         }
       } else {
         uint16 r18 = (v1 >> 8) - 10;
-        if ((projectile_bomb_x_speed[v0] & 0x8000) == 0) {
+        if ((projectile_x_speed[v0] & 0x8000) == 0) {
           uint16 v6 = projectile_index;
           projectile_x_pos[v5 >> 1] = projectile_x_pos[v0] - r18;
           projectile_index = v5;
@@ -3421,8 +3421,8 @@ void FireUnchargedBeam(void) {
         cooldown_timer = kBeamAutoFireCooldowns[v5 & 0x3F];
         if ((v5 & 1) == 0) {
 LABEL_17:
-          projectile_bomb_x_speed[v2] = 0;
-          projectile_bomb_y_speed[v2] = 0;
+          projectile_x_speed[v2] = 0;
+          projectile_y_speed[v2] = 0;
           projectile_index = v1;
           CheckBeamCollByDir(v1);
           v1 = projectile_index;
@@ -3433,12 +3433,12 @@ LABEL_17:
       }
       int v4;
       v4 = v1 >> 1;
-      projectile_bomb_x_speed[v4] = 0;
-      projectile_bomb_y_speed[v4] = 0;
+      projectile_x_speed[v4] = 0;
+      projectile_y_speed[v4] = 0;
       projectile_index = v1;
       WaveBeam_CheckColl(v1);
 LABEL_20:
-      projectile_bomb_pre_instructions[v1 >> 1] = kProjectileBombPreInstr[projectile_type[v1 >> 1] & 0xF];
+      projectile_pre_instructions[v1 >> 1] = kProjectileBombPreInstr[projectile_type[v1 >> 1] & 0xF];
       SetInitialProjectileSpeed(v1);
       return;
     }
@@ -3489,13 +3489,13 @@ void FireChargedBeam(void) {
       cooldown_timer = kProjectileCooldown_Uncharged[v5 & 0x3F];
       if ((v5 & 1) != 0) {
         int v4 = v1 >> 1;
-        projectile_bomb_x_speed[v4] = 0;
-        projectile_bomb_y_speed[v4] = 0;
+        projectile_x_speed[v4] = 0;
+        projectile_y_speed[v4] = 0;
         projectile_index = v1;
         WaveBeam_CheckColl(v1);
       } else {
-        projectile_bomb_x_speed[v2] = 0;
-        projectile_bomb_y_speed[v2] = 0;
+        projectile_x_speed[v2] = 0;
+        projectile_y_speed[v2] = 0;
         projectile_index = v1;
         CheckBeamCollByDir(v1);
         v1 = projectile_index;
@@ -3506,7 +3506,7 @@ LABEL_14:
         }
       }
       r20 = v1;
-      projectile_bomb_pre_instructions[v1 >> 1] = kFireChargedBeam_Funcs[projectile_type[v1 >> 1] & 0xF];
+      projectile_pre_instructions[v1 >> 1] = kFireChargedBeam_Funcs[projectile_type[v1 >> 1] & 0xF];
       SetInitialProjectileSpeed(r20);
       goto LABEL_14;
     }
@@ -3694,14 +3694,14 @@ void FireHyperBeam(void) {  // 0x90BCD1
       play_resume_charging_beam_sfx = 0;
       InitializeProjectile(k);
       int v1 = k >> 1;
-      projectile_bomb_x_speed[v1] = 0;
-      projectile_bomb_y_speed[v1] = 0;
+      projectile_x_speed[v1] = 0;
+      projectile_y_speed[v1] = 0;
       projectile_index = k;
       WaveBeam_CheckColl(k);
       uint16 v2 = projectile_index;
       int v3 = projectile_index >> 1;
       projectile_damage[v3] = 1000;
-      projectile_bomb_pre_instructions[v3] = FUNC16(ProjPreInstr_HyperBeam);
+      projectile_pre_instructions[v3] = FUNC16(ProjPreInstr_HyperBeam);
       r20 = v2;
       SetInitialProjectileSpeed(r20);
       cooldown_timer = 21;
@@ -3750,7 +3750,7 @@ void CheckBeamCollByDir_Right(void) {  // 0x90BD9C
 
 void CheckBeamCollByDir_Left(void) {  // 0x90BDA4
   uint16 v0 = projectile_index;
-  projectile_bomb_x_speed[projectile_index >> 1] = -1;
+  projectile_x_speed[projectile_index >> 1] = -1;
   BlockCollNoWaveBeamHoriz(v0);
 }
 
@@ -3786,7 +3786,7 @@ void WaveBeam_CheckColl_2(void) {  // 0x90BDEA
 
 void WaveBeam_CheckColl_7(void) {  // 0x90BDF2
   uint16 v0 = projectile_index;
-  projectile_bomb_x_speed[projectile_index >> 1] = -1;
+  projectile_x_speed[projectile_index >> 1] = -1;
   BlockCollWaveBeamHoriz(v0);
 }
 
@@ -3796,19 +3796,19 @@ void ProjectileReflection(uint16 r20) {  // 0x90BE00
   uint16 v2 = projectile_type[v1];
   if ((v2 & 0x100) != 0) {
     InitializeProjectile(r20);
-    projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_Missile);
+    projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_Missile);
     projectile_variables[v1] = 240;
   } else if ((v2 & 0x200) != 0) {
     uint16 k = r20;
     ClearProjectile(LOBYTE(projectile_variables[v1]));
     InitializeProjectile(k);
     int v3 = k >> 1;
-    projectile_bomb_pre_instructions[v3] = FUNC16(ProjPreInstr_SuperMissile);
+    projectile_pre_instructions[v3] = FUNC16(ProjPreInstr_SuperMissile);
     projectile_variables[v3] = 240;
   } else {
     SetInitialProjectileSpeed(r20);
     InitializeProjectile(v0);
-    projectile_bomb_pre_instructions[v1] = kFireChargedBeam_Funcs[projectile_type[v1] & 0xF];
+    projectile_pre_instructions[v1] = kFireChargedBeam_Funcs[projectile_type[v1] & 0xF];
   }
 }
 
@@ -3852,9 +3852,9 @@ LABEL_10:;
     InitializeProjectile(r20);
     uint16 v7 = projectile_type[v1];
     if ((v7 & 0x200) != 0)
-      projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_SuperMissile);
+      projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_SuperMissile);
     else
-      projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_Missile);
+      projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_Missile);
     cooldown_timer = kNonBeamProjectileCooldowns[HIBYTE(v7) & 0xF];
     if (samus_auto_cancel_hud_item_index) {
       hud_item_index = 0;
@@ -3887,7 +3887,7 @@ void SpawnSuperMissileLink(void) {  // 0x90BF46
   projectile_dir[v1] = projectile_dir[v2];
   InitProjectilePositionDirection(r20);
   InitializeInstrForSuperMissile(v0);
-  projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_SuperMissileLink);
+  projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_SuperMissileLink);
   projectile_variables[projectile_index >> 1] = v0 + (projectile_variables[projectile_index >> 1] & 0xFF00);
   ++projectile_counter;
 }
@@ -3918,8 +3918,8 @@ void HudSelectionHandler_MorphBall(void) {  // 0x90BF9D
               projectile_x_pos[v4] = samus_x_pos;
               projectile_y_pos[v4] = samus_y_pos;
               projectile_variables[v4] = 60;
-              InitializeInstrForMissile(v2);
-              projectile_bomb_pre_instructions[v4] = FUNC16(ProjPreInstr_PowerBomb);
+              InitializeInstrForBombOrPowerBomb(v2);
+              projectile_pre_instructions[v4] = FUNC16(ProjPreInstr_PowerBomb);
               cooldown_timer = kNonBeamProjectileCooldowns[v6 & 0xF];
               if (samus_auto_cancel_hud_item_index) {
                 hud_item_index = 0;
@@ -3947,8 +3947,8 @@ void HudSelectionHandler_MorphBall(void) {  // 0x90BF9D
       projectile_x_pos[v1] = samus_x_pos;
       projectile_y_pos[v1] = samus_y_pos;
       projectile_variables[v1] = 60;
-      InitializeInstrForMissile(v0);
-      projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_Bomb);
+      InitializeInstrForBombOrPowerBomb(v0);
+      projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_Bomb);
       cooldown_timer = kNonBeamProjectileCooldowns[5];
     }
   } else if (flare_counter) {
@@ -4000,7 +4000,7 @@ void HandleBomb(void) {  // 0x90C128
     projectile_variables[v1] = v3;
     if (v3) {
       if (v3 == 15)
-        projectile_bomb_instruction_ptr[v1] += 28;
+        projectile_instruction_ptr[v1] += 28;
     } else {
       QueueSfx2_Max6(kSfx2_BombExplosion);
       InitializeBombExplosion(v0);
@@ -4017,7 +4017,7 @@ void HandlePowerBomb(void) {  // 0x90C157
     projectile_variables[v1] = v3;
     if (v3) {
       if (v3 == 15)
-        projectile_bomb_instruction_ptr[v1] += 28;
+        projectile_instruction_ptr[v1] += 28;
     } else {
       power_bomb_explosion_x_pos = projectile_x_pos[v1];
       power_bomb_explosion_y_pos = projectile_y_pos[v1];
@@ -4304,12 +4304,12 @@ uint8 FireSba_FireWave(void) {  // 0x90CD1A
     projectile_timers[v1] = 4;
     projectile_type[v1] = equipped_beams & 0x100F | 0x8010;
     projectile_dir[v1] = 0;
-    projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_WaveSba);
-    projectile_bomb_y_speed[v1] = 600;
-    projectile_bomb_x_speed[v1] = 0;
+    projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_WaveSba);
+    projectile_y_speed[v1] = 600;
+    projectile_x_speed[v1] = 0;
     projectile_variables[v1] = 0;
-    projectile_bomb_x_subpos[v1] = 0;
-    projectile_bomb_y_subpos[v1] = 0;
+    projectile_x_subpos[v1] = 0;
+    projectile_y_subpos[v1] = 0;
     projectile_x_pos[v1] = kFireSba_FireWave_X[v1] + samus_x_pos;
     projectile_y_pos[v1] = kFireSba_FireWave_Y[v1] + samus_y_pos;
     InitializeSbaProjectile(i);
@@ -4324,8 +4324,8 @@ uint8 FireSba_FireWave(void) {  // 0x90CD1A
 uint8 FireSba_FireIce(void) {  // 0x90CD9B
   static const uint16 kIcePlasmaSbaProjectileOriginAngles[8] = { 0, 0x40, 0x80, 0xc0, 0x20, 0x60, 0xa0, 0xe0 };
 
-  if (projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_IceSbaEnd)
-      || projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_IceSbaMain)) {
+  if (projectile_pre_instructions[0] == FUNC16(ProjPreInstr_IceSbaEnd)
+      || projectile_pre_instructions[0] == FUNC16(ProjPreInstr_IceSbaMain)) {
     return 0;
   }
   for (int i = 6; i >= 0; i -= 2) {
@@ -4333,9 +4333,9 @@ uint8 FireSba_FireIce(void) {  // 0x90CD9B
     projectile_timers[v2] = 4;
     projectile_type[v2] = equipped_beams & 0x100F | 0x8010;
     projectile_dir[v2] = 0;
-    projectile_bomb_pre_instructions[v2] = FUNC16(ProjPreInstr_IceSbaMain);
+    projectile_pre_instructions[v2] = FUNC16(ProjPreInstr_IceSbaMain);
     projectile_variables[v2] = kIcePlasmaSbaProjectileOriginAngles[v2];
-    projectile_bomb_y_speed[v2] = 600;
+    projectile_y_speed[v2] = 600;
     InitializeProjectile(i);
   }
   projectile_counter = 4;
@@ -4356,13 +4356,13 @@ uint8 FireSba_FireSpazer(void) {  // 0x90CE14
     int v1 = i >> 1;
     projectile_timers[v1] = kFireSpazer_Timer[v1];
     projectile_dir[v1] = 5;
-    projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_SpazerSba);
-    projectile_bomb_x_speed[v1] = 40;
-    projectile_bomb_y_speed[v1] = kFireSpazer_Yspeed[v1];
+    projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_SpazerSba);
+    projectile_x_speed[v1] = 40;
+    projectile_y_speed[v1] = kFireSpazer_Yspeed[v1];
     projectile_variables[v1] = 0;
     projectile_unk_A[v1] = 0;
-    projectile_bomb_x_subpos[v1] = 0;
-    projectile_bomb_y_subpos[v1] = 0;
+    projectile_x_subpos[v1] = 0;
+    projectile_y_subpos[v1] = 0;
     if ((int16)(i - 4) >= 0) {
       projectile_type[i >> 1] = -32732;
       InitializeShinesparkEchoOrSpazerSba(i);
@@ -4382,16 +4382,16 @@ uint8 FireSba_FirePlasma(void) {  // 0x90CE98
   static const uint16 kIcePlasmaSbaProjectileOriginAngles[8] = { 0, 0x40, 0x80, 0xc0, 0x20, 0x60, 0xa0, 0xe0 };
 
 
-  if (projectile_bomb_pre_instructions[0] == FUNC16(ProjPreInstr_PlasmaSba))
+  if (projectile_pre_instructions[0] == FUNC16(ProjPreInstr_PlasmaSba))
     return 0;
   for (int i = 6; i >= 0; i -= 2) {
     int v2 = i >> 1;
     projectile_type[v2] = equipped_beams & 0x100F | 0x8010;
     projectile_dir[v2] = 0;
-    projectile_bomb_pre_instructions[v2] = FUNC16(ProjPreInstr_PlasmaSba);
+    projectile_pre_instructions[v2] = FUNC16(ProjPreInstr_PlasmaSba);
     projectile_variables[v2] = kIcePlasmaSbaProjectileOriginAngles[v2];
-    projectile_bomb_x_speed[v2] = 40;
-    projectile_bomb_y_speed[v2] = 0;
+    projectile_x_speed[v2] = 40;
+    projectile_y_speed[v2] = 0;
     InitializeSbaProjectile(i);
   }
   projectile_counter = 4;
@@ -4421,10 +4421,10 @@ void ProjPreInstr_IceSbaMain(uint16 k) {  // 0x90CF09
     projectile_x_pos[v3] = pt.x + samus_x_pos;
     projectile_y_pos[v3] = pt.y + samus_y_pos;
     projectile_variables[v3] = (uint8)(used_for_sba_attacksB60 + projectile_variables[v3]);
-    v2 = projectile_bomb_y_speed[v3]-- == 1;
+    v2 = projectile_y_speed[v3]-- == 1;
     if (v2) {
-      projectile_bomb_pre_instructions[v3] = FUNC16(ProjPreInstr_IceSbaEnd);
-      projectile_bomb_x_speed[v3] = 40;
+      projectile_pre_instructions[v3] = FUNC16(ProjPreInstr_IceSbaEnd);
+      projectile_x_speed[v3] = 40;
       QueueSfx1_Max6(kSfx1_IceSbaEnd);
     }
     cooldown_timer = 2;
@@ -4447,7 +4447,7 @@ void ProjPreInstr_IceSbaEnd(uint16 k) {  // 0x90CF7A
   }
   int v3;
   v3 = k >> 1;
-  Point16U pt = Projectile_SinLookup(projectile_variables[v3], projectile_bomb_x_speed[v3]);
+  Point16U pt = Projectile_SinLookup(projectile_variables[v3], projectile_x_speed[v3]);
   pt.x += samus_x_pos;
   projectile_x_pos[v3] = pt.x;
   v5 = pt.x - layer1_x_pos;
@@ -4459,7 +4459,7 @@ LABEL_9:
     ClearProjectile(k);
   } else {
     projectile_variables[v3] = (uint8)(used_for_sba_attacksB60 + projectile_variables[v3]);
-    projectile_bomb_x_speed[v3] = (uint8)(projectile_bomb_x_speed[v3] + 8);
+    projectile_x_speed[v3] = (uint8)(projectile_x_speed[v3] + 8);
     cooldown_timer = 2;
     flare_counter = 0;
   }
@@ -4701,9 +4701,9 @@ void Samus_MoveHandler_ShinesparkCrashFinish(void) {  // 0x90D40D
       speed_echo_ypos[2] = samus_y_pos;
       projectile_type[3] = kProjectileType_DontInteractWithSamus | kProjectileType_ShinesparkEcho;
       InitializeShinesparkEchoOrSpazerSba(6);
-      projectile_bomb_pre_instructions[3] = FUNC16(ProjPreInstr_SpeedEcho);
+      projectile_pre_instructions[3] = FUNC16(ProjPreInstr_SpeedEcho);
       projectile_variables[3] = kShinesparkCrashFinish_Tab0[(uint16)(2 * (samus_pose - 201))];
-      projectile_bomb_x_speed[3] = 0;
+      projectile_x_speed[3] = 0;
     }
     ++projectile_counter;
     speed_echo_xspeed[3] = 64;
@@ -4711,9 +4711,9 @@ void Samus_MoveHandler_ShinesparkCrashFinish(void) {  // 0x90D40D
     speed_echo_ypos[3] = samus_y_pos;
     projectile_type[4] = kProjectileType_DontInteractWithSamus | kProjectileType_ShinesparkEcho;
     InitializeShinesparkEchoOrSpazerSba(8);
-    projectile_bomb_pre_instructions[4] = FUNC16(ProjPreInstr_SpeedEcho);
+    projectile_pre_instructions[4] = FUNC16(ProjPreInstr_SpeedEcho);
     projectile_variables[4] = kShinesparkCrashFinish_Tab0[(uint16)(2 * (samus_pose - 201)) + 1];
-    projectile_bomb_x_speed[4] = 0;
+    projectile_x_speed[4] = 0;
   }
   cooldown_timer = 0;
   samus_shine_timer = 1;
@@ -4732,8 +4732,8 @@ void ProjPreInstr_SpeedEcho(uint16 k) {  // 0x90D4D2
   int16 v5;
 
   int v1 = k >> 1;
-  projectile_bomb_x_speed[v1] += 8;
-  Point16U pt = Projectile_SinLookup(projectile_variables[v1], LOBYTE(projectile_bomb_x_speed[v1]));
+  projectile_x_speed[v1] += 8;
+  Point16U pt = Projectile_SinLookup(projectile_variables[v1], LOBYTE(projectile_x_speed[v1]));
   uint16 v2 = pt.x + samus_x_pos;
   *(uint16 *)((uint8 *)&speed_echoes_index + k) = pt.x + samus_x_pos;
   projectile_x_pos[v1] = v2;
@@ -4910,11 +4910,11 @@ void ProjPreInstr_PlasmaSba(uint16 k) {  // 0x90D793
   } else {
     cooldown_timer = 2;
     flare_counter = 0;
-    Point16U pt = Projectile_SinLookup(projectile_variables[v1], projectile_bomb_x_speed[v1]);
+    Point16U pt = Projectile_SinLookup(projectile_variables[v1], projectile_x_speed[v1]);
     projectile_x_pos[v1] = pt.x + samus_x_pos;
     projectile_y_pos[v1] = pt.y + samus_y_pos;
     projectile_variables[v1] = (uint8)(used_for_sba_attacksB60 + projectile_variables[v1]);
-    v3 = 2 * projectile_bomb_y_speed[v1];
+    v3 = 2 * projectile_y_speed[v1];
     if (v3) {
       if (v3 == 2) {
         ProjPreInstr_PlasmaSba_Phase1Contract(k);
@@ -4934,18 +4934,18 @@ void ProjPreInstr_PlasmaSba(uint16 k) {  // 0x90D793
 
 void ProjPreInstr_PlasmaSba_Phase0Expand(uint16 j) {  // 0x90D7E1
   int v1 = j >> 1;
-  uint16 v2 = (uint8)(projectile_bomb_x_speed[v1] + 4);
-  projectile_bomb_x_speed[v1] = v2;
+  uint16 v2 = (uint8)(projectile_x_speed[v1] + 4);
+  projectile_x_speed[v1] = v2;
   if (!sign16(v2 - 192))
-    projectile_bomb_y_speed[v1] = 1;
+    projectile_y_speed[v1] = 1;
 }
 
 void ProjPreInstr_PlasmaSba_Phase1Contract(uint16 j) {  // 0x90D7FA
   int v1 = j >> 1;
-  uint16 v2 = (uint8)(projectile_bomb_x_speed[v1] - 4);
-  projectile_bomb_x_speed[v1] = v2;
+  uint16 v2 = (uint8)(projectile_x_speed[v1] - 4);
+  projectile_x_speed[v1] = v2;
   if (sign16(v2 - 45))
-    projectile_bomb_y_speed[v1] = 2;
+    projectile_y_speed[v1] = 2;
 }
 
 void ProjPreInstr_PlasmaSba_Phase2Disperse(uint16 j) {  // 0x90D813
@@ -4956,7 +4956,7 @@ void ProjPreInstr_PlasmaSba_Phase2Disperse(uint16 j) {  // 0x90D813
       || !sign16(projectile_y_pos[v1] - layer1_y_pos - 256)) {
     ClearProjectile(j);
   } else {
-    projectile_bomb_x_speed[v1] = (uint8)(projectile_bomb_x_speed[v1] + 4);
+    projectile_x_speed[v1] = (uint8)(projectile_x_speed[v1] + 4);
   }
 }
 
@@ -4973,32 +4973,32 @@ void ProjPreInstr_SpreadBomb(uint16 k) {  // 0x90D8F7
   }
   HandleBomb();
   if (projectile_variables[v1]) {
-    AddToHiLo(&projectile_bomb_y_speed[v1], &projectile_timers[v1], __PAIR32__(samus_y_accel, samus_y_subaccel));
-    AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], __PAIR32__(projectile_bomb_y_speed[v1], projectile_timers[v1]));
+    AddToHiLo(&projectile_y_speed[v1], &projectile_timers[v1], __PAIR32__(samus_y_accel, samus_y_subaccel));
+    AddToHiLo(&projectile_y_pos[v1], &projectile_y_subpos[v1], __PAIR32__(projectile_y_speed[v1], projectile_timers[v1]));
     if (BlockCollSpreadBomb(k) & 1) {
-      AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], -IPAIR32(projectile_bomb_y_speed[v1], projectile_timers[v1]));
-      if ((projectile_bomb_y_speed[v1] & 0x8000) != 0) {
-        projectile_bomb_y_speed[v1] = 0;
+      AddToHiLo(&projectile_y_pos[v1], &projectile_y_subpos[v1], -IPAIR32(projectile_y_speed[v1], projectile_timers[v1]));
+      if ((projectile_y_speed[v1] & 0x8000) != 0) {
+        projectile_y_speed[v1] = 0;
         projectile_y_radius[v1] = 0;
       } else {
         projectile_timers[v1] = kBombSpread_Tab3[v1 - 5];
-        projectile_bomb_y_speed[v1] = projectile_unk_A[v1];
+        projectile_y_speed[v1] = projectile_unk_A[v1];
       }
       return;
     }
-    uint16 t = projectile_bomb_x_speed[v1];
+    uint16 t = projectile_x_speed[v1];
     if (t & 0x8000)
-      AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], -INT16_SHL8(t & 0x7fff));
+      AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], -INT16_SHL8(t & 0x7fff));
     else
-      AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], INT16_SHL8(t));
+      AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], INT16_SHL8(t));
   }
   if (BlockCollSpreadBomb(k) & 1) {
-    uint16 t = projectile_bomb_x_speed[v1];
-    projectile_bomb_x_speed[v1] ^= 0x8000;
+    uint16 t = projectile_x_speed[v1];
+    projectile_x_speed[v1] ^= 0x8000;
     if (!(t & 0x8000))
-      AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], -INT16_SHL8(t));
+      AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], -INT16_SHL8(t));
     else
-      AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], INT16_SHL8(t & 0x7fff));
+      AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], INT16_SHL8(t & 0x7fff));
   }
 }
 
@@ -5006,16 +5006,16 @@ void ProjPreInstr_WaveSba(uint16 k) {  // 0x90DA08
   int v1 = k >> 1;
   bool v2, v3;
   if ((projectile_dir[v1] & 0xF0) != 0
-      || (v2 = projectile_bomb_y_speed[v1] == 1,
-          v3 = (int16)(projectile_bomb_y_speed[v1] - 1) < 0,
-          --projectile_bomb_y_speed[v1],
+      || (v2 = projectile_y_speed[v1] == 1,
+          v3 = (int16)(projectile_y_speed[v1] - 1) < 0,
+          --projectile_y_speed[v1],
           v2)
       || v3) {
     QueueSfx1_Max6(kSfx1_WaveSbaEnd_Silence);
     ClearProjectile(k);
     return;
   }
-  uint16 R34 = projectile_bomb_x_speed[v1];
+  uint16 R34 = projectile_x_speed[v1];
   //R36 = projectile_variables[v1];
   v2 = projectile_timers[v1]-- == 1;
   if (v2) {
@@ -5024,12 +5024,12 @@ void ProjPreInstr_WaveSba(uint16 k) {  // 0x90DA08
     k = projectile_index;
   }
   if ((int16)(samus_x_pos - projectile_x_pos[v1]) < 0) {
-    if (!sign16(projectile_bomb_x_speed[v1] + 2047))
-      projectile_bomb_x_speed[v1] -= 64;
-  } else if (sign16(projectile_bomb_x_speed[v1] - 2048)) {
-    projectile_bomb_x_speed[v1] += 64;
+    if (!sign16(projectile_x_speed[v1] + 2047))
+      projectile_x_speed[v1] -= 64;
+  } else if (sign16(projectile_x_speed[v1] - 2048)) {
+    projectile_x_speed[v1] += 64;
   }
-  AddToHiLo(&projectile_x_pos[v1], &projectile_bomb_x_subpos[v1], INT16_SHL8(projectile_bomb_x_speed[v1]));
+  AddToHiLo(&projectile_x_pos[v1], &projectile_x_subpos[v1], INT16_SHL8(projectile_x_speed[v1]));
 
   if ((int16)(samus_y_pos - projectile_y_pos[v1]) < 0) {
     if (!sign16(projectile_variables[v1] + 2047))
@@ -5037,9 +5037,9 @@ void ProjPreInstr_WaveSba(uint16 k) {  // 0x90DA08
   } else if (sign16(projectile_variables[v1] - 2048)) {
     projectile_variables[v1] += 64;
   }
-  AddToHiLo(&projectile_y_pos[v1], &projectile_bomb_y_subpos[v1], INT16_SHL8(projectile_variables[v1]));
+  AddToHiLo(&projectile_y_pos[v1], &projectile_y_subpos[v1], INT16_SHL8(projectile_variables[v1]));
   if (k == 6) {
-    if ((projectile_bomb_x_speed[3] & 0x8000) != 0) {
+    if ((projectile_x_speed[3] & 0x8000) != 0) {
       if ((R34 & 0x8000) == 0)
         QueueSfx1_Max6(kSfx1_WaveSba);
     } else if ((R34 & 0x8000) != 0) {
@@ -5057,17 +5057,17 @@ void BombSpread(void) {  // 0x90D849
       int v1 = v0 >> 1;
       projectile_type[v1] = -31488;
       projectile_dir[v1] = 0;
-      projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_SpreadBomb);
-      InitializeInstrForMissile(v0);
+      projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_SpreadBomb);
+      InitializeInstrForBombOrPowerBomb(v0);
       projectile_x_pos[v1] = samus_x_pos;
-      projectile_bomb_x_subpos[v1] = 0;
+      projectile_x_subpos[v1] = 0;
       projectile_y_pos[v1] = samus_y_pos;
-      projectile_bomb_y_subpos[v1] = 0;
+      projectile_y_subpos[v1] = 0;
       int v2 = (uint16)(v0 - 10) >> 1;
-      projectile_bomb_x_speed[v1] = kBombSpread_Tab1[v2];
+      projectile_x_speed[v1] = kBombSpread_Tab1[v2];
       projectile_timers[v1] = kBombSpread_Tab3[v2];
       uint16 v3 = -(int16)(kBombSpread_Tab2[v2] + ((bomb_spread_charge_timeout_counter >> 6) & 3));
-      projectile_bomb_y_speed[v1] = v3;
+      projectile_y_speed[v1] = v3;
       projectile_unk_A[v1] = v3;
       projectile_variables[v1] = kBombSpread_Tab0[v2];
       v0 += 2;
@@ -5106,7 +5106,7 @@ void ProjPreInstr_SpazerSba(uint16 k) {
       k = projectile_index;
     }
     int v4 = k >> 1;
-    Point16U pt = Projectile_SinLookup(projectile_variables[v4], projectile_bomb_x_speed[v4]);
+    Point16U pt = Projectile_SinLookup(projectile_variables[v4], projectile_x_speed[v4]);
     projectile_x_pos[v4] = pt.x + samus_x_pos;
     kProjPreInstr_SpazerSba_FuncsB[projectile_unk_A[v4] >> 1](k, pt.y);
     cooldown_timer = 2;
@@ -5139,11 +5139,11 @@ void ProjPreInstr_SpazerSba_Phase0Circle(uint16 j, uint16 r22) {  // 0x90DB93
 
   int v1 = j >> 1;
   projectile_y_pos[v1] = r22 + samus_y_pos;
-  uint16 v2 = (uint8)(LOBYTE(projectile_bomb_y_speed[v1]) + LOBYTE(projectile_variables[v1]));
+  uint16 v2 = (uint8)(LOBYTE(projectile_y_speed[v1]) + LOBYTE(projectile_variables[v1]));
   projectile_variables[v1] = v2;
   if (v2 == 128) {
-    projectile_bomb_x_speed[v1] = 160;
-    projectile_bomb_y_speed[v1] = kProjPreInstr_SpazerSba_Yspeed[v1];
+    projectile_x_speed[v1] = 160;
+    projectile_y_speed[v1] = kProjPreInstr_SpazerSba_Yspeed[v1];
     projectile_dir[v1] = 0;
     projectile_unk_A[v1] = 2;
   }
@@ -5158,11 +5158,11 @@ void ProjPreInstr_SpazerSba_Phase2FlyToPoint(uint16 j, uint16 r22) {  // 0x90DBC
   if (sign16(v1 - layer1_y_pos - 16)) {
     FireEndOfSpazerSba(j);
   } else {
-    projectile_variables[v2] = (uint8)(LOBYTE(projectile_bomb_y_speed[v2]) + LOBYTE(projectile_variables[v2]));
-    uint16 v3 = projectile_bomb_x_speed[v2] - 5;
-    projectile_bomb_x_speed[v2] = v3;
+    projectile_variables[v2] = (uint8)(LOBYTE(projectile_y_speed[v2]) + LOBYTE(projectile_variables[v2]));
+    uint16 v3 = projectile_x_speed[v2] - 5;
+    projectile_x_speed[v2] = v3;
     if (!v3) {
-      projectile_bomb_y_speed[v2] = kSpazerProjectileYSpeed[v2];
+      projectile_y_speed[v2] = kSpazerProjectileYSpeed[v2];
       projectile_variables[v2] = (uint8)(projectile_variables[v2] + 0x80);
       projectile_unk_A[v2] = 4;
       if (!j)
@@ -5179,10 +5179,10 @@ void ProjPreInstr_SpazerSba_Phase4FlyFromPoint(uint16 j, uint16 r22) {  // 0x90D
   projectile_y_pos[j >> 1] = v1;
   if (sign16(v1 - layer1_y_pos - 16)
       || (v2 = j >> 1,
-          projectile_variables[v2] = (uint8)(LOBYTE(projectile_bomb_y_speed[v2])
+          projectile_variables[v2] = (uint8)(LOBYTE(projectile_y_speed[v2])
                                              + LOBYTE(projectile_variables[v2])),
-          v3 = projectile_bomb_x_speed[v2] + 5,
-          projectile_bomb_x_speed[v2] = v3,
+          v3 = projectile_x_speed[v2] + 5,
+          projectile_x_speed[v2] = v3,
           !sign16(v3 - 96))) {
     FireEndOfSpazerSba(j);
   }
@@ -5195,7 +5195,7 @@ void FireEndOfSpazerSba(uint16 j) {  // 0x90DC67
   projectile_x_pos[v1] += kFireEndOfSpazerSba[v1];
   projectile_dir[v1] = 5;
   projectile_timers[v1] = 4;
-  projectile_bomb_pre_instructions[v1] = FUNC16(ProjPreInstr_EndOfSpazerSba);
+  projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_EndOfSpazerSba);
   if ((int16)(j - 4) < 0) {
     projectile_type[j >> 1] = -32732;
     InitializeShinesparkEchoOrSpazerSba(j);
@@ -6292,7 +6292,7 @@ void Samus_Func10(void) {  // 0x90EB02
 
 void DrawSamusAndProjectiles(void) {  // 0x90EB35
   SamusDrawSprites();
-  DrawPlayerExplosions2();
+  DrawProjectiles();
   Samus_JumpCheck();
   Samus_ShootCheck();
 }

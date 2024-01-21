@@ -783,12 +783,12 @@ void DrawIntroSprites(void) {  // 0x8B8E2D
   if (cinematic_samus_display_flag) {
     if ((cinematic_samus_display_flag & 0x8000) != 0) {
       DrawSamusAndProjectiles();
-      DrawPlayerExplosions2();
+      DrawProjectiles();
       DrawCinematicSpriteObjects_Intro();
     } else {
       DrawCinematicSpriteObjects_Intro();
       DrawSamusAndProjectiles();
-      DrawPlayerExplosions2();
+      DrawProjectiles();
     }
   } else {
     DrawCinematicSpriteObjects_Intro();
