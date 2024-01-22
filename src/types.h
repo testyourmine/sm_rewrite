@@ -111,17 +111,28 @@ typedef uint8_t CoroutineRet;
 
 #define kCoroutineNone 0
 
-/* 18 */
 #pragma pack(push, 1)
+/* 18 */
 typedef struct Mode7ObjectDef {
     VoidP object_def_ptr;
     VoidP pre_instr;
     VoidP instr_list;
 }Mode7ObjectDef;
-#pragma pack (pop)
+
+/* 38 */
+typedef union DemoInputEntry {
+    struct {
+        uint16 timer;
+        uint16 cur_input;
+        uint16 new_input;
+    };
+    struct {
+        uint16 func_ptr;
+        uint16 instr_list_ptr;
+    };
+} DemoInputEntry;
 
 /* 45 */
-#pragma pack(push, 1)
 typedef union ProjectileInstr {
     struct {
         uint16 timer;
@@ -135,10 +146,8 @@ typedef union ProjectileInstr {
         VoidP instr_list_ptr;
     };
 } ProjectileInstr;
-#pragma pack (pop)
 
 /* 90 */
-#pragma pack(push, 1)
 typedef struct LongPtr {
   VoidP addr;
   uint8 bank;

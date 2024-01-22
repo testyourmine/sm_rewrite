@@ -138,7 +138,6 @@ void RunProjectileInstructions(void) {  // 0x9381E9
     projectile_spritemap_pointers[v1] = PI.spritemap_ptr;
     projectile_x_radius[v1] = PI.x_radius;
     projectile_y_radius[v1] = PI.y_radius;
-    uint16 var = sizeof(ProjectileInstr);
     projectile_instruction_ptr[v1] = v3 + sizeof(ProjectileInstr);
   }
 }

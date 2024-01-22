@@ -162,7 +162,7 @@ PairU16 MakePairU16(uint16 k, uint16 j);
 #define kDrawArmCannon_Tab2 ((uint16*)RomFixedPtr(0x90c7a5))
 extern const int16 kSinCosTable8bit_Sext[320];
 //#define kPoseTransitionTable ((uint16*)RomFixedPtr(0x919ee2))
-#define kDemoSetDefPtrs ((uint16*)RomFixedPtr(0x918885))
+//#define kDemoSetDefPtrs ((uint16*)RomFixedPtr(0x918885))
 #define kSpeedBoostToCtr ((uint16*)RomFixedPtr(0x91b61f))
 #define kSpeedBoostToAnimFramePtr ((uint16 *)RomFixedPtr(0x91B5DE))
 #define kSamusPoseToBaseSpritemapIndexTop ((uint16*)RomFixedPtr(0x929263))

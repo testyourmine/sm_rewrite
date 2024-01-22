@@ -616,17 +616,23 @@ typedef struct DemoSetDef {
   uint16 super_missiles;
   uint16 power_bombs;
   uint16 health;
-  uint16 beams;
+  uint16 collected_beams_;
   uint16 equipped_beams_;
   VoidP demo_obj;
 } DemoSetDef;
 
-/* 38 */
-typedef struct DemoInputEntry {
-  uint16 timer;
-  uint16 input;
-  uint16 input_new;
-} DemoInputEntry;
+///* 38 */
+//typedef union DemoInputEntry {
+//  struct {
+//    uint16 timer;
+//    uint16 cur_input;
+//    uint16 new_input;
+//  };
+//  struct {
+//    uint16 func_ptr;
+//    uint16 instr_list_ptr;
+//  };
+//} DemoInputEntry;
 
 /* 39 */
 typedef struct PoseEntry {
@@ -1026,6 +1032,28 @@ enum LoadingGameState {
   kLoadingGameState_5_Main = 0x5,
   kLoadingGameState_1F_StartingAtCeres = 0x1F,
   kLoadingGameState_22_EscapingCeres = 0x22,
+};
+
+enum SamusItems {
+  kItem_VariaSuit = 0x1,
+  kItem_SpringBall = 0x2,
+  kItem_MorphBall = 0x4,
+  kItem_ScrewAttack = 0x8,
+  kItem_GravitySuit = 0x20,
+  kItem_HiJumpBoots = 0x100,
+  kItem_SpaceJump = 0x200,
+  kItem_Bombs = 0x1000,
+  kItem_SpeedBooster = 0x2000,
+  kItem_Grapple = 0x4000,
+  kItem_Xray = 0x8000,
+};
+
+enum SamusBeams {
+  kBeam_Wave = 0x1,
+  kBeam_Ice = 0x2,
+  kBeam_Spazer = 0x4,
+  kBeam_Plasma = 0x8,
+  kBeam_Charge = 0x1000,
 };
 
 /* 95 */
@@ -2179,10 +2207,12 @@ enum Consts_90 {
   addr_kSuperMissileAccelerations = 0xC32B,
 };
 enum Consts_91 {
+  addr_kDemoPreInstr_Empty = 0x8447,
+  addr_kDemoInstrs_BabyMetroidDiscovery_StopAndLook = 0x8623,
   addr_kDemoInstrs_BabyMetroidDiscovery_End = 0x864B,
   addr_kDemoInstrs_LeaveDemo = 0x8776,
-  addr_kDemoInputObjects_BabyMetroidDiscovery = 0x877E,
-  addr_kDemoInputsObjects_OldMotherBrainFight = 0x8784,
+  addr_kDemoInputObject_BabyMetroidDiscovery = 0x877E,
+  addr_kDemoInputObject_OldMotherBrainFight = 0x8784,
   addr_kDemoInstrs_Shinespark_UnseenSection = 0x9346,
 };
 enum Consts_94 {
@@ -2885,9 +2915,9 @@ struct ExtendedSpriteMap; static inline ExtendedSpriteMap *get_ExtendedSpriteMap
 //struct Mode7CgvmWriteQueue; static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr(0x800000 | a); }
 //struct PoseEntry; static inline PoseEntry *get_PoseEntry(uint16 a) { return (PoseEntry *)RomPtr(0x910000 | a); }
 //struct ProjectileDataTable; static inline ProjectileDataTable *get_ProjectileDataTable(uint16 a) { return (ProjectileDataTable *)RomPtr(0x930000 | a); }
-struct DemoInputObject; static inline DemoInputObject *get_DemoInputObject(uint16 a) { return (DemoInputObject *)RomPtr(0x910000 | a); }
+//struct DemoInputObject; static inline DemoInputObject *get_DemoInputObject(uint16 a) { return (DemoInputObject *)RomPtr(0x910000 | a); }
 //struct DemoRoomData; static inline DemoRoomData *get_DemoRoomData(uint16 a) { return (DemoRoomData *)RomPtr(0x820000 | a); }
-struct DemoSetDef; static inline DemoSetDef *get_DemoSetDef(uint16 a) { return (DemoSetDef *)RomPtr(0x910000 | a); }
+//struct DemoSetDef; static inline DemoSetDef *get_DemoSetDef(uint16 a) { return (DemoSetDef *)RomPtr(0x910000 | a); }
 struct EnemyPopulation; static inline EnemyPopulation *get_EnemyPopulation(uint8 db, uint16 a) { return (EnemyPopulation *)RomPtr(db << 16 | a); }
 struct FxDef; static inline FxDef *get_FxDef(uint16 a) { return (FxDef *)RomPtr(0x830000 | a); }
 struct LoadBg_E; static inline LoadBg_E *get_LoadBg_E(uint16 a) { return (LoadBg_E *)RomPtr(0x8F0000 | a); }

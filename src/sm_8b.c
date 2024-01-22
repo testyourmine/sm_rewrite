@@ -2583,7 +2583,7 @@ void CinematicFunction_Intro_WaitInputSetupMotherBrainFight(void) {  // 0x8BAEB8
     frame_handler_beta = FUNC16(Samus_Func15);
     ResetDemoData();
     EnableDemoInput();
-    LoadDemoInputObject(0, addr_kDemoInputsObjects_OldMotherBrainFight);  // undefined
+    LoadDemoInputObject(0, addr_kDemoInputObject_OldMotherBrainFight);  // undefined
     cinematic_samus_display_flag = -1;
     CinematicFunction_Intro_SetupTransitionToGameplay();
   }
@@ -2622,7 +2622,7 @@ void CinematicFunction_Intro_WaitInputSetupBabyMetroid(void) {  // 0x8BAF6C
     frame_handler_beta = FUNC16(Samus_Func15);
     ResetDemoData();
     EnableDemoInput();
-    LoadDemoInputObject(0, addr_kDemoInputObjects_BabyMetroidDiscovery);  // a undefined
+    LoadDemoInputObject(0, addr_kDemoInputObject_BabyMetroidDiscovery);  // a undefined
     cinematic_samus_display_flag = 1;
     CinematicFunction_Intro_SetupTransitionToGameplay();
   }

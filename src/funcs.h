@@ -1424,10 +1424,10 @@ void SamusDrawHandler_NoChargeOrGrapple(void);
 // Bank 91
 uint16 DemoInstr_ClearPreInstr(uint16 k, uint16 j);
 uint16 DemoInstr_DecTimerAndGoto(uint16 k, uint16 j);
-uint16 DemoInstr_Disable(uint16 k, uint16 j);
+uint16 DemoInstr_DisableDemo(uint16 k, uint16 j);
 uint16 DemoInstr_Finish(uint16 k, uint16 j);
-uint16 DemoInstr_Func2(uint16 k, uint16 j);
-uint16 DemoInstr_Func3(uint16 k, uint16 j);
+uint16 DemoInstr_GiveInputToPlayerAndDisableDemo(uint16 k, uint16 j);
+uint16 DemoInstr_FaceSamusLeftAndDisableDemo(uint16 k, uint16 j);
 uint16 DemoInstr_Goto(uint16 k, uint16 j);
 uint16 DemoInstr_SetPreInstr(uint16 k, uint16 j);
 uint16 DemoInstr_SetTimer(uint16 k, uint16 j);
@@ -1501,19 +1501,19 @@ void CalculateXrayHdmaTableInner(uint16 k, uint16 j, uint16 r18, uint16 r20, boo
 void CopyToSamusSuitPalette(uint16 k);
 void CopyToSamusSuitTargetPalette(uint16 k);
 void DemoObjectInputHandler(void);
-void DemoPreInstr_864F(void);
-void DemoPreInstr_866A(void);
-void DemoPreInstr_8AB0(void);
+void DemoPreInstr_BabyMetroidDiscovery_RunLeft(void);
+void DemoPreInstr_BabyMetroidDiscovery_StopAndLook(void);
+void DemoPreInstr_CheckLeaveDemo_Shinespark(void);
 void DemoPreInstr_CheckLeaveDemo(void);
-void DemoSetFunc_0(void);
-void DemoSetFunc_1(void);
-void DemoSetFunc_2(void);
-void DemoSetFunc_3(void);
-void DemoSetFunc_4(void);
-void DemoSetFunc_5(void);
-void DemoSetFunc_6(void);
-void DemoSetFunc_7(void);
-void DemoSetFunc_Common(uint16 a);
+void DemoSet_LandingSite(void);
+void DemoSet_StandFaceRight(void);
+void DemoSet_StandFaceLeft(void);
+void DemoSet_MorphBallMoveLeft(void);
+void DemoSet_FallFaceLeft(void);
+void DemoSet_Shinespark(void);
+void DemoSet_GauntletEntrance(void);
+void DemoSet_StandFaceLeft_LowHealth(void);
+void DemoSet_SetSamusPose(uint16 a);
 void DisableDemoInput(void);
 void EnableDemoInput(void);
 void GameState_28_Unused_(void);
@@ -1649,6 +1649,7 @@ void Xray_SetupStage6(void);
 void Xray_SetupStage7(void);
 void Xray_SetupStage8_SetBackdropColor(void);
 void sub_91EFC3(void);
+DemoInputEntry get_DemoInputEntry(uint16 demo_input_);
 
 // Bank 92
 uint8 PlaySamusFanfare(void);
@@ -5788,13 +5789,13 @@ void VerifySRAM(void);
 #define fnDemoInstr_Goto 0x918448
 #define fnDemoInstr_DecTimerAndGoto 0x91844F
 #define fnDemoInstr_SetTimer 0x918459
-#define fnDemoInstr_Func2 0x9185FC
-#define fnDemoPreInstr_864F 0x91864F
-#define fnDemoPreInstr_866A 0x91866A
-#define fnDemoInstr_Disable 0x918682
-#define fnDemoInstr_Func3 0x918739
+#define fnDemoInstr_GiveInputToPlayerAndDisableDemo 0x9185FC
+#define fnDemoPreInstr_BabyMetroidDiscovery_RunLeft 0x91864F
+#define fnDemoPreInstr_BabyMetroidDiscovery_StopAndLook 0x91866A
+#define fnDemoInstr_DisableDemo 0x918682
+#define fnDemoInstr_FaceSamusLeftAndDisableDemo 0x918739
 #define fnDemoPreInstr_CheckLeaveDemo 0x918A9B
-#define fnDemoPreInstr_8AB0 0x918AB0
+#define fnDemoPreInstr_CheckLeaveDemo_Shinespark 0x918AB0
 #define fnXray_SetupStage1_FreezeTimeBackup 0x91CAF9
 #define fnXray_SetupStage2_ReadBg1_2ndScreen 0x91CB1C
 #define fnXray_SetupStage3_ReadBg1_1stScreen 0x91CB57
