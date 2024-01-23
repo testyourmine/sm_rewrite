@@ -2581,7 +2581,7 @@ void MaridiaFloater_Powerbomb(void) {  // 0xA8C63F
 }
 
 void WreckedShipRobot_Init(void) {  // 0xA8CB77
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 1) != 0) {
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaBoss) != 0) {
     enemy_gfx_drawn_hook.bank = -88;
     enemy_gfx_drawn_hook.addr = FUNC16(WreckedShipRobot_Func_1);
     Enemy_WreckedShipRobot *E = Get_WreckedShipRobot(cur_enemy_index);
@@ -2939,7 +2939,7 @@ void WreckedShipRobotDeactivated_Shot(void) {  // 0xA8D18D
 }
 
 void WreckedShipRobot_Shot(void) {  // 0xA8D192
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 1) != 0) {
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaBoss) != 0) {
     NormalEnemyShotAi();
     Enemy_WreckedShipRobot *E = Get_WreckedShipRobot(cur_enemy_index);
     if (E->base.health) {
@@ -3446,7 +3446,7 @@ void WreckedShipSpark_Init(void) {  // 0xA8E637
   E->base.current_instruction = kEnemyInit_WreckedShipSpark_InstrListPtrs[v2];
   E->base.timer = 0;
   E->base.instruction_timer = 1;
-  if ((boss_bits_for_area[area_index] & 1) == 0) {
+  if ((boss_bits_for_area[area_index] & kBossBit_AreaBoss) == 0) {
     E->base.properties |= *(uint16 *)((uint8 *)&gVramWriteEntry(0)[6].vram_dst + 1);
   }
 }

@@ -143,7 +143,7 @@ const uint16 *Torizo_Instr_5(uint16 k, const uint16 *jp) {  // 0xAAB94D
 
 const uint16 *Torizo_Instr_9(uint16 k, const uint16 *jp) {  // 0xAAB951
   QueueMusic_Delayed8(g_word_AAB098);
-  SpawnPalfxObject(addr_stru_8DF759);
+  SpawnPalfxObject(addr_kPalfx_BombTorizoBelly);
   return jp;
 }
 
@@ -721,7 +721,7 @@ const uint16 *Torizo_Instr_42(uint16 k, const uint16 *jp) {  // 0xAACAE2
   Enemy_Torizo *E = Get_Torizo(k);
   E->base.x_width = 18;
   E->base.y_height = 48;
-  SpawnPalfxObject(addr_stru_8DF75D);
+  SpawnPalfxObject(addr_kPalfx_GoldenTorizoBelly);
   return jp;
 }
 
@@ -1511,7 +1511,7 @@ void ChozoStatue_Main(void) {  // 0xAAE7A7
 }
 
 void Shaktool_PreInstr_0(uint16 k) {  // 0xAAE7AE
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 1) != 0) {
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaBoss) != 0) {
     Enemy_Shaktool *E = Get_Shaktool(k);
     if (E->shakt_parameter_1) {
       E->base.current_instruction = addr_kShaktool_Ilist_E461;

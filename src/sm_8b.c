@@ -1616,7 +1616,7 @@ void HandleCinematicsTransitions_2(void) {  // 0x8B9A9C
   palette_buffer[202] = 32128;
   ClearPaletteFXObjects();
   SpawnPalfxObject(addr_kPalfx_TitleScreen_BabyMetroidTubeLight);
-  SpawnPalfxObject(addr_kPalfx_E1A4);
+  SpawnPalfxObject(addr_kPalfx_TitleScreen_FlickeringDisplays);
   SetPpuBackdropBlack();
   reg_TM = 17;
   SpawnTitleScreenGradientObjs();
@@ -1731,7 +1731,7 @@ void LoadTitleSequenceGraphics(void) {  // 0x8B9B87
   EnablePaletteFx();
   fx_layer_blending_config_a = 0;
   SpawnPalfxObject(addr_kPalfx_TitleScreen_BabyMetroidTubeLight);
-  SpawnPalfxObject(addr_kPalfx_E1A4);
+  SpawnPalfxObject(addr_kPalfx_TitleScreen_FlickeringDisplays);
   uint16 v2 = 0;  // undefined
   SpawnMode7Object(kMode7ObjBabyMetroidInTitle, v2);
 }
@@ -2809,7 +2809,7 @@ void CinematicFunction_Intro_XfadeGameplayFade(void) {  // 0x8BB250
     ClearJapaneseTextTiles();
     cinematic_function = FUNC16(CinematicFunc_Nothing);
     if ((cinematic_samus_display_flag & 0x8000) != 0)
-      SpawnPalfxObject(addr_kPalfx_E1BC);
+      SpawnPalfxObject(addr_kPalfx_OldMotherBrainFightBgLights);
   }
 }
 
@@ -3553,8 +3553,8 @@ void CinematicFunction_Intro_Func56(void) {  // 0x8BBDF9
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCE91, 1);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF0F, 1);
     cinematic_function = FUNC16(CinematicFunction_Intro_Func67);
-    SpawnPalfxObject(addr_kPalfx_E1A8);
-    SpawnPalfxObject(addr_kPalfx_E1AC);
+    SpawnPalfxObject(addr_kPalfx_Cutscene_GunshipEngineFlicker);
+    SpawnPalfxObject(addr_kPalfx_Cutscene_SpriteCeresNavigationLights);
   } else {
     mode7_transform_zoom -= 16;
   }
@@ -3801,7 +3801,7 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE8B, 2);
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE91, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF33, 0);
-  SpawnPalfxObject(addr_kPalfx_E1B8);
+  SpawnPalfxObject(addr_kPalfx_Cutscene_BgCeresNavigationLights);
   EnableNMI();
   screen_fade_delay = 1;
   screen_fade_counter = 1;
@@ -4042,7 +4042,7 @@ void CinematicFunction_Intro_Func86(void) {  // 0x8BC699
   ClearPaletteFXObjects();
   EnablePaletteFx();
   reg_MOSAIC = -127;
-  SpawnPalfxObject(addr_kPalfx_E1A8);
+  SpawnPalfxObject(addr_kPalfx_Cutscene_GunshipEngineFlicker);
   cinematic_function = FUNC16(CinematicFunction_Intro_Func87);
   EnableNMI();
   screen_fade_delay = 1;
@@ -4180,7 +4180,7 @@ void CinematicFunction_Intro_Func102(uint16 j) {  // 0x8BC992
 }
 
 uint16 CinematicSprInstr_C9A5(uint16 k, uint16 j) {  // 0x8BC9A5
-  SpawnPalfxObject(addr_kPalfx_E1B0);
+  SpawnPalfxObject(addr_kPalfx_PlantZebesText_FadeIn);
   return j;
 }
 
@@ -4374,8 +4374,8 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
 
 void CinematicFunction_Intro_Func109(void) {  // 0x8BD6D7
   if (!(HasQueuedMusic() & 1)) {
-    SpawnPalfxObject(addr_kPalfx_E1D8);
-    SpawnPalfxObject(addr_kPalfx_E1DC);
+    SpawnPalfxObject(addr_kPalfx_ZebesExploding_Lava);
+    SpawnPalfxObject(addr_kPalfx_ZebesExploding_FadeOutCrust);
     cinematic_function = FUNC16(CinematicFunction_Intro_Func110);
   }
 }
@@ -4418,7 +4418,7 @@ void CinematicFunction_Intro_Func112(void) {  // 0x8BD731
   WriteReg(MDMAEN, 2);
   ClearPaletteFXObjects();
   ClearCinematicSprites();
-  SpawnPalfxObject(addr_kPalfx_E1E0);
+  SpawnPalfxObject(addr_kPalfx_ZebesExploding_FadeOutGrayClouds);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEED3, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEED9, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEDF, 0);
@@ -4668,8 +4668,8 @@ void CinematicFunction_Intro_Func120(void) {  // 0x8BDBC4
     palette_buffer[0] = 0;
     palette_buffer[16] = 0;
     palette_buffer[128] = 0;
-    SpawnPalfxObject(addr_kPalfx_E1D4);
-    SpawnPalfxObject(addr_kPalfx_E1E4);
+    SpawnPalfxObject(addr_kPalfx_ZebesExplosion_PlanetAfterglow);
+    SpawnPalfxObject(addr_kPalfx_ZebesExplosion_GunshipEmerging);
     reg_M7X = 56;
     reg_M7Y = 24;
     mode7_x_pos = -72;
@@ -5595,7 +5595,7 @@ void CinematicFunction_Intro_Func179(uint16 k) {  // 0x8BF1E7
     cinematicbg_x_pos[v1] = 394;
     cinematicbg_y_pos[v1] = 367;
     cinematicspr_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
-    SpawnPalfxObject(addr_kPalfx_E200);
+    SpawnPalfxObject(addr_kPalfx_PostCreditsIcon);
   } else {
     cinematicspr_goto_timer[v1] += 2;
   }
@@ -5628,7 +5628,7 @@ uint16 CinematicSprInstr_Func181(uint16 k, uint16 j) {  // 0x8BF25E
 }
 
 uint16 CinematicSprInstr_Func182(uint16 k, uint16 j) {  // 0x8BF284
-  SpawnPalfxObject(addr_kPalfx_E1C4);
+  SpawnPalfxObject(addr_kPalfx_ZebesExploding_FadeOutZoomedOut);
   palette_buffer[254] = 1;
   return j;
 }
@@ -5659,9 +5659,9 @@ uint16 CinematicSprInstr_Func185(uint16 k, uint16 j) {  // 0x8BF2B7
   reg_BG2SC = 124;
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BEEBB, 0);
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BEEF7, 2);
-  SpawnPalfxObject(addr_kPalfx_E1C8);
-  SpawnPalfxObject(addr_kPalfx_E1D0);
-  SpawnPalfxObject(addr_kPalfx_E1E8);
+  SpawnPalfxObject(addr_kPalfx_ZebesExplosion_WideForeground);
+  SpawnPalfxObject(addr_kPalfx_ZebesExplosion_WhiteOutSpace);
+  SpawnPalfxObject(addr_kPalfx_ZebesExplosion_WideBackground);
   return j;
 }
 
@@ -5672,7 +5672,7 @@ uint16 CinematicSprInstr_Func186(uint16 k, uint16 j) {  // 0x8BF2FA
   reg_CGADSUB = 51;
   reg_BG1SC = 116;
   reg_BG2SC = 120;
-  SpawnPalfxObject(addr_kPalfx_E1CC);
+  SpawnPalfxObject(addr_kPalfx_ZebesExplosion_Finale);
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BEEC1, 6);
   return j;
 }

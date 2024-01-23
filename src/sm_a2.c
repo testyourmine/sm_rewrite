@@ -1294,7 +1294,7 @@ void GunshipTop_Init(void) {  // 0xA2A644
     E->gtp_var_F = FUNC16(GunshipTop_14);
     Get_GunshipTop(0)->gtp_var_A = 144;
   }
-  SpawnPalfxObject(addr_stru_8DE1C0);
+  SpawnPalfxObject(addr_kPalfx_GunshipGlow);
   Get_GunshipTop(cur_enemy_index)->gtp_var_D = 1;
   Get_GunshipTop(0)->gtp_var_C = 0;
 }

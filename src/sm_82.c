@@ -552,7 +552,7 @@ void DemoRoom_SetKraidFunctionTimer(void) {  // 0x82892B
 }
 
 void DemoRoom_SetBrinstarBossBits(void) {  // 0x828932
-  boss_bits_for_area[1] = 1;
+  boss_bits_for_area[1] = kBossBit_AreaBoss;
 }
 
 static Func_V_Coroutine *const kGameStateFuncs[45] = {

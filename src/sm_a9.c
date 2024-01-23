@@ -1830,10 +1830,10 @@ void MotherBrain_Phase3_Death_16_StartEscape(void) {  // 0xA9B26D
     QueueMusic_Delayed8(7);
     earthquake_type = 5;
     earthquake_timer = -1;
-    SpawnPalfxObject(addr_kPalfx_FFC9);
-    SpawnPalfxObject(addr_kPalfx_FFCD);
-    SpawnPalfxObject(addr_kPalfx_FFD1);
-    SpawnPalfxObject(addr_kPalfx_FFD5);
+    SpawnPalfxObject(addr_kPalfx_Tourian8_RedFlashing_Shutter);
+    SpawnPalfxObject(addr_kPalfx_Tourian16_RedFlashing_Background);
+    SpawnPalfxObject(addr_kPalfx_Tourian32_RedFlashing_GeneralLevel);
+    SpawnPalfxObject(addr_kPalfx_Tourian64_RedFlashing_ArkanoidBlocksAndOrbs);
     Get_MotherBrain(0x40)->mbn_var_02 = 0;
     SetupZebesEscapeTypewriter();
     Enemy_MotherBrain *E = Get_MotherBrain(0);

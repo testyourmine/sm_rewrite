@@ -1024,7 +1024,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
   int16 v8;
   Enemy_CeresRidley *E = Get_CeresRidley(0);
 
-  if ((boss_bits_for_area[area_index] & 1) != 0) {
+  if ((boss_bits_for_area[area_index] & kBossBit_AreaBoss) != 0) {
     E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Deleted | kEnemyProps_Invisible;
   } else {
     for (int i = 4094; i >= 0; i -= 2)
@@ -4532,7 +4532,7 @@ const uint16 *CeresDoor_Instr_6(uint16 k, const uint16 *jp) {  // 0xA6F63E
 }
 
 const uint16 *CeresDoor_Instr_4(uint16 k, const uint16 *jp) {  // 0xA6F66A
-  if (*(uint16 *)&boss_bits_for_area[area_index] & 1)
+  if (*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaBoss)
     return jp + 1;
   else
     return INSTR_RETURN_ADDR(*jp);

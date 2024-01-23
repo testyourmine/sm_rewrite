@@ -119,7 +119,7 @@ PairU16 PalInstr_ColorPlus9(uint16 k, uint16 j) {  // 0x8DC5BD
   return MakePairU16(k + 18, j + 2);
 }
 
-PairU16 PalInstr_ColorPlus15(uint16 k, uint16 j) {  // 0x8DC5C6
+PairU16 UNUSED_PalInstr_ColorPlus15(uint16 k, uint16 j) {  // 0x8DC5C6
   return MakePairU16(k + 30, j + 2);
 }
 
@@ -133,8 +133,8 @@ PairU16 PalInstr_SetPreInstr(uint16 k, uint16 j) {  // 0x8DC5D4
   return MakePairU16(k, j + 2);
 }
 
-PairU16 PalInstr_ClearPreInstr(uint16 k, uint16 j) {  // 0x8DC5DD
-  palettefx_pre_instr[k >> 1] = addr_locret_8DC5E3;
+PairU16 UNUSED_PalInstr_ClearPreInstr(uint16 k, uint16 j) {  // 0x8DC5DD
+  palettefx_pre_instr[k >> 1] = addr_kPalfxPreInstr_Empty;
   return MakePairU16(k, j);
 }
 
@@ -163,13 +163,13 @@ PairU16 PalInstr_SetColorIndex(uint16 k, uint16 j) {  // 0x8DC655
   return MakePairU16(k, j + 2);
 }
 
-PairU16 PalInstr_QueueMusic(uint16 k, uint16 j) {  // 0x8DC65E
+PairU16 UNUSED_PalInstr_QueueMusic(uint16 k, uint16 j) {  // 0x8DC65E
   const uint8 *v2 = RomPtr_8D(j);
   QueueMusic_Delayed8(*v2);
   return MakePairU16(k, j + 1);
 }
 
-PairU16 PalInstr_QueueSfx1(uint16 k, uint16 j) {  // 0x8DC66A
+PairU16 UNUSED_PalInstr_QueueSfx1(uint16 k, uint16 j) {  // 0x8DC66A
   const uint16 *v2 = (const uint16 *)RomPtr_8D(j);
   QueueSfx1_Max6(*v2);
   return MakePairU16(k, j + 1);
@@ -181,20 +181,20 @@ PairU16 PalInstr_QueueSfx2(uint16 k, uint16 j) {  // 0x8DC673
   return MakePairU16(k, j + 1);
 }
 
-PairU16 PalInstr_QueueSfx3(uint16 k, uint16 j) {  // 0x8DC67C
+PairU16 UNUSED_PalInstr_QueueSfx3(uint16 k, uint16 j) {  // 0x8DC67C
   const uint16 *v2 = (const uint16 *)RomPtr_8D(j);
   QueueSfx3_Max6(*v2);
   return MakePairU16(k, j + 1);
 }
 
-void PalInit_E1BC(uint16 k, uint16 j) {  // 0x8DE204
-  palettefx_pre_instr[j >> 1] = FUNC16(PalPreInstr_E1BC);
+void PalInit_E1BC_OldMotherBrainFightBgLights(uint16 k, uint16 j) {  // 0x8DE204
+  palettefx_pre_instr[j >> 1] = FUNC16(PalPreInstr_DisableBgLightsIfIntroPage2);
 }
 
-void PalPreInstr_E1BC(uint16 k) {  // 0x8DE20B
+void PalPreInstr_DisableBgLightsIfIntroPage2(uint16 k) {  // 0x8DE20B
   if (cinematic_function == FUNC16(CinematicFunction_Intro_Page2)) {
     int v1 = k >> 1;
-    palettefx_instr_list_ptrs[v1] = addr_off_8DE192;
+    palettefx_instr_list_ptrs[v1] = addr_kPalFxInstr_Empty;
     palettefx_instr_timers[v1] = 1;
   }
 }
@@ -205,7 +205,7 @@ void PalPreInstr_CheckEnemy0Health(uint16 k) {  // 0x8DE2E0
 }
 
 void PalPreInstr_SamusInHeat(uint16 k) {  // 0x8DE379
-  if ((equipped_items & 0x21) == 0) {
+  if ((equipped_items & (kItem_GravitySuit | kItem_VariaSuit)) == 0) {
     AddToHiLo(&samus_periodic_damage, &samus_periodic_subdamage, 0x4000);
     if ((nmi_frame_counter_word & 7) == 0 && samus_health > 0x46)
       QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
@@ -215,25 +215,25 @@ void PalPreInstr_SamusInHeat(uint16 k) {  // 0x8DE379
     uint16 v2 = 2 * samus_in_heat_palfx_index, v4;
     int v3 = k >> 1;
     palettefx_instr_timers[v3] = 1;
-    if ((equipped_items & 0x20) != 0) {
-      v4 = addr_off_8DE3E0;
-    } else if ((equipped_items & 1) != 0) {
-      v4 = addr_off_8DE400;
+    if ((equipped_items & kItem_GravitySuit) != 0) {
+      v4 = addr_kPalfxInstrListPtrs_HeatedSamus_GravitySuit;
+    } else if ((equipped_items & kItem_VariaSuit) != 0) {
+      v4 = addr_kPalfxInstrListPtrs_HeatedSamus_VariaSuit;
     } else {
-      v4 = addr_off_8DE420;
+      v4 = addr_kPalfxInstrListPtrs_HeatedSamus_PowerSuit;
     }
     palettefx_instr_list_ptrs[v3] = *(uint16 *)&RomPtr_8D(v4)[v2];
   }
 }
 
-void PalInit_F761_Norfair1(uint16 k, uint16 j) {  // 0x8DE440
+void PalInit_F761_Norfair1_Tourian1(uint16 k, uint16 j) {  // 0x8DE440
   uint16 v2;
-  if ((equipped_items & 0x20) != 0) {
-    v2 = addr_off_8DE8B6;
-  } else if ((equipped_items & 1) != 0) {
-    v2 = addr_off_8DE68A;
+  if ((equipped_items & kItem_GravitySuit) != 0) {
+    v2 = addr_kPalfxInstrList_HeatedSamus_GravitySuit;
+  } else if ((equipped_items & kItem_VariaSuit) != 0) {
+    v2 = addr_kPalfxInstrList_HeatedSamus_VariaSuit;
   } else {
-    v2 = addr_kPalfxInstrList_E45E;
+    v2 = addr_kPalfxInstrList_HeatedSamus_PowerSuit;
   }
   palettefx_instr_list_ptrs[j >> 1] = v2;
 }
@@ -242,7 +242,7 @@ void PalPreInstr_SwitchIfYpos(uint16 k) {  // 0x8DEC59
   if (samus_y_pos < 0x380) {
     int v2 = k >> 1;
     palettefx_instr_timers[v2] = 1;
-    palettefx_instr_list_ptrs[v2] = addr_word_8DEB43;
+    palettefx_instr_list_ptrs[v2] = addr_kPalfxInstrList_Crateria1;
   }
 }
 
@@ -250,12 +250,12 @@ void PalPreInstr_SwitchIfYpos2(uint16 k) {  // 0x8DED84
   if (samus_y_pos < 0x380) {
     int v2 = k >> 1;
     palettefx_instr_timers[v2] = 1;
-    palettefx_instr_list_ptrs[v2] = addr_word_8DEC76;
+    palettefx_instr_list_ptrs[v2] = addr_kPalfxInstrList_DarkLightning_Unused;
   }
 }
 
 void PalPreInstr_DeletePalfxIfMinibossDead(uint16 k) {  // 0x8DEEC5
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 2) != 0)
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0)
     palettefx_ids[k >> 1] = 0;
 }
 
@@ -264,26 +264,26 @@ PairU16 PalInstr_SetPalfxIndex(uint16 k, uint16 j) {  // 0x8DF1C6
   return MakePairU16(k, j + 1);
 }
 
-void PalPreInstr_F621(uint16 k) {  // 0x8DF621
+void PalPreInstr_DeletePalfxIfTwoMoreFxActive(uint16 k) {  // 0x8DF621
   if (*(uint16 *)((uint8 *)&flag_for_palette_fx_objects + k))
     palettefx_ids[k >> 1] = 0;
 }
 
 void PalInit_F779_Brinstar8(uint16 k, uint16 j) {  // 0x8DF730
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 2) != 0)
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0)
     palettefx_ids[j >> 1] = 0;
 }
 
 void CallPalFxPreInstr(uint32 ea, uint16 k) {
   switch (ea) {
   case fnPalPreInstr_nullsub_129: PalPreInstr_nullsub_129(k); return;
-  case fnPalPreInstr_E1BC: PalPreInstr_E1BC(k); return;
+  case fnPalPreInstr_DisableBgLightsIfIntroPage2: PalPreInstr_DisableBgLightsIfIntroPage2(k); return;
   case fnPalPreInstr_CheckEnemy0Health: PalPreInstr_CheckEnemy0Health(k); return;
   case fnPalPreInstr_SamusInHeat: PalPreInstr_SamusInHeat(k); return;
   case fnPalPreInstr_DeletePalfxIfMinibossDead: PalPreInstr_DeletePalfxIfMinibossDead(k); return;
   case fnPalPreInstr_SwitchIfYpos: PalPreInstr_SwitchIfYpos(k); return;
   case fnPalPreInstr_SwitchIfYpos2: PalPreInstr_SwitchIfYpos2(k); return;
-  case fnPalPreInstr_F621: PalPreInstr_F621(k); return;
+  case fnPalPreInstr_DeletePalfxIfTwoMoreFxActive: PalPreInstr_DeletePalfxIfTwoMoreFxActive(k); return;
   default: Unreachable();
   }
 }
@@ -296,18 +296,18 @@ PairU16 CallPalInstr(uint32 ea, uint16 k, uint16 j) {
   case fnPalInstr_ColorPlus4: return PalInstr_ColorPlus4(k, j);
   case fnPalInstr_ColorPlus8: return PalInstr_ColorPlus8(k, j);
   case fnPalInstr_ColorPlus9: return PalInstr_ColorPlus9(k, j);
-  case fnPalInstr_ColorPlus15: return PalInstr_ColorPlus15(k, j);
+  case fnUNUSED_PalInstr_ColorPlus15: return UNUSED_PalInstr_ColorPlus15(k, j);
   case fnPalInstr_Delete: return PalInstr_Delete(k, j);
   case fnPalInstr_SetPreInstr: return PalInstr_SetPreInstr(k, j);
-  case fnPalInstr_ClearPreInstr: return PalInstr_ClearPreInstr(k, j);
+  case fnUNUSED_PalInstr_ClearPreInstr: return UNUSED_PalInstr_ClearPreInstr(k, j);
   case fnPalInstr_Goto: return PalInstr_Goto(k, j);
   case fnPalInstr_DecTimerGoto: return PalInstr_DecTimerGoto(k, j);
   case fnPalInstr_SetTimer: return PalInstr_SetTimer(k, j);
   case fnPalInstr_SetColorIndex: return PalInstr_SetColorIndex(k, j);
-  case fnPalInstr_QueueMusic: return PalInstr_QueueMusic(k, j);
-  case fnPalInstr_QueueSfx1: return PalInstr_QueueSfx1(k, j);
+  case fnUNUSED_PalInstr_QueueMusic: return UNUSED_PalInstr_QueueMusic(k, j);
+  case fnUNUSED_PalInstr_QueueSfx1: return UNUSED_PalInstr_QueueSfx1(k, j);
   case fnPalInstr_QueueSfx2: return PalInstr_QueueSfx2(k, j);
-  case fnPalInstr_QueueSfx3: return PalInstr_QueueSfx3(k, j);
+  case fnUNUSED_PalInstr_QueueSfx3: return UNUSED_PalInstr_QueueSfx3(k, j);
   case fnPalInstr_SetPalfxIndex: return PalInstr_SetPalfxIndex(k, j);
   default: Unreachable(); return (PairU16) { 0, 0 };
   }
@@ -316,8 +316,8 @@ PairU16 CallPalInstr(uint32 ea, uint16 k, uint16 j) {
 void CallPalfxFunc(uint32 ea, uint16 k, uint16 j) {
   switch (ea) {
   case fnnullsub_131: return;
-  case fnPalInit_E1BC: PalInit_E1BC(k, j); return;
-  case fnPalInit_F761_Norfair1: PalInit_F761_Norfair1(k, j); return;
+  case fnPalInit_E1BC_OldMotherBrainFightBgLights: PalInit_E1BC_OldMotherBrainFightBgLights(k, j); return;
+  case fnPalInit_F761_Norfair1_Tourian1: PalInit_F761_Norfair1_Tourian1(k, j); return;
   case fnPalInit_F779_Brinstar8: PalInit_F779_Brinstar8(k, j); return;
   default: Unreachable();
   }

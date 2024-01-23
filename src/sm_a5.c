@@ -720,7 +720,7 @@ void Draygon_Func_33(void) {  // 0xA592AB
     E->base.properties = v1;
     Get_Draygon(0x40)->base.properties = v1;
     uint16 v2 = area_index;
-    *(uint16 *)&boss_bits_for_area[area_index] |= 1;
+    *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaBoss;
     Enemy_ItemDrop_Draygon(v2);
     Draygon_Func_44();
   }
@@ -1372,7 +1372,7 @@ void SporeSpawn_Init(void) {  // 0xA5EA2A
   E->ssn_var_C = E->base.x_pos;
   E->ssn_var_D = E->base.y_pos;
   E->ssn_var_F = 0;
-  if ((boss_bits_for_area[area_index] & 2) != 0) {
+  if ((boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0) {
     E0->base.current_instruction = addr_kDraygon_Ilist_E6B9;
     E0->ssn_var_A = FUNC16(nullsub_223);
     E0->base.properties |= 0x8000;
@@ -1572,7 +1572,7 @@ void SporeSpawn_Func_6(void) {  // 0xA5EDF3
       *(uint16 *)((uint8 *)eproj_id + (uint16)i) = 0;
     E0->base.current_instruction = addr_kDraygon_Ilist_E77D;
     E0->base.instruction_timer = 1;
-    *(uint16 *)&boss_bits_for_area[area_index] |= 2;
+    *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaMiniBoss;
     scrolling_finished_hook = 0;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x07, 0x1e, 0xb78f });
   }

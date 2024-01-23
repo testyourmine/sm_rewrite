@@ -366,7 +366,7 @@ void Crocomire_Init(void) {  // 0xA48A5A
     tilemap_stuff[v0 >> 1] = 824;
     v0 += 2;
   } while ((int16)(v0 - 4096) < 0);
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 2) != 0) {
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0) {
     *(uint16 *)scrolls = 257;
     *(uint16 *)&scrolls[2] = 257;
     croco_target_0688 = 0;
@@ -1482,7 +1482,7 @@ void Crocomire_Func_90(void) {  // 0xA49B7D
 void Crocomire_9B86(void) {  // 0xA49B86
   QueueMusic_Delayed8(6);
   camera_distance_index = 0;
-  *(uint16 *)&boss_bits_for_area[area_index] |= 2;
+  *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaMiniBoss;
   QueueMusic_Delayed8(6);
   Crocomire_Func_87(0, 0xFFF0);
   Crocomire_Func_87(0, 0x10);
@@ -1612,7 +1612,7 @@ void Crocomire_Func_1(void) {  // 0xA4BAB4
 
 void CrocomireTongue_Init(void) {  // 0xA4F67A
   Enemy_Crocomire *E = Get_Crocomire(cur_enemy_index);
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & 2) != 0) {
+  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0) {
     E->base.properties = E->base.properties & 0xDCFF | 0x300;
   } else {
     E->base.current_instruction = addr_kCrocomire_Ilist_BE56;

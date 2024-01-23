@@ -2501,7 +2501,7 @@ void ResetProjectileData(void) {  // 0x90AD22
     Samus_LoadSuitTargetPalette();
   }
   if (hyper_beam_flag)
-    SpawnPalfxObject(addr_stru_8DE1F0);
+    SpawnPalfxObject(addr_kPalfx_HyperBeam);
 }
 
 void ClearProjectile(uint16 k) {  // 0x90ADB7
@@ -6775,13 +6775,13 @@ uint8 SamusCode_08_SetupForCeresStart(void) {  // 0x90F1E9
 
 uint8 SamusCode_08_SetupForZebesStart(void) {  // 0x90F23C
   if ((equipped_items & 0x20) != 0) {
-    SpawnPalfxObject(addr_stru_8DE1FC);
+    SpawnPalfxObject(addr_kPalfx_SamusLoading_GravitySuit);
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   } else if ((equipped_items & 1) != 0) {
-    SpawnPalfxObject(addr_stru_8DE1F8);
+    SpawnPalfxObject(addr_kPalfx_SamusLoading_VariaSuit);
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   } else {
-    SpawnPalfxObject(addr_stru_8DE1F4);
+    SpawnPalfxObject(addr_kPalfx_SamusLoading_PowerSuit);
     samus_pose = kPose_00_FaceF_Powersuit;
   }
   Samus_LoadSuitPalette();

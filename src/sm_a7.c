@@ -163,7 +163,7 @@ void sub_A7A92A(void) {  // 0xA7A92A
 }
 
 uint16 Kraid_CheckIfDead(void) {  // 0xA7A92C
-  return (*(uint16 *)&boss_bits_for_area[area_index] & 1) != 0;
+  return (*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaBoss) != 0;
 }
 
 void Kraid_SetEnemyPropsToDead(void) {  // 0xA7A943
@@ -1868,10 +1868,10 @@ void Kraid_FadeInBg_FadeInBp6(void) {  // 0xA7C815
   if (AdvancePaletteFade_BgPalette6() & 1) {
     QueueMusic_Delayed8(3);
     v0 = *(uint16 *)&boss_bits_for_area[area_index];
-    if ((v0 & 1) != 0) {
+    if ((v0 & kBossBit_AreaBoss) != 0) {
       Get_Kraid(0)->kraid_var_A = FUNC16(Kraid_FadeInBg_SetEnemyDead_KraidWasDead);
     } else {
-      *(uint16 *)&boss_bits_for_area[area_index] = v0 | 1;
+      *(uint16 *)&boss_bits_for_area[area_index] = v0 | kBossBit_AreaBoss;
       Get_Kraid(0)->kraid_var_A = FUNC16(Kraid_FadeInBg_SetEnemyDead_KraidWasAlive);
     }
   }
@@ -2990,7 +2990,7 @@ void Phantoon_Dead(uint16 k) {  // 0xA7DB3D
       E1->base.properties = v4;
       Get_Phantoon(0x80)->base.properties = v4;
       Get_Phantoon(0xC0)->base.properties = v4;
-      *(uint16 *)&boss_bits_for_area[area_index] |= 1;
+      *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaBoss;
       SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x00, 0x06, 0xb78b });
       QueueMusic_Delayed8(3);
     }

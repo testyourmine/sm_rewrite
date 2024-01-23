@@ -2092,7 +2092,7 @@ uint8 SomeMotherBrainScripts_2(void) {  // 0x91E59B
 uint8 SomeMotherBrainScripts_3_EnableHyperBeam(void) {  // 0x91E5F0
   equipped_beams = 4105;
   UpdateBeamTilesAndPalette();
-  SpawnPalfxObject(addr_stru_8DE1F0);
+  SpawnPalfxObject(addr_kPalfx_HyperBeam);
   hyper_beam_flag = FUNC16(Samus_InputHandler);
   play_resume_charging_beam_sfx = 0;
   return 0;
