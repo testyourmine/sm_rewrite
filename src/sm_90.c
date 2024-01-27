@@ -7056,7 +7056,7 @@ void Samus_ShootCheck(void) {  // 0x90F576
       debug_invincibility = 0;
     }
   }
-  if (CheckEventHappened(0xE) & 1
+  if (CheckEventHappened(kEvent_14_ZebesTimebombSet) & 1
       && frame_handler_gamma == FUNC16(DrawTimer_)
       && game_state != kGameState_35_TimeUp) {
     game_state = kGameState_35_TimeUp;

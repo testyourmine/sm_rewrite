@@ -346,7 +346,7 @@ CoroutineRet GameState_36_WhitingOutFromTimeUp(void) {  // 0x828431
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
     QueueSfx3_Max15(kSfx3_Silence);
-    if (CheckEventHappened(0xE)) {
+    if (CheckEventHappened(kEvent_14_ZebesTimebombSet)) {
       game_options_screen_index = 0;
       menu_index = 0;
       for (int i = 254; i >= 0; i -= 2)
@@ -4818,7 +4818,7 @@ void OptionsMenuControllerFunc_ResetToDefault(void) {  // 0x82F224
 }
 
 void OptionsMenuControllerFunc_End(void) {  // 0x82F25D
-  if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0 && !OptionsMenuFunc8()) {
+  if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0 && !OptionsMenuFunc8_DrawGameOptionsMenuControllerBindings()) {
     menu_option_index = 0;
     GameOptionsMenuItemFunc_4();
   }
@@ -4921,7 +4921,7 @@ void OptionsPreInstr_SpecialSettingModeBorder(uint16 k) {  // 0x82F3E2
   }
 }
 
-void sub_82F404(uint16 k) {  // 0x82F404
+void UNUSED_sub_82F404(uint16 k) {  // 0x82F404
   if (game_options_screen_index == 1) {
     int v1 = k >> 1;
     eproj_E[v1 + 15] = 1;
@@ -4974,7 +4974,7 @@ LABEL_16:
     v0 += 2;
   } while ((int16)(v0 - 14) < 0);
 }
-static const Buttons word_82F575[9] = {  // 0x82F558
+static const Buttons kControllerInputMasks[9] = {  // 0x82F558
   kButton_X,
   kButton_A,
   kButton_B,
@@ -4985,11 +4985,11 @@ static const Buttons word_82F575[9] = {  // 0x82F558
   kButton_Left,
   kButton_Right,
 };
-uint8 OptionsMenuFunc8(void) {
+uint8 OptionsMenuFunc8_DrawGameOptionsMenuControllerBindings(void) {
   int v0 = 0, v2;
   do {
     v2 = v0;
-    *(uint16 *)&g_ram[kControllerBindingRAMAddresses[v0 >> 1]] = word_82F575[eproj_F[(v0 >> 1) + 13]];
+    *(uint16 *)&g_ram[kControllerBindingRAMAddresses[v0 >> 1]] = kControllerInputMasks[eproj_F[(v0 >> 1) + 13]];
     v0 += 2;
   } while (v2 < 12);
   return 0;
@@ -5034,7 +5034,7 @@ void OptionsMenuFunc6_DrawControllerBindings(void) {
 
 void OptionsMenuControllerFunc_SetBinding(void) {  // 0x82F6B9
   uint16 v0 = 12;
-  while ((word_82F575[v0 >> 1] & joypad1_newkeys) == 0) {
+  while ((kControllerInputMasks[v0 >> 1] & joypad1_newkeys) == 0) {
     v0 -= 2;
     if ((v0 & 0x8000) != 0)
       return;

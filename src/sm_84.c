@@ -1607,31 +1607,30 @@ void PlmPreInstr_WakePLMAndStartFxMotionSamusFarLeft(uint16 k) {  // 0x84B82A
 }
 
 void PlmPreInstr_AdvanceLavaSamusMovesLeft(uint16 k) {  // 0x84B846
-  static const uint16 g_word_84B876[10] = {
-     0x72b,  0x1bf,
-    0xff50,  0x50a,
-     0x167, 0xff20,
-     0x244,  0x100,
-    0xff20, 0x8000,
+  static const uint16 kLavaquakeFx_YPositionAndVelocity[10] = {
+     0x72b, 0x1bf, 0xff50,  
+     0x50a, 0x167, 0xff20,
+     0x244, 0x100, 0xff20, 
+    0x8000,
   };
 
 
   int v1 = k >> 1;
   uint16 v2 = plm_timers[v1];
   int v3 = v2 >> 1;
-  uint16 v4 = g_word_84B876[v3];
+  uint16 v4 = kLavaquakeFx_YPositionAndVelocity[v3];
   if ((v4 & 0x8000) != 0) {
-    SetEventHappened(0x15);
+    SetEventHappened(kEvent_21_OutranSpeedBoosterLavaquake);
   } else if (v4 >= samus_x_pos) {
-    if (g_word_84B876[v3 + 1] < fx_base_y_pos)
-      fx_base_y_pos = g_word_84B876[v3 + 1];
-    fx_y_vel = g_word_84B876[v3 + 2];
+    if (kLavaquakeFx_YPositionAndVelocity[v3 + 1] < fx_base_y_pos)
+      fx_base_y_pos = kLavaquakeFx_YPositionAndVelocity[v3 + 1];
+    fx_y_vel = kLavaquakeFx_YPositionAndVelocity[v3 + 2];
     plm_timers[v1] = v2 + 6;
   }
 }
 
 uint8 PlmSetup_SpeedBoosterEscape(uint16 j) {  // 0x84B89C
-  if (CheckEventHappened(0x15))
+  if (CheckEventHappened(kEvent_21_OutranSpeedBoosterLavaquake))
     plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1642,7 +1641,7 @@ void PlmPreInstr_ShaktoolsRoom(uint16 k) {  // 0x84B8B0
     *(uint16 *)&scrolls[2] = 257;
   }
   if (samus_x_pos > 0x348) {
-    SetEventHappened(0xD);
+    SetEventHappened(kEvent_13_ShaktoolPathCleared);
     plm_header_ptr[k >> 1] = 0;
   }
 }
@@ -1694,7 +1693,7 @@ uint8 PlmSetup_B9C1_CrittersEscapeBlock(uint16 j) {  // 0x84B978
 }
 
 const uint8 *PlmInstr_SetCrittersEscapedEvent(const uint8 *plmp, uint16 k) {  // 0x84B9B9
-  SetEventHappened(0xF);
+  SetEventHappened(kEvent_15_CrittersEscaped);
   return plmp;
 }
 
@@ -1727,7 +1726,7 @@ const uint8 *PlmInstr_JumpIfSamusHasNoBombs(const uint8 *plmp, uint16 k) {  // 0
 }
 
 uint8 PlmSetup_BB30_CrateriaMainstreetEscape(uint16 j) {  // 0x84BB09
-  if (!CheckEventHappened(0xF))
+  if (!CheckEventHappened(kEvent_15_CrittersEscaped))
     plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -1896,7 +1895,7 @@ void PlmPreInstr_GotoLinkIfEnemyDeathQuotaOk(uint16 k) {  // 0x84BE01
   if (num_enemies_killed_in_room < num_enemy_deaths_left_to_clear) {
     PlmPreInstr_PlayDudSound(k);
   } else {
-    SetEventHappened(0);
+    SetEventHappened(kEvent_0_ZebesAwake);
     PlmPreInstr_GoToLinkInstruction(k);
   }
 }
@@ -1909,7 +1908,7 @@ void PlmPreInstr_GotoLinkIfTourianStatueFinishedProcessing(uint16 k) {  // 0x84B
 }
 
 void PlmPreInstr_GotoLinkIfCrittersEscaped(uint16 k) {  // 0x84BE30
-  if (CheckEventHappened(0xF) & 1)
+  if (CheckEventHappened(kEvent_15_CrittersEscaped) & 1)
     PlmPreInstr_GoToLinkInstruction(k);
   else
     PlmPreInstr_PlayDudSound(k);
@@ -2330,7 +2329,7 @@ uint8 PlmSetup_D6DA_LowerNorfairChozoHandTrigger(uint16 j) {  // 0x84D18F
       && (samus_pose == kPose_1D_FaceR_Morphball_Ground
           || samus_pose == kPose_79_FaceR_Springball_Ground
           || samus_pose == kPose_7A_FaceL_Springball_Ground)) {
-    SetEventHappened(0xC);
+    SetEventHappened(kEvent_12_LowerNorfairChozoLoweredAcid);
     enemy_data[0].parameter_1 = 1;
     int v2 = plm_block_indices[j >> 1] >> 1;
     level_data[v2] &= 0xFFF;
@@ -2600,22 +2599,22 @@ uint8 PlmSetup_EyeDoor(uint16 j) {  // 0x84DAB9
 
 void PlmPreInstr_SetMetroidsClearState_Ev0x10(uint16 k) {  // 0x84DADE
   if (num_enemies_killed_in_room >= num_enemy_deaths_left_to_clear)
-    SetEventHappened(0x10);
+    SetEventHappened(kEvent_16_1stMetroidHallCleared);
 }
 
 void PlmPreInstr_SetMetroidsClearState_Ev0x11(uint16 k) {  // 0x84DAEE
   if (num_enemies_killed_in_room >= num_enemy_deaths_left_to_clear)
-    SetEventHappened(0x11);
+    SetEventHappened(kEvent_17_1stMetroidShaftCleared);
 }
 
 void PlmPreInstr_SetMetroidsClearState_Ev0x12(uint16 k) {  // 0x84DAFE
   if (num_enemies_killed_in_room >= num_enemy_deaths_left_to_clear)
-    SetEventHappened(0x12);
+    SetEventHappened(kEvent_18_2ndMetroidHallCleared);
 }
 
 void PlmPreInstr_SetMetroidsClearState_Ev0x13(uint16 k) {  // 0x84DB0E
   if (num_enemies_killed_in_room >= num_enemy_deaths_left_to_clear)
-    SetEventHappened(0x13);
+    SetEventHappened(kEvent_19_2ndMetroidShaftCleared);
 }
 
 uint8 PlmSetup_SetMetroidRequiredClearState(uint16 j) {  // 0x84DB1E

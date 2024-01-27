@@ -1313,7 +1313,7 @@ void EscapeEtecoon_E65C(uint16 k) {  // 0xB3E65C
 }
 
 void EscapeEtecoon_E670(uint16 k) {  // 0xB3E670
-  if (CheckEventHappened(0xF))
+  if (CheckEventHappened(kEvent_15_CrittersEscaped))
     Get_EscapeEtecoon(k)->base.current_instruction = addr_kEscapeEtecoon_Ilist_E5DA;
 }
 
@@ -1325,7 +1325,7 @@ void EscapeEtecoon_E680(uint16 k) {  // 0xB3E680
     E->een_var_A = -E->een_var_A;
     E->base.current_instruction = v3 ?
       addr_kEscapeEtecoon_Ilist_E556 : addr_kEscapeEtecoon_Ilist_E582;
-    if (CheckEventHappened(0xF))
+    if (CheckEventHappened(kEvent_15_CrittersEscaped))
       E->base.current_instruction = addr_kEscapeEtecoon_Ilist_E5AE;
   }
   Enemy_MoveDown(k, INT16_SHL16(1));
@@ -1333,7 +1333,7 @@ void EscapeEtecoon_E680(uint16 k) {  // 0xB3E680
 
 void EscapeEtecoon_Init(void) {  // 0xB3E6CB
   Enemy_EscapeEtecoon *E = Get_EscapeEtecoon(cur_enemy_index);
-  if (CheckEventHappened(0xF)) {
+  if (CheckEventHappened(kEvent_15_CrittersEscaped)) {
     E->base.properties |= kEnemyProps_Deleted;
   } else {
     E->base.properties |= kEnemyProps_DisableSamusColl | kEnemyProps_Tangible | 0x8000;
@@ -1357,7 +1357,7 @@ const uint16 *EscapeDachora_Instr_MoveIfAcid(uint16 k, const uint16 *jp) {  // 0
 }
 
 const uint16 *EscapeDachora_Instr_MoveIfCrittersEscaped(uint16 k, const uint16 *jp) {  // 0xB3EAB8
-  if (CheckEventHappened(0xF))
+  if (CheckEventHappened(kEvent_15_CrittersEscaped))
     return INSTR_RETURN_ADDR(jp[0]);
   else
     return jp + 1;
@@ -1377,7 +1377,7 @@ const uint16 *EscapeDachora_Instr_MoveRight(uint16 k, const uint16 *jp) {  // 0x
 
 void EscapeDachora_Init(void) {  // 0xB3EAE5
   Enemy_EscapeDachora *E = Get_EscapeDachora(cur_enemy_index);
-  if (CheckEventHappened(0xF)) {
+  if (CheckEventHappened(kEvent_15_CrittersEscaped)) {
     E->base.properties |= kEnemyProps_Deleted;
   } else {
     E->base.properties |= kEnemyProps_DisableSamusColl;

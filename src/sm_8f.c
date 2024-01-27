@@ -411,7 +411,7 @@ void RoomCode_SetCollectedMap(void) {  // 0x8FC90A
 }
 
 void RoomCode_SetZebesTimebombEvent(void) {  // 0x8FC91F
-  SetEventHappened(0xE);
+  SetEventHappened(kEvent_14_ZebesTimebombSet);
   earthquake_type = 18;
   earthquake_timer = -1;
 }

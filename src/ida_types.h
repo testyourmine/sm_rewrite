@@ -1026,6 +1026,31 @@ enum GameState {
   kGameState_44_TransitionFromDemo = 0x2C,
 };
 
+enum GameEvent {
+  kEvent_0_ZebesAwake = 0x0,
+  kEvent_1_ShitroidAteSidehopper = 0x1,
+  kEvent_2_MotherBrainGlassBroken = 0x2,
+  kEvent_3_Zebetite1Destroyed = 0x3,
+  kEvent_4_Zebetite2Destroyed = 0x4,
+  kEvent_5_Zebetite3Destroyed = 0x5,
+  kEvent_6_PhantoonStatueGray = 0x6,
+  kEvent_7_RidleyStatueGray = 0x7,
+  kEvent_8_DraygonStatueGray = 0x8,
+  kEvent_9_KraidStatueGray = 0x9,
+  kEvent_10_TourianEntranceUnlocked = 0xA,
+  kEvent_11_MaridiaNoobtubeBroken = 0xB,
+  kEvent_12_LowerNorfairChozoLoweredAcid = 0xC,
+  kEvent_13_ShaktoolPathCleared = 0xD,
+  kEvent_14_ZebesTimebombSet = 0xE,
+  kEvent_15_CrittersEscaped = 0xF,
+  kEvent_16_1stMetroidHallCleared = 0x10,
+  kEvent_17_1stMetroidShaftCleared = 0x11,
+  kEvent_18_2ndMetroidHallCleared = 0x12,
+  kEvent_19_2ndMetroidShaftCleared = 0x13,
+  kEvent_20_Empty14h_Unused = 0x14,
+  kEvent_21_OutranSpeedBoosterLavaquake = 0x15,
+};
+
 enum BossBits {
   kBossBit_AreaBoss = 0x1,
   kBossBit_AreaMiniBoss = 0x2,

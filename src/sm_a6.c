@@ -4739,9 +4739,9 @@ void Zebetites_Init(void) {  // 0xA6FB72
     v1 = FUNC16(Zebetites_Func_2);
   E->zebet_var_A = v1;
   uint16 r18 = 0;
-  r18 = (r18 << 1) | CheckEventHappened(5);
-  r18 = (r18 << 1) | CheckEventHappened(4);
-  r18 = (r18 << 1) | CheckEventHappened(3);
+  r18 = (r18 << 1) | CheckEventHappened(kEvent_5_Zebetite3Destroyed);
+  r18 = (r18 << 1) | CheckEventHappened(kEvent_4_Zebetite2Destroyed);
+  r18 = (r18 << 1) | CheckEventHappened(kEvent_3_Zebetite1Destroyed);
   uint16 v2 = r18;
   E->zebet_var_D = r18;
   if (sign16(v2 - 4)) {

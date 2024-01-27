@@ -4734,7 +4734,7 @@ void CinematicFunction_Intro_Func123(void) {  // 0x8BDD42
     cinematic_function = FUNC16(CinematicFunction_Intro_Func124);
     cinematic_var14 = 0x8000;
     cinematic_var13 = 0;
-    if (CheckEventHappened(0xF)) {
+    if (CheckEventHappened(kEvent_15_CrittersEscaped)) {
       SpawnCinematicSpriteObjectToR18(0xEF21, 4);
     }
   }
@@ -4911,7 +4911,7 @@ void CinematicFunction_Intro_Func131(void) {  // 0x8BE158
     reg_CGADSUB = 2;
     cinematic_func_timer = 180;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func132);
-    CinematicFunction_Intro_Func133();
+    SpawnWavySamusHdmaObject();
   }
 }
 

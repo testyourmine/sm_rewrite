@@ -343,7 +343,7 @@ void MotherBrainsBrain_GfxDrawHook(void) {  // 0xA987DD
 }
 
 void MotherBrainsBody_FirstPhase_DoubleRet(void) {  // 0xA987E1
-  if (CheckEventHappened(2)) {
+  if (CheckEventHappened(kEvent_2_MotherBrainGlassBroken)) {
     Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
     E1->mbn_var_00 = earthquake_timer;
     if (sign16(samus_x_pos - 236)) {
@@ -1869,7 +1869,7 @@ void MotherBrain_Phase3_Death_19_EscapeDoorExploding(void) {  // 0xA9B2F9
     CallSomeSamusCode(0xF);
     timer_status = 2;
     SetBossBitForCurArea(2);
-    SetEventHappened(0xE);
+    SetEventHappened(kEvent_14_ZebesTimebombSet);
     E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_20_BlowUpEscapeDoor);
     Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
     E1->mbn_var_E = 0;

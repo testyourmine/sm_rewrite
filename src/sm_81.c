@@ -733,7 +733,7 @@ void FileSelectMenu_Func1(void) {  // 0x819566
   eproj_id[17] = 0;
 }
 
-void sub_819591(void) {  // 0x819591
+void UNUSED_sub_819591(void) {  // 0x819591
   SetInitialFileCopyMenuSelection();
 }
 
@@ -1662,7 +1662,7 @@ void FileSelectMap_1_OptionsToAreaSelectFadeOut(void) {  // 0x81A37C
   }
 }
 
-void sub_81A3D1(uint16 k) {  // 0x81A3D1
+void UNUSED_sub_81A3D1(uint16 k) {  // 0x81A3D1
   LoadActiveAreaMapForegroundColors(k);
 }
 
@@ -2272,7 +2272,7 @@ LABEL_25:;
   }
 }
 
-void sub_81AEC8(void) {  // 0x81AEC8
+void UNUSED_sub_81AEC8(void) {  // 0x81AEC8
   HandleFileSelectMapScrollArrows();
 }
 

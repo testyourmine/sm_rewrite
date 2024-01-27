@@ -1521,7 +1521,7 @@ void GunshipTop_11(uint16 k) {  // 0xA2AA94
 }
 
 void GunshipTop_12(uint16 k) {  // 0xA2AAA2
-  if (CheckEventHappened(0xE)) {
+  if (CheckEventHappened(kEvent_14_ZebesTimebombSet)) {
     Get_GunshipTop(k)->gtp_var_F = FUNC16(GunshipTop_17);
     Enemy_GunshipTop *E = Get_GunshipTop(k + 64);
     E->gtp_var_F = 0;

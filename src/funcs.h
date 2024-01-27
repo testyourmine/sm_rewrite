@@ -288,9 +288,9 @@ void SetupRoomSelectMapExpandingSquareTransHDMA(void);
 void SwitchActiveFileSelectMapArea(uint16 R28);
 void UnpackMapFromSave(void);
 void DrawGrappleOrProjectileSpritemap(const uint8 *pp, uint16 x_r20, uint16 y_r18);
-void sub_819591(void);
-void sub_81A3D1(uint16 k);
-void sub_81AEC8(void);
+void UNUSED_sub_819591(void);
+void UNUSED_sub_81A3D1(uint16 k);
+void UNUSED_sub_81AEC8(void);
 void SoftReset(void);
 
 // Bank 82
@@ -334,7 +334,6 @@ uint8 CheckIfColoredDoorCapSpawned(void);
 uint8 CreateOptionsMenuObject_(uint16 a, uint16 j);
 CoroutineRet DoorTransitionFunction_HandleElevator(void);
 CoroutineRet DoorTransitionFunction_Wait48frames(void);
-uint8 OptionsMenuFunc8(void);
 uint8 RefillHealthFromReserveTanks(void);
 uint8 AdvancePaletteFadeForAllPalettesInA(uint16 a);
 uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a);
@@ -543,6 +542,7 @@ void OptionsMenuFunc4_SetLanguageHighlight(void);
 void OptionsMenuFunc5_SetMenuPalettes(uint16 a, uint16 k, uint16 j);
 void OptionsMenuFunc6_DrawControllerBindings(void);
 void OptionsMenuFunc7_SetSpecialSettingsHighlight(void);
+uint8 OptionsMenuFunc8_DrawGameOptionsMenuControllerBindings(void);
 void OptionsMenu_AddToVramQueue(void);
 void OptionsPreInstr_MenuSelectMissile(uint16 k);
 void OptionsPreInstr_OptionsModeBorder(uint16 k);
@@ -603,7 +603,7 @@ void OptionsInit_ControllerSettingModeBorder(uint16 j);
 void OptionsInit_SpecialSettingModeBorder(uint16 j);
 void OptionsInit_SamusDataBorder(uint16 j);
 void OptionsInit_CommonBorder(uint16 j);
-void sub_82F404(uint16 k);
+void UNUSED_sub_82F404(uint16 k);
 void OptionsInit_FileSelectHelmet(uint16 j);
 
 // Bank 84
@@ -805,7 +805,7 @@ void CalculatePowerBombHdma_LeftOfScreen(uint16 k, const uint8 *j);
 void CalculatePowerBombHdma_OnScreen(uint16 k, const uint8 *j);
 void CalculatePowerBombHdma_RightOfScreen(uint16 k, const uint8 *j);
 void CalculateXrayHdmaTable(void);
-void CinematicFunction_Intro_Func133(void);
+void SpawnWavySamusHdmaObject(void);
 void CrystalFlashCleanup(uint16 k);
 void CrystalFlashSetupPart1(void);
 void CrystalFlashSetupPart2(void);
@@ -842,7 +842,7 @@ void HandleMovingXrayUpDown(void);
 void Handle_LavaAcidBG2YScroll_Func1(uint16 k);
 void Handle_LavaAcidBG2YScroll_Func2(uint16 k);
 void Handle_LavaAcidBG2YScroll_Func3(uint16 k);
-uint16 HdmaFunc_A786(uint16 k, uint16 r18, uint16 r20, uint16 r22);
+uint16 CalculateFxType34IndirectHdmaTable(uint16 k, uint16 r18, uint16 r20, uint16 r22);
 void HdmaObjectHandler(void);
 void HdmaobjInstructionHandler(uint8 k);
 void Hdmaobj_CleanUpTryCrystalFlash(uint16 k);
@@ -871,15 +871,14 @@ void SpawnTitleScreenGradientObjs(void);
 void WaitUntilEndOfVblankAndClearHdma(void);
 
 void DeleteHdmaObjects(void);
-void sub_88D916(void);
-void sub_88DBCB(uint16 k);
+void SetupTourianEntranceStatueBg2YScroll(uint16 k);
 void SetupHazeColorMathSubscreenHdma(uint16 k, uint16 a);
 void SpawnDraygonMainScreenLayerHdmaObject(void);
-void sub_88DF3D(void);
-void sub_88DF46(void);
+void UNUSED_sub_88DF3D(void);
+void UNUSED_sub_88DF46(void);
 void SpawnWavyPhantoonHdmaObject(uint16 a, uint16 r22);
-void sub_88E7ED(void);
-void sub_88E987(uint16 k);
+void SetRainbowBeamColorMathSubscreenBackdropColor(void);
+void UpdateMorphBallEyeBeamHdmaDataTableAndColorMathSubscreenBackdropColor(uint16 k);
 
 // Bank 89
 void LoadFXHeader(void);
@@ -5071,8 +5070,8 @@ void VerifySRAM(void);
 #define fnnullsub_2 0x888753
 #define fnHdmaobjPreInstr_XrayFunc1_BeamWidening 0x888754
 #define fnHdmaobjPreInstr_XrayFunc2_FullBeam 0x8887AB
-#define fnHdmaobjPreInstr_XrayFunc3_DeactivateBeam 0x888934
-#define fnHdmaobjPreInstr_XrayFunc4_DeactivateBeam 0x8889BA
+#define fnHdmaobjPreInstr_XrayFunc3_DeactivateBeam_RestoreBg2_Part1 0x888934
+#define fnHdmaobjPreInstr_XrayFunc4_DeactivateBeam_RestoreBg2_Part2 0x8889BA
 #define fnHdmaobjPreInstr_XrayFunc5_DeactivateBeam 0x888A08
 #define fnHdmaobj_PreExplodeWhite 0x888B14
 #define fnHdmaobj_PreExplodeYellow 0x888B32
@@ -5115,17 +5114,17 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_WaterBG2XScroll 0x88C589
 #define fnHdmaobjPreInstr_WaterBG2XScroll_Func2 0x88C5E4
 #define fnHdmaobjPreInstr_WaterBG2XScroll_Func1 0x88C636
-#define fnsub_88D916 0x88D916
-#define fnHdmaobjInstr_SetVideoMode1 0x88D949
+#define fnHdmaobjInstr_SetVideoMode1_FloorAndHud 0x88D916
+#define fnHdmaobjInstr_SetVideoMode1_Hud 0x88D949
 #define fnHdmaobjInstr_RandomBg3XVel 0x88D981
 #define fnHdmaobjPreInstr_RainBg3Scroll 0x88D9A1
 #define fnHdmaobjPreInstr_SporesBG3Xscroll 0x88DA47
 #define fnnullsub_112 0x88DB2E
 #define fnHdmaobjPreInstr_FogBG3Scroll 0x88DB36
-#define fnHdmaobjPreInstr_CheckLotsOfEventsHappened 0x88DBD7
-#define fnHdmaobjPreInstr_DC23 0x88DC23
-#define fnHdmaobjPreInstr_DC69 0x88DC69
-#define fnHdmaobjPreInstr_DCBA 0x88DCBA
+#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_WaitForUnlock 0x88DBD7
+#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_DescentDelay 0x88DC23
+#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_Descending 0x88DC69
+#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_EnableScrolling 0x88DCBA
 #define fnHdmaobjInstr_GotoIfEventHappened 0x88DCCB
 #define fnHdmaobjPreInstr_BombTorizoHazeColorMathBgColor 0x88DD43
 #define fnHdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyAlive 0x88DE10
@@ -5135,25 +5134,25 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_HazeColorMathSubscreen_FadingOut 0x88DE96
 #define fnnullsub_113 0x88DF91
 #define fnnullsub_114 0x88DF92
-#define fnHdmaobjPreInstr_DF94 0x88DF94
+#define fnHdmaobjPreInstr_DraygonMainScreenLayers 0x88DF94
 #define fnHdmaobjPreInstr_VariaSuitPickup 0x88E026
 #define fnHdmaobjPreInstr_GravitySuitPickup 0x88E05C
-#define fnHdmaobjPreInstr_E449 0x88E449
+#define fnHdmaobjPreInstr_PhantoonSemiTransparency 0x88E449
 #define fnHdmaobjInstr_SetUpWavyPhantoon 0x88E4BD
-#define fnHdmaobjPreInstr_E567 0x88E567
+#define fnHdmaobjPreInstr_WavyPhantoon 0x88E567
 #define fnnullsub_357 0x88E726
 #define fnInitializeRainbowBeam 0x88E767
-#define fnHdmaobjPreInstr_E7BC 0x88E7BC
+#define fnHdmaobjPreInstr_MotherBrainRainbowBeam 0x88E7BC
 #define fnHdmaobjInstr_InitMorphBallEyeBeamHdma 0x88E917
-#define fnHdmaobjPreInstr_E9E6 0x88E9E6
-#define fnHdmaobjPreInstr_EA3C 0x88EA3C
-#define fnHdmaobjPreInstr_EACB 0x88EACB
+#define fnHdmaobjPreInstr_MorphBallEyeBeam_BeamWidening 0x88E9E6
+#define fnHdmaobjPreInstr_MorphBallEyeBeam_FullBeam 0x88EA3C
+#define fnHdmaobjPreInstr_MorphBallEyeBeam_DeactivateBeam 0x88EACB
 #define fnHdmaobjInsr_ConfigTitleSequenceGradientHDMA 0x88EB9F
 #define fnHdmaobjPreInstr_Backdrop_TitleSequenceGradient 0x88EBB0
 #define fnHdmaobjPreInstr_ColorMathControlB_TitleGradient 0x88EBD2
 #define fnHdmaobjPreInstr_IntroCutsceneCrossfade 0x88EC1D
 #define fnHdmaobjInstr_SetUpWavySamus 0x88EC9F
-#define fnHdmaobjPreInstr_ECB6 0x88ECB6
+#define fnHdmaobjPreInstr_WavySamus 0x88ECB6
 #define fnRoomCode_CeresElevatorShaft 0x89ACC3
 #define fnnullsub_5 0x8B8697
 #define fnProcessCinematicBgObject 0x8B8839
