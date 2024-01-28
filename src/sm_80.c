@@ -688,7 +688,7 @@ void QueueMusic_Delayed8(uint16 a) {  // 0x808FC1
 }
 
 void QueueMusic_DelayedY(uint16 a, uint16 j) {  // 0x808FF7
-  if (game_state < 0x28) {
+  if (game_state < kGameState_40_TransitionToDemo) {
     int v2 = music_queue_write_pos;
     music_queue_track[v2 >> 1] = a;
     int v4 = j;
@@ -723,7 +723,7 @@ void QueueSfx1_Internal(uint16 a) {  // 0x809051
   sfx_max_queued[0] = a;
   if (((sfx_writepos[0] - sfx_readpos[0]) & 0xF) < (uint8)a) {
     uint8 v2 = GET_HIBYTE(a);
-    if (!debug_disable_sounds && game_state < 0x28 && (power_bomb_explosion_status & 0x8000) == 0) {
+    if (!debug_disable_sounds && game_state < kGameState_40_TransitionToDemo && (power_bomb_explosion_status & 0x8000) == 0) {
       uint8 v1 = sfx_writepos[0];
       uint8 v3 = sfx_writepos[0] + 1;
       if (v3 >= 0x10)
@@ -764,7 +764,7 @@ void QueueSfx2_Internal(uint16 a) {  // 0x8090D3
   sfx_max_queued[1] = a;
   if (((sfx_writepos[1] - sfx_readpos[1]) & 0xF) < (uint8)a) {
     uint8 v2 = GET_HIBYTE(a);
-    if (!debug_disable_sounds && game_state < 0x28 && (power_bomb_explosion_status & 0x8000) == 0) {
+    if (!debug_disable_sounds && game_state < kGameState_40_TransitionToDemo && (power_bomb_explosion_status & 0x8000) == 0) {
       uint8 v1 = sfx_writepos[1];
       uint8 v3 = sfx_writepos[1] + 1;
       if (v3 >= 0x10)
@@ -805,7 +805,7 @@ void QueueSfx3_Internal(uint16 a) {  // 0x809155
   sfx_max_queued[2] = a;
   if (((sfx_writepos[2] - sfx_readpos[2]) & 0xF) < (uint8)a) {
     uint8 v2 = GET_HIBYTE(a);
-    if (!debug_disable_sounds && game_state < 0x28 && (power_bomb_explosion_status & 0x8000) == 0) {
+    if (!debug_disable_sounds && game_state < kGameState_40_TransitionToDemo && (power_bomb_explosion_status & 0x8000) == 0) {
       uint8 v1 = sfx_writepos[2];
       uint8 v3 = sfx_writepos[2] + 1;
       if (v3 >= 0x10)
@@ -1855,8 +1855,8 @@ void HandleAutoscrolling_X(void) {  // 0x80A528
       layer1_x_pos = v0;
     v1 = HIBYTE(layer1_x_pos);
     uint16 v2 = Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls) + v1;
-    if (scrolls[v2]) {
-      if (scrolls[(uint16)(v2 + 1)])
+    if (scrolls[v2] != kScroll_Red) {
+      if (scrolls[(uint16)(v2 + 1)] != kScroll_Red)
         return;
       var933 = layer1_x_pos & 0xFF00;
       uint16 v5 = var939 - absolute_moved_last_frame_x - 2;
@@ -1865,7 +1865,7 @@ void HandleAutoscrolling_X(void) {  // 0x80A528
       } else {
         var939 = v5;
         v6 = HIBYTE(var939);
-        if (scrolls[(uint16)(Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls) + v6)])
+        if (scrolls[(uint16)(Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls) + v6)] != kScroll_Red)
           v4 = var939;
         else
           v4 = (var939 & 0xFF00) + 256;
@@ -1877,7 +1877,7 @@ void HandleAutoscrolling_X(void) {  // 0x80A528
       } else {
         var939 += absolute_moved_last_frame_x + 2;
         v3 = (uint8)(HIBYTE(var939) + 1);
-        if (scrolls[(uint16)(Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls) + v3)])
+        if (scrolls[(uint16)(Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls) + v3)] != kScroll_Red)
           v4 = var939;
         else
           v4 = var939 & 0xFF00;
@@ -1899,7 +1899,7 @@ void HandleScrollingWhenTriggeringScrollRight(void) {  // 0x80A641
   if (v0 >= layer1_x_pos) {
     v1 = HIBYTE(layer1_x_pos);
     uint16 RegWord = Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls);
-    if (!scrolls[(uint16)(RegWord + 1 + v1)]) {
+    if (scrolls[(uint16)(RegWord + 1 + v1)] == kScroll_Red) {
       uint16 var933 = layer1_x_pos & 0xFF00;
       uint16 v4 = var939 - absolute_moved_last_frame_x - 2;
       if ((int16)(v4 - (layer1_x_pos & 0xFF00)) < 0)
@@ -1922,7 +1922,7 @@ void HandleScrollingWhenTriggeringScrollLeft(void) {  // 0x80A6BB
   if ((layer1_x_pos & 0x8000) == 0) {
     v0 = HIBYTE(layer1_x_pos);
     uint16 prod = Mult8x8((uint16)(layer1_y_pos + 128) >> 8, room_width_in_scrolls);
-    if (!scrolls[(uint16)(prod + v0)]) {
+    if (scrolls[(uint16)(prod + v0)] == kScroll_Red) {
       uint16 var933 = (layer1_x_pos & 0xFF00) + 256;
       uint16 v1 = absolute_moved_last_frame_x + var939 + 2;
       if (v1 >= var933)
@@ -1946,7 +1946,7 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
     uint16 v0 = 0;
     v1 = (uint16)(layer1_x_pos + 128) >> 8;
     uint16 r20 = Mult8x8(HIBYTE(layer1_y_pos), room_width_in_scrolls) + v1;
-    if (scrolls[r20] != 1)
+    if (scrolls[r20] != kScroll_Blue)
       v0 = 31;
     uint16 var933 = v0;
     uint16 var939 = layer1_y_pos;
@@ -1959,7 +1959,7 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
       layer1_y_pos = v3;
     v4 = (uint16)(layer1_x_pos + 128) >> 8;
     uint16 v5 = Mult8x8(HIBYTE(layer1_y_pos), room_width_in_scrolls) + v4;
-    if (!scrolls[v5]) {
+    if (scrolls[v5] == kScroll_Red) {
       uint16 var935 = (layer1_y_pos & 0xFF00) + 256;
       uint16 v6 = absolute_moved_last_frame_y + var939 + 2;
       if (v6 >= var935) {
@@ -1968,7 +1968,7 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
         var939 += absolute_moved_last_frame_y + 2;
         v7 = (uint16)(layer1_x_pos + 128) >> 8;
         uint16 prod = Mult8x8(HIBYTE(v6) + 1, room_width_in_scrolls);
-        if (scrolls[(uint16)(prod + v7)])
+        if (scrolls[(uint16)(prod + v7)] != kScroll_Red)
           v8 = var939;
         else
           v8 = var939 & 0xFF00;
@@ -1976,7 +1976,7 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
       layer1_y_pos = v8;
       return;
     }
-    if (!scrolls[(uint16)(room_width_in_scrolls + v5)]) {
+    if (scrolls[(uint16)(room_width_in_scrolls + v5)] == kScroll_Red) {
       uint16 var937 = var933 + (layer1_y_pos & 0xFF00);
       if (var937 < layer1_y_pos) {
         uint16 v9 = var939 - absolute_moved_last_frame_y - 2;
@@ -1986,7 +1986,7 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
           var939 = v9;
           uint16 prod = Mult8x8(HIBYTE(v9), room_width_in_scrolls);
           v10 = (uint16)(layer1_x_pos + 128) >> 8;
-          if (scrolls[(uint16)(prod + v10)])
+          if (scrolls[(uint16)(prod + v10)] != kScroll_Red)
             v8 = var939;
           else
             v8 = (var939 & 0xFF00) + 256;
@@ -2004,7 +2004,7 @@ void HandleScrollingWhenTriggeringScrollDown(void) {  // 0x80A893
   uint16 prod = Mult8x8(HIBYTE(layer1_y_pos), room_width_in_scrolls);
   uint16 v1 = (uint16)(layer1_x_pos + 128) >> 8;
   uint16 r20 = prod + v1;
-  if (scrolls[r20] != 1)
+  if (scrolls[r20] != kScroll_Blue)
     v0 = 31;
   uint16 var933 = v0;
   if ((int16)(ideal_layer1_ypos - layer1_y_pos) < 0) {
@@ -2014,7 +2014,7 @@ void HandleScrollingWhenTriggeringScrollDown(void) {  // 0x80A893
   uint16 v2 = swap16(room_height_in_scrolls - 1);
   uint16 var937 = var933 + v2;
   if ((uint16)(var933 + v2) < layer1_y_pos
-      || !scrolls[(uint16)(room_width_in_scrolls + r20)]
+      || (scrolls[(uint16)(room_width_in_scrolls + r20)] == kScroll_Red)
       && (var937 = var933 + (layer1_y_pos & 0xFF00), var937 < layer1_y_pos)) {
     uint16 v3 = var939 - absolute_moved_last_frame_y - 2;
     if ((int16)(v3 - var937) < 0)
@@ -2034,7 +2034,7 @@ void HandleScrollingWhenTriggeringScrollUp(void) {  // 0x80A936
   if ((layer1_y_pos & 0x8000) == 0) {
     uint16 prod = Mult8x8(HIBYTE(layer1_y_pos), room_width_in_scrolls);
     v0 = (uint16)(layer1_x_pos + 128) >> 8;
-    if (!scrolls[(uint16)(prod + v0)]) {
+    if (scrolls[(uint16)(prod + v0)] == kScroll_Red) {
       uint16 var933 = (layer1_y_pos & 0xFF00) + 256;
       uint16 v1 = absolute_moved_last_frame_y + var939 + 2;
       if (v1 >= var933)

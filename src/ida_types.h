@@ -785,6 +785,148 @@ enum ProjectileType {
   kProjectileType_DontInteractWithSamus = 0x8000,
 };
 
+enum DebugGameOverMenu {
+  kDebugGameOverMenu_0_FadeOut_ConfigureMenuGraphics = 0x0,
+  kDebugGameOverMenu_1_Initalize = 0x1,
+  kDebugGameOverMenu_2_FadeToMain = 0x2,
+  kDebugGameOverMenu_3_Main = 0x3,
+  kDebugGameOverMenu_4_FadeToContinue = 0x4,
+  kDebugGameOverMenu_5_Continue = 0x5,
+};
+
+enum GameOverMenu {
+  kGameOverMenu_0_FadeOut_ConfigureMenuGraphics = 0x0,
+  kGameOverMenu_1_Initalize = 0x1,
+  kGameOverMenu_2_PlayPreStatueTrack = 0x2,
+  kGameOverMenu_3_FadeToMain = 0x3,
+  kGameOverMenu_4_Main = 0x4,
+  kGameOverMenu_5_FadeToGameMapView = 0x5,
+  kGameOverMenu_6_LoadGameMapView = 0x6,
+  kGameOverMenu_7_FadeToSoftReset = 0x7,
+};
+
+enum FileSelectMenu {
+  kFileSelectMenu_0_TitleToMain_FadeOut_ConfigureGraphics = 0x0,
+  kFileSelectMenu_1_TitleToMain_LoadBg2 = 0x1,
+  kFileSelectMenu_2_TitleToMain_Initialize = 0x2,
+  kFileSelectMenu_3_TitleToMain_FadeIn = 0x3,
+  kFileSelectMenu_4_Main = 0x4,
+  kFileSelectMenu_5_MainToFileCopy_FadeOut = 0x5,
+  kFileSelectMenu_6_MainToFileCopy_Initialize = 0x6,
+  kFileSelectMenu_7_MainToFileCopy_FadeIn = 0x7,
+  kFileSelectMenu_8_FileCopy_SelectSource = 0x8,
+  kFileSelectMenu_9_FileCopy_InitalizeSelectDestination = 0x9,
+  kFileSelectMenu_10_FileCopy_SelectDestination = 0xA,
+  kFileSelectMenu_11_FileCopy_InitalizeConfirmation = 0xB,
+  kFileSelectMenu_12_FileCopy_Confirmation = 0xC,
+  kFileSelectMenu_13_FileCopy_DoFileCopy = 0xD,
+  kFileSelectMenu_14_FileCopy_CopyCompleted = 0xE,
+  kFileSelectMenu_15_FileCopyToMain_FadeOut = 0xF,
+  kFileSelectMenu_16_FileCopyToMain_ReloadMain = 0x10,
+  kFileSelectMenu_17_FileCopyToMain_FadeIn = 0x11,
+  kFileSelectMenu_18_FileCopyToMain_MainMenuIndex = 0x12,
+  kFileSelectMenu_19_MainToFileClear_FadeOut = 0x13,
+  kFileSelectMenu_20_MainToFileClear_Initialize = 0x14,
+  kFileSelectMenu_21_MainToFileClear_FadeIn = 0x15,
+  kFileSelectMenu_22_FileClear_SelectSlot = 0x16,
+  kFileSelectMenu_23_FileClear_InitializeConfirmation = 0x17,
+  kFileSelectMenu_24_FileClear_Confirmation = 0x18,
+  kFileSelectMenu_25_FileClear_DoFileClear = 0x19,
+  kFileSelectMenu_26_FileClear_ClearComplete = 0x1A,
+  kFileSelectMenu_27_FileClearToMain_FadeOut = 0x1B,
+  kFileSelectMenu_28_FileClearToMain_ReloadMain = 0x1C,
+  kFileSelectMenu_29_FileClearToMain_FadeIn = 0x1D,
+  kFileSelectMenu_30_FileClearToMain_MainMenuIndex = 0x1E,
+  kFileSelectMenu_31_MainToOptions_TurnSamusHelmet = 0x1F,
+  kFileSelectMenu_32_MainToOptions_FadeOut = 0x20,
+  kFileSelectMenu_33_MainToTitle = 0x21,
+};
+
+enum FileSelectMap {
+  kFileSeletMap_0_OptionsToAreaSelect_ClearBg2_SetUpFadeOut = 0x0,
+  kFileSeletMap_1_OptionsToAreaSelect_FadeOut_LoadAreaPalette = 0x1,
+  kFileSeletMap_2_OptionsToAreaSelect_LoadForegroundTilemap = 0x2,
+  kFileSeletMap_3_OptionsToAreaSelect_LoadBackgroundTilemap = 0x3,
+  kFileSeletMap_4_OptionsToAreaSelect_PrepareExpandingContractingSquareTransition = 0x4,
+  kFileSeletMap_5_OptionsToAreaSelect_ExpandingSquareTransition = 0x5,
+  kFileSeletMap_6_AreaSelect = 0x6,
+  kFileSeletMap_7_AreaSelectToRoomSelect_PrepareExpandingSquareTransition = 0x7,
+  kFileSeletMap_8_AreaSelectToRoomSelect_ExpandingSquareTransition = 0x8,
+  kFileSeletMap_9_AreaSelectToRoomSelect_Initialize = 0x9,
+  kFileSeletMap_10_RoomSelect = 0xA,
+  kFileSeletMap_11_RoomSelectToLoadGame_FadeOut2FrameDelay = 0xB,
+  kFileSeletMap_12_RoomSelectToLoadGame_FadeOut1FrameDelay = 0xC,
+  kFileSeletMap_13_RoomSelectToLoadGame_FadeOut = 0xD,
+  kFileSeletMap_14_RoomSelectToLoadGame_Wait = 0xE,
+  kFileSeletMap_15_RoomSelectToAreaSelect_ClearBg1Tilemap = 0xF,
+  kFileSeletMap_16_RoomSelectToAreaSelect_LoadPalettes = 0x10,
+  kFileSeletMap_17_RoomSelectToAreaSelect_LoadForegroundTilemap = 0x11,
+  kFileSeletMap_18_RoomSelectToAreaSelect_LoadBackgroundTilemap = 0x12,
+  kFileSeletMap_19_RoomSelectToAreaSelect_PrepareExpandingContractingSquareTransition = 0x13,
+  kFileSeletMap_20_RoomSelectToAreaSelect_PrepareContractingSquareTransition = 0x14,
+  kFileSeletMap_21_RoomSelectToAreaSelect_ContractingSquareTransition = 0x15,
+  kFileSeletMap_22_AreaSelectToOptions = 0x16,
+};
+
+enum PauseMenu {
+  kPauseMenu_0_MapScreen = 0x0,
+  kPauseMenu_1_EquipmentScreen = 0x1,
+  kPauseMenu_2_MapScreenToEquipmentScreen_FadeOut = 0x2,
+  kPauseMenu_3_MapScreenToEquipmentScreen_LoadEquipmentScreen = 0x3,
+  kPauseMenu_4_MapScreenToEquipmentScreen_FadeIn = 0x4,
+  kPauseMenu_5_EquipmentScreenToMapScreen_FadeOut = 0x5,
+  kPauseMenu_6_EquipmentScreenToMapScreen_LoadMapScren = 0x6,
+  kPauseMenu_7_EquipmentScreenToMapScreen_FadeIn = 0x7,
+};
+
+enum GameOptionsMenuIndex {
+  kGameOptionsMenu_0_FinishFadeOut = 0x0,
+  kGameOptionsMenu_1_LoadOptionsMenu = 0x1,
+  kGameOptionsMenu_2_FadeInOptionsMenu = 0x2,
+  kGameOptionsMenu_3_OptionsMenu = 0x3,
+  kGameOptionsMenu_4_StartGame = 0x4,
+  kGameOptionsMenu_5_DissolveFromScreen = 0x5,
+  kGameOptionsMenu_6_DissolveToScreen = 0x6,
+  kGameOptionsMenu_7_ControllerSettings = 0x7,
+  kGameOptionsMenu_8_SpecialSettings = 0x8,
+  kGameOptionsMenu_9_ScrollControllerSettingsDown = 0x9,
+  kGameOptionsMenu_10_ScrollControllerSettingsUp = 0xA,
+  kGameOptionsMenu_11_TransitionToFileSelect = 0xB,
+  kGameOptionsMenu_12_FadeOutOptionsMenu = 0xC,
+};
+
+enum kMessageBoxIndex {
+  kMessageBox_1_EnergyTank = 0x1,
+  kMessageBox_2_Missile = 0x2,
+  kMessageBox_3_SuperMissile = 0x3,
+  kMessageBox_4_PowerBomb = 0x4,
+  kMessageBox_5_GrapplingBeam = 0x5,
+  kMessageBox_6_XrayScope = 0x6,
+  kMessageBox_7_VariaSuit = 0x7,
+  kMessageBox_8_SpringBall = 0x8,
+  kMessageBox_9_MorphingBall = 0x9,
+  kMessageBox_10_ScrewAttack = 0xA,
+  kMessageBox_11_HiJumpBoots = 0xB,
+  kMessageBox_12_SpaceJump = 0xC,
+  kMessageBox_13_SpeedBooster = 0xD,
+  kMessageBox_14_ChargeBeam = 0xE,
+  kMessageBox_15_IceBeam = 0xF,
+  kMessageBox_16_WaveBeam = 0x10,
+  kMessageBox_17_Spazer = 0x11,
+  kMessageBox_18_PlasmaBeam = 0x12,
+  kMessageBox_19_Bomb = 0x13,
+  kMessageBox_20_MapDataAccessCompleted = 0x14,
+  kMessageBox_21_EnergyRechargeCompleted = 0x15,
+  kMessageBox_22_MissileReloadCompleted = 0x16,
+  kMessageBox_23_WouldYouLikeToSave = 0x17,
+  kMessageBox_24_SaveCompleted = 0x18,
+  kMessageBox_25_ReserveTank = 0x19,
+  kMessageBox_26_GravitySuit = 0x1A,
+  kMessageBox_27_Terminator1 = 0x1B,
+  kMessageBox_28_WouldYouLikeToSave_Gunship = 0x1C,
+  kMessageBox_29_Terminator2 = 0x1D,
+};
+
 /* 53 */
 enum EnemyProps {
   kEnemyProps_Invisible = 0x100,
@@ -1024,6 +1166,12 @@ enum GameState {
   kGameState_42_PlayingDemo = 0x2A,
   kGameState_43_TransitionFromDemo = 0x2B,
   kGameState_44_TransitionFromDemo = 0x2C,
+};
+
+enum RoomScrolls {
+  kScroll_Red = 0x0,
+  kScroll_Blue = 0x1,
+  kScroll_Green = 0x2,
 };
 
 enum GameEvent {

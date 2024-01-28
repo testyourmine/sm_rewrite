@@ -2312,7 +2312,7 @@ void MaridiaSnail_Touch(void) {  // 0xA3D3B0
 
 uint8 MaridiaSnail_Func_20(uint16 k) {  // 0xA3D421
   uint16 r20 = Get_MaridiaSnail(k)->msl_var_C & 1;
-  if ((uint16)(joypad1_lastkeys & 0x300) >> 8 == 1) {
+  if ((uint16)(joypad1_lastkeys & (kButton_Left | kButton_Right)) >> 8 == 1) {
     if (r20)
       return 0;
   } else if (!r20) {

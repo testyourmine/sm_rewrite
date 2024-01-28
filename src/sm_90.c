@@ -988,7 +988,7 @@ void Samus_JumpingMovement(void) {  // 0x908FB3
       samus_x_accel_mode = 2;
     goto LABEL_17;
   }
-  if (samus_x_accel_mode || (joypad1_lastkeys & 0x100) != 0 || (joypad1_lastkeys & 0x200) != 0) {
+  if (samus_x_accel_mode || (joypad1_lastkeys & kButton_Right) != 0 || (joypad1_lastkeys & kButton_Left) != 0) {
 LABEL_17:
     Samus_MoveX(pair.amt);
     goto LABEL_18;
@@ -4777,7 +4777,7 @@ void Grapple_Func1(void) {  // 0x90D525
 uint8 Hdmaobj_CrystalFlash(void) {  // 0x90D5A2
   SamusPose v1;
 
-  if (sign16(game_state - 40)) {
+  if (sign16(game_state - kGameState_40_TransitionToDemo)) {
     if (joypad1_lastkeys != (button_config_shoot_x | 0x430))
       return 1;
   }
@@ -6427,13 +6427,13 @@ void Samus_UpdateSuitPaletteIndex(void) {  // 0x90ECB6
 }
 
 void MoveSamusWithControlPad(void) {  // 0x90ECD5
-  if ((joypad1_lastkeys & 0x800) != 0)
+  if ((joypad1_lastkeys & kButton_Up) != 0)
     Samus_MoveUp(INT16_SHL16(-4));
-  if ((joypad1_lastkeys & 0x400) != 0)
+  if ((joypad1_lastkeys & kButton_Down) != 0)
     Samus_MoveDown(INT16_SHL16(4));
-  if ((joypad1_lastkeys & 0x200) != 0)
+  if ((joypad1_lastkeys & kButton_Left) != 0)
     Samus_MoveLeft(INT16_SHL16(-4));
-  if ((joypad1_lastkeys & 0x100) != 0)
+  if ((joypad1_lastkeys & kButton_Right) != 0)
     Samus_MoveRight(INT16_SHL16(4));
 }
 
@@ -6988,7 +6988,7 @@ uint8 SamusCode_1D_ClearSoundInDoor(void) {  // 0x90F471
 }
 
 uint8 SamusCode_1E(void) {  // 0x90F4A2
-  if (game_state == 8) {
+  if (game_state == kGameState_8_MainGameplay) {
     if (samus_movement_type == 3 || samus_movement_type == 20) {
       SamusCode_1C_PlaySpinSfxIfSpinJumping();
       return 0;

@@ -428,11 +428,11 @@ void EquipmentScreenSetupReserveMode(void);
 void EquipmentScreenTransferBG1Tilemap(void);
 void FinishProcessingGameOverBabyMetroidAsm(void);
 void GameOptionsMenuFunc_0(void);
-void GameOptionsMenuItemFunc_0(void);
+void GameOptionsMenuItemFunc_0_StartGame(void);
 void GameOptionsMenuItemFunc_2_ToggleJapanese(void);
-void GameOptionsMenuItemFunc_4(void);
-void GameOptionsMenuSpecialSettings_0(void);
-void GameOptionsMenuSpecialSettings_2(void);
+void GameOptionsMenuItemFunc_4_StartGameDissolveTransition(void);
+void GameOptionsMenuSpecialSettings_ToggleSetting(void);
+void GameOptionsMenuSpecialSettings_End(void);
 void GameOptionsMenu_1_LoadingOptionsScreen(void);
 void GameOptionsMenu_2_FadeInOptionsScreen(void);
 void GameOptionsMenu_3_OptionsScreen(void);
@@ -5121,10 +5121,10 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_SporesBG3Xscroll 0x88DA47
 #define fnnullsub_112 0x88DB2E
 #define fnHdmaobjPreInstr_FogBG3Scroll 0x88DB36
-#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_WaitForUnlock 0x88DBD7
-#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_DescentDelay 0x88DC23
-#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_Descending 0x88DC69
-#define fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_EnableScrolling 0x88DCBA
+#define fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_WaitForUnlock 0x88DBD7
+#define fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_DescentDelay 0x88DC23
+#define fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending 0x88DC69
+#define fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_EnableScrolling 0x88DCBA
 #define fnHdmaobjInstr_GotoIfEventHappened 0x88DCCB
 #define fnHdmaobjPreInstr_BombTorizoHazeColorMathBgColor 0x88DD43
 #define fnHdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyAlive 0x88DE10

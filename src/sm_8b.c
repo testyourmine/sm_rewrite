@@ -1956,7 +1956,7 @@ void CinematicFunc_Func10(void) {  // 0x8B9F52
       *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
     for (j = 510; (j & 0x8000) == 0; j -= 2)
       hdma_table_1[j >> 1] = 0;
-    game_state = 4;
+    game_state = kGameState_4_FileSelectMenus;
     game_options_screen_index = 0;
   }
 }
@@ -1981,7 +1981,7 @@ void CinematicFunc_Func9(void) {  // 0x8B9FAE
       *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
     for (j = 510; (j & 0x8000) == 0; j -= 2)
       hdma_table_1[j >> 1] = 0;
-    game_state = 40;
+    game_state = kGameState_40_TransitionToDemo;
     demo_scene = 0;
   }
 }
@@ -3718,7 +3718,7 @@ void CinematicFunction_Intro_Func72(void) {  // 0x8BC0C5
 }
 
 void CinematicFunction_Intro_Func73(void) {  // 0x8BC100
-  loading_game_state = kGameState_31_SetUpNewGame;
+  loading_game_state = kLoadingGameState_1F_StartingAtCeres;
   game_state = kGameState_31_SetUpNewGame;
   area_index = 6;
   load_station_index = 0;
@@ -3847,7 +3847,7 @@ void CinematicFunction_Intro_Func76(void) {  // 0x8BC345
     reg_CGADSUB = 55;
     mode7_transform_zoom = 768;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF2D, 0);
-    if (game_state == 37)
+    if (game_state == kGameState_37_CeresGoesBoomWithSamus)
       QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_ClearCeresUpperHalf);
     else
       QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_FrontOfGunship);

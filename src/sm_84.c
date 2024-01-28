@@ -442,7 +442,7 @@ const uint8 *PlmInstr_PickupEquipmentAddGrappleShowMessage(const uint8 *plmp, ui
   collected_items |= t;
   AddGrappleToHudTilemap();
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(5);
+  DisplayMessageBox(kMessageBox_5_GrapplingBeam);
   return plmp + 2;
 }
 
@@ -452,7 +452,7 @@ const uint8 *PlmInstr_PickupEquipmentAddXrayShowMessage(const uint8 *plmp, uint1
   collected_items |= t;
   AddXrayToHudTilemap();
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(6);
+  DisplayMessageBox(kMessageBox_6_XrayScope);
   return plmp + 2;
 }
 
@@ -460,7 +460,7 @@ const uint8 *PlmInstr_CollectHealthEnergyTank(const uint8 *plmp, uint16 k) {  //
   samus_max_health += GET_WORD(plmp);
   samus_health = samus_max_health;
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(1);
+  DisplayMessageBox(kMessageBox_1_EnergyTank);
   return plmp + 2;
 }
 
@@ -469,7 +469,7 @@ const uint8 *PlmInstr_CollectHealthReserveTank(const uint8 *plmp, uint16 k) {  /
   if (!reserve_health_mode)
     ++reserve_health_mode;
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(0x19);
+  DisplayMessageBox(kMessageBox_25_ReserveTank);
   return plmp + 2;
 }
 
@@ -479,7 +479,7 @@ const uint8 *PlmInstr_CollectAmmoMissileTank(const uint8 *plmp, uint16 k) {  // 
   samus_missiles += t;
   AddMissilesToHudTilemap();
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(2);
+  DisplayMessageBox(kMessageBox_2_Missile);
   return plmp + 2;
 }
 
@@ -489,7 +489,7 @@ const uint8 *PlmInstr_CollectAmmoSuperMissileTank(const uint8 *plmp, uint16 k) {
   samus_super_missiles += t;
   AddSuperMissilesToHudTilemap();
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(3);
+  DisplayMessageBox(kMessageBox_3_SuperMissile);
   return plmp + 2;
 }
 
@@ -499,7 +499,7 @@ const uint8 *PlmInstr_CollectAmmoPowerBombTank(const uint8 *plmp, uint16 k) {  /
   samus_power_bombs += t;
   AddPowerBombsToHudTilemap();
   PlayRoomMusicTrackAfterAFrames(0x168);
-  DisplayMessageBox(4);
+  DisplayMessageBox(kMessageBox_4_PowerBomb);
   return plmp + 2;
 }
 
@@ -700,14 +700,14 @@ const uint8 *PlmInstr_QueueSfx3_Max1(const uint8 *plmp, uint16 k) {  // 0x848C85
 
 const uint8 *PlmInstr_ActivateMapStation(const uint8 *plmp, uint16 k) {  // 0x848C8F
   *(uint16 *)&map_station_byte_array[area_index] |= 0xFF;
-  DisplayMessageBox(0x14);
+  DisplayMessageBox(kMessageBox_20_MapDataAccessCompleted);
   has_area_map = 1;
   return plmp;
 }
 
 const uint8 *PlmInstr_ActivateEnergyStation(const uint8 *plmp, uint16 k) {  // 0x848CAF
   if (samus_max_health != samus_health) {
-    DisplayMessageBox(0x15);
+    DisplayMessageBox(kMessageBox_21_EnergyRechargeCompleted);
     samus_health = samus_max_health;
   }
   CallSomeSamusCode(1);
@@ -716,7 +716,7 @@ const uint8 *PlmInstr_ActivateEnergyStation(const uint8 *plmp, uint16 k) {  // 0
 
 const uint8 *PlmInstr_ActivateMissileStation(const uint8 *plmp, uint16 k) {  // 0x848CD0
   if (samus_max_missiles != samus_missiles) {
-    DisplayMessageBox(0x16);
+    DisplayMessageBox(kMessageBox_22_MissileReloadCompleted);
     samus_missiles = samus_max_missiles;
   }
   CallSomeSamusCode(1);
@@ -1038,7 +1038,7 @@ uint8 PlmSetup_CrumbleBotwoonWall(uint16 j) {  // 0x84AB28
 }
 
 const uint8 *PlmInstr_Scroll_0_1_Blue(const uint8 *plmp, uint16 k) {  // 0x84AB51
-  *(uint16 *)scrolls = 257;
+  *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
   return plmp;
 }
 
@@ -1100,7 +1100,7 @@ const uint8 *PlmInstr_PlaceSamusOnSaveStation(const uint8 *plmp, uint16 k) {  //
 }
 
 const uint8 *PlmInstr_DisplayGameSavedMessageBox(const uint8 *plmp, uint16 k) {  // 0x84B024
-  DisplayMessageBox(0x18);
+  DisplayMessageBox(kMessageBox_24_SaveCompleted);
   return plmp;
 }
 
@@ -1637,8 +1637,8 @@ uint8 PlmSetup_SpeedBoosterEscape(uint16 j) {  // 0x84B89C
 
 void PlmPreInstr_ShaktoolsRoom(uint16 k) {  // 0x84B8B0
   if (power_bomb_explosion_status) {
-    *(uint16 *)scrolls = 257;
-    *(uint16 *)&scrolls[2] = 257;
+    *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
+    *(uint16 *)&scrolls[2] = (kScroll_Blue << 8) | kScroll_Blue;
   }
   if (samus_x_pos > 0x348) {
     SetEventHappened(kEvent_13_ShaktoolPathCleared);
@@ -1647,8 +1647,8 @@ void PlmPreInstr_ShaktoolsRoom(uint16 k) {  // 0x84B8B0
 }
 
 uint8 PlmSetup_ShaktoolsRoom(uint16 j) {  // 0x84B8DC
-  *(uint16 *)scrolls = 1;
-  *(uint16 *)&scrolls[2] = 0;
+  *(uint16 *)scrolls = kScroll_Blue;
+  *(uint16 *)&scrolls[2] = kScroll_Red;
   return 0;
 }
 
@@ -2479,8 +2479,8 @@ uint8 PlmSetup_D6F2_WreckedShipChozoHandTrigger(uint16 j) {  // 0x84D620
           || samus_pose == kPose_79_FaceR_Springball_Ground
           || samus_pose == kPose_7A_FaceL_Springball_Ground)) {
     enemy_data[0].parameter_1 = 1;
-    *(uint16 *)&scrolls[7] = 514;
-    *(uint16 *)&scrolls[13] = 257;
+    *(uint16 *)&scrolls[7] = (kScroll_Green << 8) | kScroll_Green;
+    *(uint16 *)&scrolls[13] = (kScroll_Blue << 8) | kScroll_Blue;
     int v1 = plm_block_indices[j >> 1] >> 1;
     level_data[v1] &= 0xFFF;
     CallSomeSamusCode(0);

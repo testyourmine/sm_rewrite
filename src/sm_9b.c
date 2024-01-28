@@ -392,7 +392,7 @@ void GrappleBeamFunc_BB64(void) {  // 0x9BBB64
   }
   if (sign16((grapple_beam_end_angle_hi << 8) - 0x4000) || !sign16((grapple_beam_end_angle_hi << 8) + 0x4000))
     goto LABEL_13;
-  if ((joypad1_lastkeys & 0x200) != 0) {
+  if ((joypad1_lastkeys & kButton_Left) != 0) {
     if (grapple_beam_end_angle_hi << 8 == 0x8000 && !grapple_beam_unkD26)
       grapple_beam_unkD26 = 256;
     if (grapple_beam_flags && (grapple_beam_flags & 1) != 0)
@@ -400,7 +400,7 @@ void GrappleBeamFunc_BB64(void) {  // 0x9BBB64
     else
       grapple_beam_unkD2A = g_word_9BC11A;
   } else {
-    if ((joypad1_lastkeys & 0x100) == 0) {
+    if ((joypad1_lastkeys & kButton_Right) == 0) {
 LABEL_13:
       grapple_beam_unkD2A = 0;
       return;

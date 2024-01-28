@@ -49,280 +49,280 @@ void DoorCode_StartWreckedShipTreadmillWest(void) {  // 0x8FB971
 }
 
 void DoorCode_Scroll6_Green(void) {  // 0x8FB981
-  scrolls[6] = 2;
+  scrolls[6] = kScroll_Green;
 }
 
 void DoorCode_Scroll0_Blue(void) {  // 0x8FB98C
-  scrolls[0] = 1;
+  scrolls[0] = kScroll_Blue;
 }
 
 void DoorCode_Scroll13_Blue(void) {  // 0x8FB997
-  scrolls[19] = 1;
+  scrolls[19] = kScroll_Blue;
 }
 
 void DoorCode_Scroll_4Blue_8Green(void) {  // 0x8FB9A2
-  scrolls[4] = 0;
-  scrolls[8] = 2;
+  scrolls[4] = kScroll_Red;
+  scrolls[8] = kScroll_Green;
 }
 
 void DoorCode_Scroll_8toB_Red(void) {  // 0x8FB9B3
-  scrolls[8] = 0;
-  scrolls[9] = 0;
-  scrolls[10] = 0;
-  scrolls[11] = 0;
+  scrolls[8] = kScroll_Red;
+  scrolls[9] = kScroll_Red;
+  scrolls[10] = kScroll_Red;
+  scrolls[11] = kScroll_Red;
 }
 
 void DoorCode_Scroll_LotsRed(void) {  // 0x8FB9CA
-  scrolls[2] = 0;
-  scrolls[3] = 0;
-  scrolls[4] = 0;
-  scrolls[5] = 0;
-  scrolls[11] = 0;
-  scrolls[12] = 0;
-  scrolls[13] = 0;
-  scrolls[17] = 0;
+  scrolls[2] = kScroll_Red;
+  scrolls[3] = kScroll_Red;
+  scrolls[4] = kScroll_Red;
+  scrolls[5] = kScroll_Red;
+  scrolls[11] = kScroll_Red;
+  scrolls[12] = kScroll_Red;
+  scrolls[13] = kScroll_Red;
+  scrolls[17] = kScroll_Red;
 }
 
 void DoorCode_Scroll_1_4_Green(void) {  // 0x8FB9F1
-  scrolls[1] = 2;
-  scrolls[4] = 2;
+  scrolls[1] = kScroll_Green;
+  scrolls[4] = kScroll_Green;
 }
 
 void DoorCode_Scroll_2_Blue(void) {  // 0x8FBA00
-  scrolls[2] = 1;
+  scrolls[2] = kScroll_Blue;
 }
 
 void DoorCode_Scroll_17_Blue(void) {  // 0x8FBA0B
-  scrolls[23] = 1;
+  scrolls[23] = kScroll_Blue;
 }
 
 void DoorCode_Scroll_4_Blue(void) {  // 0x8FBA16
-  scrolls[4] = 1;
+  scrolls[4] = kScroll_Blue;
 }
 
 void DoorCode_Scroll_6_Green(void) {  // 0x8FBA21
-  scrolls[6] = 2;
+  scrolls[6] = kScroll_Green;
 }
 
 void DoorCode_Scroll_3_Green(void) {  // 0x8FBA2C
-  scrolls[3] = 2;
+  scrolls[3] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_0(void) {  // 0x8FBD07
-  scrolls[24] = 2;
-  scrolls[28] = 2;
+  scrolls[24] = kScroll_Green;
+  scrolls[28] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_1(void) {  // 0x8FBD16
-  scrolls[5] = 1;
-  scrolls[6] = 1;
+  scrolls[5] = kScroll_Blue;
+  scrolls[6] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_2(void) {  // 0x8FBD25
-  scrolls[29] = 1;
+  scrolls[29] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_3(void) {  // 0x8FBD30
-  scrolls[2] = 2;
-  scrolls[3] = 2;
+  scrolls[2] = kScroll_Green;
+  scrolls[3] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_4(void) {  // 0x8FBD3F
-  scrolls[0] = 0;
-  scrolls[1] = 2;
+  scrolls[0] = kScroll_Red;
+  scrolls[1] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_5(void) {  // 0x8FBD50
-  scrolls[11] = 2;
+  scrolls[11] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_6(void) {  // 0x8FBD5B
-  scrolls[28] = 0;
-  scrolls[29] = 1;
+  scrolls[28] = kScroll_Red;
+  scrolls[29] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_7(void) {  // 0x8FBD6C
-  scrolls[4] = 0;
+  scrolls[4] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_8(void) {  // 0x8FBD77
-  scrolls[32] = 2;
-  scrolls[36] = 2;
-  scrolls[37] = 2;
+  scrolls[32] = kScroll_Green;
+  scrolls[36] = kScroll_Green;
+  scrolls[37] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_9(void) {  // 0x8FBD8A
-  scrolls[2] = 1;
+  scrolls[2] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_10(void) {  // 0x8FBD95
-  scrolls[0] = 2;
+  scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_11(void) {  // 0x8FBDA0
-  scrolls[6] = 2;
-  scrolls[7] = 2;
+  scrolls[6] = kScroll_Green;
+  scrolls[7] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_12(void) {  // 0x8FBDAF
-  scrolls[1] = 1;
-  scrolls[2] = 0;
+  scrolls[1] = kScroll_Blue;
+  scrolls[2] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_13(void) {  // 0x8FBDC0
-  scrolls[1] = 1;
-  scrolls[3] = 0;
+  scrolls[1] = kScroll_Blue;
+  scrolls[3] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_14(void) {  // 0x8FBDD1
-  scrolls[0] = 0;
-  scrolls[4] = 1;
+  scrolls[0] = kScroll_Red;
+  scrolls[4] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_15(void) {  // 0x8FBDE2
-  scrolls[2] = 1;
-  scrolls[3] = 1;
+  scrolls[2] = kScroll_Blue;
+  scrolls[3] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_16(void) {  // 0x8FBDF1
-  scrolls[0] = 2;
-  scrolls[1] = 2;
+  scrolls[0] = kScroll_Green;
+  scrolls[1] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_17(void) {  // 0x8FBE00
-  scrolls[1] = 2;
+  scrolls[1] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_18(void) {  // 0x8FBE0B
-  scrolls[15] = 2;
-  scrolls[18] = 2;
+  scrolls[15] = kScroll_Green;
+  scrolls[18] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_19(void) {  // 0x8FBE1A
-  scrolls[6] = 2;
+  scrolls[6] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_20(void) {  // 0x8FBE25
-  scrolls[0] = 2;
-  scrolls[1] = 1;
+  scrolls[0] = kScroll_Green;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_21(void) {  // 0x8FBE36
-  scrolls[2] = 2;
+  scrolls[2] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_22(void) {  // 0x8FBF9E
-  scrolls[3] = 0;
-  scrolls[4] = 0;
-  scrolls[6] = 1;
-  scrolls[7] = 1;
-  scrolls[8] = 1;
+  scrolls[3] = kScroll_Red;
+  scrolls[4] = kScroll_Red;
+  scrolls[6] = kScroll_Blue;
+  scrolls[7] = kScroll_Blue;
+  scrolls[8] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_23(void) {  // 0x8FBFBB
-  scrolls[1] = 1;
-  scrolls[2] = 1;
-  scrolls[3] = 1;
-  scrolls[4] = 2;
-  scrolls[6] = 0;
+  scrolls[1] = kScroll_Blue;
+  scrolls[2] = kScroll_Blue;
+  scrolls[3] = kScroll_Blue;
+  scrolls[4] = kScroll_Green;
+  scrolls[6] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_24(void) {  // 0x8FBFDA
-  scrolls[0] = 1;
-  scrolls[1] = 1;
+  scrolls[0] = kScroll_Blue;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_25(void) {  // 0x8FBFE9
-  scrolls[1] = 0;
-  scrolls[0] = 1;
+  scrolls[1] = kScroll_Red;
+  scrolls[0] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_26(void) {  // 0x8FBFFA
-  scrolls[10] = 2;
+  scrolls[10] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_27(void) {  // 0x8FC005
-  scrolls[0] = 1;
-  scrolls[2] = 0;
+  scrolls[0] = kScroll_Blue;
+  scrolls[2] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_28(void) {  // 0x8FC016
-  scrolls[0] = 2;
-  scrolls[2] = 2;
+  scrolls[0] = kScroll_Green;
+  scrolls[2] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_29(void) {  // 0x8FC025
-  scrolls[6] = 1;
-  scrolls[7] = 1;
-  scrolls[8] = 0;
+  scrolls[6] = kScroll_Blue;
+  scrolls[7] = kScroll_Blue;
+  scrolls[8] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_30(void) {  // 0x8FC03A
-  scrolls[2] = 0;
-  scrolls[3] = 1;
+  scrolls[2] = kScroll_Red;
+  scrolls[3] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_31(void) {  // 0x8FC04B
-  scrolls[7] = 2;
+  scrolls[7] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_32(void) {  // 0x8FC056
-  scrolls[1] = 0;
-  scrolls[2] = 1;
+  scrolls[1] = kScroll_Red;
+  scrolls[2] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_33(void) {  // 0x8FC067
-  scrolls[3] = 0;
-  scrolls[0] = 1;
+  scrolls[3] = kScroll_Red;
+  scrolls[0] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_34(void) {  // 0x8FC078
-  scrolls[1] = 1;
-  scrolls[4] = 0;
+  scrolls[1] = kScroll_Blue;
+  scrolls[4] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_35(void) {  // 0x8FC089
-  scrolls[0] = 1;
-  scrolls[1] = 0;
-  scrolls[2] = 0;
-  scrolls[3] = 0;
+  scrolls[0] = kScroll_Blue;
+  scrolls[1] = kScroll_Red;
+  scrolls[2] = kScroll_Red;
+  scrolls[3] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_36(void) {  // 0x8FC0A2
-  scrolls[0] = 2;
+  scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_37(void) {  // 0x8FC0AD
-  scrolls[0] = 1;
-  scrolls[1] = 1;
-  scrolls[4] = 0;
+  scrolls[0] = kScroll_Blue;
+  scrolls[1] = kScroll_Blue;
+  scrolls[4] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_38(void) {  // 0x8FC0C2
-  scrolls[0] = 1;
-  scrolls[3] = 0;
+  scrolls[0] = kScroll_Blue;
+  scrolls[3] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_39(void) {  // 0x8FC0D3
-  scrolls[0] = 1;
+  scrolls[0] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_40(void) {  // 0x8FC0DE
-  scrolls[0] = 1;
-  scrolls[1] = 0;
+  scrolls[0] = kScroll_Blue;
+  scrolls[1] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_41(void) {  // 0x8FC0EF
-  scrolls[24] = 1;
+  scrolls[24] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_42(void) {  // 0x8FC0FA
-  scrolls[3] = 0;
-  scrolls[2] = 1;
+  scrolls[3] = kScroll_Red;
+  scrolls[2] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_43(void) {  // 0x8FC10B
-  scrolls[14] = 0;
+  scrolls[14] = kScroll_Red;
 }
 
 void RoomCode_ScrollingSkyLand_(void) {  // 0x8FC116
@@ -377,7 +377,7 @@ void RoomCode_GenRandomExplodes(uint16 x_r18, uint16 y_r20) {  // 0x8FC1A9
 }
 
 void RoomCode_ScrollRightDachora(void) {  // 0x8FC1E6
-  if (scrolls[11] == 2 && layer1_y_pos < 0x500 && layer1_x_pos < 0x380)
+  if (scrolls[11] == kScroll_Green && layer1_y_pos < 0x500 && layer1_x_pos < 0x380)
     layer1_x_pos += (layer1_x_pos >= 0x380) + 3;
 }
 
@@ -457,34 +457,34 @@ void DoorCode_StartWreckedSkipTreadmill_East(void) {  // 0x8FE1D8
 }
 
 void DoorCode_SetScroll_44(void) {  // 0x8FE1E8
-  scrolls[1] = 1;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_45(void) {  // 0x8FE1F3
-  scrolls[0] = 2;
+  scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_46(void) {  // 0x8FE1FE
-  scrolls[3] = 0;
-  scrolls[4] = 1;
+  scrolls[3] = kScroll_Red;
+  scrolls[4] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_47(void) {  // 0x8FE20F
-  scrolls[41] = 1;
+  scrolls[41] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_48(void) {  // 0x8FE21A
-  scrolls[40] = 2;
-  scrolls[46] = 2;
+  scrolls[40] = kScroll_Green;
+  scrolls[46] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_49(void) {  // 0x8FE229
-  scrolls[6] = 0;
-  scrolls[7] = 0;
-  scrolls[8] = 0;
-  scrolls[9] = 0;
-  scrolls[10] = 0;
-  scrolls[11] = 0;
+  scrolls[6] = kScroll_Red;
+  scrolls[7] = kScroll_Red;
+  scrolls[8] = kScroll_Red;
+  scrolls[9] = kScroll_Red;
+  scrolls[10] = kScroll_Red;
+  scrolls[11] = kScroll_Red;
 }
 
 void DoorCode_SetupElevatubeFromSouth(void) {  // 0x8FE26C
@@ -522,84 +522,84 @@ void DoorCode_ResetElevatubeNorthExit(void) {  // 0x8FE301
 }
 
 void DoorCode_ResetElevatubeSouthExit(void) {  // 0x8FE309
-  *(uint16 *)scrolls = 514;
+  *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
   CallSomeSamusCode(1);
 }
 
 void DoorCode_SetScroll_50(void) {  // 0x8FE318
-  scrolls[10] = 0;
-  scrolls[11] = 1;
+  scrolls[10] = kScroll_Red;
+  scrolls[11] = kScroll_Blue;
 }
 
 void UNUSED_DoorCode_SetScroll_51(void) {  // 0x8FE329
-  scrolls[17] = 0;
-  scrolls[16] = 1;
+  scrolls[17] = kScroll_Red;
+  scrolls[16] = kScroll_Blue;
 }
 
 void UNUSED_DoorCode_SetScroll_52(void) {  // 0x8FE33A
-  scrolls[4] = 2;
+  scrolls[4] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_53(void) {  // 0x8FE345
-  scrolls[0] = 0;
-  scrolls[4] = 1;
+  scrolls[0] = kScroll_Red;
+  scrolls[4] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_54(void) {  // 0x8FE356
-  scrolls[0] = 0;
-  scrolls[1] = 1;
+  scrolls[0] = kScroll_Red;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_55(void) {  // 0x8FE367
-  scrolls[9] = 0;
-  scrolls[10] = 1;
+  scrolls[9] = kScroll_Red;
+  scrolls[10] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_56(void) {  // 0x8FE378
-  scrolls[0] = 0;
-  scrolls[2] = 0;
-  scrolls[1] = 1;
+  scrolls[0] = kScroll_Red;
+  scrolls[2] = kScroll_Red;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_57(void) {  // 0x8FE38D
-  scrolls[1] = 1;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_58(void) {  // 0x8FE398
-  scrolls[6] = 1;
+  scrolls[6] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_59(void) {  // 0x8FE3A3
-  scrolls[4] = 0;
+  scrolls[4] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_60(void) {  // 0x8FE3AE
-  scrolls[1] = 0;
+  scrolls[1] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_61(void) {  // 0x8FE3B9
-  scrolls[4] = 0;
-  scrolls[7] = 0;
+  scrolls[4] = kScroll_Red;
+  scrolls[7] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_62(void) {  // 0x8FE3C8
-  scrolls[2] = 0;
-  scrolls[1] = 1;
+  scrolls[2] = kScroll_Red;
+  scrolls[1] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_63(void) {  // 0x8FE3D9
-  scrolls[0] = 2;
-  scrolls[2] = 2;
+  scrolls[0] = kScroll_Green;
+  scrolls[2] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_64(void) {  // 0x8FE4C0
-  scrolls[0] = 2;
-  scrolls[1] = 2;
+  scrolls[0] = kScroll_Green;
+  scrolls[1] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_65(void) {  // 0x8FE4CF
-  scrolls[24] = 1;
-  scrolls[25] = 0;
+  scrolls[24] = kScroll_Blue;
+  scrolls[25] = kScroll_Red;
 }
 
 void DoorCode_CeresElevatorShaft(void) {  // 0x8FE4E0

@@ -204,8 +204,8 @@ void Kraid_Init(void) {  // 0xA7A959
   } else {
     reg_BG2SC = 67;
     camera_distance_index = 2;
-    *(uint16 *)scrolls = 0;
-    *(uint16 *)&scrolls[2] = 1;
+    *(uint16 *)scrolls = kScroll_Red;
+    *(uint16 *)&scrolls[2] = kScroll_Blue;
     Enemy_Kraid *E = Get_Kraid(0);
     E->kraid_min_y_pos_eject = 324;
     uint16 v7 = 0;
@@ -1486,8 +1486,8 @@ void Kraid_HandleFirstPhase(void) {  // 0xA7C005
 void Kraid_GetsBig_ReleaseCamera(void) {  // 0xA7C0A1
   Enemy_Kraid *E = Get_Kraid(0);
   E->kraid_var_A = FUNC16(Kraid_GetsBig_BreakCeilingPlatforms);
-  *(uint16 *)scrolls = 514;
-  *(uint16 *)&scrolls[2] = 257;
+  *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
+  *(uint16 *)&scrolls[2] = (kScroll_Blue << 8) | kScroll_Blue;
   E->kraid_min_y_pos_eject = 164;
 }
 
@@ -2138,7 +2138,7 @@ void Phantoon_Func_1(void) {  // 0xA7CEED
 }
 
 void Phantoon_Func_2(uint16 k) {  // 0xA7CF0C
-  if (!k && (joypad1_newkeys & 0x4000) != 0)
+  if (!k && (joypad1_newkeys & kButton_Y) != 0)
     *(uint16 *)((uint8 *)&kPhantoon_BrokenCode[0].ypos + 1) = *(uint16 *)((uint8 *)&kPhantoon_BrokenCode[0].ypos + 1) == 0;
 }
 

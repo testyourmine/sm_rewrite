@@ -118,7 +118,7 @@ void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
       CallSomeSamusCode(2);
       screen_fade_delay = 0;
       screen_fade_counter = 0;
-      game_state = 32;
+      game_state = kGameState_32_MadeItToCeresElevator;
     }
     -- *(uint16 *)&room_main_asm_variables[2];
     if (*(int16 *)&room_main_asm_variables[2] < 0) {

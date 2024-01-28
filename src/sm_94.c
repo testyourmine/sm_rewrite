@@ -875,7 +875,7 @@ uint8 BlockColl_Vert_Door(CollInfo *ci) {  // 0x9493CE
     return BlockColl_Vert_SolidShootGrappleBlock(ci);
   } else {
     door_def_ptr = v0;
-    game_state = kPose_09_MoveR_NoAim;
+    game_state = kGameState_9_HitDoorBlock;
     return 0;
   }
 }

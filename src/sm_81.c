@@ -450,7 +450,7 @@ void GameOverMenu_5_Continue(void) {  // 0x81907E
   static const StartDmaCopy kDmaCopy_GameOver_StandardBg3Tiles_ClearBg2 = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x9ab200), .das = 0x2000 };
   SetupDmaTransfer(&kDmaCopy_GameOver_StandardBg3Tiles_ClearBg2);
   WriteReg(MDMAEN, 2);
-  game_state = 16;
+  game_state = kGameState_16_Unpausing;
   file_select_map_area_index = 0;
   RestorePalettesAndIoAfterDebugGameover();
 }
@@ -512,7 +512,7 @@ void GameOverMenu_4_Main(void) {  // 0x81912B
     if (file_select_map_area_index) {
       menu_index = 7;
     } else {
-      if (loading_game_state == kGameState_31_SetUpNewGame)
+      if (loading_game_state == kLoadingGameState_1F_StartingAtCeres)
         game_state = loading_game_state;
       else
         ++menu_index;
@@ -827,7 +827,7 @@ void FileSelectMenu_8(void) {
       eproj_id[16] = eproj_id[15];
       ++menu_index;
     }
-  } else if ((joypad1_newkeys & 0x8000) != 0) {
+  } else if ((joypad1_newkeys & kButton_B) != 0) {
     menu_index += 7;
     QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   } else {
@@ -920,7 +920,7 @@ LABEL_9:
     }
     menu_index += 5;
   } else {
-    if ((joypad1_newkeys & 0x8000) == 0) {
+    if ((joypad1_newkeys & kButton_B) == 0) {
       if ((joypad1_newkeys & kButton_Up) != 0) {
         QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
         v0 = eproj_id[15];
@@ -1006,7 +1006,7 @@ void FileSelectMenu_12_FileCopyConfirm(void) {  // 0x819984
     eproj_id[15] ^= 1;
     QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   } else {
-    if ((joypad1_newkeys & 0x8000) != 0) {
+    if ((joypad1_newkeys & kButton_B) != 0) {
       menu_index -= 3;
       eproj_id[15] = eproj_id[17];
       QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
@@ -1139,7 +1139,7 @@ LABEL_11:
     menu_index += 5;
     return;
   }
-  if ((joypad1_newkeys & 0x8000) != 0)
+  if ((joypad1_newkeys & kButton_B) != 0)
     goto LABEL_11;
   if ((joypad1_newkeys & kButton_Up) != 0) {
     v1 = eproj_id[15];
@@ -1194,7 +1194,7 @@ LABEL_8:
     eproj_id[5] = 94;
     return;
   }
-  if ((joypad1_newkeys & 0x8000) != 0) {
+  if ((joypad1_newkeys & kButton_B) != 0) {
 LABEL_5:
     menu_index -= 2;
     eproj_id[15] = eproj_id[16];
@@ -2254,7 +2254,7 @@ LABEL_25:;
         v11 = map_min_y_scroll;
       reg_BG1VOFS = v11;
     }
-  } else if ((joypad1_newkeys & 0x8000) != 0) {
+  } else if ((joypad1_newkeys & kButton_B) != 0) {
     menu_index += 5;
     uint16 v0 = 0;
     while (area_index != kFileSelectMap_AreaIndexes[v0 >> 1]) {

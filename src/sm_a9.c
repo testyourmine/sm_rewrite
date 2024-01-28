@@ -5970,8 +5970,8 @@ void Shitroid_Func_12(uint16 k) {  // 0xA9F138
   if ((--E->shitr_var_F & 0x8000) != 0) {
     E->shitr_var_A = FUNC16(Shitroid_Func_13);
     E->shitr_parameter_2 = 1;
-    *(uint16 *)scrolls |= 0x100;
-    *(uint16 *)&scrolls[2] |= 0x100;
+    *(uint16 *)scrolls |= (kScroll_Blue << 8);
+    *(uint16 *)&scrolls[2] |= (kScroll_Blue << 8);
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb763 });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1f, 0x03, 0xb763 });
   }

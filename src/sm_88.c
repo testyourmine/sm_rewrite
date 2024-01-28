@@ -2315,7 +2315,7 @@ void FxTypeFunc_26_TourianEntranceStatue(void) {  // 0x88DB8A
 
   if (CheckEventHappened(kEvent_10_TourianEntranceUnlocked) & 1) {
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x0c, 0xb777 });
-    *(uint16 *)scrolls = 514;
+    *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
   }
   reg_BG2SC = 74;
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_C428_WaterNormal);
@@ -2329,7 +2329,7 @@ void SetupTourianEntranceStatueBg2YScroll(uint16 k) {  // 0x88DBCB
   *(uint16 *)&hdma_window_1_left_pos[0].height = layer1_y_pos + hdma_object_B[k >> 1];
 }
 
-void HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_WaitForUnlock(uint16 v0) {  // 0x88DBD7
+void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_WaitForUnlock(uint16 v0) {  // 0x88DBD7
   if (CheckEventHappened(kEvent_6_PhantoonStatueGray) & 1) {
     if (CheckEventHappened(kEvent_7_RidleyStatueGray) & 1) {
       if (CheckEventHappened(kEvent_8_DraygonStatueGray) & 1) {
@@ -2349,7 +2349,7 @@ void HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_WaitForUnlock(uint16 v0) { 
   SetupTourianEntranceStatueBg2YScroll(v0);
 }
 
-void HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_DescentDelay(uint16 k) {  // 0x88DC23
+void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_DescentDelay(uint16 k) {  // 0x88DC23
   uint16 v0 = k;
 
   HandleEarthquakeSoundEffect();
@@ -2367,7 +2367,7 @@ void HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_DescentDelay(uint16 k) {  /
   SetupTourianEntranceStatueBg2YScroll(v0);
 }
 
-void HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_Descending(uint16 k) {  // 0x88DC69
+void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending(uint16 k) {  // 0x88DC69
   HandleEarthquakeSoundEffect();
   earthquake_type = 13;
   earthquake_timer |= 0x20;
@@ -2384,9 +2384,9 @@ void HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_Descending(uint16 k) {  // 
   }
 }
 
-void HdmaobjPreInstr_EnableScrolling(uint16 v0) {  // 0x88DCBA
+void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_EnableScrolling(uint16 v0) {  // 0x88DCBA
   tourian_entrance_statue_finished = 0x8000;
-  *(uint16 *)scrolls = 514;
+  *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
   SetupTourianEntranceStatueBg2YScroll(v0);
 }
 
@@ -2401,7 +2401,7 @@ const uint8 *HdmaobjInstr_GotoIfEventHappened(uint16 k, const uint8 *hdp) {  // 
   } else {
     hdma_object_B[v2] = 0;
     *(uint16 *)&hdma_window_1_left_pos[0].height = 0;
-    *(uint16 *)scrolls = 1;
+    *(uint16 *)scrolls = kScroll_Blue;
     return hdp + 2;
   }
 }
@@ -2971,11 +2971,11 @@ void InitializeRainbowBeam(void) {  // 0x88E767
 }
 
 void HdmaobjPreInstr_MotherBrainRainbowBeam(uint16 k) {  // 0x88E7BC
-  if (game_state == 19) {
+  if (game_state == kGameState_19_SamusNoHealth) {
     hdma_object_channels_bitmask[hdma_object_index >> 1] = 0;
   } else {
     fx_layer_blending_config_c = 36;
-    if (game_state != 27) {
+    if (game_state != kGameState_27_ReserveTanksAuto) {
       MotherBrain_CalculateRainbowBeamHdma();
       SetRainbowBeamColorMathSubscreenBackdropColor();
     }
@@ -3274,10 +3274,10 @@ void CallHdmaobjPreInstr(uint32 ea, uint16 k) {
   case fnHdmaobjPreInstr_RainBg3Scroll: HdmaobjPreInstr_RainBg3Scroll(k); return;
   case fnHdmaobjPreInstr_SporesBG3Xscroll: HdmaobjPreInstr_SporesBG3Xscroll(k); return;
   case fnHdmaobjPreInstr_FogBG3Scroll: HdmaobjPreInstr_FogBG3Scroll(k); return;
-  case fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_WaitForUnlock: HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_WaitForUnlock(k); return;
-  case fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_DescentDelay: HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_DescentDelay(k); return;
-  case fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_Descending: HdmaobjPreInstr_TourianEntranceStatusBg2YScroll_Descending(k); return;
-  case fnHdmaobjPreInstr_TourianEntranceStatusBg2YScroll_EnableScrolling: HdmaobjPreInstr_EnableScrolling(k); return;
+  case fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_WaitForUnlock: HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_WaitForUnlock(k); return;
+  case fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_DescentDelay: HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_DescentDelay(k); return;
+  case fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending: HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending(k); return;
+  case fnHdmaobjPreInstr_TourianEntranceStatueBg2YScroll_EnableScrolling: HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_EnableScrolling(k); return;
   case fnHdmaobjPreInstr_BombTorizoHazeColorMathBgColor: HdmaobjPreInstr_BombTorizoHazeColorMathBgColor(k); return;
   case fnHdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyAlive: HdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyAlive(k); return;
   case fnHdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyDead: HdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyDead(k); return;

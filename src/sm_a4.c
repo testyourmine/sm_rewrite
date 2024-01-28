@@ -367,8 +367,8 @@ void Crocomire_Init(void) {  // 0xA48A5A
     v0 += 2;
   } while ((int16)(v0 - 4096) < 0);
   if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0) {
-    *(uint16 *)scrolls = 257;
-    *(uint16 *)&scrolls[2] = 257;
+    *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
+    *(uint16 *)&scrolls[2] = (kScroll_Blue << 8) | kScroll_Blue;
     croco_target_0688 = 0;
     Enemy_Crocomire *E = Get_Crocomire(0);
     E->base.properties = E->base.properties & 0x7BFF | 0x400;
@@ -395,7 +395,7 @@ void Crocomire_Init(void) {  // 0xA48A5A
     Enemy_Crocomire *E = Get_Crocomire(cur_enemy_index);
     E->crocom_var_A = 0;
     E->crocom_var_E = 0;
-    *(uint16 *)scrolls = 0;
+    *(uint16 *)scrolls = kScroll_Red;
     for (int i = 32; i >= 0; i -= 2) {
       int v3 = i >> 1;
       target_palettes[v3 + 160] = kEnemyInit_Crocomire_Palette2[v3];
@@ -473,9 +473,9 @@ void Crocomire_Main(void) {
 
 void Crocomire_Func_28(void) {  // 0xA48C6E
   Crocomire_Func_37();
-  *(uint16 *)&scrolls[4] = 257;
+  *(uint16 *)&scrolls[4] = (kScroll_Blue << 8) | kScroll_Blue;
   if (!sign16(samus_x_pos - 1312))
-    *(uint16 *)&scrolls[4] = 256;
+    *(uint16 *)&scrolls[4] = kScroll_Blue << 8;
   Crocomire_Func_27(cur_enemy_index);
 }
 
@@ -730,7 +730,7 @@ void Crocomire_Func_49(void) {  // 0xA49099
     QueueMusic_Delayed8(6);
     E->crocom_var_A = 88;
     E->base.current_instruction = addr_kCrocomire_Ilist_E1D2;
-    *(uint16 *)&scrolls[4] = 257;
+    *(uint16 *)&scrolls[4] = (kScroll_Blue << 8) | kScroll_Blue;
     debug_disable_minimap = 0;
     Get_Crocomire(0x40)->base.properties |= 0x200;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x4e, 0x03, 0xb753 });
@@ -1231,7 +1231,7 @@ uint16 Crocomire_Func_67(void) {  // 0xA496C8
 void Crocomire_Func_68(void) {  // 0xA497D3
   if (sign16(samus_x_pos - 640)) {
     QueueMusic_Delayed8(5);
-    *(uint16 *)&scrolls[3] = 256;
+    *(uint16 *)&scrolls[3] = kScroll_Blue << 8;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb757 });
     camera_distance_index = 6;
     Enemy_Crocomire *E0 = Get_Crocomire(0);
@@ -1463,8 +1463,8 @@ void Crocomire_Func_88(void) {  // 0xA49B06
 }
 
 void Crocomire_9B65(void) {  // 0xA49B65
-  *(uint16 *)scrolls = 257;
-  *(uint16 *)&scrolls[2] = 257;
+  *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
+  *(uint16 *)&scrolls[2] = (kScroll_Blue << 8) | kScroll_Blue;
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1e, 0x03, 0xb753 });
   Crocomire_9BB3();
 }

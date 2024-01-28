@@ -1813,7 +1813,7 @@ void Samus_Initialize(void) {  // 0x91E00D
   while ((int16)(v0 - 0xA02) >= 0);
   if (game_state != kGameState_40_TransitionToDemo) {
     frame_handler_alfa = FUNC16(EmptyFunction);
-    if (loading_game_state == kGameState_34_CeresGoesBoom) {
+    if (loading_game_state == kLoadingGameState_22_EscapingCeres) {
       frame_handler_beta = FUNC16(SetContactDamageIndexAndUpdateMinimap);
       samus_draw_handler = FUNC16(SamusDrawHandler_Default);
       samus_momentum_routine_index = -1;
@@ -1893,7 +1893,7 @@ uint8 Xray_Initialize(void) {  // 0x91E16D
       || !sign16(samus_pose - kPose_A4_FaceR_LandJump)
       && (sign16(samus_pose - kPose_A8_FaceR_Grappling)
           || !sign16(samus_pose - kPose_E0_FaceR_LandJump_AimU) && sign16(samus_pose - kPose_E8_FaceR_Drained_CrouchFalling))
-      || game_state != 8
+      || game_state != kGameState_8_MainGameplay
       || power_bomb_explosion_status
       || samus_y_speed
       || samus_y_subspeed
@@ -2672,21 +2672,21 @@ uint8 Samus_HandleTransitionsB_1_6(void) {  // 0x91EDA6
 uint8 Samus_HandleTransitionsB_1_0(void) {  // 0x91EDB0
   if (samus_pose_x_dir == 4) {
     if (knockback_x_dir) {
-      if ((joypad1_lastkeys & 0x200) != 0)
+      if ((joypad1_lastkeys & kButton_Left) != 0)
         knockback_dir = 5;
       else
         knockback_dir = 2;
-    } else if ((joypad1_lastkeys & 0x200) != 0) {
+    } else if ((joypad1_lastkeys & kButton_Left) != 0) {
       knockback_dir = 4;
     } else {
       knockback_dir = 1;
     }
   } else if (knockback_x_dir) {
-    if ((joypad1_lastkeys & 0x100) != 0)
+    if ((joypad1_lastkeys & kButton_Right) != 0)
       knockback_dir = 5;
     else
       knockback_dir = 2;
-  } else if ((joypad1_lastkeys & 0x100) != 0) {
+  } else if ((joypad1_lastkeys & kButton_Right) != 0) {
     knockback_dir = 4;
   } else {
     knockback_dir = 1;

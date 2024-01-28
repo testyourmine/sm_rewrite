@@ -1276,7 +1276,7 @@ void GunshipTop_Init(void) {  // 0xA2A644
   E->base.timer = 0;
   E->base.current_instruction = addr_kGunshipTop_Ilist_A616;
   E->base.palette_index = 3584;
-  if (game_state != 40 || demo_set) {
+  if (game_state != kGameState_40_TransitionToDemo || demo_set) {
     if (loading_game_state == kLoadingGameState_22_EscapingCeres) {
       E->base.y_pos = samus_y_pos - 17;
       E->gtp_var_F = FUNC16(GunshipTop_3);
@@ -1313,11 +1313,11 @@ void GunshipBottom_Init(void) {  // 0xA2A6D2
   E->base.palette_index = 3584;
   if (E->gbm_parameter_2) {
     E->base.y_pos = enemy_drawing_queue[v2 + 61] - 1;
-    if (game_state == kPose_28_FaceL_Crouch && !demo_set) {
+    if (game_state == kGameState_40_TransitionToDemo && !demo_set) {
       E->base.instruction_timer = 1;
       E->base.current_instruction = addr_kGunshipTop_Ilist_A5BE;
     }
-  } else if (loading_game_state == kGameState_34_CeresGoesBoom) {
+  } else if (loading_game_state == kLoadingGameState_22_EscapingCeres) {
     E->base.y_pos = samus_y_pos + 23;
   } else {
     E->base.y_pos += 15;
@@ -1463,7 +1463,7 @@ void GunshipTop_7(uint16 k) {  // 0xA2A987
 }
 
 void GunshipTop_8(uint16 k) {  // 0xA2A9BD
-  if (game_state == 8 && frame_handler_alfa == FUNC16(Samus_FrameHandlerAlfa_Func11)) {
+  if (game_state == kGameState_8_MainGameplay && frame_handler_alfa == FUNC16(Samus_FrameHandlerAlfa_Func11)) {
     Enemy_GunshipTop *E = Get_GunshipTop(k);
     if ((int16)(E->base.x_pos - 8 - samus_x_pos) < 0
         && (int16)(E->base.x_pos + 8 - samus_x_pos) >= 0
@@ -1683,7 +1683,7 @@ void GunshipTop_20(uint16 k) {  // 0xA2AD0E
   Enemy_GunshipTop *E = Get_GunshipTop(k);
   if (sign16(E->base.y_pos - 256)) {
     E->gtp_var_F = FUNC16(GunshipTop_21);
-    game_state = 38;
+    game_state = kGameState_38_SamusEscapesFromZebes;
     screen_fade_delay = 0;
     screen_fade_counter = 0;
   }
@@ -2811,9 +2811,9 @@ void MaridiaLargeSnail_Func_3(uint16 k) {  // 0xA2CD77
     v2 = E->base.x_pos - E->mlsl_var_06;
     if (!v2) {
       if (E->mlsl_var_05) {
-        if (!E->mlsl_var_D || (joypad1_lastkeys & 0x100) == 0)
+        if (!E->mlsl_var_D || (joypad1_lastkeys & kButton_Right) == 0)
           return;
-      } else if (E->mlsl_var_D || (joypad1_lastkeys & 0x200) == 0) {
+      } else if (E->mlsl_var_D || (joypad1_lastkeys & kButton_Left) == 0) {
         return;
       }
       E->mlsl_var_0B = 1;
@@ -2821,11 +2821,11 @@ void MaridiaLargeSnail_Func_3(uint16 k) {  // 0xA2CD77
       return;
     }
     if (v2 < 0) {
-      if ((joypad1_lastkeys & 0x100) != 0) {
+      if ((joypad1_lastkeys & kButton_Right) != 0) {
         E->mlsl_var_0B = 1;
         E->base.x_pos = E->mlsl_var_06;
       }
-    } else if ((joypad1_lastkeys & 0x200) != 0) {
+    } else if ((joypad1_lastkeys & kButton_Left) != 0) {
       E->mlsl_var_0B = 1;
       E->base.x_pos = E->mlsl_var_06;
     }
@@ -4016,7 +4016,7 @@ void HorizontalShootableShutter_Func_9(void) {  // 0xA2F2E4
 
 void HorizontalShootableShutter_Func_10(uint16 k) {  // 0xA2F356
   if (Get_RisingFallingPlatform(k)->rfpm_var_13) {
-    if ((joypad1_lastkeys & 0x100) != 0) {
+    if ((joypad1_lastkeys & kButton_Right) != 0) {
       extra_samus_x_displacement -= 4;
       extra_samus_y_subdisplacement = 0;
     }
@@ -4025,7 +4025,7 @@ void HorizontalShootableShutter_Func_10(uint16 k) {  // 0xA2F356
 
 void HorizontalShootableShutter_Func_11(uint16 k) {  // 0xA2F371
   if (Get_RisingFallingPlatform(k)->rfpm_var_13) {
-    if ((joypad1_lastkeys & 0x200) != 0) {
+    if ((joypad1_lastkeys & kButton_Left) != 0) {
       extra_samus_x_displacement += 4;
       extra_samus_y_subdisplacement = 0;
     }
@@ -4060,11 +4060,11 @@ void HorizontalShootableShutter_Touch(void) {  // 0xA2F3D8
   Enemy_HorizontalShootableShutter *E = Get_HorizontalShootableShutter(cur_enemy_index);
   if (E->hssr_var_A == FUNC16(HorizontalShootableShutter_Func_14)) {
     if ((int16)(samus_x_pos - E->base.x_pos) >= 0) {
-      if ((joypad1_lastkeys & 0x200) != 0) {
+      if ((joypad1_lastkeys & kButton_Left) != 0) {
         extra_samus_x_displacement = 4;
         extra_samus_y_subdisplacement = 0;
       }
-    } else if ((joypad1_lastkeys & 0x100) != 0) {
+    } else if ((joypad1_lastkeys & kButton_Right) != 0) {
       extra_samus_x_displacement = -4;
       extra_samus_y_subdisplacement = 0;
     }

@@ -654,7 +654,7 @@ void Torizo_Init(void) {  // 0xAAC87F
     }
     if (area_index) {
       Torizo_C280();
-      if (joypad1_lastkeys == 0xC0C0) {
+      if (joypad1_lastkeys == (kButton_B | kButton_Y | kButton_A | kButton_X)) {
         samus_health = 700;
         samus_max_health = 700;
         samus_max_reserve_health = 300;
@@ -877,7 +877,7 @@ const uint16 *Torizo_Instr_50(uint16 k, const uint16 *jp) {  // 0xAAD4BA
   if ((Torizo_Func_12(k) & 0x8000) != 0)
     return jp + 1;
   Enemy_Torizo *E = Get_Torizo(k);
-  if (E->toriz_var_07 <= 0x168 && ((joypad1_lastkeys & 0x300) == 0 || (NextRandom() & 0x101) == 0))
+  if (E->toriz_var_07 <= 0x168 && ((joypad1_lastkeys & (kButton_Left | kButton_Right)) == 0 || (NextRandom() & 0x101) == 0))
     return jp + 1;
   E->toriz_var_09 = 0;
   Torizo_C20A(k);
@@ -1458,10 +1458,10 @@ const uint16 *Shaktool_Instr_7(uint16 k, const uint16 *jp) {  // 0xAAE5D8
 
 const uint16 *Shaktool_Instr_14(uint16 k, const uint16 *jp) {  // 0xAAE6F0
   CallSomeSamusCode(1);
-  *(uint16 *)&scrolls[6] = 0;
-  *(uint16 *)&scrolls[8] = 0;
-  *(uint16 *)&scrolls[9] = 0;
-  *(uint16 *)&scrolls[13] = 1;
+  *(uint16 *)&scrolls[6] = kScroll_Red;
+  *(uint16 *)&scrolls[8] = kScroll_Red;
+  *(uint16 *)&scrolls[9] = kScroll_Red;
+  *(uint16 *)&scrolls[13] = kScroll_Blue;
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x17, 0x1d, 0xd6fc });
   return jp;
 }

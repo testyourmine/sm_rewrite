@@ -300,7 +300,7 @@ CoroutineRet GameState_33_BlackoutFromCeres(void) {  // 0x828388
     screen_fade_delay = 0;
     screen_fade_counter = 0;
     loading_game_state = kLoadingGameState_22_EscapingCeres;
-    game_state = 34;
+    game_state = kGameState_34_CeresGoesBoom;
     SaveToSram(selected_save_slot);
     cinematic_function = FUNC16(CinematicFunctionBlackoutFromCeres);
     ceres_status = 0;
@@ -540,7 +540,7 @@ void LoadDemoRoomData(void) {  // 0x828679
 }
 
 void DemoRoom_ChargeBeamRoomScroll21(void) {  // 0x82891A
-  scrolls[33] = 0;
+  scrolls[33] = kScroll_Red;
 }
 
 void DemoRoom_SetBG2TilemapBase(void) {  // 0x828925
@@ -2590,18 +2590,18 @@ void EquipmentScreenCategory_Weapons(void) {  // 0x82AFBE
 
 void EquipmentScreenCategory_Weapons_MoveButtons(void) {  // 0x82AFDB
   uint16 r18 = pausemenu_equipment_category_item;
-  if ((joypad1_newkeys & 0x100) != 0) {
-    if ((joypad1_newkeys & 0x800) != 0) {
+  if ((joypad1_newkeys & kButton_Right) != 0) {
+    if ((joypad1_newkeys & kButton_Up) != 0) {
       EquipmentScreenMoveLowerOnSuitsMisc(0);
     } else if (EquipmentScreenMoveLowerOnSuitsMisc(4)) {
       EquipmentScreenMoveToHighJumpOrLowerInBoots(0, r18);
     }
-  } else if ((joypad1_newkeys & 0x400) != 0) {
+  } else if ((joypad1_newkeys & kButton_Down) != 0) {
     if (!hyper_beam_flag && pausemenu_equipment_category_item != 1025) {
       pausemenu_equipment_category_item += 256;
       EquipmentScreenMoveToBeams(2 * HIBYTE(pausemenu_equipment_category_item), r18);
     }
-  } else if ((joypad1_newkeys & 0x800) != 0) {
+  } else if ((joypad1_newkeys & kButton_Up) != 0) {
     if ((pausemenu_equipment_category_item & 0xFF00) == 0
         || (pausemenu_equipment_category_item -= 256,
             EquipmentScreenMoveToBottomOfBeams(2 * HIBYTE(pausemenu_equipment_category_item)) == 0xFFFF)) {
@@ -3683,7 +3683,7 @@ void UpdateMusicTrackIndex(void) {  // 0x82E09B
 }
 
 void LoadNewMusicTrackIfChanged(void) {  // 0x82E0D5
-  if (game_state < 0x28 && room_music_track_index) {
+  if (game_state < kGameState_40_TransitionToDemo && room_music_track_index) {
     uint16 r18 = room_music_data_index << 8;
     r18 |= room_music_track_index;
     uint16 r20 = music_data_index << 8;
@@ -4500,11 +4500,11 @@ void OptionsMenuFunc5_SetMenuPalettes(uint16 a, uint16 k, uint16 j) {  // 0x82ED
   } while (j);
 }
 static Func_V *const kGameOptionsMenuItemFuncs[5] = {  // 0x82ED42
-  GameOptionsMenuItemFunc_0,
+  GameOptionsMenuItemFunc_0_StartGame,
   GameOptionsMenuItemFunc_2_ToggleJapanese,
   GameOptionsMenuItemFunc_2_ToggleJapanese,
-  GameOptionsMenuItemFunc_4,
-  GameOptionsMenuItemFunc_4,
+  GameOptionsMenuItemFunc_4_StartGameDissolveTransition,
+  GameOptionsMenuItemFunc_4_StartGameDissolveTransition,
 };
 void GameOptionsMenu_3_OptionsScreen(void) {
   if ((joypad1_newkeys & kButton_Up) != 0) {
@@ -4516,7 +4516,7 @@ void GameOptionsMenu_3_OptionsScreen(void) {
     if (++menu_option_index == 5)
       menu_option_index = 0;
   }
-  if ((joypad1_newkeys & 0x8000) != 0) {
+  if ((joypad1_newkeys & kButton_B) != 0) {
     game_options_screen_index = 11;
   } else if ((joypad1_newkeys & kButton_A) != 0 || (joypad1_newkeys & kButton_Start) != 0) {
     QueueSfx1_Max6(kSfx1_MenuOptionSelected);
@@ -4524,8 +4524,8 @@ void GameOptionsMenu_3_OptionsScreen(void) {
   }
 }
 
-void GameOptionsMenuItemFunc_0(void) {  // 0x82EDB1
-  if (enable_debug && (joypad1_lastkeys & kButton_L) == 0 || loading_game_state == kGameState_5_FileSelectMap) {
+void GameOptionsMenuItemFunc_0_StartGame(void) {  // 0x82EDB1
+  if (enable_debug && (joypad1_lastkeys & kButton_L) == 0 || loading_game_state == kLoadingGameState_5_Main) {
     game_options_screen_index = 4;
   } else {
     screen_fade_delay = 0;
@@ -4554,7 +4554,7 @@ void OptionsMenuFunc4_SetLanguageHighlight(void) {  // 0x82EDED
   }
 }
 
-void GameOptionsMenuItemFunc_4(void) {  // 0x82EE55
+void GameOptionsMenuItemFunc_4_StartGameDissolveTransition(void) {  // 0x82EE55
   reg_MOSAIC = 3;
   screen_fade_delay = 0;
   screen_fade_counter = 0;
@@ -4585,15 +4585,15 @@ void GameOptionsMenu_C_FadeOutOptionsScreenToStart(void) {  // 0x82EE92
 
 void GameOptionsMenu_4_StartGame(void) {  // 0x82EEB4
   game_options_screen_index = 0;
-  if (enable_debug && (joypad1_lastkeys & 0x20) == 0) {
+  if (enable_debug && (joypad1_lastkeys & kButton_L) == 0) {
     game_state = kGameState_5_FileSelectMap;
     if (loading_game_state != kLoadingGameState_5_Main) {
-      loading_game_state = kGameState_5_FileSelectMap;
+      loading_game_state = kLoadingGameState_5_Main;
       SaveToSram(selected_save_slot);
     }
   } else if (loading_game_state) {
     game_state = loading_game_state;
-    if (loading_game_state == kGameState_34_CeresGoesBoom)
+    if (loading_game_state == kLoadingGameState_22_EscapingCeres)
       cinematic_function = FUNC16(CinematicFunctionBlackoutFromCeres);
     menu_option_index = 0;
     game_options_screen_index = 0;
@@ -4683,9 +4683,9 @@ void GameOptionsMenu_6_DissolveInScreen(void) {  // 0x82EFDB
   }
 }
 static Func_V *const kGameOptionsMenuSpecialSettings[3] = {  // 0x82F024
-  GameOptionsMenuSpecialSettings_0,
-  GameOptionsMenuSpecialSettings_0,
-  GameOptionsMenuSpecialSettings_2,
+  GameOptionsMenuSpecialSettings_ToggleSetting,
+  GameOptionsMenuSpecialSettings_ToggleSetting,
+  GameOptionsMenuSpecialSettings_End,
 };
 void GameOptionsMenu_8_SpecialSettings(void) {
   if ((joypad1_newkeys & kButton_Up) != 0) {
@@ -4697,7 +4697,7 @@ void GameOptionsMenu_8_SpecialSettings(void) {
     if (++menu_option_index == 3)
       menu_option_index = 0;
   }
-  if ((joypad1_newkeys & 0x8000) == 0) {
+  if ((joypad1_newkeys & kButton_B) == 0) {
     if ((joypad1_newkeys & (kButton_Start | kButton_Left | kButton_Right | kButton_A)) != 0) {
       QueueSfx1_Max6(kSfx1_MenuOptionSelected);
       kGameOptionsMenuSpecialSettings[menu_option_index]();
@@ -4705,10 +4705,10 @@ void GameOptionsMenu_8_SpecialSettings(void) {
   } else {
     QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     menu_option_index = 0;
-    GameOptionsMenuItemFunc_4();
+    GameOptionsMenuItemFunc_4_StartGameDissolveTransition();
   }
 }
-void GameOptionsMenuSpecialSettings_0(void) {  // 0x82F08E
+void GameOptionsMenuSpecialSettings_ToggleSetting(void) {  // 0x82F08E
   uint8 *v0 = RomPtr_RAM(kOptionsMenuSpecialPtrs[menu_option_index]);
   if (GET_WORD(v0))
     *(uint16 *)v0 = 0;
@@ -4717,16 +4717,16 @@ void GameOptionsMenuSpecialSettings_0(void) {  // 0x82F08E
   OptionsMenuFunc7_SetSpecialSettingsHighlight();
 }
 
-void GameOptionsMenuSpecialSettings_2(void) {  // 0x82F0B2
+void GameOptionsMenuSpecialSettings_End(void) {  // 0x82F0B2
   menu_option_index = 0;
-  GameOptionsMenuItemFunc_4();
+  GameOptionsMenuItemFunc_4_StartGameDissolveTransition();
 }
 
-static const uint16 g_word_82F149[4] = {  // 0x82F0B9
+static const uint16 kLeftOptionTilemapIndex[4] = {  // 0x82F0B9
   0x1e0, 0x220,
   0x360, 0x3a0,
 };
-static const uint16 g_word_82F151[4] = {
+static const uint16 kRightOptionTilemapIndex[4] = {
   0x1ee, 0x22e,
   0x36e, 0x3ae,
 };
@@ -4734,23 +4734,24 @@ void OptionsMenuFunc7_SetSpecialSettingsHighlight(void) {
 
   uint16 v0 = 4 * menu_option_index;
   if (*(uint16 *)RomPtr_RAM(kOptionsMenuSpecialPtrs[menu_option_index])) {
-    OptionsMenuFunc5_SetMenuPalettes(0, g_word_82F149[(uint16)(4 * menu_option_index) >> 1], 0xC);
-    OptionsMenuFunc5_SetMenuPalettes(0, g_word_82F149[(v0 >> 1) + 1], 0xC);
-    OptionsMenuFunc5_SetMenuPalettes(0x400, g_word_82F151[v0 >> 1], 0xC);
-    OptionsMenuFunc5_SetMenuPalettes(0x400, g_word_82F151[(v0 >> 1) + 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0, kLeftOptionTilemapIndex[(uint16)(4 * menu_option_index) >> 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0, kLeftOptionTilemapIndex[(v0 >> 1) + 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0x400, kRightOptionTilemapIndex[v0 >> 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0x400, kRightOptionTilemapIndex[(v0 >> 1) + 1], 0xC);
   } else {
-    OptionsMenuFunc5_SetMenuPalettes(0x400, g_word_82F149[(uint16)(4 * menu_option_index) >> 1], 0xC);
-    OptionsMenuFunc5_SetMenuPalettes(0x400, g_word_82F149[(v0 >> 1) + 1], 0xC);
-    OptionsMenuFunc5_SetMenuPalettes(0, g_word_82F151[v0 >> 1], 0xC);
-    OptionsMenuFunc5_SetMenuPalettes(0, g_word_82F151[(v0 >> 1) + 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0x400, kLeftOptionTilemapIndex[(uint16)(4 * menu_option_index) >> 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0x400, kLeftOptionTilemapIndex[(v0 >> 1) + 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0, kRightOptionTilemapIndex[v0 >> 1], 0xC);
+    OptionsMenuFunc5_SetMenuPalettes(0, kRightOptionTilemapIndex[(v0 >> 1) + 1], 0xC);
   }
 }
 
-static const uint16 word_82F204[16] = {  // 0x82F159
-  0x20, 0x20,   0x20, 0x20,
-  0x10, 0x10,   0x10, 0x10,
-  0x10, 0x10, 0x4000, 0x40,
-  0x40, 0x80,   0x80, 0x80,
+static const uint16 kDebugInvincibilityInputCombo[16] = {  // 0x82F159
+  kButton_L, kButton_L, kButton_L, kButton_L,
+  kButton_R, kButton_R, kButton_R, kButton_R, kButton_R, kButton_R,
+  kButton_Y,
+  kButton_X, kButton_X,
+  kButton_A, kButton_A, kButton_A,
 };
 
 void GameOptionsMenu_7_ControllerSettings(void) {
@@ -4796,7 +4797,7 @@ void GameOptionsMenu_7_ControllerSettings(void) {
     };
     kOptionsMenuControllerFuncs[menu_option_index]();
   } else if (joypad2_new_keys && menu_option_index == 8 && sign16(debug_invincibility - 16)) {
-    if ((word_82F204[debug_invincibility] & joypad2_new_keys) == word_82F204[debug_invincibility])
+    if ((kDebugInvincibilityInputCombo[debug_invincibility] & joypad2_new_keys) == kDebugInvincibilityInputCombo[debug_invincibility])
       ++debug_invincibility;
     else
       debug_invincibility = 0;
@@ -4820,7 +4821,7 @@ void OptionsMenuControllerFunc_ResetToDefault(void) {  // 0x82F224
 void OptionsMenuControllerFunc_End(void) {  // 0x82F25D
   if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0 && !OptionsMenuFunc8_DrawGameOptionsMenuControllerBindings()) {
     menu_option_index = 0;
-    GameOptionsMenuItemFunc_4();
+    GameOptionsMenuItemFunc_4_StartGameDissolveTransition();
   }
 }
 
@@ -4937,7 +4938,7 @@ void OptionsInit_FileSelectHelmet(uint16 j) {  // 0x82F419
 }
 
 void OptionsPreInstr_FileSelectHelmet(uint16 k) {  // 0x82F42C
-  if (game_state != 2) {
+  if (game_state != kGameState_2_GameOptionsMenu) {
     int v1 = k >> 1;
     eproj_E[v1 + 15] = 1;
     eproj_y_vel[v1 + 17] = addr_kOptionsInstr_Destroy;
