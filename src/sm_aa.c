@@ -1410,7 +1410,7 @@ const uint16 *Shaktool_Instr_11(uint16 k, const uint16 *jp) {  // 0xAAE436
 }
 
 const uint16 *Shaktool_Instr_10(uint16 k, const uint16 *jp) {  // 0xAAE43D
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   return jp;
 }
 
@@ -1457,7 +1457,7 @@ const uint16 *Shaktool_Instr_7(uint16 k, const uint16 *jp) {  // 0xAAE5D8
 }
 
 const uint16 *Shaktool_Instr_14(uint16 k, const uint16 *jp) {  // 0xAAE6F0
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   *(uint16 *)&scrolls[6] = kScroll_Red;
   *(uint16 *)&scrolls[8] = kScroll_Red;
   *(uint16 *)&scrolls[9] = kScroll_Red;

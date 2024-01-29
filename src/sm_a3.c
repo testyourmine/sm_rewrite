@@ -464,7 +464,7 @@ void Elevator_Func_1(void) {  // 0xA39548
   if ((kElevator_ControllerInputs[Get_Elevator(cur_enemy_index)->elevat_parameter_1 >> 1] & joypad1_newkeys) != 0) {
     QueueSfx3_Max6(kSfx3_Elevator);
     QueueSfx1_Max6(kSfx1_SpinJumpEnd_Silence);
-    CallSomeSamusCode(7);
+    RunSamusCode(kSamusCode_7_SetupForElevator);
     ResetProjectileData();
     Elevator_Func_4();
     ++elevator_status;
@@ -509,7 +509,7 @@ void Elevator_Func3b(void) {  // 0xA395BC
   elevator_flags = 0;
   QueueSfx3_Max6(kSfx3_ClearSpeedBooster_ElevatorSound_Silence);
   E->base.y_pos = E->elevat_var_A;
-  CallSomeSamusCode(0xB);
+  RunSamusCode(kSamusCode_11_DrawHandlerDefault);
   Elevator_Func_4();
 }
 
@@ -2958,7 +2958,7 @@ void Metroid_Touch(void) {  // 0xA3EDEB
       uint16 v7 = 1;
       if (abs16(E->base.x_pos - samus_x_pos) < 8 && abs16(E->base.y_pos - varE32) < 8) {
         v7 = 2;
-        CallSomeSamusCode(0x12);
+        RunSamusCode(kSamusCode_18_EnableBlueFlashing);
       }
       E->metroid_var_F = v7;
       if (v7 == 2) {
@@ -3000,7 +3000,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
       if (!E->base.health) {
         E->metroid_var_B = 0;
         EnemyDeathAnimation(cur_enemy_index, 4);
-        CallSomeSamusCode(0x13);
+        RunSamusCode(kSamusCode_19_DisableBlueFlashing);
         sprite_instr_list_ptrs[E->metroid_var_00 >> 1] = 0;
         uint16 metroid_var_01 = E->metroid_var_01;
         sprite_instr_list_ptrs[metroid_var_01 >> 1] = 0;
@@ -3014,7 +3014,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
         E->metroid_var_F = 3;
         E->base.current_instruction = addr_kMetroid_Ilist_E9CF;
         E->base.instruction_timer = 1;
-        CallSomeSamusCode(0x13);
+        RunSamusCode(kSamusCode_19_DisableBlueFlashing);
       }
     } else {
       E->metroid_var_A = 0;
@@ -3053,7 +3053,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
 void Metroid_Powerbomb(uint16 k) {  // 0xA3F042
   NormalEnemyPowerBombAi();
   if (!Get_Metroid(k)->base.health) {
-    CallSomeSamusCode(0x13);
+    RunSamusCode(kSamusCode_19_DisableBlueFlashing);
     sprite_instr_list_ptrs[Get_Metroid(cur_enemy_index)->metroid_var_00 >> 1] = 0;
     sprite_instr_list_ptrs[Get_Metroid(cur_enemy_index)->metroid_var_01 >> 1] = 0;
   }

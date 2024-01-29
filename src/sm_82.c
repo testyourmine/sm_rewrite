@@ -122,9 +122,9 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
     } while (v4);
     if (loading_game_state == kLoadingGameState_1F_StartingAtCeres) {
       palette_buffer[223] = 0;
-      CallSomeSamusCode(8);
+      RunSamusCode(kSamusCode_8_SetupForCeresStart);
     } else {
-      CallSomeSamusCode(9);
+      RunSamusCode(kSamusCode_9_SetupForZebesStart);
     }
   }
 
@@ -1885,7 +1885,7 @@ void ContinueInitGameplayResume(void) {  // 0x82A2E3
   CalculateBgScrolls_Unpause();
   UpdateBeamTilesAndPalette_Unpause();
   ClearPauseMenuData();
-  CallSomeSamusCode(0xC);
+  RunSamusCode(kSamusCode_12_UnlockFromMapStation);
 }
 
 void SetupPpuForGameplayResume(void) {  // 0x82A313
@@ -3258,7 +3258,7 @@ void QueueSamusMovementSfx(void) {  // 0x82BE2F
     QueueSfx3_Max6(kSfx3_ResumeSpeedBooster_Shinespark);
   if (!sign16(flare_counter - 16))
     QueueSfx1_Max6(kSfx1_ResumeChargingBeam);
-  CallSomeSamusCode(0x14);
+  RunSamusCode(kSamusCode_20_QueueSfx);
 }
 
 
@@ -3381,12 +3381,12 @@ void HandleSamusOutOfHealthAndGameTile(void) {  // 0x82DB69
     if ((reserve_health_mode & 1) != 0 && samus_reserve_health) {
       time_is_frozen_flag = 0x8000;
       game_state = kGameState_27_ReserveTanksAuto;
-      CallSomeSamusCode(0x1B);
+      RunSamusCode(kSamusCode_27_LockForReserveTank);
     } else {
       if (game_state != kGameState_8_MainGameplay)
         return;
       time_is_frozen_flag = 0x8000;
-      CallSomeSamusCode(0x11);
+      RunSamusCode(kSamusCode_17_SetupForDeath);
       game_state = kGameState_19_SamusNoHealth;
     }
   }
@@ -3413,7 +3413,7 @@ CoroutineRet GameState_27_ReserveTanksAuto(void) {  // 0x82DC10
   if (coroutine_state_1 == 0 && RefillHealthFromReserveTanks()) {
     time_is_frozen_flag = 0;
     game_state = kGameState_8_MainGameplay;
-    CallSomeSamusCode(0x10);
+    RunSamusCode(kSamusCode_16_UnlockSamusFromReserveTank);
   }
   COROUTINE_AWAIT_ONLY(GameState_8_MainGameplay());
   Samus_LowHealthCheck_0();
@@ -3746,7 +3746,7 @@ CoroutineRet DoorTransitionFunction_HandleElevator(void) {  // 0x82E17D
     ++game_state;
     return GameState_10_LoadingNextRoom_Async();
   }
-  CallSomeSamusCode(0);
+  RunSamusCode(kSamusCode_0_LockSamus);
   if ((elevator_direction & 0x8000) != 0) {
     ++game_state;
     return GameState_10_LoadingNextRoom_Async();
@@ -4104,9 +4104,9 @@ CoroutineRet DoorTransition_HandleTransition(void) {  // 0x82E6A2
   PointlessFunctionStupidToo();
   if (elevator_flags) {
     if ((elevator_direction & 0x8000) == 0)
-      CallSomeSamusCode(7);
+      RunSamusCode(kSamusCode_7_SetupForElevator);
     else
-      CallSomeSamusCode(0);
+      RunSamusCode(kSamusCode_0_LockSamus);
   }
   SetLiquidPhysicsType();
   door_transition_function = FUNC16(DoorTransition_FadeInScreenAndFinish);

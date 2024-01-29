@@ -1902,7 +1902,7 @@ void EprojPreInstr_CeresElevatorPad(uint16 k) {  // 0x86A328
       samus_y_pos = 72;
       eproj_instr_timers[v1] = 1;
       eproj_instr_list_ptr[v1] = addr_off_86A28B;
-      CallSomeSamusCode(0xE);
+      RunSamusCode(kSamusCode_14_UnlockFromCeresElevator);
     }
   }
 }
@@ -4652,7 +4652,7 @@ void EprojPreInstr_Pickup(uint16 k) {
   int v1 = k >> 1;
   if (!--eproj_F[v1])
     goto LABEL_7;
-  if (CallSomeSamusCode(0xD)) {
+  if (RunSamusCode(kSamusCode_13_IsGrappleActive)) {
     if (sign16(eproj_F[v1] - 384)) {
       uint16 v2, v3;
       v2 = abs16(eproj_x_pos[v1] - grapple_beam_end_x_pos);

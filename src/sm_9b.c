@@ -858,7 +858,7 @@ void GrappleBeamFunc_Cancel(void) {  // 0x9BC856
   if (samus_movement_type == kMovementType_16_Grappling)
     Samus_Pose_CancelGrapple();
   else
-    CallSomeSamusCode(0x1C);
+    RunSamusCode(kSamusCode_28_PlaySpinSfxIfSpinJumping);
   grapple_beam_unkD1E = 0;
   grapple_beam_unkD20 = 0;
   grapple_beam_direction = 0;

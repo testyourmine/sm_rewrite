@@ -2292,7 +2292,7 @@ void Ridley_Func_37(void) {  // 0xA6BC68
   Enemy_Ridley *E = Get_Ridley(0);
   E->base.properties |= kEnemyProps_Tangible;
   E->ridley_var_1B = 1;
-  CallSomeSamusCode(0);
+  RunSamusCode(kSamusCode_0_LockSamus);
   Ridley_Func_119(1);
 }
 
@@ -2304,7 +2304,7 @@ void Ridley_Func_38(void) {  // 0xA6BC84
     E->ridley_var_1E = Ridley_Func_40_Sign() ? 6 : 10;
   }
   E->ridley_var_1B = 0;
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   Ridley_Func_119(0);
 }
 

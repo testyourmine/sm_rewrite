@@ -174,11 +174,38 @@ typedef struct EnemyBase {
 
 
 /* 14 */
-typedef struct AnimtilesDef {
+typedef struct AnimtilesObject {
   VoidP instruction_list;
   uint16 size;
   uint16 vram_addr;
-} AnimtilesDef;
+} AnimtilesObject;
+
+//typedef union AnimtilesEntry {
+//  struct {
+//    uint16 timer;
+//    VoidP tile_src;
+//  };
+//  struct {
+//    uint16 func_ptr;
+//    union {
+//      struct {
+//        union {
+//          struct {
+//            uint8 boss_bit;
+//            uint8 area;
+//          };
+//          uint16 game_event;
+//        };
+//        uint16 instr_list_ptr2;
+//      };
+//      uint16 instr_list_ptr1;
+//      uint16 tourian_statue_state;
+//      uint16 palette_offset;
+//      uint16 eproj_param;
+//      uint16 palfx_id;
+//    };
+//  };
+//} AnimtilesEntry;
 
 /* 15 */
 typedef struct HdmaScrollEntry {
@@ -254,6 +281,41 @@ enum LoadLibaryOpcode {
   kLoadLibaryOpcode_A_ClearBG2Tilemap = 0xA,
   kLoadLibaryOpcode_C_ClearKraidLayer2 = 0xC,
   kLoadBg_E_DoorDepXferVram = 0xE,
+};
+
+enum SamusCode {
+  kSamusCode_0_LockSamus = 0x0,
+  kSamusCode_1_UnlockSamus = 0x1,
+  kSamusCode_2_ReachCeresElevator = 0x2,
+  kSamusCode_3_UnspinSamus = 0x3,
+  kSamusCode_4_EndChargeBeam = 0x4,
+  kSamusCode_5_SetupDrained = 0x5,
+  kSamusCode_6_LockToStation = 0x6,
+  kSamusCode_7_SetupForElevator = 0x7,
+  kSamusCode_8_SetupForCeresStart = 0x8,
+  kSamusCode_9_SetupForZebesStart = 0x9,
+  kSamusCode_10_ClearDrawHandler = 0xA,
+  kSamusCode_11_DrawHandlerDefault = 0xB,
+  kSamusCode_12_UnlockFromMapStation = 0xC,
+  kSamusCode_13_IsGrappleActive = 0xD,
+  kSamusCode_14_UnlockFromCeresElevator = 0xE,
+  kSamusCode_15_EnableTimerHandling = 0xF,
+  kSamusCode_16_UnlockSamusFromReserveTank = 0x10,
+  kSamusCode_17_SetupForDeath = 0x11,
+  kSamusCode_18_EnableBlueFlashing = 0x12,
+  kSamusCode_19_DisableBlueFlashing = 0x13,
+  kSamusCode_20_QueueSfx = 0x14,
+  kSamusCode_21_LockToSuitAcquisition = 0x15,
+  kSamusCode_22_EnableRainbowSamus = 0x16,
+  kSamusCode_23_DisableRainbowSamusAndStandUp = 0x17,
+  kSamusCode_24_SetupDrainedAndDisableStandUp = 0x18,
+  kSamusCode_25_FreezeDrainedSamus = 0x19,
+  kSamusCode_26_EnterGunship = 0x1A,
+  kSamusCode_27_LockForReserveTank = 0x1B,
+  kSamusCode_28_PlaySpinSfxIfSpinJumping = 0x1C,
+  kSamusCode_29_ClearSoundInDoor = 0x1D,
+  kSamusCode_30_ResumeSfxAfterPowerBombExplosion = 0x1E,
+  kSamusCode_31_KillGrappleBeam = 0x1F,
 };
 
 /* 27 */
@@ -938,6 +1000,14 @@ enum EnemyProps {
   kEnemyProps_RespawnIfKilled = 0x4000,
 };
 
+enum TourianEntranceStatueAnimationState {
+  kStatueState_PhantoonProcessing = 0x1,
+  kStatueState_RidleyProcessing = 0x2,
+  kStatueState_KraidProcessing = 0x4,
+  kStatueState_DraygonProcessing = 0x8,
+  kStatueState_ReleasingBossLock = 0x8000,
+};
+
 /* 54 */
 typedef struct EnemyPopulation {
   VoidP enemy_ptr;
@@ -1197,6 +1267,17 @@ enum GameEvent {
   kEvent_19_2ndMetroidShaftCleared = 0x13,
   kEvent_20_Empty14h_Unused = 0x14,
   kEvent_21_OutranSpeedBoosterLavaquake = 0x15,
+};
+
+enum AreaIndex {
+  kArea_0_Crateria = 0x0,
+  kArea_1_Brinstar = 0x1,
+  kArea_2_Norfair = 0x2,
+  kArea_3_WreckedShip = 0x3,
+  kArea_4_Maridia = 0x4,
+  kArea_5_Tourian = 0x5,
+  kArea_6_Ceres = 0x6,
+  kArea_7_Debug = 0x7,
 };
 
 enum BossBits {
@@ -2146,8 +2227,18 @@ enum Consts_86 {
   addr_kEproj_Sparks = 0xF498,
 };
 enum Consts_87 {
-  addr_kAnimtiles_WreckedShipTradmillRight = 0x8275,
-  addr_kAnimtiles_WreckedShipTradmillLeft = 0x827B,
+  addr_kAnimTiles_Nothing = 0x824B,
+  addr_kAnimTiles_VerticalSpikes = 0x8251,
+  addr_kAnimTiles_HorizontalSpikes = 0x8257,
+  addr_kAnimTiles_CrateriaLake = 0x825D,
+  addr_kAnimTiles_CrateriaLava_Unused1 = 0x8263,
+  addr_kAnimTiles_CrateriaLava_Unused2 = 0x8269,
+  addr_kAnimTiles_WreckedShipScreen = 0x826F,
+  addr_kAnimtiles_WreckedShipTreadmillRight = 0x8275,
+  addr_kAnimtiles_WreckedShipTreadmillLeft = 0x827B,
+  addr_kAnimTiles_BrinstarMouth = 0x8281,
+  addr_kAnimTiles_MaridiaSandCeiling = 0x8287,
+  addr_kAnimTiles_MaridiaSandFalling = 0x828D,
   addr_kAnimtiles_Lava = 0x82AB,
   addr_kAnimtiles_Acid = 0x82C9,
   addr_kAnimtiles_Rain = 0x82E7,

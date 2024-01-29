@@ -2306,7 +2306,7 @@ PairU16 GrappleBeam_CollDetect_Enemy(void) {  // 0xA09E9A
   VoidP grapple_ai;
   EnemyData *E;
 
-  CallSomeSamusCode(0xD);
+  RunSamusCode(kSamusCode_13_IsGrappleActive);
   collision_detection_index = 0;
   for (int i = 0; ; i++) {
     cur_enemy_index = interactive_enemy_indexes[i];
@@ -2580,7 +2580,7 @@ void NormalEnemyTouchAiSkipDeathAnim(void) {  // 0xA0A4A1
   } else {
     ++r20;
     if (samus_contact_damage_index == 4)
-      CallSomeSamusCode(4);
+      RunSamusCode(kSamusCode_4_EndChargeBeam);
     r22 = 200;
   }
   uint16 vp = ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_kEnemyVulnerability;

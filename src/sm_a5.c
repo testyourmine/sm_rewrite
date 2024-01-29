@@ -509,7 +509,7 @@ void Draygon_Func_22(void) {  // 0xA58E19
       Enemy_Draygon *E3 = Get_Draygon(0xC0);
       E3->base.current_instruction = v5;
       E3->base.instruction_timer = 1;
-      if (CallSomeSamusCode(0xD)) {
+      if (RunSamusCode(kSamusCode_13_IsGrappleActive)) {
         E->draygon_var_A = FUNC16(Draygon_Func_23);
       } else {
         Samus_SetGrabbedByDraygonPose(E->draygon_var_20 != 0);

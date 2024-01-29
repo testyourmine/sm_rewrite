@@ -245,6 +245,7 @@
     <ClInclude Include="sm_84.h" />
     <ClInclude Include="sm_85.h" />
     <ClInclude Include="sm_86.h" />
+    <ClInclude Include="sm_87.h" />
     <ClInclude Include="sm_88.h" />
     <ClInclude Include="sm_89.h" />
     <ClInclude Include="sm_8b.h" />

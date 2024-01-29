@@ -6625,38 +6625,38 @@ static Func_U8 *const kSamusCodeHandlers[32] = {  // 0x90F084
   SamusCode_00_LockSamus,
   SamusCode_01_UnlockSamus,
   SamusCode_02_ReachCeresElevator,
-  SamusCode_03,
-  SamusCode_04,
+  SamusCode_03_UnspinSamus,
+  SamusCode_04_EndChargeBeam,
   SamusCode_05_SetupDrained,
   SamusCode_06_LockToStation,
   SamusCode_07_SetupForElevator,
   SamusCode_08_SetupForCeresStart,
-  SamusCode_08_SetupForZebesStart,
+  SamusCode_09_SetupForZebesStart,
   SamusCode_0A_ClearDrawHandler,
   SamusCode_0B_DrawHandlerDefault,
   SamusCode_0C_UnlockFromMapStation,
   SamusCode_0D_IsGrappleActive,
-  SamusCode_0E,
+  SamusCode_0E_UnlockFromCeresElevator,
   SamusCode_0F_EnableTimerHandling,
   SamusCode_10_UnlockSamusFromReserveTank,
   SamusCode_11_SetupForDeath,
-  SamusCode_12_SetSuperPaletteFlag1,
-  SamusCode_12_SetSuperPaletteFlag0,
+  SamusCode_12_EnableBlueFlashing,
+  SamusCode_13_DisableBlueFlashing,
   SamusCode_14_QueueSfx,
-  SamusCode_15_CalledBySuitAcquision,
+  SamusCode_15_LockToSuitAcquisition,
   SamusCode_16_EnableRainbowSamus,
   SamusCode_17_DisableRainbowSamusAndStandUp,
   SamusCode_18_SetupDrainedAndDisableStandUp,
-  SamusCode_17_FreezeDrainedSamus,
-  SamusCode_1A,
-  SamusCode_1B_CheckedLockSamus,
+  SamusCode_19_FreezeDrainedSamus,
+  SamusCode_1A_EnterGunship,
+  SamusCode_1B_LockForReserveTank,
   SamusCode_1C_PlaySpinSfxIfSpinJumping,
   SamusCode_1D_ClearSoundInDoor,
-  SamusCode_1E,
+  SamusCode_1E_ResumeSfxAfterPowerBombExplosion,
   SamusCode_1F_KillGrappleBeam,
 };
 
-uint16 CallSomeSamusCode(uint16 a) {
+uint16 RunSamusCode(uint16 a) {
   uint16 code = kSamusCodeHandlers[a & 0x1F]();
   if (!(code & 1))
     return code >> 1;
@@ -6704,7 +6704,7 @@ uint8 SamusCode_02_ReachCeresElevator(void) {  // 0x90F125
   return SamusCode_00_LockSamus();
 }
 
-uint8 SamusCode_03(void) {  // 0x90F152
+uint8 SamusCode_03_UnspinSamus(void) {  // 0x90F152
   if (grapple_beam_function != FUNC16(GrappleBeamFunc_Inactive)) {
     grapple_beam_function = FUNC16(GrappleBeam_Func2);
     return 0;
@@ -6729,7 +6729,7 @@ uint8 SamusCode_04_06_Common(void) {  // 0x90F19E
   return 0;
 }
 
-uint8 SamusCode_04(void) {  // 0x90F19B
+uint8 SamusCode_04_EndChargeBeam(void) {  // 0x90F19B
   samus_charge_palette_index = 0;
   return SamusCode_04_06_Common();
 }
@@ -6773,7 +6773,7 @@ uint8 SamusCode_08_SetupForCeresStart(void) {  // 0x90F1E9
   return 1;
 }
 
-uint8 SamusCode_08_SetupForZebesStart(void) {  // 0x90F23C
+uint8 SamusCode_09_SetupForZebesStart(void) {  // 0x90F23C
   if ((equipped_items & 0x20) != 0) {
     SpawnPalfxObject(addr_kPalfx_SamusLoading_GravitySuit);
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
@@ -6819,7 +6819,7 @@ uint8 SamusCode_0D_IsGrappleActive_A(void) {
   return grapple_beam_function != FUNC16(GrappleBeamFunc_Inactive);
 }
 
-uint8 SamusCode_0E(void) {  // 0x90F2CA
+uint8 SamusCode_0E_UnlockFromCeresElevator(void) {  // 0x90F2CA
   frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Func11);
   frame_handler_beta = FUNC16(Samus_Func18);
   return 1;
@@ -6850,7 +6850,7 @@ uint8 SamusCode_11_SetupForDeath(void) {  // 0x90F2F8
   return SamusCode_11_15_Common();
 }
 
-uint8 SamusCode_15_CalledBySuitAcquision(void) {  // 0x90F310
+uint8 SamusCode_15_LockToSuitAcquisition(void) {  // 0x90F310
   Samus_UpdatePreviousPose();
   flare_counter = 0;
   ClearFlareAnimationState();
@@ -6858,12 +6858,12 @@ uint8 SamusCode_15_CalledBySuitAcquision(void) {  // 0x90F310
   return SamusCode_11_15_Common();
 }
 
-uint8 SamusCode_12_SetSuperPaletteFlag1(void) {  // 0x90F320
+uint8 SamusCode_12_EnableBlueFlashing(void) {  // 0x90F320
   samus_special_super_palette_flags = 1;
   return 0;
 }
 
-uint8 SamusCode_12_SetSuperPaletteFlag0(void) {  // 0x90F328
+uint8 SamusCode_13_DisableBlueFlashing(void) {  // 0x90F328
   samus_special_super_palette_flags = 0;
   Samus_LoadSuitPalette();
   return 0;
@@ -6931,18 +6931,18 @@ uint8 SamusCode_17_DisableRainbowSamusAndStandUp(void) {  // 0x90F3DD
   return 0;
 }
 
-uint8 SamusCode_17_FreezeDrainedSamus(void) {  // 0x90F3FB
+uint8 SamusCode_19_FreezeDrainedSamus(void) {  // 0x90F3FB
   samus_anim_frame_timer = 1;
   samus_anim_frame = 28;
   return 1;
 }
 
-uint8 SamusCode_1A(void) {  // 0x90F409
+uint8 SamusCode_1A_EnterGunship(void) {  // 0x90F409
   frame_handler_beta = FUNC16(Samus_LowHealthCheck);
   return 0;
 }
 
-uint8 SamusCode_1B_CheckedLockSamus(void) {  // 0x90F411
+uint8 SamusCode_1B_LockForReserveTank(void) {  // 0x90F411
   if (frame_handler_beta == FUNC16(j_HandleDemoRecorder_2_0))
     return 1;
   else
@@ -6987,7 +6987,7 @@ uint8 SamusCode_1D_ClearSoundInDoor(void) {  // 0x90F471
   }
 }
 
-uint8 SamusCode_1E(void) {  // 0x90F4A2
+uint8 SamusCode_1E_ResumeSfxAfterPowerBombExplosion(void) {  // 0x90F4A2
   if (game_state == kGameState_8_MainGameplay) {
     if (samus_movement_type == 3 || samus_movement_type == 20) {
       SamusCode_1C_PlaySpinSfxIfSpinJumping();

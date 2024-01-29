@@ -1114,7 +1114,7 @@ void YappingMaw_Func_9(uint16 k) {  // 0xA8A63E
 }
 
 void YappingMaw_Func_10(void) {  // 0xA8A665
-  CallSomeSamusCode(3);
+  RunSamusCode(kSamusCode_3_UnspinSamus);
   Enemy_YappingMaw *E = Get_YappingMaw(cur_enemy_index);
   samus_x_pos = E->ymw_var_32 + E->base.x_pos;
   samus_y_pos = E->ymw_var_33 + E->base.y_pos;

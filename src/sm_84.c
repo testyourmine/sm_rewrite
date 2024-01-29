@@ -39,7 +39,7 @@ void LoadRoomPlmGfx(void) {  // 0x848232
 }
 
 void ClearSoundsWhenGoingThroughDoor(void) {  // 0x848250
-  CallSomeSamusCode(0x1D);
+  RunSamusCode(kSamusCode_29_ClearSoundInDoor);
 }
 
 void UNUSED_sub_848258(void) {  // 0x848258
@@ -48,7 +48,7 @@ void UNUSED_sub_848258(void) {  // 0x848258
 }
 
 void PlaySpinJumpSoundIfSpinJumping(void) {  // 0x848270
-  CallSomeSamusCode(0x1C);
+  RunSamusCode(kSamusCode_28_PlaySpinSfxIfSpinJumping);
 }
 
 void UNUSED_sub_848278(void) {  // 0x848278
@@ -710,7 +710,7 @@ const uint8 *PlmInstr_ActivateEnergyStation(const uint8 *plmp, uint16 k) {  // 0
     DisplayMessageBox(kMessageBox_21_EnergyRechargeCompleted);
     samus_health = samus_max_health;
   }
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   return plmp;
 }
 
@@ -719,7 +719,7 @@ const uint8 *PlmInstr_ActivateMissileStation(const uint8 *plmp, uint16 k) {  // 
     DisplayMessageBox(kMessageBox_22_MissileReloadCompleted);
     samus_missiles = samus_max_missiles;
   }
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   return plmp;
 }
 
@@ -1082,14 +1082,14 @@ const uint8 *PlmInstr_Draw0x38FramesOfLeftTreadmill(const uint8 *plmp, uint16 k)
 const uint8 *PlmInstr_GotoIfSamusHealthFull(const uint8 *plmp, uint16 k) {  // 0x84AE35
   if (samus_max_health != samus_health)
     return plmp + 2;
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   return INSTRB_RETURN_ADDR(GET_WORD(plmp));
 }
 
 const uint8 *PlmInstr_GotoIfMissilesFull(const uint8 *plmp, uint16 k) {  // 0x84AEBF
   if (samus_max_missiles != samus_missiles)
     return plmp + 2;
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   return INSTRB_RETURN_ADDR(GET_WORD(plmp));
 }
 
@@ -1105,7 +1105,7 @@ const uint8 *PlmInstr_DisplayGameSavedMessageBox(const uint8 *plmp, uint16 k) { 
 }
 
 const uint8 *PlmInstr_EnableMovementAndSetSaveStationUsed(const uint8 *plmp, uint16 k) {  // 0x84B030
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   save_station_lockout_flag = 1;
   return plmp;
 }
@@ -1161,7 +1161,7 @@ uint8 ActivateStationIfSamusCannonLinedUp(uint16 a, uint16 j) {  // 0x84B146
     int v3 = v2 >> 1;
     plm_instr_list_ptrs[v3] = plm_instruction_list_link_reg[v3];
     plm_instruction_timer[v3] = 1;
-    CallSomeSamusCode(6);
+    RunSamusCode(kSamusCode_6_LockToStation);
     return 1;
   }
 LABEL_7:
@@ -2333,7 +2333,7 @@ uint8 PlmSetup_D6DA_LowerNorfairChozoHandTrigger(uint16 j) {  // 0x84D18F
     enemy_data[0].parameter_1 = 1;
     int v2 = plm_block_indices[j >> 1] >> 1;
     level_data[v2] &= 0xFFF;
-    CallSomeSamusCode(0);
+    RunSamusCode(kSamusCode_0_LockSamus);
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0c, 0x1d, 0xd113 });
   }
   plm_header_ptr[j >> 1] = 0;
@@ -2445,12 +2445,12 @@ const uint8 *PlmInstr_Spawn10shardsAnd6n00bs(const uint8 *plmp, uint16 k) {  // 
 }
 
 const uint8 *PlmInstr_DisableSamusControls(const uint8 *plmp, uint16 k) {  // 0x84D5E6
-  CallSomeSamusCode(0);
+  RunSamusCode(kSamusCode_0_LockSamus);
   return plmp;
 }
 
 const uint8 *PlmInstr_EnableSamusControls(const uint8 *plmp, uint16 k) {  // 0x84D5EE
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
   return plmp;
 }
 
@@ -2483,7 +2483,7 @@ uint8 PlmSetup_D6F2_WreckedShipChozoHandTrigger(uint16 j) {  // 0x84D620
     *(uint16 *)&scrolls[13] = (kScroll_Blue << 8) | kScroll_Blue;
     int v1 = plm_block_indices[j >> 1] >> 1;
     level_data[v1] &= 0xFFF;
-    CallSomeSamusCode(0);
+    RunSamusCode(kSamusCode_0_LockSamus);
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x17, 0x1d, 0xd6f8 });
   }
   plm_header_ptr[j >> 1] = 0;

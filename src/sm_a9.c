@@ -370,7 +370,7 @@ void MotherBrainBody_FakeDeath_Descent_0_Pause(void) {  // 0xA9881D
 void MotherBrainBody_FakeDeath_Descent_1(void) {  // 0xA98829
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0);
   if ((--E->mbby_var_F & 0x8000) != 0) {
-    CallSomeSamusCode(0);
+    RunSamusCode(kSamusCode_0_LockSamus);
     *(uint16 *)scrolls = scrolls[0];
     E->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Descent_2);
     E->mbby_var_F = 32;
@@ -392,7 +392,7 @@ void MotherBrainBody_FakeDeath_Descent_2(void) {  // 0xA9884D
 void MotherBrainBody_FakeDeath_Descent_3(void) {  // 0xA9886C
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0);
   if ((--E->mbby_var_F & 0x8000) != 0) {
-    CallSomeSamusCode(1);
+    RunSamusCode(kSamusCode_1_UnlockSamus);
     E->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Descent_4);
     E->mbby_var_F = 8;
     MotherBrainBody_FakeDeath_Descent_4();
@@ -1866,7 +1866,7 @@ void MotherBrain_Phase3_Death_19_EscapeDoorExploding(void) {  // 0xA9B2F9
   MotherBrain_GenerateEscapeDoorExploding();
   Enemy_MotherBrain *E = Get_MotherBrain(0);
   if ((--E->mbn_var_F & 0x8000) != 0) {
-    CallSomeSamusCode(0xF);
+    RunSamusCode(kSamusCode_15_EnableTimerHandling);
     timer_status = 2;
     SetBossBitForCurArea(2);
     SetEventHappened(kEvent_14_ZebesTimebombSet);
@@ -2414,10 +2414,10 @@ void MotherBomb_FiringRainbowBeam_5_StartFiring(void) {  // 0xA9B975
       E1->mbn_var_33 = 4;
       E->mbn_parameter_1 = 0;
       E->mbn_parameter_2 = 0;
-      uint16 v4 = 5;
+      uint16 v4 = kSamusCode_5_SetupDrained;
       if ((int16)(samus_health - 700) < 0)
-        v4 = 24;
-      CallSomeSamusCode(v4);
+        v4 = kSamusCode_24_SetupDrainedAndDisableStandUp;
+      RunSamusCode(v4);
       E->mbn_var_15 = 6;
       E->mbn_var_A = FUNC16(MotherBomb_FiringRainbowBeam_6_MoveSamusToWall);
     }
@@ -2491,7 +2491,7 @@ void MotherBomb_FiringRainbowBeam_10_FinishFiringRainbow(void) {  // 0xA9BA5E
     MotherBrain_WriteDefaultPalette();
     QueueSfx1_Max6(kSfx1_Silence);
     E->mbn_var_16 = 0;
-    CallSomeSamusCode(1);
+    RunSamusCode(kSamusCode_1_UnlockSamus);
     cooldown_timer = 8;
     E->mbn_var_A = FUNC16(MotherBomb_FiringRainbowBeam_11_LetSamusFall);
   }
@@ -3870,7 +3870,7 @@ void ShitroidInCutscene_PlaySamusTheme(uint16 k) {  // 0xA9CC60
 void ShitroidInCutscene_PrepareSamusHyperbeam(uint16 k) {  // 0xA9CC7F
   Enemy_ShitroidInCutscene *E = Get_ShitdroidInCutscene(k);
   if ((--E->sice_var_F & 0x8000) != 0) {
-    CallSomeSamusCode(0x19);
+    RunSamusCode(kSamusCode_25_FreezeDrainedSamus);
     Get_ShitdroidInCutscene(0x40)->sice_var_16 = FUNC16(SamusRainbowPaletteFunc_ActivateWhenEnemyLow);
     E->sice_var_A = FUNC16(ShitroidInCutscene_DeathSequence);
   }
@@ -3916,7 +3916,7 @@ void ShitroidInCutscene_FinishCutscene(uint16 k) {  // 0xA9CCF0
   E->sice_var_37 = v2;
   if (MotherBrain_Phase3_TurnLightsBackOn(v2 - 1) & 1) {
     E->sice_var_A = FUNC16(MotherBrain_Phase3_Recover_MakeDistance);
-    CallSomeSamusCode(0x17);
+    RunSamusCode(kSamusCode_23_DisableRainbowSamusAndStandUp);
     SomeMotherBrainScripts(3);
     Get_ShitdroidInCutscene(k)->base.properties |= kEnemyProps_Deleted;
     Get_ShitdroidInCutscene(0x40)->sice_var_0A = 0;
@@ -3938,7 +3938,7 @@ void HandleSamusRainbowPaletteAnimation(uint16 k) {  // 0xA9CD27
 
 void SamusRainbowPaletteFunc_ActivateWhenEnemyLow(uint16 k) {  // 0xA9CD30
   if ((int16)(Get_ShitdroidInCutscene(k)->base.y_pos + 16 - samus_y_pos) >= 0) {
-    CallSomeSamusCode(0x16);
+    RunSamusCode(kSamusCode_22_EnableRainbowSamus);
     Get_ShitdroidInCutscene(0x40)->sice_var_16 = FUNC16(SamusRainbowPaletteFunc_GraduallySlowDown);
   }
 }
@@ -6013,7 +6013,7 @@ void Shitroid_Func_14(uint16 k) {  // 0xA9F1FA
 }
 
 void Shitroid_Func_15(uint16 k) {  // 0xA9F20E
-  CallSomeSamusCode(0x12);
+  RunSamusCode(kSamusCode_18_EnableBlueFlashing);
   Get_Shitroid(0)->shitr_var_A = FUNC16(Shitroid_Func_16);
   Shitroid_Func_16(k);
 }
@@ -6028,7 +6028,7 @@ void Shitroid_Func_16(uint16 k) {  // 0xA9F21B
     E->shitr_var_C = 0;
     Enemy_SetInstrList(k, addr_kShitroid_Ilist_F906);
     E->shitr_var_E = 10;
-    CallSomeSamusCode(0x13);
+    RunSamusCode(kSamusCode_19_DisableBlueFlashing);
     SomeMotherBrainScripts(0);
     E->shitr_var_04 = 0;
     QueueMusic_Delayed8(7);

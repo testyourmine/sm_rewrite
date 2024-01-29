@@ -112,6 +112,32 @@ typedef uint8_t CoroutineRet;
 #define kCoroutineNone 0
 
 #pragma pack(push, 1)
+typedef union AnimtilesEntry {
+  struct {
+    uint16 timer;
+    VoidP tile_src;
+  };
+  struct {
+    uint16 func_ptr;
+    union {
+      struct {
+        union {
+          struct {
+            uint8 boss_bit;
+            uint8 area;
+          };
+          uint16 game_event;
+        };
+        uint16 instr_list_ptr2;
+      };
+      uint16 instr_list_ptr1;
+      uint16 tourian_statue_state;
+      uint16 palette_offset;
+      uint16 eproj_param;
+      uint16 palfx_id;
+    };
+  };
+} AnimtilesEntry;
 /* 18 */
 typedef struct Mode7ObjectDef {
     VoidP object_def_ptr;

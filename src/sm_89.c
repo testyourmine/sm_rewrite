@@ -97,10 +97,10 @@ void LoadFXHeader(void) {
   }
   if (FD->animtiles_bitset) {
     int bits = FD->animtiles_bitset;
-    const uint8 *v14 = RomPtr_83(kAreaAnimtilesListPtrs[area_index]);
+    const uint16 *v14 = kAreaAnimtilesListPtrs[area_index];
     for (int k = 0; k != 16; k += 2, bits >>= 1) {
       if (bits & 1)
-        SpawnAnimtiles(*(uint16 *)&v14[k]);
+        SpawnAnimtiles(v14[k >> 1]);
     }
   }
 }
@@ -115,7 +115,7 @@ void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
         && !samus_y_speed
         && !samus_y_subspeed
         && game_state == kGameState_8_MainGameplay) {
-      CallSomeSamusCode(2);
+      RunSamusCode(kSamusCode_2_ReachCeresElevator);
       screen_fade_delay = 0;
       screen_fade_counter = 0;
       game_state = kGameState_32_MadeItToCeresElevator;

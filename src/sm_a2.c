@@ -1477,7 +1477,7 @@ void GunshipTop_8(uint16 k) {  // 0xA2A9BD
         samus_prev_x_pos = samus_x_pos;
       }
       MakeSamusFaceForward();
-      CallSomeSamusCode(0x1A);
+      RunSamusCode(kSamusCode_26_EnterGunship);
       elevator_status = 0;
       uint16 v3 = E->base.y_pos - 1;
       Enemy_GunshipTop *E2 = Get_GunshipTop(k + 128);
@@ -1530,7 +1530,7 @@ void GunshipTop_12(uint16 k) {  // 0xA2AAA2
     suit_pickup_light_beam_pos = 0;
     *(uint16 *)&suit_pickup_color_math_R = 0;
     *(uint16 *)&suit_pickup_color_math_B = 0;
-    CallSomeSamusCode(0xA);
+    RunSamusCode(kSamusCode_10_ClearDrawHandler);
   } else {
     Samus_RestoreHealth(2);
     Samus_RestoreMissiles(2);

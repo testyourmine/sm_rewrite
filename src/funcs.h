@@ -745,22 +745,22 @@ void SpawnMotherBrainDeathBeam(uint16 k);
 
 // Bank 87
 uint16 AnimtilesInstr_Clear3PaletteColors(uint16 k, uint16 j);
-uint16 AnimtilesInstr_DecrementTimerAndGoto(uint16 k, uint16 j);
-uint16 AnimtilesInstr_DecrementTimerAndGotoRel(uint16 k, uint16 j);
+uint16 AnimtilesInstr_DecrementTimerAndGoto_Unused(uint16 k, uint16 j);
+uint16 AnimtilesInstr_DecrementTimerAndGotoRel_Unused(uint16 k, uint16 j);
 uint16 AnimtilesInstr_Delete(uint16 k, uint16 j);
 uint16 AnimtilesInstr_Goto(uint16 k, uint16 j);
-uint16 AnimtilesInstr_GotoIfBossBitSet(uint16 k, uint16 j);
+uint16 AnimtilesInstr_GotoIfBossBitSet_Unused(uint16 k, uint16 j);
 uint16 AnimtilesInstr_GotoIfBossBitSetInArea(uint16 k, uint16 j);
 uint16 AnimtilesInstr_GotoIfEventHappened(uint16 k, uint16 j);
 uint16 AnimtilesInstr_GotoIfTourianStatueBusy(uint16 k, uint16 j);
-uint16 AnimtilesInstr_GotoRel(uint16 k, uint16 j);
-uint16 AnimtilesInstr_QueueMusic(uint16 k, uint16 j);
-uint16 AnimtilesInstr_QueueSfx1(uint16 k, uint16 j);
-uint16 AnimtilesInstr_QueueSfx2(uint16 k, uint16 j);
-uint16 AnimtilesInstr_QueueSfx3(uint16 k, uint16 j);
-uint16 AnimtilesInstr_SetBossBit(uint16 k, uint16 j);
+uint16 AnimtilesInstr_GotoRel_Unused(uint16 k, uint16 j);
+uint16 AnimtilesInstr_QueueMusic_Unused(uint16 k, uint16 j);
+uint16 AnimtilesInstr_QueueSfx1_Unused(uint16 k, uint16 j);
+uint16 AnimtilesInstr_QueueSfx2_Unused(uint16 k, uint16 j);
+uint16 AnimtilesInstr_QueueSfx3_Unused(uint16 k, uint16 j);
+uint16 AnimtilesInstr_SetBossBit_Unused(uint16 k, uint16 j);
 uint16 AnimtilesInstr_SetEventHappened(uint16 k, uint16 j);
-uint16 AnimtilesInstr_SetTimer(uint16 k, uint16 j);
+uint16 AnimtilesInstr_SetTimer_Unused(uint16 k, uint16 j);
 uint16 AnimtilesInstr_SpawnPalfxObj(uint16 k, uint16 j);
 uint16 AnimtilesInstr_SpawnTourianStatueEyeGlow(uint16 k, uint16 j);
 uint16 AnimtilesInstr_SpawnTourianStatueSoul(uint16 k, uint16 j);
@@ -1015,7 +1015,7 @@ PairU16 Samus_CalcSpritemapPos_Crouch(uint16 j);
 PairU16 Samus_CalcSpritemapPos_Default(uint16 j);
 PairU16 Samus_CalcSpritemapPos_Special(uint16 j);
 PairU16 Samus_CalcSpritemapPos_Standing(uint16 j);
-uint16 CallSomeSamusCode(uint16 a);
+uint16 RunSamusCode(uint16 a);
 uint16 Samus_DetermineGrappleSwingSpeed_X(void);
 uint16 Samus_DetermineSpeedTableEntryPtr_X(void);
 uint8 ClearCarry(void);
@@ -1042,36 +1042,36 @@ uint8 SamusBottomDrawn_F_Transitions(void);
 uint8 SamusCode_00_LockSamus(void);
 uint8 SamusCode_01_UnlockSamus(void);
 uint8 SamusCode_02_ReachCeresElevator(void);
-uint8 SamusCode_03(void);
-uint8 SamusCode_04(void);
+uint8 SamusCode_03_UnspinSamus(void);
+uint8 SamusCode_04_EndChargeBeam(void);
 uint8 SamusCode_04_06_Common(void);
 uint8 SamusCode_05_SetupDrained(void);
 uint8 SamusCode_06_LockToStation(void);
 uint8 SamusCode_07_SetupForElevator(void);
 uint8 SamusCode_08_SetupForCeresStart(void);
-uint8 SamusCode_08_SetupForZebesStart(void);
+uint8 SamusCode_09_SetupForZebesStart(void);
 uint8 SamusCode_0A_ClearDrawHandler(void);
 uint8 SamusCode_0B_DrawHandlerDefault(void);
 uint8 SamusCode_0C_UnlockFromMapStation(void);
 uint8 SamusCode_0D_IsGrappleActive(void);
-uint8 SamusCode_0E(void);
+uint8 SamusCode_0E_UnlockFromCeresElevator(void);
 uint8 SamusCode_0F_EnableTimerHandling(void);
 uint8 SamusCode_10_UnlockSamusFromReserveTank(void);
 uint8 SamusCode_11_15_Common(void);
 uint8 SamusCode_11_SetupForDeath(void);
-uint8 SamusCode_12_SetSuperPaletteFlag0(void);
-uint8 SamusCode_12_SetSuperPaletteFlag1(void);
+uint8 SamusCode_13_DisableBlueFlashing(void);
+uint8 SamusCode_12_EnableBlueFlashing(void);
 uint8 SamusCode_14_QueueSfx(void);
-uint8 SamusCode_15_CalledBySuitAcquision(void);
+uint8 SamusCode_15_LockToSuitAcquisition(void);
 uint8 SamusCode_16_EnableRainbowSamus(void);
 uint8 SamusCode_17_DisableRainbowSamusAndStandUp(void);
-uint8 SamusCode_17_FreezeDrainedSamus(void);
+uint8 SamusCode_19_FreezeDrainedSamus(void);
 uint8 SamusCode_18_SetupDrainedAndDisableStandUp(void);
-uint8 SamusCode_1A(void);
-uint8 SamusCode_1B_CheckedLockSamus(void);
+uint8 SamusCode_1A_EnterGunship(void);
+uint8 SamusCode_1B_LockForReserveTank(void);
 uint8 SamusCode_1C_PlaySpinSfxIfSpinJumping(void);
 uint8 SamusCode_1D_ClearSoundInDoor(void);
-uint8 SamusCode_1E(void);
+uint8 SamusCode_1E_ResumeSfxAfterPowerBombExplosion(void);
 uint8 SamusCode_1F_KillGrappleBeam(void);
 uint8 Samus_CanFireBeam(void);
 uint8 Samus_CanFireSuperMissile(void);
@@ -5022,16 +5022,16 @@ void VerifySRAM(void);
 #define fnEprojPreInstr_Sparks 0x86F3F0
 #define fnAnimtilesInstr_Delete 0x8780B2
 #define fnAnimtilesInstr_Goto 0x8780B7
-#define fnAnimtilesInstr_GotoRel 0x8780BC
-#define fnAnimtilesInstr_DecrementTimerAndGoto 0x8780D4
-#define fnAnimtilesInstr_DecrementTimerAndGotoRel 0x8780DC
-#define fnAnimtilesInstr_SetTimer 0x8780E3
-#define fnAnimtilesInstr_QueueMusic 0x8780F0
-#define fnAnimtilesInstr_QueueSfx1 0x8780FC
-#define fnAnimtilesInstr_QueueSfx2 0x878108
-#define fnAnimtilesInstr_QueueSfx3 0x878114
-#define fnAnimtilesInstr_GotoIfBossBitSet 0x878120
-#define fnAnimtilesInstr_SetBossBit 0x878133
+#define fnAnimtilesInstr_GotoRel_Unused 0x8780BC
+#define fnAnimtilesInstr_DecrementTimerAndGoto_Unused 0x8780D4
+#define fnAnimtilesInstr_DecrementTimerAndGotoRel_Unused 0x8780DC
+#define fnAnimtilesInstr_SetTimer_Unused 0x8780E3
+#define fnAnimtilesInstr_QueueMusic_Unused 0x8780F0
+#define fnAnimtilesInstr_QueueSfx1_Unused 0x8780FC
+#define fnAnimtilesInstr_QueueSfx2_Unused 0x878108
+#define fnAnimtilesInstr_QueueSfx3_Unused 0x878114
+#define fnAnimtilesInstr_GotoIfBossBitSet_Unused 0x878120
+#define fnAnimtilesInstr_SetBossBit_Unused 0x878133
 #define fnAnimtilesInstr_GotoIfEventHappened 0x87813F
 #define fnAnimtilesInstr_SetEventHappened 0x878150
 #define fnAnimtilesInstr_WaitUntilAreaBossDead_DoubleRet 0x8781BA

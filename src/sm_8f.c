@@ -44,7 +44,7 @@ void RoomSetup_RunStatueUnlockAnims(void) {  // 0x8F91D7
 }
 
 void DoorCode_StartWreckedShipTreadmillWest(void) {  // 0x8FB971
-  SpawnAnimtiles(addr_kAnimtiles_WreckedShipTradmillRight);
+  SpawnAnimtiles(addr_kAnimtiles_WreckedShipTreadmillRight);
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x04, 0x09, 0xb64b });
 }
 
@@ -452,7 +452,7 @@ void RoomCode_CeresColorMathHdma_BgBase(void) {  // 0x8FC97B
 }
 
 void DoorCode_StartWreckedSkipTreadmill_East(void) {  // 0x8FE1D8
-  SpawnAnimtiles(addr_kAnimtiles_WreckedShipTradmillLeft);
+  SpawnAnimtiles(addr_kAnimtiles_WreckedShipTreadmillLeft);
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x04, 0x09, 0xb64f });
 }
 
@@ -491,15 +491,15 @@ void DoorCode_SetupElevatubeFromSouth(void) {  // 0x8FE26C
   *(uint16 *)&room_main_asm_variables[4] = -256;
   *(uint16 *)&room_main_asm_variables[2] = 2496;
   *(uint16 *)&room_main_asm_variables[6] = -32;
-  CallSomeSamusCode(0);
+  RunSamusCode(kSamusCode_0_LockSamus);
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x01, 0x00, 0xb8f9 });
 }
 
 void DoorCode_SetupElevatubeFromNorth(void) {  // 0x8FE291
   *(uint16 *)&room_main_asm_variables[4] = 256;
-  strcpy((uint8 *)&room_main_asm_variables[2], "@");
-  strcpy((uint8 *)&room_main_asm_variables[6], " ");
-  CallSomeSamusCode(0);
+  *(uint16 *)&room_main_asm_variables[2] = 64;
+  *(uint16 *)&room_main_asm_variables[6] = 32;
+  RunSamusCode(kSamusCode_0_LockSamus);
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x01, 0x00, 0xb8f9 });
 }
 
@@ -518,12 +518,12 @@ void RoomCode_Elevatube(void) {  // 0x8FE2B6
 }
 
 void DoorCode_ResetElevatubeNorthExit(void) {  // 0x8FE301
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
 }
 
 void DoorCode_ResetElevatubeSouthExit(void) {  // 0x8FE309
   *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
-  CallSomeSamusCode(1);
+  RunSamusCode(kSamusCode_1_UnlockSamus);
 }
 
 void DoorCode_SetScroll_50(void) {  // 0x8FE318

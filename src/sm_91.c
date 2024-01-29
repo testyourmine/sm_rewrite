@@ -1291,7 +1291,7 @@ void VariaSuitPickup(void) {  // 0x91D4E4
     samus_pose = kPose_00_FaceF_Powersuit;
   SamusFunc_F433();
   Samus_SetAnimationFrameIfPoseChanged();
-  CallSomeSamusCode(0x15);
+  RunSamusCode(kSamusCode_21_LockToSuitAcquisition);
   samus_x_pos = layer1_x_pos + 120;
   samus_prev_x_pos = layer1_x_pos + 120;
   samus_y_pos = layer1_y_pos + 136;
@@ -1329,7 +1329,7 @@ void GravitySuitPickup(void) {  // 0x91D5BA
     samus_pose = kPose_00_FaceF_Powersuit;
   SamusFunc_F433();
   Samus_SetAnimationFrameIfPoseChanged();
-  CallSomeSamusCode(0x15);
+  RunSamusCode(kSamusCode_21_LockToSuitAcquisition);
   samus_x_pos = layer1_x_pos + 120;
   samus_prev_x_pos = layer1_x_pos + 120;
   samus_y_pos = layer1_y_pos + 136;
@@ -1477,7 +1477,7 @@ LABEL_17:;
     if (v1 == 40) {
       if (grapple_beam_function == FUNC16(GrappleBeamFunc_Inactive)) {
         if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping) {
-          CallSomeSamusCode(0x1C);
+          RunSamusCode(kSamusCode_28_PlaySpinSfxIfSpinJumping);
         } else if (!sign16(flare_counter - 16) && (button_config_shoot_x & joypad1_lastkeys) != 0) {
           play_resume_charging_beam_sfx = 1;
         }
@@ -1992,7 +1992,7 @@ void MakeSamusFaceForward(void) {  // 0x91E3F6
   samus_momentum_routine_index = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
-  CallSomeSamusCode(0x1F);
+  RunSamusCode(kSamusCode_31_KillGrappleBeam);
   SetHiLo(&samus_x_extra_run_speed, &samus_x_extra_run_subspeed, 0);
   samus_x_base_speed = 0;
   samus_x_base_subspeed = 0;

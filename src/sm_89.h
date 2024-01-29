@@ -28,8 +28,15 @@ uint16 kAreaPalFxListPointers[] = {
 
 //#define kAreaAnimtilesListPtrs ((uint16*)RomFixedPtr(0x83ac56))
 
-uint16 kAreaAnimtilesListPtrs[] = {
-	0xac76, 0xac96, 0xacb6, 0xacd6, 0xacf6, 0xad16, 0xad36, 0xad56,
+uint16 kAreaAnimtilesListPtrs[8][8] ={
+  [0] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_CrateriaLake, addr_kAnimTiles_CrateriaLava_Unused1, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [1] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_BrinstarMouth, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [2] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [3] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimtiles_WreckedShipTreadmillRight, addr_kAnimtiles_WreckedShipTreadmillLeft, addr_kAnimTiles_WreckedShipScreen, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [4] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_MaridiaSandCeiling, addr_kAnimTiles_MaridiaSandFalling, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [5] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [6] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [7] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
 };
 
 //#define kCereElevatorShaftMode7TransformationMatrix ((uint16*)RomFixedPtr(0x89ad5f))

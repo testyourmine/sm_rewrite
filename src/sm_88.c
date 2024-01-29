@@ -922,7 +922,7 @@ void Hdmaobj_CleanUpTryCrystalFlash(uint16 v0) {  // 0x888B4E
   hdma_object_channels_bitmask[v1 + 1] = 0;
   power_bomb_pre_explosion_flash_radius = 0;
   power_bomb_explosion_radius = 0;
-  CallSomeSamusCode(0x1E);
+  RunSamusCode(kSamusCode_30_ResumeSfxAfterPowerBombExplosion);
 }
 
 void HdmaobjPreInstr_PowerBombExplode_SetWindowConf(uint16 k) {  // 0x888B8F
@@ -2335,7 +2335,7 @@ void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_WaitForUnlock(uint16 v0) { 
       if (CheckEventHappened(kEvent_8_DraygonStatueGray) & 1) {
         if (CheckEventHappened(kEvent_9_KraidStatueGray) & 1) {
           tourian_entrance_statue_animstate |= 0x10;
-          if ((tourian_entrance_statue_animstate & 0x8000) == 0) {
+          if ((tourian_entrance_statue_animstate & kStatueState_ReleasingBossLock) == 0) {
             hdma_object_C[v0 >> 1] = 300;
             v0 = hdma_object_index;
             int v1 = hdma_object_index >> 1;
@@ -2737,7 +2737,7 @@ uint8 GravitySuitPickup_6(void) {  // 0x88E25F
   int v0 = hdma_object_index >> 1;
   hdma_object_instruction_list_pointers[v0] += 2;
   hdma_object_instruction_timers[v0] = 1;
-  CallSomeSamusCode(0xB);
+  RunSamusCode(kSamusCode_11_DrawHandlerDefault);
   return 0;
 }
 
