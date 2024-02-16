@@ -1096,7 +1096,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
       E->cry_var_04 = 1;
       gRam8800_Default(0)->var_40 = FUNC16(Ridley_Func_50);
       E->cry_var_07 = 5;
-      QueueMusic_Delayed8(0);
+      QueueMusic_Delayed8(kMusic_Stop);
     }
   }
 }
@@ -1302,7 +1302,7 @@ void CeresRidley_Func_5(void) {  // 0xA6A3DF
       E->cry_var_E = 0;
       E->cry_var_A = FUNC16(CeresRidley_Func_6);
       E->cry_var_F = 4;
-      QueueMusic_Delayed8(5);
+      QueueMusic_Delayed8(kMusic_Song0);
     } else {
       E->cry_var_E = cry_var_E;
     }
@@ -2571,7 +2571,7 @@ void Ridley_C09F(void) {  // 0xA6C09F
     ++E->ridley_var_F;
     Ridley_Func_59();
     E->ridley_var_E = 128;
-    QueueMusic_Delayed8(7);
+    QueueMusic_Delayed8(kMusic_Song2);
   }
 }
 
@@ -2666,7 +2666,7 @@ void SetupZebesEscapeTypewriter(void) {  // 0xA6C23F
   palette_buffer[157] = palette_buffer[125];
   palette_buffer[158] = palette_buffer[126];
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  E->mbn_var_3B = addr_loc_A9C49C;
+  E->mbn_var_3B = addr_loc_A6C49C;
   E->mbn_var_3C = 0;
   E->mbn_var_3D = 0;
   E->mbn_var_3E = 0;
@@ -2846,7 +2846,7 @@ void Ridley_Func_67(void) {  // 0xA6C5DA
     printf("Warning: X undefined\n");
     SetBossBitForCurArea(1);
     Enemy_ItemDrop_Ridley(k);
-    QueueMusic_Delayed8(3);
+    QueueMusic_Delayed8(kMusic_Elevator);
     E->base.properties |= kEnemyProps_Deleted;
     E->ridley_var_A = addr_locret_A6C600;
   }

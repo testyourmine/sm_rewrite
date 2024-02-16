@@ -658,6 +658,11 @@ typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {
   VoidP ptrs;
 } DisableMinimapAndMarkBossRoomAsExploredEnt;
 
+typedef struct MarkMapTileExplored {
+  uint16 x_offset;
+  uint16 y_offset;
+} MarkMapTileExplored;
+
 /* 34 */
 typedef struct ProjectileDamagesAndInstrPtr {
   uint16 damage;
@@ -989,6 +994,41 @@ enum kMessageBoxIndex {
   kMessageBox_29_Terminator2 = 0x1D,
 };
 
+enum kMessageBoxText {
+  kTxt_Empty = 0xE,
+  kTxt_Dash = 0xCF,
+  kTxt_A = 0xE0,
+  kTxt_B = 0xE1,
+  kTxt_C = 0xE2,
+  kTxt_D = 0xE3,
+  kTxt_E = 0xE4,
+  kTxt_F = 0xE5,
+  kTxt_G = 0xE6,
+  kTxt_H = 0xE7,
+  kTxt_I = 0xE8,
+  kTxt_J = 0xE9,
+  kTxt_K = 0xEA,
+  kTxt_L = 0xEB,
+  kTxt_M = 0xEC,
+  kTxt_N = 0xED,
+  kTxt_O = 0xEE,
+  kTxt_P = 0xEF,
+  kTxt_Q = 0xF0,
+  kTxt_R = 0xF1,
+  kTxt_S = 0xF2,
+  kTxt_T = 0xF3,
+  kTxt_U = 0xF4,
+  kTxt_V = 0xF5,
+  kTxt_W = 0xF6,
+  kTxt_X = 0xF7,
+  kTxt_Y = 0xF8,
+  kTxt_Z = 0xF9,
+  kTxt_Space = 0x284E,
+  kTxt_Pr = 0x2800,
+  kTxt_Gn = 0x3800,
+  kTxt_Yl = 0x3C00,
+};
+
 /* 53 */
 enum EnemyProps {
   kEnemyProps_Invisible = 0x100,
@@ -1280,6 +1320,20 @@ enum AreaIndex {
   kArea_7_Debug = 0x7,
 };
 
+enum BossId {
+  kBossId_0_None = 0x0,
+  kBossId_1_CeresRidley = 0x1,
+  kBossId_2_Torizo = 0x2,
+  kBossId_3_Kraid = 0x3,
+  kBossId_4_SporeSpawn = 0x4,
+  kBossId_5_Ridley = 0x5,
+  kBossId_6_Crocomire = 0x6,
+  kBossId_7_Phantoon = 0x7,
+  kBossId_8_Draygon = 0x8,
+  kBossId_9_Botwoon = 0x9,
+  kBossId_10_MotherBrain = 0xA,
+};
+
 enum BossBits {
   kBossBit_AreaBoss = 0x1,
   kBossBit_AreaMiniBoss = 0x2,
@@ -1331,6 +1385,11 @@ typedef enum Buttons {
   kButton_Y = 0x4000,
   kButton_B = 0x8000,
 } Buttons;
+
+enum SaveConfirmationSelection {
+  kConfirmSave_Yes = 0x0,
+  kConfirmSave_No = 0x2,
+};
 
 /* 96 */
 typedef struct TileSet {
@@ -1574,6 +1633,80 @@ typedef struct EnemyDef {
   VoidP name_ptr;
 } EnemyDef;
 
+typedef union Ram_HudTilemap_Row1 {
+  uint16 arr[64 >> 1];
+  struct {
+    uint8 pad0[2];
+    uint16 energy_tanks[14 >> 1];
+    uint16 auto_reserve[4 >> 1];
+    uint16 missiles[6 >> 1];
+    uint8 pad1[2];
+    uint16 super_missiles[4 >> 1];
+    uint8 pad2[2];
+    uint16 power_bombs[4 >> 1];
+    uint8 pad3[2];
+    uint16 grapple[4 >> 1];
+    uint8 pad4[2];
+    uint16 x_ray[4 >> 1];
+    uint8 pad5[2];
+    uint16 minimap[10 >> 1];
+    uint8 pad6[2];
+  };
+} Ram_HudTilemap_Row1;
+
+typedef union Ram_HudTilemap_Row2 {
+  uint16 arr[64 >> 1];
+  struct {
+    uint8 pad0[2];
+    uint16 energy_tanks[14 >> 1];
+    uint16 auto_reserve[4 >> 1];
+    uint16 missiles[6 >> 1];
+    uint8 pad1[2];
+    uint16 super_missiles[4 >> 1];
+    uint8 pad2[2];
+    uint16 power_bombs[4 >> 1];
+    uint8 pad3[2];
+    uint16 grapple[4 >> 1];
+    uint8 pad4[2];
+    uint16 x_ray[4 >> 1];
+    uint8 pad5[2];
+    union {
+      uint16 minimap[10 >> 1];
+      struct {
+        uint8 pad[4];
+        uint16 minimap_samus_pos;
+      };
+    };
+    uint8 pad6[2];
+  };
+} Ram_HudTilemap_Row2;
+
+typedef union Ram_HudTilemap_Row3 {
+  uint16 arr[64 >> 1];
+  struct {
+    uint8 pad0[12];
+    uint16 subtank_health[4 >> 1];
+    uint16 auto_reserve[4 >> 1];
+    uint16 missile_count[6 >> 1];
+    uint8 pad1[2];
+    uint16 super_missile_count[4 >> 1];
+    uint16 debug_extra_super_missile_count_digit[2 >> 1];
+    uint16 power_bomb_count[4 >> 1];
+    uint8 pad2[14];
+    uint16 minimap[10 >> 1];
+    uint8 pad3[2];
+  };
+} Ram_HudTilemap_Row3;
+
+typedef union Ram_HudTilemap {
+  uint16 arr[192 >> 1];
+  struct {
+    Ram_HudTilemap_Row1 row1;
+    Ram_HudTilemap_Row2 row2;
+    Ram_HudTilemap_Row3 row3;
+  };
+} Ram_HudTilemap;
+
 typedef struct Ram3000_MsgBox {
   uint8 pad[188];
   uint16 msg_box_anim_y_radius_neg[30];
@@ -1629,7 +1762,7 @@ typedef union Ram4000 {
 } Ram4000;
 
 /* 139 */
-typedef struct  Mode7CgvmWriteQueue {
+typedef struct Mode7CgvmWriteQueue {
   uint8 tag;
   LongPtr src_addr;
   uint16 count;
@@ -1704,6 +1837,43 @@ typedef struct Ram7800_Default {
   uint16 var_1E;
   uint16 var_1F;
 } Ram7800_Default;
+
+enum MusicEntry {
+  kMusic_Stop = 0x0,
+  kMusic_SamusFanfare = 0x1,
+  kMusic_ItemFanfare = 0x2,
+  kMusic_Elevator = 0x3,
+  kMusic_PreStatueHall_PreRidleyFight_GameOver = 0x4,
+  kMusic_Song0 = 0x5,
+  kMusic_Song1 = 0x6,
+  kMusic_Song2 = 0x7,
+  kMusic_Song3 = 0x8,
+  kMusic_SpcEngine = 0xFF00,
+  kMusic_TitleSequence = 0xFF03,
+  kMusic_EmptyCrateria = 0xFF06,
+  kMusic_LowerCrateria = 0xFF09,
+  kMusic_UpperCrateria = 0xFF0C,
+  kMusic_GreenBrinstar = 0xFF0F,
+  kMusic_RedBrinstar = 0xFF12,
+  kMusic_UpperNorfair = 0xFF15,
+  kMusic_LowerNorfair = 0xFF18,
+  kMusic_Maridia = 0xFF1B,
+  kMusic_Tourian = 0xFF1E,
+  kMusic_MotherBrain = 0xFF21,
+  kMusic_BossFight1 = 0xFF24,
+  kMusic_BossFight2 = 0xFF27,
+  kMusic_MinibossFight = 0xFF2A,
+  kMusic_Ceres = 0xFF2D,
+  kMusic_WreckedShip = 0xFF30,
+  kMusic_ZebesBoom = 0xFF33,
+  kMusic_Intro = 0xFF36,
+  kMusic_Death = 0xFF39,
+  kMusic_Credits = 0xFF3C,
+  kMusic_TheLastMetroidIsInCaptivity = 0xFF3F,
+  kMusic_TheGalaxyIsAtPeace = 0xFF42,
+  kMusic_Shitroid = 0xFF45,
+  kMusic_SamusTheme = 0xFF48,
+};
 
 enum SoundLibrary1 {
   kSfx1_PowerBombExplosion = 0x1,
@@ -2051,6 +2221,35 @@ enum Consts_84 {
   addr_kPlmHeader_D6EA = 0xD6EA,
   addr_locret_84D779 = 0xD779,
 };
+enum Consts_85 {
+  addr_kEnergyTankMsgBoxTilemap = 0x877f,
+  addr_kMissileMsgBoxTilemap = 0x87bf,
+  addr_kSuperMissileMsgBoxTilemap = 0x88bf,
+  addr_kPowerBombMsgBoxTilemap = 0x89bf,
+  addr_kGrapplingBeamMsgBoxTilemap = 0x8abf,
+  addr_kXrayScopeMsgBoxTilemap = 0x8bbf,
+  addr_kVariaSuitMsgBoxTilemap = 0x8cbf,
+  addr_kSpringBallMsgBoxTilemap = 0x8cff,
+  addr_kMorphingBallMsgBoxTilemap = 0x8d3f,
+  addr_kScrewAttackMsgBoxTilemap = 0x8d7f,
+  addr_kHiJumpBootsMsgBoxTilemap = 0x8dbf,
+  addr_kSpaceJumpMsgBoxTilemap = 0x8dff,
+  addr_kSpeedBoosterMsgBoxTilemap = 0x8e3f,
+  addr_kChargeBeamMsgBoxTilemap = 0x8f3f,
+  addr_kIceBeamMsgBoxTilemap = 0x8f7f,
+  addr_kWaveBeamMsgBoxTilemap = 0x8fbf,
+  addr_kSpazerMsgBoxTilemap = 0x8fff,
+  addr_kPlasmaBeamMsgBoxTilemap = 0x903f,
+  addr_kBombMsgBoxTilemap = 0x907f,
+  addr_kMapDataAccessCompletedMsgBoxTilemap = 0x917f,
+  addr_kEnergyRechargeCompletedMsgBoxTilemap = 0x923f,
+  addr_kMissileReloadCompletedMsgBoxTilemap = 0x92ff,
+  addr_kWouldYouLikeToSaveMsgBoxTilemap = 0x93bf,
+  addr_kSaveCompletedMsgBoxTilemap = 0x94bf,
+  addr_kReserveTankMsgBoxTilemap = 0x94ff,
+  addr_kGravitySuitMsgBoxTilemap = 0x953f,
+  addr_kTerminator1MsgBoxTilemap = 0x957f,
+};
 enum Consts_86 {
   addr_kEproj_SkreeParticles_DownRight = 0x8BC2,
   addr_kEproj_SkreeParticles_UpRight = 0x8BD0,
@@ -2224,6 +2423,7 @@ enum Consts_86 {
   addr_word_86ECA3 = 0xECA3,
   addr_kEproj_Pickup = 0xF337,
   addr_kEproj_EnemyDeathExplosion = 0xF345,
+  addr_kEproj_IList_Sparks = 0xF353,
   addr_kEproj_Sparks = 0xF498,
 };
 enum Consts_87 {
@@ -2249,7 +2449,7 @@ enum Consts_87 {
   addr_kAnimtiles_TourianStatue_Draygon = 0x855E,
 };
 enum Consts_88 {
-  addr_locret_88858A = 0x858A,
+  addr_kClearPreInstr = 0x858A,
   addr_loc_889180 = 0x9180,
   addr_kPowerBombExplosionShapeDef0 = 0x9246,
   addr_kPowerBombPreExplosionShapeDef0 = 0x9F06,
@@ -2502,25 +2702,24 @@ enum Consts_9B {
 enum Consts_A0 {
   addr_kSpritemap_Nothing_A0 = 0x804D,
   addr_kExtendedSpritemap_Nothing_A0 = 0x804F,
-  addr_kEnemyDef_DAFF = 0xDAFF,
-  addr_kEnemyDef_DD7F = 0xDD7F,
-  addr_kEnemyDef_DDBF = 0xDDBF,
-  addr_kEnemyDef_DE3F = 0xDE3F,
-  addr_kEnemyDef_DE7F = 0xDE7F,
-  addr_kEnemyDef_DF3F = 0xDF3F,
-  addr_kEnemyDef_DF7F = 0xDF7F,
-  addr_kEnemyDef_E0FF = 0xE0FF,
-  addr_kEnemyDef_E17F = 0xE17F,
-  addr_kEnemyDef_E2BF = 0xE2BF,
-  addr_kEnemyDef_E4BF = 0xE4BF,
-  addr_kEnemyDef_E4FF = 0xE4FF,
-  addr_kEnemyDef_E7FF = 0xE7FF,
-  addr_kEnemyDef_E83F = 0xE83F,
-  addr_kEnemyDef_EC3F = 0xEC3F,
-  addr_kEnemyDef_EEFF = 0xEEFF,
-  addr_kEnemyDef_F293 = 0xF293,
-  addr_kEnemyDef_F353 = 0xF353,
-  addr_kEnemyDef_F593 = 0xF593,
+  addr_kEnemyDef_RespawnEnemyPlaceholder = 0xDAFF,
+  addr_kEnemyDef_ItemDrop_MetroidDropChances = 0xDD7F,
+  addr_kEnemyDef_ItemDrop_CrocomireDropChances = 0xDDBF,
+  addr_kEnemyDef_ItemDrop_DraygonDropChances = 0xDE3F,
+  addr_kEnemyDef_ItemDrop_DraygonEyeDropChances = 0xDE7F,
+  addr_kEnemyDef_ItemDrop_SporeSpawnDropChances = 0xDF3F,
+  addr_kEnemyDef_ItemDrop_SporeDropChances = 0xDF7F,
+  addr_kEnemyDef_ItemDrop_MiniKraidDropChances = 0xE0FF,
+  addr_kEnemyDef_ItemDrop_RidleyDropChances = 0xE17F,
+  addr_kEnemyDef_ItemDrop_KraidDropChances = 0xE2BF,
+  addr_kEnemyDef_ItemDrop_PhantoonBodyDropChances = 0xE4BF,
+  addr_kEnemyDef_ItemDrop_PhantoonEyeDropChances = 0xE4FF,
+  addr_kEnemyDef_ItemDrop_KagoDropChances = 0xE7FF,
+  addr_kEnemyDef_ItemDrop_LavamanProjDropChances = 0xE83F,
+  addr_kEnemyDef_ItemDrop_MotherBrainDropChances = 0xEC3F,
+  addr_kEnemyDef_ItemDrop_BombTorizoDropChances = 0xEEFF,
+  addr_kEnemyDef_ItemDrop_BotwoonDropChances = 0xF293,
+  addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances = 0xF593,
 };
 enum Consts_A2 {
   addr_kSpritemap_Nothing_A2 = 0x804D,
@@ -2777,6 +2976,7 @@ enum Consts_A6 {
   addr_kBabyMetroid_Ilist_BF31 = 0xBF31,
   addr_byte_A6C15D = 0xC15D,
   addr_stru_A6C3B8 = 0xC3B8,
+  addr_loc_A6C49C = 0xC49C,
   addr_stru_A6C4CB = 0xC4CB,
   addr_locret_A6C600 = 0xC600,
   addr_stru_A6C987 = 0xC987,
@@ -2984,92 +3184,92 @@ enum Consts_A8 {
   addr_locret_A8F5E3 = 0xF5E3,
 };
 enum Consts_A9 {
-  addr_locret_A98AE4 = 0x8AE4,
-  addr_stru_A98AE5 = 0x8AE5,
-  addr_stru_A98AF5 = 0x8AF5,
-  addr_stru_A98B05 = 0x8B05,
-  addr_stru_A98B25 = 0x8B25,
-  addr_stru_A98F8F = 0x8F8F,
-  addr_stru_A98FC7 = 0x8FC7,
-  addr_stru_A98FE5 = 0x8FE5,
-  addr_stru_A99003 = 0x9003,
-  addr_stru_A9902F = 0x902F,
+  addr_kMotherBrainBody_Return = 0x8AE4,
+  addr_MotherBrainBody_TubesFalling_BottomLeft = 0x8AE5,
+  addr_MotherBrainBody_TubesFalling_BottomRight = 0x8AF5,
+  addr_MotherBrainBody_TubesFalling_BottomMiddleLeft = 0x8B05,
+  addr_MotherBrainBody_TubesFalling_BottomMiddleRight = 0x8B15,
+  addr_MotherBrainBody_TubesFalling_MainTube = 0x8B25,
+  addr_kMotherBrainLegs_SpriteTileTransfers = 0x8F8F,
+  addr_kMotherBrainAttacks_SpriteTileTransfers = 0x8FC7,
+  addr_kMotherBrainShitroid_SpriteTileTransfers = 0x8FE5,
+  addr_kMotherBrainCorpse_SpriteTileTransfers = 0x9003,
+  addr_kMotherBrainExplodeEscapeDoor_SpriteTileTransfers = 0x902F,
   addr_kMotherBrainsBrain_Palette = 0x9472,
-  addr_kMotherBrainPalette_0 = 0x9492,
-  addr_kMotherBrainPalette_1 = 0x94B2,
-  addr_kMotherBrainPalette_2 = 0x94D2,
-  addr_kMotherBrainPalette_3 = 0x94F2,
-  addr_kMotherBrainPalette_4 = 0x9512,
-  addr_kMotherBrainPalette_5 = 0x9532,
-  addr_kMotherBrain_Ilist_97A4 = 0x97A4,
-  addr_kMotherBrain_Ilist_98C6 = 0x98C6,
-  addr_kMotherBrain_Ilist_99AA = 0x99AA,
-  addr_kMotherBrain_Ilist_99C6 = 0x99C6,
-  addr_kMotherBrain_Ilist_99E2 = 0x99E2,
-  addr_kMotherBrain_Ilist_99F2 = 0x99F2,
-  addr_kMotherBrain_Ilist_9A02 = 0x9A02,
-  addr_kMotherBrain_Ilist_9A0A = 0x9A0A,
-  addr_kMotherBrain_Ilist_9A26 = 0x9A26,
-  addr_kMotherBrain_Ilist_9A42 = 0x9A42,
-  addr_kMotherBrain_Ilist_9B7F = 0x9B7F,
-  addr_kMotherBrain_Ilist_9BB3 = 0x9BB3,
-  addr_kMotherBrain_Ilist_9BE7 = 0x9BE7,
-  addr_kMotherBrain_Ilist_9C13 = 0x9C13,
-  addr_stru_A99C21 = 0x9C21,
-  addr_kMotherBrain_Ilist_9C29 = 0x9C29,
-  addr_kMotherBrain_Ilist_9C39 = 0x9C39,
-  addr_stru_A99C47 = 0x9C47,
-  addr_stru_A99C5F = 0x9C5F,
-  addr_kMotherBrain_Ilist_9C77 = 0x9C77,
-  addr_kMotherBrain_Ilist_9C87 = 0x9C87,
-  addr_stru_A99C9F = 0x9C9F,
-  addr_stru_A99CD1 = 0x9CD1,
-  addr_kMotherBrain_Ilist_9D25 = 0x9D25,
-  addr_kMotherBrain_Ilist_9D3D = 0x9D3D,
-  addr_kMotherBrain_Ilist_9D7F = 0x9D7F,
-  addr_kMotherBrain_Ilist_9DB1 = 0x9DB1,
-  addr_kMotherBrain_Ilist_9DBB = 0x9DBB,
-  addr_kMotherBrain_Ilist_9ECC = 0x9ECC,
-  addr_kMotherBrain_Ilist_9F00 = 0x9F00,
-  addr_kMotherBrain_Ilist_9F34 = 0x9F34,
-  addr_kMotherBrain_Ilist_9F6C = 0x9F6C,
+  addr_kMotherBrainPalette3_BackLeg = 0x9492,
+  addr_kMotherBrainPalette2_Attacks = 0x94B2,
+  addr_kMotherBrainPalette7_Shitroid = 0x94D2,
+  addr_kMotherBrainPalette7_TubeProjectiles = 0x94F2,
+  addr_kMotherBrainPalette3_GlassShards = 0x9512,
+  addr_kMotherBrainPalette1_ExplodeEscapeDoorParticles = 0x9532,
+  addr_kMotherBrain_Ilist_WalkForwards_Medium = 0x97A4,
+  addr_kMotherBrain_Ilist_WalkBackwards_Fast = 0x98C6,
+  addr_kMotherBrain_Ilist_StandUpAfterCrouch_Slow = 0x99AA,
+  addr_kMotherBrain_Ilist_StandUpAfterCrouch_Fast = 0x99C6,
+  addr_kMotherBrain_Ilist_StandUpAfterLean = 0x99E2,
+  addr_kMotherBrain_Ilist_LeaningDown = 0x99F2,
+  addr_kMotherBrain_Ilist_Crouched = 0x9A02,
+  addr_kMotherBrain_Ilist_Crouch_Slow = 0x9A0A,
+  addr_kMotherBrain_Ilist_Crouch_Fast = 0x9A26,
+  addr_kMotherBrain_Ilist_DeathBeam = 0x9A42,
+  addr_kMotherBrain_Ilist_Stretch_Phase2 = 0x9B7F,
+  addr_kMotherBrain_Ilist_Stretch_Phase3 = 0x9BB3,
+  addr_kMotherBrain_Ilist_HyperBeamRecoil = 0x9BE7,
+  addr_kMotherBrain_Ilist_Initial_Dummy = 0x9C13,
+  addr_kMotherBrain_Ilist_Initial = 0x9C21,
+  addr_kMotherBrain_Ilist_Decapitated = 0x9C29,
+  addr_kMotherBrain_Ilist_DyingDrool = 0x9C39,
+  addr_kMotherBrain_Instr_GoTo9C47 = 0x9C47,
+  addr_kMotherBrain_Instr_GoTo9C5F = 0x9C5F,
+  addr_kMotherBrain_Ilist_FireRainbowBeam = 0x9C77,
+  addr_kMotherBrain_Ilist_Neutral_Phase2 = 0x9C87,
+  addr_kMotherBrain_Instr_GoTo9C9F = 0x9C9F,
+  addr_kMotherBrain_Instr_GoTo9CD1 = 0x9CD1,
+  addr_kMotherBrain_Ilist_Corpse = 0x9D25,
+  addr_kMotherBrain_Ilist_Attack_FourBlueRings_Phase2 = 0x9D3D,
+  addr_kMotherBrain_Ilist_Attack_TwoBlueRings_Phase = 0x9D7F,
+  addr_kMotherBrain_Ilist_AttackShitroid = 0x9DB1,
+  addr_kMotherBrain_Ilist_Attack_FourBlueRings_Phase3 = 0x9DBB,
+  addr_kMotherBrain_Ilist_Attack_Bomb_Phase2 = 0x9ECC,
+  addr_kMotherBrain_Ilist_Attack_Bomb_Phase3 = 0x9F00,
+  addr_kMotherBrain_Ilist_Attack_Laser = 0x9F34,
+  addr_kMotherBrain_Ilist_ChargeRainbowBeam = 0x9F6C,
   addr_kMotherBrain_Sprmap_A694 = 0xA694,
-  addr_word_A9B109 = 0xB109,
-  addr_word_A9B10F = 0xB10F,
-  addr_word_A9B427 = 0xB427,
-  addr_byte_A9B6DC = 0xB6DC,
-  addr_byte_A9B6DF = 0xB6DF,
-  addr_stru_A9BE28 = 0xBE28,
-  addr_locret_A9C18D = 0xC18D,
-  addr_locret_A9C353 = 0xC353,
-  addr_loc_A9C49C = 0xC49C,
-  addr_loc_A9C959 = 0xC959,
-  addr_stru_A9CA24 = 0xCA24,
-  addr_kShitroid_Ilist_CFA2 = 0xCFA2,
-  addr_kShitroid_Ilist_CFB8 = 0xCFB8,
-  addr_kShitroid_Ilist_CFCE = 0xCFCE,
-  addr_stru_A9D046 = 0xD046,
-  addr_word_A9D082 = 0xD082,
-  addr_kDeadTorizo_Ilist_D6DC = 0xD6DC,
-  addr_kDeadTorizo_Sprmap_D761 = 0xD761,
-  addr_kDeadTorizo_Hitbox_D77C = 0xD77C,
-  addr_stru_A9DD58 = 0xDD58,
-  addr_stru_A9DD68 = 0xDD68,
-  addr_stru_A9DD78 = 0xDD78,
-  addr_stru_A9DE08 = 0xDE08,
-  addr_kDeadMonsters_Ilist_ECAC = 0xECAC,
-  addr_kDeadMonsters_Ilist_ECE3 = 0xECE3,
-  addr_kDeadMonsters_Ilist_ECE9 = 0xECE9,
-  addr_kDeadMonsters_Ilist_ECEF = 0xECEF,
-  addr_word_A9F6D1 = 0xF6D1,
-  addr_word_A9F711 = 0xF711,
-  addr_kDeadSidehopper_Palette_0 = 0xF8A6,
-  addr_word_A9F8C6 = 0xF8C6,
+  addr_kMotherBrain_GeneratedMixedExplosions_Chances = 0xB109,
+  addr_kMotherBrain_GenerateSmokyExplosions_Chances = 0xB10F,
+  addr_kMotherBrain_HitboxDefs = 0xB427,
+  addr_kMotherBrain_AttackRngThresholds_Default = 0xB6DC,
+  addr_kMotherBrain_AttackRngThresholds_InRange = 0xB6DF,
+  addr_kMotherBrain_ShitroidSpawnParameters = 0xBE28,
+  addr_kMotherBrain_Instr_StopBody = 0xC18D,
+  addr_kMotherBrain_Instr_StopNeck = 0xC353,
+  //addr_kShitroidInCutscene_Func_MoveUpToCeiling = 0xC959,
+  addr_kShitroidInCutscene_MoveToSamusTab0 = 0xCA24,
+  addr_kShitroid_Ilist_Initial = 0xCFA2,
+  addr_kShitroid_Ilist_DrainMotherBrain = 0xCFB8,
+  addr_kShitroid_Ilist_TookFatalBlow = 0xCFCE,
+  addr_kMotherBrain_RoomPal_Ilist_FirstPhaseEnd = 0xD046,
+  addr_kMotherBrain_RoomPal_FirstPhaseEnd = 0xD082,
+  addr_kDeadTorizo_Ilist_Initial = 0xD6DC,
+  addr_kDeadTorizo_Sprmap_SandHeap = 0xD761,
+  addr_kDeadTorizo_HitboxDef = 0xD77C,
+  addr_kCorpseRotDefs_DeadTorizo = 0xDD58,
+  addr_kCorpseRotDefs_Sidehopper_EnemyParam1_0 = 0xDD68,
+  addr_kCorpseRotDefs_Sidehopper_EnemyParam1_2 = 0xDD78,
+  addr_kCorpseRotDefs_MotherBrain = 0xDE08,
+  addr_kDeadMonsters_Ilist_SidehopperAlive_Hopping = 0xECAC,
+  addr_kDeadMonsters_Ilist_SidehopperAlive_Idle = 0xECE3,
+  addr_kDeadMonsters_Ilist_SidehopperAlive_Corpse = 0xECE9,
+  addr_kDeadMonsters_Ilist_SidehopperDead = 0xECEF,
+  addr_kShitroid_Palette_Normal = 0xF6D1,
+  addr_kShitroid_Palette_LowHealth = 0xF711,
+  addr_kDeadMonsters_Palette_0 = 0xF8A6,
+  addr_kDeadSidehopper_Palette_0 = 0xF8C6,
   addr_kShitroidInCutscene_Palette = 0xF8E6,
-  addr_kShitroid_Ilist_F906 = 0xF906,
-  addr_kShitroid_Ilist_F90E = 0xF90E,
-  addr_kShitroid_Ilist_F924 = 0xF924,
-  addr_kShitroid_Ilist_F93A = 0xF93A,
+  addr_kShitroid_Ilist_FinishDraining = 0xF906,
+  addr_kShitroid_Ilist_Normal = 0xF90E,
+  addr_kShitroid_Ilist_LatchedOn = 0xF924,
+  addr_kShitroid_Ilist_Remorse = 0xF93A,
 };
 enum Consts_AA {
   addr_kSpritemap_Nothing_AA = 0x804D,
@@ -3136,29 +3336,29 @@ enum Consts_B2 {
 };
 enum Consts_B3 {
   addr_kSpritemap_Nothing_B3 = 0x804D,
-  addr_kUnusedSpinningTurtleEye_Ilist_86A7 = 0x86A7,
-  addr_kBrinstarPipeBug_Ilist_87AB = 0x87AB,
-  addr_kBrinstarPipeBug_Ilist_8A1D = 0x8A1D,
-  addr_kNorfairPipeBug_Ilist_8AE1 = 0x8AE1,
-  addr_kNorfairPipeBug_Ilist_8B05 = 0x8B05,
-  addr_kNorfairPipeBug_Ilist_8B21 = 0x8B21,
-  addr_kNorfairPipeBug_Ilist_8B45 = 0x8B45,
-  addr_kBrinstarYellowPipeBug_Ilist_8EFC = 0x8EFC,
-  addr_kBrinstarYellowPipeBug_Ilist_8F10 = 0x8F10,
-  addr_kBrinstarYellowPipeBug_Ilist_8F24 = 0x8F24,
-  addr_kBrinstarYellowPipeBug_Ilist_8F38 = 0x8F38,
-  addr_kBotwoon_Ilist_9389 = 0x9389,
-  addr_stru_B3E150 = 0xE150,
-  addr_loc_B3E28C = 0xE28C,
-  addr_kEscapeEtecoon_Ilist_E556 = 0xE556,
-  addr_kEscapeEtecoon_Ilist_E582 = 0xE582,
-  addr_kEscapeEtecoon_Ilist_E5AE = 0xE5AE,
-  addr_kEscapeEtecoon_Ilist_E5DA = 0xE5DA,
-  addr_kEscapeDachora_Ilist_E964 = 0xE964,
+  addr_kUnusedSpinningTurtleEye_Ilist_Initial = 0x86A7,
+  addr_kBrinstarRedPipeBug_Ilist_FaceLeft_Rise = 0x87AB,
+  addr_kBrinstarGreenPipeBug_Ilist_FaceLeft_Rise = 0x8A1D,
+  addr_kNorfairPipeBug_Ilist_FaceLeft_Rise = 0x8AE1,
+  addr_kNorfairPipeBug_Ilist_FaceLeft_Shoot = 0x8B05,
+  addr_kNorfairPipeBug_Ilist_FaceRight_Rise = 0x8B21,
+  addr_kNorfairPipeBug_Ilist_FaceRight_Shoot = 0x8B45,
+  addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Rise = 0x8EFC,
+  addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Shoot = 0x8F10,
+  addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Rise = 0x8F24,
+  addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Shoot = 0x8F38,
+  addr_kBotwoon_Ilist_Hide = 0x9389,
+  addr_kBotwoon_MovementTab0 = 0xE150,
+  addr_kBotwoon_Func_MoveUsingData = 0xE28C,
+  addr_kEscapeEtecoon_Ilist_RunLeft_LowTide = 0xE556,
+  addr_kEscapeEtecoon_Ilist_RunRight_LowTide = 0xE582,
+  addr_kEscapeEtecoon_Ilist_RunForEscape = 0xE5AE,
+  addr_kEscapeEtecoon_Ilist_ExpressGratitudeThenEscape = 0xE5DA,
+  addr_kEscapeDachora_Ilist_RunAimlessly_LowTide = 0xE964,
 };
 enum Consts_B4 {
-  addr_kSpriteObject_Ilist_C3BA = 0xC3BA,
-  addr_kSpriteObject_Ilist_C4B6 = 0xC4B6,
+  addr_kSpriteObject_Ilist_MetroidElectricity = 0xC3BA,
+  addr_kSpriteObject_Ilist_MetroidShell = 0xC4B6,
   //addr_asc_B4DD89 = 0xDD89,
   addr_kEnemyVulnerability = 0xEC1C,
 };

@@ -1188,7 +1188,8 @@ bool CanXrayShowBlocks(void) {  // 0x91D143
     return false;
   if (fx_type == 0x24)
     return false;
-  if (boss_id == 3 || boss_id == 6 || boss_id == 7 || boss_id == 8 || boss_id == 10)
+  if (boss_id == kBossId_3_Kraid || boss_id == kBossId_6_Crocomire || boss_id == kBossId_7_Phantoon
+      || boss_id == kBossId_8_Draygon || boss_id == kBossId_10_MotherBrain)
     return false;
   return true;
 }

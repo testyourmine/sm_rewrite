@@ -22,7 +22,7 @@ uint8 PlaySamusFanfare(void) {  // 0x92ED24
     if (substate == 5)
       PlayRoomMusicTrackAfterAFrames(0x168);
   } else {
-    QueueMusic_DelayedY(1, 0xE);
+    QueueMusic_DelayedY(kMusic_SamusFanfare, 14);
   }
   if (sign16(substate - 359)) {
     ++substate;

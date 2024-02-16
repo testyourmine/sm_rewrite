@@ -2179,15 +2179,15 @@ void Samus_Movement_1B_ShinesparkEtc(void) {  // 0x90A7DA
   input_to_pose_calc = 0;
 }
 
-static const uint8 kShr0x80[8] = { 0x80, 0x40, 0x20, 0x10, 8, 4, 2, 1 };
-static const uint16 kShr0xFc00[8] = { 0xfc00, 0x7e00, 0x3f00, 0x1f80, 0xfc0, 0x7e0, 0x3f0, 0x1f8 };
+static const uint8 kBitmask_1Bit[8] = { 0x80, 0x40, 0x20, 0x10, 8, 4, 2, 1 };
+static const uint16 kBitmask_6Bits[8] = { 0xfc00, 0x7e00, 0x3f00, 0x1f80, 0xfc0, 0x7e0, 0x3f0, 0x1f8 };
 
 static void MarkMapTileAsExplored(uint16 r18, uint16 r24) {  // 0x90A8A6
   uint8 v0 = (uint16)(r18 & 0xFF00) >> 8;
   uint16 R34 = (room_x_coordinate_on_map + v0) & 0x20;
   uint16 r20 = ((room_x_coordinate_on_map + v0) & 0x1F) >> 3;
   uint16 R22 = room_y_coordinate_on_map + ((r24 & 0xFF00) >> 8) + 1;
-  map_tiles_explored[(uint16)(r20 + 4 * (R34 + R22))] |= kShr0x80[(room_x_coordinate_on_map + v0) & 7];
+  map_tiles_explored[(uint16)(r20 + 4 * (R34 + R22))] |= kBitmask_1Bit[(room_x_coordinate_on_map + v0) & 7];
 }
 
 void DisableMinimapAndMarkBossRoomAsExplored(void) {  // 0x90A7E2
@@ -2195,9 +2195,9 @@ void DisableMinimapAndMarkBossRoomAsExplored(void) {  // 0x90A7E2
   uint16 v0 = 0;
   do {
     int v1 = v0 >> 1;
-    hud_tilemap[v1 + 26] = 11295;
-    hud_tilemap[v1 + 58] = 11295;
-    hud_tilemap[v1 + 90] = 11295;
+    hud_tilemap.row1.minimap[v1] = 0x2C1F;
+    hud_tilemap.row2.minimap[v1] = 0x2C1F;
+    hud_tilemap.row3.minimap[v1] = 0x2C1F;
     v0 += 2;
   } while ((int16)(v0 - 10) < 0);
   uint16 v2 = 5;
@@ -2235,7 +2235,7 @@ void UpdateMinimap(void) {  // 0x90A91B
   uint16 r20 = ((room_x_coordinate_on_map + v0) & 0x1F) >> 3;
   uint16 r22 = room_y_coordinate_on_map + ((samus_y_pos & 0xFF00) >> 8) + 1;
   uint16 v2 = r20 + 4 * (r34 + r22);
-  map_tiles_explored[v2] |= kShr0x80[(room_x_coordinate_on_map + v0) & 7];
+  map_tiles_explored[v2] |= kBitmask_1Bit[(room_x_coordinate_on_map + v0) & 7];
   uint16 r32 = v1;
   uint16 r30 = v2;
   uint16 v3 = v2 - 4;
@@ -2248,9 +2248,9 @@ void UpdateMinimap(void) {  // 0x90A91B
   uint16 R50 = v3;
   int r52 = 2 * v4;
   int v6 = r52 >> 1;
-  uint16 r24 = kShr0xFc00[v6] & swap16(*(uint16 *)&map_tiles_explored[v3]);
-  uint16 r26 = kShr0xFc00[v6] & swap16(*(uint16 *)&map_tiles_explored[v3 + 4]);
-  uint16 r28 = kShr0xFc00[v6] & swap16(*(uint16 *)&map_tiles_explored[v3 + 8]);
+  uint16 r24 = kBitmask_6Bits[v6] & swap16(*(uint16 *)&map_tiles_explored[v3]);
+  uint16 r26 = kBitmask_6Bits[v6] & swap16(*(uint16 *)&map_tiles_explored[v3 + 4]);
+  uint16 r28 = kBitmask_6Bits[v6] & swap16(*(uint16 *)&map_tiles_explored[v3 + 8]);
   const uint8 *r9 = RomPtr_82(kPauseMenuMapData_90[area_index]);
   const uint8 *r15 = r9;
   r9 += v3;
@@ -2335,49 +2335,49 @@ void UpdateMinimapInside(uint16 r18, uint16 r22, uint16 r34, uint16 r30, uint16 
     bool v4 = r38 >> 15;
     r38 *= 2;
     if (!v4 || (v5 = r0[v2 >> 1], !has_area_map))
-      v5 = 31;
+      v5 = 0x1F;
     int v6 = v3 >> 1;
-    hud_tilemap[v6 + 26] = v5 & 0xC3FF | 0x2C00;
+    hud_tilemap.row1.minimap[v6] = v5 & 0xC3FF | 0x2C00;
 
     v4 = r24 >> 15;
     r24 *= 2;
     if (v4)
-      hud_tilemap[v6 + 26] = r0[v2 >> 1] & 0xC3FF | 0x2800;
+      hud_tilemap.row1.minimap[v6] = r0[v2 >> 1] & 0xC3FF | 0x2800;
     
     v4 = r40 >> 15;
     r40 *= 2;
     if (!v4 || (v7 = r3[v2 >> 1], !has_area_map))
-      v7 = 31;
-    hud_tilemap[v6 + 58] = v7 & 0xC3FF | 0x2C00;
+      v7 = 0x1F;
+    hud_tilemap.row2.minimap[v6] = v7 & 0xC3FF | 0x2C00;
 
     v4 = r26 >> 15;
     r26 *= 2;
     if (v4) {
-      hud_tilemap[v6 + 58] = r3[v2 >> 1] & 0xC3FF | 0x2800;
-      if (n == 3 && (hud_tilemap[v6 + 58] & 0x1FF) == 40) {
+      hud_tilemap.row2.minimap[v6] = r3[v2 >> 1] & 0xC3FF | 0x2800;
+      if (n == 3 && (hud_tilemap.row2.minimap[v6] & 0x1FF) == 40) {
         // MarkMapTileAboveSamusAsExplored
-        *((uint8 *)&music_data_index + r30) |= kShr0x80[r32];
+        *((uint8 *)&music_data_index + r30) |= kBitmask_1Bit[r32];
       }
     }
 
     v4 = r42 >> 15;
     r42 *= 2;
     if (!v4 || (v8 = r6[v2 >> 1], !has_area_map))
-      v8 = 31;
-    hud_tilemap[v6 + 90] = v8 & 0xC3FF | 0x2C00;
+      v8 = 0x1F;
+    hud_tilemap.row3.minimap[v6] = v8 & 0xC3FF | 0x2C00;
 
     v4 = r28 >> 15;
     r28 *= 2;
     if (v4)
-      hud_tilemap[v6 + 90] = r6[v2 >> 1] & 0xC3FF | 0x2800;
+      hud_tilemap.row3.minimap[v6] = r6[v2 >> 1] & 0xC3FF | 0x2800;
 
     v3 += 2;
     v2 += 2;
     if ((v2 & 0x3F) == 0)
-      v2 += 1984;
+      v2 += (0x800 - 0x40);
   } while (--n);
   if ((nmi_frame_counter_byte & 8) == 0)
-    hud_tilemap[60] |= 0x1C00;
+    hud_tilemap.row2.minimap_samus_pos |= 0x1C00;
 }
 
 void Samus_HandleCooldown(void) {  // 0x90AC1C

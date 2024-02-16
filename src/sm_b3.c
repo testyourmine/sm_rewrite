@@ -60,7 +60,7 @@ const uint16 *Enemy_ClearAiPreInstr_B3(uint16 k, const uint16 *jp) {  // 0xB3807
 void UnusedSpinningTurtleEye_Init(void) {  // 0xB386FB
   EnemyData *v0 = gEnemyData(cur_enemy_index);
   v0->properties |= kEnemyProps_DisableSamusColl;
-  v0->current_instruction = addr_kUnusedSpinningTurtleEye_Ilist_86A7;
+  v0->current_instruction = addr_kUnusedSpinningTurtleEye_Ilist_Initial;
 }
 
 void UnusedSpinningTurtleEye_Main(void) {  // 0xB3870E
@@ -77,9 +77,9 @@ void BrinstarPipeBug_Init(void) {  // 0xB3883B
   PipeBug->pbg_var_D = 48;
   PipeBug->pbg_var_E = 0;
   PipeBug->pbg_var_01 = 0;
-  PipeBug->base.current_instruction = addr_kBrinstarPipeBug_Ilist_87AB;
+  PipeBug->base.current_instruction = addr_kBrinstarRedPipeBug_Ilist_FaceLeft_Rise;
   if (PipeBug->pbg_parameter_1)
-    PipeBug->base.current_instruction = addr_kBrinstarPipeBug_Ilist_8A1D;
+    PipeBug->base.current_instruction = addr_kBrinstarGreenPipeBug_Ilist_FaceLeft_Rise;
 }
 
 void BrinstarPipeBug_Main(void) {  // 0xB3887A
@@ -178,7 +178,7 @@ void NorfairPipeBug_Init(void) {  // 0xB38B61
   PipeBug->pbg_var_C = 0;
   PipeBug->base.instruction_timer = 1;
   PipeBug->base.timer = 0;
-  PipeBug->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
+  PipeBug->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
   PipeBug->pbg_var_A = FUNC16(NorfairPipeBug_Func_1);
 }
 
@@ -240,17 +240,17 @@ void NorfairPipeBug_Func_2(void) {  // 0xB38BFF
     PipeBug->base.instruction_timer = 1;
     PipeBug->base.timer = 0;
     if ((GetSamusEnemyDelta_X(k) & 0x8000) == 0) {
-      Get_PipeBug(k)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B21;
-      Get_PipeBug(k + 64)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B21;
-      Get_PipeBug(k + 128)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B21;
-      Get_PipeBug(k + 192)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B21;
-      Get_PipeBug(k + 256)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B21;
+      Get_PipeBug(k)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Rise;
+      Get_PipeBug(k + 64)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Rise;
+      Get_PipeBug(k + 128)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Rise;
+      Get_PipeBug(k + 192)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Rise;
+      Get_PipeBug(k + 256)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Rise;
     } else {
-      PipeBug->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
-      Get_PipeBug(k + 64)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
-      Get_PipeBug(k + 128)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
-      Get_PipeBug(k + 192)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
-      Get_PipeBug(k + 256)->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
+      PipeBug->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
+      Get_PipeBug(k + 64)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
+      Get_PipeBug(k + 128)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
+      Get_PipeBug(k + 192)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
+      Get_PipeBug(k + 256)->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
     }
     NorfairPipeBug_Func_3(k);
   }
@@ -284,9 +284,9 @@ void NorfairPipeBug_Func_4(void) {  // 0xB38CA6
     E->base.instruction_timer = 1;
     E->base.timer = 0;
     if ((GetSamusEnemyDelta_X(cur_enemy_index) & 0x8000) == 0)
-      E->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B21;
+      E->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Rise;
     else
-      E->base.current_instruction = addr_kNorfairPipeBug_Ilist_8AE1;
+      E->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Rise;
   }
 }
 
@@ -363,10 +363,10 @@ void NorfairPipeBug_Func_12(void) {  // 0xB38E5A
     E->base.instruction_timer = 1;
     E->base.timer = 0;
     E->pbg_var_A = FUNC16(NorfairPipeBug_Func_10);
-    E->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B05;
+    E->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceLeft_Shoot;
     if ((GetSamusEnemyDelta_X(cur_enemy_index) & 0x8000) == 0) {
       E->pbg_var_A = FUNC16(NorfairPipeBug_Func_11);
-      E->base.current_instruction = addr_kNorfairPipeBug_Ilist_8B45;
+      E->base.current_instruction = addr_kNorfairPipeBug_Ilist_FaceRight_Shoot;
     }
   }
 }
@@ -380,9 +380,9 @@ void BrinstarYellowPipeBug_Init(void) {  // 0xB38F4C
   E->base.y_subpos = 0;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
-  E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8EFC;
+  E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Rise;
   if (!E->pbg_parameter_1)
-    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8F24;
+    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Rise;
   int v1 = (8 * E->pbg_parameter_2) >> 1;
   E->pbg_var_01 = kCommonEnemySpeeds_Linear[v1];
   E->pbg_var_00 = kCommonEnemySpeeds_Linear[v1 + 1];
@@ -428,10 +428,10 @@ void BrinstarYellowPipeBug_Func_2(uint16 k) {  // 0xB38FF5
   if (!v2) {
     E->base.instruction_timer = 1;
     E->base.timer = 0;
-    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8EFC;
+    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Rise;
     E->pbg_var_A = FUNC16(BrinstarYellowPipeBug_Func_3);
     if (!E->pbg_parameter_1) {
-      E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8F24;
+      E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Rise;
       E->pbg_var_A = FUNC16(BrinstarYellowPipeBug_Func_5);
     }
   }
@@ -459,7 +459,7 @@ void BrinstarYellowPipeBug_Func_3(void) {  // 0xB39028
         E->pbg_var_04 = E->base.x_pos;
         E->base.instruction_timer = 1;
         E->base.timer = 0;
-        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8F10;
+        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Shoot;
       }
     }
   }
@@ -493,7 +493,7 @@ void BrinstarYellowPipeBug_Func_5(void) {  // 0xB390BD
         E->pbg_var_04 = E->base.x_pos;
         E->base.instruction_timer = 1;
         E->base.timer = 0;
-        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8F38;
+        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Shoot;
       }
     }
   }
@@ -515,7 +515,7 @@ void BrinstarYellowPipeBug_Func_7(void) {  // 0xB3915A
     E->pbg_var_06 = 0;
     E->base.instruction_timer = 1;
     E->base.timer = 0;
-    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8EFC;
+    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Rise;
     E->base.properties |= kEnemyProps_Invisible;
   } else {
     BrinstarYellowPipeBug_Func_4(cur_enemy_index);
@@ -529,7 +529,7 @@ void BrinstarYellowPipeBug_Func_7(void) {  // 0xB3915A
         E->pbg_var_A = FUNC16(BrinstarYellowPipeBug_Func_3);
         E->base.instruction_timer = 1;
         E->base.timer = 0;
-        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8EFC;
+        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceLeft_Rise;
       }
     }
   }
@@ -546,7 +546,7 @@ void BrinstarYellowPipeBug_Func_8(void) {  // 0xB391D8
     E->pbg_var_06 = 0;
     E->base.instruction_timer = 1;
     E->base.timer = 0;
-    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8F24;
+    E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Rise;
     E->base.properties |= kEnemyProps_Invisible;
   } else {
     BrinstarYellowPipeBug_Func_6(cur_enemy_index);
@@ -559,7 +559,7 @@ void BrinstarYellowPipeBug_Func_8(void) {  // 0xB391D8
         E->pbg_var_F = 1;
         E->base.instruction_timer = 1;
         E->base.timer = 0;
-        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_8F24;
+        E->base.current_instruction = addr_kBrinstarYellowPipeBug_Ilist_FaceRight_Rise;
         E->pbg_var_A = FUNC16(BrinstarYellowPipeBug_Func_5);
       }
     }
@@ -674,7 +674,7 @@ void Botwoon_Init(void) {  // 0xB39583
   if ((boss_bits_for_area[4] & kBossBit_AreaMiniBoss) != 0) {
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0f, 0x04, 0xb797 });
     *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
-    E->base.current_instruction = addr_kBotwoon_Ilist_9389;
+    E->base.current_instruction = addr_kBotwoon_Ilist_Hide;
     E->base.properties |= kEnemyProps_Deleted;
   } else {
     uint16 v3 = 24;
@@ -685,8 +685,8 @@ void Botwoon_Init(void) {  // 0xB39583
       v5 = (int16)(--E->botwoon_var_A - 1) < 0;
       --E->botwoon_var_A;
     } while (!v5);
-    E->base.current_instruction = addr_kBotwoon_Ilist_9389;
-    E->botwoon_var_3B = addr_kBotwoon_Ilist_9389;
+    E->base.current_instruction = addr_kBotwoon_Ilist_Hide;
+    E->botwoon_var_3B = addr_kBotwoon_Ilist_Hide;
     E->botwoon_var_Func = FUNC16(Botwoon_Func_Initialize);
     E->botwoon_var_E = FUNC16(Botwoon_Func_MoveToTargetHole);
     E->botwoon_var_F = FUNC16(Botwoon_Func_MoveHeadAround);
@@ -994,7 +994,7 @@ void Botwoon_Func_CrumbleWall(uint16 k) {  // 0xB39AF9
   } else {
     E->base.properties |= kEnemyProps_Deleted;
     SetBossBitForCurArea(2);
-    QueueMusic_Delayed8(3);
+    QueueMusic_Delayed8(kMusic_Elevator);
   }
 }
 
@@ -1123,7 +1123,7 @@ void Botwoon_Func_MoveHeadAround(uint16 k) {  // 0xB39DC0
     if (E->botwoon_var_33) {
       E->base.layer = 7;
       E->base.properties |= kEnemyProps_Tangible;
-      v1 = addr_kBotwoon_Ilist_9389;
+      v1 = addr_kBotwoon_Ilist_Hide;
     } else {
       E->base.layer = 2;
       E->base.properties &= ~kEnemyProps_Tangible;
@@ -1255,9 +1255,9 @@ void Botwoon_Powerbomb(void) {  // 0xB3A041
 
 void Botwoon_Func_StartMovementUsingData(void) {  // 0xB3E250
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
-  E->botwoon_var_E = addr_loc_B3E28C;
+  E->botwoon_var_E = addr_kBotwoon_Func_MoveUsingData;
   E->botwoon_var_3C = 0;
-  const uint8 *v1 = RomPtr_B3(E->botwoon_var_40 + addr_stru_B3E150);
+  const uint8 *v1 = RomPtr_B3(E->botwoon_var_40 + addr_kBotwoon_MovementTab0);
   E->botwoon_var_42 = GET_WORD(v1);
   E->botwoon_var_37 = GET_WORD(v1 + 4);
   int16 v2 = GET_WORD(v1 + 2);
@@ -1314,7 +1314,7 @@ void EscapeEtecoon_E65C(uint16 k) {  // 0xB3E65C
 
 void EscapeEtecoon_E670(uint16 k) {  // 0xB3E670
   if (CheckEventHappened(kEvent_15_CrittersEscaped))
-    Get_EscapeEtecoon(k)->base.current_instruction = addr_kEscapeEtecoon_Ilist_E5DA;
+    Get_EscapeEtecoon(k)->base.current_instruction = addr_kEscapeEtecoon_Ilist_ExpressGratitudeThenEscape;
 }
 
 void EscapeEtecoon_E680(uint16 k) {  // 0xB3E680
@@ -1324,9 +1324,9 @@ void EscapeEtecoon_E680(uint16 k) {  // 0xB3E680
     bool v3 = (-E->een_var_A & 0x8000) != 0;
     E->een_var_A = -E->een_var_A;
     E->base.current_instruction = v3 ?
-      addr_kEscapeEtecoon_Ilist_E556 : addr_kEscapeEtecoon_Ilist_E582;
+      addr_kEscapeEtecoon_Ilist_RunLeft_LowTide : addr_kEscapeEtecoon_Ilist_RunRight_LowTide;
     if (CheckEventHappened(kEvent_15_CrittersEscaped))
-      E->base.current_instruction = addr_kEscapeEtecoon_Ilist_E5AE;
+      E->base.current_instruction = addr_kEscapeEtecoon_Ilist_RunForEscape;
   }
   Enemy_MoveDown(k, INT16_SHL16(1));
 }
@@ -1384,6 +1384,6 @@ void EscapeDachora_Init(void) {  // 0xB3EAE5
     E->base.spritemap_pointer = addr_kSpritemap_Nothing_B3;
     E->base.instruction_timer = 1;
     E->base.timer = 0;
-    E->base.current_instruction = addr_kEscapeDachora_Ilist_E964;
+    E->base.current_instruction = addr_kEscapeDachora_Ilist_RunAimlessly_LowTide;
   }
 }

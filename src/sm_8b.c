@@ -1587,7 +1587,7 @@ void HandleCinematicsTransitions_1(void) {  // 0x8B9A83
   if (AdvanceFastScreenFadeOut() & 1) {
     cinematic_var18 = 2;
     cinematic_function = FUNC16(nullsub_117);
-    QueueMusic_Delayed8(6);
+    QueueMusic_Delayed8(kMusic_Song1);
   }
 }
 
@@ -1665,10 +1665,10 @@ void HandleCinematicsTransitions(void) {
 
 void CinematicFunctionOpening(void) {  // 0x8B9B68
   LoadTitleSequenceGraphics();
-  QueueMusic_Delayed8(0xFF03);
+  QueueMusic_Delayed8(kMusic_TitleSequence);
   cinematic_function = FUNC16(CinematicFunctionNone);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_ScrollingText_1994, FUNC16(CinematicFunctionNone));
-  QueueMusic_Delayed8(5);
+  QueueMusic_Delayed8(kMusic_Song0);
 }
 
 void LoadTitleSequenceGraphics(void) {  // 0x8B9B87
@@ -2150,8 +2150,8 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
     ram3000.pause_menu_map_tilemap[k] = *(uint16 *)((uint8 *)kInitialIntro_JapaneseTextTilemap + k * 2);
   cinematic_intro_end_counter = -1;
   cinematic_function = FUNC16(CinematicFunction_Intro_FadeIn);
-  QueueMusic_Delayed8(0);
-  QueueMusic_Delayed8(0xFF3F);
+  QueueMusic_Delayed8(kMusic_Stop);
+  QueueMusic_Delayed8(kMusic_TheLastMetroidIsInCaptivity);
 }
 
 void CinematicFunction_Intro_FadeIn(void) {  // 0x8BA5A7
@@ -2184,16 +2184,16 @@ void CinematicFunction_Intro_LastMetroidCaptivity(void) {  // 0x8BA5F8
   if (!cinematic_func_timer || v0) {
     cinematic_function = FUNC16(CinematicFunc_Intro_QueueGalaxyIsAtPeace);
     cinematic_func_timer = 200;
-    QueueMusic_Delayed8(5);
+    QueueMusic_Delayed8(kMusic_Song0);
   }
 }
 
 void CinematicFunc_Intro_QueueGalaxyIsAtPeace(void) {  // 0x8BA613
   bool v0 = (--cinematic_func_timer & 0x8000) != 0;
   if (!cinematic_func_timer || v0) {
-    QueueMusic_Delayed8(0);
-    QueueMusic_Delayed8(0xFF42);
-    QueueMusic_DelayedY(5, 0xE);
+    QueueMusic_Delayed8(kMusic_Stop);
+    QueueMusic_Delayed8(kMusic_TheGalaxyIsAtPeace);
+    QueueMusic_DelayedY(kMusic_Song0, 14);
     cinematic_function = FUNC16(CinematicFunc_Intro_WaitForQueueWait4secs);
   }
 }
@@ -2253,9 +2253,9 @@ void CinematicFunc_Intro_SetupTextPage2(void) {  // 0x8BA66F
   reg_BG3VOFS = 8;
   ClearEnglishTextTilemap();
   SetSomeStuffForSpriteObject_16();
-  QueueMusic_Delayed8(0);
-  QueueMusic_Delayed8(0xFF36);
-  QueueMusic_DelayedY(5, 0xE);
+  QueueMusic_Delayed8(kMusic_Stop);
+  QueueMusic_Delayed8(kMusic_Intro);
+  QueueMusic_DelayedY(kMusic_Song0, 14);
   cinematic_function = FUNC16(CinematicFunc_Intro_WaitFadeinShowText);
 }
 
@@ -2754,7 +2754,7 @@ void CinematicFunction_Intro_Func15b(void) {  // 0x8BB207
   SpawnCinematicBgObject(addr_kCinematicBgObjectDef_8BCF5D, 0x4C00);
   cinematic_function = FUNC16(nullsub_121);
   SetSomeStuffForSpriteObject_16();
-  QueueMusic_Delayed8(0);
+  QueueMusic_Delayed8(kMusic_Stop);
 }
 
 void CinematicFunction_Intro_Func15(void) {  // 0x8BB1DA
@@ -3524,8 +3524,8 @@ void CinematicFunction_Intro_Func54(void) {  // 0x8BBCA0
   EnableNMI();
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF0F, 0);
   cinematic_function = FUNC16(CinematicFunction_Intro_Func55);
-  QueueMusic_Delayed8(0xFF2D);
-  QueueMusic_DelayedY(5, 0xE);
+  QueueMusic_Delayed8(kMusic_Ceres);
+  QueueMusic_DelayedY(kMusic_Song0, 14);
 }
 
 void CinematicFunction_Intro_Func55(void) {  // 0x8BBDE4
@@ -3806,12 +3806,12 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
   screen_fade_delay = 1;
   screen_fade_counter = 1;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func74);
-  QueueMusic_Delayed8(0);
-  QueueMusic_Delayed8(0xFF2D);
+  QueueMusic_Delayed8(kMusic_Stop);
+  QueueMusic_Delayed8(kMusic_Ceres);
   if (game_state == kGameState_37_CeresGoesBoomWithSamus)
-    QueueMusic_DelayedY(8, 0xE);
+    QueueMusic_DelayedY(kMusic_Song3, 14);
   else
-    QueueMusic_DelayedY(7, 0xE);
+    QueueMusic_DelayedY(kMusic_Song2, 14);
 }
 
 void CinematicFunction_Intro_Func74(void) {  // 0x8BC2E4
@@ -3971,7 +3971,7 @@ void CinematicFunction_Intro_Func85(void) {  // 0x8BC627
     screen_fade_delay = 0;
     screen_fade_counter = 0;
     if (game_state == kGameState_37_CeresGoesBoomWithSamus) {
-      QueueMusic_Delayed8(0);
+      QueueMusic_Delayed8(kMusic_Stop);
       hud_item_index = 0;
       samus_auto_cancel_hud_item_index = 0;
       samus_invincibility_timer = 0;
@@ -4367,9 +4367,9 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
   screen_fade_delay = 0;
   screen_fade_counter = 2;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func109);
-  QueueMusic_Delayed8(0);
-  QueueMusic_Delayed8(0xFF33);
-  QueueMusic_DelayedY(5, 0xE);
+  QueueMusic_Delayed8(kMusic_Stop);
+  QueueMusic_Delayed8(kMusic_ZebesBoom);
+  QueueMusic_DelayedY(kMusic_Song0, 14);
 }
 
 void CinematicFunction_Intro_Func109(void) {  // 0x8BD6D7
@@ -4645,9 +4645,9 @@ void CinematicFunction_Intro_Func118(void) {
 void CinematicFunction_Intro_Func119(void) {  // 0x8BDB9E
   bool v0 = (--cinematic_func_timer & 0x8000) != 0;
   if (!cinematic_func_timer || v0) {
-    QueueMusic_Delayed8(0);
-    QueueMusic_Delayed8(0xFF3C);
-    QueueMusic_DelayedY(5, 0xE);
+    QueueMusic_Delayed8(kMusic_Stop);
+    QueueMusic_Delayed8(kMusic_Credits);
+    QueueMusic_DelayedY(kMusic_Song0, 14);
     cinematic_function = FUNC16(CinematicFunction_Intro_Func120);
   }
 }

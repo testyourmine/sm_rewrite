@@ -346,7 +346,7 @@ void LoadEnemies(void) {  // 0xA08A1E
   enemy_bg2_tilemap_size = 2048;
   UNUSED_word_7E179E = 0;
   UNUSED_word_7E17A0 = 0;
-  boss_id = 0;
+  boss_id = kBossId_0_None;
   ClearEnemyDataAndProcessEnemySet();
   LoadEnemyTileData();
   enemy_tile_vram_src = 0;
@@ -540,7 +540,7 @@ void DetermineWhichEnemiesToProcess(void) {  // 0xA08EB6
     do {
       uint16 v5 = cur_enemy_index;
       EnemyData *v6 = gEnemyData(cur_enemy_index);
-      if (v6->enemy_ptr && v6->enemy_ptr != addr_kEnemyDef_DAFF) {
+      if (v6->enemy_ptr && v6->enemy_ptr != addr_kEnemyDef_RespawnEnemyPlaceholder) {
         if ((v6->properties & 0x200) != 0) {
           v6->enemy_ptr = 0;
         } else {
@@ -564,7 +564,7 @@ void DetermineWhichEnemiesToProcess(void) {  // 0xA08EB6
     do {
       uint16 v0 = cur_enemy_index;
       EnemyData *v1 = gEnemyData(cur_enemy_index);
-      if (v1->enemy_ptr && v1->enemy_ptr != addr_kEnemyDef_DAFF) {
+      if (v1->enemy_ptr && v1->enemy_ptr != addr_kEnemyDef_RespawnEnemyPlaceholder) {
         uint16 properties = v1->properties;
         if ((properties & 0x200) != 0) {
           v1->enemy_ptr = 0;
@@ -2231,7 +2231,7 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
   uint16 shot_ai = get_EnemyDef_A2(E->enemy_ptr)->shot_ai;
   if (shot_ai == FUNC16(nullsub_170) || shot_ai == FUNC16(nullsub_169))
     return;
-  if ((E->properties & 0x400) != 0 || E->invincibility_timer || E->enemy_ptr == addr_kEnemyDef_DAFF)
+  if ((E->properties & 0x400) != 0 || E->invincibility_timer || E->enemy_ptr == addr_kEnemyDef_RespawnEnemyPlaceholder)
     return;
   for(int pidx = 0; pidx < 5; pidx++) {
     uint16 v4 = projectile_type[pidx];
@@ -2421,7 +2421,7 @@ void EnemySamusCollHandler(void) {  // 0xA0A07A
   if (samus_contact_damage_index) {
     samus_invincibility_timer = 0;
   } else if (samus_invincibility_timer) {
-    if (E->enemy_ptr != addr_kEnemyDef_DAFF)
+    if (E->enemy_ptr != addr_kEnemyDef_RespawnEnemyPlaceholder)
       return;
     uint16 some_flag = gEnemySpawnData(cur_enemy_index)->some_flag;
     if (some_flag == 0 || some_flag == 8)
@@ -2433,7 +2433,7 @@ void EnemySamusCollHandler(void) {  // 0xA0A07A
   if (abs16(samus_x_pos - E->x_pos) - samus_x_radius < E->x_width &&
       abs16(samus_y_pos - E->y_pos) - samus_y_radius < E->y_height) {
     // r20 = 2 * E->spritemap_pointer;
-    if (E->enemy_ptr == addr_kEnemyDef_DAFF || !E->frozen_timer)
+    if (E->enemy_ptr == addr_kEnemyDef_RespawnEnemyPlaceholder || !E->frozen_timer)
       CallEnemyAi(E->bank << 16 | ED->touch_ai);
   }
 }
@@ -2444,7 +2444,7 @@ void EprojCollHandler(void) {  // 0xA0A143
   if (!projectile_counter)
     return;
   if (!E->spritemap_pointer || E->spritemap_pointer == addr_kSpritemap_Nothing_A0 || (E->properties & 0x400) != 0 ||
-      E->enemy_ptr == addr_kEnemyDef_DAFF || E->invincibility_timer)
+      E->enemy_ptr == addr_kEnemyDef_RespawnEnemyPlaceholder || E->invincibility_timer)
     return;
   for (int pidx = 0; pidx < 5; pidx++) {
     uint16 j = projectile_type[pidx];
@@ -2472,7 +2472,7 @@ void EnemyBombCollHandler(void) {  // 0xA0A236
   EnemyData *E = gEnemyData(cur_enemy_index);
   enemy_processing_stage = 8;
   if (!bomb_counter || !E->spritemap_pointer ||
-      E->invincibility_timer || E->enemy_ptr == addr_kEnemyDef_DAFF)
+      E->invincibility_timer || E->enemy_ptr == addr_kEnemyDef_RespawnEnemyPlaceholder)
     return;
   for(int pidx = 5; pidx < 10; pidx++) {
     if (!projectile_type[pidx] || projectile_variables[pidx] ||
@@ -2494,7 +2494,7 @@ void ProcessEnemyPowerBombInteraction(void) {  // 0xA0A306
   uint16 ry = (rx + (rx >> 1)) >> 1;
   for(int i = 0x7c0; rx && i >= 0; i -= 0x40) {
     EnemyData *E = gEnemyData(i);
-    if (E->invincibility_timer || !E->enemy_ptr || E->enemy_ptr == addr_kEnemyDef_DAFF)
+    if (E->invincibility_timer || !E->enemy_ptr || E->enemy_ptr == addr_kEnemyDef_RespawnEnemyPlaceholder)
       continue;
     EnemyDef *ED = get_EnemyDef_A2(E->enemy_ptr);
     if ((get_Vulnerability(ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_kEnemyVulnerability)->power_bomb & 0x7F) == 0)
@@ -2519,7 +2519,7 @@ void EnemyDeathAnimation(uint16 k, uint16 a) {  // 0xA0A3AF
   uint16 r18 = E->properties & 0x4000;
   memset(E, 0, 64);
   if (r18) {
-    E->enemy_ptr = addr_kEnemyDef_DAFF;
+    E->enemy_ptr = addr_kEnemyDef_RespawnEnemyPlaceholder;
     E->bank = 0xa3;
   }
   num_enemies_killed_in_room++;
@@ -2534,7 +2534,7 @@ void RinkasDeathAnimation(uint16 a) {  // 0xA0A410
   uint16 r18 = E->properties & 0x4000;
   memset(E, 0, 64);
   if (r18) {
-    E->enemy_ptr = addr_kEnemyDef_DAFF;
+    E->enemy_ptr = addr_kEnemyDef_RespawnEnemyPlaceholder;
     E->bank = 0xa3;
   }
 }
@@ -3123,7 +3123,7 @@ void Enemy_ItemDrop_MiniKraid(uint16 k) {  // 0xA0B8EE
   do {
     eproj_spawn_pt.x = special_death_item_drop_x_origin_pos + (NextRandom() & 0x1F) - 16;
     eproj_spawn_pt.y = special_death_item_drop_y_origin_pos + ((random_number & 0x1F00) >> 8) - 16;
-    SpawnEnemyDrops(addr_kEnemyDef_E0FF, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_MiniKraidDropChances, k, 0);
   } while (--n);
 }
 
@@ -3132,7 +3132,7 @@ void Enemy_ItemDrop_LowerNorfairSpacePirate(uint16 k) {  // 0xA0B92B
   do {
     eproj_spawn_pt.x = special_death_item_drop_x_origin_pos + (NextRandom() & 0x1F) - 16;
     eproj_spawn_pt.y = special_death_item_drop_y_origin_pos + ((random_number & 0x1F00) >> 8) - 16;
-    SpawnEnemyDrops(addr_kEnemyDef_F593, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances, k, 0);
   } while (--n);
 }
 
@@ -3141,7 +3141,7 @@ void Enemy_ItemDrop_Metroid(uint16 k) {  // 0xA0B968
   do {
     eproj_spawn_pt.x = special_death_item_drop_x_origin_pos + (NextRandom() & 0x1F) - 16;
     eproj_spawn_pt.y = special_death_item_drop_y_origin_pos + ((random_number & 0x1F00) >> 8) - 16;
-    SpawnEnemyDrops(addr_kEnemyDef_DD7F, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_MetroidDropChances, k, 0);
   } while (--n);
 }
 
@@ -3150,7 +3150,7 @@ void Enemy_ItemDrop_Ridley(uint16 k) {  // 0xA0B9A5
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 320;
-    SpawnEnemyDrops(addr_kEnemyDef_E17F, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_RidleyDropChances, k, 0);
   } while (--n);
 }
 
@@ -3159,7 +3159,7 @@ void Enemy_ItemDrop_Crocomire(uint16 k) {  // 0xA0B9D8
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 576;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 96;
-    SpawnEnemyDrops(addr_kEnemyDef_DDBF, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_CrocomireDropChances, k, 0);
   } while (--n);
 }
 
@@ -3168,7 +3168,7 @@ void Enemy_ItemDrop_Phantoon(uint16 k) {  // 0xA0BA0B
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 96;
-    SpawnEnemyDrops(addr_kEnemyDef_E4BF, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_PhantoonBodyDropChances, k, 0);
   } while (--n);
 }
 
@@ -3177,7 +3177,7 @@ void Enemy_ItemDrop_Botwoon(uint16 k) {  // 0xA0BA3E
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 128;
-    SpawnEnemyDrops(addr_kEnemyDef_F293, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_BotwoonDropChances, k, 0);
   } while (--n);
 }
 
@@ -3186,7 +3186,7 @@ void Enemy_ItemDrop_Kraid(uint16 k) {  // 0xA0BA71
   do {
     eproj_spawn_pt.x = (uint8)NextRandom() + 128;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 352;
-    SpawnEnemyDrops(addr_kEnemyDef_E2BF, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_KraidDropChances, k, 0);
   } while (--n);
 }
 
@@ -3195,7 +3195,7 @@ void Enemy_ItemDrop_BombTorizo(uint16 k) {  // 0xA0BAA4
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 96;
-    SpawnEnemyDrops(addr_kEnemyDef_EEFF, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_BombTorizoDropChances, k, 0);
   } while (--n);
 }
 
@@ -3204,7 +3204,7 @@ void Enemy_ItemDrop_GoldenTorizo(uint16 k) {  // 0xA0BAD7
   do {
     eproj_spawn_pt.x = (uint8)NextRandom() + 128;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 288;
-    SpawnEnemyDrops(addr_kEnemyDef_EEFF, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_BombTorizoDropChances, k, 0);
   } while (--n);
 }
 
@@ -3213,7 +3213,7 @@ void Enemy_ItemDrop_SporeSpawn(uint16 k) {  // 0xA0BB0A
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 528;
-    SpawnEnemyDrops(addr_kEnemyDef_DF3F, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_SporeSpawnDropChances, k, 0);
   } while (--n);
 }
 
@@ -3222,7 +3222,7 @@ void Enemy_ItemDrop_Draygon(uint16 k) {  // 0xA0BB3D
   do {
     eproj_spawn_pt.x = (uint8)NextRandom() + 128;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 352;
-    SpawnEnemyDrops(addr_kEnemyDef_DE3F, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_DraygonDropChances, k, 0);
   } while (--n);
 }
 

@@ -1250,13 +1250,13 @@ void Vector_IRQ(void) {
 }
 
 void AddMissilesToHudTilemap(void) {  // 0x8099CF
-  if ((hud_tilemap[10] & 0x3FF) == 15) {
-    hud_tilemap[10] = kHudTilemaps_Missiles[0];
-    hud_tilemap[11] = kHudTilemaps_Missiles[1];
-    hud_tilemap[12] = kHudTilemaps_Missiles[2];
-    hud_tilemap[42] = kHudTilemaps_Missiles[3];
-    hud_tilemap[43] = kHudTilemaps_Missiles[4];
-    hud_tilemap[44] = kHudTilemaps_Missiles[5];
+  if ((hud_tilemap.row1.missiles[0] & 0x3FF) == 15) {
+    hud_tilemap.row1.missiles[0] = kHudTilemaps_Missiles[0];
+    hud_tilemap.row1.missiles[1] = kHudTilemaps_Missiles[1];
+    hud_tilemap.row1.missiles[2] = kHudTilemaps_Missiles[2];
+    hud_tilemap.row2.missiles[0] = kHudTilemaps_Missiles[3];
+    hud_tilemap.row2.missiles[1] = kHudTilemaps_Missiles[4];
+    hud_tilemap.row2.missiles[2] = kHudTilemaps_Missiles[5];
   }
 }
 
@@ -1278,11 +1278,11 @@ void AddXrayToHudTilemap(void) {  // 0x809A3E
 
 void AddToTilemapInner(uint16 k, const uint16 *j) {  // 0x809A4C
   int v2 = k >> 1;
-  if ((hud_tilemap[v2] & 0x3FF) == 15) {
-    hud_tilemap[v2] = j[0];
-    hud_tilemap[v2 + 1] = j[1];
-    hud_tilemap[v2 + 32] = j[2];
-    hud_tilemap[v2 + 33] = j[3];
+  if ((hud_tilemap.arr[v2] & 0x3FF) == 15) {
+    hud_tilemap.row1.arr[v2] = j[0];
+    hud_tilemap.row1.arr[v2 + 1] = j[1];
+    hud_tilemap.row2.arr[v2] = j[2];
+    hud_tilemap.row2.arr[v2 + 1] = j[3];
   }
 }
 
@@ -1293,7 +1293,7 @@ void InitializeHud(void) {  // 0x809A79
   SetupDmaTransfer(&kDmaCopy_HudTilemaps_TopRow);
   WriteReg(MDMAEN, 2);
   for (int i = 0; i != 192; i += 2)
-    hud_tilemap[i >> 1] = kHudTilemaps_Row1to3[i >> 1];
+    hud_tilemap.arr[i >> 1] = kHudTilemaps_Row1to3[i >> 1];
   if ((equipped_items & 0x8000) != 0)
     AddXrayToHudTilemap();
   if ((equipped_items & 0x4000) != 0)
@@ -1321,19 +1321,22 @@ void InitializeHud(void) {  // 0x809A79
   HandleHudTilemap();
 }
 
-static const uint16 kEnergyTankIconTilemapOffsets[14] = { 0x42, 0x44, 0x46, 0x48, 0x4a, 0x4c, 0x4e, 2, 4, 6, 8, 0xa, 0xc, 0xe };
+static const uint16 kEnergyTankIconTilemapOffsets[14] = {
+    0x42, 0x44, 0x46, 0x48, 0x4a, 0x4c, 0x4e,
+    2, 4, 6, 8, 0xa, 0xc, 0xe 
+};
 
 void HandleHudTilemap(void) {  // 0x809B44
   if (reserve_health_mode == 1) {
     const uint16 *v1 = kHudTilemaps_AutoReserve;
     if (!samus_reserve_health)
       v1 = kHudTilemaps_EmptyAutoReserve;
-    hud_tilemap[8] = v1[0];
-    hud_tilemap[9] = v1[1];
-    hud_tilemap[40] = v1[2];
-    hud_tilemap[41] = v1[3];
-    hud_tilemap[72] = v1[4];
-    hud_tilemap[73] = v1[5];
+    hud_tilemap.row1.auto_reserve[0] = v1[0];
+    hud_tilemap.row1.auto_reserve[1] = v1[1];
+    hud_tilemap.row2.auto_reserve[0] = v1[2];
+    hud_tilemap.row2.auto_reserve[1] = v1[3];
+    hud_tilemap.row3.auto_reserve[0] = v1[4];
+    hud_tilemap.row3.auto_reserve[1] = v1[5];
   }
   if (samus_health != samus_prev_health) {
     samus_prev_health = samus_health;
@@ -1345,12 +1348,12 @@ void HandleHudTilemap(void) {  // 0x809B44
     do {
       if (!--n)
         break;
-      uint16 v3 = 13360;
+      uint16 v3 = 0x3430;
       if (r20) {
         --r20;
-        v3 = 10289;
+        v3 = 0x2831;
       }
-      hud_tilemap[kEnergyTankIconTilemapOffsets[v2 >> 1] >> 1] = v3;
+      hud_tilemap.arr[kEnergyTankIconTilemapOffsets[v2 >> 1] >> 1] = v3;
       v2 += 2;
     } while ((int16)(v2 - 28) < 0);
     DrawTwoHudDigits(kDigitTilesetsHealth, r18, 0x8C);
@@ -1388,7 +1391,7 @@ void HandleHudTilemap(void) {  // 0x809B44
   uint16 v5 = vram_write_queue_tail;
   gVramWriteEntry(vram_write_queue_tail)->size = 192;
   v5 += 2;
-  gVramWriteEntry(v5)->size = ADDR16_OF_RAM(*hud_tilemap);
+  gVramWriteEntry(v5)->size = ADDR16_OF_RAM(hud_tilemap.arr[0]);
   v5 += 2;
   gVramWriteEntry(v5++)->size = 126;
   gVramWriteEntry(v5)->size = addr_unk_605820;
@@ -1404,32 +1407,32 @@ void ToggleHudItemHighlight(uint16 a, uint16 k) {  // 0x809CEA
   v2 = a - 1;
   if (v2 >= 0) {
     int v3 = kHudItemTilemapOffsets[v2] >> 1;
-    if (hud_tilemap[v3] != 11279)
-      hud_tilemap[v3] = hud_item_tilemap_palette_bits | hud_tilemap[v3] & 0xE3FF;
-    if (hud_tilemap[v3 + 1] != 11279)
-      hud_tilemap[v3 + 1] = hud_item_tilemap_palette_bits | hud_tilemap[v3 + 1] & 0xE3FF;
-    if (hud_tilemap[v3 + 32] != 11279)
-      hud_tilemap[v3 + 32] = hud_item_tilemap_palette_bits | hud_tilemap[v3 + 32] & 0xE3FF;
-    if (hud_tilemap[v3 + 33] != 11279)
-      hud_tilemap[v3 + 33] = hud_item_tilemap_palette_bits | hud_tilemap[v3 + 33] & 0xE3FF;
+    if (hud_tilemap.row1.arr[v3] != 0x2C0F)
+      hud_tilemap.row1.arr[v3] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[v3] & 0xE3FF;
+    if (hud_tilemap.row1.arr[v3 + 1] != 0x2C0F)
+      hud_tilemap.row1.arr[v3 + 1] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[v3 + 1] & 0xE3FF;
+    if (hud_tilemap.row2.arr[v3] != 0x2C0F)
+      hud_tilemap.row2.arr[v3] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[v3] & 0xE3FF;
+    if (hud_tilemap.row2.arr[v3 + 1] != 0x2C0F)
+      hud_tilemap.row2.arr[v3 + 1] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[v3 + 1] & 0xE3FF;
     if (!(2 * v2)) {
-      if (hud_tilemap[v3 + 2] != 11279)
-        hud_tilemap[v3 + 2] = hud_item_tilemap_palette_bits | hud_tilemap[v3 + 2] & 0xE3FF;
-      if (hud_tilemap[v3 + 34] != 11279)
-        hud_tilemap[v3 + 34] = hud_item_tilemap_palette_bits | hud_tilemap[v3 + 34] & 0xE3FF;
+      if (hud_tilemap.row1.arr[v3 + 2] != 0x2C0F)
+        hud_tilemap.row1.arr[v3 + 2] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[v3 + 2] & 0xE3FF;
+      if (hud_tilemap.row2.arr[v3 + 2] != 0x2C0F)
+        hud_tilemap.row2.arr[v3 + 2] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[v3 + 2] & 0xE3FF;
     }
   }
 }
 
 void DrawThreeHudDigits(const uint16* addr, uint16 a, uint16 k) {  // 0x809D78
-  hud_tilemap[k >> 1] = addr[(2 * (a / 100)) >> 1];
+  hud_tilemap.arr[k >> 1] = addr[(2 * (a / 100)) >> 1];
   DrawTwoHudDigits(addr, a % 100, k + 2);
 }
 
 void DrawTwoHudDigits(const uint16* addr, uint16 a, uint16 k) {  // 0x809D98
   int v3 = k >> 1;
-  hud_tilemap[v3] = addr[(2 * (a / 10)) >> 1];
-  hud_tilemap[v3 + 1] = addr[(2 * (a % 10)) >> 1];
+  hud_tilemap.arr[v3] = addr[(2 * (a / 10)) >> 1];
+  hud_tilemap.arr[v3 + 1] = addr[(2 * (a % 10)) >> 1];
 }
 
 static Func_U8 *const kTimerProcessFuncs[7] = {  // 0x809DE7

@@ -27,7 +27,7 @@ void WalkingSpacePirates_Touch(void) {  // 0xB2876C
 }
 
 void WalkingSpacePirates_Shot(void) {  // 0xB28779
-  if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr == addr_kEnemyDef_F593)
+  if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr == addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances)
     WalkingSpacePirates_8789();
   else
     NormalEnemyShotAi();
@@ -40,7 +40,7 @@ void WalkingSpacePirates_8789(void) {  // 0xB28789
   NormalEnemyShotAiSkipDeathAnim_CurEnemy();
   if (!E->base.health) {
     uint16 v1 = cur_enemy_index;
-    if (E->base.enemy_ptr == addr_kEnemyDef_F593) {
+    if (E->base.enemy_ptr == addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances) {
       E->sps_var_B = 0;
       EnemyDeathAnimation(v1, 4);
       Enemy_ItemDrop_LowerNorfairSpacePirate(v1);
@@ -56,7 +56,7 @@ void WalkingSpacePirates_87C8(void) {  // 0xB287C8
   int16 v3;
   Vulnerability *v;
 
-  if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr != addr_kEnemyDef_F593)
+  if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr != addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances)
     goto LABEL_2;
   uint16 r18 = projectile_type[collision_detection_index];
   if (sign16((r18 & kProjectileType_TypeMask) - kProjectileType_PowerBomb)) {
@@ -87,7 +87,7 @@ LABEL_2:
 }
 
 void WalkingSpacePirates_883E(void) {  // 0xB2883E
-  if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr != addr_kEnemyDef_F593) {
+  if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr != addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances) {
     WalkingSpacePirates_8789();
     return;
   }

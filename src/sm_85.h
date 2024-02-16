@@ -34,6 +34,10 @@
 //  0x8436, 0x8289, 0x94bf, 
 //};
 
+#define PR(x) (0x2800 | x)  //Purple letters
+#define GN(x) (0x3800 | x)  //Green letters
+#define YL(x) (0x3C00 | x)  //Yellow letters
+
 static const uint16 kLargeMsgBoxTopBottomBorderTilemap[32] = {
      0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f,
   0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x280f, 0x284e, 0x284e,    0xe,    0xe,    0xe,
@@ -63,7 +67,7 @@ static const uint16 kSaveConfirmationSelectionTilemap[96] = {
 
 
 uint16 kEnergyTankMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x28e4, 0x28ed, 0x28e4, 0x28f1, 0x28e6, 0x28f8, 0x284e, 0x28f3, 0x28e0, 0x28ed, 0x28ea, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
+     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, PR(kTxt_E), 0x28ed, 0x28e4, 0x28f1, 0x28e6, 0x28f8, 0x284e, 0x28f3, 0x28e0, 0x28ed, 0x28ea, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
 };
 
 uint16 kMissileMsgBoxTilemap[] = {
@@ -213,65 +217,65 @@ uint16 kTerminatorSaveCompletedUnusedMsgBoxTilemap[] = {
 
 uint16* getMessageTilemap(uint16 tilemap) {
   switch(tilemap) {
-    case 0x877f: return kEnergyTankMsgBoxTilemap;
-    case 0x87bf: return kMissileMsgBoxTilemap;
-    case 0x88bf: return kSuperMissileMsgBoxTilemap;
-    case 0x89bf: return kPowerBombMsgBoxTilemap;
-    case 0x8abf: return kGrapplingBeamMsgBoxTilemap;
-    case 0x8bbf: return kXrayScopeMsgBoxTilemap;
-    case 0x8cbf: return kVariaSuitMsgBoxTilemap;
-    case 0x8cff: return kSpringBallMsgBoxTilemap;
-    case 0x8d3f: return kMorphingBallMsgBoxTilemap;
-    case 0x8d7f: return kScrewAttackMsgBoxTilemap;
-    case 0x8dbf: return kHiJumpBootsMsgBoxTilemap;
-    case 0x8dff: return kSpaceJumpMsgBoxTilemap;
-    case 0x8e3f: return kSpeedBoosterMsgBoxTilemap;
-    case 0x8f3f: return kChargeBeamMsgBoxTilemap;
-    case 0x8f7f: return kIceBeamMsgBoxTilemap;
-    case 0x8fbf: return kWaveBeamMsgBoxTilemap;
-    case 0x8fff: return kSpazerMsgBoxTilemap;
-    case 0x903f: return kPlasmaBeamMsgBoxTilemap;
-    case 0x907f: return kBombMsgBoxTilemap;
-    case 0x917f: return kMapDataAccessCompletedMsgBoxTilemap;
-    case 0x923f: return kEnergyRechargeCompletedMsgBoxTilemap;
-    case 0x92ff: return kMissileReloadCompletedMsgBoxTilemap;
-    case 0x93bf: return kWouldYouLikeToSaveMsgBoxTilemap;
-    case 0x94bf: return kSaveCompletedMsgBoxTilemap;
-    case 0x94ff: return kReserveTankMsgBoxTilemap;
-    case 0x953f: return kGravitySuitMsgBoxTilemap;
-    case 0x957f: return kTerminator1MsgBoxTilemap;
-    default: return (uint16*)Unreachable();
+    case addr_kEnergyTankMsgBoxTilemap: return kEnergyTankMsgBoxTilemap;
+    case addr_kMissileMsgBoxTilemap: return kMissileMsgBoxTilemap;
+    case addr_kSuperMissileMsgBoxTilemap: return kSuperMissileMsgBoxTilemap;
+    case addr_kPowerBombMsgBoxTilemap: return kPowerBombMsgBoxTilemap;
+    case addr_kGrapplingBeamMsgBoxTilemap: return kGrapplingBeamMsgBoxTilemap;
+    case addr_kXrayScopeMsgBoxTilemap: return kXrayScopeMsgBoxTilemap;
+    case addr_kVariaSuitMsgBoxTilemap: return kVariaSuitMsgBoxTilemap;
+    case addr_kSpringBallMsgBoxTilemap: return kSpringBallMsgBoxTilemap;
+    case addr_kMorphingBallMsgBoxTilemap: return kMorphingBallMsgBoxTilemap;
+    case addr_kScrewAttackMsgBoxTilemap: return kScrewAttackMsgBoxTilemap;
+    case addr_kHiJumpBootsMsgBoxTilemap: return kHiJumpBootsMsgBoxTilemap;
+    case addr_kSpaceJumpMsgBoxTilemap: return kSpaceJumpMsgBoxTilemap;
+    case addr_kSpeedBoosterMsgBoxTilemap: return kSpeedBoosterMsgBoxTilemap;
+    case addr_kChargeBeamMsgBoxTilemap: return kChargeBeamMsgBoxTilemap;
+    case addr_kIceBeamMsgBoxTilemap: return kIceBeamMsgBoxTilemap;
+    case addr_kWaveBeamMsgBoxTilemap: return kWaveBeamMsgBoxTilemap;
+    case addr_kSpazerMsgBoxTilemap: return kSpazerMsgBoxTilemap;
+    case addr_kPlasmaBeamMsgBoxTilemap: return kPlasmaBeamMsgBoxTilemap;
+    case addr_kBombMsgBoxTilemap: return kBombMsgBoxTilemap;
+    case addr_kMapDataAccessCompletedMsgBoxTilemap: return kMapDataAccessCompletedMsgBoxTilemap;
+    case addr_kEnergyRechargeCompletedMsgBoxTilemap: return kEnergyRechargeCompletedMsgBoxTilemap;
+    case addr_kMissileReloadCompletedMsgBoxTilemap: return kMissileReloadCompletedMsgBoxTilemap;
+    case addr_kWouldYouLikeToSaveMsgBoxTilemap: return kWouldYouLikeToSaveMsgBoxTilemap;
+    case addr_kSaveCompletedMsgBoxTilemap: return kSaveCompletedMsgBoxTilemap;
+    case addr_kReserveTankMsgBoxTilemap: return kReserveTankMsgBoxTilemap;
+    case addr_kGravitySuitMsgBoxTilemap: return kGravitySuitMsgBoxTilemap;
+    case addr_kTerminator1MsgBoxTilemap: return kTerminator1MsgBoxTilemap;
+    default: Unreachable(); return (uint16*){0};
   }
 }
 MsgBoxConfig kMessageBoxDefs[] = {
-  [0] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x877f },
-  [1] = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x87bf },
-  [2] = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x88bf },
-  [3] = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x89bf },
-  [4] = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x8abf },
-  [5] = { .modify_box_func = FUNC16(DrawRunButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x8bbf },
-  [6] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8cbf },
-  [7] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8cff },
-  [8] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8d3f },
-  [9] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8d7f },
-  [10] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8dbf },
-  [11] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8dff },
-  [12] = { .modify_box_func = FUNC16(DrawRunButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x8e3f },
-  [13] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8f3f },
-  [14] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8f7f },
-  [15] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8fbf },
-  [16] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x8fff },
-  [17] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x903f },
-  [18] = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = 0x907f },
-  [19] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x917f },
-  [20] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x923f },
-  [21] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x92ff },
-  [22] = { .modify_box_func = FUNC16(SetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x93bf },
-  [23] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x94bf },
-  [24] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x94ff },
-  [25] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x953f },
-  [26] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x957f },
-  [27] = { .modify_box_func = FUNC16(SetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x93bf },
-  [28] = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox), .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = 0x94bf },
+  [kMessageBox_1_EnergyTank-1]                  = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kEnergyTankMsgBoxTilemap              },
+  [kMessageBox_2_Missile-1]                     = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kMissileMsgBoxTilemap                 },
+  [kMessageBox_3_SuperMissile-1]                = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kSuperMissileMsgBoxTilemap            },
+  [kMessageBox_4_PowerBomb-1]                   = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kPowerBombMsgBoxTilemap               },
+  [kMessageBox_5_GrapplingBeam-1]               = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kGrapplingBeamMsgBoxTilemap           },
+  [kMessageBox_6_XrayScope-1]                   = { .modify_box_func = FUNC16(DrawRunButtonAndSetupPpuForLargeMessageBox),   .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kXrayScopeMsgBoxTilemap               },
+  [kMessageBox_7_VariaSuit-1]                   = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kVariaSuitMsgBoxTilemap               },
+  [kMessageBox_8_SpringBall-1]                  = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kSpringBallMsgBoxTilemap              },
+  [kMessageBox_9_MorphingBall-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kMorphingBallMsgBoxTilemap            },
+  [kMessageBox_10_ScrewAttack-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kScrewAttackMsgBoxTilemap             },
+  [kMessageBox_11_HiJumpBoots-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kHiJumpBootsMsgBoxTilemap             },
+  [kMessageBox_12_SpaceJump-1]                  = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kSpaceJumpMsgBoxTilemap               },
+  [kMessageBox_13_SpeedBooster-1]               = { .modify_box_func = FUNC16(DrawRunButtonAndSetupPpuForLargeMessageBox),   .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kSpeedBoosterMsgBoxTilemap            },
+  [kMessageBox_14_ChargeBeam-1]                 = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kChargeBeamMsgBoxTilemap              },
+  [kMessageBox_15_IceBeam-1]                    = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kIceBeamMsgBoxTilemap                 },
+  [kMessageBox_16_WaveBeam-1]                   = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kWaveBeamMsgBoxTilemap                },
+  [kMessageBox_17_Spazer-1]                     = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kSpazerMsgBoxTilemap                  },
+  [kMessageBox_18_PlasmaBeam-1]                 = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kPlasmaBeamMsgBoxTilemap              },
+  [kMessageBox_19_Bomb-1]                       = { .modify_box_func = FUNC16(DrawShootButtonAndSetupPpuForLargeMessageBox), .draw_initial_tilemap = FUNC16(WriteLargeMessageBoxTilemap), .message_tilemap = addr_kBombMsgBoxTilemap                    },
+  [kMessageBox_20_MapDataAccessCompleted-1]     = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kMapDataAccessCompletedMsgBoxTilemap  },
+  [kMessageBox_21_EnergyRechargeCompleted-1]    = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kEnergyRechargeCompletedMsgBoxTilemap },
+  [kMessageBox_22_MissileReloadCompleted-1]     = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kMissileReloadCompletedMsgBoxTilemap  },
+  [kMessageBox_23_WouldYouLikeToSave-1]         = { .modify_box_func = FUNC16(SetupPpuForLargeMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kWouldYouLikeToSaveMsgBoxTilemap      },
+  [kMessageBox_24_SaveCompleted-1]              = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kSaveCompletedMsgBoxTilemap           },
+  [kMessageBox_25_ReserveTank-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kReserveTankMsgBoxTilemap             },
+  [kMessageBox_26_GravitySuit-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kGravitySuitMsgBoxTilemap             },
+  [kMessageBox_27_Terminator1-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kTerminator1MsgBoxTilemap             },
+  [kMessageBox_28_WouldYouLikeToSave_Gunship-1] = { .modify_box_func = FUNC16(SetupPpuForLargeMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kWouldYouLikeToSaveMsgBoxTilemap      },
+  [kMessageBox_29_Terminator2-1]                = { .modify_box_func = FUNC16(SetupPpuForSmallMessageBox),                   .draw_initial_tilemap = FUNC16(WriteSmallMessageBoxTilemap), .message_tilemap = addr_kSaveCompletedMsgBoxTilemap           },
 };
 

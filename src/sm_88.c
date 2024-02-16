@@ -509,7 +509,7 @@ const uint8 *HdmaobjInstr_SetPreInstr(uint16 k, const uint8 *hdp) {  // 0x888570
 }
 
 const uint8 *HdmaobjInstr_ClearPreInstr(uint16 k, const uint8 *hdp) {  // 0x888584
-  hdma_object_pre_instructions[k >> 1] = addr_locret_88858A;
+  hdma_object_pre_instructions[k >> 1] = addr_kClearPreInstr;
   return hdp;
 }
 
@@ -1514,7 +1514,7 @@ const uint8 *HdmaobjInstr_SetFlagB(uint16 k, const uint8 *hdp) {  // 0x88A66C
   hdma_object_B[k >> 1] = 1;
   return hdp;
 }
-static const int16 g_word_88C46E[16] = {  // 0x88A673
+static const int16 kWaveDisplacement_Water_Tab0[16] = {  // 0x88A673
   0, 1, 1, 0, 0, -1, -1, 0,
   0, 1, 1, 0, 0, -1, -1, 0,
 };
@@ -1540,7 +1540,7 @@ void HdmaobjPreInstr_BG3Xscroll(uint16 k) {
     }
     uint16 v5 = hdma_object_A[v3];
     for (int i = 30; i >= 0; i -= 2) {
-      g_word_7E9E80[v5 >> 1] = g_word_88C46E[i >> 1] + reg_BG1HOFS;
+      g_word_7E9E80[v5 >> 1] = kWaveDisplacement_Water_Tab0[i >> 1] + reg_BG1HOFS;
       v5 = (v5 - 2) & 0x1F;
     }
   }
@@ -1799,24 +1799,24 @@ void ExpandingContractingHdmaEffect(void) {  // 0x88B17F
       if (!sign16(message_box_animation_y_radius + 0x8000))
         ++UNUSED_hdma_contracting_flag;
     }
-    message_box_animation_y0 = 128;
-    message_box_animation_y1 = 128;
-    message_box_animation_y2 = 127;
-    message_box_animation_y3 = 127;
+    message_box_animation_y0_bottom_half = 128;
+    message_box_animation_y1_bottom_half = 128;
+    message_box_animation_y2_top_half = 127;
+    message_box_animation_y3_top_half = 127;
   }
-  uint16 v0 = 2 * message_box_animation_y0;
-  uint16 v1 = 2 * message_box_animation_y2;
+  uint16 v0 = 2 * message_box_animation_y0_bottom_half;
+  uint16 v1 = 2 * message_box_animation_y2_top_half;
   uint16 r18 = 0, r20 = 32;
   do {
-    *(uint16 *)&mother_brain_indirect_hdma[v0] = message_box_animation_y1 - message_box_animation_y0;
-    *(uint16 *)&mother_brain_indirect_hdma[v1] = message_box_animation_y3 - message_box_animation_y2;
+    *(uint16 *)&mother_brain_indirect_hdma[v0] = message_box_animation_y1_bottom_half - message_box_animation_y0_bottom_half;
+    *(uint16 *)&mother_brain_indirect_hdma[v1] = message_box_animation_y3_top_half - message_box_animation_y2_top_half;
     r18 += message_box_animation_y_radius;
     if (Unreachable()) {
-      ++message_box_animation_y1;
-      --message_box_animation_y3;
+      ++message_box_animation_y1_bottom_half;
+      --message_box_animation_y3_top_half;
     }
-    ++message_box_animation_y0;
-    --message_box_animation_y2;
+    ++message_box_animation_y0_bottom_half;
+    --message_box_animation_y2_top_half;
     v1 -= 2;
     v0 += 2;
   } while (--r20);
@@ -2145,7 +2145,7 @@ void HdmaobjPreInstr_WaterBG3XScroll(uint16 k) {  // 0x88C48E
   }
   uint8 v7 = hdma_object_A[v5];
   for (int i = 30; (i & 0x80) == 0; i -= 2) {
-    *(uint16 *)&mother_brain_indirect_hdma[v7 + 4] = g_word_88C46E[i >> 1] + r20;
+    *(uint16 *)&mother_brain_indirect_hdma[v7 + 4] = kWaveDisplacement_Water_Tab0[i >> 1] + r20;
     v7 = (v7 - 2) & 0x1E;
   }
   if ((fx_liquid_options & 1) != 0)
@@ -2199,7 +2199,7 @@ void HdmaobjPreInstr_WaterBG2XScroll_Func2(uint16 k) {  // 0x88C5E4
   uint8 v4 = (2 * (reg_BG2VOFS & 0xF) + 30) & 0x1E;
   int n = 15;
   do {
-    lava_acid_bg2_y_scroll_hdma_data_table_entry[(v4 >> 1) + 1] = g_word_88C46E[v3 >> 1] + reg_BG2HOFS;
+    lava_acid_bg2_y_scroll_hdma_data_table_entry[(v4 >> 1) + 1] = kWaveDisplacement_Water_Tab0[v3 >> 1] + reg_BG2HOFS;
     v4 = (v4 - 2) & 0x1E;
     v3 = (v3 - 2) & 0x1E;
   } while (--n >= 0);
@@ -2716,7 +2716,7 @@ uint8 VariaSuitPickup_5_LightBeamDissipates(void) {  // 0x88E22B
 }
 
 uint8 VariaSuitPickup_6(void) {  // 0x88E258
-  QueueMusic_Delayed8(3);
+  QueueMusic_Delayed8(kMusic_Elevator);
   return GravitySuitPickup_6();
 }
 

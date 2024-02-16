@@ -724,7 +724,7 @@ const uint8 *PlmInstr_ActivateMissileStation(const uint8 *plmp, uint16 k) {  // 
 }
 
 const uint8 *PlmInstr_ActivateSaveStationAndGotoIfNo(const uint8 *plmp, uint16 k) {  // 0x848CF1
-  int r = DisplayMessageBox_Poll(23);
+  int r = DisplayMessageBox_Poll(kMessageBox_23_WouldYouLikeToSave);
   if (r < 0)
     return plmp - 2; // restart plm instr
   if (r == 2)
@@ -2383,7 +2383,7 @@ const uint8 *PlmInstr_SpawnTorizoStatueBreaking(const uint8 *plmp, uint16 k) {  
 }
 
 const uint8 *PlmInstr_QueueSong1MusicTrack(const uint8 *plmp, uint16 k) {  // 0x84D3C7
-  QueueMusic_Delayed8(6);
+  QueueMusic_Delayed8(kMusic_Song1);
   return plmp;
 }
 

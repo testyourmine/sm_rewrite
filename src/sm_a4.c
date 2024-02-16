@@ -360,7 +360,7 @@ const uint16 *Crocomire_Func_26(uint16 k, const uint16 *jp) {  // 0xA489F9
 void Crocomire_Init(void) {  // 0xA48A5A
   VramWriteEntry *v7;
 
-  boss_id = 6;
+  boss_id = kBossId_6_Crocomire;
   uint16 v0 = 0;
   do {
     tilemap_stuff[v0 >> 1] = 824;
@@ -727,7 +727,7 @@ void Crocomire_Func_49(void) {  // 0xA49099
   Crocomire_Func_55();
   Enemy_Crocomire *E = Get_Crocomire(0);
   if (E->crocom_var_A == 62) {
-    QueueMusic_Delayed8(6);
+    QueueMusic_Delayed8(kMusic_Song1);
     E->crocom_var_A = 88;
     E->base.current_instruction = addr_kCrocomire_Ilist_E1D2;
     *(uint16 *)&scrolls[4] = (kScroll_Blue << 8) | kScroll_Blue;
@@ -1137,14 +1137,14 @@ LABEL_4:;
   uint16 r18 = 0;
   uint16 v6 = 2 * (E1->base.y_pos - 72);
   uint16 v7 = g_word_7E0694;
-  message_box_animation_y1 = g_word_7E0694;
+  message_box_animation_y1_bottom_half = g_word_7E0694;
   do {
-    crocomire_bg2_scroll_hdma_data[v6 >> 1] = reg_BG2VOFS + v7 - message_box_animation_y1;
+    crocomire_bg2_scroll_hdma_data[v6 >> 1] = reg_BG2VOFS + v7 - message_box_animation_y1_bottom_half;
     bool v8 = __CFADD__uint16(g_word_7E0692, r18);
     r18 += g_word_7E0692;
     if (!v8)
       ++v7;
-    message_box_animation_y1++;
+    message_box_animation_y1_bottom_half++;
     v6 += 2;
   } while ((int16)(v7 - g_word_7E0698) < 0);
   if ((int16)(v6 - 512) < 0) {
@@ -1230,7 +1230,7 @@ uint16 Crocomire_Func_67(void) {  // 0xA496C8
 
 void Crocomire_Func_68(void) {  // 0xA497D3
   if (sign16(samus_x_pos - 640)) {
-    QueueMusic_Delayed8(5);
+    QueueMusic_Delayed8(kMusic_Song0);
     *(uint16 *)&scrolls[3] = kScroll_Blue << 8;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb757 });
     camera_distance_index = 6;
@@ -1480,10 +1480,10 @@ void Crocomire_Func_90(void) {  // 0xA49B7D
 }
 
 void Crocomire_9B86(void) {  // 0xA49B86
-  QueueMusic_Delayed8(6);
+  QueueMusic_Delayed8(kMusic_Song1);
   camera_distance_index = 0;
   *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaMiniBoss;
-  QueueMusic_Delayed8(6);
+  QueueMusic_Delayed8(kMusic_Song1);
   Crocomire_Func_87(0, 0xFFF0);
   Crocomire_Func_87(0, 0x10);
   Crocomire_9BB3();

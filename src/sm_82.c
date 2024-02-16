@@ -90,7 +90,7 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
       v7 -= 2;
     } while (v7);
   } else if (loading_game_state == kLoadingGameState_22_EscapingCeres) {
-    QueueMusic_Delayed8(5);
+    QueueMusic_Delayed8(kMusic_Song0);
     loop_counter_transfer_enemies_to_vram = 15;
     do {
       TransferEnemyTilesToVramAndInit();
@@ -305,7 +305,7 @@ CoroutineRet GameState_33_BlackoutFromCeres(void) {  // 0x828388
     cinematic_function = FUNC16(CinematicFunctionBlackoutFromCeres);
     ceres_status = 0;
     timer_status = 0;
-    QueueMusic_Delayed8(0);
+    QueueMusic_Delayed8(kMusic_Stop);
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
     QueueSfx3_Max15(kSfx3_Silence);
@@ -380,7 +380,7 @@ CoroutineRet GameState_38_SamusEscapesFromZebes(void) {  // 0x8284BD
     game_state = kGameState_39_EndingAndCredits;
     cinematic_function = FUNC16(CinematicFunctionEscapeFromCebes);
     timer_status = 0;
-    QueueMusic_Delayed8(0);
+    QueueMusic_Delayed8(kMusic_Stop);
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
     QueueSfx3_Max15(kSfx3_Silence);
@@ -463,7 +463,7 @@ CoroutineRet GameState_44_TransitionFromDemo(void) {  // 0x8285FB
     eproj_x_pos[4] = 2;
     cinematic_function = FUNC16(CinematicFunctionNone);
   } else {
-    QueueMusic_Delayed8(0);
+    QueueMusic_Delayed8(kMusic_Stop);
     debug_disable_sounds = 0;
     cinematic_function = FUNC16(CinematicFunctionOpening);
   }
@@ -2531,25 +2531,25 @@ void EquipmentScreenCategory_Tanks_0(void) {
 
 void EquipmentScreenHudReserveAutoTilemap_On_BUGGY(void) {  // 0x82AEFD
   // loads garbage...
-  uint16 v0 = -26229;
+  uint16 v0 = 0x998B;
   if (!samus_reserve_health)
-    v0 = -26217;
+    v0 = 0x9997;
   const uint16 *v1 = (const uint16 *)RomPtr_82(v0);
-  hud_tilemap[8] = *v1;
-  hud_tilemap[9] = v1[1];
-  hud_tilemap[40] = v1[2];
-  hud_tilemap[41] = v1[3];
-  hud_tilemap[72] = v1[4];
-  hud_tilemap[73] = v1[5];
+  hud_tilemap.row1.auto_reserve[0] = v1[0];
+  hud_tilemap.row1.auto_reserve[1] = v1[1];
+  hud_tilemap.row2.auto_reserve[0] = v1[2];
+  hud_tilemap.row2.auto_reserve[1] = v1[3];
+  hud_tilemap.row3.auto_reserve[0] = v1[4];
+  hud_tilemap.row3.auto_reserve[1] = v1[5];
 }
 
 void EquipmentScreenHudReserveAutoTilemap_Off(void) {  // 0x82AF33
-  hud_tilemap[8] = 11279;
-  hud_tilemap[9] = 11279;
-  hud_tilemap[40] = 11279;
-  hud_tilemap[41] = 11279;
-  hud_tilemap[72] = 11279;
-  hud_tilemap[73] = 11279;
+  hud_tilemap.row1.auto_reserve[0] = 0x2C0F;
+  hud_tilemap.row1.auto_reserve[1] = 0x2C0F;
+  hud_tilemap.row2.auto_reserve[0] = 0x2C0F;
+  hud_tilemap.row2.auto_reserve[1] = 0x2C0F;
+  hud_tilemap.row3.auto_reserve[0] = 0x2C0F;
+  hud_tilemap.row3.auto_reserve[1] = 0x2C0F;
 }
 
 static const uint16 kReserveTankEnergyTransferPerFrame = 1;
@@ -3493,9 +3493,9 @@ CoroutineRet GameState_20_SamusNoHealth_BlackOut(void) {  // 0x82DCE0
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
     QueueSfx3_Max15(kSfx3_Silence);
-    QueueMusic_Delayed8(0);
-    QueueMusic_Delayed8(0xFF39);
-    QueueMusic_DelayedY(5, 0xE);
+    QueueMusic_Delayed8(kMusic_Stop);
+    QueueMusic_Delayed8(kMusic_Death);
+    QueueMusic_DelayedY(kMusic_Song0, 14);
   }
   return kCoroutineNone;
 }
@@ -3666,8 +3666,8 @@ void LoadEnemyGfxToVram(void) {  // 0x82DFD1
 
 void LoadRoomMusic(void) {  // 0x82E071
   if (game_state < kGameState_40_TransitionToDemo && room_music_data_index && room_music_data_index != music_data_index) {
-    QueueMusic_Delayed8(0);
-    QueueMusic_Delayed8(room_music_data_index | 0xFF00);
+    QueueMusic_Delayed8(kMusic_Stop);
+    QueueMusic_Delayed8(room_music_data_index | kMusic_SpcEngine);
   }
 }
 
@@ -3699,7 +3699,7 @@ void NullFunc(void) {  // 0x82E113
 
 void PlayRoomMusicTrackAfterAFrames(uint16 a) {  // 0x82E118
   if (game_state < kGameState_40_TransitionToDemo) {
-    QueueMusic_DelayedY(0, a);
+    QueueMusic_DelayedY(kMusic_Stop, a);
     QueueMusic_Delayed8(music_track_index);
   }
 }

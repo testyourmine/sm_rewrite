@@ -8,9 +8,9 @@
 
 
 
-static const uint16 g_word_AAB096 = 6;
-static const uint16 g_word_AAB098 = 5;
-static const uint16 g_word_AAB09A = 3;
+static const uint16 g_word_AAB096 = kMusic_Song1;
+static const uint16 g_word_AAB098 = kMusic_Song0;
+static const uint16 g_word_AAB09A = kMusic_Elevator;
 
 static const int16 g_word_AAC3EE[16] = { -9, -6, -7, 5, -16, -7, 0, 0, 9, 6, 7, -5, 16, 7, 0, 0 };
 static const int16 g_word_AAC40E[8] = { 0, -6, -6, -7, 0, 0, 0, 0 };
@@ -717,7 +717,7 @@ const uint16 *Torizo_Instr_41(uint16 k, const uint16 *jp) {  // 0xAACADE
 }
 
 const uint16 *Torizo_Instr_42(uint16 k, const uint16 *jp) {  // 0xAACAE2
-  QueueMusic_Delayed8(5);
+  QueueMusic_Delayed8(kMusic_Song0);
   Enemy_Torizo *E = Get_Torizo(k);
   E->base.x_width = 18;
   E->base.y_height = 48;

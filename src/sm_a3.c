@@ -2753,11 +2753,11 @@ void Metroid_Frozen(void) {  // 0xA3EAE6
   int v1 = E->metroid_var_00 >> 1;
   sprite_palettes[v1] = 3072;
   sprite_disable_flag[v1] = 1;
-  sprite_instr_list_ptrs[v1] = addr_kSpriteObject_Ilist_C3BA;
+  sprite_instr_list_ptrs[v1] = addr_kSpriteObject_Ilist_MetroidElectricity;
   int v2 = E->metroid_var_01 >> 1;
   sprite_palettes[v2] = 3072;
   sprite_disable_flag[v2] = 1;
-  sprite_instr_list_ptrs[v2] = addr_kSpriteObject_Ilist_C4B6;
+  sprite_instr_list_ptrs[v2] = addr_kSpriteObject_Ilist_MetroidShell;
 }
 
 void Metroid_Hurt(void) {  // 0xA3EB33

@@ -1866,7 +1866,7 @@ void Kraid_FadeInBg_FadeInBp6(void) {  // 0xA7C815
   int16 v0;
 
   if (AdvancePaletteFade_BgPalette6() & 1) {
-    QueueMusic_Delayed8(3);
+    QueueMusic_Delayed8(kMusic_Elevator);
     v0 = *(uint16 *)&boss_bits_for_area[area_index];
     if ((v0 & kBossBit_AreaBoss) != 0) {
       Get_Kraid(0)->kraid_var_A = FUNC16(Kraid_FadeInBg_SetEnemyDead_KraidWasDead);
@@ -1929,7 +1929,7 @@ void Kraid_Raise_LoadTilemapBottomAndShake(void) {  // 0xA7C89A
   E->kraid_var_A = FUNC16(Kraid_Raise_SpawnRandomEarthquakeProjs16);
   E->kraid_var_F = 120;
   earthquake_timer = 496;
-  QueueMusic_Delayed8(5);
+  QueueMusic_Delayed8(kMusic_Song0);
   Kraid_UpdateBG2TilemapBottomHalf();
 }
 
@@ -2527,7 +2527,7 @@ void Phantoon_SpawnFireballsBeforeFight(uint16 k) {  // 0xA7D508
     SpawnWavyPhantoonHdmaObject(2, g_word_A7CDA3);
     E3->phant_var_D = g_word_A7CD9D;
     Get_Phantoon(0x40)->phant_var_F = 0;
-    QueueMusic_Delayed8(5);
+    QueueMusic_Delayed8(kMusic_Song0);
   }
 }
 
@@ -2992,7 +2992,7 @@ void Phantoon_Dead(uint16 k) {  // 0xA7DB3D
       Get_Phantoon(0xC0)->base.properties = v4;
       *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaBoss;
       SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x00, 0x06, 0xb78b });
-      QueueMusic_Delayed8(3);
+      QueueMusic_Delayed8(kMusic_Elevator);
     }
   }
 }

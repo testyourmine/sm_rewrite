@@ -532,8 +532,8 @@ void GameOverMenu_1_Init(void) {  // 0x8191A4
   reg_COLDATA[0] = 32;
   reg_COLDATA[1] = 64;
   reg_COLDATA[2] = 0x80;
-  QueueMusic_Delayed8(0);
-  QueueMusic_Delayed8(0xFF03);
+  QueueMusic_Delayed8(kMusic_Stop);
+  QueueMusic_Delayed8(kMusic_TitleSequence);
   eproj_enable_flag = 1;
   eproj_id[0] = 0;
   int v0 = 0;
@@ -577,7 +577,7 @@ void GameOverMenu_1_Init(void) {  // 0x8191A4
 void GameOverMenu_2_PlayMusic(void) {  // 0x8193E8
   if (!(HasQueuedMusic())) {
     ++menu_index;
-    QueueMusic_Delayed8(4);
+    QueueMusic_Delayed8(kMusic_PreStatueHall_PreRidleyFight_GameOver);
   }
 }
 

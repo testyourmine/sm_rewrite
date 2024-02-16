@@ -682,7 +682,7 @@ void Draygon_Func_31(void) {  // 0xA59185
     if (sign16(v4 - 4)) {
       Draygon_Func_43();
       E->draygon_var_A = FUNC16(Draygon_Func_32);
-      QueueMusic_Delayed8(3);
+      QueueMusic_Delayed8(kMusic_Elevator);
       E->draygon_var_B = 416;
       E->base.current_instruction = addr_kDraygon_Ilist_97B9;
       E->base.instruction_timer = 1;
