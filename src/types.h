@@ -1,8 +1,6 @@
 #ifndef SM_TYPES_H_
 #define SM_TYPES_H_
 
-#pragma warning(disable: 4244)
-
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -34,6 +32,7 @@ typedef uint16 VoidP;
 #define load24(x) ((*(uint32*)&(x))&0xffffff)
 
 #ifdef _MSC_VER
+#pragma warning(disable: 4244)
 #define countof _countof
 #define NORETURN __declspec(noreturn)
 #define FORCEINLINE __forceinline
