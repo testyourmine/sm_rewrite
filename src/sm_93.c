@@ -7,17 +7,17 @@
 
 void InitializeProjectile(uint16 k) {  // 0x938000
   int v1 = k >> 1;
-  int r18 = (projectile_dir[v1] & 0xF);
+  int r18 = (projectile_dir[v1] & kProjectileDir_DirMask);
   uint16 v2 = projectile_type[v1];
   ProjectileDataTable PD;
   if ((v2 & kProjectileType_TypeMask) != 0) {
-    PD = kProjectileData_NonBeams[HIBYTE(v2) & 0xF];
+    PD = kProjectileData_NonBeams[HIBYTE(v2) & (kProjectileType_TypeMask >> 8)];
   } 
   else if ((v2 & kProjectileType_Charged) != 0) {
-    PD = kProjectileData_ChargedBeams[projectile_type[v1] & 0xF];
+    PD = kProjectileData_ChargedBeams[projectile_type[v1] & kProjectileType_BeamMask];
   } 
   else {
-    PD = kProjectileData_UnchargedBeams[projectile_type[v1] & 0xF];
+    PD = kProjectileData_UnchargedBeams[projectile_type[v1] & kProjectileType_BeamMask];
   }
   if (sign16(PD.damage))
     InvalidInterrupt_Crash();
@@ -32,7 +32,7 @@ void InitializeProjectile(uint16 k) {  // 0x938000
 
 void InitializeInstrForSuperMissile(uint16 v0) {  // 0x938071
   int v1 = v0 >> 1;
-  ProjectileDataTable v3 = kRunInstrForSuperMissile[HIBYTE(projectile_type[v1]) & 0xF];
+  ProjectileDataTable v3 = kRunInstrForSuperMissile[HIBYTE(projectile_type[v1]) & (kProjectileType_TypeMask >> 8)];
   uint16 v4 = v3.damage;
   projectile_damage[v1] = v4;
   if (sign16(v4))
@@ -43,7 +43,7 @@ void InitializeInstrForSuperMissile(uint16 v0) {  // 0x938071
 
 void InitializeInstrForBombOrPowerBomb(uint16 v0) {  // 0x9380A0
   int v1 = v0 >> 1;
-  ProjectileDataTable v3 = kProjectileData_NonBeams[HIBYTE(projectile_type[v1]) & 0xF];
+  ProjectileDataTable v3 = kProjectileData_NonBeams[HIBYTE(projectile_type[v1]) & (kProjectileType_TypeMask >> 8)];
   uint16 v4 = v3.damage;
   projectile_damage[v1] = v3.damage;
   if (sign16(v4))
@@ -59,7 +59,7 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
       QueueSfx2_Max6(kSfx2_SuperOrMissileHitWall);
     uint16 v2 = projectile_type[v1];
     projectile_type[v1] = v2 & 0xF0FF | kProjectileType_MissileExplosion;
-    if ((v2 & 0x200) != 0) {
+    if ((v2 & kProjectileType_SuperMissile) != 0) {
       projectile_instruction_ptr[v1] = kProjInstrList_SuperMissileExplosion.instr_ptr;
       earthquake_type = 20;
       earthquake_timer = 30;
@@ -85,7 +85,7 @@ void InitializeBombExplosion(uint16 k) {  // 0x93814E
 
 void InitializeShinesparkEchoOrSpazerSba(uint16 k) {  // 0x938163
   int v1 = k >> 1;
-  int r18 = projectile_dir[v1] & 0xF;
+  int r18 = projectile_dir[v1] & kProjectileDir_DirMask;
   ProjectileDataTable PD = kProjectileData_ShinesparkEchoSpazerSba[LOBYTE(projectile_type[v1]) - 34];
   projectile_damage[v1] = PD.damage;
   if (sign16(PD.damage))
@@ -96,7 +96,7 @@ void InitializeShinesparkEchoOrSpazerSba(uint16 k) {  // 0x938163
 
 void InitializeSbaProjectile(uint16 k) {  // 0x9381A4
   int v1 = k >> 1;
-  ProjectileDataTable v2 = kProjectileData_SBA[projectile_type[v1] & 0xF];
+  ProjectileDataTable v2 = kProjectileData_SBA[projectile_type[v1] & kProjectileType_BeamMask];
   uint16 v3 = v2.damage;
   projectile_damage[v1] = v3;
   if (sign16(v3))

@@ -337,9 +337,9 @@ CoroutineRet DoorTransitionFunction_Wait48frames(void);
 uint8 RefillHealthFromReserveTanks(void);
 uint8 AdvancePaletteFadeForAllPalettesInA(uint16 a);
 uint8 AdvancePaletteFadeForAllPalettesInA_0xc(uint16 a);
-void BabyMetroidCry1PlaySfx(void);
-void BabyMetroidCry2PlaySfx(void);
-void BabyMetroidCry3PlaySfx(void);
+void BabyMetroidPlayCry1Sfx(void);
+void BabyMetroidPlayCry2Sfx(void);
+void BabyMetroidPlayCry3Sfx(void);
 void BackupBG2TilemapForPauseMenu(void);
 void BackupGameplayPalettesAndLoadForPause(void);
 void BackupSomeGfxStateForPause(void);
@@ -589,11 +589,11 @@ void WaitUntilEndOfVblankAndEnableIrq(void);
 void WriteSamusWireframeTilemap(void);
 void WriteSamusWireframeTilemapAndQueue(void);
 
-void sub_82A425(void);
-void sub_82A42A(void);
-void sub_82A47B(void);
-void sub_82A4A9(void);
-void sub_82B932(void);
+void UNUSED_ChangePoseDueToEquipmentChange_None(void);
+void UNUSED_ChangePoseDueToEquipmentChange_SpinJump(void);
+void UNUSED_ChangePoseDueToEquipmentChange_MovementTypes7And9(void);
+void UNUSED_ChangePoseDueToEquipmentChange_Morph(void);
+void UNUSED_sub_82B932(void);
 void ProcessGameOverBabyMetroidInstructionList(uint16 a);
 void RestartGameOverBabyMetroidInstructionList(void);
 void AdvancePaletteFadeForPaletteInX_0x20(void);
@@ -1011,7 +1011,7 @@ CoroutineRet UnpauseHook_DraygonRoom(void);
 
 // Bank 90
 PairU16 Samus_CalcSpritemapPos(uint16 k);
-PairU16 Samus_CalcSpritemapPos_Crouch(uint16 j);
+PairU16 Samus_CalcSpritemapPos_Transitions(uint16 j);
 PairU16 Samus_CalcSpritemapPos_Default(uint16 j);
 PairU16 Samus_CalcSpritemapPos_Special(uint16 j);
 PairU16 Samus_CalcSpritemapPos_Standing(uint16 j);
@@ -1026,38 +1026,38 @@ uint8 FireSba_FireIce(void);
 uint8 FireSba_FirePlasma(void);
 uint8 FireSba_FireSpazer(void);
 uint8 FireSba_FireWave(void);
-uint8 Hdmaobj_CrystalFlash(void);
-uint8 HudSelectionHandler_MorphBall_Helper(void);
-uint8 HudSelectionHandler_MorphBall_Helper2(void);
+uint8 CrystalFlash(void);
+uint8 HudSelectionHandler_MorphBall_Helper_FireBombOrSpread(void);
+uint8 HudSelectionHandler_MorphBall_Helper_FireBombOrPowerBomb(void);
 uint8 InitProjectilePositionDirection(uint16 r20);
 uint8 SamusBottomDrawn_0_Standing(void);
 uint8 SamusBottomDrawn_1_FlagDrawn(void);
 uint8 SamusBottomDrawn_14_WallJump(void);
 uint8 SamusBottomDrawn_19_DamageBoost(void);
-uint8 SamusBottomDrawn_1B_Crouching(void);
+uint8 SamusBottomDrawn_1B_Shinespark_CrystalFlash_Drained_MBDamaged(void);
 uint8 SamusBottomDrawn_3_SpinJump(void);
 uint8 SamusBottomDrawn_4_FlagNotDrawn(void);
-uint8 SamusBottomDrawn_A_Knockback(void);
+uint8 SamusBottomDrawn_A_Knockback_CrystalFlashEnd(void);
 uint8 SamusBottomDrawn_F_Transitions(void);
 uint8 SamusCode_00_LockSamus(void);
 uint8 SamusCode_01_UnlockSamus(void);
 uint8 SamusCode_02_ReachCeresElevator(void);
 uint8 SamusCode_03_UnspinSamus(void);
 uint8 SamusCode_04_EndChargeBeam(void);
-uint8 SamusCode_04_06_Common(void);
-uint8 SamusCode_05_SetupDrained(void);
+uint8 EndChargeBeam(void);
+uint8 SamusCode_05_SetupDrained_AbleToStand(void);
 uint8 SamusCode_06_LockToStation(void);
 uint8 SamusCode_07_SetupForElevator(void);
 uint8 SamusCode_08_SetupForCeresStart(void);
 uint8 SamusCode_09_SetupForZebesStart(void);
 uint8 SamusCode_0A_ClearDrawHandler(void);
-uint8 SamusCode_0B_DrawHandlerDefault(void);
-uint8 SamusCode_0C_UnlockFromMapStation(void);
+uint8 SamusCode_0B_UnlockFromFacingForward(void);
+uint8 SamusCode_0C_UpdateDueToUnpause(void);
 uint8 SamusCode_0D_IsGrappleActive(void);
 uint8 SamusCode_0E_UnlockFromCeresElevator(void);
 uint8 SamusCode_0F_EnableTimerHandling(void);
-uint8 SamusCode_10_UnlockSamusFromReserveTank(void);
-uint8 SamusCode_11_15_Common(void);
+uint8 SamusCode_10_UnlockFromReserveTank(void);
+uint8 LockSamus_SetInanimateDrawHandler(void);
 uint8 SamusCode_11_SetupForDeath(void);
 uint8 SamusCode_13_DisableBlueFlashing(void);
 uint8 SamusCode_12_EnableBlueFlashing(void);
@@ -1066,7 +1066,7 @@ uint8 SamusCode_15_LockToSuitAcquisition(void);
 uint8 SamusCode_16_EnableRainbowSamus(void);
 uint8 SamusCode_17_DisableRainbowSamusAndStandUp(void);
 uint8 SamusCode_19_FreezeDrainedSamus(void);
-uint8 SamusCode_18_SetupDrainedAndDisableStandUp(void);
+uint8 SamusCode_18_SetupDrained_UnableToStand(void);
 uint8 SamusCode_1A_EnterGunship(void);
 uint8 SamusCode_1B_LockForReserveTank(void);
 uint8 SamusCode_1C_PlaySpinSfxIfSpinJumping(void);
@@ -1076,24 +1076,24 @@ uint8 SamusCode_1F_KillGrappleBeam(void);
 uint8 Samus_CanFireBeam(void);
 uint8 Samus_CanFireSuperMissile(void);
 uint8 Samus_CheckAndMoveY(void);
-uint8 Samus_EndSuperJump(void);
-uint8 Samus_Func26(void);
+uint8 Samus_EndShinespark(void);
+uint8 UNUSED_Samus_Func26(void);
 uint8 Samus_GrappleWallJumpCheck(int32 amt);
 uint8 Samus_HitInterrupt_Ball(void);
 uint8 Samus_HitInterrupt_Falling(void);
 uint8 Samus_HitInterrupt_KnockbackGrapple(void);
-uint8 Samus_HitInterrupt_Shinespark(void);
+uint8 Samus_HitInterrupt_Drained(void);
 uint8 Samus_HitInterrupt_Stand(void);
 uint8 Samus_HitInterrupt_Turning(void);
 uint8 Samus_HitInterrupt_Unused(void);
 uint8 Samus_MoveY_Simple_(void);
 uint8 Samus_SetupForBeingDrained(void);
 uint8 Samus_WallJumpCheck(int32 amt);
-uint8 SetupBombJump_RunFallMoonwalkWallJumpRanIntoWallGrapple(void);
-uint8 SetupBombJump_GrabbedShinesparkCrystalFlashDrainedMBAttack(void);
-uint8 SetupBombJump_JumpTurnAroundDamageBoostTransition(void);
-uint8 SetupBombJump_MorphedKnockbackCrystalFlash(void);
-uint8 SetupBombJump_StandCrouch(void);
+uint8 SetupBombJump_Run_Fall_Moonwalk_WallJump_RanIntoWall_Grapple(void);
+uint8 SetupBombJump_Grabbed_Shinespark_CrystalFlash_Drained_MBAttack(void);
+uint8 SetupBombJump_Jump_TurnAround_DamageBoost_Transition(void);
+uint8 SetupBombJump_Morphed_Knockback_CrystalFlash(void);
+uint8 SetupBombJump_Stand_Crouch(void);
 uint8 SwitchToHudHandler_Grapple(void);
 uint8 SwitchToHudHandler_Missiles(void);
 uint8 SwitchToHudHandler_Nothing(void);
@@ -1103,11 +1103,11 @@ uint8 SwitchToHudHandler_Xray(void);
 uint8 UNUSED_SamusBottomDrawn_D(void);
 uint8 UpdateArmCannonIsOpenFlag(void);
 void AdvanceArmCannonFrame(void);
-void AtmosphericTypeFunc_1_FootstepSplash(uint16 k, uint16 j);
+void AtmosphericTypeFunc_1_2_FootstepSplash(uint16 k, uint16 j);
 void AtmosphericTypeFunc_3_DivingSplash(uint16 k, uint16 j);
 void AtmosphericTypeFunc_4_LavaSurfaceDmg(uint16 k, uint16 j);
 void AtmosphericTypeFunc_5_Bubbles(uint16 k, uint16 j);
-void AtmosphericTypeFunc_67_Dust(uint16 k, uint16 j);
+void AtmosphericTypeFunc_6_7_Dust(uint16 k, uint16 j);
 void AtmosphericTypeFunc_Common(uint16 j, uint16 a);
 void BombSpread(void);
 void HandleBomb(void);
@@ -1121,19 +1121,19 @@ void ClearProjectile(uint16 k);
 void DisableMinimapAndMarkBossRoomAsExplored(void);
 void DrawFlareAnimationComponent(uint16 k);
 void DrawSamusAndProjectiles(void);
-void DrawTimer_(void);
+void Samus_FrameHandlerGamma_DrawTimer(void);
 void FireChargedBeam(void);
 void FireEndOfSpazerSba(uint16 j);
 void FireHyperBeam(void);
 void FireUnchargedBeam(void);
-void Grapple_Func1(void);
+void UNUSED_Grapple_Func1(void);
 void HandleArmCannonOpenState(void);
 void HandleAtmosphericEffects(void);
-void HandleAutoJumpHack(void);
+void Samus_InputHandler_AutoJump(void);
 void HandleChargingBeamGfxAudio(void);
 void HandleControllerInputForGamePhysics(void);
-void HandleDemoRecorder_1(void);
-void HandleDemoRecorder_3(void);
+void HandleSamusPlacementModeToggles(void);
+void Samus_FrameHandlerBeta_Debug(void);
 void HandleProjectile(void);
 void HandleProjectileTrails(void);
 void HandleSamusMovementAndPause(void);
@@ -1185,18 +1185,18 @@ void ProjPreInstr_BlockCollMissileVert(uint16 k);
 void ProjPreInstr_BlockCollMissileDiagonal(uint16 k);
 void ProjPreInstr_BlockCollMissileHoriz(uint16 k);
 void ProjPreInstr_PlasmaSba(uint16 k);
-void ProjPreInstr_PlasmaSba_Phase0Expand(uint16 j);
-void ProjPreInstr_PlasmaSba_Phase1Contract(uint16 j);
-void ProjPreInstr_PlasmaSba_Phase2Disperse(uint16 j);
+void ProjPreInstr_PlasmaSba_Phase0_Expand(uint16 j);
+void ProjPreInstr_PlasmaSba_Phase1_Contract(uint16 j);
+void ProjPreInstr_PlasmaSba_Phase2_Disperse(uint16 j);
 void ProjPreInstr_PowerBomb(uint16 k);
 void ProjPreInstr_SpazerSba(uint16 k);
 void ProjPreInstr_SpazerSba_ClearProjPair0(uint16 k);
 void ProjPreInstr_SpazerSba_ClearProjPair2(uint16 k);
 void ProjPreInstr_SpazerSba_ClearProjPair4(uint16 k);
 void ProjPreInstr_SpazerSba_ClearProjPair6(uint16 k);
-void ProjPreInstr_SpazerSba_Phase0Circle(uint16 j, uint16 r22);
-void ProjPreInstr_SpazerSba_Phase2FlyToPoint(uint16 j, uint16 r22);
-void ProjPreInstr_SpazerSba_Phase4FlyFromPoint(uint16 j, uint16 r22);
+void ProjPreInstr_SpazerSba_Phase0_Circle(uint16 j, uint16 r22);
+void ProjPreInstr_SpazerSba_Phase2_FlyToPoint(uint16 j, uint16 r22);
+void ProjPreInstr_SpazerSba_Phase4_FlyFromPoint(uint16 j, uint16 r22);
 void ProjPreInstr_SpeedEcho(uint16 k);
 void ProjPreInstr_SpreadBomb(uint16 k);
 void ProjPreInstr_SuperMissile(uint16 k);
@@ -1211,13 +1211,13 @@ void ProjPreInstr_BlockCollWaveBeamHoriz(uint16 k);
 void ProjPreInstr_WaveSba(uint16 k);
 void ProjPreInstr_Wave_Shared(uint16 k);
 void ProjectileReflection(uint16 r20);
-void Projectile_Func4(uint16 k);
+void UNUSED_ClearSuperMissileLinkIfExplosion(uint16 k);
 void TriggerShinesparkWindup(void);
 Point16U Projectile_SinLookup(uint16 j, uint16 a);
 void ResetProjectileData(void);
 void RunFrameHandlerGamma(void);
 void RunSamusMovementHandler(void);
-void SamusCrouchingEtcFunc(void);
+void UNUSED_SamusCrouching_Nothing(void);
 void SamusDisplayHandler_SamusReceivedFatal(void);
 void SamusDisplayHandler_UsingElevator(void);
 void SamusDrawHandler_Default(void);
@@ -1248,7 +1248,7 @@ void Samus_CalcDistanceMoved_Y(void);
 uint32 Samus_CalcSpeed_X(uint32 amt);
 void Samus_CallInputHandler(void);
 void Samus_CheckStartFalling(void);
-void Samus_ClearMoveVars(void);
+void Samus_HandleKnockbackVerticalColl(void);
 void Samus_ClearXSpeedIfColl(void);
 void Samus_DetermineAccel_Y(void);
 void Samus_Draw(void);
@@ -1266,49 +1266,49 @@ void Samus_FootstepGraphics(void);
 void Samus_FootstepGraphics_Common(void);
 void Samus_FootstepGraphics_Crateria(void);
 void Samus_FootstepGraphics_Maridia(void);
-void Samus_FrameHandlerAlfa_Func11(void);
-void Samus_FrameHandlerAlfa_Func12(void);
-void Samus_FrameHandlerAlfa_Func13(void);
-void Samus_FrameHandlerBeta_Func14(void);
-void Samus_FrameHandlerBeta_Func17(void);
-void Samus_Func1(void);
+void Samus_FrameHandlerAlfa_Normal(void);
+void Samus_FrameHandlerAlfa_Demo(void);
+void Samus_FrameHandlerAlfa_SamusLocked(void);
+void Samus_FrameHandlerBeta_TitleDemo(void);
+void Samus_FrameHandlerBeta_Normal(void);
+void Samus_FrameHandlerGamma_UnlockSamusFromDrained(void);
 void Samus_Func10(void);
-void Samus_Func15(void);
-void Samus_Func16(void);
-void Samus_Func18(void);
-void Samus_Func19(void);
-void Samus_Func2(void);
-void Samus_Func20_(void);
-void Samus_Func25_ShineSpark(void);
-void Samus_Func3(void);
-void Samus_Func4(void);
-void Samus_Func5(void);
-void Samus_Func6(void);
-void Samus_Func7(void);
-void Samus_Func8(void);
-void Samus_Func9(void);
+void Samus_FrameHandlerBeta_IntroDemo(void);
+void Samus_FrameHandlerBeta_SamusAppears(void);
+void Samus_FrameHandlerBeta_Ceres(void);
+void Samus_FrameHandlerBeta_RidingElevator(void);
+void Samus_FrameHandlerGamma_KeepSamusLockedFromDrained(void);
+void Samus_InputHandler_Xray(void);
+void Samus_MoveHandler_F04B_Unused(void);
+void Samus_FrameHandlerGamma_HandleTimer(void);
+void Samus_FrameHandlerGamma_PushingOutOfRidleysWay(void);
+void Samus_PushOutOfRidleysWay_Leftwards(void);
+void Samus_PushOutOfRidleysWay_Rightwards(void);
+void Samus_FrameHandlerGamma_PushMorphedSamusOutOfRidleysWay_Unused(void);
+void Samus_ClearSpecialFalling_Unused(void);
+void Samus_FrameHandlerGamma_SpecialFalling_Unused(void);
 uint16 Samus_GetTop_R20(void);
 uint16 Samus_GetBottom_R18(void);
-void Samus_GrabbedByDraygonFrameHandler(void);
+void Samus_FrameHandlerGamma_GrabbedByDraygon(void);
 static void Samus_HandleAnimDelay(void);
 void Samus_HandleCooldown(void);
 void Samus_HandleExtraRunspeedX(void);
 void Samus_HandleHudSpecificBehaviorAndProjs(void);
-void Samus_HandleMovement_DrainedCrouching(void);
+void Samus_MovementHandler_DrainedCrouching(void);
 void Samus_HandleMovement_X(void);
 void Samus_HandlePeriodicDamage(void);
 void Samus_HandleScroll_X(void);
 void Samus_HandleScroll_Y(void);
 void Samus_HitInterruption(void);
-void Samus_HorizontalBombJump(void);
+void Samus_MoveHandler_HorizontalBombJump(void);
 void Samus_InitBombJump(void);
 void Samus_InitJump(void);
 void Samus_InitWallJump(void);
-void Samus_InputHandler_E913(void);
-void Samus_InputHandler_E91D(void);
+void Samus_InputHandler_Normal(void);
+void Samus_InputHandler_Demo(void);
 void Samus_JumpCheck(void);
 void Samus_JumpingMovement(void);
-void Samus_LowHealthCheck(void);
+void Samus_FrameHandlerBeta_EnterExitGunship(void);
 void Samus_LowHealthCheck_(void);
 void Samus_LowHealthCheck_0(void);
 void Samus_MorphedBouncingMovement(void);
@@ -1317,26 +1317,26 @@ void Samus_MoveDown(int32 amt);
 void Samus_MoveDown_NoColl(int32 amt);
 void Samus_MoveDown_SetPoseCalcInput(void);
 void Samus_MoveExtraY(void);
-void Samus_MoveHandlerShinesparkWindup(void);
-void Samus_MoveHandlerVerticalShinespark(void);
-void Samus_MoveHandler_BombJumpFunc1(void);
+void Samus_MovementHandler_ShinesparkWindup(void);
+void Samus_MovementHandler_VerticalShinespark(void);
+void Samus_MoveHandler_EndBombJump(void);
 void Samus_MoveHandler_BombJumpMain(void);
 void Samus_MoveHandler_BombJumpStart(void);
-void Samus_MoveHandler_F072(void);
+void Samus_MoveHandler_F072_Unused(void);
 void Samus_MoveHandler_Knockback(void);
-void Samus_MoveHandler_Knockback_0(void);
-void Samus_MoveHandler_Knockback_3(void);
+void Samus_MoveHandler_Invalid(void);
+void Samus_MoveHandler_Knockback_StraightUp_Unused(void);
 void Samus_MoveHandler_Knockback_Down(void);
 void Samus_MoveHandler_Knockback_Up(void);
-void Samus_MoveHandler_ReleaseFromGrapple(void);
-void Samus_MoveHandler_ShinesparkCrash(void);
-void Samus_MoveHandler_ShinesparkCrashEchoCircle(void);
-void Samus_MoveHandler_ShinesparkCrashFinish(void);
-void Samus_MoveHandler_ShinesparkCrash_0(void);
-void Samus_MoveHandler_ShinesparkCrash_1(void);
-void Samus_MoveHandler_ShinesparkCrash_2(void);
-void Samus_MoveHandler_Shinespark_Diag(void);
-void Samus_MoveHandler_Shinespark_Horiz(void);
+void Samus_MovementHandler_ReleaseFromGrapple(void);
+void Samus_MovementHandler_ShinesparkCrash_EchoCircle(void);
+void Samus_MovementHandler_ShinesparkCrash_EchoCircle_Finish(void);
+void Samus_MovementHandler_ShinesparkCrash_Finish(void);
+void Samus_MovementHandler_ShinesparkCrash_EchoCircle_Phase0(void);
+void Samus_MovementHandler_ShinesparkCrash_EchoCircle_Phase1(void);
+void Samus_MovementHandler_ShinesparkCrash_EchoCircle_Phase2(void);
+void Samus_MovementHandler_DiagonalShinespark(void);
+void Samus_MovementHandler_HorizontalShinespark(void);
 void Samus_MoveLeft(int32 amt);
 void Samus_MoveLeft_NoColl(int32 amt);
 void Samus_MoveRight(int32 amt);
@@ -1379,7 +1379,7 @@ void Samus_Movement_1A_GrabbedByDraygon(void);
 void Samus_Movement_1B_ShinesparkEtc(void);
 void Samus_PauseCheck(void);
 void Samus_PostGrappleCollisionDetect(void);
-void Samus_PushOutOfRidleysWay(void);
+void Samus_FrameHandlerGamma_PushOutOfRidleysWay(void);
 void Samus_ReleaseFromDraygon(void);
 void Samus_ReleaseFromDraygon_(void);
 void Samus_ScrollFinishedHook_SporeSpawnFight(void);
@@ -1396,27 +1396,27 @@ void Samus_SpinJumpMovement(void);
 void Samus_UpdatePreviousPose(void);
 void Samus_UpdateSpeedEchoPos(void);
 void Samus_UpdateSuitPaletteIndex(void);
-void Samus_VerticalBombJump(void);
-void SetContactDamageIndexAndUpdateMinimap(void);
+void Samus_MoveHandler_VerticalBombJump(void);
+void Samus_FrameHandlerBeta_SamusLocked(void);
 void SetInitialProjectileSpeed(uint16 r20);
 void SetLiquidPhysicsType(void);
 void SetupBombJump(void);
 void SpawnProjectileTrail(uint16 k);
 void SuperMissileBlockCollDetect_X(void);
 void SuperMissileBlockCollDetect_Y(void);
-void SwappedAmmoRoutine(void);
+void DisplaySamusPositionAsAmmoIfMorphed(void);
 void UpdateBeamTilesAndPalette(void);
 void UpdateMinimap(void);
 void UpdateMinimapInside(uint16 r18, uint16 r22, uint16 r34, uint16 r30, uint16 r32, uint16 r38, uint16 r24, uint16 r40, uint16 r26, uint16 r42, uint16 r28);
 
 void WaveBeam_CheckColl(uint16 k);
-void WaveBeam_CheckColl_0459(void);
-void WaveBeam_CheckColl_1368(void);
-void WaveBeam_CheckColl_2(void);
-void WaveBeam_CheckColl_7(void);
+void WaveBeam_CheckColl_Vertical(void);
+void WaveBeam_CheckColl_Diagonal(void);
+void WaveBeam_CheckColl_Right(void);
+void WaveBeam_CheckColl_Left(void);
 void WriteBeamPalette_A(uint16 a);
 void WriteBeamPalette_Y(uint16 j);
-void kSamusMoveHandler_CrystalFlashFinish(void);
+void SamusMoveHandler_CrystalFlashFinish(void);
 void DrawSamus_NoChargeOrGrapple(void);
 void SamusDrawHandler_NoChargeOrGrapple(void);
 
@@ -1489,11 +1489,11 @@ uint8 Samus_MorphTrans(void);
 uint8 Samus_Pose_Func2(void);
 uint8 Samus_SpeedBoosterShinePals(void);
 uint8 Samus_StandOrUnmorphTrans(void);
-uint8 SomeMotherBrainScripts_0(void);
-uint8 SomeMotherBrainScripts_1(void);
-uint8 SomeMotherBrainScripts_2(void);
-uint8 SomeMotherBrainScripts_3_EnableHyperBeam(void);
-uint8 SomeMotherBrainScripts_4(void);
+uint8 DrainedSamusHandler_0_LetSamusFall(void);
+uint8 DrainedSamusHandler_1_SetSamusStandingDrainedPose(void);
+uint8 DrainedSamusHandler_2_ReleaseSamusFromDrainedPose(void);
+uint8 DrainedSamusHandler_3_EnableHyperBeam(void);
+uint8 DrainedSamusHandler_4_SetSamusCrouchOrFallDrainedPose(void);
 uint8 Xray_Initialize(void);
 uint8 nullsub_164(void);
 void CalculateXrayHdmaTableInner(uint16 k, uint16 j, uint16 r18, uint16 r20, bool off_screen, uint16 *dest_addr);
@@ -1540,7 +1540,7 @@ void LoadDemoInputObject(uint16 a, uint16 j);
 void MakeSamusFaceForward(void);
 void ProcessDemoInputObject(void);
 void ResetDemoData(void);
-void ResponsibleForXrayStandupGlitch(void);
+void SetNonXraySamusPose(void);
 void SamusFunc_E633(void);
 void SamusFunc_E633_0(void);
 void SamusFunc_E633_17(void);
@@ -1633,7 +1633,7 @@ void Samus_RestorePowerBombs(uint16 a);
 void Samus_RestoreSuperMissiles(uint16 a);
 void Samus_SetAnimationFrameIfPoseChanged(void);
 void Samus_UpdatePreviousPose_0(void);
-void SomeMotherBrainScripts(uint16 a);
+void DrainedSamusHandler(uint16 a);
 void VariaSuitPickup(void);
 void XrayRunHandler(void);
 void Xray_SetupStage1_FreezeTimeBackup(uint16 k);
@@ -4346,9 +4346,9 @@ void VerifySRAM(void);
 #define fnOptionsInstr_Goto 0x828C82
 #define fnOptionsInstr_DecrementTimerAndGoto 0x828C89
 #define fnOptionsInstr_SetTimer 0x828C93
-#define fnBabyMetroidPlaySfx0x23 0x82BC0C
-#define fnBabyMetroidPlaySfx0x26 0x82BC15
-#define fnBabyMetroidPlaySfx0x27 0x82BC1E
+#define fnBabyMetroidPlayCry1Sfx 0x82BC0C
+#define fnBabyMetroidPlayCry2Sfx 0x82BC15
+#define fnBabyMetroidPlayCry3Sfx 0x82BC1E
 #define fnDoorTransitionFunction_HandleElevator 0x82E17D
 #define fnDoorTransitionFunction_Wait48frames 0x82E19F
 #define fnDoorTransitionFunction_WaitForSoundsToFinish 0x82E29E
@@ -4551,7 +4551,7 @@ void VerifySRAM(void);
 #define fnPlmSetup_C794_GreyDoor 0x84C794
 #define fnPlmSetup_Door_Colored 0x84C7B1
 #define fnPlmSetup_Door_Blue 0x84C7BB
-#define fnPlmSetup_Door_Strange 0x84C7E2
+#define fnPlmSetup_C7E2_GenericShotTrigger 0x84C7E2
 #define fnPlmInstr_SetBtsTo1 0x84CD93
 #define fnPlmSetup_D028_D02C_Unused 0x84CDC2
 #define fnPlmSetup_RespawningSpeedBoostBlock 0x84CDEA
@@ -5669,8 +5669,8 @@ void VerifySRAM(void);
 #define fnnullsub_12 0x908077
 #define fnSamus_Draw 0x9085E2
 #define fnnullsub_3 0x9092E9
-#define fnSamus_MoveHandler_ReleaseFromGrapple 0x90946E
-#define fnSamus_HandleMovement_DrainedCrouching 0x9094CB
+#define fnSamus_MovementHandler_ReleaseFromGrapple 0x90946E
+#define fnSamus_MovementHandler_DrainedCrouching 0x9094CB
 #define fnSamus_ScrollFinishedHook_SporeSpawnFight 0x909589
 #define fnSamus_MovementHandler_Normal 0x90A337
 #define fnnullsub_13 0x90A671
@@ -5702,20 +5702,20 @@ void VerifySRAM(void);
 #define fnProjInstr_MoveLeftProjectileTrailUp 0x90B5B3
 #define fnProjPreInstr_IceSbaMain 0x90CF09
 #define fnProjPreInstr_IceSbaEnd 0x90CF7A
-#define fnSamus_MoveHandlerShinesparkWindup 0x90D068
-#define fnSamus_MoveHandlerVerticalShinespark 0x90D0AB
-#define fnSamus_MoveHandler_Shinespark_Diag 0x90D0D7
-#define fnSamus_MoveHandler_Shinespark_Horiz 0x90D106
-#define fnSamus_MoveHandler_ShinesparkCrash 0x90D346
-#define fnSamus_MoveHandler_ShinesparkCrash_0 0x90D383
-#define fnSamus_MoveHandler_ShinesparkCrash_1 0x90D396
-#define fnSamus_MoveHandler_ShinesparkCrash_2 0x90D3CC
-#define fnSamus_MoveHandler_ShinesparkCrashEchoCircle 0x90D3F3
-#define fnSamus_MoveHandler_ShinesparkCrashFinish 0x90D40D
+#define fnSamus_MovementHandler_ShinesparkWindup 0x90D068
+#define fnSamus_MovementHandler_VerticalShinespark 0x90D0AB
+#define fnSamus_MovementHandler_DiagonalShinespark 0x90D0D7
+#define fnSamus_MovementHandler_HorizontalShinespark 0x90D106
+#define fnSamus_MovementHandler_ShinesparkCrash_EchoCircle 0x90D346
+#define fnSamus_MovementHandler_ShinesparkCrash_EchoCircle_Phase0 0x90D383
+#define fnSamus_MovementHandler_ShinesparkCrash_EchoCircle_Phase1 0x90D396
+#define fnSamus_MovementHandler_ShinesparkCrash_EchoCircle_Phase2 0x90D3CC
+#define fnSamus_MovementHandler_ShinesparkCrash_EchoCircle_Finish 0x90D3F3
+#define fnSamus_MovementHandler_ShinesparkCrash_Finish 0x90D40D
 #define fnProjPreInstr_SpeedEcho 0x90D4D2
 #define fnSamusMoveHandler_CrystalFlashStart 0x90D678
 #define fnSamusMoveHandler_CrystalFlashMain 0x90D6CE
-#define fnkSamusMoveHandler_CrystalFlashFinish 0x90D75B
+#define fnSamusMoveHandler_CrystalFlashFinish 0x90D75B
 #define fnProjPreInstr_PlasmaSba 0x90D793
 #define fnProjPreInstr_PlasmaSba_Phase0Expand 0x90D7E1
 #define fnProjPreInstr_PlasmaSba_Phase1Contract 0x90D7FA
@@ -5739,36 +5739,36 @@ void VerifySRAM(void);
 #define fnSamus_MoveHandler_BombJumpStart 0x90E025
 #define fnSamus_MoveHandler_BombJumpMain 0x90E032
 #define fnSamus_MoveHandler_BombJumpFunc1 0x90E07D
-#define fnSamus_Func1 0x90E09B
-#define fnSamus_Func2 0x90E0C5
-#define fnSamus_Func3 0x90E0E6
-#define fnDrawTimer_ 0x90E114
-#define fnSamus_PushOutOfRidleysWay 0x90E12E
-#define fnSamus_Func4 0x90E1C8
-#define fnSamus_GrabbedByDraygonFrameHandler 0x90E2A1
+#define fnSamus_FrameHandlerGamma_UnlockSamusFromDrained 0x90E09B
+#define fnSamus_FrameHandlerGamma_KeepSamusLockedFromDrained 0x90E0C5
+#define fnSamus_FrameHandlerGamma_HandleTimer 0x90E0E6
+#define fnSamus_FrameHandlerGamma_DrawTimer 0x90E114
+#define fnSamus_FrameHandlerGamma_PushOutOfRidleysWay 0x90E12E
+#define fnSamus_FrameHandlerGamma_PushingOutOfRidleysWay 0x90E1C8
+#define fnSamus_FrameHandlerGamma_GrabbedByDraygon 0x90E2A1
 #define fnnullsub_151 0x90E37E
-#define fnSamus_Func7 0x90E3A3
-#define fnSamus_Func9 0x90E41B
-#define fnSamus_FrameHandlerAlfa_Func11 0x90E695
-#define fnSamus_FrameHandlerAlfa_Func12 0x90E6C9
-#define fnSamus_FrameHandlerAlfa_Func13 0x90E713
-#define fnSamus_FrameHandlerBeta_Func17 0x90E725
-#define fnHandleDemoRecorder_3 0x90E7D2
-#define fnSamus_FrameHandlerBeta_Func14 0x90E7F5
-#define fnSamus_Func15 0x90E833
-#define fnSamus_Func16 0x90E86A
-#define fnSamus_Func18 0x90E8AA
-#define fnEmptyFunction 0x90E8CD
-#define fnj_HandleDemoRecorder_2 0x90E8D6
-#define fnj_HandleDemoRecorder_2_0 0x90E8D9
-#define fnSetContactDamageIndexAndUpdateMinimap 0x90E8DC
-#define fnSamus_Func19 0x90E8EC
-#define fnSamus_LowHealthCheck 0x90E902
+#define fnSamus_FrameHandlerGamma_PushMorphedSamusOutOfRidleysWay_Unused 0x90E3A3
+#define fnSamus_FrameHandlerGamma_SpecialFalling_Unused 0x90E41B
+#define fnSamus_FrameHandlerAlfa_Normal 0x90E695
+#define fnSamus_FrameHandlerAlfa_Demo 0x90E6C9
+#define fnSamus_FrameHandlerAlfa_SamusLocked 0x90E713
+#define fnSamus_FrameHandlerBeta_Normal 0x90E725
+#define fnSamus_FrameHandlerBeta_Debug 0x90E7D2
+#define fnSamus_FrameHandlerBeta_TitleDemo 0x90E7F5
+#define fnSamus_FrameHandlerBeta_IntroDemo 0x90E833
+#define fnSamus_FrameHandlerBeta_SamusAppears 0x90E86A
+#define fnSamus_FrameHandlerBeta_Ceres 0x90E8AA
+#define fnSamus_FrameHandlerBeta_DoNothing 0x90E8CD
+#define fnSamus_FrameHandlerBeta_SamusLockedToStation 0x90E8D6
+#define fnSamus_FrameHandlerBeta_SamusBeingDrained 0x90E8D9
+#define fnSamus_FrameHandlerBeta_SamusLocked 0x90E8DC
+#define fnSamus_FrameHandlerBeta_RidingElevator 0x90E8EC
+#define fnSamus_FrameHandlerBeta_EnterExitGunship 0x90E902
 #define fnnullsub_152 0x90E90E
-#define fnSamus_InputHandler_E913 0x90E913
-#define fnSamus_Func20_ 0x90E918
-#define fnSamus_InputHandler_E91D 0x90E91D
-#define fnHandleAutoJumpHack 0x90E926
+#define fnSamus_InputHandler_Normal 0x90E913
+#define fnSamus_InputHandler_Xray 0x90E918
+#define fnSamus_InputHandler_Demo 0x90E91D
+#define fnSamus_InputHandler_AutoJump 0x90E926
 #define fnSamusMovementType_Xray 0x90E94F
 #define fnSamusDrawHandler_Default 0x90EB52
 #define fnSamusDrawHandler_NoChargeOrGrapple 0x90EB86
@@ -5777,8 +5777,8 @@ void VerifySRAM(void);
 #define fnSamusDisplayHandler_UsingElevator 0x90EC14
 #define fnSamusDisplayHandler_SamusReceivedFatal 0x90EC1D
 #define fnProjPreInstr_UnknownProj8027 0x90EFD3
-#define fnSamus_Func25_ShineSpark 0x90F04B
-#define fnSamus_MoveHandler_F072 0x90F072
+#define fnSamus_MoveHandler_F04B_Unused 0x90F04B
+#define fnSamus_MoveHandler_F072_Unused 0x90F072
 #define fnnullsub_7 0x90F52F
 #define fnSamus_InputHandler 0x918000
 #define fnDemoPreInstr_nullsub_162 0x9183BF

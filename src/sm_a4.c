@@ -1517,7 +1517,7 @@ void Crocomire_Func_93(void) {  // 0xA4B951
 void Crocomire_Func_94(void) {  // 0xA4B968
   int v0 = collision_detection_index;
   eproj_spawn_pt = (Point16U){ projectile_x_pos[v0], projectile_y_pos[v0] };
-  uint16 v1 = ((projectile_type[v0] & 0x200) == 0) ? 6 : 29;
+  uint16 v1 = ((projectile_type[v0] & kProjectileType_SuperMissile) == 0) ? 6 : 29;
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v1);
 }
 
@@ -1568,17 +1568,17 @@ void Crocomire_Func_95(void) {  // 0xA4BA05
     goto LABEL_10;
   uint16 v1, v2;
   v1 = projectile_type[collision_detection_index];
-  if ((v1 & 0xF00) != 0) {
-    v3 = v1 & 0xF00;
+  if ((v1 & kProjectileType_TypeMask) != 0) {
+    v3 = v1 & kProjectileType_TypeMask;
     v2 = g_word_A4869A;
-    if (v3 != 256) {
+    if (v3 != kProjectileType_Missile) {
       v2 = g_word_A4869C;
-      if (v3 != 512)
+      if (v3 != kProjectileType_SuperMissile)
         v2 = 0;
     }
   } else {
     v2 = g_word_A48698;
-    if ((v1 & 0x10) == 0) {
+    if ((v1 & kProjectileType_Charged) == 0) {
       E->base.instruction_timer = g_word_A486A0;
       Crocomire_Func_1();
       return;
@@ -1606,7 +1606,7 @@ LABEL_10:;
 void Crocomire_Func_1(void) {  // 0xA4BAB4
   int v0 = collision_detection_index;
   eproj_spawn_pt = (Point16U){ projectile_x_pos[v0], projectile_y_pos[v0] };
-  uint16 v1 = ((projectile_type[v0] & 0x200) == 0) ? 6 : 29;
+  uint16 v1 = ((projectile_type[v0] & kProjectileType_SuperMissile) == 0) ? 6 : 29;
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v1);
 }
 

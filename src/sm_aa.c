@@ -665,10 +665,10 @@ void Torizo_Init(void) {  // 0xAAC87F
         samus_max_super_missiles = 20;
         samus_power_bombs = 20;
         samus_max_power_bombs = 20;
-        equipped_items = -3273;
-        collected_items = -3273;
-        equipped_beams = 4111;
-        collected_beams = 4111;
+        equipped_items = (kItem_Xray | kItem_Grapple | kItem_SpeedBooster | kItem_Bombs | kItem_SpaceJump | kItem_HiJumpBoots | kItem_GravitySuit | 0x10 | kItem_MorphBall | kItem_SpringBall | kItem_VariaSuit);
+        collected_items = (kItem_Xray | kItem_Grapple | kItem_SpeedBooster | kItem_Bombs | kItem_SpaceJump | kItem_HiJumpBoots | kItem_GravitySuit | 0x10 | kItem_MorphBall | kItem_SpringBall | kItem_VariaSuit);
+        equipped_beams = (kBeam_Charge | kBeam_Plasma | kBeam_Spazer | kBeam_Ice | kBeam_Wave);
+        collected_beams = (kBeam_Charge | kBeam_Plasma | kBeam_Spazer | kBeam_Ice | kBeam_Wave);
       }
     } else {
       Torizo_C250();
@@ -1002,13 +1002,13 @@ void GoldTorizo_Shot(void) {  // 0xAAD667
       goto LABEL_11;
     uint16 v2, v3;
     v2 = 2 * collision_detection_index;
-    v3 = projectile_type[collision_detection_index] & 0xF00;
+    v3 = projectile_type[collision_detection_index] & kProjectileType_TypeMask;
     E->toriz_var_05 = v3;
-    if (v3 == 256) {
+    if (v3 == kProjectileType_Missile) {
       Torizo_D6D1(cur_enemy_index, v2);
       return;
     }
-    if (v3 != 512) {
+    if (v3 != kProjectileType_SuperMissile) {
 LABEL_11:
       E->toriz_parameter_2 |= 0x2000;
       Torizo_D6A6();
@@ -1030,7 +1030,7 @@ void Torizo_D6A6(void) {  // 0xAAD6A6
 }
 
 void Torizo_D6D1(uint16 k, uint16 j) {  // 0xAAD6D1
-  projectile_dir[j >> 1] &= ~0x10;
+  projectile_dir[j >> 1] &= ~kProjectileDir_Delete;
   Enemy_Torizo *E = Get_Torizo(k);
   E->toriz_var_E = FUNC16(nullsub_270);
   E->base.instruction_timer = 1;
@@ -1048,7 +1048,7 @@ void Torizo_D6F7(uint16 k, uint16 j) {  // 0xAAD6F7
   if ((Torizo_Func_12(k) & 0x8000) == 0) {
     E->toriz_parameter_2 |= 0x1000;
     E->toriz_var_E = FUNC16(nullsub_270);
-    projectile_dir[j >> 1] |= 0x10;
+    projectile_dir[j >> 1] |= kProjectileDir_Delete;
     E->base.instruction_timer = 1;
     uint16 v3;
     if ((E->toriz_parameter_1 & 0x2000) != 0) {

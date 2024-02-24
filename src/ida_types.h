@@ -331,6 +331,15 @@ typedef struct DoorDef {
   VoidP door_setup_code;
 }DoorDef;
 
+enum HudItemIndex {
+  kHudItem_0_Nothing = 0x0,
+  kHudItem_1_Missile = 0x1,
+  kHudItem_2_SuperMissile = 0x2,
+  kHudItem_3_PowerBomb = 0x3,
+  kHudItem_4_Grapple = 0x4,
+  kHudItem_5_Xray = 0x5,
+};
+
 /* 28 */
 typedef enum SamusPose {
   kPose_00_FaceF_Powersuit = 0x0,
@@ -620,6 +629,14 @@ typedef struct SamusSpeedTableEntry {
   uint16 decel_sub;
 } SamusSpeedTableEntry;
 
+enum SamusPoseXDirection {
+  kSamusXDir_FaceForward = 0x0,
+  kSamusXDir_UnusedPose21 = 0x1,
+  kSamusXDir_UnusedPose22 = 0x2,
+  kSamusXDir_FaceLeft = 0x4,
+  kSamusXDir_FaceRight = 0x8,
+};
+
 /* 32 */
 enum SamusMovementType {
   kMovementType_00_Standing = 0x0,
@@ -637,7 +654,7 @@ enum SamusMovementType {
   kMovementType_0C_Unused = 0xC,
   kMovementType_0D_Unused = 0xD,
   kMovementType_0E_TurningAroundOnGround = 0xE,
-  kMovementType_0F_CrouchingEtcTransition = 0xF,
+  kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition = 0xF,
   kMovementType_10_Moonwalking = 0x10,
   kMovementType_11_SpringBallOnGround = 0x11,
   kMovementType_12_SpringBallInAir = 0x12,
@@ -649,7 +666,13 @@ enum SamusMovementType {
   kMovementType_18_TurningAroundFalling = 0x18,
   kMovementType_19_DamageBoost = 0x19,
   kMovementType_1A_GrabbedByDraygon = 0x1A,
-  kMovementType_1B_ShinesparkEtc = 0x1B,
+  kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain = 0x1B,
+};
+
+enum SamusSuitPaletteIndex {
+  kSuitPaletteIndex_0_Power = 0x0,
+  kSuitPaletteIndex_2_Varia = 0x2,
+  kSuitPaletteIndex_4_Gravity = 0x4,
 };
 
 /* 33 */
@@ -832,15 +855,33 @@ enum EnemyExtraProps {
   kEnemyExtraProps_UpdateGfx = 0x8000,
 } ;
 
+enum ProjectileDirection {
+  kProjectileDir_UpFaceRight = 0x0,
+  kProjectileDir_UpRight = 0x1,
+  kProjectileDir_Right = 0x2,
+  kProjectileDir_DownRight = 0x3,
+  kProjectileDir_DownFaceRight = 0x4,
+  kProjectileDir_DownFaceLeft = 0x5,
+  kProjectileDir_DownLeft = 0x6,
+  kProjectileDir_Left = 0x7,
+  kProjectileDir_UpLeft = 0x8,
+  kProjectileDir_UpFaceLeft = 0x9,
+  kProjectileDir_DirMask = 0xF,
+  kProjectileDir_Delete = 0x10,
+};
+
 /* 52 */
 enum ProjectileType {
   kProjectileType_Wave_NormalBombExplosion = 0x1,
   kProjectileType_Ice = 0x2,
   kProjectileType_Spazer = 0x4,
   kProjectileType_Plasma = 0x8,
+  kProjectileType_BeamMask = 0xF,
   kProjectileType_Charged = 0x10,
+  kProjectileType_SpazerSbaMask = 0x20,
   kProjectileType_SpazerSbaTrail = 0x24,
   kProjectileType_ShinesparkEcho = 0x29,
+  kProjectileType_CooldownMask = 0x3F,
   kProjectileType_Missile = 0x100,
   kProjectileType_SuperMissile = 0x200,
   kProjectileType_PowerBomb = 0x300,
@@ -1024,9 +1065,6 @@ enum kMessageBoxText {
   kTxt_Y = 0xF8,
   kTxt_Z = 0xF9,
   kTxt_Space = 0x284E,
-  kTxt_Pr = 0x2800,
-  kTxt_Gn = 0x3800,
-  kTxt_Yl = 0x3C00,
 };
 
 /* 53 */

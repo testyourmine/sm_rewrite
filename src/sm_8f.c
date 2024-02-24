@@ -729,7 +729,7 @@ uint16 RoomDefStateSelect_IsBossDead(uint16 k) {  // 0x8FE629
 }
 
 uint16 RoomDefStateSelect_MorphBallMissiles(uint16 k) {  // 0x8FE652
-  if ((collected_items & 4) == 0 || !samus_max_missiles)
+  if ((collected_items & kItem_MorphBall) == 0 || !samus_max_missiles)
     return k + 2;
   const uint16 *v1 = (const uint16 *)RomPtr_8F(k);
   return RoomDefStateSelect_Finish(*v1);

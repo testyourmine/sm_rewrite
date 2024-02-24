@@ -2006,7 +2006,7 @@ void MotherBrainsBrain_Shot(void) {  // 0xA9B507
     else
       NormalEnemyShotAiSkipDeathAnim_CurEnemy();
   } else {
-    uint16 v1 = HIBYTE(projectile_type[collision_detection_index]) & 7;
+    uint16 v1 = HIBYTE(projectile_type[collision_detection_index]) & (kProjectileType_BeamExplosion >> 8);
     if (kMotherBrainProjVulnerability[v1]) {
       plm_room_arguments[39] += kMotherBrainProjVulnerability[v1];
       QueueSfx2_Max6(kSfx2_ShotMotherBrainPhase1_HighPriority);
@@ -2037,7 +2037,7 @@ void MotherBrain_Phase23_ShotReaction(void) {  // 0xA9B562
 }
 
 uint16 MotherBrain_DetermineShotReactionType(void) {  // 0xA9B58E
-  return kMotherBrainShotReaction[HIBYTE(projectile_type[collision_detection_index]) & 7];
+  return kMotherBrainShotReaction[HIBYTE(projectile_type[collision_detection_index]) & (kProjectileType_BeamExplosion >> 8)];
 }
 
 void MotherBrain_Phase3_BeamShotReaction(void) {  // 0xA9B5A9
@@ -2056,7 +2056,7 @@ void MotherBrain_Phase3_BeamShotReaction(void) {  // 0xA9B5A9
 void MotherBrainsBrain_Touch(void) {  // 0xA9B5C6
   int16 v0;
 
-  if (samus_movement_type == 3) {
+  if (samus_movement_type == kMovementType_03_SpinJumping) {
     v0 = 13;
     EnemyData *v1 = gEnemyData(0);
     uint16 flash_timer = v1[1].flash_timer;
@@ -2498,7 +2498,7 @@ void MotherBomb_FiringRainbowBeam_10_FinishFiringRainbow(void) {  // 0xA9BA5E
 }
 
 void MotherBomb_FiringRainbowBeam_11_LetSamusFall(void) {  // 0xA9BAC4
-  SomeMotherBrainScripts(0);
+  DrainedSamusHandler(0);
   Get_MotherBomb(0)->mbb_var_A = FUNC16(MotherBomb_FiringRainbowBeam_12_WaitForSamusHitGround);
   MotherBomb_FiringRainbowBeam_12_WaitForSamusHitGround();
 }
@@ -3304,8 +3304,8 @@ void Samus_DecrementAmmoDueToRainbowBeam(void) {  // 0xA9C4C4
   if ((random_enemy_counter & 3) == 0 && samus_missiles) {
     uint16 v0 = samus_missiles - kAmmoDecrement;
     if (sign16(samus_missiles - kAmmoDecrement - 1)) {
-      if (hud_item_index == 1)
-        hud_item_index = 0;
+      if (hud_item_index == kHudItem_1_Missile)
+        hud_item_index = kHudItem_0_Nothing;
       v0 = 0;
       samus_auto_cancel_hud_item_index = 0;
     }
@@ -3314,8 +3314,8 @@ void Samus_DecrementAmmoDueToRainbowBeam(void) {  // 0xA9C4C4
   if ((random_enemy_counter & 3) == 0 && samus_super_missiles) {
     uint16 v1 = samus_super_missiles - kAmmoDecrement;
     if (sign16(samus_super_missiles - kAmmoDecrement - 1)) {
-      if (hud_item_index == 2)
-        hud_item_index = 0;
+      if (hud_item_index == kHudItem_2_SuperMissile)
+        hud_item_index = kHudItem_0_Nothing;
       v1 = 0;
       samus_auto_cancel_hud_item_index = 0;
     }
@@ -3324,8 +3324,8 @@ void Samus_DecrementAmmoDueToRainbowBeam(void) {  // 0xA9C4C4
   if (samus_power_bombs) {
     uint16 v2 = samus_power_bombs - kAmmoDecrement;
     if (sign16(samus_power_bombs - kAmmoDecrement - 1)) {
-      if (hud_item_index == 3)
-        hud_item_index = 0;
+      if (hud_item_index == kHudItem_3_PowerBomb)
+        hud_item_index = kHudItem_0_Nothing;
       v2 = 0;
       samus_auto_cancel_hud_item_index = 0;
     }
@@ -3342,16 +3342,16 @@ void Samus_DamageDueToShitroid(void) {  // 0xA9C560
   int16 v0;
 
   v0 = -4;
-  if (equipped_items & 1)
+  if (equipped_items & kItem_VariaSuit)
     v0 = -3;
-  uint16 v1 = samus_health + (equipped_items & 1) + v0;
+  uint16 v1 = samus_health + (equipped_items & kItem_VariaSuit) + v0;
   if (sign16(v1 - 2))
     v1 = 1;
   samus_health = v1;
 }
 
 void Samus_DamageDueToRainbowBeam(void) {  // 0xA9C57D
-  uint16 v0 = samus_health + (equipped_items & 1) - 2;
+  uint16 v0 = samus_health + (equipped_items & kItem_VariaSuit) - 2;
   if (sign16(v0 - 1))
     v0 = 0;
   samus_health = v0;
@@ -3616,7 +3616,7 @@ void ShitroidInCutscene_GetIntoFace(uint16 k) {  // 0xA9C811
   if (!Shitroid_Func_2(k, rect)
       || (E = Get_ShitroidInCutscene(k), v3 = (int16)(E->sice_var_F - 1) < 0, --E->sice_var_F, v3)) {
     Get_ShitroidInCutscene(k)->sice_var_A = FUNC16(ShitroidInCutscene_LatchOntoBrain);
-    SomeMotherBrainScripts(1);
+    DrainedSamusHandler(1);
   }
 }
 
@@ -3694,7 +3694,7 @@ void ShitroidInCutscene_MoveUpToCeiling(uint16 k) {  // 0xA9C959
   Rect16U rect = { Get_ShitdroidInCutscene(0x40)->base.x_pos, 0, 4, 4 };
   Shitroid_Func_GraduallyAccelerateTowards0x400(k, 0, rect.x, rect.y);
   if (!Shitroid_Func_2(k, rect)) {
-    SomeMotherBrainScripts(4);
+    DrainedSamusHandler(4);
     Enemy_ShitroidInCutscene *E = Get_ShitdroidInCutscene(k);
     E->sice_var_A = FUNC16(ShitroidInCutscene_MoveToSamus);
     E->sice_var_0E = addr_kShitroidInCutscene_MoveToSamusTab0;
@@ -3917,7 +3917,7 @@ void ShitroidInCutscene_FinishCutscene(uint16 k) {  // 0xA9CCF0
   if (MotherBrain_Phase3_TurnLightsBackOn(v2 - 1) & 1) {
     E->sice_var_A = FUNC16(MotherBrain_Phase3_Recover_MakeDistance);
     RunSamusCode(kSamusCode_23_DisableRainbowSamusAndStandUp);
-    SomeMotherBrainScripts(3);
+    DrainedSamusHandler(3);
     Get_ShitdroidInCutscene(k)->base.properties |= kEnemyProps_Deleted;
     Get_ShitdroidInCutscene(0x40)->sice_var_0A = 0;
   }
@@ -6029,7 +6029,7 @@ void Shitroid_Func_16(uint16 k) {  // 0xA9F21B
     Enemy_SetInstrList(k, addr_kShitroid_Ilist_FinishDraining);
     E->shitr_var_E = 10;
     RunSamusCode(kSamusCode_19_DisableBlueFlashing);
-    SomeMotherBrainScripts(0);
+    DrainedSamusHandler(0);
     E->shitr_var_04 = 0;
     QueueMusic_Delayed8(kMusic_Song2);
   } else {
@@ -6118,7 +6118,7 @@ void Shitroid_Func_23(void) {  // 0xA9F36D
 void Shitroid_Func_24(uint16 k) {  // 0xA9F3A3
   Enemy_Shitroid *E = Get_Shitroid(k);
   if ((--E->shitr_var_F & 0x8000) != 0) {
-    SomeMotherBrainScripts(2);
+    DrainedSamusHandler(2);
     E->shitr_parameter_2 = 1;
     E->shitr_var_A = FUNC16(Shitroid_Func_25);
     Shitroid_Func_25(k);
@@ -6416,7 +6416,7 @@ void Shitroid_Touch(void) {  // 0xA9F789
   Enemy_Shitroid *E = Get_Shitroid(cur_enemy_index);
   if (E->shitr_parameter_2) {
     Shitroid_Func_26(cur_enemy_index);
-    if (samus_movement_type == 3 && !sign16(samus_x_pos - 512)) {
+    if (samus_movement_type == kMovementType_03_SpinJumping && !sign16(samus_x_pos - 512)) {
       uint16 r18 = (uint8)(0x80 - CalculateAngleFromXY(samus_x_pos - E->base.x_pos, samus_y_pos - E->base.y_pos) + 0x80);
       E->shitr_var_B += Math_MultBySin(0x40, r18);
       E->shitr_var_C += Math_MultByCos(0x40, r18);

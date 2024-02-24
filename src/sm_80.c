@@ -1294,9 +1294,9 @@ void InitializeHud(void) {  // 0x809A79
   WriteReg(MDMAEN, 2);
   for (int i = 0; i != 192; i += 2)
     hud_tilemap.arr[i >> 1] = kHudTilemaps_Row1to3[i >> 1];
-  if ((equipped_items & 0x8000) != 0)
+  if ((equipped_items & kItem_Xray) != 0)
     AddXrayToHudTilemap();
-  if ((equipped_items & 0x4000) != 0)
+  if ((equipped_items & kItem_Grapple) != 0)
     AddGrappleToHudTilemap();
   if (samus_max_missiles)
     AddMissilesToHudTilemap();
@@ -1377,8 +1377,8 @@ void HandleHudTilemap(void) {  // 0x809B44
     ToggleHudItemHighlight(hud_item_index, 0x1000);
     ToggleHudItemHighlight(samus_prev_hud_item_index, 0x1400);
     samus_prev_hud_item_index = hud_item_index;
-    if (samus_movement_type != 3
-        && samus_movement_type != 20
+    if (samus_movement_type != kMovementType_03_SpinJumping
+        && samus_movement_type != kMovementType_14_WallJumping
         && grapple_beam_function == 0xC4F0
         && !time_is_frozen_flag) {
       QueueSfx1_Max6(kSfx1_SwitchHudItem);

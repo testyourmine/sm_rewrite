@@ -1962,7 +1962,7 @@ void WriteEnemyOams(void) {  // 0xA0944A
 void NormalEnemyFrozenAI(void) {  // 0xA0957E
   EnemyData *v0 = gEnemyData(cur_enemy_index);
   v0->flash_timer = 0;
-  if (!v0->frozen_timer || (--v0->frozen_timer, (equipped_beams & 2) == 0)) {
+  if (!v0->frozen_timer || (--v0->frozen_timer, (equipped_beams & kBeam_Ice) == 0)) {
     uint16 v1 = v0->ai_handler_bits & 0xFFFB;
     v0->ai_handler_bits = v1;
     v0->frozen_timer = v1;
@@ -2027,14 +2027,14 @@ void SamusProjectileInteractionHandler(void) {  // 0xA09785
     return;
   for (int pidx = 0; pidx != num_colls_to_check;pidx++) {
     collision_detection_index = pidx;
-    if (!projectile_damage[pidx] || sign16(projectile_type[pidx]) || !sign16((projectile_type[pidx] & 0xF00) - 1792))
+    if (!projectile_damage[pidx] || sign16(projectile_type[pidx]) || !sign16((projectile_type[pidx] & kProjectileType_TypeMask) - kProjectileType_BeamExplosion))
       continue;
-    if ((projectile_dir[pidx] & 0x10) != 0)
+    if ((projectile_dir[pidx] & kProjectileDir_Delete) != 0)
       continue;
     if (abs16(projectile_x_pos[pidx] - samus_x_pos) - projectile_x_radius[pidx] < samus_x_radius &&
         abs16(projectile_y_pos[pidx] - samus_y_pos) - projectile_y_radius[pidx] < samus_y_radius) {
-      if ((projectile_type[pidx] & 0xFF00) != 768 && (projectile_type[pidx] & 0xFF00) != 1280) {
-        projectile_dir[pidx] |= 0x10;
+      if ((projectile_type[pidx] & 0xFF00) != kProjectileType_PowerBomb && (projectile_type[pidx] & 0xFF00) != kProjectileType_Bomb) {
+        projectile_dir[pidx] |= kProjectileDir_Delete;
         Samus_DealDamage(SuitDamageDivision(projectile_damage[pidx]));
         samus_invincibility_timer = 96;
         samus_knockback_timer = 5;
@@ -2095,7 +2095,8 @@ void EprojProjCollDet(void) {  // 0xA0996C
       if (eproj_flags[i] == 2)
         break;
       uint16 v4 = projectile_type[j];
-      if (v4 && (v4 & 0xF00) != 768 && (v4 & 0xF00) != 1280 && sign16((v4 & 0xF00) - 1792)) {
+      if (v4 && (v4 & kProjectileType_TypeMask) != kProjectileType_PowerBomb && (v4 & kProjectileType_TypeMask) != kProjectileType_Bomb 
+          && sign16((v4 & kProjectileType_TypeMask) - kProjectileType_BeamExplosion)) {
         if ((eproj_x_pos[i] & 0xFFE0) == (projectile_x_pos[j] & 0xFFE0) && 
             (eproj_y_pos[i] & 0xFFE0) == (projectile_y_pos[j] & 0xFFE0)) {
           HandleEprojCollWithProj(i * 2, j * 2);
@@ -2107,8 +2108,8 @@ void EprojProjCollDet(void) {  // 0xA0996C
 
 void HandleEprojCollWithProj(uint16 k, uint16 j) {  // 0xA099F9
   int i = j >> 1;
-  if ((projectile_type[i] & 8) == 0)
-    projectile_dir[i] |= 0x10;
+  if ((projectile_type[i] & kProjectileType_Plasma) == 0)
+    projectile_dir[i] |= kProjectileDir_Delete;
   if (eproj_flags[k >> 1] == 1) {
     int v4 = k >> 1;
     CreateSpriteAtPos(projectile_x_pos[v4], projectile_y_pos[v4], 6, 0);
@@ -2235,7 +2236,8 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
     return;
   for(int pidx = 0; pidx < 5; pidx++) {
     uint16 v4 = projectile_type[pidx];
-    if (!(v4 && (v4 & 0xF00) != 768 && (v4 & 0xF00) != 1280 && sign16((v4 & 0xF00) - 1792)))
+    if (!(v4 && (v4 & kProjectileType_TypeMask) != kProjectileType_PowerBomb && (v4 & kProjectileType_TypeMask) != kProjectileType_Bomb
+        && sign16((v4 & kProjectileType_TypeMask) - kProjectileType_BeamExplosion)))
       continue;
     if (!sign16(E->spritemap_pointer))
       Unreachable();
@@ -2250,12 +2252,12 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
             (int16)(projectile_x_pos[pidx] - projectile_x_radius[pidx] - (coll_x_pos + hb->right)) < 0 &&
             (int16)(projectile_y_radius[pidx] + projectile_y_pos[pidx] - (coll_y_pos + hb->top)) >= 0 &&
             (int16)(projectile_y_pos[pidx] - projectile_y_radius[pidx] - (coll_y_pos + hb->bottom)) < 0) {
-          if ((projectile_type[pidx] & 0xF00) == 512) {
+          if ((projectile_type[pidx] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
             earthquake_timer = 30;
             earthquake_type = 18;
           }
-          if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & 8) == 0)
-            projectile_dir[pidx] |= 0x10;
+          if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & kProjectileType_Plasma) == 0)
+            projectile_dir[pidx] |= kProjectileDir_Delete;
           collision_detection_index = pidx;
           CallHitboxShot(E->bank << 16 | hb->proj_coll_ptr, pidx * 2);
           return;
@@ -2277,7 +2279,7 @@ void EnemyBombCollHandler_Multibox(void) {  // 0xA09D23
     if (!projectile_x_pos[pidx])
       continue;
     uint16 v4 = projectile_type[pidx];
-    if (!(v4 && (v4 & 0xF00) == 1280 && !projectile_variables[pidx]))
+    if (!(v4 && (v4 & kProjectileType_TypeMask) == kProjectileType_Bomb && !projectile_variables[pidx]))
       continue;
     if (!sign16(E->spritemap_pointer))
       Unreachable();
@@ -2292,7 +2294,7 @@ void EnemyBombCollHandler_Multibox(void) {  // 0xA09D23
             (int16)(projectile_x_pos[pidx] - projectile_x_radius[pidx] - (coll_x_pos + hb->right)) < 0 &&
             (int16)(projectile_y_radius[pidx] + projectile_y_pos[pidx] - (coll_y_pos + hb->top)) >= 0 &&
             (int16)(projectile_y_pos[pidx] - projectile_y_radius[pidx] - (coll_y_pos + hb->bottom)) < 0) {
-          projectile_dir[pidx] |= 0x10;
+          projectile_dir[pidx] |= kProjectileDir_Delete;
           collision_detection_index = pidx;
           CallHitboxShot(E->bank << 16 | hb->proj_coll_ptr, pidx * 2);
           return;
@@ -2448,17 +2450,18 @@ void EprojCollHandler(void) {  // 0xA0A143
     return;
   for (int pidx = 0; pidx < 5; pidx++) {
     uint16 j = projectile_type[pidx];
-    if (j && (j & 0xF00) != 768 && (j & 0xF00) != 1280 && sign16((j & 0xF00) - 1792)) {
+    if (j && (j & kProjectileType_TypeMask) != kProjectileType_PowerBomb && (j & kProjectileType_TypeMask) != kProjectileType_Bomb
+        && sign16((j & kProjectileType_TypeMask) - kProjectileType_BeamExplosion)) {
       uint16 x = abs16(projectile_x_pos[pidx] - E->x_pos);
       uint16 y = abs16(projectile_y_pos[pidx] - E->y_pos);
       if (x - projectile_x_radius[pidx] < E->x_width) {
         if (y - projectile_y_radius[pidx] < E->y_height) {
-          if ((projectile_type[pidx] & 0xF00) == 512) {
+          if ((projectile_type[pidx] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
             earthquake_timer = 30;
             earthquake_type = 18;
           }
-          if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & 8) == 0)
-            projectile_dir[pidx] |= 0x10;
+          if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & kProjectileType_Plasma) == 0)
+            projectile_dir[pidx] |= kProjectileDir_Delete;
           collision_detection_index = pidx;
           CallEnemyAi(E->bank << 16 | get_EnemyDef_A2(E->enemy_ptr)->shot_ai);
           return;
@@ -2476,12 +2479,12 @@ void EnemyBombCollHandler(void) {  // 0xA0A236
     return;
   for(int pidx = 5; pidx < 10; pidx++) {
     if (!projectile_type[pidx] || projectile_variables[pidx] ||
-        (projectile_type[pidx] & 0xF00) != 1280 && (projectile_type[pidx] & 0x8000) == 0)
+        (projectile_type[pidx] & kProjectileType_TypeMask) != kProjectileType_Bomb && (projectile_type[pidx] & kProjectileType_DontInteractWithSamus) == 0)
       continue;
     if (abs16(projectile_x_pos[pidx] - E->x_pos) - projectile_x_radius[pidx] < E->x_width && 
         abs16(projectile_y_pos[pidx] - E->y_pos) - projectile_y_radius[pidx] < E->y_height) {
       collision_detection_index = pidx;
-      projectile_dir[pidx] |= 0x10;
+      projectile_dir[pidx] |= kProjectileDir_Delete;
       CallEnemyAi(E->bank << 16 | get_EnemyDef_A2(E->enemy_ptr)->shot_ai);
       return;
     }
@@ -2540,9 +2543,9 @@ void RinkasDeathAnimation(uint16 a) {  // 0xA0A410
 }
 
 uint16 SuitDamageDivision(uint16 a) {  // 0xA0A45E
-  if ((equipped_items & 0x20) != 0)
+  if ((equipped_items & kItem_GravitySuit) != 0)
     return a >> 2;
-  if (equipped_items & 1)
+  if (equipped_items & kItem_VariaSuit)
     return a >> 1;
   return a;
 }
@@ -2653,7 +2656,7 @@ void NormalEnemyShotAi(void) {  // 0xA0A63D
     CreateSpriteAtPos(E->x_pos, E->y_pos, 55, 0);
   }
   if (!E->health) {
-    uint16 j = HIBYTE(projectile_type[collision_detection_index]) & 0xF;
+    uint16 j = HIBYTE(projectile_type[collision_detection_index]) & (kProjectileType_TypeMask >> 8);
     gEnemySpawnData(cur_enemy_index)->cause_of_death = j;
     uint16 death_anim = 2;
     if (j == 2) {
@@ -2697,15 +2700,15 @@ uint16 NormalEnemyShotAiSkipDeathAnim(void) {  // 0xA0A6DE
   if (!vulnerability_ptr)
     vulnerability_ptr = addr_kEnemyVulnerability;
   uint16 r20 = vulnerability_ptr;
-  if ((r18 & 0xF00) != 0) {
-    v5 = r18 & 0xF00;
-    if ((r18 & 0xF00) == 256 || v5 == 512) {
-      v6 = (r18 & 0xF00) >> 8;
+  if ((r18 & kProjectileType_TypeMask) != 0) {
+    v5 = r18 & kProjectileType_TypeMask;
+    if ((r18 & kProjectileType_TypeMask) == kProjectileType_Missile || v5 == kProjectileType_SuperMissile) {
+      v6 = (r18 & kProjectileType_TypeMask) >> 8;
       varE32 = get_Vulnerability(r20 + v6)->plasma_ice_wave & 0x7F;
-    } else if (v5 == 1280) {
+    } else if (v5 == kProjectileType_Bomb) {
       varE32 = get_Vulnerability(r20)->bomb & 0x7F;
     } else {
-      if (v5 != 768)
+      if (v5 != kProjectileType_PowerBomb)
         goto LABEL_18;
       varE32 = get_Vulnerability(r20)->power_bomb & 0x7F;
     }
@@ -2729,7 +2732,7 @@ LABEL_9:;
         ++varE2E;
       }
       uint16 v15 = cur_enemy_index;
-      if ((projectile_type[collision_detection_index] & 8) != 0)
+      if ((projectile_type[collision_detection_index] & kProjectileType_Plasma) != 0)
         gEnemyData(cur_enemy_index)->invincibility_timer = 16;
       EnemyData *v16 = gEnemyData(v15);
       uint16 health = v16->health;
@@ -2737,7 +2740,7 @@ LABEL_9:;
       uint16 v18 = health - pd;
       v19 = !v19;
       if (!v18 || !v19) {
-        if ((projectile_type[collision_detection_index] & 2) != 0
+        if ((projectile_type[collision_detection_index] & kProjectileType_Ice) != 0
             && (last_enemy_power & 0xF0) != 128
             && !v16->frozen_timer) {
           v20 = 400;
@@ -2756,7 +2759,7 @@ LABEL_9:;
     }
 LABEL_18:;
     int v7 = collision_detection_index;
-    projectile_dir[v7] |= 0x10;
+    projectile_dir[v7] |= kProjectileDir_Delete;
     CreateSpriteAtPos(projectile_x_pos[v7], projectile_y_pos[v7], 6, 0);
     QueueSfx1_Max3(kSfx1_DudShot);
     return varE2E;
@@ -2791,7 +2794,7 @@ void CreateDudShot(void) {  // 0xA0A8BC
   int v0 = collision_detection_index;
   CreateSpriteAtPos(projectile_x_pos[v0], projectile_y_pos[v0], 6, 0);
   QueueSfx1_Max3(kSfx1_DudShot);
-  projectile_dir[collision_detection_index] |= 0x10;
+  projectile_dir[collision_detection_index] |= kProjectileDir_Delete;
 }
 
 typedef struct PositionAndWidth {

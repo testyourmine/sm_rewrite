@@ -50,11 +50,11 @@ void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
   int v3 = k >> 1;
   uint16 v4 = projectile_type[v3], v5;
   if ((v4 & 0x20) != 0) {
-    v5 = kSpazerSbaTrailOffsets[projectile_type[v3] & 0xF] + 2 * (projectile_dir[v3] & 0xF);
+    v5 = kSpazerSbaTrailOffsets[projectile_type[v3] & kProjectileType_BeamMask] + 2 * (projectile_dir[v3] & kProjectileDir_DirMask);
   } else if ((v4 & 0x10) != 0) {
-    v5 = kChargedBeamTrailOffsets[projectile_type[v3] & 0xF] + 2 * (projectile_dir[v3] & 0xF);
+    v5 = kChargedBeamTrailOffsets[projectile_type[v3] & kProjectileType_BeamMask] + 2 * (projectile_dir[v3] & kProjectileDir_DirMask);
   } else {
-    v5 = kUnchargedBeamTrailOffsets[projectile_type[v3] & 0xF] + 2 * (projectile_dir[v3] & 0xF);
+    v5 = kUnchargedBeamTrailOffsets[projectile_type[v3] & kProjectileType_BeamMask] + 2 * (projectile_dir[v3] & kProjectileDir_DirMask);
   }
   uint16 v6 = *(uint16 *)RomPtr_9B(v5) + 4 * R22;
   const uint8 *p = RomPtr_9B(v6);
@@ -67,10 +67,10 @@ void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
 
 void StartSamusDeathAnimation(void) {  // 0x9BB3A7
   uint16 v0 = samus_movement_type;
-  if (samus_movement_type == 3)
+  if (samus_movement_type == kMovementType_03_SpinJumping)
     QueueSfx1_Max6(kSfx1_SpinJumpEnd_Silence);
   uint16 v1 = kDeathAnimationFrames[v0];
-  if (samus_pose_x_dir == 4)
+  if (samus_pose_x_dir == kSamusXDir_FaceLeft)
     samus_pose = kPose_D8_FaceL_CrystalFlashEnd;
   else
     samus_pose = kPose_D7_FaceR_CrystalFlashEnd;
@@ -228,15 +228,15 @@ static int ProcessEnemyGrappleBeamColl(uint16 a, uint16 r18) {  // 0x9BB907
     return 0;
   case 6:
     r18 = *((uint16 *)RomPtr_A0(r18) + 3);
-    if ((equipped_items & 0x20) != 0) {
+    if ((equipped_items & kItem_GravitySuit) != 0) {
       r18 >>= 2;
-    } else if (equipped_items & 1) {
+    } else if (equipped_items & kItem_VariaSuit) {
       r18 >>= 1;
     }
     Samus_DealDamage(r18);
     samus_invincibility_timer = 96;
     samus_knockback_timer = 5;
-    knockback_x_dir = samus_pose_x_dir == 4;
+    knockback_x_dir = samus_pose_x_dir == kSamusXDir_FaceLeft;
     return 1;
   default:
     Unreachable();
@@ -269,7 +269,7 @@ void HandleConnectingGrapple(void) {  // 0x9BB97C
     if (samus_y_speed || samus_y_subspeed) {
       grapple_beam_function = kGrappleBlockVerticalMovementConnectionPtrs[v1];
       CallGrappleNextFunc(kGrappleBlockVerticalMovementConnectionPtrs[v1 + 1] | 0x9B0000);
-    } else if (samus_movement_type == 5) {
+    } else if (samus_movement_type == kMovementType_05_Crouching) {
       grapple_beam_function = kGrappleBlockCrouchConnectionPtrs[v1];
       CallGrappleNextFunc(kGrappleBlockCrouchConnectionPtrs[v1 + 1] | 0x9B0000);
     } else {
@@ -511,7 +511,7 @@ LABEL_8:;
       v3 = 16;
     samus_anim_frame = v3 + 32;
   }
-  if (samus_pose_x_dir == 4) {
+  if (samus_pose_x_dir == kSamusXDir_FaceLeft) {
     samus_x_pos = x_pos_of_start_of_grapple_beam + (int8)kGrappleBeam_SwingingData2[v2];
     samus_y_pos = y_pos_of_start_of_grapple_beam + (int8)kGrappleBeam_SwingingData2[v2 + 1];
   } else {
@@ -554,7 +554,7 @@ void GrappleBeamFunc_BEEB(void) {  // 0x9BBEEB
 void GrappleBeamFunc_BF1B(void) {  // 0x9BBF1B
   uint16 r22 = kPoseParams[samus_pose].y_offset_to_gfx;
   uint16 v0 = 2 * grapple_beam_direction;
-  if (samus_pose == kPose_49_FaceL_Moonwalk || samus_pose == kPose_4A_FaceR_Moonwalk || samus_movement_type != 1) {
+  if (samus_pose == kPose_49_FaceL_Moonwalk || samus_pose == kPose_4A_FaceR_Moonwalk || samus_movement_type != kMovementType_01_Running) {
     int v1 = v0 >> 1;
     x_pos_of_start_of_grapple_beam = kGrappleBeam_OriginX_NoRun[v1] + samus_x_pos;
     x_pos_of_start_of_grapple_beam_prevframe = kGrappleBeam_0x0d1a_offs_NoRun[v1] + samus_x_pos;
@@ -616,7 +616,7 @@ void HandleGrappleBeamFlare(void) {  // 0x9BC036
       flare_animation_timer = kFlareAnimDelays_Main[v0];
     }
     uint16 r22;
-    if (samus_pose_x_dir == 4)
+    if (samus_pose_x_dir == kSamusXDir_FaceLeft)
       r22 = flare_animation_frame + kFlareLeftSpritemapOffsets[0];
     else
       r22 = flare_animation_frame + kFlareRightSpritemapOffsets[0];
@@ -638,7 +638,7 @@ void GrappleBeamHandler(void) {  // 0x9BC490
   CallGrappleBeamFunc(grapple_beam_function | 0x9B0000);
   if (grapple_beam_function != FUNC16(GrappleBeamFunc_Inactive)
       && sign16(grapple_beam_function - FUNC16(GrappleBeamFunc_Cancel))
-      && (samus_suit_palette_index & 4) == 0
+      && (samus_suit_palette_index & kSuitPaletteIndex_4_Gravity) == 0
       && fx_type
       && (r18 = Samus_GetBottom_R18(), (fx_y_pos & 0x8000) == 0)
       && sign16(fx_y_pos - r18)) {
@@ -685,7 +685,7 @@ void GrappleBeamFunc_FireGoToCancel(void) {  // 0x9BC51E
   grapple_beam_end_angle16 = kGrappleBeam_Init_EndAngle[v1];
   grapple_beam_end_angles_mirror = grapple_beam_end_angle16;
   grapple_varCF6 = 10;
-  if (samus_pose == kPose_49_FaceL_Moonwalk || samus_pose == kPose_4A_FaceR_Moonwalk || samus_movement_type != 1) {
+  if (samus_pose == kPose_49_FaceL_Moonwalk || samus_pose == kPose_4A_FaceR_Moonwalk || samus_movement_type != kMovementType_01_Running) {
     grapple_beam_origin_x_offset = kGrappleBeam_OriginX_NoRun[v1];
     grapple_beam_origin_y_offset = kGrappleBeam_OriginY_NoRun[v1] - r22;
     grapple_beam_end_x_pos = kGrappleBeam_OriginX_NoRun[v1] + samus_x_pos;
@@ -738,7 +738,7 @@ void GrappleBeamFunc_FireGoToCancel(void) {  // 0x9BC51E
   QueueSfx1_Max1(kSfx1_GrappleStart);
   flare_counter = 1;
   play_resume_charging_beam_sfx = 0;
-  if (samus_movement_handler == FUNC16(Samus_MoveHandler_ReleaseFromGrapple))
+  if (samus_movement_handler == FUNC16(Samus_MovementHandler_ReleaseFromGrapple))
     samus_movement_handler = FUNC16(Samus_MovementHandler_Normal);
 }
 
@@ -829,7 +829,7 @@ LABEL_2:
   if (grapple_beam_unkD26 || grapple_beam_end_angle16 != 0x8000) {
     PropelSamusFromGrappleSwing();
     grapple_beam_function = FUNC16(GrappleBeamFunc_ReleaseFromSwing);
-    samus_movement_handler = FUNC16(Samus_MoveHandler_ReleaseFromGrapple);
+    samus_movement_handler = FUNC16(Samus_MovementHandler_ReleaseFromGrapple);
   } else {
     grapple_beam_function = FUNC16(GrappleBeam_Func2);
   }
@@ -879,7 +879,7 @@ void GrappleBeamFunc_Cancel(void) {  // 0x9BC856
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
   Samus_PostGrappleCollisionDetect();
   if (samus_auto_cancel_hud_item_index) {
-    hud_item_index = 0;
+    hud_item_index = kHudItem_0_Nothing;
     samus_auto_cancel_hud_item_index = 0;
   }
 }
@@ -895,7 +895,7 @@ LABEL_6:
   }
   if (sign16(samus_y_radius - 17)) {
     if ((kPoseParams[samus_pose].direction_shots_fired & 0xF0) != 0) {
-      if (samus_pose_x_dir == 4)
+      if (samus_pose_x_dir == kSamusXDir_FaceLeft)
         samus_new_pose_transitional = kPose_28_FaceL_Crouch;
       else
         samus_new_pose_transitional = kPose_27_FaceR_Crouch;
@@ -906,7 +906,7 @@ LABEL_6:
     goto LABEL_15;
   }
   if ((kPoseParams[samus_pose].direction_shots_fired & 0xF0) != 0) {
-    if (samus_pose_x_dir != 4) {
+    if (samus_pose_x_dir != kSamusXDir_FaceLeft) {
 LABEL_5:
       samus_new_pose_transitional = kPose_01_FaceR_Normal;
       goto LABEL_15;
@@ -942,14 +942,14 @@ LABEL_15:
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
   Samus_PostGrappleCollisionDetect();
   if (samus_auto_cancel_hud_item_index) {
-    hud_item_index = 0;
+    hud_item_index = kHudItem_0_Nothing;
     samus_auto_cancel_hud_item_index = 0;
   }
 }
 
 void GrappleBeamFunc_C9CE(void) {  // 0x9BC9CE
   QueueSfx1_Max15(kSfx1_GrappleEnd);
-  if (samus_pose_x_dir == 8)
+  if (samus_pose_x_dir == kSamusXDir_FaceRight)
     samus_new_pose_transitional = kPose_84_FaceL_Walljump;
   else
     samus_new_pose_transitional = kPose_83_FaceR_Walljump;
@@ -985,7 +985,7 @@ void GrappleBeamFunc_C9CE(void) {  // 0x9BC9CE
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
   Samus_PostGrappleCollisionDetect();
   if (samus_auto_cancel_hud_item_index) {
-    hud_item_index = 0;
+    hud_item_index = kHudItem_0_Nothing;
     samus_auto_cancel_hud_item_index = 0;
   }
 }
@@ -1050,7 +1050,7 @@ void GrappleBeamFunc_ReleaseFromSwing(void) {  // 0x9BCB8B
   samus_draw_handler = FUNC16(SamusDrawHandler_Default);
   Samus_PostGrappleCollisionDetect();
   if (samus_auto_cancel_hud_item_index) {
-    hud_item_index = 0;
+    hud_item_index = kHudItem_0_Nothing;
     samus_auto_cancel_hud_item_index = 0;
   }
 }

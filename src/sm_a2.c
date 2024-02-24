@@ -554,7 +554,7 @@ void MiniMaridiaBeybladeTurtle_Func3(uint16 k) {  // 0xA29198
     E->base.instruction_timer = 1;
     E->mmte_var_04 = 1;
     uint16 v2 = g_word_A28D68;
-    if ((samus_pose_x_dir & 0xF) == 8)
+    if ((samus_pose_x_dir & 0xF) == kSamusXDir_FaceRight)
       v2 = g_word_A28D6A;
     E->mmte_var_E = v2;
   } else {
@@ -1453,8 +1453,8 @@ void GunshipTop_7(uint16 k) {  // 0xA2A987
   bool v3 = (--E->gtp_var_A & 0x8000) != 0;
   if (v2 || v3) {
     Get_GunshipTop(k)->gtp_var_F = FUNC16(GunshipTop_8);
-    frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Func11);
-    frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_Func17);
+    frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Normal);
+    frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_Normal);
     loading_game_state = kLoadingGameState_5_Main;
     *(uint16 *)used_save_stations_and_elevators |= 1;
     load_station_index = 0;
@@ -1463,13 +1463,13 @@ void GunshipTop_7(uint16 k) {  // 0xA2A987
 }
 
 void GunshipTop_8(uint16 k) {  // 0xA2A9BD
-  if (game_state == kGameState_8_MainGameplay && frame_handler_alfa == FUNC16(Samus_FrameHandlerAlfa_Func11)) {
+  if (game_state == kGameState_8_MainGameplay && frame_handler_alfa == FUNC16(Samus_FrameHandlerAlfa_Normal)) {
     Enemy_GunshipTop *E = Get_GunshipTop(k);
     if ((int16)(E->base.x_pos - 8 - samus_x_pos) < 0
         && (int16)(E->base.x_pos + 8 - samus_x_pos) >= 0
         && (int16)(E->base.y_pos - 64 - samus_y_pos) < 0
         && (int16)(E->base.y_pos - samus_y_pos) >= 0
-        && !samus_movement_type
+        && samus_movement_type == kMovementType_00_Standing
         && (joypad1_newkeys & kButton_Down) != 0) {
       E->gtp_var_F = FUNC16(GunshipTop_9);
       if (samus_x_pos != 1152) {
@@ -1594,8 +1594,8 @@ void GunshipTop_16(uint16 k) {  // 0xA2ABA5
   if (v2 || v3) {
     Get_GunshipTop(k)->gtp_var_F = FUNC16(GunshipTop_8);
     if (sign16(game_state - kGameState_40_TransitionToDemo)) {
-      frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Func11);
-      frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_Func17);
+      frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Normal);
+      frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_Normal);
     }
   }
 }

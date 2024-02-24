@@ -102,12 +102,12 @@ void WalkingSpacePirates_883E(void) {  // 0xB2883E
   }
   Get_SpacePirates(cur_enemy_index)->base.invincibility_timer = 10;
   uint16 v2;
-  if ((projectile_dir[v1] & 0xF) == 7) {
-    v2 = 1;
-  } else if ((projectile_dir[v1] & 0xF) == 2) {
-    v2 = 8;
+  if ((projectile_dir[v1] & kProjectileDir_DirMask) == kProjectileDir_Left) {
+    v2 = kProjectileDir_UpRight;
+  } else if ((projectile_dir[v1] & kProjectileDir_DirMask) == kProjectileDir_Right) {
+    v2 = kProjectileDir_UpLeft;
   } else {
-    v2 = 5;
+    v2 = kProjectileDir_DownFaceLeft;
   }
   projectile_dir[v1] = v2;
   ProjectileReflection(v0);

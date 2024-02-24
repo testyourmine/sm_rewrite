@@ -2413,7 +2413,7 @@ void NewSaveFile(void) {  // 0x81B2CB
   samus_super_missiles = 0;
   samus_max_power_bombs = 0;
   samus_power_bombs = 0;
-  hud_item_index = 0;
+  hud_item_index = kHudItem_0_Nothing;
   collected_beams = 0;
   equipped_beams = 0;
   collected_items = 0;

@@ -1651,11 +1651,11 @@ uint16 Bang_Func_4(uint16 a) {  // 0xA3BBEB
   projectile_x_pos[v3] = E->base.x_pos;
   projectile_y_pos[v3] = E->base.y_pos;
   projectile_dir[v3] = a;
-  projectile_type[v3] = equipped_beams & 0xF | 0x10;
+  projectile_type[v3] = equipped_beams & (kBeam_Plasma | kBeam_Spazer | kBeam_Ice | kBeam_Wave) | kProjectileType_Charged;
   ++projectile_counter;
   ProjectileReflection(i);
   projectile_damage[v3] = E->bang_var_E;
-  QueueSfx1_Max6(kBang_ShotSoundIndices[projectile_type[v3] & 0xF]);
+  QueueSfx1_Max6(kBang_ShotSoundIndices[projectile_type[v3] & kProjectileType_BeamMask]);
   return 0;
 }
 
@@ -1776,7 +1776,7 @@ void Bang_Func_18(void) {  // 0xA3BEDA
 void Bang_Shot(void) {  // 0xA3BEFD
   Enemy_Bang *E = Get_Bang(cur_enemy_index);
   if (E->bang_var_F != 0xBCC1) {
-    E->bang_var_01 = kBang_ShotDirectionIndices[projectile_dir[collision_detection_index] & 0xF];
+    E->bang_var_01 = kBang_ShotDirectionIndices[projectile_dir[collision_detection_index] & kProjectileDir_DirMask];
     E->bang_var_F = FUNC16(Bang_Func_11);
     E->bang_var_07 = 0;
     E->bang_var_08 = 0;
@@ -1788,7 +1788,7 @@ void Bang_Shot(void) {  // 0xA3BEFD
     Bang_Func_18();
     int v1 = collision_detection_index;
     E->bang_var_E += projectile_damage[v1];
-    projectile_dir[v1] |= 0x10;
+    projectile_dir[v1] |= kProjectileDir_Delete;
     if (E->bang_var_20 == 9)
       E->bang_var_D = 1;
   }
@@ -1898,7 +1898,7 @@ void Skree_Shot(void) {  // 0xA3C7F5
     SpawnEprojWithGfx(0, v1, addr_kEproj_SkreeParticles_DownLeft);
     SpawnEprojWithGfx(0, v1, addr_kEproj_SkreeParticles_UpLeft);
     uint16 v5 = 2;
-    if ((projectile_type[collision_detection_index] & 0xF00) != 512)
+    if ((projectile_type[collision_detection_index] & kProjectileType_TypeMask) != kProjectileType_SuperMissile)
       v5 = 0;
     EnemyDeathAnimation(2 * collision_detection_index, v5);
   }
@@ -1989,9 +1989,9 @@ void MaridiaSnail_Func_5(uint16 k) {  // 0xA3CE9A
   if (msl_var_08 != 1 && msl_var_08 != 3 && msl_var_08 != 4 && msl_var_08 != 5) {
     if (!sign16(E->base.y_pos - samus_y_pos + 96)) {
       if ((int16)(E->base.x_pos - samus_x_pos) < 0) {
-        if (samus_pose_x_dir != 4)
+        if (samus_pose_x_dir != kSamusXDir_FaceLeft)
           goto LABEL_14;
-      } else if (samus_pose_x_dir != 8) {
+      } else if (samus_pose_x_dir != kSamusXDir_FaceRight) {
         goto LABEL_14;
       }
       if (E->msl_var_08 == 2)
@@ -2323,13 +2323,13 @@ uint8 MaridiaSnail_Func_20(uint16 k) {  // 0xA3D421
 
 uint8 MaridiaSnail_Func_21(uint16 k) {  // 0xA3D446
   if ((Get_MaridiaSnail(k)->msl_var_A & 0x8000) != 0)
-    return samus_pose_x_dir == 8;
-  return samus_pose_x_dir == 4;
+    return samus_pose_x_dir == kSamusXDir_FaceRight;
+  return samus_pose_x_dir == kSamusXDir_FaceLeft;
 }
 
 void MaridiaSnail_Shot(void) {  // 0xA3D469
   uint16 v0 = projectile_type[collision_detection_index] & 0xFF00;
-  if (v0 == 768 || v0 == 1280) {
+  if (v0 == kProjectileType_PowerBomb || v0 == kProjectileType_Bomb) {
     Enemy_NormalShotAI_A3();
   } else {
     uint16 msl_var_08 = Get_MaridiaSnail(cur_enemy_index)->msl_var_08;
@@ -2356,7 +2356,7 @@ void MaridiaSnail_Func_22(uint16 k) {  // 0xA3D49F
   int v4 = (uint16)(4 * v3) >> 1;
   E->msl_var_00 = kMaridiaSnail_Tab4[v4];
   E->msl_var_01 = kMaridiaSnail_Tab4[v4 + 1];
-  if ((samus_pose_x_dir & 4) != 0) {
+  if ((samus_pose_x_dir & kSamusXDir_FaceLeft) != 0) {
     E->msl_var_02 = -E->msl_var_02;
     E->msl_var_03 = -E->msl_var_03;
   }
@@ -2372,7 +2372,7 @@ void MaridiaSnail_Func_23(uint16 k) {  // 0xA3D557
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->msl_var_01 = -1;
-  E->msl_var_03 = (samus_pose_x_dir == 4) ? -1 : 1;
+  E->msl_var_03 = (samus_pose_x_dir == kSamusXDir_FaceLeft) ? -1 : 1;
 }
 
 void Reflec_Func_1(void) {  // 0xA3DB0C
@@ -2409,11 +2409,11 @@ void Reflec_Shot(void) {
   uint16 v0 = 2 * collision_detection_index;
   Enemy_Reflec *EK = Get_Reflec(cur_enemy_index);
   EK->base.invincibility_timer = 10;
-  uint16 v2 = 32 * EK->reflec_parameter_2 + 2 * (projectile_dir[v0 >> 1] & 0xF);
+  uint16 v2 = 32 * EK->reflec_parameter_2 + 2 * (projectile_dir[v0 >> 1] & kProjectileDir_DirMask);
   uint16 varE32 = v2;
   int v3 = v2 >> 1;
   if (kReflec_ShootDirectionsIndices[v3] == 0x8000) {
-    projectile_dir[v0 >> 1] |= 0x10;
+    projectile_dir[v0 >> 1] |= kProjectileDir_Delete;
     printf("Possible bug. What is X?\n");
     Enemy_Reflec *ET = Get_Reflec(v2);
     if (ET->base.health) {
@@ -2430,7 +2430,7 @@ void Reflec_Shot(void) {
       v4 = -kReflec_ShootDirectionsIndices[varE32 >> 1];
     int v5 = v0 >> 1;
     projectile_dir[v5] = v4;
-    projectile_type[v5] &= ~0x8000;
+    projectile_type[v5] &= ~kProjectileType_DontInteractWithSamus;
     ProjectileReflection(v0);
     QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   }
@@ -2972,9 +2972,9 @@ void Metroid_Touch(void) {  // 0xA3EDEB
 void Metroid_Func_5(uint16 k) {  // 0xA3EECE
   uint16 v1;
   uint16 varE32 = samus_y_pos - 8;
-  if ((equipped_items & 0x20) != 0) {
+  if ((equipped_items & kItem_GravitySuit) != 0) {
     v1 = 12288;
-  } else if (equipped_items & 1) {
+  } else if (equipped_items & kItem_VariaSuit) {
     v1 = 24576;
   } else {
     v1 = -16384;
@@ -2992,8 +2992,8 @@ void Metroid_Shot(void) {  // 0xA3EF07
   uint16 v0 = 2 * collision_detection_index;
   Enemy_Metroid *E = Get_Metroid(cur_enemy_index);
   if (E->base.frozen_timer) {
-    uint16 v3 = projectile_type[v0 >> 1] & 0xF00;
-    if (v3 == 256 || v3 == 512) {
+    uint16 v3 = projectile_type[v0 >> 1] & kProjectileType_TypeMask;
+    if (v3 == kProjectileType_Missile || v3 == kProjectileType_SuperMissile) {
       special_death_item_drop_x_origin_pos = E->base.x_pos;
       special_death_item_drop_y_origin_pos = E->base.y_pos;
       Enemy_NormalShotAI_SkipSomeParts_A3();
@@ -3009,7 +3009,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
     }
   } else {
     if (E->metroid_var_F == 2) {
-      if ((projectile_type[v0 >> 1] & 0xF00) == 1280) {
+      if ((projectile_type[v0 >> 1] & kProjectileType_TypeMask) == kProjectileType_Bomb) {
         E->metroid_var_E = 4;
         E->metroid_var_F = 3;
         E->base.current_instruction = addr_kMetroid_Ilist_E9CF;
@@ -3029,7 +3029,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
       E->base.current_instruction = addr_kMetroid_Ilist_E9CF;
       E->base.instruction_timer = 1;
       int v10 = collision_detection_index;
-      if ((projectile_type[v10] & 2) != 0) {
+      if ((projectile_type[v10] & kProjectileType_Ice) != 0) {
         QueueSfx3_Max6(kSfx3_EnemyFrozen_HighPriority);
         uint16 r18 = projectile_damage[v10];
         E->base.flash_timer = 4;

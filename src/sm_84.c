@@ -43,7 +43,7 @@ void ClearSoundsWhenGoingThroughDoor(void) {  // 0x848250
 }
 
 void UNUSED_sub_848258(void) {  // 0x848258
-  if (samus_movement_type << 8 == 768 || samus_movement_type << 8 == 5120)
+  if (samus_movement_type << 8 == (kMovementType_03_SpinJumping << 8) || samus_movement_type << 8 == (kMovementType_14_WallJumping << 8))
     QueueSfx1_Max15(kSfx1_SpinJumpEnd_Silence);
 }
 
@@ -52,7 +52,7 @@ void PlaySpinJumpSoundIfSpinJumping(void) {  // 0x848270
 }
 
 void UNUSED_sub_848278(void) {  // 0x848278
-  if (samus_movement_type << 8 == 768 || samus_movement_type << 8 == 5120)
+  if (samus_movement_type << 8 == (kMovementType_03_SpinJumping << 8) || samus_movement_type << 8 == (kMovementType_14_WallJumping << 8))
     QueueSfx1_Max15(kSfx1_ResumedSpinJump);
 }
 
@@ -419,8 +419,8 @@ const uint8 *PlmInstr_PickupBeamAndShowMessage(const uint8 *plmp, uint16 k) {  /
   uint16 t = GET_WORD(plmp);
   collected_beams |= t;
   equipped_beams |= t;
-  equipped_beams &= ~((t << 1) & 8);
-  equipped_beams &= ~((t >> 1) & 4);
+  equipped_beams &= ~((t << 1) & kBeam_Plasma);
+  equipped_beams &= ~((t >> 1) & kBeam_Spazer);
   UpdateBeamTilesAndPalette();
   PlayRoomMusicTrackAfterAFrames(0x168);
   DisplayMessageBox(plmp[2]);
@@ -1183,14 +1183,14 @@ uint8 PlmSetup_B6D3_MapStation(uint16 j) {  // 0x84B18B
 }
 
 uint8 PlmSetup_Bts47_MapStationRightAccess(uint16 j) {  // 0x84B1C8
-  if ((samus_collision_direction & 0xF) == 0 && samus_pose == kPose_8A_FaceL_Ranintowall && (samus_pose_x_dir & 4) != 0)
+  if ((samus_collision_direction & 0xF) == 0 && samus_pose == kPose_8A_FaceL_Ranintowall && (samus_pose_x_dir & kSamusXDir_FaceLeft) != 0)
     return ActivateStationIfSamusCannonLinedUp(plm_block_indices[j >> 1] - 2, j);
   plm_header_ptr[j >> 1] = 0;
   return 1;
 }
 
 uint8 PlmSetup_Bts4_MapStationLeftAccess(uint16 j) {  // 0x84B1F0
-  if ((samus_collision_direction & 0xF) == 1 && samus_pose == kPose_89_FaceR_Ranintowall && (samus_pose_x_dir & 8) != 0)
+  if ((samus_collision_direction & 0xF) == 1 && samus_pose == kPose_89_FaceR_Ranintowall && (samus_pose_x_dir & kSamusXDir_FaceRight) != 0)
     return ActivateStationIfSamusCannonLinedUp(plm_block_indices[j >> 1] + 4, j);
   plm_header_ptr[j >> 1] = 0;
   return 1;
@@ -1217,7 +1217,7 @@ uint8 PlmSetup_PlmB6EB_EnergyStation(uint16 j) {  // 0x84B245
 uint8 PlmSetup_B6E3_EnergyStationRightAccess(uint16 j) {  // 0x84B26D
   if ((samus_collision_direction & 0xF) != 0
       || samus_pose != kPose_8A_FaceL_Ranintowall
-      || (samus_pose_x_dir & 4) == 0
+      || (samus_pose_x_dir & kSamusXDir_FaceLeft) == 0
       || samus_health == samus_max_health) {
     plm_header_ptr[j >> 1] = 0;
     return 1;
@@ -1229,7 +1229,7 @@ uint8 PlmSetup_B6E3_EnergyStationRightAccess(uint16 j) {  // 0x84B26D
 uint8 PlmSetup_B6E7_EnergyStationLeftAccess(uint16 j) {  // 0x84B29D
   if ((samus_collision_direction & 0xF) == 1
       && samus_pose == kPose_89_FaceR_Ranintowall
-      && (samus_pose_x_dir & 8) != 0
+      && (samus_pose_x_dir & kSamusXDir_FaceRight) != 0
       && samus_health != samus_max_health) {
     return ActivateStationIfSamusCannonLinedUp(plm_block_indices[j >> 1] + 2, j);
   }
@@ -1240,7 +1240,7 @@ uint8 PlmSetup_B6E7_EnergyStationLeftAccess(uint16 j) {  // 0x84B29D
 uint8 PlmSetup_B6EF_MissileStationRightAccess(uint16 j) {  // 0x84B2D0
   if ((samus_collision_direction & 0xF) != 0
       || samus_pose != kPose_8A_FaceL_Ranintowall
-      || (samus_pose_x_dir & 4) == 0
+      || (samus_pose_x_dir & kSamusXDir_FaceLeft) == 0
       || samus_missiles == samus_max_missiles) {
     plm_header_ptr[j >> 1] = 0;
     return 1;
@@ -1251,7 +1251,7 @@ uint8 PlmSetup_B6EF_MissileStationRightAccess(uint16 j) {  // 0x84B2D0
 uint8 PlmSetup_B6F3_MissileStationLeftAccess(uint16 j) {  // 0x84B300
   if ((samus_collision_direction & 0xF) == 1
       && samus_pose == kPose_89_FaceR_Ranintowall
-      && (samus_pose_x_dir & 8) != 0
+      && (samus_pose_x_dir & kSamusXDir_FaceRight) != 0
       && samus_missiles != samus_max_missiles) {
     return ActivateStationIfSamusCannonLinedUp(plm_block_indices[j >> 1] + 2, j);
   } else {
@@ -1383,7 +1383,7 @@ uint8 PlmSetup_QuicksandSurface(uint16 j) {
   samus_x_base_subspeed &= ~0x8000;
   samus_x_base_speed = 0;
   uint16 v1 = 0;
-  if ((equipped_items & 0x20) != 0)
+  if ((equipped_items & kItem_GravitySuit) != 0)
     v1 = 2;
   if (!inside_block_reaction_samus_point)
     kPlmSetup_QuicksandSurface[samus_y_dir & 3](v1);
@@ -1575,7 +1575,7 @@ void PlmPreInstr_B7EB_DecTimerEnableSoundsDeletePlm(uint16 k) {  // 0x84B7DD
 }
 
 void PlmPreInstr_WakeAndLavaIfBoosterCollected(uint16 k) {  // 0x84B7EF
-  if ((collected_items & 0x2000) != 0) {
+  if ((collected_items & kItem_SpeedBooster) != 0) {
     if ((fx_target_y_pos & 0x8000) != 0) {
       plm_header_ptr[k >> 1] = 0;
     } else {
@@ -1719,7 +1719,7 @@ uint8 PlmSetup_B9F1_TurnCeresDoorSolid(uint16 j) {  // 0x84B9F1
 }
 
 const uint8 *PlmInstr_JumpIfSamusHasNoBombs(const uint8 *plmp, uint16 k) {  // 0x84BA6F
-  if ((collected_items & 0x1000) != 0)
+  if ((collected_items & kItem_Bombs) != 0)
     return plmp + 2;
   else
     return INSTRB_RETURN_ADDR(GET_WORD(plmp));
@@ -1920,7 +1920,7 @@ const uint8 *PlmInstr_SetGreyDoorPreInstr(const uint8 *plmp, uint16 k) {  // 0x8
 }
 
 uint8 PlmSetup_C806_LeftGreenGateTrigger(uint16 j) {  // 0x84C54D
-  if ((projectile_type[projectile_index >> 1] & 0xFFF) == 512)
+  if ((projectile_type[projectile_index >> 1] & 0xFFF) == kProjectileType_SuperMissile)
     return TriggerPlmOfBlockToTheRight(j);
   QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
@@ -1928,7 +1928,7 @@ uint8 PlmSetup_C806_LeftGreenGateTrigger(uint16 j) {  // 0x84C54D
 }
 
 uint8 PlmSetup_C80A_RightGreenGateTrigger(uint16 j) {  // 0x84C56C
-  if ((projectile_type[projectile_index >> 1] & 0xFFF) == 512)
+  if ((projectile_type[projectile_index >> 1] & 0xFFF) == kProjectileType_SuperMissile)
     return TriggerPlmOfBlockToTheLeft(j);
   QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
@@ -1939,7 +1939,7 @@ uint8 PlmSetup_C80E_LeftRedGateTrigger(uint16 j) {  // 0x84C58B
   int16 v1;
 
   v1 = projectile_type[projectile_index >> 1] & 0xFFF;
-  if (v1 == 256 || v1 == 512)
+  if (v1 == kProjectileType_Missile || v1 == kProjectileType_SuperMissile)
     return TriggerPlmOfBlockToTheRight(j);
   QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
@@ -1950,7 +1950,7 @@ uint8 PlmSetup_C812_RightRedGateTrigger(uint16 j) {  // 0x84C5AF
   int16 v1;
 
   v1 = projectile_type[projectile_index >> 1] & 0xFFF;
-  if (v1 == 256 || v1 == 512)
+  if (v1 == kProjectileType_Missile || v1 == kProjectileType_SuperMissile)
     return TriggerPlmOfBlockToTheLeft(j);
   QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
@@ -1958,7 +1958,7 @@ uint8 PlmSetup_C812_RightRedGateTrigger(uint16 j) {  // 0x84C5AF
 }
 
 uint8 PlmSetup_C822_RightYellowGateTrigger(uint16 j) {  // 0x84C5F1
-  if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
+  if ((projectile_type[projectile_index >> 1] & 0xFFF) != kProjectileType_PowerBomb)
     return TriggerPlmOfBlockToTheLeft(j);
   QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   plm_header_ptr[j >> 1] = 0;
@@ -1966,7 +1966,7 @@ uint8 PlmSetup_C822_RightYellowGateTrigger(uint16 j) {  // 0x84C5F1
 }
 
 uint8 PlmSetup_C81E_LeftYellowGateTrigger(uint16 j) {  // 0x84C5D3
-  if ((projectile_type[projectile_index >> 1] & 0xFFF) == 768)
+  if ((projectile_type[projectile_index >> 1] & 0xFFF) == kProjectileType_PowerBomb)
     return TriggerPlmOfBlockToTheRight(j);
   QueueSfx2_Max6(kSfx2_ShotDoorGateWithDudShot_ShotReflec_ShotMaridiaLargeIndestructibleSnail);
   int v1 = j >> 1;
@@ -1975,14 +1975,14 @@ uint8 PlmSetup_C81E_LeftYellowGateTrigger(uint16 j) {  // 0x84C5D3
 }
 
 uint8 PlmSetup_C81A_RightBlueGateTrigger(uint16 j) {  // 0x84C627
-  if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
+  if ((projectile_type[projectile_index >> 1] & 0xFFF) != kProjectileType_PowerBomb)
     return TriggerPlmOfBlockToTheLeft(j);
   plm_header_ptr[j >> 1] = 0;
   return 0;
 }
 
 uint8 PlmSetup_C816_LeftBlueGateTrigger(uint16 j) {  // 0x84C610
-  if ((projectile_type[projectile_index >> 1] & 0xFFF) != 768)
+  if ((projectile_type[projectile_index >> 1] & 0xFFF) != kProjectileType_PowerBomb)
     return TriggerPlmOfBlockToTheRight(j);
   plm_header_ptr[j >> 1] = 0;
   return PlmSetup_C81A_RightBlueGateTrigger(j);
@@ -2100,7 +2100,7 @@ uint8 PlmSetup_Door_Colored(uint16 j) {  // 0x84C7B1
 uint8 PlmSetup_Door_Blue(uint16 j) {  // 0x84C7BB
 //  if (sign16(projectile_index))
 //    printf("BUG: projectile_index invalid\n");
-  if (!sign16(projectile_index) && (projectile_type[projectile_index >> 1] & 0xF00) == 768) {
+  if (!sign16(projectile_index) && (projectile_type[projectile_index >> 1] & kProjectileType_TypeMask) == kProjectileType_PowerBomb) {
     plm_header_ptr[j >> 1] = 0;
   } else {
     uint16 v1 = plm_block_indices[j >> 1];
@@ -2109,7 +2109,7 @@ uint8 PlmSetup_Door_Blue(uint16 j) {  // 0x84C7BB
   return 0;
 }
 
-uint8 PlmSetup_Door_Strange(uint16 j) {  // 0x84C7E2
+uint8 PlmSetup_C7E2_GenericShotTrigger(uint16 j) {  // 0x84C7E2
   int v1 = j >> 1;
   uint16 v2 = plm_block_indices[v1];
   plm_block_indices[v1] = 0;
@@ -2119,7 +2119,7 @@ uint8 PlmSetup_Door_Strange(uint16 j) {  // 0x84C7E2
     if ((v3 & 0x8000) != 0)
       return 0;
   }
-  plm_timers[v3 >> 1] = projectile_type[(int16)projectile_index >> 1] & 0x1FFF | 0x8000;
+  plm_timers[v3 >> 1] = projectile_type[(int16)projectile_index >> 1] & 0x1FFF | kProjectileType_DontInteractWithSamus;
   return 0;
 }
 
@@ -2210,15 +2210,15 @@ uint8 PlmSetup_RespawningBombBlock(uint16 j) {  // 0x84CE83
 uint8 PlmSetup_RespawningBombBlock2(uint16 j) {  // 0x84CEDA
   int16 v1;
 
-  v1 = projectile_type[projectile_index >> 1] & 0xF00;
-  if (v1 == 1280) {
+  v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
+  if (v1 == kProjectileType_Bomb) {
     int v5 = j >> 1;
     plm_instr_list_ptrs[v5] += 3;
     int v6 = plm_block_indices[v5] >> 1;
     uint16 v7 = level_data[v6] & 0xF000 | 0x58;
     plm_variable[v5] = v7;
     level_data[v6] = v7 & 0x8FFF;
-  } else if (v1 == 768) {
+  } else if (v1 == kProjectileType_PowerBomb) {
     int v2 = j >> 1;
     int v3 = plm_block_indices[v2] >> 1;
     uint16 v4 = level_data[v3] & 0xF000 | 0x58;
@@ -2233,10 +2233,10 @@ uint8 PlmSetup_RespawningBombBlock2(uint16 j) {  // 0x84CEDA
 uint8 PlmSetup_RespawningPowerBombBlock(uint16 j) {  // 0x84CF2E
   int16 v1;
 
-  v1 = projectile_type[projectile_index >> 1] & 0xF00;
-  if (v1 == 1280) {
+  v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
+  if (v1 == kProjectileType_Bomb) {
     plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C91C;
-  } else if (v1 == 768) {
+  } else if (v1 == kProjectileType_PowerBomb) {
     int v2 = j >> 1;
     int v3 = plm_block_indices[v2] >> 1;
     uint16 v4 = level_data[v3] & 0xF000 | 0x57;
@@ -2251,10 +2251,10 @@ uint8 PlmSetup_RespawningPowerBombBlock(uint16 j) {  // 0x84CF2E
 uint8 PlmSetup_D08C_SuperMissileBlockRespawning(uint16 j) {  // 0x84CF67
   int16 v1;
 
-  v1 = projectile_type[projectile_index >> 1] & 0xF00;
-  if (v1 == 1280) {
+  v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
+  if (v1 == kProjectileType_Bomb) {
     plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C922;
-  } else if (v1 == 512) {
+  } else if (v1 == kProjectileType_SuperMissile) {
     int v2 = j >> 1;
     int v3 = plm_block_indices[v2] >> 1;
     uint16 v4 = level_data[v3] & 0xF000 | 0x9F;
@@ -2267,7 +2267,7 @@ uint8 PlmSetup_D08C_SuperMissileBlockRespawning(uint16 j) {  // 0x84CF67
 }
 
 uint8 PlmSetup_D08C_CrumbleBlock(uint16 j) {  // 0x84CFA0
-  if ((projectile_type[projectile_index >> 1] & 0xF00) != 1280)
+  if ((projectile_type[projectile_index >> 1] & kProjectileType_TypeMask) != kProjectileType_Bomb)
     plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -2324,7 +2324,7 @@ void PlmPreInstr_DeletePlmAndSpawnTriggerIfBlockDestroyed(uint16 k) {  // 0x84D1
 }
 
 uint8 PlmSetup_D6DA_LowerNorfairChozoHandTrigger(uint16 j) {  // 0x84D18F
-  if ((collected_items & 0x200) != 0
+  if ((collected_items & kItem_SpaceJump) != 0
       && (samus_collision_direction & 0xF) == 3
       && (samus_pose == kPose_1D_FaceR_Morphball_Ground
           || samus_pose == kPose_79_FaceR_Springball_Ground
@@ -2369,7 +2369,7 @@ void SpawnMotherBrainGlassShatteringShard(uint16 a) {  // 0x84D331
 }
 
 void PlmPreInstr_WakePlmIfSamusHasBombs(uint16 k) {  // 0x84D33B
-  if ((collected_items & 0x1000) != 0) {
+  if ((collected_items & kItem_Bombs) != 0) {
     int v1 = k >> 1;
     plm_instruction_timer[v1] = 1;
     plm_instr_list_ptrs[v1] += 2;
@@ -2953,7 +2953,7 @@ uint8 CallPlmHeaderFunc(uint32 ea, uint16 j) {
   case fnPlmSetup_C794_GreyDoor: return PlmSetup_C794_GreyDoor(j);
   case fnPlmSetup_Door_Colored: return PlmSetup_Door_Colored(j);
   case fnPlmSetup_Door_Blue: return PlmSetup_Door_Blue(j);
-  case fnPlmSetup_Door_Strange: return PlmSetup_Door_Strange(j);
+  case fnPlmSetup_C7E2_GenericShotTrigger: return PlmSetup_C7E2_GenericShotTrigger(j);
   case fnPlmSetup_D028_D02C_Unused: return PlmSetup_D028_D02C_Unused(j);
   case fnPlmSetup_RespawningSpeedBoostBlock: return PlmSetup_RespawningSpeedBoostBlock(j);
   case fnPlmSetup_RespawningCrumbleBlock: return PlmSetup_RespawningCrumbleBlock(j);

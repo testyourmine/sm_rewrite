@@ -637,7 +637,7 @@ static void BlockColl_SpikeBlock_BTS0(void) {  // 0x948E83
     samus_invincibility_timer = 60;
     samus_knockback_timer = 10;
     samus_periodic_damage += 60;
-    knockback_x_dir = ((samus_pose_x_dir ^ 0xC) & 8) != 0;
+    knockback_x_dir = ((samus_pose_x_dir ^ (kSamusXDir_FaceRight | kSamusXDir_FaceLeft)) & kSamusXDir_FaceRight) != 0;
   }
 }
 
@@ -646,7 +646,7 @@ static void BlockColl_SpikeBlock_BTS1(void) {  // 0x948ECF
     samus_invincibility_timer = 60;
     samus_knockback_timer = 10;
     samus_periodic_damage += 16;
-    knockback_x_dir = ((samus_pose_x_dir ^ 0xC) & 8) != 0;
+    knockback_x_dir = ((samus_pose_x_dir ^ (kSamusXDir_FaceRight | kSamusXDir_FaceLeft)) & kSamusXDir_FaceRight) != 0;
   }
 }
 
@@ -655,7 +655,7 @@ static void BlockColl_SpikeBlock_BTS3(void) {  // 0x948F0A
     samus_invincibility_timer = 60;
     samus_knockback_timer = 10;
     samus_periodic_damage += 16;
-    knockback_x_dir = ((samus_pose_x_dir ^ 0xC) & 8) != 0;
+    knockback_x_dir = ((samus_pose_x_dir ^ (kSamusXDir_FaceRight | kSamusXDir_FaceLeft)) & kSamusXDir_FaceRight) != 0;
   }
 }
 
@@ -1107,7 +1107,7 @@ static void BlockInsideReact_SpikeAir_BTS2(void) {  // 0x949866
     samus_invincibility_timer = 60;
     samus_knockback_timer = 10;
     samus_periodic_damage += 16;
-    knockback_x_dir = ((*(uint16 *)&samus_pose_x_dir ^ 0xC) & 8) != 0;
+    knockback_x_dir = ((*(uint16 *)&samus_pose_x_dir ^ (kSamusXDir_FaceRight | kSamusXDir_FaceLeft)) & kSamusXDir_FaceRight) != 0;
   }
   samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
@@ -1389,10 +1389,10 @@ static const int8 kProtoWeapon_NonBeams[18] = {
 
 uint16 GetProjProtoType(uint16 v0) {
   int v1 = v0 >> 1;
-  if ((projectile_type[v1] & 0xF00) != 0) {
-    return kProtoWeapon_NonBeams[2 * (HIBYTE(projectile_type[v1]) & 0xF) + 1];
+  if ((projectile_type[v1] & kProjectileType_TypeMask) != 0) {
+    return kProtoWeapon_NonBeams[2 * (HIBYTE(projectile_type[v1]) & (kProjectileType_TypeMask >> 8)) + 1];
   } else {
-    int r18 = projectile_type[v1] & 0xF;
+    int r18 = projectile_type[v1] & kProjectileType_BeamMask;
     return kProtoWeapon_Beams[3 * r18 + 2];
   }
 }
@@ -1447,8 +1447,8 @@ static void BlockColl_BombExplosion(CollInfo *ci, uint16 k) {  // 0x949CF4
   int v1 = k >> 1;
   if (!projectile_variables[v1]) {
     v2 = projectile_type[v1];
-    if ((v2 & 1) == 0) {
-      projectile_type[v1] = v2 | 1;
+    if ((v2 & kProjectileType_Wave_NormalBombExplosion) == 0) {
+      projectile_type[v1] = v2 | kProjectileType_Wave_NormalBombExplosion;
       if (cur_block_index != 0xFFFF) {
         uint16 v3 = 2 * cur_block_index;
         BlockBombedReact(ci, 2 * cur_block_index);

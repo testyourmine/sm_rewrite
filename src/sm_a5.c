@@ -1516,7 +1516,7 @@ void SporeSpawn_Shot(void) {  // 0xA5ED5A
 
   uint16 v0 = 2 * collision_detection_index;
   uint16 v1 = projectile_type[collision_detection_index];
-  if ((v1 & 0x700) != 0 || (v1 & 0x10) != 0) {
+  if ((v1 & kProjectileType_BeamExplosion) != 0 || (v1 & kProjectileType_Charged) != 0) {
     EnemyFunc_A6B4_UsedBySporeSpawn();
     v0 = cur_enemy_index;
     Enemy_SporeSpawn *EK = Get_SporeSpawn(v0);

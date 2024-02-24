@@ -155,7 +155,7 @@ void KraidsArm_Touch(void) {  // 0xA79490
 
 void Kraid_Arm_Shot(uint16 j) {  // 0xA794B6
   Kraid_SpawnExplosionEproj(j);
-  projectile_dir[j >> 1] |= 0x10;
+  projectile_dir[j >> 1] |= kProjectileDir_Delete;
 }
 
 void sub_A7A92A(void) {  // 0xA7A92A
@@ -641,9 +641,9 @@ void Kraid_Shot_Mouth(void) {  // 0xA7AFAA
       }
       uint16 v8;
       v8 = projectile_type[v7];
-      if ((v8 & 0xF00) != 0)
+      if ((v8 & kProjectileType_TypeMask) != 0)
         goto LABEL_12;
-      if ((v8 & 0x10) != 0)
+      if ((v8 & kProjectileType_Charged) != 0)
         break;
 LABEL_13:
       v6 -= 2;
@@ -654,7 +654,7 @@ LABEL_13:
 LABEL_12:
     collision_detection_index = v6 >> 1;
     NormalEnemyShotAiSkipDeathAnim_CurEnemy();
-    projectile_dir[v6 >> 1] |= 0x10;
+    projectile_dir[v6 >> 1] |= kProjectileDir_Delete;
     v3 = 1;
     // The real game doesn't preserve R18, R20 so they're junk at this point.
     // Force getting out of the loop.
@@ -688,7 +688,7 @@ LABEL_14:
 void Kraid_SpawnExplosionEproj(uint16 k) {  // 0xA7B0CB
   int v1 = k >> 1;
   eproj_spawn_pt = (Point16U){ projectile_x_pos[v1], projectile_y_pos[v1] };
-  uint16 v2 = ((projectile_type[v1] & 0x200) == 0) ? 6 : 29;
+  uint16 v2 = ((projectile_type[v1] & kProjectileType_SuperMissile) == 0) ? 6 : 29;
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, v2);
   QueueSfx1_Max6(kSfx1_DudShot);
 }
@@ -759,8 +759,8 @@ void Kraid_Shot_Body(void) {  // 0xA7B181
 LABEL_7:
             Kraid_SpawnExplosionEproj(i);
             int v6 = i >> 1;
-            projectile_dir[v6] |= 0x10;
-            if ((projectile_type[v6] & 0x10) != 0) {
+            projectile_dir[v6] |= kProjectileDir_Delete;
+            if ((projectile_type[v6] & kProjectileType_Charged) != 0) {
               E->kraid_mouth_flags |= 1;
             }
             ++R48;
@@ -3149,7 +3149,7 @@ LABEL_20:
       }
       health -= EK->base.health;
       if (sign16(health - 300)
-          || (projectile_type[collision_detection_index] & 0xF00) != 512) {
+          || (projectile_type[collision_detection_index] & kProjectileType_TypeMask) != kProjectileType_SuperMissile) {
         Enemy_Phantoon *E2 = Get_Phantoon(v1 + 0x80);
         uint16 v7 = health + E2->phant_var_B;
         E2->phant_var_B = v7;
@@ -3160,7 +3160,7 @@ LABEL_20:
       goto LABEL_23;
     }
     health -= EK->base.health;
-    if (!sign16(health - 300) && (projectile_type[collision_detection_index] & 0xF00) == 512) {
+    if (!sign16(health - 300) && (projectile_type[collision_detection_index] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
 LABEL_23:
       EK->phant_var_F = FUNC16(Phantoon_FadeOutBeforeEnrage);
       goto LABEL_22;

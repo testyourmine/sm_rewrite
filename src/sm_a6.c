@@ -1765,7 +1765,7 @@ void Ridley_Func_3b(void) {  // 0xA6B321
 
 uint16 Ridley_Func_4(void) {  // 0xA6B335
   uint16 r18;
-  if (samus_movement_type == 3) {
+  if (samus_movement_type == kMovementType_03_SpinJumping) {
     r18 = addr_off_A6B3CC;
   } else {
     Enemy_Ridley *E = Get_Ridley(0);
@@ -1950,7 +1950,7 @@ uint8 Ridley_Func_17(uint16 r18) {  // 0xA6B641
     v0 = 352;
   Ridley_Func_104_0(0, Ridley_Func_7(), r18, v0);
   tilemap_stuff[2] = 1;
-  if (samus_movement_type != 3)
+  if (samus_movement_type != kMovementType_03_SpinJumping)
     return 1;
   if ((uint8)random_number >= 0x80) {
     Enemy_Ridley *E = Get_Ridley(0);
@@ -3492,7 +3492,8 @@ uint8 Ridley_Func_90(Point16U *out) {  // 0xA6D242
   uint16 v1 = 0;
   while (1) {
     int v2 = v1 >> 1;
-    if ((HIBYTE(projectile_type[v2]) & 0xF) == 1 || (HIBYTE(projectile_type[v2]) & 0xF) == 2) {
+    if ((HIBYTE(projectile_type[v2]) & (kProjectileType_TypeMask >> 8)) == (kProjectileType_Missile >> 8) ||
+        (HIBYTE(projectile_type[v2]) & (kProjectileType_TypeMask >> 8)) == (kProjectileType_SuperMissile >> 8)) {
       uint16 v3 = abs16(projectile_x_pos[v2] - rect.x);
       bool v4 = v3 < projectile_x_radius[v2];
       uint16 v5 = v3 - projectile_x_radius[v2];
@@ -4172,7 +4173,7 @@ uint16 Ridley_Func_122(Rect16U rect) {  // 0xA6DEA6
     int v1 = result >> 1;
     v2 = projectile_type[v1];
     if (v2 < 0) {
-      if (sign16((HIBYTE(v2) & 0xF) - 3)) {
+      if (sign16((HIBYTE(v2) & (kProjectileType_TypeMask >> 8)) - (kProjectileType_PowerBomb >> 8))) {
         uint16 v3 = abs16(projectile_x_pos[v1] - rect.x);
         bool v4 = v3 < projectile_x_radius[v1];
         uint16 v5 = v3 - projectile_x_radius[v1];
@@ -4192,19 +4193,19 @@ uint16 Ridley_Func_122(Rect16U rect) {  // 0xA6DEA6
   int v8 = result >> 1;
   projectile_x_pos[v8] = rect.x;
   projectile_y_pos[v8] = rect.y;
-  projectile_dir[v8] |= 0x10;
+  projectile_dir[v8] |= kProjectileDir_Delete;
   return result;
 }
 
 void Ridley_Func_123(uint16 j) {  // 0xA6DF08
   int v1 = j >> 1;
   uint16 v2;
-  if ((projectile_dir[v1] & 0xF) == 7) {
-    v2 = 1;
-  } else if ((projectile_dir[v1] & 0xF) == 2) {
-    v2 = 8;
+  if ((projectile_dir[v1] & kProjectileDir_DirMask) == kProjectileDir_Left) {
+    v2 = kProjectileDir_UpRight;
+  } else if ((projectile_dir[v1] & kProjectileDir_DirMask) == kProjectileDir_Right) {
+    v2 = kProjectileDir_UpLeft;
   } else {
-    v2 = 5;
+    v2 = kProjectileDir_DownFaceLeft;
   }
   projectile_dir[v1] = v2;
 }
@@ -4306,7 +4307,7 @@ void Ridley_Func_129(void) {  // 0xA6E088
     int v1 = v0 >> 1;
     eproj_spawn_pt = (Point16U){ projectile_x_pos[v1], projectile_y_pos[v1] };
     uint16 v2 = 12;
-    if ((HIBYTE(projectile_type[v1]) & 0xF) == 1) {
+    if ((HIBYTE(projectile_type[v1]) & (kProjectileType_TypeMask >> 8)) == (kProjectileType_Missile >> 8)) {
       QueueSfx1_Max6(kSfx1_DudShot);
       v2 = 6;
     }

@@ -2578,9 +2578,9 @@ void CinematicFunction_Intro_WaitInputSetupMotherBrainFight(void) {  // 0x8BAEB8
       *(uint16 *)&BTS[v2] = 0;
       v2 += 2;
     } while ((int16)(v2 - 512) < 0);
-    hud_item_index = 1;
-    frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Func12);
-    frame_handler_beta = FUNC16(Samus_Func15);
+    hud_item_index = kHudItem_1_Missile;
+    frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Demo);
+    frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_IntroDemo);
     ResetDemoData();
     EnableDemoInput();
     LoadDemoInputObject(0, addr_kDemoInputObject_OldMotherBrainFight);  // undefined
@@ -2617,9 +2617,9 @@ void CinematicFunction_Intro_WaitInputSetupBabyMetroid(void) {  // 0x8BAF6C
       level_data[v1 >> 1] = kLevelData_RoomWithBabyMetroidHatching[v1 >> 1];
       v1 += 2;
     } while ((int16)(v1 - 768) < 0);
-    hud_item_index = 0;
-    frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Func12);
-    frame_handler_beta = FUNC16(Samus_Func15);
+    hud_item_index = kHudItem_0_Nothing;
+    frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Demo);
+    frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_IntroDemo);
     ResetDemoData();
     EnableDemoInput();
     LoadDemoInputObject(0, addr_kDemoInputObject_BabyMetroidDiscovery);  // a undefined
@@ -3181,7 +3181,7 @@ void CinematicFunction_Intro_Func35(uint16 j) {  // 0x8BB773
 void CinematicFunction_Intro_Func36(uint16 k) {  // 0x8BB786
   CinematicFunction_Intro_Func37(k);
   uint16 v1 = 8;
-  while ((projectile_type[v1 >> 1] & 0xFFF) != 256) {
+  while ((projectile_type[v1 >> 1] & 0xFFF) != kProjectileType_Missile) {
     v1 -= 2;
     if ((v1 & 0x8000) != 0)
       return;
@@ -3972,7 +3972,7 @@ void CinematicFunction_Intro_Func85(void) {  // 0x8BC627
     screen_fade_counter = 0;
     if (game_state == kGameState_37_CeresGoesBoomWithSamus) {
       QueueMusic_Delayed8(kMusic_Stop);
-      hud_item_index = 0;
+      hud_item_index = kHudItem_0_Nothing;
       samus_auto_cancel_hud_item_index = 0;
       samus_invincibility_timer = 0;
       samus_knockback_timer = 0;

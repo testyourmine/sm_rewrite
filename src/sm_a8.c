@@ -397,7 +397,7 @@ void MorphBallEye_Init(void) {  // 0xA89058
 }
 
 void MorphBallEye_Main(void) {  // 0xA890E2
-  if ((collected_items & 4) != 0) {
+  if ((collected_items & kItem_MorphBall) != 0) {
     Enemy_MorphBallEye *E = Get_MorphBallEye(cur_enemy_index);
     CallEnemyPreInstr(E->mbee_var_F | 0xA80000);
   }
@@ -1125,8 +1125,8 @@ void YappingMaw_Func_11(void) {  // 0xA8A68A
   Enemy_YappingMaw *E = Get_YappingMaw(cur_enemy_index);
   if (E->ymw_var_30)
     YappingMaw_Func_10();
-  if ((--E->ymw_var_E & 0x8000) != 0 && samus_input_handler != FUNC16(Samus_InputHandler_E91D)) {
-    samus_input_handler = FUNC16(Samus_InputHandler_E913);
+  if ((--E->ymw_var_E & 0x8000) != 0 && samus_input_handler != FUNC16(Samus_InputHandler_Demo)) {
+    samus_input_handler = FUNC16(Samus_InputHandler_Normal);
     E->ymw_var_30 = 0;
     E->ymw_var_35 = 48;
     E->ymw_var_E = 64;
@@ -1200,8 +1200,8 @@ void YappingMaw_Shot(void) {  // 0xA8A7BD
   Enemy_YappingMaw *E = Get_YappingMaw(cur_enemy_index);
   if (E->base.health) {
     if (E->base.frozen_timer) {
-      if (samus_input_handler != FUNC16(Samus_InputHandler_E91D))
-        samus_input_handler = FUNC16(Samus_InputHandler_E913);
+      if (samus_input_handler != FUNC16(Samus_InputHandler_Demo))
+        samus_input_handler = FUNC16(Samus_InputHandler_Normal);
       E->ymw_var_30 = 0;
     }
   } else {
@@ -1210,8 +1210,8 @@ void YappingMaw_Shot(void) {  // 0xA8A7BD
     *(uint16 *)((uint8 *)eproj_id + E->ymw_var_42) = 0;
     *(uint16 *)((uint8 *)eproj_id + E->ymw_var_43) = 0;
     sprite_instr_list_ptrs[E->ymw_var_46 >> 1] = 0;
-    if (samus_input_handler != FUNC16(Samus_InputHandler_E91D))
-      samus_input_handler = FUNC16(Samus_InputHandler_E913);
+    if (samus_input_handler != FUNC16(Samus_InputHandler_Demo))
+      samus_input_handler = FUNC16(Samus_InputHandler_Normal);
     Get_YappingMaw(cur_enemy_index)->ymw_var_30 = 0;
   }
 }
@@ -3099,7 +3099,7 @@ void MaridiaPuffer_Shot(void) {  // 0xA8DB14
     E->base.instruction_timer = 1;
     E->base.timer = 0;
     E->base.current_instruction = addr_kMaridiaPuffer_Ilist_D855;
-    E->mpr_var_02 = g_word_A8D871[projectile_dir[collision_detection_index] & 0xF];
+    E->mpr_var_02 = g_word_A8D871[projectile_dir[collision_detection_index] & kProjectileDir_DirMask];
     E->mpr_var_B = 256;
     E->mpr_var_D = 1536;
     E->mpr_var_A = FUNC16(MaridiaPuffer_Func_4);
@@ -3503,14 +3503,14 @@ void WreckedShipSpark_Func_3(uint16 k) {  // 0xA8E6DC
 
 
 void WreckedShipSpark_Shot(void) {  // 0xA8E70E
-  projectile_dir[collision_detection_index] &= ~0x10;
+  projectile_dir[collision_detection_index] &= ~kProjectileDir_Delete;
 }
 
 void BlueBrinstarFaceBlock_Init(void) {  // 0xA8E82E
   EnemyData *v0 = gEnemyData(cur_enemy_index);
   v0->current_instruction = addr_kBlueBrinstarFaceBlock_Ilist_E828;
   uint16 v1 = FUNC16(BlueBrinstarFaceBlock_Func_1);
-  if ((collected_items & 4) == 0)
+  if ((collected_items & kItem_MorphBall) == 0)
     v1 = FUNC16(nullsub_170_A8);
   enemy_gfx_drawn_hook.addr = v1;
   *(uint16 *)&enemy_gfx_drawn_hook.bank = 168;
@@ -3535,7 +3535,7 @@ void BlueBrinstarFaceBlock_Func_1(void) {  // 0xA8E86E
 }
 
 void BlueBrinstarFaceBlock_Main(void) {  // 0xA8E8AE
-  if ((collected_items & 4) != 0) {
+  if ((collected_items & kItem_MorphBall) != 0) {
     enemy_gfx_drawn_hook.addr = FUNC16(BlueBrinstarFaceBlock_Func_1);
     EnemyData *v1 = gEnemyData(cur_enemy_index);
     variables_for_enemy_graphics_drawn_hook[0] = ((16 * v1->palette_index) & 0xFF00) >> 8;
@@ -3559,7 +3559,7 @@ void BlueBrinstarFaceBlock_Main(void) {  // 0xA8E8AE
 }
 
 void BlueBrinstarFaceBlock_Shot(void) {  // 0xA8E91D
-  projectile_dir[collision_detection_index] &= ~0x10;
+  projectile_dir[collision_detection_index] &= ~kProjectileDir_Delete;
 }
 
 void KiHunter_Init(void) {  // 0xA8F188

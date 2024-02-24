@@ -720,17 +720,17 @@ void MoveXrayDown(void) {  // 0x888835
 
 void CalculateXrayHdmaTable(void) {  // 0x888896
   int16 v0;
-  if (samus_pose_x_dir == 4)
+  if (samus_pose_x_dir == kSamusXDir_FaceLeft)
     v0 = samus_x_pos - layer1_x_pos - 3;
   else
     v0 = samus_x_pos - layer1_x_pos + 3;
   uint16 v1;
-  if (samus_movement_type == 5)
+  if (samus_movement_type == kMovementType_05_Crouching)
     v1 = samus_y_pos - layer1_y_pos - 12;
   else
     v1 = samus_y_pos - layer1_y_pos - 16;
   if (v0 < 0) {
-    if (samus_pose_x_dir != 4) {
+    if (samus_pose_x_dir != kSamusXDir_FaceLeft) {
 off_screen:
       CalculateXrayHdmaTableInner(v0, v1, xray_angle, demo_input, true, (uint16*)(g_ram + 0x9800));
       return;
@@ -740,7 +740,7 @@ off_screen:
       CalculateXrayHdmaTableInner(v0, v1, xray_angle, demo_input, false, (uint16 *)(g_ram + 0x9800));
       return;
     }
-    if (samus_pose_x_dir != 8)
+    if (samus_pose_x_dir != kSamusXDir_FaceRight)
       goto off_screen;
   }
 
@@ -827,7 +827,7 @@ void HdmaobjPreInstr_XrayFunc5_DeactivateBeam(uint16 k) {  // 0x888A08
     demo_input_prev = 0;
     demo_input_prev_new = 0;
     demo_backup_prev_controller_input = 0;
-    ResponsibleForXrayStandupGlitch();
+    SetNonXraySamusPose();
     hdma_object_channels_bitmask[hdma_object_index >> 1] = 0;
     QueueSfx1_Max6(kSfx1_XRayEnd_Silence);
     if ((uint8)fx_type != 36) {
@@ -838,7 +838,7 @@ void HdmaobjPreInstr_XrayFunc5_DeactivateBeam(uint16 k) {  // 0x888A08
     for (int i = 510/2; i >= 0; i--)
       hdma_table_1[i] = 0xff;
     if (samus_auto_cancel_hud_item_index) {
-      hud_item_index = 0;
+      hud_item_index = kHudItem_0_Nothing;
       samus_auto_cancel_hud_item_index = 0;
     }
   }
@@ -913,7 +913,7 @@ void Hdmaobj_ExplodeWhite(void) {  // 0x888B47
 void Hdmaobj_CleanUpTryCrystalFlash(uint16 v0) {  // 0x888B4E
   if (samus_x_pos != power_bomb_explosion_x_pos
       || samus_y_pos != power_bomb_explosion_y_pos
-      || Hdmaobj_CrystalFlash() & 1) {
+      || CrystalFlash() & 1) {
     power_bomb_flag = 0;
   }
   power_bomb_explosion_status = 0;
@@ -2771,8 +2771,8 @@ uint8 AdvanceSuitPickupColorMathToOrange(void) {  // 0x88E2F9
 }
 
 uint8 VariaSuitPickup_3_GiveSamusVariaSuit(void) {  // 0x88E320
-  equipped_items |= 1;
-  collected_items |= 1;
+  equipped_items |= kItem_VariaSuit;
+  collected_items |= kItem_VariaSuit;
   samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   SamusFunc_F433();
   Samus_SetAnimationFrameIfPoseChanged();
@@ -2786,8 +2786,8 @@ uint8 VariaSuitPickup_3_GiveSamusVariaSuit(void) {  // 0x88E320
 }
 
 uint8 GravitySuitPickup_3_GiveSamusGravitySuit(void) {  // 0x88E361
-  equipped_items |= 0x20;
-  collected_items |= 0x20;
+  equipped_items |= kItem_GravitySuit;
+  collected_items |= kItem_GravitySuit;
   samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   SamusFunc_F433();
   Samus_SetAnimationFrameIfPoseChanged();

@@ -1950,20 +1950,20 @@ void ClearPauseMenuData(void) {  // 0x82A380
 }
 
 
-void sub_82A425(void) {  // 0x82A425
+void UNUSED_ChangePoseDueToEquipmentChange_None(void) {  // 0x82A425
   ;
 }
 
-void sub_82A42A(void) {  // 0x82A42A
+void UNUSED_ChangePoseDueToEquipmentChange_SpinJump(void) {  // 0x82A42A
   if (samus_pose == kPose_81_FaceR_Screwattack || samus_pose == kPose_82_FaceL_Screwattack) {
-    if ((equipped_items & 8) != 0)
+    if ((equipped_items & kItem_ScrewAttack) != 0)
       return;
     goto LABEL_8;
   }
   if ((samus_pose == kPose_1B_FaceR_SpaceJump || samus_pose == kPose_1C_FaceL_SpaceJump)
-      && (equipped_items & 0x20) == 0) {
+      && (equipped_items & kItem_GravitySuit) == 0) {
 LABEL_8:
-    if (samus_pose_x_dir == 4)
+    if (samus_pose_x_dir == kSamusXDir_FaceLeft)
       samus_pose = kPose_1A_FaceL_SpinJump;
     else
       samus_pose = kPose_19_FaceR_SpinJump;
@@ -1972,9 +1972,9 @@ LABEL_8:
   }
 }
 
-void sub_82A47B(void) {  // 0x82A47B
-  if ((equipped_items & 4) == 0) {
-    if (samus_pose_x_dir == 4)
+void UNUSED_ChangePoseDueToEquipmentChange_MovementTypes7And9(void) {  // 0x82A47B
+  if ((equipped_items & kItem_MorphBall) == 0) {
+    if (samus_pose_x_dir == kSamusXDir_FaceLeft)
       samus_pose = kPose_41_FaceL_Morphball_Ground;
     else
       samus_pose = kPose_1D_FaceR_Morphball_Ground;
@@ -1983,9 +1983,9 @@ void sub_82A47B(void) {  // 0x82A47B
   }
 }
 
-void sub_82A4A9(void) {  // 0x82A4A9
-  if ((equipped_items & 2) != 0) {
-    if (samus_pose_x_dir == 4)
+void UNUSED_ChangePoseDueToEquipmentChange_Morph(void) {  // 0x82A4A9
+  if ((equipped_items & kItem_SpringBall) != 0) {
+    if (samus_pose_x_dir == kSamusXDir_FaceLeft)
       samus_pose = kPose_7A_FaceL_Springball_Ground;
     else
       samus_pose = kPose_79_FaceR_Springball_Ground;
@@ -2614,12 +2614,12 @@ void EquipmentScreenCategory_Weapons_MoveButtons(void) {  // 0x82AFDB
 void EquipmentScreenCategory_Weapons_PlazmaSpazerCheck(uint16 R36) {  // 0x82B068
   int t = equipped_beams & ~R36;
   if ((t & 4) != 0) {
-    if ((R36 & 4) == 0 && (equipped_beams & 8) != 0) {
-      equipped_beams &= ~8;
+    if ((R36 & 4) == 0 && (equipped_beams & kBeam_Plasma) != 0) {
+      equipped_beams &= ~kBeam_Plasma;
       ChangePaletteValues((uint16 *)(g_ram + kEquipmentTilemapOffs_Weapons[4]), 3072, 5);
     }
-  } else if ((t & 8) != 0 && (R36 & 8) == 0 && (equipped_beams & 4) != 0) {
-    equipped_beams &= ~4;
+  } else if ((t & 8) != 0 && (R36 & 8) == 0 && (equipped_beams & kBeam_Spazer) != 0) {
+    equipped_beams &= ~kBeam_Spazer;
     ChangePaletteValues((uint16 *)(g_ram + kEquipmentTilemapOffs_Weapons[3]), 3072, 5);
   }
 }
@@ -2698,21 +2698,21 @@ void WriteSamusWireframeTilemapAndQueue(void) {  // 0x82B1E0
 void WriteSamusWireframeTilemap(void) {  // 0x82B20C
   uint16 i;
 
-  for (i = 0; (equipped_items & 0x101) != kEquipmentScreenWireframeCmp[i >> 1]; i += 2)
+  for (i = 0; (equipped_items & (kItem_HiJumpBoots | kItem_VariaSuit)) != kEquipmentScreenWireframeCmp[i >> 1]; i += 2)
     ;
   
   const uint16 *src = (const uint16*)RomPtr_82(kEquipmentScreenWireframePtrs[i >> 1]);
   int m = 17;
   uint16 v1 = 0;
-  uint16 v2 = 472;
+  uint16 v2 = 0x1D8;
   do {
     uint16 v3 = v2;
     int n = 8;
     do {
-      *(uint16 *)((uint8 *)ram3800.cinematic_bg_tilemap + v2) = *src++;
+      *(uint16 *)((uint8 *)ram3800.equipment_screen_bg1_tilemap + v2) = *src++;
       v2 += 2;
     } while (--n);
-    v2 = v3 + 64;
+    v2 = v3 + 0x40;
   } while (--m);
 }
 
@@ -3068,7 +3068,7 @@ void DrawMapScrollArrowAndCheckToScroll(uint8 db, uint16 k) {  // 0x82B90A
     map_scrolling_direction = GET_WORD(v2 + 8);
 }
 
-void sub_82B932(void) {  // 0x82B932
+void UNUSED_sub_82B932(void) {  // 0x82B932
   HandleMapScrollArrows();
 }
 
@@ -3181,9 +3181,9 @@ void HandleGameOverBabyMetroid(void) {  // 0x82BB75
 
 void CallBabyMetroidPlaySfx(uint32 ea) {
   switch (ea) {
-  case fnBabyMetroidPlaySfx0x23: BabyMetroidCry1PlaySfx(); return;
-  case fnBabyMetroidPlaySfx0x26: BabyMetroidCry2PlaySfx(); return;
-  case fnBabyMetroidPlaySfx0x27: BabyMetroidCry3PlaySfx(); return;
+  case fnBabyMetroidPlayCry1Sfx: BabyMetroidPlayCry1Sfx(); return;
+  case fnBabyMetroidPlayCry2Sfx: BabyMetroidPlayCry2Sfx(); return;
+  case fnBabyMetroidPlayCry3Sfx: BabyMetroidPlayCry3Sfx(); return;
   default: Unreachable();
   }
 }
@@ -3232,17 +3232,17 @@ void FinishProcessingGameOverBabyMetroidAsm(void) {  // 0x82BBF0
     DrawBabyMetroid(enemy_data[0].current_instruction);
 }
 
-void BabyMetroidCry1PlaySfx(void) {  // 0x82BC0C
+void BabyMetroidPlayCry1Sfx(void) {  // 0x82BC0C
   QueueSfx3_Max6(kSfx3_BabyMetroidCry1);
   FinishProcessingGameOverBabyMetroidAsm();
 }
 
-void BabyMetroidCry2PlaySfx(void) {  // 0x82BC15
+void BabyMetroidPlayCry2Sfx(void) {  // 0x82BC15
   QueueSfx3_Max6(kSfx3_BabyMetroidCry2);
   FinishProcessingGameOverBabyMetroidAsm();
 }
 
-void BabyMetroidCry3PlaySfx(void) {  // 0x82BC1E
+void BabyMetroidPlayCry3Sfx(void) {  // 0x82BC1E
   QueueSfx3_Max6(kSfx3_BabyMetroidCry3);
   FinishProcessingGameOverBabyMetroidAsm();
 }
@@ -3455,7 +3455,7 @@ CoroutineRet GameState_19_SamusNoHealth(void) {  // 0x82DC80
   samus_death_anim_timer = 0;
   samus_death_anim_counter = 0;
   samus_death_anim_pre_flash_timer = 0;
-  hud_item_index = 0;
+  hud_item_index = kHudItem_0_Nothing;
   samus_auto_cancel_hud_item_index = 0;
   samus_invincibility_timer = 0;
   samus_knockback_timer = 0;
