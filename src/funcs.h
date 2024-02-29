@@ -671,7 +671,7 @@ CoroutineRet DisplayMessageBox_Async(uint16 a);
 extern Rect16U eproj_spawn_rect;
 extern uint16 eproj_spawn_r22;
 extern Point16U eproj_spawn_pt;
-extern uint16 eproj_spawn_varE24;
+extern uint16 eproj_spawn_header_pt;
 
 uint16 Math_MultByCos(uint16 a, uint16 r18);
 uint16 Math_MultBySin(uint16 a, uint16 r18);
@@ -4139,69 +4139,69 @@ void MotherBrain_SealWall(void);
 void TurnOffLightsForShitroidDeath(void);
 
 // Bank B2
-uint16 SpacePirates_Func_10(void);
-uint16 SpacePirates_Func_8(void);
-uint16 SpacePirates_Func_9(void);
-const uint16 *SpacePirates_Instr_11(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_12(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_13(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_14(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_15(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_16(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_17(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_18(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_19(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_20(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_21(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_FireLaserL(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_FireLaserR(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_PlaySfx(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_PrepareWallJumpL(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_PrepareWallJumpR(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_RandomNewDirFaceL(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_RandomNewDirFaceR(uint16 k, const uint16 *jp);
-const uint16 *SpacePirates_Instr_SetEnemyFunc(uint16 k, const uint16 *jp);
+uint16 NinjaSpacePirates_StandKickTrigger(void);
+uint16 NinjaSpacePirates_FlinchTrigger(void);
+uint16 NinjaSpacePirates_SpinJumpTrigger(void);
+const uint16 *WalkingSpacePirates_Instr_SetEnemyFunc(uint16 k, const uint16 *jp);
+const uint16 *WalkingSpacePirates_Instr_FireLaserLOffsetY(uint16 k, const uint16 *jp);
+const uint16 *WalkingSpacePirates_Instr_ChooseDir_FireLaserIfClose(uint16 k, const uint16 *jp);
+const uint16 *WalkingSpacePirates_Instr_FireLaserROffsetY(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_SpawnEprojPirateClaw(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_QueueSfx2_Max6(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_ResetXSpeed(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_SetAiActive(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_InitDivekickLJumpYSpeed(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_SetPaletteIndex(uint16 k, const uint16 *jp);
+const uint16 *NinjaSpacePirates_Instr_InitDivekickRJumpYSpeed(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_FireLaserL(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_FireLaserR(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_PlaySpacePirateAttackSfx(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_PrepareWallJumpL(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_PrepareWallJumpR(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_RandomNewDirFaceL(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_RandomNewDirFaceR(uint16 k, const uint16 *jp);
+const uint16 *WallSpacePirates_Instr_SetEnemyFunc(uint16 k, const uint16 *jp);
 void Enemy_GrappleReact_CancelBeam_B2(void);
 void Enemy_NormalFrozenAI_B2(void);
 void NinjaSpacePirates_Init(void);
 void NinjaSpacePirates_Main(void);
-void SpacePirates_F985(uint16 k);
-void SpacePirates_F9C1(uint16 k);
-void SpacePirates_FA15(uint16 k);
-void SpacePirates_FA59(uint16 k);
-void SpacePirates_FA95(uint16 k);
-void SpacePirates_FAE9(uint16 k);
-void SpacePirates_FB11(uint16 k);
-void SpacePirates_Func_1(uint16 k);
-void SpacePirates_Func_11(uint16 k);
-void SpacePirates_Func_12(uint16 k);
-void SpacePirates_Func_13(uint16 k);
-void SpacePirates_Func_14(uint16 k);
-void SpacePirates_Func_15(uint16 k);
-void SpacePirates_Func_16(void);
-void SpacePirates_Func_2(uint16 k);
-void SpacePirates_Func_3(uint16 k);
-void SpacePirates_Func_4(uint16 k);
-void SpacePirates_Func_5(uint16 k);
-void SpacePirates_Func_6(uint16 k);
-void SpacePirates_Func_7(uint16 k);
-void WalkingSpacePirates_8789(void);
-void WalkingSpacePirates_87C8(void);
-void WalkingSpacePirates_883E(void);
-void WalkingSpacePirates_FD44(void);
-void WalkingSpacePirates_FDCE(void);
-void WalkingSpacePirates_FE4B(void);
+void NinjaSpacePirates_Func_DivekickL_Jump(uint16 k);
+void NinjaSpacePirates_Func_DivekickL_Divekick(uint16 k);
+void NinjaSpacePirates_Func_DivekickL_WalkToLeftPost(uint16 k);
+void NinjaSpacePirates_Func_DivekickR_Jump(uint16 k);
+void NinjaSpacePirates_Func_DivekickR_Divekick(uint16 k);
+void NinjaSpacePirates_Func_DivekickR_WalkToRightPost(uint16 k);
+void NinjaSpacePirates_SpawnLandingDustCloud(uint16 k);
+void WallSpacePirates_Func_ClimbLWall(uint16 k);
+void NinjaSpacePirates_Func_SpinJumpL_Rise(uint16 k);
+void NinjaSpacePirates_Func_SpinJumpL_Fall(uint16 k);
+void NinjaSpacePirates_Func_SpinJumpR_Rise(uint16 k);
+void NinjaSpacePirates_Func_SpinJumpR_Fall(uint16 k);
+void NinjaSpacePirates_Func_DivekickReady(uint16 k);
+void NinjaSpacePirates_DivekickTrigger(void);
+void WallSpacePirates_Func_WallJumpR(uint16 k);
+void WallSpacePirates_Func_ClimbRWall(uint16 k);
+void WallSpacePirates_Func_WallJumpL(uint16 k);
+void NinjaSpacePirates_Func_Initial(uint16 k);
+void NinjaSpacePirates_Func_Active(uint16 k);
+void NinjaSpacePirates_ProjClawAttackTrigger(uint16 k);
+void SpacePirates_NormalShot(void);
+void SpacePirates_Shot_LowerNorfairPirateVulnerable(void);
+void SpacePirates_Shot_LowerNorfairPirateInvincible(void);
+void WalkingSpacePirates_Func_WalkL(void);
+void WalkingSpacePirates_Func_WalkR(void);
+void WalkingSpacePirates_FlinchTrigger(void);
 void WalkingSpacePirates_Init(void);
 void WalkingSpacePirates_Main(void);
-void WalkingSpacePirates_Powerbomb(void);
-void WalkingSpacePirates_Shot(void);
-void WalkingSpacePirates_Touch(void);
+void SpacePirates_Powerbomb(void);
+void SpacePirates_ShotAi(void);
+void SpacePirates_TouchAi(void);
 void WallSpacePirates_Init(void);
 void WallSpacePirates_Main(void);
-void sub_B2F554(void);
-void sub_B2F5B3(void);
+void NinjaSpacePirates_Instr_GoToEnemy_Unused(void);
+void NinjaSpacePirates_Instr_SetAiStandKick_Unused(void);
 
 // Bank B3
 const uint16 *Botwoon_Instr_AimUpRadius8x16Unused(uint16 k, const uint16 *jp);
@@ -7641,59 +7641,59 @@ void VerifySRAM(void);
 #define fnEnemyInstr_SetTimer_B2 0xB28123
 #define fnEnemyInstr_Sleep_B2 0xB2812F
 #define fnEnemyInstr_WaitNframes_B2 0xB2813A
-#define fnWalkingSpacePirates_Powerbomb 0xB28767
-#define fnWalkingSpacePirates_Touch 0xB2876C
-#define fnWalkingSpacePirates_Shot 0xB28779
-#define fnWalkingSpacePirates_87C8 0xB287C8
-#define fnWalkingSpacePirates_883E 0xB2883E
-#define fnSpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight 0xB2EE40
-#define fnSpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft 0xB2EE72
-#define fnSpacePirates_Instr_RandomNewDirFaceR 0xB2EEA4
-#define fnSpacePirates_Instr_RandomNewDirFaceL 0xB2EEBC
-#define fnSpacePirates_Instr_PrepareWallJumpR 0xB2EED4
-#define fnSpacePirates_Instr_PrepareWallJumpL 0xB2EEFD
-#define fnSpacePirates_Instr_FireLaserL 0xB2EF2A
-#define fnSpacePirates_Instr_FireLaserR 0xB2EF5D
-#define fnSpacePirates_Instr_SetEnemyFunc 0xB2EF83
-#define fnSpacePirates_Instr_PlaySfx 0xB2EF93
+#define fnSpacePirates_Powerbomb 0xB28767
+#define fnSpacePirates_TouchAi 0xB2876C
+#define fnSpacePirates_ShotAi 0xB28779
+#define fnSpacePirates_Shot_LowerNorfairPirateVulnerable 0xB287C8
+#define fnSpacePirates_Shot_LowerNorfairPirateInvincible 0xB2883E
+#define fnWallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight 0xB2EE40
+#define fnWallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft 0xB2EE72
+#define fnWallSpacePirates_Instr_RandomNewDirFaceR 0xB2EEA4
+#define fnWallSpacePirates_Instr_RandomNewDirFaceL 0xB2EEBC
+#define fnWallSpacePirates_Instr_PrepareWallJumpR 0xB2EED4
+#define fnWallSpacePirates_Instr_PrepareWallJumpL 0xB2EEFD
+#define fnWallSpacePirates_Instr_FireLaserL 0xB2EF2A
+#define fnWallSpacePirates_Instr_FireLaserR 0xB2EF5D
+#define fnWallSpacePirates_Instr_SetEnemyFunc 0xB2EF83
+#define fnWallSpacePirates_Instr_PlaySpacePirateAttackSfx 0xB2EF93
 #define fnWallSpacePirates_Init 0xB2EF9F
 #define fnWallSpacePirates_Main 0xB2F02D
-#define fnSpacePirates_Func_1 0xB2F034
+#define fnWallSpacePirates_Func_ClimbLWall 0xB2F034
 #define fnnullsub_279 0xB2F04F
-#define fnSpacePirates_Func_2 0xB2F050
-#define fnSpacePirates_Func_3 0xB2F0C8
+#define fnWallSpacePirates_Func_WallJumpR 0xB2F050
+#define fnWallSpacePirates_Func_ClimbRWall 0xB2F0C8
 #define fnnullsub_281 0xB2F0E3
-#define fnSpacePirates_Func_4 0xB2F0E4
-#define fnSpacePirates_Instr_20 0xB2F536
-#define fnSpacePirates_Instr_16 0xB2F546
-#define fnSpacePirates_Instr_15 0xB2F564
-#define fnSpacePirates_Instr_18 0xB2F590
-#define fnSpacePirates_Instr_17 0xB2F5D6
+#define fnWallSpacePirates_Func_WallJumpL 0xB2F0E4
+#define fnNinjaSpacePirates_Instr_SetPaletteIndex 0xB2F536
+#define fnNinjaSpacePirates_Instr_QueueSfx2_Max6 0xB2F546
+#define fnNinjaSpacePirates_Instr_SpawnEprojPirateClaw 0xB2F564
+#define fnNinjaSpacePirates_Instr_SetAIActive 0xB2F590
+#define fnNinjaSpacePirates_Instr_ResetXSpeed 0xB2F5D6
 #define fnNinjaSpacePirates_Init 0xB2F5DE
 #define fnNinjaSpacePirates_Main 0xB2F6A2
-#define fnSpacePirates_Func_5 0xB2F6A9
-#define fnSpacePirates_Func_6 0xB2F6E4
-#define fnSpacePirates_Func_11 0xB2F817
-#define fnSpacePirates_Func_12 0xB2F84C
-#define fnSpacePirates_Func_13 0xB2F890
-#define fnSpacePirates_Func_14 0xB2F8C5
-#define fnSpacePirates_Func_15 0xB2F909
-#define fnSpacePirates_Instr_19 0xB2F969
-#define fnSpacePirates_F985 0xB2F985
-#define fnSpacePirates_F9C1 0xB2F9C1
-#define fnSpacePirates_FA15 0xB2FA15
-#define fnSpacePirates_Instr_21 0xB2FA3D
-#define fnSpacePirates_FA59 0xB2FA59
-#define fnSpacePirates_FA95 0xB2FA95
-#define fnSpacePirates_FAE9 0xB2FAE9
-#define fnSpacePirates_Instr_12 0xB2FC68
-#define fnSpacePirates_Instr_14 0xB2FC90
-#define fnSpacePirates_Instr_11 0xB2FCB8
-#define fnSpacePirates_Instr_13 0xB2FCC8
+#define fnNinjaSpacePirates_Func_Initial 0xB2F6A9
+#define fnNinjaSpacePirates_Func_Active 0xB2F6E4
+#define fnNinjaSpacePirates_Func_SpinJumpL_Rise 0xB2F817
+#define fnNinjaSpacePirates_Func_SpinJumpL_Fall 0xB2F84C
+#define fnNinjaSpacePirates_Func_SpinJumpR_Rise 0xB2F890
+#define fnNinjaSpacePirates_Func_SpinJumpR_Fall 0xB2F8C5
+#define fnNinjaSpacePirates_Func_DivekickReady 0xB2F909
+#define fnNinjaSpacePirates_Instr_InitDivekickLJumpYSpeed 0xB2F969
+#define fnNinjaSpacePirates_Func_DivekickL_Jump 0xB2F985
+#define fnNinjaSpacePirates_Func_DivekickL_Divekick 0xB2F9C1
+#define fnNinjaSpacePirates_Func_DivekickL_WalkToLeftPost 0xB2FA15
+#define fnNinjaSpacePirates_Instr_InitDivekickRJumpYSpeed 0xB2FA3D
+#define fnNinjaSpacePirates_Func_DivekickR_Jump 0xB2FA59
+#define fnNinjaSpacePirates_Func_DivekickR_Divekick 0xB2FA95
+#define fnNinjaSpacePirates_Func_DivekickR_WalkToRightPost 0xB2FAE9
+#define fnWalkingSpacePirates_Instr_FireLaserLOffsetY 0xB2FC68
+#define fnWalkingSpacePirates_Instr_FireLaserROffsetY 0xB2FC90
+#define fnWalkingSpacePirates_Instr_SetEnemyFunc 0xB2FCB8
+#define fnWalkingSpacePirates_Instr_ChooseDir_FireLaserIfClose 0xB2FCC8
 #define fnWalkingSpacePirates_Init 0xB2FD02
 #define fnWalkingSpacePirates_Main 0xB2FD32
-#define fnWalkingSpacePirates_FD44 0xB2FD44
-#define fnWalkingSpacePirates_FDCE 0xB2FDCE
+#define fnWalkingSpacePirates_Func_WalkL 0xB2FD44
+#define fnWalkingSpacePirates_Func_WalkR 0xB2FDCE
 #define fnnullsub_282 0xB2FE4A
 #define fnEnemy_GrappleReact_NoInteract_B3 0xB38000
 #define fnEnemy_GrappleReact_KillEnemy_B3 0xB3800A

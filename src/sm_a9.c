@@ -1564,7 +1564,7 @@ uint16 MotherBrain_Instr_SpawnLaserEproj(uint16 k) {  // 0xA99F46
   E->mbn_var_31 = 0;
   eproj_spawn_r22 = 1;
   eproj_spawn_pt = (Point16U){ E->base.x_pos + 16, E->base.y_pos + 4 };
-  SpawnEprojWithRoomGfx(addr_stru_86A17B, 1);
+  SpawnEprojWithRoomGfx(addr_kEprojDef_PirateAndMotherBrainLaser, 1);
   return k;
 }
 

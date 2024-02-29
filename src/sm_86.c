@@ -9,7 +9,7 @@
 Rect16U eproj_spawn_rect;
 uint16 eproj_spawn_r22;
 Point16U eproj_spawn_pt; // R18/R20
-uint16 eproj_spawn_varE24;
+uint16 eproj_spawn_header_pt;
 
 
 typedef struct EprojCollInfo {
@@ -863,7 +863,7 @@ void Eproj_PreInstr_SkreeParticle(uint16 k) {  // 0x868B5D
 const uint8 *EprojInstr_SpawnEnemyDropsWithDraygonsEyeDrops(uint16 k, const uint8 *epjp) {  // 0x868C68
   int v1 = k >> 1;
   eproj_spawn_pt = (Point16U) { eproj_x_pos[v1], eproj_y_pos[v1] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_DraygonEyeDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_DraygonEye, k, 0);
   return epjp;
 }
 
@@ -1076,7 +1076,7 @@ void EprojPreInstr_CrocomireSpikeWallPieces(uint16 k) {
 const uint8 *EprojInstr_9270(uint16 k, const uint8 *epjp) {  // 0x869270
   int v1 = k >> 1;
   eproj_spawn_pt = (Point16U) { eproj_x_pos[v1], eproj_y_pos[v1] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_CrocomireDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_Crocomire, k, 0);
   return epjp;
 }
 
@@ -1348,7 +1348,7 @@ void EprojPreInstr_9734_CeresFallingDebris(uint16 k) {  // 0x869701
 const uint8 *EprojInstr_980E(uint16 k, const uint8 *epjp) {  // 0x86980E
   int v2 = k >> 1;
   eproj_spawn_pt = (Point16U) { eproj_x_pos[v2], eproj_y_pos[v2] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_PhantoonEyeDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_PhantoonEye, k, 0);
   return epjp;
 }
 
@@ -3229,7 +3229,7 @@ uint8 MotherBrainBomb_Bomb_CollDetect_DoubleRet(uint16 k) {  // 0x86C564
   eproj_spawn_pt = (Point16U){ eproj_x_pos[v1], eproj_y_pos[v1] };
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
   eproj_spawn_pt = (Point16U){ eproj_x_pos[v1], eproj_y_pos[v1] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_MotherBrainDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_MotherBrain, k, 0);
   return 1;  // double return
 }
 
@@ -3719,7 +3719,7 @@ const uint8 *EprojInstr_D1C7(uint16 k, const uint8 *epjp) {  // 0x86D1C7
 
 const uint8 *EprojInstr_D1CE(uint16 k, const uint8 *epjp) {  // 0x86D1CE
   eproj_spawn_pt = (Point16U){ eproj_x_pos[k >> 1], eproj_y_pos[k >> 1] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_KagoDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_Kago, k, 0);
   return epjp;
 }
 
@@ -4078,7 +4078,7 @@ const uint8 *EprojInstr_DC5A(uint16 k, const uint8 *epjp) {  // 0x86DC5A
 const uint8 *EprojInstr_SpawnEnemyDrops_0(uint16 k, const uint8 *epjp) {  // 0x86DC61
   int v2 = k >> 1;
   eproj_spawn_pt = (Point16U){ eproj_x_pos[v2], eproj_y_pos[v2] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_SporeDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_Spore, k, 0);
   return epjp;
 }
 
@@ -4202,7 +4202,7 @@ uint16 sub_86DFA0(uint16 k) {  // 0x86DFA0
 const uint8 *EprojInstr_DFEA(uint16 k, const uint8 *epjp) {  // 0x86DFEA
   int v1 = k >> 1;
   eproj_spawn_pt = (Point16U){ eproj_x_pos[v1], eproj_y_pos[v1] };
-  SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_LavamanProjDropChances, k, 0);
+  SpawnEnemyDrops(addr_kEnemyDef_LavamanProj, k, 0);
   return epjp;
 }
 
@@ -4605,7 +4605,7 @@ static void EprojInit_F337(uint16 j) {  // 0x86EF29
   eproj_x_pos[v2] = eproj_spawn_pt.x;
   eproj_y_pos[v2] = eproj_spawn_pt.y;
   eproj_gfx_idx[v2] = 0;
-  eproj_enemy_header_ptr[v2] = eproj_spawn_varE24; // this is X?!
+  eproj_enemy_header_ptr[v2] = eproj_spawn_header_pt; // this is X?!
   uint16 v3 = RandomDropRoutine(j);
   if (v3 != 0 && sign16(v3 - 6)) { // bug, why does it compare x here.
     uint16 v4 = 2 * v3;

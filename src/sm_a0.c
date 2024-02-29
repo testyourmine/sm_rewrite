@@ -987,9 +987,9 @@ void CallEnemyAi(uint32 ea) {
   case fnEnemy_GrappleReact_CancelBeam_B2: Enemy_GrappleReact_CancelBeam_B2(); return;
   case fnEnemy_NormalFrozenAI_B2: Enemy_NormalFrozenAI_B2(); return;
   case fnnullsub_170_B2: return;
-  case fnWalkingSpacePirates_Powerbomb: WalkingSpacePirates_Powerbomb(); return;
-  case fnWalkingSpacePirates_Touch: WalkingSpacePirates_Touch(); return;
-  case fnWalkingSpacePirates_Shot: WalkingSpacePirates_Shot(); return;
+  case fnSpacePirates_Powerbomb: SpacePirates_Powerbomb(); return;
+  case fnSpacePirates_TouchAi: SpacePirates_TouchAi(); return;
+  case fnSpacePirates_ShotAi: SpacePirates_ShotAi(); return;
   case fnWallSpacePirates_Init: WallSpacePirates_Init(); return;
   case fnWallSpacePirates_Main: WallSpacePirates_Main(); return;
   case fnNinjaSpacePirates_Init: NinjaSpacePirates_Init(); return;
@@ -1634,27 +1634,27 @@ const uint16 *CallEnemyInstr(uint32 ea, uint16 k, const uint16 *j) {
   case fnEnemyInstr_SetTimer_B2: return EnemyInstr_SetTimer(k, j);
   case fnEnemyInstr_Sleep_B2: return EnemyInstr_Sleep(k, j);
   case fnEnemyInstr_WaitNframes_B2: return EnemyInstr_WaitNframes(k, j);
-  case fnSpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight: return SpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight(k, j);
-  case fnSpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft: return SpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft(k, j);
-  case fnSpacePirates_Instr_RandomNewDirFaceR: return SpacePirates_Instr_RandomNewDirFaceR(k, j);
-  case fnSpacePirates_Instr_RandomNewDirFaceL: return SpacePirates_Instr_RandomNewDirFaceL(k, j);
-  case fnSpacePirates_Instr_PrepareWallJumpR: return SpacePirates_Instr_PrepareWallJumpR(k, j);
-  case fnSpacePirates_Instr_PrepareWallJumpL: return SpacePirates_Instr_PrepareWallJumpL(k, j);
-  case fnSpacePirates_Instr_FireLaserL: return SpacePirates_Instr_FireLaserL(k, j);
-  case fnSpacePirates_Instr_FireLaserR: return SpacePirates_Instr_FireLaserR(k, j);
-  case fnSpacePirates_Instr_SetEnemyFunc: return SpacePirates_Instr_SetEnemyFunc(k, j);
-  case fnSpacePirates_Instr_PlaySfx: return SpacePirates_Instr_PlaySfx(k, j);
-  case fnSpacePirates_Instr_20: return SpacePirates_Instr_20(k, j);
-  case fnSpacePirates_Instr_16: return SpacePirates_Instr_16(k, j);
-  case fnSpacePirates_Instr_15: return SpacePirates_Instr_15(k, j);
-  case fnSpacePirates_Instr_18: return SpacePirates_Instr_18(k, j);
-  case fnSpacePirates_Instr_17: return SpacePirates_Instr_17(k, j);
-  case fnSpacePirates_Instr_19: return SpacePirates_Instr_19(k, j);
-  case fnSpacePirates_Instr_21: return SpacePirates_Instr_21(k, j);
-  case fnSpacePirates_Instr_12: return SpacePirates_Instr_12(k, j);
-  case fnSpacePirates_Instr_14: return SpacePirates_Instr_14(k, j);
-  case fnSpacePirates_Instr_11: return SpacePirates_Instr_11(k, j);
-  case fnSpacePirates_Instr_13: return SpacePirates_Instr_13(k, j);
+  case fnWallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight: return WallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceRight(k, j);
+  case fnWallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft: return WallSpacePirates_Instr_MovePixelsDownAndChangeDirFaceLeft(k, j);
+  case fnWallSpacePirates_Instr_RandomNewDirFaceR: return WallSpacePirates_Instr_RandomNewDirFaceR(k, j);
+  case fnWallSpacePirates_Instr_RandomNewDirFaceL: return WallSpacePirates_Instr_RandomNewDirFaceL(k, j);
+  case fnWallSpacePirates_Instr_PrepareWallJumpR: return WallSpacePirates_Instr_PrepareWallJumpR(k, j);
+  case fnWallSpacePirates_Instr_PrepareWallJumpL: return WallSpacePirates_Instr_PrepareWallJumpL(k, j);
+  case fnWallSpacePirates_Instr_FireLaserL: return WallSpacePirates_Instr_FireLaserL(k, j);
+  case fnWallSpacePirates_Instr_FireLaserR: return WallSpacePirates_Instr_FireLaserR(k, j);
+  case fnWallSpacePirates_Instr_SetEnemyFunc: return WallSpacePirates_Instr_SetEnemyFunc(k, j);
+  case fnWallSpacePirates_Instr_PlaySpacePirateAttackSfx: return WallSpacePirates_Instr_PlaySpacePirateAttackSfx(k, j);
+  case fnNinjaSpacePirates_Instr_SetPaletteIndex: return NinjaSpacePirates_Instr_SetPaletteIndex(k, j);
+  case fnNinjaSpacePirates_Instr_QueueSfx2_Max6: return NinjaSpacePirates_Instr_QueueSfx2_Max6(k, j);
+  case fnNinjaSpacePirates_Instr_SpawnEprojPirateClaw: return NinjaSpacePirates_Instr_SpawnEprojPirateClaw(k, j);
+  case fnNinjaSpacePirates_Instr_SetAIActive: return NinjaSpacePirates_Instr_SetAiActive(k, j);
+  case fnNinjaSpacePirates_Instr_ResetXSpeed: return NinjaSpacePirates_Instr_ResetXSpeed(k, j);
+  case fnNinjaSpacePirates_Instr_InitDivekickLJumpYSpeed: return NinjaSpacePirates_Instr_InitDivekickLJumpYSpeed(k, j);
+  case fnNinjaSpacePirates_Instr_InitDivekickRJumpYSpeed: return NinjaSpacePirates_Instr_InitDivekickRJumpYSpeed(k, j);
+  case fnWalkingSpacePirates_Instr_FireLaserLOffsetY: return WalkingSpacePirates_Instr_FireLaserLOffsetY(k, j);
+  case fnWalkingSpacePirates_Instr_FireLaserROffsetY: return WalkingSpacePirates_Instr_FireLaserROffsetY(k, j);
+  case fnWalkingSpacePirates_Instr_SetEnemyFunc: return WalkingSpacePirates_Instr_SetEnemyFunc(k, j);
+  case fnWalkingSpacePirates_Instr_ChooseDir_FireLaserIfClose: return WalkingSpacePirates_Instr_ChooseDir_FireLaserIfClose(k, j);
   case fnEnemy_SetAiPreInstr_B3: return Enemy_SetAiPreInstr_B3(k, j);
   case fnEnemy_ClearAiPreInstr_B3: return Enemy_ClearAiPreInstr_B3(k, j);
   case fnEnemyInstr_Goto_B3: return EnemyInstr_Goto(k, j);
@@ -1806,7 +1806,7 @@ void DecrementSamusTimers(void) {  // 0xA09169
 }
 
 void SpawnEnemyDrops(uint16 a, uint16 k, uint16 varE20) {  // 0xA0920E
-  eproj_spawn_varE24 = a;
+  eproj_spawn_header_pt = a;
   SpawnEprojWithGfx(varE20, k, addr_kEproj_Pickup);
 }
 
@@ -2144,7 +2144,7 @@ void CallHitboxTouch(uint32 ea) {
   case fnnullsub_47: return;  // 0xa9b5c5
   case fnMotherBrainsBrain_Touch: MotherBrainsBrain_Touch(); return;  // 0xa9b5c6
   case fnGoldTorizo_Touch: GoldTorizo_Touch(); return;  // 0xaac977
-  case fnWalkingSpacePirates_Touch: WalkingSpacePirates_Touch(); return;  // 0xb2876c
+  case fnSpacePirates_TouchAi: SpacePirates_TouchAi(); return;  // 0xb2876c
   default: Unreachable();
   }
 }
@@ -2174,9 +2174,9 @@ void CallHitboxShot(uint32 ea, uint16 j) {  // 0xA09D17
   case fnTorizo_Shot: Torizo_Shot(); return;  // 0xaac97c
   case fnnullsub_271: return;  // 0xaac9c1
   case fnTorizo_Func_8: Torizo_Func_8(); return;  // 0xaac9c2
-  case fnWalkingSpacePirates_Shot: WalkingSpacePirates_Shot(); return;  // 0xb28779
-  case fnWalkingSpacePirates_87C8: WalkingSpacePirates_87C8(); return;  // 0xb287c8
-  case fnWalkingSpacePirates_883E: WalkingSpacePirates_883E(); return;  // 0xb2883e
+  case fnSpacePirates_ShotAi: SpacePirates_ShotAi(); return;  // 0xb28779
+  case fnSpacePirates_Shot_LowerNorfairPirateVulnerable: SpacePirates_Shot_LowerNorfairPirateVulnerable(); return;  // 0xb287c8
+  case fnSpacePirates_Shot_LowerNorfairPirateInvincible: SpacePirates_Shot_LowerNorfairPirateInvincible(); return;  // 0xb2883e
   default: Unreachable();
   }
 }
@@ -3126,7 +3126,7 @@ void Enemy_ItemDrop_MiniKraid(uint16 k) {  // 0xA0B8EE
   do {
     eproj_spawn_pt.x = special_death_item_drop_x_origin_pos + (NextRandom() & 0x1F) - 16;
     eproj_spawn_pt.y = special_death_item_drop_y_origin_pos + ((random_number & 0x1F00) >> 8) - 16;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_MiniKraidDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_MiniKraid, k, 0);
   } while (--n);
 }
 
@@ -3135,7 +3135,7 @@ void Enemy_ItemDrop_LowerNorfairSpacePirate(uint16 k) {  // 0xA0B92B
   do {
     eproj_spawn_pt.x = special_death_item_drop_x_origin_pos + (NextRandom() & 0x1F) - 16;
     eproj_spawn_pt.y = special_death_item_drop_y_origin_pos + ((random_number & 0x1F00) >> 8) - 16;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_GoldNinjaSpacePirateDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_GoldNinjaSpacePirate, k, 0);
   } while (--n);
 }
 
@@ -3144,7 +3144,7 @@ void Enemy_ItemDrop_Metroid(uint16 k) {  // 0xA0B968
   do {
     eproj_spawn_pt.x = special_death_item_drop_x_origin_pos + (NextRandom() & 0x1F) - 16;
     eproj_spawn_pt.y = special_death_item_drop_y_origin_pos + ((random_number & 0x1F00) >> 8) - 16;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_MetroidDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_Metroid, k, 0);
   } while (--n);
 }
 
@@ -3153,7 +3153,7 @@ void Enemy_ItemDrop_Ridley(uint16 k) {  // 0xA0B9A5
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 320;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_RidleyDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_Ridley, k, 0);
   } while (--n);
 }
 
@@ -3162,7 +3162,7 @@ void Enemy_ItemDrop_Crocomire(uint16 k) {  // 0xA0B9D8
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 576;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 96;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_CrocomireDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_Crocomire, k, 0);
   } while (--n);
 }
 
@@ -3171,7 +3171,7 @@ void Enemy_ItemDrop_Phantoon(uint16 k) {  // 0xA0BA0B
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 96;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_PhantoonBodyDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_PhantoonBody, k, 0);
   } while (--n);
 }
 
@@ -3180,7 +3180,7 @@ void Enemy_ItemDrop_Botwoon(uint16 k) {  // 0xA0BA3E
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 128;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_BotwoonDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_Botwoon, k, 0);
   } while (--n);
 }
 
@@ -3189,7 +3189,7 @@ void Enemy_ItemDrop_Kraid(uint16 k) {  // 0xA0BA71
   do {
     eproj_spawn_pt.x = (uint8)NextRandom() + 128;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 352;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_KraidDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_Kraid, k, 0);
   } while (--n);
 }
 
@@ -3198,7 +3198,7 @@ void Enemy_ItemDrop_BombTorizo(uint16 k) {  // 0xA0BAA4
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 96;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_BombTorizoDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_BombTorizo, k, 0);
   } while (--n);
 }
 
@@ -3207,7 +3207,7 @@ void Enemy_ItemDrop_GoldenTorizo(uint16 k) {  // 0xA0BAD7
   do {
     eproj_spawn_pt.x = (uint8)NextRandom() + 128;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 288;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_BombTorizoDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_BombTorizo, k, 0);
   } while (--n);
 }
 
@@ -3216,7 +3216,7 @@ void Enemy_ItemDrop_SporeSpawn(uint16 k) {  // 0xA0BB0A
   do {
     eproj_spawn_pt.x = (NextRandom() & 0x7F) + 64;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 528;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_SporeSpawnDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_SporeSpawn, k, 0);
   } while (--n);
 }
 
@@ -3225,7 +3225,7 @@ void Enemy_ItemDrop_Draygon(uint16 k) {  // 0xA0BB3D
   do {
     eproj_spawn_pt.x = (uint8)NextRandom() + 128;
     eproj_spawn_pt.y = ((random_number & 0x3F00) >> 8) + 352;
-    SpawnEnemyDrops(addr_kEnemyDef_ItemDrop_DraygonDropChances, k, 0);
+    SpawnEnemyDrops(addr_kEnemyDef_Draygon, k, 0);
   } while (--n);
 }
 
