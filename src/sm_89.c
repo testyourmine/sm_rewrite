@@ -7,7 +7,7 @@
 
 
 void LoadFxEntry(uint16 v0) {  // 0x89AB02
-  FxDef *FD = get_FxDef(room_layer3_asm_ptr + 16 * (v0 & 7));
+  FxDef *FD = get_FxDef(room_layer3_fx_ptr + 16 * (v0 & 7));
   fx_base_y_pos = FD->base_y_pos;
   fx_target_y_pos = FD->target_y_pos;
   fx_y_vel = FD->y_vel;
@@ -17,11 +17,11 @@ void LoadFxEntry(uint16 v0) {  // 0x89AB02
   fx_liquid_options = FD->fx_liquid_options_;
   if (FD->palette_blend) {
     int v2 = FD->palette_blend >> 1;
-    palette_buffer[25] = kPaletteBlends[v2];
-    palette_buffer[26] = kPaletteBlends[v2 + 1];
-    palette_buffer[27] = kPaletteBlends[v2 + 2];
+    palette_buffer.bg3_pal_6[1] = kPaletteBlends[v2];
+    palette_buffer.bg3_pal_6[2] = kPaletteBlends[v2 + 1];
+    palette_buffer.bg3_pal_6[3] = kPaletteBlends[v2 + 2];
   } else {
-    palette_buffer[27] = 0;
+    palette_buffer.bg3_pal_6[3] = 0;
   }
 }
 
@@ -53,7 +53,7 @@ static Func_V *const kFxTypeFuncPtrs[23] = {  // 0x89AB82
   FxTypeFunc_2C_Haze,
 };
 void LoadFXHeader(void) {
-  uint16 entry_ptr = room_layer3_asm_ptr;
+  uint16 entry_ptr = room_layer3_fx_ptr;
   if (entry_ptr == 0)
     return;
   for(;;) {
@@ -76,11 +76,11 @@ void LoadFXHeader(void) {
   fx_liquid_options = FD->fx_liquid_options_;
   if (FD->palette_blend) {
     int v4 = FD->palette_blend >> 1;
-    target_palettes[25] = kPaletteBlends[v4];
-    target_palettes[26] = kPaletteBlends[v4 + 1];
-    target_palettes[27] = kPaletteBlends[v4 + 2];
+    target_palettes.bg3_pal_6[1] = kPaletteBlends[v4];
+    target_palettes.bg3_pal_6[2] = kPaletteBlends[v4 + 1];
+    target_palettes.bg3_pal_6[3] = kPaletteBlends[v4 + 2];
   } else {
-    target_palettes[27] = 0;
+    target_palettes.bg3_pal_6[3] = 0;
   }
   fx_type = FD->type;
   if (FD->type) {

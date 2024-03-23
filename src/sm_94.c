@@ -633,7 +633,7 @@ static uint8 ClearCarry_3(CollInfo *ci) {  // 0x948E81
 }
 
 static void BlockColl_SpikeBlock_BTS0(void) {  // 0x948E83
-  if ((area_index != 3 || CheckBossBitForCurArea(1) & 1) && !samus_invincibility_timer) {
+  if ((area_index != kArea_3_WreckedShip || CheckBossBitForCurArea(kBossBit_AreaBoss) & 1) && !samus_invincibility_timer) {
     samus_invincibility_timer = 60;
     samus_knockback_timer = 10;
     samus_periodic_damage += 60;
@@ -855,8 +855,8 @@ uint8 BlockColl_Horiz_Door(CollInfo *ci) {  // 0x94938B
   uint8 door_bts = BTS[cur_block_index];
   uint16 v0 = *(uint16 *)RomPtr_8F(door_list_pointer + 2 * (door_bts & 0x7F));
   if ((get_DoorDef(v0)->room_definition_ptr & 0x8000) == 0) {
-    if (samus_pose < kGameState_9_HitDoorBlock)
-      elevator_flags = 1;
+    if (samus_pose < kPose_09_MoveR_NoAim)
+      elevator_properties = kElevatorProperty_StandingOnElevator;
     return BlockColl_Horiz_SolidShootGrappleBlock(ci);
   } else {
     door_def_ptr = v0;
@@ -871,7 +871,7 @@ uint8 BlockColl_Vert_Door(CollInfo *ci) {  // 0x9493CE
   uint16 v0 = *(uint16 *)RomPtr_8F(door_list_pointer + 2 * (door_bts & 0x7F));
   if ((get_DoorDef(v0)->room_definition_ptr & 0x8000) == 0) {
     if (samus_pose < kPose_09_MoveR_NoAim)
-      elevator_flags = 1;
+      elevator_properties = kElevatorProperty_StandingOnElevator;
     return BlockColl_Vert_SolidShootGrappleBlock(ci);
   } else {
     door_def_ptr = v0;
@@ -1146,7 +1146,7 @@ static void BlockInsideReact_SpecialAir_Default(void) {  // 0x9498E3
 }
 
 static void BlockInsideReact_SpecialAir_8(void) {  // 0x9498EA
-  if ((area_index != 3 || CheckBossBitForCurArea(1) & 1) && !samus_y_speed) {
+  if ((area_index != kArea_3_WreckedShip || CheckBossBitForCurArea(kBossBit_AreaBoss) & 1) && !samus_y_speed) {
     extra_samus_x_subdisplacement = 0;
     extra_samus_x_displacement = 2;
   }
@@ -1154,7 +1154,7 @@ static void BlockInsideReact_SpecialAir_8(void) {  // 0x9498EA
 }
 
 static void BlockInsideReact_SpecialAir_9(void) {  // 0x949910
-  if ((area_index != 3 || CheckBossBitForCurArea(1) & 1) && !samus_y_speed) {
+  if ((area_index != kArea_3_WreckedShip || CheckBossBitForCurArea(kBossBit_AreaBoss) & 1) && !samus_y_speed) {
     extra_samus_x_subdisplacement = 0;
     extra_samus_x_displacement = -2;
   }
@@ -1178,18 +1178,18 @@ static void BlockInsideReact_SpecialAir_70(void) {  // 0x949956
     SpawnPLM(addr_kPlmHeader_B6FF);
 }
 
-static const uint16 g_off_949B06[8] = {  // 0x949B16
-  0x9a06,
-  0x9a26,
-  0x9a46,
-  0x9a66,
-  0x9a86,
-  0x9aa6,
-  0x9ac6,
-  0x9ae6,
+static const uint16 kBlockInsideReact_SpecialAir_PlmTab0[8] = {  // 0x949B16
+  [kArea_0_Crateria] = 0x9a06,
+  [kArea_1_Brinstar] = 0x9a26,
+  [kArea_2_Norfair] = 0x9a46,
+  [kArea_3_WreckedShip] = 0x9a66,
+  [kArea_4_Maridia] = 0x9a86,
+  [kArea_5_Tourian] = 0x9aa6,
+  [kArea_6_Ceres] = 0x9ac6,
+  [kArea_7_Debug] = 0x9ae6,
 };
 
-static Func_V *const off_949966[80] = {
+static Func_V *const kBlockInsideReact_SpecialAir_JumpTab0[80] = {
   BlockInsideReact_SpecialAir_Default,
   BlockInsideReact_SpecialAir_Default,
   BlockInsideReact_SpecialAir_Default,
@@ -1275,10 +1275,10 @@ static Func_V *const off_949966[80] = {
 static uint8 BlockInsideReact_SpecialAir(CollInfo *ci) {
   uint8 v0 = BTS[cur_block_index];
   if (v0 & 0x80) {
-    const uint8 *v3 = RomPtr_94(g_off_949B06[area_index]);
+    const uint8 *v3 = RomPtr_94(kBlockInsideReact_SpecialAir_PlmTab0[area_index]);
     SpawnPLM(*(uint16 *)&v3[2 * (v0 & 0x7F)]);
   } else {
-    off_949966[v0]();
+    kBlockInsideReact_SpecialAir_JumpTab0[v0]();
   }
   return 0;
 }

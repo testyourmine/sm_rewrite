@@ -8,11 +8,25 @@
 //#define kBlockShotBombedReactionShootablePlm ((uint16 *)RomPtr_94(0x9ea6))
 
 uint16 kSpecialAirPtrs[] = {
-  0x91d9, 0x91f9, 0x9219, 0x9239, 0x9259, 0x9279, 0x9299, 0x92b9,
+  [kArea_0_Crateria] = 0x91d9,
+  [kArea_1_Brinstar] = 0x91f9, 
+  [kArea_2_Norfair] = 0x9219,
+  [kArea_3_WreckedShip] = 0x9239,
+  [kArea_4_Maridia] = 0x9259,
+  [kArea_5_Tourian] = 0x9279,
+  [kArea_6_Ceres] = 0x9299,
+  [kArea_7_Debug] = 0x92b9,
 };
 
 uint16 kSpecialBlockPtrs[] = {
-  0x91d9, 0x91f9, 0x9219, 0x9239, 0x9259, 0x9279, 0x9299, 0x92b9,
+  [kArea_0_Crateria] = 0x91d9,
+  [kArea_1_Brinstar] = 0x91f9,
+  [kArea_2_Norfair] = 0x9219,
+  [kArea_3_WreckedShip] = 0x9239,
+  [kArea_4_Maridia] = 0x9259,
+  [kArea_5_Tourian] = 0x9279,
+  [kArea_6_Ceres] = 0x9299,
+  [kArea_7_Debug] = 0x92b9,
 };
 
 uint16 kPlmHeaderDefPtrs[] = {

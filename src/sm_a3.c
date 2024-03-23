@@ -442,78 +442,87 @@ void Elevator_Init(void) {  // 0xA394E6
   E->base.spritemap_pointer = addr_kSpritemap_Nothing_A3;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
-  E->base.current_instruction = addr_kElevator_Ilist_94D6;
+  E->base.current_instruction = addr_kElevator_Ilist_Elevator;
   E->elevat_parameter_1 *= 2;
   E->elevat_var_A = E->base.y_pos;
-  if (elevator_status != 2)
-    elevator_flags = elevator_status = 0;
-  if (__PAIR32__(elevator_status, elevator_flags)) {
-    E->base.y_pos = E->elevat_parameter_2;
-    Elevator_Func_4();
+  if (elevator_status != kElevatorStatus_RoomTransition) {
+    elevator_properties = 0;
+    elevator_status = kElevatorStatus_Inactive;
   }
-}
-static Func_V *const off_A39540[4] = { Elevator_Func_1, Elevator_Func_2, Elevator_Func_3, Elevator_Func3b };
-void Elevator_Frozen(void) {  // 0xA3952A
-  if (!door_transition_flag_elevator_zebetites) {
-    if (__PAIR32__(elevator_status, elevator_flags))
-      off_A39540[elevator_status]();
+  if ((elevator_properties | elevator_status) != 0) {
+    E->base.y_pos = E->elevat_parameter_2;
+    PlaceSamusOnElevator();
   }
 }
 
-void Elevator_Func_1(void) {  // 0xA39548
-  if ((kElevator_ControllerInputs[Get_Elevator(cur_enemy_index)->elevat_parameter_1 >> 1] & joypad1_newkeys) != 0) {
+static Func_V *const kElevatorFuncs[4] = {
+    Elevator_Func_Inactive,
+    Elevator_Func_LeavingRoom,
+    Elevator_Func_RoomTransition,
+    Elevator_Func_EnteringRoom
+};
+void Elevator_Main(void) {  // 0xA3952A
+  if (!door_transition_flag_elevator_zebetites) {
+    if ((elevator_properties | elevator_status) != 0)
+      kElevatorFuncs[elevator_status]();
+  }
+}
+
+void Elevator_Func_Inactive(void) {  // 0xA39548
+  Enemy_Elevator *E = Get_Elevator(cur_enemy_index);
+  if ((kElevator_ControllerInputs[E->elevat_parameter_1 >> 1] & joypad1_newkeys) != 0) {
     QueueSfx3_Max6(kSfx3_Elevator);
     QueueSfx1_Max6(kSfx1_SpinJumpEnd_Silence);
     RunSamusCode(kSamusCode_7_SetupForElevator);
     ResetProjectileData();
-    Elevator_Func_4();
+    PlaceSamusOnElevator();
     ++elevator_status;
   } else {
-    elevator_flags = 0;
+    elevator_properties = 0;
   }
 }
 
-void Elevator_Func_2(void) {  // 0xA39579
+void Elevator_Func_LeavingRoom(void) {  // 0xA39579
   Enemy_Elevator *E = Get_Elevator(cur_enemy_index);
   if (E->elevat_parameter_1) {
-    elevator_direction = 0x8000;
+    elevator_direction = kElevatorDirection_Up;
     AddToHiLo(&E->base.y_pos, &E->base.y_subpos, -0x18000);
   } else {
-    elevator_direction = 0;
+    elevator_direction = kElevatorDirection_Down;
     AddToHiLo(&E->base.y_pos, &E->base.y_subpos, 0x18000);
   }
-  Elevator_Func_4();
+  PlaceSamusOnElevator();
 }
 
-void Elevator_Func_3(void) {  // 0xA395B9
+void Elevator_Func_RoomTransition(void) {  // 0xA395B9
   ++elevator_status;
-  Elevator_Func3b();
+  Elevator_Func_EnteringRoom();
 }
 
-void Elevator_Func3b(void) {  // 0xA395BC
+void Elevator_Func_EnteringRoom(void) {  // 0xA395BC
   Enemy_Elevator *E = Get_Elevator(cur_enemy_index);
   if (E->elevat_parameter_1) {
     AddToHiLo(&E->base.y_pos, &E->base.y_subpos, 0x18000);
     if (E->base.y_pos < E->elevat_var_A) {
-      Elevator_Func_4();
+      PlaceSamusOnElevator();
       return;
     }
   } else {
     AddToHiLo(&E->base.y_pos, &E->base.y_subpos, -0x18000);
     if (E->base.y_pos >= E->elevat_var_A) {
-      Elevator_Func_4();
+      PlaceSamusOnElevator();
       return;
     }
   }
-  elevator_status = 0;
-  elevator_flags = 0;
+  elevator_status = kElevatorStatus_Inactive;
+  elevator_properties = 0;
   QueueSfx3_Max6(kSfx3_ClearSpeedBooster_ElevatorSound_Silence);
   E->base.y_pos = E->elevat_var_A;
   RunSamusCode(kSamusCode_11_DrawHandlerDefault);
-  Elevator_Func_4();
+  PlaceSamusOnElevator();
 }
 
-void Elevator_Func_4(void) {  // 0xA39612
+void PlaceSamusOnElevator(void) {  // 0xA39612
   Enemy_Elevator *E = Get_Elevator(cur_enemy_index);
   samus_y_pos = E->base.y_pos - 26;
   samus_y_subpos = 0;
@@ -1038,17 +1047,23 @@ void Roach_Func_33(uint16 k) {  // 0xA3A648
 void Mochtroid_Init(void) {  // 0xA3A77D
   Enemy_Mochtroid *E = Get_Mochtroid(cur_enemy_index);
   E->base.layer = 2;
-  Mochtroid_Func_4(cur_enemy_index, addr_kMochtroid_Ilist_A745);
+  SetMochtroidInstruction(cur_enemy_index, addr_kMochtroid_Ilist_A745);
   E->mochtr_var_F = 0;
 }
-static Func_V *const off_A3A7A4[3] = { Mochtroid_Func_1, Mochtroid_Func_3, Mochtroid_Func_2 };
+
+static Func_V *const kMochtroidFuncs[3] = {
+    Mochtroid_Func_NotTouchingSamus,
+    Mochtroid_Func_TouchingSamus,
+    Mochtroid_Func_2_UNUSED
+};
 void Mochtroid_Main(void) {  // 0xA3A790
-  uint16 v0 = 2 * Get_Mochtroid(cur_enemy_index)->mochtr_var_F;
-  Get_Mochtroid(cur_enemy_index)->mochtr_var_F = 0;
-  off_A3A7A4[v0 >> 1]();
+  Enemy_Mochtroid *E = Get_Mochtroid(cur_enemy_index);
+  uint16 v0 = 2 * E->mochtr_var_F;
+  E->mochtr_var_F = 0;
+  kMochtroidFuncs[v0 >> 1]();
 }
 
-void Mochtroid_Func_1(void) {  // 0xA3A7AA
+void Mochtroid_Func_NotTouchingSamus(void) {  // 0xA3A7AA
   int16 v5, v10;
 
   Enemy_Mochtroid *E = Get_Mochtroid(cur_enemy_index);
@@ -1086,10 +1101,10 @@ LABEL_21:
     E->mochtr_var_A = 0;
     E->mochtr_var_B = 0;
   }
-  Mochtroid_Func_4(cur_enemy_index, addr_kMochtroid_Ilist_A745);
+  SetMochtroidInstruction(cur_enemy_index, addr_kMochtroid_Ilist_A745);
 }
 
-void Mochtroid_Func_2(void) {  // 0xA3A88F
+void Mochtroid_Func_2_UNUSED(void) {  // 0xA3A88F
   Enemy_Mochtroid *E = Get_Mochtroid(cur_enemy_index);
   int v2 = (E->mochtr_var_E & 6) >> 1;
   E->base.x_pos += g_word_A3A76D[v2];
@@ -1100,10 +1115,10 @@ void Mochtroid_Func_2(void) {  // 0xA3A88F
   E->mochtr_var_D = 0;
   if (E->mochtr_var_E-- == 1)
     E->mochtr_var_F = 0;
-  Mochtroid_Func_4(cur_enemy_index, addr_kMochtroid_Ilist_A745);
+  SetMochtroidInstruction(cur_enemy_index, addr_kMochtroid_Ilist_A745);
 }
 
-void Mochtroid_Func_3(void) {  // 0xA3A8C8
+void Mochtroid_Func_TouchingSamus(void) {  // 0xA3A8C8
   Enemy_Mochtroid *E = Get_Mochtroid(cur_enemy_index);
   uint16 x_pos = E->base.x_pos;
   if (x_pos == samus_x_pos) {
@@ -1131,7 +1146,7 @@ void Mochtroid_Func_3(void) {  // 0xA3A8C8
   Enemy_MoveDown(cur_enemy_index, __PAIR32__(E->mochtr_var_D, E->mochtr_var_C));
 }
 
-void Mochtroid_Func_4(uint16 k, uint16 a) {  // 0xA3A93C
+void SetMochtroidInstruction(uint16 k, uint16 a) {  // 0xA3A93C
   Enemy_Mochtroid *E = Get_Mochtroid(k);
   if (a != E->mochtr_var_01) {
     E->mochtr_var_01 = a;
@@ -1144,7 +1159,7 @@ void Mochtroid_Func_4(uint16 k, uint16 a) {  // 0xA3A93C
 void Mochtroid_Touch(void) {  // 0xA3A953
   Enemy_Mochtroid *E = Get_Mochtroid(cur_enemy_index);
   E->mochtr_var_F = 1;
-  Mochtroid_Func_4(cur_enemy_index, addr_kMochtroid_Ilist_A759);
+  SetMochtroidInstruction(cur_enemy_index, addr_kMochtroid_Ilist_A759);
   ++E->mochtr_var_20;
   if (samus_contact_damage_index)
     goto LABEL_7;
@@ -2382,7 +2397,7 @@ void Reflec_Func_1(void) {  // 0xA3DB0C
     uint16 v1 = 8 * variables_for_enemy_graphics_drawn_hook[1];
     int n = 4;
     do {
-      palette_buffer[(v0 >> 1) + 137] = kReflec_GlowColorsIndices[v1 >> 1];
+      palette_buffer.sprite_pal_0[(v0 >> 1) + 9] = kReflec_GlowColorsIndices[v1 >> 1];
       v1 += 2;
       v0 += 2;
     } while (--n);

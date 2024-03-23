@@ -87,7 +87,7 @@ uint16 loadstationlist_ptrs[] = {
 };
 
 const LoadStationList kLoadStationLists[9][23] = {
-  [0] = {
+  [kArea_0_Crateria] = {
     [0] = {
       .room_ptr_ = 0x91f8, .door_ptr = 0x896a, .door_bts =    0x0,
       .screen_x_pos =  0x400, .screen_y_pos =  0x400, .samus_y_offset =   0x40, .samus_x_offset =    0x0,
@@ -165,7 +165,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =  0x400, .screen_y_pos =    0x0, .samus_y_offset =   0x80, .samus_x_offset =    0x0,
     },
   },
-  [1] = {
+  [kArea_1_Brinstar] = {
     [0] = {
       .room_ptr_ = 0xa184, .door_ptr = 0x8df6, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x98, .samus_x_offset = 0xffe0,
@@ -243,7 +243,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =  0x300, .screen_y_pos =    0x0, .samus_y_offset =   0x80, .samus_x_offset =    0x0,
     },
   },
-  [2] = {
+  [kArea_2_Norfair] = {
     [0] = {
       .room_ptr_ = 0xaab5, .door_ptr = 0x9456, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x98, .samus_x_offset =    0x0,
@@ -337,7 +337,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x80, .samus_x_offset =    0x0,
     },
   },
-  [3] = {
+  [kArea_3_WreckedShip] = {
     [0] = {
       .room_ptr_ = 0xce8a, .door_ptr = 0xa240, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x98, .samus_x_offset =    0x0,
@@ -411,7 +411,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =  0x400, .screen_y_pos =    0x0, .samus_y_offset =   0x80, .samus_x_offset =    0x0,
     },
   },
-  [4] = {
+  [kArea_4_Maridia] = {
     [0] = {
       .room_ptr_ = 0xced2, .door_ptr = 0xa354, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x98, .samus_x_offset =    0x0,
@@ -493,7 +493,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =    0x0, .screen_y_pos =  0x100, .samus_y_offset =   0x80, .samus_x_offset =    0x0,
     },
   },
-  [5] = {
+  [kArea_5_Tourian] = {
     [0] = {
       .room_ptr_ = 0xde23, .door_ptr = 0xaabc, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x98, .samus_x_offset = 0xffe0,
@@ -567,7 +567,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x80, .samus_x_offset =    0x0,
     },
   },
-  [6] = {
+  [kArea_6_Ceres] = {
     [0] = {
       .room_ptr_ = 0xdf45, .door_ptr = 0xab58, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x48, .samus_x_offset =    0x0,
@@ -637,7 +637,7 @@ const LoadStationList kLoadStationLists[9][23] = {
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0x40, .samus_x_offset =    0x0,
     },
   },
-  [7] = {
+  [kArea_7_Debug] = {
     [0] = {
       .room_ptr_ = 0xe82c, .door_ptr = 0xabc4, .door_bts =    0x0,
       .screen_x_pos =    0x0, .screen_y_pos =    0x0, .samus_y_offset =   0xb0, .samus_x_offset =    0x0,
@@ -710,61 +710,31 @@ const LoadStationList kLoadStationLists[9][23] = {
 };
 
 const ElevatorsUsedConf kAreaElevatorBits[6][5] = {
-  [0] = {
-    [0] = {
-      .source_area =  1, .source_bit =  1, .dest_area =  9, .dest_bit =  1,
-    },
-    [1] = {
-      .source_area =  1, .source_bit =  2, .dest_area =  3, .dest_bit =  4,
-    },
-    [2] = {
-      .source_area =  1, .source_bit =  4, .dest_area =  3, .dest_bit =  2,
-    },
-    [3] = {
-      .source_area =  1, .source_bit =  8, .dest_area =  3, .dest_bit =  1,
-    },
-    [4] = {
-      .source_area =  1, .source_bit = 16, .dest_area = 11, .dest_bit =  1,
-    },
+  [kArea_0_Crateria] = {
+    [0] = { .src_area =  1, .src_bit =  1, .dst_area =  9, .dst_bit =  1 },
+    [1] = { .src_area =  1, .src_bit =  2, .dst_area =  3, .dst_bit =  4, },
+    [2] = { .src_area =  1, .src_bit =  4, .dst_area =  3, .dst_bit =  2, },
+    [3] = { .src_area =  1, .src_bit =  8, .dst_area =  3, .dst_bit =  1, },
+    [4] = { .src_area =  1, .src_bit = 16, .dst_area = 11, .dst_bit =  1, },
   },
-  [1] = {
-    [0] = {
-      .source_area =  3, .source_bit =  1, .dest_area =  1, .dest_bit =  8,
-    },
-    [1] = {
-      .source_area =  3, .source_bit =  2, .dest_area =  1, .dest_bit =  4,
-    },
-    [2] = {
-      .source_area =  3, .source_bit =  4, .dest_area =  1, .dest_bit =  2,
-    },
-    [3] = {
-      .source_area =  3, .source_bit =  8, .dest_area =  5, .dest_bit =  1,
-    },
+  [kArea_1_Brinstar] = {
+    [0] = { .src_area =  3, .src_bit =  1, .dst_area =  1, .dst_bit =  8, },
+    [1] = { .src_area =  3, .src_bit =  2, .dst_area =  1, .dst_bit =  4, },
+    [2] = { .src_area =  3, .src_bit =  4, .dst_area =  1, .dst_bit =  2, },
+    [3] = { .src_area =  3, .src_bit =  8, .dst_area =  5, .dst_bit =  1, },
   },
-  [2] = {
-    [0] = {
-      .source_area =  5, .source_bit =  1, .dest_area =  3, .dest_bit =  8,
-    },
-    [1] = {
-      .source_area =  5, .source_bit =  2, .dest_area =  5, .dest_bit =  4,
-    },
-    [2] = {
-      .source_area =  5, .source_bit =  4, .dest_area =  5, .dest_bit =  2,
-    },
+  [kArea_2_Norfair] = {
+    [0] = { .src_area =  5, .src_bit =  1, .dst_area =  3, .dst_bit =  8, },
+    [1] = { .src_area =  5, .src_bit =  2, .dst_area =  5, .dst_bit =  4, },
+    [2] = { .src_area =  5, .src_bit =  4, .dst_area =  5, .dst_bit =  2, },
   },
-  [3] = {
-    [0] = {
-      .source_area =  0, .source_bit =  0, .dest_area =  0, .dest_bit =  0,
-    },
+  [kArea_3_WreckedShip] = {
+    [0] = { .src_area =  0, .src_bit =  0, .dst_area =  0, .dst_bit =  0, },
   },
-  [4] = {
-    [0] = {
-      .source_area =  9, .source_bit =  1, .dest_area =  1, .dest_bit =  1,
-    },
+  [kArea_4_Maridia] = {
+    [0] = { .src_area =  9, .src_bit =  1, .dst_area =  1, .dst_bit =  1, },
   },
-  [5] = {
-    [0] = {
-      .source_area = 11, .source_bit =  1, .dest_area =  1, .dest_bit = 16,
-    },
+  [kArea_5_Tourian] = {
+    [0] = { .src_area = 11, .src_bit =  1, .dst_area =  1, .dst_bit = 16, },
   },
 };

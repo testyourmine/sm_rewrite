@@ -1478,7 +1478,7 @@ void GunshipTop_8(uint16 k) {  // 0xA2A9BD
       }
       MakeSamusFaceForward();
       RunSamusCode(kSamusCode_26_EnterGunship);
-      elevator_status = 0;
+      elevator_status = kElevatorStatus_Inactive;
       uint16 v3 = E->base.y_pos - 1;
       Enemy_GunshipTop *E2 = Get_GunshipTop(k + 128);
       E2->base.y_pos = v3;

@@ -115,8 +115,8 @@ uint16 HandleSamusDeathSequence(void) {  // 0x9BB441
 
 void HandleSamusDeathSequence_Helper2(void) {  // 0x9BB4B6
   const uint16 *v0 = (const uint16 *)RomPtr_9B(kDeathSequencePals_SuitOffset_1[samus_suit_palette_index >> 1]);
-  memcpy(&palette_buffer[192], RomPtr_9B(*v0), 32);
-  memcpy(&palette_buffer[240], RomPtr_9B(addr_kSamusPalette_DeathSequence_SuitlessSamus), 32);
+  memcpy(&palette_buffer.sprite_pal_4[0], RomPtr_9B(*v0), 32);
+  memcpy(&palette_buffer.sprite_pal_7[0], RomPtr_9B(addr_kSamusPalette_DeathSequence_SuitlessSamus), 32);
   QueueTransferOfSamusDeathSequence(8);
   game_options_screen_index = kDeathSequencePalette_ExplosionTabs[0];
   samus_death_anim_timer = 0;
@@ -127,8 +127,8 @@ void HandleSamusDeathSequence_Helper2(void) {  // 0x9BB4B6
 void CopyPalettesForSamusDeath(uint16 v0) {  // 0x9BB5CE
   int r20 = kDeathSequencePals_SuitOffset_2[samus_suit_palette_index >> 1];
   const uint16 *v1 = (const uint16 *)RomPtr_9B(r20 + v0);
-  memcpy(&palette_buffer[192], RomPtr_9B(*v1), 32);
-  memcpy(&palette_buffer[240], RomPtr_9B(kDeathSequencePals_Suitless[v0 >> 1]), 32);
+  memcpy(&palette_buffer.sprite_pal_4[0], RomPtr_9B(*v1), 32);
+  memcpy(&palette_buffer.sprite_pal_7[0], RomPtr_9B(kDeathSequencePals_Suitless[v0 >> 1]), 32);
 }
 
 void QueueTransferOfSamusDeathSequence(uint16 v0) {  // 0x9BB6D8
@@ -733,7 +733,7 @@ void GrappleBeamFunc_FireGoToCancel(void) {  // 0x9BC51E
   samus_draw_handler = FUNC16(SamusDrawHandler_NoChargeOrGrapple);
   grapple_walljump_timer = 0;
   LoadProjectilePalette(2);
-  palette_buffer[223] = 32657;
+  palette_buffer.sprite_pal_5[15] = 32657;
   grapple_beam_function = FUNC16(GrappleBeamFunc_Firing);
   QueueSfx1_Max1(kSfx1_GrappleStart);
   flare_counter = 1;
@@ -856,7 +856,7 @@ void GrappleBeamFunc_C832(void) {  // 0x9BC832
 void GrappleBeamFunc_Cancel(void) {  // 0x9BC856
   QueueSfx1_Max15(kSfx1_GrappleEnd);
   if (samus_movement_type == kMovementType_16_Grappling)
-    Samus_Pose_CancelGrapple();
+    Samus_LookupTransitionTableFailureHandler();
   else
     RunSamusCode(kSamusCode_28_PlaySpinSfxIfSpinJumping);
   grapple_beam_unkD1E = 0;

@@ -383,7 +383,7 @@ void NinjaSpacePirates_Init(void) {  // 0xB2F5DE
   uint16 v7 = 0;
   int n = 15;
   do {
-    target_palettes[(v7 >> 1) + 240] = kWallSpacePirates_Palette_3[v6 >> 1];
+    target_palettes.sprite_pal_7[(v7 >> 1)] = kWallSpacePirates_Palette_3[v6 >> 1];
     v6 += 2;
     v7 += 2;
   } while (--n >= 0);

@@ -44,7 +44,7 @@ static const uint16 g_word_A8C1C3 = 0;
 static const uint16 g_word_A8C1C5 = 0xffff;
 static const uint16 g_word_A8C1C7 = 0x8000;
 
-static const int16 g_word_A8CCC1[31] = {
+static const int16 kWreckedShipRobot_PalAnim_Tab0[31] = {
   0x1f, 0x18,  0xf,    8, 0x40,
   0x18,  0xf,    8, 0x1f, 0x10,
    0xf,    8, 0x1f, 0x18, 0x10,
@@ -585,7 +585,7 @@ void WreckedShipGhost_Init(void) {  // 0xA89AEE
   uint16 v3 = 16 * v2 + 256;
   int n = 16;
   do {
-    target_palettes[v3 >> 1] = 0;
+    target_palettes.pal[v3 >> 1] = 0;
     v3 += 2;
   } while (--n >= 0);
 }
@@ -615,8 +615,8 @@ void WreckedShipGhost_Func_1(uint16 k) {  // 0xA89B42
   int n = 16, v1 = 16;
   do {
     int v5 = v4 >> 1;
-    if (sign16((palette_buffer[v5] & 0x1F) - 31)) {
-      palette_buffer[v5] += 1057;
+    if (sign16((palette_buffer.pal[v5] & 0x1F) - 31)) {
+      palette_buffer.pal[v5] += 1057;
       --v1;
     }
     v4 += 2;
@@ -627,7 +627,7 @@ void WreckedShipGhost_Func_1(uint16 k) {  // 0xA89B42
     uint16 v8 = 16 * v7 + 256;
     uint16 v9 = 0;
     do {
-      target_palettes[v8 >> 1] = kWreckedShipGhost_Palette[v9 >> 1];
+      target_palettes.pal[v8 >> 1] = kWreckedShipGhost_Palette[v9 >> 1];
       v8 += 2;
       v9 += 2;
     } while ((int16)(v9 - 32) < 0);
@@ -711,7 +711,7 @@ void WreckedShipGhost_Func_5(uint16 k) {  // 0xA89C8A
     uint16 v9 = 16 * t + 256;
     int n = 16;
     do {
-      target_palettes[v9 >> 1] = 0x7FFF;
+      target_palettes.pal[v9 >> 1] = 0x7FFF;
       v9 += 2;
     } while ((--n & 0x8000) == 0);
   }
@@ -800,9 +800,9 @@ uint16 WreckedShipGhost_Func_8(void) {  // 0xA89E88
     uint16 r20 = 16 * v2 + 288;
     do {
       int v4 = v3 >> 1;
-      if (target_palettes[v4] != palette_buffer[v4]) {
-        uint16 r18 = target_palettes[v4] & 0x1F;
-        uint16 v5 = palette_buffer[v4] & 0x1F;
+      if (target_palettes.pal[v4] != palette_buffer.pal[v4]) {
+        uint16 r18 = target_palettes.pal[v4] & 0x1F;
+        uint16 v5 = palette_buffer.pal[v4] & 0x1F;
         if (v5 != r18) {
           uint16 v6;
           if ((int16)(v5 - r18) >= 0)
@@ -810,22 +810,22 @@ uint16 WreckedShipGhost_Func_8(void) {  // 0xA89E88
           else
             v6 = v5 + 1;
           r18 = v6;
-          palette_buffer[v4] = v6 | palette_buffer[v4] & 0xFFE0;
+          palette_buffer.pal[v4] = v6 | palette_buffer.pal[v4] & 0xFFE0;
           ++v0;
         }
-        r18 = target_palettes[v4] & 0x3E0;
-        uint16 v7 = palette_buffer[v4] & 0x3E0;
+        r18 = target_palettes.pal[v4] & 0x3E0;
+        uint16 v7 = palette_buffer.pal[v4] & 0x3E0;
         if (v7 != r18) {
           uint16 v8;
           if ((int16)(v7 - r18) >= 0)
             v8 = v7 - 32;
           else
             v8 = v7 + 32;
-          palette_buffer[v4] = v8 | palette_buffer[v4] & 0xFC1F;
+          palette_buffer.pal[v4] = v8 | palette_buffer.pal[v4] & 0xFC1F;
           ++v0;
         }
-        r18 = target_palettes[v4] & 0x7C00;
-        uint16 v9 = palette_buffer[v4] & 0x7C00;
+        r18 = target_palettes.pal[v4] & 0x7C00;
+        uint16 v9 = palette_buffer.pal[v4] & 0x7C00;
         if (v9 != r18) {
           uint16 v10;
           if ((int16)(v9 - r18) >= 0)
@@ -833,7 +833,7 @@ uint16 WreckedShipGhost_Func_8(void) {  // 0xA89E88
           else
             v10 = v9 + 1024;
           r18 = v10;
-          palette_buffer[v4] = v10 | palette_buffer[v4] & 0x83FF;
+          palette_buffer.pal[v4] = v10 | palette_buffer.pal[v4] & 0x83FF;
           ++v0;
         }
       }
@@ -1505,10 +1505,10 @@ void NorfairLavaMan_Func_6(void) {  // 0xA8B0B2
     uint16 r22 = kNorfairLavaMan_Palette[v0 + 11];
     uint16 r24 = kNorfairLavaMan_Palette[v0 + 12];
     int v1 = variables_for_enemy_graphics_drawn_hook[0] >> 1;
-    palette_buffer[v1 + 9] = r18;
-    palette_buffer[v1 + 10] = r20;
-    palette_buffer[v1 + 11] = r22;
-    palette_buffer[v1 + 12] = r24;
+    palette_buffer.pal[v1 + 9] = r18;
+    palette_buffer.pal[v1 + 10] = r20;
+    palette_buffer.pal[v1 + 11] = r22;
+    palette_buffer.pal[v1 + 12] = r24;
   }
 }
 
@@ -2613,10 +2613,10 @@ void WreckedShipRobotDeactivated_Init(void) {  // 0xA8CBCC
   v0->ai_var_E = 0;
   v0->ai_preinstr = 1;
   int v2 = (16 * ((wrecked_ship_robot_palanim_palindex & 0xFF00) >> 8)) >> 1;
-  palette_buffer[v2 + 137] = 10;
-  palette_buffer[v2 + 138] = 10;
-  palette_buffer[v2 + 139] = 10;
-  palette_buffer[v2 + 140] = 10;
+  palette_buffer.pal[v2 + 137] = 10;
+  palette_buffer.pal[v2 + 138] = 10;
+  palette_buffer.pal[v2 + 139] = 10;
+  palette_buffer.pal[v2 + 140] = 10;
 }
 
 void WreckedShipRobot_Main(void) {  // 0xA8CC36
@@ -2637,16 +2637,16 @@ void WreckedShipRobot_Func_1(void) {  // 0xA8CC67
         int v1;
         for (i = *(uint16 *)&wrecked_ship_robot_palanim_table_index; ; i = 0) {
           v1 = i >> 1;
-          v2 = g_word_A8CCC1[v1];
+          v2 = kWreckedShipRobot_PalAnim_Tab0[v1];
           if (v2 >= 0)
             break;
         }
         int v3 = (16 * ((wrecked_ship_robot_palanim_palindex & 0xFF00) >> 8)) >> 1;
-        palette_buffer[v3 + 137] = v2;
-        palette_buffer[v3 + 138] = g_word_A8CCC1[v1 + 1];
-        palette_buffer[v3 + 139] = g_word_A8CCC1[v1 + 2];
-        palette_buffer[v3 + 140] = g_word_A8CCC1[v1 + 3];
-        wrecked_ship_robot_palanim_timer = g_word_A8CCC1[v1 + 4];
+        palette_buffer.pal[v3 + 137] = v2;
+        palette_buffer.pal[v3 + 138] = kWreckedShipRobot_PalAnim_Tab0[v1 + 1];
+        palette_buffer.pal[v3 + 139] = kWreckedShipRobot_PalAnim_Tab0[v1 + 2];
+        palette_buffer.pal[v3 + 140] = kWreckedShipRobot_PalAnim_Tab0[v1 + 3];
+        wrecked_ship_robot_palanim_timer = kWreckedShipRobot_PalAnim_Tab0[v1 + 4];
         *(uint16 *)&wrecked_ship_robot_palanim_table_index = i + 10;
       }
     }
@@ -3526,7 +3526,7 @@ void BlueBrinstarFaceBlock_Func_1(void) {  // 0xA8E86E
     uint16 v1 = 8 * variables_for_enemy_graphics_drawn_hook[1];
     int n = 4;
     do {
-      palette_buffer[(v0 >> 1) + 137] = kBlueBrinstarFaceBlock_GlowPalette[v1 >> 1];
+      palette_buffer.pal[(v0 >> 1) + 137] = kBlueBrinstarFaceBlock_GlowPalette[v1 >> 1];
       v1 += 2;
       v0 += 2;
     } while (--n);

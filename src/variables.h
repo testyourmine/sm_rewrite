@@ -25,6 +25,7 @@ extern int32 *cur_coll_amt32;
 #define REMOVED_R20 *(uint16*)(g_ram + 20)
 #define REMOVED_R22 *(uint16*)(g_ram + 22)
 
+// Regular IO registers {
 #define reg_INIDISP (*(uint8*)(g_ram+0x51))
 #define reg_OBSEL (*(uint8*)(g_ram+0x52))
 #define reg_OAMaddr_UNUSED (*(uint16*)(g_ram+0x53))
@@ -70,6 +71,7 @@ extern int32 *cur_coll_amt32;
 #define reg_NMITIMEN (*(uint8*)(g_ram+0x84))
 #define reg_HDMAEN (*(uint8*)(g_ram+0x85))
 #define reg_MEMSEL (*(uint8*)(g_ram+0x86))
+// }
 #define joypad_ctr_repeat_first (*(uint16*)(g_ram+0x87))
 #define joypad_ctr_repeat_next (*(uint16*)(g_ram+0x89))
 #define joypad1_lastkeys (*(uint16*)(g_ram+0x8B))
@@ -102,8 +104,10 @@ extern int32 *cur_coll_amt32;
 #define mode7_vram_write_queue_tail (*(uint16*)(g_ram+0x334))
 #define vram_read_queue ((VramReadQueueEnt*)(g_ram+0x340))
 #define vram_read_queue_tail (*(uint16*)(g_ram+0x360))
+// OAM {
 #define oam_ent ((OamEnt*)(g_ram+0x370))
 #define oam_ext ((uint16*)(g_ram+0x570))
+// }
 #define oam_next_ptr (*(uint16*)(g_ram+0x590))
 #define power_bomb_explosion_status (*(uint16*)(g_ram+0x592))
 
@@ -128,11 +132,14 @@ extern int32 *cur_coll_amt32;
 #define set_to_e0_by_scrolling_sky (*(uint16*)(g_ram+0x59A))
 #define set_to_0_by_scrolling_sky (*(uint16*)(g_ram+0x59C))
 #define UNUSED_hdma_contracting_flag (*(uint16*)(g_ram+0x5A0))
+// Message box animation variables {
 #define message_box_animation_y_radius (*(uint16*)(g_ram+0x5A2))
 #define message_box_animation_y0_bottom_half (*(uint16*)(g_ram+0x5A4))
 #define message_box_animation_y1_bottom_half (*(uint16*)(g_ram+0x5A6))
 #define message_box_animation_y2_top_half (*(uint16*)(g_ram+0x5A8))
 #define message_box_animation_y3_top_half (*(uint16*)(g_ram+0x5AA))
+// }
+// Expanding and contracting effect variables {}
 #define map_min_x_scroll (*(uint16*)(g_ram+0x5AC))
 #define map_max_x_scroll (*(uint16*)(g_ram+0x5AE))
 #define map_min_y_scroll (*(uint16*)(g_ram+0x5B0))
@@ -215,6 +222,7 @@ extern int32 *cur_coll_amt32;
 #define screen_fade_delay (*(uint16*)(g_ram+0x723))
 #define screen_fade_counter (*(uint16*)(g_ram+0x725))
 #define menu_index (*(uint16*)(g_ram+0x727))
+// Pause menu data {
 #define pausemenu_start_lr_pressed_highlight_timer (*(uint16*)(g_ram+0x729))
 #define pausemenu_lr_animation_timer (*(uint16*)(g_ram+0x72B))
 #define pausemenu_item_selector_animation_timer (*(uint16*)(g_ram+0x72D))
@@ -244,6 +252,7 @@ extern int32 *cur_coll_amt32;
 #define UNUSED_word_7E075D (*(uint16*)(g_ram+0x75D))
 #define UNUSED_word_7E075F (*(uint16*)(g_ram+0x75F))
 #define UNUSED_word_7E0761 (*(uint16*)(g_ram+0x761))
+// }
 #define pause_screen_mode (*(uint16*)(g_ram+0x763))
 #define pausemenu_bak_BG1SC (*(uint8*)(g_ram+0x765))
 #define pausemenu_bak_BG2SC (*(uint8*)(g_ram+0x766))
@@ -265,6 +274,7 @@ extern int32 *cur_coll_amt32;
 #define samus_position_indicator_animation_frame (*(uint16*)(g_ram+0x776))
 #define samus_position_indicator_animation_timer (*(uint16*)(g_ram+0x778))
 #define samus_position_indicator_animation_loop_counter (*(uint16*)(g_ram+0x77A))
+// Main gameplay RAM {
 #define hud_item_tilemap_palette_bits (*(uint16*)(g_ram+0x77C))
 #define irq_enable_mode7 (*(uint16*)(g_ram+0x783))
 #define mode7_rotation_angle (*(uint16*)(g_ram+0x785))
@@ -295,13 +305,13 @@ extern int32 *cur_coll_amt32;
 #define REMOVED_event_pointer (*(uint16*)(g_ram+0x7B7))
 #define room_size_in_blocks (*(uint16*)(g_ram+0x7B9))
 #define roomdefroomstate_ptr (*(uint16*)(g_ram+0x7BB))
-#define room_compr_level_data_ptr (*(LongPtr*)(g_ram+0x7BD))
+#define room_level_data_ptr (*(LongPtr*)(g_ram+0x7BD))
 #define tileset_tile_table_pointer (*(LongPtr*)(g_ram+0x7C0))
 #define tileset_tiles_pointer (*(LongPtr*)(g_ram+0x7C3))
 #define tileset_compr_palette_ptr (*(LongPtr*)(g_ram+0x7C6))
 #define room_music_track_index (*(uint16*)(g_ram+0x7C9))
 #define room_music_data_index (*(uint16*)(g_ram+0x7CB))
-#define room_layer3_asm_ptr (*(uint16*)(g_ram+0x7CD))
+#define room_layer3_fx_ptr (*(uint16*)(g_ram+0x7CD))
 #define room_enemy_population_ptr (*(uint16*)(g_ram+0x7CF))
 #define room_enemy_tilesets_ptr (*(uint16*)(g_ram+0x7D1))
 #define room_main_code_ptr (*(uint16*)(g_ram+0x7DF))
@@ -391,9 +401,11 @@ extern int32 *cur_coll_amt32;
 #define blocks_to_update_y_block (*(uint16*)(g_ram+0x992))
 #define vram_blocks_to_update_x_block (*(uint16*)(g_ram+0x994))
 #define vram_blocks_to_update_y_block (*(uint16*)(g_ram+0x996))
+// }
 #define game_state (*(uint16*)(g_ram+0x998))
 #define door_transition_function (*(uint16*)(g_ram+0x99C))
 #define menu_option_index (*(uint16*)(g_ram+0x99E))
+// Save to SRAM {
 #define equipped_items (*(uint16*)(g_ram+0x9A2))
 #define collected_items (*(uint16*)(g_ram+0x9A4))
 #define equipped_beams (*(uint16*)(g_ram+0x9A6))
@@ -431,6 +443,8 @@ extern int32 *cur_coll_amt32;
 #define debug_flag (*(uint16*)(g_ram+0x9E6))
 #define UNUSED_word_7E09E8 (*(uint16*)(g_ram+0x9E8))
 #define hud_auto_cancel_flag (*(uint16*)(g_ram+0x9EA))
+// }
+// Samus RAM {
 #define samus_auto_cancel_hud_item_index (*(uint16*)(g_ram+0xA04))
 #define samus_prev_health (*(uint16*)(g_ram+0xA06))
 #define samus_prev_missiles (*(uint16*)(g_ram+0xA08))
@@ -454,7 +468,7 @@ extern int32 *cur_coll_amt32;
 #define samus_new_pose (*(uint16*)(g_ram+0xA28))
 #define samus_new_pose_interrupted (*(uint16*)(g_ram+0xA2A))
 #define samus_new_pose_transitional (*(uint16*)(g_ram+0xA2C))
-#define samus_momentum_routine_index (*(uint16*)(g_ram+0xA2E))
+#define samus_new_pose_command (*(uint16*)(g_ram+0xA2E))
 #define samus_special_transgfx_index (*(uint16*)(g_ram+0xA30))
 #define samus_hurt_switch_index (*(uint16*)(g_ram+0xA32))
 #define solid_enemy_collision_flags (*(uint16*)(g_ram+0xA34))
@@ -733,13 +747,17 @@ extern int32 *cur_coll_amt32;
 #define distance_to_eject_samus_right (*(uint16*)(g_ram+0xE06))
 #define distance_to_eject_samus_up (*(uint16*)(g_ram+0xE08))
 #define distance_to_eject_samus_down (*(uint16*)(g_ram+0xE0A))
+// }
+// Ending Shooting Stars {
 #define ending_shooting_stars ((uint8*)(g_ram+0xE0C))
+// }
 #define debug_disable_sprite_interact (*(uint16*)(g_ram+0xE12))
-#define elevator_flags (*(uint16*)(g_ram+0xE16))
+#define elevator_properties (*(uint16*)(g_ram+0xE16))
 #define elevator_status (*(uint16*)(g_ram+0xE18))
 #define health_drop_bias_flag (*(uint16*)(g_ram+0xE1A))
 #define enemy_index_to_shake (*(uint16*)(g_ram+0xE1C))
 #define nmi_flag_bg2_enemy_vram_transfer (*(uint16*)(g_ram+0xE1E))
+// Enemy temporaries {
 #define REMOVED_varE20 (*(uint16*)(g_ram+0xE20))
 #define REMOVED_varE22 (*(uint16*)(g_ram+0xE22))
 #define REMOVED_varE24 (*(uint16*)(g_ram+0xE24))
@@ -756,6 +774,7 @@ extern int32 *cur_coll_amt32;
 #define REMOVED_varE3C (*(uint16*)(g_ram+0xE3C))
 #define REMOVED_varE3E (*(uint16*)(g_ram+0xE3E))
 #define last_enemy_power (*(uint16*)(g_ram+0xE40))
+// }
 #define random_enemy_counter (*(uint16*)(g_ram+0xE44))
 #define UNUSED_word_7E0E46 (*(uint16*)(g_ram+0xE46))
 #define UNUSED_word_7E0E48 (*(uint16*)(g_ram+0xE48))
@@ -771,7 +790,9 @@ extern int32 *cur_coll_amt32;
 #define enemy_tile_load_data_write_pos (*(uint16*)(g_ram+0xE7A))
 #define enemy_tile_vram_src (*(uint16*)(g_ram+0xE7C))
 #define enemy_tile_vram_dst (*(uint16*)(g_ram+0xE7E))
+// Enemy drawing queues {
 #define enemy_drawing_queue ((uint16*)(g_ram+0xE84))
+// }
 #define enemy_drawing_queue_sizes ((uint16*)(g_ram+0xF68))
 #define enemy_data ((EnemyData*)(g_ram+0xF78))
 #define fireflea_flashing_timer (*(uint16*)(g_ram+0x1778))
@@ -855,12 +876,14 @@ extern int32 *cur_coll_amt32;
 #define hdma_object_pre_instructions ((uint16*)(g_ram+0x18F0))
 #define hdma_object_pre_instruction_bank ((uint16*)(g_ram+0x18FC))
 #define hdma_object_timers ((uint16*)(g_ram+0x1908))
+// HDMA object variables {
 #define hdma_object_A ((uint16*)(g_ram+0x1914))
 #define hdma_object_B ((uint16*)(g_ram+0x1920))
 #define hdma_object_C ((uint16*)(g_ram+0x192C))
 #define hdma_object_D ((uint16*)(g_ram+0x1938))
 #define hdma_object_E ((uint16*)(g_ram+0x1944))
 #define hdma_object_F ((uint16*)(g_ram+0x1950))
+// }
 #define fx_y_subpos (*(uint16*)(g_ram+0x195C))
 #define fx_y_pos (*(uint16*)(g_ram+0x195E))
 #define lava_acid_y_subpos (*(uint16*)(g_ram+0x1960))
@@ -881,6 +904,7 @@ extern int32 *cur_coll_amt32;
 #define fx_layer_blending_config_b (*(uint16*)(g_ram+0x1984))
 #define fx_layer_blending_config_c (*(uint16*)(g_ram+0x1986))
 #define phantom_related_layer_flag (*(uint16*)(g_ram+0x1988))
+// Enemy projectile data {
 #define eproj_enable_flag (*(uint16*)(g_ram+0x198D))
 #define eproj_unk198F (*(uint16*)(g_ram+0x198F))
 #define eproj_index (*(uint16*)(g_ram+0x1991))
@@ -904,6 +928,10 @@ extern int32 *cur_coll_amt32;
 #define eproj_radius ((uint16*)(g_ram+0x1BB3))
 #define eproj_properties ((uint16*)(g_ram+0x1BD7))
 #define eproj_G ((uint16*)(g_ram+0x1BFB))
+// }
+// Non-gameplay use {}
+// Menus {}
+// Game options menu {}
 #define message_box_index (*(uint16*)(g_ram+0x1C1F))
 #define plm_flag (*(uint16*)(g_ram+0x1C23))
 #define plm_draw_tilemap_index (*(uint16*)(g_ram+0x1C25))
@@ -919,9 +947,11 @@ extern int32 *cur_coll_amt32;
 #define plm_timers ((uint16*)(g_ram+0x1D77))
 #define plm_room_arguments ((uint16*)(g_ram+0x1DC7))
 #define plm_variable ((uint16*)(g_ram+0x1E17))
+// Custom draw instruction {
 #define custom_draw_instr_num_blocks (*(uint16*)(g_ram+0x1E67))
 #define custom_draw_instr_plm_block (*(uint16*)(g_ram+0x1E69))
 #define custom_draw_instr_zero_terminator (*(uint16*)(g_ram+0x1E6B))
+// }
 #define tourian_entrance_statue_finished (*(uint16*)(g_ram+0x1E6D))
 #define tourian_entrance_statue_animstate (*(uint16*)(g_ram+0x1E6F))
 #define flag_samus_in_quicksand (*(uint16*)(g_ram+0x1E71))
@@ -953,7 +983,12 @@ extern int32 *cur_coll_amt32;
 #define demo_set (*(uint16*)(g_ram+0x1F55))
 #define demo_scene (*(uint16*)(g_ram+0x1F57))
 #define num_demo_sets (*(uint16*)(g_ram+0x1F59))
+// Room tiles {}
+// Enemy BG2 tilemap {
 #define tilemap_stuff ((uint16*)(g_ram+0x2000))
+// }
+// Fading palette data {}
+// Corpse rotting graphics {}
 #define ram3000 (*(Ram3000*)(g_ram+0x3000))
 #define ram3800 (*(Ram3800*)(g_ram+0x3800))
 #define ram4000 (*(Ram4000*)(g_ram+0x4000))
@@ -961,7 +996,11 @@ extern int32 *cur_coll_amt32;
 #define enemy_ram7800 ((ExtraEnemyRam7800*)(g_ram+0x7800))
 #define extra_enemy_ram8000 ((ExtraEnemyRam8000*)(g_ram+0x8000))
 #define extra_enemy_ram8800 ((ExtraEnemyRam8800*)(g_ram+0x8800))
+// Mother Brain corpse rotting graphics {}
+// Botwoon position history {}
+// Morph ball eye beam window 1 indirect HDMA table
 #define kraid_unk9000 (*(uint16*)(g_ram+0x9000))
+// Draygon swoop Y positions {}
 #define g_word_7E9002 (*(uint16*)(g_ram+0x9002))
 #define g_word_7E9004 (*(uint16*)(g_ram+0x9004))
 #define g_word_7E9006 (*(uint16*)(g_ram+0x9006))
@@ -996,6 +1035,8 @@ extern int32 *cur_coll_amt32;
 #define g_word_7E90C2 (*(uint16*)(g_ram+0x90C2))
 #define g_word_7E90D0 (*(uint16*)(g_ram+0x90D0))
 #define g_word_7E90D2 (*(uint16*)(g_ram+0x90D2))
+// Morph ball eye beam window 1 HDMA data table {}
+// Wavy Phantoon BG2 X scroll HDMA table {}
 #define g_word_7E9100 (*(uint16*)(g_ram+0x9100))
 #define g_word_7E9140 (*(uint16*)(g_ram+0x9140))
 #define g_word_7E9180 (*(uint16*)(g_ram+0x9180))
@@ -1017,8 +1058,18 @@ extern int32 *cur_coll_amt32;
 #define g_byte_7E95F0 (*(uint8*)(g_ram+0x95F0))
 #define g_byte_7E9600 (*(uint8*)(g_ram+0x9600))
 #define g_byte_7E9610 (*(uint8*)(g_ram+0x9610))
+// Mother brain corpse rotting rot table {}
 #define eproj_angles ((uint16*)(g_ram+0x97DC))
+// X-ray window 2 HDMA data table {}
+// Suit pickup window 1 HDMA data table {}
+// Wavy Samus BG3 X scroll HDMA data table {}
+// Title screen gradient colour math subscreen backdrop colour HDMA table {}
 #define hdma_table_1 ((uint16*)(g_ram+0x9800))
+// Expanding and contracting effect BG2 Y scroll indirect HDMA data table {}
+// FX type 22h BG3 Y scroll HDMA table {}
+// Mother Brain rainbow beam window 1 indirect HDMA table {}
+// Lava/acid BG3 Y scroll HDMA data table {}
+// Water BG3 X scroll HDMA data table {}
 #define mother_brain_indirect_hdma ((uint8*)(g_ram+0x9C00))
 #define UNUSED_bg2_lava_acid_y_scroll (*(uint16*)(g_ram+0x9C44))
 #define lava_acid_bg2_y_scroll_hdma_data_table_entry ((uint16*)(g_ram+0x9C46))
@@ -1048,8 +1099,8 @@ extern int32 *cur_coll_amt32;
 #define scrolling_sky_bg2_indirect_hdma ((uint8*)(g_ram+0x9F00))
 #define scrolling_sky_bg2_hdma_data ((uint16*)(g_ram+0x9F80))
 #define tile_table (*(TileTables*)(g_ram+0xA000))
-#define palette_buffer ((uint16*)(g_ram+0xC000))
-#define target_palettes ((uint16*)(g_ram+0xC200))
+#define palette_buffer (*(Palettes*)(g_ram+0xC000))
+#define target_palettes (*(Palettes*)(g_ram+0xC200))
 #define palette_change_num (*(uint16*)(g_ram+0xC400))
 #define palette_change_denom (*(uint16*)(g_ram+0xC402))
 #define palette_change_color_index (*(uint16*)(g_ram+0xC404))
@@ -1057,7 +1108,7 @@ extern int32 *cur_coll_amt32;
 #define power_bomb_explosion_right_hdma ((uint8*)(g_ram+0xC506))
 #define offscreen_power_bomb_left_hdma (*(uint8*)(g_ram+0xC606))
 #define offscreen_power_bomb_right_hdma (*(uint8*)(g_ram+0xC607))
-#define hud_tilemap (*(Ram_HudTilemap*)(g_ram+0xC608))
+#define hud_tilemap (*(RamHudTilemap*)(g_ram+0xC608))
 #define plm_draw_tilemap ((uint16*)(g_ram+0xC6C8))
 #define bg1_column_update_tilemap_left_halves ((uint16*)(g_ram+0xC8C8))
 #define bg1_column_update_tilemap_right_halves ((uint16*)(g_ram+0xC908))
@@ -1080,6 +1131,7 @@ extern int32 *cur_coll_amt32;
 #define wrecked_ship_robot_palanim_palindex (*(uint16*)(g_ram+0xD652))
 #define wrecked_ship_robot_palanim_timer (*(uint16*)(g_ram+0xD654))
 #define wrecked_ship_robot_palanim_table_index (*(uint8*)(g_ram+0xD656))
+// Projectile trail data {
 #define projectiletrail_left_instr_timer ((uint16*)(g_ram+0xD658))
 #define projectiletrail_right_instr_timer ((uint16*)(g_ram+0xD67C))
 #define projectiletrail_left_instr_list_ptr ((uint16*)(g_ram+0xD6A0))
@@ -1090,6 +1142,8 @@ extern int32 *cur_coll_amt32;
 #define projectiletrail_right_x_pos ((uint16*)(g_ram+0xD754))
 #define projectiletrail_left_y_pos ((uint16*)(g_ram+0xD778))
 #define projectiletrail_right_y_pos ((uint16*)(g_ram+0xD79C))
+// }
+// RAM that is saved to SRAM {
 #define player_data_saved ((uint16*)(g_ram+0xD7C0))
 #define events_that_happened ((uint8*)(g_ram+0xD820))
 #define boss_bits_for_area ((uint8*)(g_ram+0xD828))
@@ -1104,16 +1158,20 @@ extern int32 *cur_coll_amt32;
 #define sram_area_index (*(uint16*)(g_ram+0xD918))
 #define global_number_of_items_loaded_ctr (*(uint16*)(g_ram+0xD91A))
 #define compressed_map_data ((uint8*)(g_ram+0xD91C))
+// }
 #define plm_instruction_timer ((uint16*)(g_ram+0xDE1C))
 #define plm_instruction_draw_ptr ((uint16*)(g_ram+0xDE6C))
 #define plm_instruction_list_link_reg ((uint16*)(g_ram+0xDEBC))
 #define plm_variables ((uint16*)(g_ram+0xDF0C))
 #define backup_of_bg2_during_pause ((uint16*)(g_ram+0xDF5C))
+// Enemy GFX data {
 #define enemy_def_ptr ((uint16*)(g_ram+0xEF5C))
 #define enemy_gfxdata_tiles_index ((uint16*)(g_ram+0xEF64))
 #define enemy_gfxdata_vram_ptr ((uint16*)(g_ram+0xEF6C))
+// }
 #define REMOVED_enemy_gfx_data_write_ptr (*(uint16*)(g_ram+0xEF74))
 #define REMOVED_next_enemy_tiles_index (*(uint16*)(g_ram+0xEF76))
+// Sprite object RAM {
 #define sprite_instr_list_ptrs ((uint16*)(g_ram+0xEF78))
 #define sprite_instr_timer ((uint16*)(g_ram+0xEFF8))
 #define sprite_palettes ((uint16*)(g_ram+0xF078))
@@ -1122,12 +1180,15 @@ extern int32 *cur_coll_amt32;
 #define sprite_y_pos ((uint16*)(g_ram+0xF1F8))
 #define sprite_y_subpos ((uint16*)(g_ram+0xF278))
 #define sprite_disable_flag ((uint16*)(g_ram+0xF2F8))
+// }
 #define enemy_processing_stage (*(uint16*)(g_ram+0xF378))
+// Enemy projectile data {
 #define eproj_flags ((uint16*)(g_ram+0xF380))
 #define eproj_enemy_header_ptr ((uint16*)(g_ram+0xF3C8))
 #define eproj_killed_enemy_index ((uint16*)(g_ram+0xF410))
 #define special_death_item_drop_x_origin_pos (*(uint16*)(g_ram+0xF434))
 #define special_death_item_drop_y_origin_pos (*(uint16*)(g_ram+0xF436))
+// }
 #define ram7F_start (*(uint16*)(g_ram+0x10000))
 #define level_data ((uint16*)(g_ram+0x10002))
 #define BTS ((uint8*)(g_ram+0x16402))

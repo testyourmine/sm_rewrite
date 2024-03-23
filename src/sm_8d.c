@@ -84,7 +84,7 @@ void PalFx_ProcessOne(uint16 k) {  // 0x8DC54A
       v11 = GET_WORD(v10 + 2);
       if (v11 & 0x8000)
         break;
-      palette_buffer[color_idx >> 1] = v11;
+      palette_buffer.pal[color_idx >> 1] = v11;
       color_idx += 2;
       j += 2;
     }

@@ -55,7 +55,7 @@ void SetBossBitForCurArea(uint16 a) {  // 0x8081A6
   boss_bits_for_area[area_index] |= a;
 }
 
-void ClearBossBitForCurArea(uint16 a) {  // 0x8081C0
+void ClearBossBitForCurArea_UNUSED(uint16 a) {  // 0x8081C0
   boss_bits_for_area[area_index] &= ~a;
 }
 
@@ -907,7 +907,7 @@ void NmiUpdatePalettesAndOam(void) {  // 0x80933A
   WriteRegWord(DAS0L, 0x220);
   WriteRegWord(OAMADDL, 0);
   WriteRegWord(DMAP1, 0x2200);
-  WriteRegWord(A1T1L, ADDR16_OF_RAM(*palette_buffer));
+  WriteRegWord(A1T1L, ADDR16_OF_RAM(palette_buffer.pal[0]));
   WriteReg(A1B1, 0x7E);
   WriteRegWord(DAS1L, 0x200);
   WriteReg(CGADD, 0);
@@ -1327,7 +1327,7 @@ static const uint16 kEnergyTankIconTilemapOffsets[14] = {
 };
 
 void HandleHudTilemap(void) {  // 0x809B44
-  if (reserve_health_mode == 1) {
+  if (reserve_health_mode == kReserveHealthMode_1_Auto) {
     const uint16 *v1 = kHudTilemaps_AutoReserve;
     if (!samus_reserve_health)
       v1 = kHudTilemaps_EmptyAutoReserve;
@@ -1608,7 +1608,7 @@ CoroutineRet StartGameplay_Async(void) {  // 0x80A07B
   EnableIrqInterrupts();
   COROUTINE_AWAIT(3, Play20FramesOfMusic_Async());
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x08, 0x08, 0xb7eb });
-  door_transition_function = FUNC16(DoorTransition_FadeInScreenAndFinish);
+  door_transition_function = FUNC16(DoorTransitionFunction_FadeInScreenAndFinish);
   COROUTINE_END(0);
 }
 
@@ -2262,7 +2262,7 @@ static Func_V *const kDoorTransitionSetupFuncs[4] = {  // 0x80AD30
 void DoorTransitionScrollingSetup(void) {
   layer1_x_pos = door_destination_x_pos;
   layer1_y_pos = door_destination_y_pos;
-  kDoorTransitionSetupFuncs[door_direction & 3]();
+  kDoorTransitionSetupFuncs[door_direction & kDoorDirection_DirectionMask]();
 }
 
 void DoorTransitionScrollingSetup_Right(void) {  // 0x80AD4A
@@ -2343,7 +2343,7 @@ static Func_U8 *const kDoorTransitionFuncs[4] = {
 };
 
 void Irq_FollowDoorTransition(void) {
-  if (kDoorTransitionFuncs[door_direction & 3]()) {
+  if (kDoorTransitionFuncs[door_direction & kDoorDirection_DirectionMask]()) {
     layer1_x_pos = door_destination_x_pos;
     layer1_y_pos = door_destination_y_pos;
     door_transition_flag |= 0x8000;
@@ -2625,9 +2625,9 @@ void LoadFromLoadStation(void) {  // 0x80C437
 }
 
 
-void SetElevatorsAsUsed(void) {  // 0x80CD07
+void SetDebugElevatorsAsUsed(void) {  // 0x80CD07
   //const uint8 *v0 = RomPtr_80(kAreaElevatorBitsPtr[area_index] + 4 * ((elevator_door_properties_orientation & 0xF) - 1));
   const ElevatorsUsedConf E = kAreaElevatorBits[area_index][(elevator_door_properties_orientation & 0xF) - 1];
-  used_save_stations_and_elevators[E.source_area] |= E.source_bit;
-  used_save_stations_and_elevators[E.dest_area] |= E.dest_bit;
+  used_save_stations_and_elevators[E.src_area] |= E.src_bit;
+  used_save_stations_and_elevators[E.dst_area] |= E.dst_bit;
 }

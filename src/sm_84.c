@@ -19,11 +19,11 @@ void SetGoldenTorizoPalette(uint16 a) {  // 0x848000
   if ((v1 & 0x40) != 0)
     v1 = 56;
   uint16 v2 = (4 * v1) | 0x1E;
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v4 = v2 >> 1;
     int v5 = i >> 1;
-    palette_buffer[v5 + 160] = kGoldenTorizoPalette2[v4];
-    palette_buffer[v5 + 144] = kGoldenTorizoPalette1[v4];
+    palette_buffer.sprite_pal_2[v5] = kGoldenTorizoPalette2[v4];
+    palette_buffer.sprite_pal_1[v5] = kGoldenTorizoPalette1[v4];
     v2 -= 2;
   }
 }
@@ -87,7 +87,7 @@ void LoadXrayBlocks(void) {  // 0x84831A
       if ((bitmask & v2) == 0) {
         CalculatePlmBlockCoords(k);
         const uint8 *v3 = RomPtr_84(kXrayBlockDrawingInstrs[plm_variables[k >> 1] >> 1]);
-        LoadBlockToXrayTilemap(GET_WORD(v3 + 2) & 0xFFF, plm_x_block, plm_y_block);
+        LoadBlockToXrayBg2(GET_WORD(v3 + 2) & 0xFFF, plm_x_block, plm_y_block);
         i = k;
       }
     }
@@ -96,7 +96,7 @@ void LoadXrayBlocks(void) {  // 0x84831A
   if (RS->xray_special_casing_ptr) {
     const XraySpecialCasing *p = (const XraySpecialCasing *)RomPtr_8F(RS->xray_special_casing_ptr);
     for (; p->x_block || p->y_block; p++)
-      LoadBlockToXrayTilemap(p->level_data_block, p->x_block, p->y_block);
+      LoadBlockToXrayBg2(p->level_data_block, p->x_block, p->y_block);
   }
 }
 
@@ -466,7 +466,7 @@ const uint8 *PlmInstr_CollectHealthEnergyTank(const uint8 *plmp, uint16 k) {  //
 
 const uint8 *PlmInstr_CollectHealthReserveTank(const uint8 *plmp, uint16 k) {  // 0x848986
   samus_max_reserve_health += GET_WORD(plmp);
-  if (!reserve_health_mode)
+  if (reserve_health_mode == kReserveHealthMode_0_None)
     ++reserve_health_mode;
   PlayRoomMusicTrackAfterAFrames(0x168);
   DisplayMessageBox(kMessageBox_25_ReserveTank);
@@ -699,9 +699,9 @@ const uint8 *PlmInstr_QueueSfx3_Max1(const uint8 *plmp, uint16 k) {  // 0x848C85
 }
 
 const uint8 *PlmInstr_ActivateMapStation(const uint8 *plmp, uint16 k) {  // 0x848C8F
-  *(uint16 *)&map_station_byte_array[area_index] |= 0xFF;
+  WORD(map_station_byte_array[area_index]) |= 0xFF;
   DisplayMessageBox(kMessageBox_20_MapDataAccessCompleted);
-  has_area_map = 1;
+  has_area_map = true;
   return plmp;
 }
 
@@ -1556,7 +1556,7 @@ uint8 PlmSetup_MotherBrainRoomEscapeDoor(uint16 j) {  // 0x84B5F8
 
 uint8 PlmSetup_B7EB_EnableSoundsIn32Frames(uint16 j) {  // 0x84B7C3
   uint16 v1;
-  if (area_index == 6)
+  if (area_index == kArea_6_Ceres)
     v1 = 32;
   else
     v1 = 240;
@@ -1871,21 +1871,21 @@ void PlmPreInstr_PlayDudSound(uint16 k) {  // 0x84BE1C
 }
 
 void PlmPreInstr_GotoLinkIfBoss1Dead(uint16 k) {  // 0x84BDD4
-  if (CheckBossBitForCurArea(1) & 1)
+  if (CheckBossBitForCurArea(kBossBit_AreaBoss) & 1)
     PlmPreInstr_GoToLinkInstruction(k);
   else
     PlmPreInstr_PlayDudSound(k);
 }
 
 void PlmPreInstr_GotoLinkIfMiniBossDead(uint16 k) {  // 0x84BDE3
-  if (CheckBossBitForCurArea(2) & 1)
+  if (CheckBossBitForCurArea(kBossBit_AreaMiniBoss) & 1)
     PlmPreInstr_GoToLinkInstruction(k);
   else
     PlmPreInstr_PlayDudSound(k);
 }
 
 void PlmPreInstr_GotoLinkIfTorizoDead(uint16 k) {  // 0x84BDF2
-  if (CheckBossBitForCurArea(4) & 1)
+  if (CheckBossBitForCurArea(kBossBit_AreaTorizo) & 1)
     PlmPreInstr_GoToLinkInstruction(k);
   else
     PlmPreInstr_PlayDudSound(k);
@@ -2462,7 +2462,7 @@ uint8 PlmSetup_MotherBrainGlass(uint16 j) {  // 0x84D5F6
 }
 
 uint8 PlmSetup_DeletePlmIfAreaTorizoDead(uint16 j) {  // 0x84D606
-  if (CheckBossBitForCurArea(4) & 1)
+  if (CheckBossBitForCurArea(kBossBit_AreaTorizo) & 1)
     plm_header_ptr[j >> 1] = 0;
   return 0;
 }
@@ -2473,7 +2473,7 @@ uint8 PlmSetup_MakeBllockChozoHandTrigger(uint16 j) {  // 0x84D616
 }
 
 uint8 PlmSetup_D6F2_WreckedShipChozoHandTrigger(uint16 j) {  // 0x84D620
-  if (CheckBossBitForCurArea(1) & 1
+  if (CheckBossBitForCurArea(kBossBit_AreaBoss) & 1
       && (samus_collision_direction & 0xF) == 3
       && (samus_pose == kPose_1D_FaceR_Morphball_Ground
           || samus_pose == kPose_79_FaceR_Springball_Ground

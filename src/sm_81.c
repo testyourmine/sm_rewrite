@@ -328,7 +328,7 @@ void GameOverMenu_0_FadeOutConfigGfx(void) {  // 0x818D0F
     WaitUntilEndOfVblankAndClearHdma();
     uint16 v0 = 0;
     do {
-      ram3000.pause_menu_map_tilemap[v0 + 384] = palette_buffer[v0];
+      ram3000.pause_menu_map_tilemap[v0 + 384] = palette_buffer.pal[v0];
       ++v0;
     } while ((int16)(v0 * 2 - 512) < 0);
     uint16 v1 = 0;
@@ -397,8 +397,8 @@ void LoadMenuPalettes(void) {  // 0x818E60
   uint16 v0 = 0;
   do {
     int v1 = v0 >> 1;
-    palette_buffer[v1] = kMenuPalettes[v1];
-    palette_buffer[v1 + 1] = kMenuPalettes[v1 + 1];
+    palette_buffer.pal[v1] = kMenuPalettes[v1];
+    palette_buffer.pal[v1 + 1] = kMenuPalettes[v1 + 1];
     v0 += 4;
   } while ((int16)(v0 - 512) < 0);
 }
@@ -433,7 +433,7 @@ void GameOverMenu_3_Main(void) {  // 0x819003
 void RestorePalettesAndIoAfterDebugGameover(void) {  // 0x81905B
   int v0 = 0;
   do {
-    palette_buffer[v0] = ram3000.pause_menu_map_tilemap[v0 + 384];
+    palette_buffer.pal[v0] = ram3000.pause_menu_map_tilemap[v0 + 384];
     ++v0;
   } while ((int16)(v0 * 2 - 512) < 0);
   int v1 = 0;
@@ -587,32 +587,32 @@ static Func_V *const kFileSelectMenuFuncs[34] = {  // 0x8193FB
   FileSelectMenu_2_InitMain,
   FileSelectMenu_3_FadeInToMain,
   FileSelectMenu_4_Main,
-  FileSelectMenu_5_FadeOutFromMain,
+  FileSelectMenu_5_19_FadeOutFromMain,
   FileSelectMenu_6_FileCopyInit,
-  FileSelectMenu_7_FadeInFromMain,
-  FileSelectMenu_8,
+  FileSelectMenu_7_21_FadeInFromMain,
+  FileSelectMenu_8_FileCopySelectSrc,
   FileSelectMenu_9_InitializeSelectDest,
   FileSelectMenu_10_FileCopySelectDest,
   FileSelectMenu_11_InitializeConfirm,
   FileSelectMenu_12_FileCopyConfirm,
   FileSelectMenu_13_FileCopyDoIt,
   FileSelectMenu_14_CopyCompleted,
-  FileSelectMenu_15_FadeOutToMain,
-  FileSelectMenu_16,
-  FileSelectMenu_17_FadeInToMain,
-  FileSelectMenu_18,
-  FileSelectMenu_5_FadeOutFromMain,
+  FileSelectMenu_15_27_FadeOutToMain,
+  FileSelectMenu_16_28_ReloadMain,
+  FileSelectMenu_17_29_FadeInToMain,
+  FileSelectMenu_18_FileCopyMenuToMain,
+  FileSelectMenu_5_19_FadeOutFromMain,
   FileSelectMenu_20_FileClearInit,
-  FileSelectMenu_7_FadeInFromMain,
+  FileSelectMenu_7_21_FadeInFromMain,
   FileSelectMenu_22_FileClearSelectSlot,
   FileSelectMenu_23_FileClearInitConfirm,
   FileSelectMenu_24_FileClearConfirm,
   FileSelectMenu_25_FileClearDoClear,
   FileSelectMenu_26_ClearCompleted,
-  FileSelectMenu_15_FadeOutToMain,
-  FileSelectMenu_16,
-  FileSelectMenu_17_FadeInToMain,
-  FileSelectMenu_30,
+  FileSelectMenu_15_27_FadeOutToMain,
+  FileSelectMenu_16_28_ReloadMain,
+  FileSelectMenu_17_29_FadeInToMain,
+  FileSelectMenu_30_FileClearMenuToMain,
   FileSelectMenu_31_TurnSamusHelmet,
   FileSelectMenu_32_FadeOutToOptions,
   FileSelectMenu_33_FadeOutToTitle,
@@ -646,8 +646,8 @@ void LoadFileSelectPalettes(void) {  // 0x819486
   int v0 = 0;
   do {
     int v1 = v0 >> 1;
-    palette_buffer[v1] = kMenuPalettes[v1];
-    palette_buffer[v1 + 1] = kMenuPalettes[v1 + 1];
+    palette_buffer.pal[v1] = kMenuPalettes[v1];
+    palette_buffer.pal[v1 + 1] = kMenuPalettes[v1 + 1];
     v0 += 4;
   } while ((int16)(v0 - 512) < 0);
 
@@ -677,12 +677,12 @@ void FileSelectMenu_33_FadeOutToTitle(void) {  // 0x8194D5
     SoftReset();
 }
 
-void FileSelectMenu_5_FadeOutFromMain(void) {  // 0x8194EE
+void FileSelectMenu_5_19_FadeOutFromMain(void) {  // 0x8194EE
   DrawMenuSelectionMissile();
-  FileSelectMenu_15_FadeOutToMain();
+  FileSelectMenu_15_27_FadeOutToMain();
 }
 
-void FileSelectMenu_15_FadeOutToMain(void) {  // 0x8194F4
+void FileSelectMenu_15_27_FadeOutToMain(void) {  // 0x8194F4
   HandleFadeOut();
   reg_MOSAIC = reg_MOSAIC & 0x0F | (16 * (reg_INIDISP & 0xF)) ^ 0xF0;
   if ((reg_INIDISP & 0xF) == 0) {
@@ -700,14 +700,14 @@ static const uint16 kMenuSelectionMissileXY[12] = {  // 0x81951E
   0xd3, 0xe,
 };
 
-void FileSelectMenu_17_FadeInToMain(void) {
+void FileSelectMenu_17_29_FadeInToMain(void) {
   int v0 = (uint16)(4 * selected_save_slot) >> 1;
   eproj_id[10] = kMenuSelectionMissileXY[v0];
   eproj_id[5] = kMenuSelectionMissileXY[v0 + 1];
-  FileSelectMenu_7_FadeInFromMain();
+  FileSelectMenu_7_21_FadeInFromMain();
 }
 
-void FileSelectMenu_7_FadeInFromMain(void) {  // 0x819532
+void FileSelectMenu_7_21_FadeInFromMain(void) {  // 0x819532
   DrawMenuSelectionMissile();
   HandleFadeIn();
   reg_MOSAIC = reg_MOSAIC & 0x0F | (16 * (reg_INIDISP & 0xF)) ^ 0xF0;
@@ -717,10 +717,10 @@ void FileSelectMenu_7_FadeInFromMain(void) {  // 0x819532
 
 void FileSelectMenu_6_FileCopyInit(void) {  // 0x819561
   ++menu_index;
-  FileSelectMenu_Func1();
+  InitFileSelectMenuFileCopy();
 }
 
-void FileSelectMenu_Func1(void) {  // 0x819566
+void InitFileSelectMenuFileCopy(void) {  // 0x819566
   ClearMenuTilemap();
   enemy_data[0].palette_index = 0;
   LoadMenuTilemap(0x52, addr_kMenuTilemap_DataCopyMode);
@@ -814,7 +814,7 @@ static const uint8 kBitShl[3] = {  // 0x8196C2
   4,
 };
 
-void FileSelectMenu_8(void) {
+void FileSelectMenu_8_FileCopySelectSrc(void) {
   uint8 v0;
 
   DrawBorderAroundDataCopyMode();
@@ -944,7 +944,7 @@ LABEL_8:
     menu_index -= 2;
     eproj_id[15] = eproj_id[16];
     QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
-    FileSelectMenu_Func1();
+    InitFileSelectMenuFileCopy();
   }
 }
 
@@ -1016,7 +1016,7 @@ void FileSelectMenu_12_FileCopyConfirm(void) {  // 0x819984
       QueueSfx1_Max6(kSfx1_MenuOptionSelected);
       if (eproj_id[15]) {
         menu_index -= 4;
-        FileSelectMenu_Func1();
+        InitFileSelectMenuFileCopy();
       } else {
         ++menu_index;
       }
@@ -1034,13 +1034,13 @@ void HandleFileCopyArrowPalette(void) {  // 0x8199FE
   if (eproj_unk198F) {
     if (!--eproj_unk198F) {
       eproj_unk198F = 4;
-      uint16 v0 = palette_buffer[145];
+      uint16 v0 = palette_buffer.sprite_pal_1[1];
       uint16 v1 = 0;
       do {
-        palette_buffer[(v1 >> 1) + 145] = palette_buffer[(v1 >> 1) + 146];
+        palette_buffer.sprite_pal_1[(v1 >> 1) + 1] = palette_buffer.sprite_pal_1[(v1 >> 1) + 2];
         v1 += 2;
       } while ((int16)(v1 - 12) < 0);
-      palette_buffer[151] = v0;
+      palette_buffer.sprite_pal_1[7] = v0;
     }
   }
 }
@@ -1099,7 +1099,7 @@ void FileSelectMenu_14_CopyCompleted(void) {  // 0x819AFA
   }
 }
 
-void FileSelectMenu_18(void) {  // 0x819B28
+void FileSelectMenu_18_FileCopyMenuToMain(void) {  // 0x819B28
   menu_index -= 14;
 }
 
@@ -1260,7 +1260,7 @@ LABEL_3:
   }
 }
 
-void FileSelectMenu_30(void) {  // 0x819D68
+void FileSelectMenu_30_FileClearMenuToMain(void) {  // 0x819D68
   DrawBorderAroundSamusData();
   menu_index -= 26;
 }
@@ -1376,10 +1376,10 @@ void FileSelectMenu_2_InitMain(void) {  // 0x819ED6
     v0 = 0;
   }
   selected_save_slot = v0;
-  FileSelectMenu_16();
+  FileSelectMenu_16_28_ReloadMain();
 }
 
-void FileSelectMenu_16(void) {  // 0x819EF3
+void FileSelectMenu_16_28_ReloadMain(void) {  // 0x819EF3
   for (int i = 2046; i >= 0; i -= 2)
     *(uint16 *)((uint8 *)&ram3000.pause_menu_map_tilemap[768] + (uint16)i) = 15;
   nonempty_save_slots = -1;
@@ -1620,11 +1620,11 @@ void FileSelectMap_0_OptionsToAreaSelectSetupFadeOut(void) {  // 0x81A32A
   LoadFileSelectPalettes();
   uint16 v2 = 0;
   do {
-    target_palettes[v2 >> 1] = palette_buffer[v2 >> 1];
+    target_palettes.pal[v2 >> 1] = palette_buffer.pal[v2 >> 1];
     v2 += 2;
-  } while ((int16)(v2 - 64) < 0);
-  target_palettes[14] = 0;
-  target_palettes[30] = 0;
+  } while ((int16)(v2 - 0x40) < 0);
+  target_palettes.bg1_bg2_pal_0[14] = 0;
+  target_palettes.bg1_bg2_pal_1[14] = 0;
   ++menu_index;
 }
 
@@ -1691,7 +1691,7 @@ void LoadAreaMapForegroundColors(uint16 j) {  // 0x81A3E3
     uint16 v3 = kAreaMapForegroundSetDefs[v1];
     int n = 5;
     do {
-      palette_buffer[v2 >> 1] = kAreaMapForegroundColors[v3 >> 1];
+      palette_buffer.pal[v2 >> 1] = kAreaMapForegroundColors[v3 >> 1];
       v2 += 2;
       v3 += 2;
     } while (--n);
@@ -2000,13 +2000,14 @@ void SwitchActiveFileSelectMapArea(uint16 R28) {  // 0x81A958
   LoadActiveAreaMapForegroundColors(kFileSelectMap_AreaIndexes[R28]);
   LoadAreaSelectBackgroundTilemap(kFileSelectMap_AreaIndexes[file_select_map_area_index]);
 }
-static const uint16 kAreaSelectMapLabelPositions[12] = {  // 0x81A97E
-  0x5b, 0x32,
-  0x2a, 0x7f,
-  0x5e, 0xb5,
-  0xce, 0x50,
-  0xce, 0x9f,
-  0x87, 0x8b,
+
+static const Point16U kAreaSelectMapLabelPositions[6] = {  // 0x81A97E
+  [kArea_0_Crateria] = { .x = 0x5b, .y = 0x32 },
+  [kArea_1_Brinstar] = { .x = 0x2a, .y = 0x7f },
+  [kArea_2_Norfair] = { .x = 0x5e, .y = 0xb5 },
+  [kArea_3_WreckedShip] = { .x = 0xce, .y = 0x50 },
+  [kArea_4_Maridia] = { .x = 0xce, .y = 0x9f },
+  [kArea_5_Tourian] = { .x = 0x87, .y = 0x8b },
 };
 void DrawAreaSelectMapLabels(void) {
   uint16 r3 = 0;
@@ -2029,8 +2030,8 @@ LABEL_11:;
           int j = 4 * kFileSelectMap_AreaIndexes[i] >> 1;
           DrawMenuSpritemap(
             gAreaSelectSpritemapOffset[0] + kFileSelectMap_AreaIndexes[i] + 1,
-            kAreaSelectMapLabelPositions[j],
-            kAreaSelectMapLabelPositions[j + 1], r3);
+            kAreaSelectMapLabelPositions[j].x,
+            kAreaSelectMapLabelPositions[j].y, r3);
           break;
         }
         break;
@@ -2040,7 +2041,14 @@ LABEL_11:;
 }
 
 
-static const uint16 kRoomSelectMapExpandingSquareTimers[6] = { 0x33, 0x35, 0x2d, 0x33, 0x33, 0x22 };
+static const uint16 kRoomSelectMapExpandingSquareTimers[6] = {
+  [kArea_0_Crateria] = 51,
+  [kArea_1_Brinstar] = 53,
+  [kArea_2_Norfair] = 45,
+  [kArea_3_WreckedShip] = 51,
+  [kArea_4_Maridia] = 51,
+  [kArea_5_Tourian] = 34,
+};
 
 void FileSelectMap_7_PrepExpandSquareTransToRoomMap(void) {  // 0x81AAAC
   DrawAreaSelectMapLabels();
@@ -2068,10 +2076,9 @@ void FileSelectMap_7_PrepExpandSquareTransToRoomMap(void) {  // 0x81AAAC
   vram_write_queue_tail = v0 + 7;
 
   expand_sq_timer = kRoomSelectMapExpandingSquareTimers[area_index];
-  int v2 = (uint16)(4 * area_index) >> 1;
-  expand_sq_left_pos = kAreaSelectMapLabelPositions[v2];
+  expand_sq_left_pos = kAreaSelectMapLabelPositions[area_index].x;
   expand_sq_right_pos = expand_sq_left_pos;
-  expand_sq_top_pos = kAreaSelectMapLabelPositions[v2 + 1];
+  expand_sq_top_pos = kAreaSelectMapLabelPositions[area_index].y;
   expand_sq_bottom_pos = expand_sq_top_pos;
   expand_sq_left_subpos = 0;
   expand_sq_right_subpos = 0;
@@ -2351,24 +2358,18 @@ void FileSelectMap_20_SetupContractingSquare(void) {  // 0x81AFF6
   reg_HDMAEN = 0;
   QueueSfx1_Max6(kSfx1_SquareMapToHexagonMapTransition);
   expand_sq_timer = kRoomSelectMapExpandingSquareTimers[area_index] - 12;
-  expand_sq_left_subvel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].left_subvel
-                                             + (uint16)(16 * area_index));
-  expand_sq_left_vel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].left_vel + (uint16)(16 * area_index));
-  expand_sq_right_subvel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].right_subvel
-                                              + (uint16)(16 * area_index));
-  expand_sq_right_vel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].right_vel
-                                           + (uint16)(16 * area_index));
-  expand_sq_top_subvel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].top_subvel
-                                            + (uint16)(16 * area_index));
-  expand_sq_top_vel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].top_vel + (uint16)(16 * area_index));
-  expand_sq_bottom_subvel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].bottom_subvel
-                                               + (uint16)(16 * area_index));
-  expand_sq_bottom_vel = *(uint16 *)((uint8 *)&kExpandingSquareVels[0].bottom_vel
-                                            + (uint16)(16 * area_index));
+  expand_sq_left_subvel = kExpandingSquareVels[area_index].left_subvel;
+  expand_sq_left_vel = kExpandingSquareVels[area_index].left_vel;
+  expand_sq_right_subvel = kExpandingSquareVels[area_index].right_subvel;
+  expand_sq_right_vel = kExpandingSquareVels[area_index].right_vel;
+  expand_sq_top_subvel = kExpandingSquareVels[area_index].top_subvel;
+  expand_sq_top_vel = kExpandingSquareVels[area_index].top_vel;
+  expand_sq_bottom_subvel = kExpandingSquareVels[area_index].bottom_subvel;
+  expand_sq_bottom_vel = kExpandingSquareVels[area_index].bottom_vel;
   expand_sq_left_pos = 8;
-  expand_sq_right_pos = 248;
+  expand_sq_right_pos = (uint8)(-8);
   expand_sq_top_pos = 8;
-  expand_sq_bottom_pos = 216;
+  expand_sq_bottom_pos = (uint8)(-40);
   expand_sq_left_subpos = 0;
   expand_sq_right_subpos = 0;
   expand_sq_top_subpos = 0;
@@ -2413,7 +2414,7 @@ void NewSaveFile(void) {  // 0x81B2CB
   samus_super_missiles = 0;
   samus_max_power_bombs = 0;
   samus_power_bombs = 0;
-  hud_item_index = kHudItem_0_Nothing;
+  hud_item_index = 0;
   collected_beams = 0;
   equipped_beams = 0;
   collected_items = 0;

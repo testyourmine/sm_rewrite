@@ -796,7 +796,7 @@ void Botwoon_HealthBasedPalHandling(void) {  // 0xB3982B
     uint16 r18 = 16 * E->botwoon_var_4F;
     uint16 r20 = E->botwoon_var_4E;
     do {
-      palette_buffer[r20 >> 1] = kBotwoonHealthBasedPalette[r18++ >> 1];
+      palette_buffer.pal[r20 >> 1] = kBotwoonHealthBasedPalette[r18++ >> 1];
       r18++;
       r20 += 2;
     } while (r20 != 512);
@@ -993,7 +993,7 @@ void Botwoon_Func_CrumbleWall(uint16 k) {  // 0xB39AF9
     ++E->botwoon_var_23;
   } else {
     E->base.properties |= kEnemyProps_Deleted;
-    SetBossBitForCurArea(2);
+    SetBossBitForCurArea(kBossBit_AreaMiniBoss);
     QueueMusic_Delayed8(kMusic_Elevator);
   }
 }

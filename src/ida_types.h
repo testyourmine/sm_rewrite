@@ -10,328 +10,334 @@
 
 #pragma pack(push, 1)
 
-/* 2 */
-typedef struct PlmHeader_Size4 {
-  VoidP func_ptr;
-  VoidP instr_list_ptr;
-} PlmHeader_Size4;
+/* 95 */
+typedef enum Buttons {  // 0x7E008B
+  kButton_R = 0x10,
+  kButton_L = 0x20,
+  kButton_X = 0x40,
+  kButton_A = 0x80,
+  kButton_Right = 0x100,
+  kButton_Left = 0x200,
+  kButton_Down = 0x400,
+  kButton_Up = 0x800,
+  kButton_Start = 0x1000,
+  kButton_Select = 0x2000,
+  kButton_Y = 0x4000,
+  kButton_B = 0x8000,
+} Buttons;
 
-/* 3 */
-typedef struct FxDef {
-  uint16 door_ptr;
-  uint16 base_y_pos;
-  uint16 target_y_pos;
-  uint16 y_vel;
-  uint8 timer;
-  uint8 type;
-  uint8 default_layer_blend;
-  uint8 layer3_layer_blend;
-  uint8 fx_liquid_options_;
-  uint8 palette_fx_bitset;
-  uint8 animtiles_bitset;
-  uint8 palette_blend;
-} FxDef;
-
-/* 4 */
-typedef struct LoadStationList {
-  VoidP room_ptr_;
-  VoidP door_ptr;
-  uint16 door_bts;
-  uint16 screen_x_pos;
-  uint16 screen_y_pos;
-  uint16 samus_y_offset;
-  uint16 samus_x_offset;
-} LoadStationList;
-
-/* 5 */
-typedef struct  DebugDoorDef {
-  VoidP room_definition_ptr;
-  uint8 door_bitflags;
-  uint8 door_orientation;
-  uint8 x_pos_plm;
-  uint8 y_pos_plm;
-  uint8 x_pos_in_room;
-  uint8 y_pos_in_room;
-  uint8 field_8;
-  uint16 field_9;
-} DebugDoorDef;
-
-/* 6 */
-typedef struct XraySpecialCasing {
-  uint8 x_block;
-  uint8 y_block;
-  uint16 level_data_block;
-} XraySpecialCasing;
-
-/* 7 */
-
-/* 8 */
-typedef struct RoomPlmEntry {
-  VoidP plm_header_ptr_;
-  uint8 x_block;
-  uint8 y_block;
-  uint16 plm_room_argument;
-} RoomPlmEntry;
-
-/* 9 */
-typedef struct PlmHeader_Size6 {
-  VoidP func_ptr;
-  VoidP instr_list_1_ptr;
-  VoidP instr_list_2_ptr;
-} PlmHeader_Size6;
-
-/* 10 */
-typedef struct MsgBoxConfig {
-  VoidP modify_box_func;
-  VoidP draw_initial_tilemap;
-  VoidP message_tilemap;
-} MsgBoxConfig;
-
-/* 11 */
-typedef struct EprojDef {
-  VoidP init_code_ptr;
-  VoidP pre_instr_ptr;
-  VoidP instr_list;
-  uint16 radius;
-  uint16 properties;
-  VoidP hit_instruction_list;
-  VoidP shot_instruction_list;
-} EprojDef;
-
-/* 12 */
-typedef struct Eproj_InitXYVelRandom_Args {
-  VoidP field_0;
-  uint16 field_2;
-  uint16 field_4;
-  uint16 field_6;
-  uint16 field_8;
-} Eproj_InitXYVelRandom_Args;
-
-/* 13 */
-typedef struct EnemyData {
-  uint16 enemy_ptr;
-  uint16 x_pos;
-  uint16 x_subpos;
-  uint16 y_pos;
-  uint16 y_subpos;
-  uint16 x_width;
-  uint16 y_height;
-  uint16 properties;
-  uint16 extra_properties;
-  uint16 ai_handler_bits;
-  uint16 health;
-  uint16 spritemap_pointer;
-  uint16 timer;
-  uint16 current_instruction;
-  uint16 instruction_timer;
-  uint16 palette_index;
-  uint16 vram_tiles_index;
-  uint16 layer;
-  uint16 flash_timer;
-  uint16 frozen_timer;
-  uint16 invincibility_timer;
-  uint16 shake_timer;
-  uint16 frame_counter;
-  uint8 bank;
-  uint8 field_2F;
-  uint16 ai_var_A;
-  uint16 ai_var_B;
-  uint16 ai_var_C;
-  uint16 ai_var_D;
-  uint16 ai_var_E;
-  uint16 ai_preinstr;
-  uint16 parameter_1;
-  uint16 parameter_2;
-} EnemyData;
-
-typedef struct EnemyBase {
-  uint16 enemy_ptr;
-  uint16 x_pos;
-  uint16 x_subpos;
-  uint16 y_pos;
-  uint16 y_subpos;
-  uint16 x_width;
-  uint16 y_height;
-  uint16 properties;
-  uint16 extra_properties;
-  uint16 ai_handler_bits;
-  uint16 health;
-  uint16 spritemap_pointer;
-  uint16 timer;
-  uint16 current_instruction;
-  uint16 instruction_timer;
-  uint16 palette_index;
-  uint16 vram_tiles_index;
-  uint16 layer;
-  uint16 flash_timer;
-  uint16 frozen_timer;
-  uint16 invincibility_timer;
-  uint16 shake_timer;
-  uint16 frame_counter;
-  uint8 bank;
-  uint8 field_2F;
-} EnemyBase;
-
-
-/* 14 */
-typedef struct AnimtilesObject {
-  VoidP instruction_list;
+/* 105 */
+typedef struct  VramWriteEntry {  // 0x7E00D0
   uint16 size;
+  LongPtr src;
+  uint16 vram_dst;
+} VramWriteEntry;
+
+/* 73 */
+typedef struct  Mode7VramWriteQueue {  // 0x7E02D0
+  uint8 control;
+  uint16 src_addr;
+  uint8 gap3[2];
+  uint16 field_5;
+} Mode7VramWriteQueue;
+
+/* 139 */
+typedef struct Mode7CgvmWriteQueue {  // 0x7E02D0
+  uint8 tag;
+  LongPtr src_addr;
+  uint16 count;
   uint16 vram_addr;
-} AnimtilesObject;
+  uint8 vmain;
+} Mode7CgvmWriteQueue;
 
-//typedef union AnimtilesEntry {
-//  struct {
-//    uint16 timer;
-//    VoidP tile_src;
-//  };
-//  struct {
-//    uint16 func_ptr;
-//    union {
-//      struct {
-//        union {
-//          struct {
-//            uint8 boss_bit;
-//            uint8 area;
-//          };
-//          uint16 game_event;
-//        };
-//        uint16 instr_list_ptr2;
-//      };
-//      uint16 instr_list_ptr1;
-//      uint16 tourian_statue_state;
-//      uint16 palette_offset;
-//      uint16 eproj_param;
-//      uint16 palfx_id;
-//    };
-//  };
-//} AnimtilesEntry;
+/* 106 */
+typedef struct  VramReadQueueEnt {  // 0x7E0340
+  uint16 vram_target;
+  union {
+    uint16 dma_parameters;
+    struct {
+        uint8 dma_control;
+        uint8 dma_target;
+    };
+  };
+  LongPtr src;
+  uint16 size;
+} VramReadQueueEnt;
 
-/* 15 */
-typedef struct HdmaScrollEntry {
-  uint16 top_pos;
-  uint16 scroll_subspeed;
-  uint16 scroll_speed;
-  VoidP hdma_data_table_entry;
-}HdmaScrollEntry;
+/* 104 */
+typedef struct OamEnt {  // 0x7E0370
+  uint8 xcoord;
+  uint8 ycoord;
+  uint8 charnum;
+  uint8 flags;
+} OamEnt;
 
-/* 16 */
-typedef struct SpawnHdmaObject_Args {
-  uint8 hdma_control;
-  uint8 hdma_target;
-  VoidP hdmr_instr_list;
-}SpawnHdmaObject_Args;
-
-/* 17 */
-typedef struct CinematicSpriteObjectDef {
-  VoidP init_func;
-  VoidP pre_instr_func;
-  VoidP instr_list;
-}CinematicSpriteObjectDef;
-
-///* 18 */
-//typedef struct Mode7ObjectDef {
-//  VoidP object_def_ptr;
-//  VoidP pre_instr;
-//  VoidP instr_list;
-//}Mode7ObjectDef;
-
-/* 19 */
-typedef struct Mode7TransferData {
-  uint8 field_0;
-}Mode7TransferData;
-
-/* 20 */
-typedef struct CinematicBgObjectDef {
-  VoidP init_func;
-  VoidP pre_instr_func;
-  VoidP instr_list;
-}CinematicBgObjectDef;
-
-/* 21 */
-typedef struct PalFxDef {
-  VoidP func;
-  VoidP instrs;
-}PalFxDef;
-
-/* 22 */
-typedef struct RoomDefStateSelect_E6E5_Finish {
-  VoidP code_ptr;
-}RoomDefStateSelect_E6E5_Finish;
-
-/* 23 */
-typedef struct LoadBg_E {
-  uint16 bg_ptr;
-  uint16 field_2;
-}LoadBg_E;
-
-
-/* 25 */
-typedef struct LoadBg_4 {
-  uint16 field_0;
-}LoadBg_4;
-
-/* 26 */
-enum LoadLibaryOpcode {
-  kLoadLibOp_0_DONE = 0x0,
-  kLoadBg_2_TransferToVram = 0x2,
-  kLoadBg_4_Decompress = 0x4,
-  kLoadLibOp_6_ClearFxTilemap = 0x6,
-  kLoadBg_8_TransferToVramSetBG3 = 0x8,
-  kLoadLibaryOpcode_A_ClearBG2Tilemap = 0xA,
-  kLoadLibaryOpcode_C_ClearKraidLayer2 = 0xC,
-  kLoadBg_E_DoorDepXferVram = 0xE,
+enum SaveConfirmationSelection {  // 0x7E05F9
+  kConfirmSave_Yes = 0x0,
+  kConfirmSave_No = 0x2,
 };
 
-enum SamusCode {
-  kSamusCode_0_LockSamus = 0x0,
-  kSamusCode_1_UnlockSamus = 0x1,
-  kSamusCode_2_ReachCeresElevator = 0x2,
-  kSamusCode_3_UnspinSamus = 0x3,
-  kSamusCode_4_EndChargeBeam = 0x4,
-  kSamusCode_5_SetupDrained = 0x5,
-  kSamusCode_6_LockToStation = 0x6,
-  kSamusCode_7_SetupForElevator = 0x7,
-  kSamusCode_8_SetupForCeresStart = 0x8,
-  kSamusCode_9_SetupForZebesStart = 0x9,
-  kSamusCode_10_ClearDrawHandler = 0xA,
-  kSamusCode_11_DrawHandlerDefault = 0xB,
-  kSamusCode_12_UnlockFromMapStation = 0xC,
-  kSamusCode_13_IsGrappleActive = 0xD,
-  kSamusCode_14_UnlockFromCeresElevator = 0xE,
-  kSamusCode_15_EnableTimerHandling = 0xF,
-  kSamusCode_16_UnlockSamusFromReserveTank = 0x10,
-  kSamusCode_17_SetupForDeath = 0x11,
-  kSamusCode_18_EnableBlueFlashing = 0x12,
-  kSamusCode_19_DisableBlueFlashing = 0x13,
-  kSamusCode_20_QueueSfx = 0x14,
-  kSamusCode_21_LockToSuitAcquisition = 0x15,
-  kSamusCode_22_EnableRainbowSamus = 0x16,
-  kSamusCode_23_DisableRainbowSamusAndStandUp = 0x17,
-  kSamusCode_24_SetupDrainedAndDisableStandUp = 0x18,
-  kSamusCode_25_FreezeDrainedSamus = 0x19,
-  kSamusCode_26_EnterGunship = 0x1A,
-  kSamusCode_27_LockForReserveTank = 0x1B,
-  kSamusCode_28_PlaySpinSfxIfSpinJumping = 0x1C,
-  kSamusCode_29_ClearSoundInDoor = 0x1D,
-  kSamusCode_30_ResumeSfxAfterPowerBombExplosion = 0x1E,
-  kSamusCode_31_KillGrappleBeam = 0x1F,
+enum MusicEntry {  // 0x7E063D
+  kMusic_Stop = 0x0,
+  kMusic_SamusFanfare = 0x1,
+  kMusic_ItemFanfare = 0x2,
+  kMusic_Elevator = 0x3,
+  kMusic_PreStatueHall_PreRidleyFight_GameOver = 0x4,
+  kMusic_Song0 = 0x5,
+  kMusic_Song1 = 0x6,
+  kMusic_Song2 = 0x7,
+  kMusic_Song3 = 0x8,
+  kMusic_SpcEngine = 0xFF00,
+  kMusic_TitleSequence = 0xFF03,
+  kMusic_EmptyCrateria = 0xFF06,
+  kMusic_LowerCrateria = 0xFF09,
+  kMusic_UpperCrateria = 0xFF0C,
+  kMusic_GreenBrinstar = 0xFF0F,
+  kMusic_RedBrinstar = 0xFF12,
+  kMusic_UpperNorfair = 0xFF15,
+  kMusic_LowerNorfair = 0xFF18,
+  kMusic_Maridia = 0xFF1B,
+  kMusic_Tourian = 0xFF1E,
+  kMusic_MotherBrain = 0xFF21,
+  kMusic_BossFight1 = 0xFF24,
+  kMusic_BossFight2 = 0xFF27,
+  kMusic_MinibossFight = 0xFF2A,
+  kMusic_Ceres = 0xFF2D,
+  kMusic_WreckedShip = 0xFF30,
+  kMusic_ZebesBoom = 0xFF33,
+  kMusic_Intro = 0xFF36,
+  kMusic_Death = 0xFF39,
+  kMusic_Credits = 0xFF3C,
+  kMusic_TheLastMetroidIsInCaptivity = 0xFF3F,
+  kMusic_TheGalaxyIsAtPeace = 0xFF42,
+  kMusic_Shitroid = 0xFF45,
+  kMusic_SamusTheme = 0xFF48,
 };
 
-/* 27 */
-typedef struct DoorDef {
-  VoidP room_definition_ptr;
-  uint8 door_bitflags;
-  uint8 door_orientation;
-  uint8 x_pos_plm;
-  uint8 y_pos_plm;
-  uint8 x_pos_in_room;
-  uint8 y_pos_in_room;
-  uint16 samus_distance_from_door;
-  VoidP door_setup_code;
-}DoorDef;
+enum DebugGameOverMenu {  // 0x7E0727
+  kDebugGameOverMenu_0_FadeOut_ConfigureMenuGraphics = 0x0,
+  kDebugGameOverMenu_1_Initalize = 0x1,
+  kDebugGameOverMenu_2_FadeToMain = 0x2,
+  kDebugGameOverMenu_3_Main = 0x3,
+  kDebugGameOverMenu_4_FadeToContinue = 0x4,
+  kDebugGameOverMenu_5_Continue = 0x5,
+};
 
-enum HudItemIndex {
+enum GameOverMenu {  // 0x7E0727
+  kGameOverMenu_0_FadeOut_ConfigureMenuGraphics = 0x0,
+  kGameOverMenu_1_Initalize = 0x1,
+  kGameOverMenu_2_PlayPreStatueTrack = 0x2,
+  kGameOverMenu_3_FadeToMain = 0x3,
+  kGameOverMenu_4_Main = 0x4,
+  kGameOverMenu_5_FadeToGameMapView = 0x5,
+  kGameOverMenu_6_LoadGameMapView = 0x6,
+  kGameOverMenu_7_FadeToSoftReset = 0x7,
+};
+
+enum FileSelectMenu {  // 0x7E0727
+  kFileSelectMenu_0_TitleToMain_FadeOut_ConfigureGraphics = 0x0,
+  kFileSelectMenu_1_TitleToMain_LoadBg2 = 0x1,
+  kFileSelectMenu_2_TitleToMain_Initialize = 0x2,
+  kFileSelectMenu_3_TitleToMain_FadeIn = 0x3,
+  kFileSelectMenu_4_Main = 0x4,
+  kFileSelectMenu_5_MainToFileCopy_FadeOut = 0x5,
+  kFileSelectMenu_6_MainToFileCopy_Initialize = 0x6,
+  kFileSelectMenu_7_MainToFileCopy_FadeIn = 0x7,
+  kFileSelectMenu_8_FileCopy_SelectSource = 0x8,
+  kFileSelectMenu_9_FileCopy_InitalizeSelectDestination = 0x9,
+  kFileSelectMenu_10_FileCopy_SelectDestination = 0xA,
+  kFileSelectMenu_11_FileCopy_InitalizeConfirmation = 0xB,
+  kFileSelectMenu_12_FileCopy_Confirmation = 0xC,
+  kFileSelectMenu_13_FileCopy_DoFileCopy = 0xD,
+  kFileSelectMenu_14_FileCopy_CopyCompleted = 0xE,
+  kFileSelectMenu_15_FileCopyToMain_FadeOut = 0xF,
+  kFileSelectMenu_16_FileCopyToMain_ReloadMain = 0x10,
+  kFileSelectMenu_17_FileCopyToMain_FadeIn = 0x11,
+  kFileSelectMenu_18_FileCopyToMain_MainMenuIndex = 0x12,
+  kFileSelectMenu_19_MainToFileClear_FadeOut = 0x13,
+  kFileSelectMenu_20_MainToFileClear_Initialize = 0x14,
+  kFileSelectMenu_21_MainToFileClear_FadeIn = 0x15,
+  kFileSelectMenu_22_FileClear_SelectSlot = 0x16,
+  kFileSelectMenu_23_FileClear_InitializeConfirmation = 0x17,
+  kFileSelectMenu_24_FileClear_Confirmation = 0x18,
+  kFileSelectMenu_25_FileClear_DoFileClear = 0x19,
+  kFileSelectMenu_26_FileClear_ClearComplete = 0x1A,
+  kFileSelectMenu_27_FileClearToMain_FadeOut = 0x1B,
+  kFileSelectMenu_28_FileClearToMain_ReloadMain = 0x1C,
+  kFileSelectMenu_29_FileClearToMain_FadeIn = 0x1D,
+  kFileSelectMenu_30_FileClearToMain_MainMenuIndex = 0x1E,
+  kFileSelectMenu_31_MainToOptions_TurnSamusHelmet = 0x1F,
+  kFileSelectMenu_32_MainToOptions_FadeOut = 0x20,
+  kFileSelectMenu_33_MainToTitle = 0x21,
+};
+
+enum FileSelectMap {  // 0x7E0727
+  kFileSeletMap_0_OptionsToAreaSelect_ClearBg2_SetUpFadeOut = 0x0,
+  kFileSeletMap_1_OptionsToAreaSelect_FadeOut_LoadAreaPalette = 0x1,
+  kFileSeletMap_2_OptionsToAreaSelect_LoadForegroundTilemap = 0x2,
+  kFileSeletMap_3_OptionsToAreaSelect_LoadBackgroundTilemap = 0x3,
+  kFileSeletMap_4_OptionsToAreaSelect_PrepareExpandingContractingSquareTransition = 0x4,
+  kFileSeletMap_5_OptionsToAreaSelect_ExpandingSquareTransition = 0x5,
+  kFileSeletMap_6_AreaSelect = 0x6,
+  kFileSeletMap_7_AreaSelectToRoomSelect_PrepareExpandingSquareTransition = 0x7,
+  kFileSeletMap_8_AreaSelectToRoomSelect_ExpandingSquareTransition = 0x8,
+  kFileSeletMap_9_AreaSelectToRoomSelect_Initialize = 0x9,
+  kFileSeletMap_10_RoomSelect = 0xA,
+  kFileSeletMap_11_RoomSelectToLoadGame_FadeOut2FrameDelay = 0xB,
+  kFileSeletMap_12_RoomSelectToLoadGame_FadeOut1FrameDelay = 0xC,
+  kFileSeletMap_13_RoomSelectToLoadGame_FadeOut = 0xD,
+  kFileSeletMap_14_RoomSelectToLoadGame_Wait = 0xE,
+  kFileSeletMap_15_RoomSelectToAreaSelect_ClearBg1Tilemap = 0xF,
+  kFileSeletMap_16_RoomSelectToAreaSelect_LoadPalettes = 0x10,
+  kFileSeletMap_17_RoomSelectToAreaSelect_LoadForegroundTilemap = 0x11,
+  kFileSeletMap_18_RoomSelectToAreaSelect_LoadBackgroundTilemap = 0x12,
+  kFileSeletMap_19_RoomSelectToAreaSelect_PrepareExpandingContractingSquareTransition = 0x13,
+  kFileSeletMap_20_RoomSelectToAreaSelect_PrepareContractingSquareTransition = 0x14,
+  kFileSeletMap_21_RoomSelectToAreaSelect_ContractingSquareTransition = 0x15,
+  kFileSeletMap_22_AreaSelectToOptions = 0x16,
+};
+
+enum PauseMenu {  // 0x7E0727
+  kPauseMenu_0_MapScreen = 0x0,
+  kPauseMenu_1_EquipmentScreen = 0x1,
+  kPauseMenu_2_MapScreenToEquipmentScreen_FadeOut = 0x2,
+  kPauseMenu_3_MapScreenToEquipmentScreen_LoadEquipmentScreen = 0x3,
+  kPauseMenu_4_MapScreenToEquipmentScreen_FadeIn = 0x4,
+  kPauseMenu_5_EquipmentScreenToMapScreen_FadeOut = 0x5,
+  kPauseMenu_6_EquipmentScreenToMapScreen_LoadMapScren = 0x6,
+  kPauseMenu_7_EquipmentScreenToMapScreen_FadeIn = 0x7,
+};
+
+enum EquipmentScreenCategoryIndex { // 0x7E0755
+  kEquipmentCategory_0_Tanks = 0x0,
+  kEquipmentCategory_1_Weapons = 0x1,
+  kEquipmentCategory_2_SuitMisc = 0x2,
+  kEquipmentCategory_3_Boots = 0x3,
+};
+
+enum EquipmentScreenItemIndex {  // 0x7E0756
+  kEquipmentItem_Tanks_0_Mode = 0x0,
+  kEquipmentItem_Tanks_1_Reserve = 0x1,
+  kEquipmentItem_Weapons_0_Charge = 0x0,
+  kEquipmentItem_Weapons_1_Ice = 0x1,
+  kEquipmentItem_Weapons_2_Wave = 0x2,
+  kEquipmentItem_Weapons_3_Spazer = 0x3,
+  kEquipmentItem_Weapons_4_Plasma = 0x4,
+  kEquipmentItem_SuitMisc_0_Varia = 0x0,
+  kEquipmentItem_SuitMisc_1_Gravity = 0x1,
+  kEquipmentItem_SuitMisc_2_MorphBall = 0x2,
+  kEquipmentItem_SuitMisc_3_Bombs = 0x3,
+  kEquipmentItem_SuitMisc_4_SpringBall = 0x4,
+  kEquipmentItem_SuitMisc_5_ScrewAttack = 0x5,
+  kEquipmentItem_Boots_0_HiJumpBoots = 0x0,
+  kEquipmentItem_Boots_1_SpaceJump = 0x1,
+  kEquipmentItem_Boots_2_SpeedBooster = 0x2,
+};
+
+enum DoorDirection {  // 0x7E0791
+  kDoorDirection_Right = 0x0,
+  kDoorDirection_Left = 0x1,
+  kDoorDirection_Down = 0x2,
+  kDoorDirection_Up = 0x3,
+  kDoorDirection_HorizontalMask = 0x1,
+  kDoorDirection_VerticalMask = 0x2,
+  kDoorDirection_DirectionMask = 0x3,
+};
+
+enum ElevatorDirection {  // 0x7E0799
+  kElevatorDirection_Down = 0x0,
+  kElevatorDirection_Up = 0x8000,
+};
+
+enum AreaIndex {  // 0x7E079F
+  kArea_0_Crateria = 0x0,
+  kArea_1_Brinstar = 0x1,
+  kArea_2_Norfair = 0x2,
+  kArea_3_WreckedShip = 0x3,
+  kArea_4_Maridia = 0x4,
+  kArea_5_Tourian = 0x5,
+  kArea_6_Ceres = 0x6,
+  kArea_7_Debug = 0x7,
+};
+
+/* 93 */
+enum GameState {  // 0x7E0998
+  kGameState_0_Reset = 0x0,
+  kGameState_1_OpeningCinematic = 0x1,
+  kGameState_2_GameOptionsMenu = 0x2,
+  kGameState_3_Unused = 0x3,
+  kGameState_4_FileSelectMenus = 0x4,
+  kGameState_5_FileSelectMap = 0x5,
+  kGameState_6_LoadingGameData = 0x6,
+  kGameState_7_MainGameplayFadeIn = 0x7,
+  kGameState_8_MainGameplay = 0x8,
+  kGameState_9_HitDoorBlock = 0x9,
+  kGameState_10_LoadingNextRoom = 0xA,
+  kGameState_11_LoadingNextRoom = 0xB,
+  kGameState_12_Pausing = 0xC,
+  kGameState_13_Pausing = 0xD,
+  kGameState_14_Paused = 0xE,
+  kGameState_15_Paused = 0xF,
+  kGameState_16_Unpausing = 0x10,
+  kGameState_17_Unpausing = 0x11,
+  kGameState_18_Unpausing = 0x12,
+  kGameState_19_SamusNoHealth = 0x13,
+  kGameState_20_SamusNoHealth = 0x14,
+  kGameState_21_SamusNoHealth = 0x15,
+  kGameState_22_SamusNoHealth = 0x16,
+  kGameState_23_SamusNoHealth = 0x17,
+  kGameState_24_SamusNoHealth = 0x18,
+  kGameState_25_SamusNoHealth = 0x19,
+  kGameState_26_GameOverMenu = 0x1A,
+  kGameState_27_ReserveTanksAuto = 0x1B,
+  kGameState_28_Unused = 0x1C,
+  kGameState_29_DebugGameOverMenu = 0x1D,
+  kGameState_30_IntroCinematic = 0x1E,
+  kGameState_31_SetUpNewGame = 0x1F,
+  kGameState_32_MadeItToCeresElevator = 0x20,
+  kGameState_33_BlackoutFromCeres = 0x21,
+  kGameState_34_CeresGoesBoom = 0x22,
+  kGameState_35_TimeUp = 0x23,
+  kGameState_36_WhitingOutFromTimeUp = 0x24,
+  kGameState_37_CeresGoesBoomWithSamus = 0x25,
+  kGameState_38_SamusEscapesFromZebes = 0x26,
+  kGameState_39_EndingAndCredits = 0x27,
+  kGameState_40_TransitionToDemo = 0x28,
+  kGameState_41_TransitionToDemo = 0x29,
+  kGameState_42_PlayingDemo = 0x2A,
+  kGameState_43_TransitionFromDemo = 0x2B,
+  kGameState_44_TransitionFromDemo = 0x2C,
+};
+
+enum SamusItems {  // 0x7E09A2
+  kItem_VariaSuit = 0x1,
+  kItem_SpringBall = 0x2,
+  kItem_MorphBall = 0x4,
+  kItem_ScrewAttack = 0x8,
+  kItem_GravitySuit = 0x20,
+  kItem_HiJumpBoots = 0x100,
+  kItem_SpaceJump = 0x200,
+  kItem_Bombs = 0x1000,
+  kItem_SpeedBooster = 0x2000,
+  kItem_Grapple = 0x4000,
+  kItem_Xray = 0x8000,
+};
+
+enum SamusBeams {  // 0x7E09A6
+  kBeam_Wave = 0x1,
+  kBeam_Ice = 0x2,
+  kBeam_Spazer = 0x4,
+  kBeam_Plasma = 0x8,
+  kBeam_Charge = 0x1000,
+};
+
+enum ReserveHealthMode {  // 0x7E09C0
+  kReserveHealthMode_0_None = 0x0,
+  kReserveHealthMode_1_Auto = 0x1,
+  kReserveHealthMode_2_Manual = 0x2,
+};
+
+enum HudItemIndex {  // 0x7E09D2
   kHudItem_0_Nothing = 0x0,
   kHudItem_1_Missile = 0x1,
   kHudItem_2_SuperMissile = 0x2,
@@ -341,7 +347,7 @@ enum HudItemIndex {
 };
 
 /* 28 */
-typedef enum SamusPose {
+typedef enum SamusPose {  // 0x7E0A1C
   kPose_00_FaceF_Powersuit = 0x0,
   kPose_01_FaceR_Normal = 0x1,
   kPose_02_FaceL_Normal = 0x2,
@@ -600,36 +606,7 @@ typedef enum SamusPose {
   kPose_FF = 0xFF,
 } SamusPose;
 
-/* 29 */
-enum LiquidPhysicsType {
-  kLiquidPhysicsType_Air = 0x0,
-  kLiquidPhysicsType_Water = 0x1,
-  kLiquidPhysicsType_LavaAcid = 0x2,
-};
-
-/* 30 */
-typedef struct SamusPoseParams {
-  uint8 pose_x_dir;
-  uint8 movement_type;
-  uint8 new_pose_unless_buttons;
-  uint8 direction_shots_fired;
-  uint8 y_offset_to_gfx;
-  uint8 UNUSED_field_5;
-  uint8 y_radius;
-  uint8 UNUSED_field_7;
-} SamusPoseParams;
-
-/* 31 */
-typedef struct SamusSpeedTableEntry {
-  uint16 accel;
-  uint16 accel_sub;
-  uint16 max_speed;
-  uint16 max_speed_sub;
-  uint16 decel;
-  uint16 decel_sub;
-} SamusSpeedTableEntry;
-
-enum SamusPoseXDirection {
+enum SamusPoseXDirection {  // 0x7E0A1E
   kSamusXDir_FaceForward = 0x0,
   kSamusXDir_UnusedPose21 = 0x1,
   kSamusXDir_UnusedPose22 = 0x2,
@@ -638,7 +615,7 @@ enum SamusPoseXDirection {
 };
 
 /* 32 */
-enum SamusMovementType {
+enum SamusMovementType {  // 0x7E0A1F
   kMovementType_00_Standing = 0x0,
   kMovementType_01_Running = 0x1,
   kMovementType_02_NormalJumping = 0x2,
@@ -669,159 +646,270 @@ enum SamusMovementType {
   kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain = 0x1B,
 };
 
-enum SamusSuitPaletteIndex {
+enum SamusSuitPaletteIndex {  // 0x7E0A74
   kSuitPaletteIndex_0_Power = 0x0,
   kSuitPaletteIndex_2_Varia = 0x2,
   kSuitPaletteIndex_4_Gravity = 0x4,
 };
 
-/* 33 */
-typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {
-  uint16 boss_id_;
-  VoidP ptrs;
-} DisableMinimapAndMarkBossRoomAsExploredEnt;
+/* 29 */
+enum LiquidPhysicsType {  // 0x7E0AD2
+  kLiquidPhysicsType_Air = 0x0,
+  kLiquidPhysicsType_Water = 0x1,
+  kLiquidPhysicsType_LavaAcid = 0x2,
+};
 
-typedef struct MarkMapTileExplored {
-  uint16 x_offset;
-  uint16 y_offset;
-} MarkMapTileExplored;
+enum ProjectileDirection { // 0x7E0C04
+  kProjectileDir_UpFaceRight = 0x0,
+  kProjectileDir_UpRight = 0x1,
+  kProjectileDir_Right = 0x2,
+  kProjectileDir_DownRight = 0x3,
+  kProjectileDir_DownFaceRight = 0x4,
+  kProjectileDir_DownFaceLeft = 0x5,
+  kProjectileDir_DownLeft = 0x6,
+  kProjectileDir_Left = 0x7,
+  kProjectileDir_UpLeft = 0x8,
+  kProjectileDir_UpFaceLeft = 0x9,
+  kProjectileDir_DirMask = 0xF,
+  kProjectileDir_Delete = 0x10,
+};
 
-/* 34 */
-typedef struct ProjectileDamagesAndInstrPtr {
-  uint16 damage;
-  VoidP instr_ptr;
-} ProjectileDamagesAndInstrPtr;
+/* 52 */
+enum ProjectileType {  // 0x7E0C18
+  kProjectileType_Wave_NormalBombExplosion = 0x1,
+  kProjectileType_Ice = 0x2,
+  kProjectileType_Spazer = 0x4,
+  kProjectileType_Plasma = 0x8,
+  kProjectileType_BeamMask = 0xF,
+  kProjectileType_Charged = 0x10,
+  kProjectileType_SpazerSbaMask = 0x20,
+  kProjectileType_SpazerSbaTrail = 0x24,
+  kProjectileType_ShinesparkEcho = 0x29,
+  kProjectileType_CooldownMask = 0x3F,
+  kProjectileType_Missile = 0x100,
+  kProjectileType_SuperMissile = 0x200,
+  kProjectileType_PowerBomb = 0x300,
+  kProjectileType_Bomb = 0x500,
+  kProjectileType_BeamExplosion = 0x700,
+  kProjectileType_MissileExplosion = 0x800,
+  kProjectileType_TypeMask = 0xF00,
+  kProjectileType_ChargeBeamEquipped = 0x1000,
+  kProjectileType_DontInteractWithSamus = 0x8000,
+};
 
-/* 36 */
-typedef struct DemoInputObject {
-  VoidP ptr;
-  VoidP pre_instr;
-  VoidP instr_ptr;
-} DemoInputObject;
+enum GameOptionsMenuIndex {  // 0x7E0DE2
+  kGameOptionsMenu_0_FinishFadeOut = 0x0,
+  kGameOptionsMenu_1_LoadOptionsMenu = 0x1,
+  kGameOptionsMenu_2_FadeInOptionsMenu = 0x2,
+  kGameOptionsMenu_3_OptionsMenu = 0x3,
+  kGameOptionsMenu_4_StartGame = 0x4,
+  kGameOptionsMenu_5_DissolveFromScreen = 0x5,
+  kGameOptionsMenu_6_DissolveToScreen = 0x6,
+  kGameOptionsMenu_7_ControllerSettings = 0x7,
+  kGameOptionsMenu_8_SpecialSettings = 0x8,
+  kGameOptionsMenu_9_ScrollControllerSettingsDown = 0x9,
+  kGameOptionsMenu_10_ScrollControllerSettingsUp = 0xA,
+  kGameOptionsMenu_11_TransitionToFileSelect = 0xB,
+  kGameOptionsMenu_12_FadeOutOptionsMenu = 0xC,
+};
 
-/* 37 */
-typedef struct DemoSetDef {
-  uint16 items;
-  uint16 missiles;
-  uint16 super_missiles;
-  uint16 power_bombs;
+enum ElevatorProperties {  // 0x7E0E16
+  kElevatorProperty_StandingOnElevator = 0x1,
+  kElevatorProperty_DoorIsElevator = 0x80,
+};
+
+enum ElevatorStatus {  // 0x7E0E18
+  kElevatorStatus_Inactive = 0x0,
+  kElevatorStatus_LeavingRoom = 0x1,
+  kElevatorStatus_RoomTransition = 0x2,
+  kElevatorStatus_EnteringRoom = 0x3,
+};
+
+/* 108 */
+typedef struct  EnemyTileLoadData {  // 0x7E0E5A
+  uint16 tile_data_size;
+  LongPtr tile_data_ptr;
+  uint16 offset_into_ram;
+} EnemyTileLoadData;
+
+/* 13 */
+typedef struct EnemyData {  // 0x7E0F78
+  uint16 enemy_ptr;
+  uint16 x_pos;
+  uint16 x_subpos;
+  uint16 y_pos;
+  uint16 y_subpos;
+  uint16 x_width;
+  uint16 y_height;
+  uint16 properties;
+  uint16 extra_properties;
+  uint16 ai_handler_bits;
   uint16 health;
-  uint16 collected_beams_;
-  uint16 equipped_beams_;
-  VoidP demo_obj;
-} DemoSetDef;
-
-///* 38 */
-//typedef union DemoInputEntry {
-//  struct {
-//    uint16 timer;
-//    uint16 cur_input;
-//    uint16 new_input;
-//  };
-//  struct {
-//    uint16 func_ptr;
-//    uint16 instr_list_ptr;
-//  };
-//} DemoInputEntry;
-
-/* 39 */
-typedef struct PoseEntry {
-  uint16 new_input;
-  uint16 cur_input;
-  uint16 new_pose;
-} PoseEntry;
-
-/* 40 */
-typedef struct XrayBlockData {
-  uint16 value;
-  VoidP addr;
-} XrayBlockData;
-
-/* 41 */
-typedef struct SamusCrystalFlashPalTable {
-  VoidP ptr;
+  uint16 spritemap_pointer;
   uint16 timer;
-} SamusCrystalFlashPalTable;
+  uint16 current_instruction;
+  uint16 instruction_timer;
+  uint16 palette_index;
+  uint16 vram_tiles_index;
+  uint16 layer;
+  uint16 flash_timer;
+  uint16 frozen_timer;
+  uint16 invincibility_timer;
+  uint16 shake_timer;
+  uint16 frame_counter;
+  uint8 bank;
+  uint8 field_2F;
+  uint16 ai_var_A;
+  uint16 ai_var_B;
+  uint16 ai_var_C;
+  uint16 ai_var_D;
+  uint16 ai_var_E;
+  uint16 ai_preinstr;
+  uint16 parameter_1;
+  uint16 parameter_2;
+} EnemyData;
 
-/* 42 */
-typedef struct SamusTileAnimationDefs {
-  uint8 top_half_idx;
-  uint8 top_half_pos;
-  uint8 bottom_half_idx;
-  uint8 bottom_half_pos;
-} SamusTileAnimationDefs;
+typedef struct EnemyBase {  // 0x7E0F78
+  uint16 enemy_ptr;
+  uint16 x_pos;
+  uint16 x_subpos;
+  uint16 y_pos;
+  uint16 y_subpos;
+  uint16 x_width;
+  uint16 y_height;
+  uint16 properties;
+  uint16 extra_properties;
+  uint16 ai_handler_bits;
+  uint16 health;
+  uint16 spritemap_pointer;
+  uint16 timer;
+  uint16 current_instruction;
+  uint16 instruction_timer;
+  uint16 palette_index;
+  uint16 vram_tiles_index;
+  uint16 layer;
+  uint16 flash_timer;
+  uint16 frozen_timer;
+  uint16 invincibility_timer;
+  uint16 shake_timer;
+  uint16 frame_counter;
+  uint8 bank;
+  uint8 field_2F;
+} EnemyBase;
 
-/* 43 */
-typedef struct SamusTileAnimationTileDefs {
-  LongPtr src;
-  uint16 part1_size;
-  uint16 part2_size;
-}SamusTileAnimationTileDefs;
+/* 53 */
+enum EnemyProps {  // 0x7E0F86
+  kEnemyProps_Invisible = 0x100,
+  kEnemyProps_Deleted = 0x200,
+  kEnemyProps_Tangible = 0x400,
+  kEnemyProps_ProcessedOffscreen = 0x800,
+  kEnemyProps_BlockPlasmaBeam = 0x1000,
+  kEnemyProps_DisableSamusColl = 0x2000,
+  kEnemyProps_RespawnIfKilled = 0x4000,
+};
 
-/* 44 */
-typedef struct ProjectileDataTable {
-  uint16 damage;
-  union { 
-    uint16 instr_ptrs[10];
-    struct {
-      uint16 up_face_right;
-      uint16 up_right;
-      uint16 right;
-      uint16 down_right;
-      uint16 down_face_right;
-      uint16 down_face_left;
-      uint16 down_left;
-      uint16 left;
-      uint16 up_left;
-      uint16 up_face_left;
-    };
-  };
-} ProjectileDataTable;
+/* 50 */
+enum EnemyExtraProps {  // 0x7E0F88
+  kEnemyExtraProps_DisableEnemyAI = 0x1,
+  kEnemyExtraProps_MultiHitbox = 0x4,
+  kEnemyExtraProps_UpdateGfx = 0x8000,
+};
 
-///* 45 */
-//typedef union ProjectileInstr {
-//  struct {
-//    uint16 timer;
-//    VoidP spritemap_ptr;
-//    uint8 x_radius;
-//    uint8 y_radius;
-//    uint16 trail_frame;
-//  };
-//  struct {
-//    VoidP func_ptr;
-//    VoidP instr_list_ptr;
-//  };
-//} ProjectileInstr;
+/* 57 */
+enum EnemyAiBits {  // 0x7E0F8A
+  kEnemyAiBits_Grapple = 0x1,
+  kEnemyAiBits_Hurt = 0x2,
+  kEnemyAiBits_Frozen = 0x4,
+};
 
-/* 46 */
-typedef struct GrappleBeamSpecialAngles {
-  uint16 angle;
-  uint16 pose;
-  uint16 x_offset;
-  uint16 y_offset;
-  VoidP grapple_function;
-} GrappleBeamSpecialAngles;
+enum BossId {  // 0x7E179C
+  kBossId_0_None = 0x0,
+  kBossId_1_CeresRidley = 0x1,
+  kBossId_2_Torizo = 0x2,
+  kBossId_3_Kraid = 0x3,
+  kBossId_4_SporeSpawn = 0x4,
+  kBossId_5_Ridley = 0x5,
+  kBossId_6_Crocomire = 0x6,
+  kBossId_7_Phantoon = 0x7,
+  kBossId_8_Draygon = 0x8,
+  kBossId_9_Botwoon = 0x9,
+  kBossId_10_MotherBrain = 0xA,
+};
 
-/* 47 */
-typedef struct ExtendedSpriteMap {
-  uint16 xpos;
-  uint16 ypos;
-  VoidP spritemap;
-  VoidP hitbox_ptr_;
-} ExtendedSpriteMap;
+enum TourianEntranceStatueAnimationState {  // 0x7E1E6F
+  kStatueState_PhantoonProcessing = 0x1,
+  kStatueState_RidleyProcessing = 0x2,
+  kStatueState_KraidProcessing = 0x4,
+  kStatueState_DraygonProcessing = 0x8,
+  kStatueState_ReleasingBossLock = 0x8000,
+};
 
-/* 48 */
-typedef struct Hitbox {
-  uint16 left;
-  uint16 top;
-  uint16 right;
-  uint16 bottom;
-  VoidP samus_coll_ptr;
-  VoidP proj_coll_ptr;
-} Hitbox;
+typedef struct Ram3000_MsgBox {  // 0x7E30BC
+  uint8 pad[188];
+  uint16 msg_box_anim_y_radius_neg[30];
+  uint16 msg_box_anim_y_radius[30];
+  uint8 field_134[204];
+  uint16 tilemap[192];
+  uint8 indirect_hdma[7];
+  uint8 field_387[99];
+  uint8 backup_of_enabled_hdma_channels;
+  uint8 backup_of_bg3_tilemap_and_size;
+} Ram3000_MsgBox;
+
+/* 134 */
+typedef struct Ram3000_Misc {  // 0x7E31D8
+  uint8 field_0[472];
+  uint16 pause_screen_samus_wireframe_tilemap[264];
+  uint8 field_3E8[24];
+} Ram3000_Misc;
+
+/* 135 */
+typedef struct Ram3000_Menu {  // 0x7E3300
+  uint8 field_0[768];
+  uint16 palette_backup_in_menu[256];
+  uint8 backup_of_io_registers_in_gameover[54];
+  uint8 field_536[202];
+  uint8 menu_tilemap[512];
+} Ram3000_Menu;
+
+/* 149 */
+typedef union Ram3000 {  // 0x7E3000
+  uint16 pause_menu_map_tilemap[1024];
+  uint16 cinematic_bg_tilemap[1024];
+  Ram3000_MsgBox msgbox;
+  uint8 msgbox_y_scroll_hdma[240];
+  Ram3000_Misc misc;
+  Ram3000_Menu menu;
+} Ram3000;
+
+/* 136 */
+typedef union Ram3800 {  // 0x7E3800
+  uint16 cinematic_bg_tilemap[1024];
+  uint16 equipment_screen_bg1_tilemap[1024];
+  uint16 debug_game_over_tilemap[1024];
+  uint16 cleared_message_box_bg3_tilemap[1024];
+} Ram3800;
+
+/* 137 */
+typedef struct Ram4000_Backups {  // 0x7E4100
+  uint8 field_0[256];
+  uint16 backup_of_vram_0x5880_msgbox[896];
+  uint8 field_800[2048];
+  uint8 backup_of_0x3e00_in_kraid_pause[1024];
+} Ram4000_Backups;
+
+/* 138 */
+typedef union Ram4000 {  // 0x7E4000
+  uint16 xray_tilemaps[6144];
+  uint16 bg2_tilemap[2048];
+  uint16 decomp_buffer_kraid[1024];
+  uint16 bg2_room_select_map_tilemap[1024];
+  uint16 intro_japanese_text_tiles[768];
+  Ram4000_Backups backups;
+} Ram4000;
 
 /* 49 */
-typedef struct EnemySpawnData {
+typedef struct EnemySpawnData {  // 0x7E7000
   uint16 some_flag;
   uint16 cause_of_death;
   uint16 field_4;
@@ -848,162 +936,401 @@ typedef struct EnemySpawnData {
   uint8 name[18];
 } EnemySpawnData;
 
-/* 50 */
-enum EnemyExtraProps {
-  kEnemyExtraProps_DisableEnemyAI = 0x1,
-  kEnemyExtraProps_MultiHitbox = 0x4,
-  kEnemyExtraProps_UpdateGfx = 0x8000,
-} ;
+/* 100 */
+typedef struct Ram7800_Kraid {  // 0x7E7800
+  uint16 kraid_next;
+  uint16 field_2;
+  uint16 field_4;
+  uint16 kraid_thinking;
+  uint16 kraid_min_y_pos_eject;
+  uint16 kraid_mouth_flags;
+  uint16 kraid_healths_8ths[8];
+  uint16 field_1C;
+  uint16 kraid_target_x;
+  uint16 kraid_healths_4ths[4];
+  uint16 field_28;
+  uint16 kraid_hurt_frame;
+  uint16 kraid_hurt_frame_timer;
+} Ram7800_Kraid;
 
-enum ProjectileDirection {
-  kProjectileDir_UpFaceRight = 0x0,
-  kProjectileDir_UpRight = 0x1,
-  kProjectileDir_Right = 0x2,
-  kProjectileDir_DownRight = 0x3,
-  kProjectileDir_DownFaceRight = 0x4,
-  kProjectileDir_DownFaceLeft = 0x5,
-  kProjectileDir_DownLeft = 0x6,
-  kProjectileDir_Left = 0x7,
-  kProjectileDir_UpLeft = 0x8,
-  kProjectileDir_UpFaceLeft = 0x9,
-  kProjectileDir_DirMask = 0xF,
-  kProjectileDir_Delete = 0x10,
+/* 145 */
+typedef union ExtraEnemyRam7800 {  // 0x7E7800
+  Ram7800_Kraid kraid;
+  uint8 pad[64];
+}ExtraEnemyRam7800;
+
+typedef struct Ram7800_Default {  // 0x7E7800
+  uint16 var_00;
+  uint16 var_01;
+  uint16 var_02;
+  uint16 var_03;
+  uint16 var_04;
+  uint16 var_05;
+  uint16 var_06;
+  uint16 var_07;
+  uint16 var_08;
+  uint16 var_09;
+  uint16 var_0A;
+  uint16 var_0B;
+  uint16 var_0C;
+  uint16 var_0D;
+  uint16 var_0E;
+  uint16 var_0F;
+  uint16 var_10;
+  uint16 var_11;
+  uint16 var_12;
+  uint16 var_13;
+  uint16 var_14;
+  uint16 var_15;
+  uint16 var_16;
+  uint16 var_17;
+  uint16 var_18;
+  uint16 var_19;
+  uint16 var_1A;
+  uint16 var_1B;
+  uint16 var_1C;
+  uint16 var_1D;
+  uint16 var_1E;
+  uint16 var_1F;
+} Ram7800_Default;
+
+/* 146 */
+typedef union ExtraEnemyRam8000 {  // 0x7E8000
+  uint8 pad[64];
+}ExtraEnemyRam8000;
+
+/* 147 */
+typedef struct ExtraEnemyRam8800 {  // 0x7E8800
+  uint8 pad[64];
+}ExtraEnemyRam8800;
+
+/* 109 */
+typedef struct ExpandingSquareTransitionHdma {  // 0x7E9E00
+  uint8 height;
+  uint8 addr_lo;
+  uint8 addr_hi;
+} ExpandingSquareTransitionHdma;
+
+/* 110 */
+typedef struct TileTable {  // 0x7EA000
+  uint16 top_left;
+  uint16 top_right;
+  uint16 bottom_left;
+  uint16 bottom_right;
+} TileTable;
+
+/* 111 */
+typedef struct TileTables {  // 0x7EA000
+  TileTable tables[1024];
+} TileTables;
+
+typedef union Palettes {  // 0x7EC000
+  uint16 pal[0x200 >> 1];
+  struct {
+    union {
+      struct {
+        uint16 bg1_bg2_pal_0[0x20 >> 1];
+        uint16 bg1_bg2_pal_1[0x20 >> 1];
+      };
+      struct {
+        uint16 bg3_pal_0[0x8 >> 1];
+        uint16 bg3_pal_1[0x8 >> 1];
+        uint16 bg3_pal_2[0x8 >> 1];
+        uint16 bg3_pal_3[0x8 >> 1];
+        uint16 bg3_pal_4[0x8 >> 1];
+        uint16 bg3_pal_5[0x8 >> 1];
+        uint16 bg3_pal_6[0x8 >> 1];
+        uint16 bg3_pal_7[0x8 >> 1];
+      };
+    };
+    uint16 bg1_bg2_pal_2[0x20 >> 1];
+    uint16 bg1_bg2_pal_3[0x20 >> 1];
+    uint16 bg1_bg2_pal_4[0x20 >> 1];
+    uint16 bg1_bg2_pal_5[0x20 >> 1];
+    uint16 bg1_bg2_pal_6[0x20 >> 1];
+    uint16 bg1_bg2_pal_7[0x20 >> 1];
+    uint16 sprite_pal_0[0x20 >> 1];
+    uint16 sprite_pal_1[0x20 >> 1];
+    uint16 sprite_pal_2[0x20 >> 1];
+    uint16 sprite_pal_3[0x20 >> 1];
+    uint16 sprite_pal_4[0x20 >> 1];
+    uint16 sprite_pal_5[0x20 >> 1];
+    uint16 sprite_pal_6[0x20 >> 1];
+    uint16 sprite_pal_7[0x20 >> 1];
+  };
+} Palettes;
+
+typedef union RamHudTilemap_Row1 {  // 0x7EC608
+  uint16 arr[64 >> 1];
+  struct {
+    uint8 pad0[2];
+    uint16 energy_tanks[14 >> 1];
+    uint16 auto_reserve[4 >> 1];
+    uint16 missiles[6 >> 1];
+    uint8 pad1[2];
+    uint16 super_missiles[4 >> 1];
+    uint8 pad2[2];
+    uint16 power_bombs[4 >> 1];
+    uint8 pad3[2];
+    uint16 grapple[4 >> 1];
+    uint8 pad4[2];
+    uint16 x_ray[4 >> 1];
+    uint8 pad5[2];
+    uint16 minimap[10 >> 1];
+    uint8 pad6[2];
+  };
+} RamHudTilemap_Row1;
+
+typedef union RamHudTilemap_Row2 {  // 0x7EC648
+  uint16 arr[64 >> 1];
+  struct {
+    uint8 pad0[2];
+    uint16 energy_tanks[14 >> 1];
+    uint16 auto_reserve[4 >> 1];
+    uint16 missiles[6 >> 1];
+    uint8 pad1[2];
+    uint16 super_missiles[4 >> 1];
+    uint8 pad2[2];
+    uint16 power_bombs[4 >> 1];
+    uint8 pad3[2];
+    uint16 grapple[4 >> 1];
+    uint8 pad4[2];
+    uint16 x_ray[4 >> 1];
+    uint8 pad5[2];
+    union {
+      uint16 minimap[10 >> 1];
+      struct {
+        uint8 pad[4];
+        uint16 minimap_samus_pos;
+      };
+    };
+    uint8 pad6[2];
+  };
+} RamHudTilemap_Row2;
+
+typedef union RamHudTilemap_Row3 {  // 0x7EC688
+  uint16 arr[64 >> 1];
+  struct {
+    uint8 pad0[12];
+    uint16 subtank_health[4 >> 1];
+    uint16 auto_reserve[4 >> 1];
+    uint16 missile_count[6 >> 1];
+    uint8 pad1[2];
+    uint16 super_missile_count[4 >> 1];
+    uint16 debug_extra_super_missile_count_digit[2 >> 1];
+    uint16 power_bomb_count[4 >> 1];
+    uint8 pad2[14];
+    uint16 minimap[10 >> 1];
+    uint8 pad3[2];
+  };
+} RamHudTilemap_Row3;
+
+typedef union RamHudTilemap {  // 0x7EC608
+  uint16 arr[192 >> 1];
+  struct {
+    RamHudTilemap_Row1 row1;
+    RamHudTilemap_Row2 row2;
+    RamHudTilemap_Row3 row3;
+  };
+} RamHudTilemap;
+
+enum RoomScrolls {  // 0x7ECD20
+  kScroll_Red = 0x0,
+  kScroll_Blue = 0x1,
+  kScroll_Green = 0x2,
 };
 
-/* 52 */
-enum ProjectileType {
-  kProjectileType_Wave_NormalBombExplosion = 0x1,
-  kProjectileType_Ice = 0x2,
-  kProjectileType_Spazer = 0x4,
-  kProjectileType_Plasma = 0x8,
-  kProjectileType_BeamMask = 0xF,
-  kProjectileType_Charged = 0x10,
-  kProjectileType_SpazerSbaMask = 0x20,
-  kProjectileType_SpazerSbaTrail = 0x24,
-  kProjectileType_ShinesparkEcho = 0x29,
-  kProjectileType_CooldownMask = 0x3F,
-  kProjectileType_Missile = 0x100,
-  kProjectileType_SuperMissile = 0x200,
-  kProjectileType_PowerBomb = 0x300,
-  kProjectileType_Bomb = 0x500,
-  kProjectileType_BeamExplosion = 0x700,
-  kProjectileType_MissileExplosion = 0x800,
-  kProjectileType_TypeMask = 0xF00,
-  kProjectileType_ChargeBeamEquipped = 0x1000,
-  kProjectileType_DontInteractWithSamus = 0x8000,
+enum GameEvent {  // 0x7ED820
+  kEvent_0_ZebesAwake = 0x0,
+  kEvent_1_ShitroidAteSidehopper = 0x1,
+  kEvent_2_MotherBrainGlassBroken = 0x2,
+  kEvent_3_Zebetite1Destroyed = 0x3,
+  kEvent_4_Zebetite2Destroyed = 0x4,
+  kEvent_5_Zebetite3Destroyed = 0x5,
+  kEvent_6_PhantoonStatueGray = 0x6,
+  kEvent_7_RidleyStatueGray = 0x7,
+  kEvent_8_DraygonStatueGray = 0x8,
+  kEvent_9_KraidStatueGray = 0x9,
+  kEvent_10_TourianEntranceUnlocked = 0xA,
+  kEvent_11_MaridiaNoobtubeBroken = 0xB,
+  kEvent_12_LowerNorfairChozoLoweredAcid = 0xC,
+  kEvent_13_ShaktoolPathCleared = 0xD,
+  kEvent_14_ZebesTimebombSet = 0xE,
+  kEvent_15_CrittersEscaped = 0xF,
+  kEvent_16_1stMetroidHallCleared = 0x10,
+  kEvent_17_1stMetroidShaftCleared = 0x11,
+  kEvent_18_2ndMetroidHallCleared = 0x12,
+  kEvent_19_2ndMetroidShaftCleared = 0x13,
+  kEvent_20_Empty14h_Unused = 0x14,
+  kEvent_21_OutranSpeedBoosterLavaquake = 0x15,
 };
 
-enum DebugGameOverMenu {
-  kDebugGameOverMenu_0_FadeOut_ConfigureMenuGraphics = 0x0,
-  kDebugGameOverMenu_1_Initalize = 0x1,
-  kDebugGameOverMenu_2_FadeToMain = 0x2,
-  kDebugGameOverMenu_3_Main = 0x3,
-  kDebugGameOverMenu_4_FadeToContinue = 0x4,
-  kDebugGameOverMenu_5_Continue = 0x5,
+enum BossBits {  // 0x7ED828
+  kBossBit_AreaBoss = 0x1,
+  kBossBit_AreaMiniBoss = 0x2,
+  kBossBit_AreaTorizo = 0x4,
 };
 
-enum GameOverMenu {
-  kGameOverMenu_0_FadeOut_ConfigureMenuGraphics = 0x0,
-  kGameOverMenu_1_Initalize = 0x1,
-  kGameOverMenu_2_PlayPreStatueTrack = 0x2,
-  kGameOverMenu_3_FadeToMain = 0x3,
-  kGameOverMenu_4_Main = 0x4,
-  kGameOverMenu_5_FadeToGameMapView = 0x5,
-  kGameOverMenu_6_LoadGameMapView = 0x6,
-  kGameOverMenu_7_FadeToSoftReset = 0x7,
+/* 94 */
+enum LoadingGameState {  // 0x7ED914
+  kLoadingGameState_0_Intro = 0x0,
+  kLoadingGameState_5_Main = 0x5,
+  kLoadingGameState_1F_StartingAtCeres = 0x1F,
+  kLoadingGameState_22_EscapingCeres = 0x22,
 };
 
-enum FileSelectMenu {
-  kFileSelectMenu_0_TitleToMain_FadeOut_ConfigureGraphics = 0x0,
-  kFileSelectMenu_1_TitleToMain_LoadBg2 = 0x1,
-  kFileSelectMenu_2_TitleToMain_Initialize = 0x2,
-  kFileSelectMenu_3_TitleToMain_FadeIn = 0x3,
-  kFileSelectMenu_4_Main = 0x4,
-  kFileSelectMenu_5_MainToFileCopy_FadeOut = 0x5,
-  kFileSelectMenu_6_MainToFileCopy_Initialize = 0x6,
-  kFileSelectMenu_7_MainToFileCopy_FadeIn = 0x7,
-  kFileSelectMenu_8_FileCopy_SelectSource = 0x8,
-  kFileSelectMenu_9_FileCopy_InitalizeSelectDestination = 0x9,
-  kFileSelectMenu_10_FileCopy_SelectDestination = 0xA,
-  kFileSelectMenu_11_FileCopy_InitalizeConfirmation = 0xB,
-  kFileSelectMenu_12_FileCopy_Confirmation = 0xC,
-  kFileSelectMenu_13_FileCopy_DoFileCopy = 0xD,
-  kFileSelectMenu_14_FileCopy_CopyCompleted = 0xE,
-  kFileSelectMenu_15_FileCopyToMain_FadeOut = 0xF,
-  kFileSelectMenu_16_FileCopyToMain_ReloadMain = 0x10,
-  kFileSelectMenu_17_FileCopyToMain_FadeIn = 0x11,
-  kFileSelectMenu_18_FileCopyToMain_MainMenuIndex = 0x12,
-  kFileSelectMenu_19_MainToFileClear_FadeOut = 0x13,
-  kFileSelectMenu_20_MainToFileClear_Initialize = 0x14,
-  kFileSelectMenu_21_MainToFileClear_FadeIn = 0x15,
-  kFileSelectMenu_22_FileClear_SelectSlot = 0x16,
-  kFileSelectMenu_23_FileClear_InitializeConfirmation = 0x17,
-  kFileSelectMenu_24_FileClear_Confirmation = 0x18,
-  kFileSelectMenu_25_FileClear_DoFileClear = 0x19,
-  kFileSelectMenu_26_FileClear_ClearComplete = 0x1A,
-  kFileSelectMenu_27_FileClearToMain_FadeOut = 0x1B,
-  kFileSelectMenu_28_FileClearToMain_ReloadMain = 0x1C,
-  kFileSelectMenu_29_FileClearToMain_FadeIn = 0x1D,
-  kFileSelectMenu_30_FileClearToMain_MainMenuIndex = 0x1E,
-  kFileSelectMenu_31_MainToOptions_TurnSamusHelmet = 0x1F,
-  kFileSelectMenu_32_MainToOptions_FadeOut = 0x20,
-  kFileSelectMenu_33_MainToTitle = 0x21,
-};
+/* 4 */
+typedef struct LoadStationList {  // 0x80C4B5
+  VoidP room_ptr_;
+  VoidP door_ptr;
+  uint16 door_bts;
+  uint16 screen_x_pos;
+  uint16 screen_y_pos;
+  uint16 samus_y_offset;
+  uint16 samus_x_offset;
+} LoadStationList;
 
-enum FileSelectMap {
-  kFileSeletMap_0_OptionsToAreaSelect_ClearBg2_SetUpFadeOut = 0x0,
-  kFileSeletMap_1_OptionsToAreaSelect_FadeOut_LoadAreaPalette = 0x1,
-  kFileSeletMap_2_OptionsToAreaSelect_LoadForegroundTilemap = 0x2,
-  kFileSeletMap_3_OptionsToAreaSelect_LoadBackgroundTilemap = 0x3,
-  kFileSeletMap_4_OptionsToAreaSelect_PrepareExpandingContractingSquareTransition = 0x4,
-  kFileSeletMap_5_OptionsToAreaSelect_ExpandingSquareTransition = 0x5,
-  kFileSeletMap_6_AreaSelect = 0x6,
-  kFileSeletMap_7_AreaSelectToRoomSelect_PrepareExpandingSquareTransition = 0x7,
-  kFileSeletMap_8_AreaSelectToRoomSelect_ExpandingSquareTransition = 0x8,
-  kFileSeletMap_9_AreaSelectToRoomSelect_Initialize = 0x9,
-  kFileSeletMap_10_RoomSelect = 0xA,
-  kFileSeletMap_11_RoomSelectToLoadGame_FadeOut2FrameDelay = 0xB,
-  kFileSeletMap_12_RoomSelectToLoadGame_FadeOut1FrameDelay = 0xC,
-  kFileSeletMap_13_RoomSelectToLoadGame_FadeOut = 0xD,
-  kFileSeletMap_14_RoomSelectToLoadGame_Wait = 0xE,
-  kFileSeletMap_15_RoomSelectToAreaSelect_ClearBg1Tilemap = 0xF,
-  kFileSeletMap_16_RoomSelectToAreaSelect_LoadPalettes = 0x10,
-  kFileSeletMap_17_RoomSelectToAreaSelect_LoadForegroundTilemap = 0x11,
-  kFileSeletMap_18_RoomSelectToAreaSelect_LoadBackgroundTilemap = 0x12,
-  kFileSeletMap_19_RoomSelectToAreaSelect_PrepareExpandingContractingSquareTransition = 0x13,
-  kFileSeletMap_20_RoomSelectToAreaSelect_PrepareContractingSquareTransition = 0x14,
-  kFileSeletMap_21_RoomSelectToAreaSelect_ContractingSquareTransition = 0x15,
-  kFileSeletMap_22_AreaSelectToOptions = 0x16,
-};
+/* 112 */
+typedef struct ElevatorsUsedConf {  // 0x80CD46
+  uint8 src_area;
+  uint8 src_bit;
+  uint8 dst_area;
+  uint8 dst_bit;
+} ElevatorsUsedConf;
 
-enum PauseMenu {
-  kPauseMenu_0_MapScreen = 0x0,
-  kPauseMenu_1_EquipmentScreen = 0x1,
-  kPauseMenu_2_MapScreenToEquipmentScreen_FadeOut = 0x2,
-  kPauseMenu_3_MapScreenToEquipmentScreen_LoadEquipmentScreen = 0x3,
-  kPauseMenu_4_MapScreenToEquipmentScreen_FadeIn = 0x4,
-  kPauseMenu_5_EquipmentScreenToMapScreen_FadeOut = 0x5,
-  kPauseMenu_6_EquipmentScreenToMapScreen_LoadMapScren = 0x6,
-  kPauseMenu_7_EquipmentScreenToMapScreen_FadeIn = 0x7,
-};
+/* 115 */
+typedef struct ExpandingSquareVels {  // 0x81AA34
+  uint16 left_subvel;
+  uint16 left_vel;
+  uint16 right_subvel;
+  uint16 right_vel;
+  uint16 top_subvel;
+  uint16 top_vel;
+  uint16 bottom_subvel;
+  uint16 bottom_vel;
+} ExpandingSquareVels;
 
-enum GameOptionsMenuIndex {
-  kGameOptionsMenu_0_FinishFadeOut = 0x0,
-  kGameOptionsMenu_1_LoadOptionsMenu = 0x1,
-  kGameOptionsMenu_2_FadeInOptionsMenu = 0x2,
-  kGameOptionsMenu_3_OptionsMenu = 0x3,
-  kGameOptionsMenu_4_StartGame = 0x4,
-  kGameOptionsMenu_5_DissolveFromScreen = 0x5,
-  kGameOptionsMenu_6_DissolveToScreen = 0x6,
-  kGameOptionsMenu_7_ControllerSettings = 0x7,
-  kGameOptionsMenu_8_SpecialSettings = 0x8,
-  kGameOptionsMenu_9_ScrollControllerSettingsDown = 0x9,
-  kGameOptionsMenu_10_ScrollControllerSettingsUp = 0xA,
-  kGameOptionsMenu_11_TransitionToFileSelect = 0xB,
-  kGameOptionsMenu_12_FadeOutOptionsMenu = 0xC,
-};
+/* 116 */
+typedef struct MapScrollArrowData {  // 0x81AF32 0x82B9A0
+  uint16 xpos;
+  uint16 ypos;
+  uint16 pause_screen_animation_id;
+  uint16 joypad_input;
+  uint16 map_scroll_dir;
+} MapScrollArrowData;
 
-enum kMessageBoxIndex {
+/* 117 */
+typedef struct DemoRoomData {  // 0x82876C
+  VoidP room_ptr_;
+  uint16 door_ptr;
+  uint16 door_slot;
+  uint16 screen_x_pos;
+  uint16 screen_y_pos;
+  uint16 samus_y_offs;
+  uint16 samus_x_offs;
+  uint16 demo_length;
+  VoidP demo_code_ptr;
+} DemoRoomData;
+
+/* 119 */
+typedef struct FileCopyArrowStuff {  // 0x82BB0C
+  uint16 spritemap_idx;
+  uint16 x_pos;
+  uint16 y_pos;
+} FileCopyArrowStuff;
+
+/* 118 */
+typedef union PauseScreenSpriteAnimationData {  // 0x82C0B2
+  struct {
+    VoidP unused;
+    VoidP lr_highlight;
+    VoidP item_selector;
+    VoidP unused2;
+    VoidP unused3;
+    VoidP map_scroll_arrow_up;
+    VoidP map_scroll_arrow_down;
+    VoidP map_scroll_arrow_right;
+    VoidP map_scroll_arrow_left;
+  };
+  VoidP arr[9];
+} PauseScreenSpriteAnimationData;
+
+/* 114 */
+typedef struct MapIconDataPointers {  // 0x82C7CB
+  VoidP crateria;
+  VoidP brinstar;
+  VoidP norfair;
+  VoidP wrecked_ship;
+  VoidP maraidia;
+  VoidP tourian;
+  VoidP ceres;
+  VoidP debug;
+} MapIconDataPointers;
+
+/* 3 */
+typedef struct FxDef {  // 0x830000
+  uint16 door_ptr;
+  uint16 base_y_pos;
+  uint16 target_y_pos;
+  uint16 y_vel;
+  uint8 timer;
+  uint8 type;
+  uint8 default_layer_blend;
+  uint8 layer3_layer_blend;
+  uint8 fx_liquid_options_;
+  uint8 palette_fx_bitset;
+  uint8 animtiles_bitset;
+  uint8 palette_blend;
+} FxDef;
+
+/* 27 */
+typedef struct DoorDef {  // 0x830000
+  VoidP room_definition_ptr;
+  uint8 door_bitflags;
+  uint8 door_direction_;
+  uint8 x_pos_plm;
+  uint8 y_pos_plm;
+  uint8 x_pos_in_room;
+  uint8 y_pos_in_room;
+  uint16 samus_distance_from_door;
+  VoidP door_setup_code;
+}DoorDef;
+
+/* 2 */
+typedef struct PlmHeader_Size4 {  // 0x840000
+  VoidP func_ptr;
+  VoidP instr_list_ptr;
+} PlmHeader_Size4;
+
+/* 8 */
+typedef struct RoomPlmEntry {  // 0x840000
+  VoidP plm_header_ptr_;
+  uint8 x_block;
+  uint8 y_block;
+  uint16 plm_room_argument;
+} RoomPlmEntry;
+
+/* 9 */
+typedef struct PlmHeader_Size6 {  // 0x840000
+  VoidP func_ptr;
+  VoidP instr_list_1_ptr;
+  VoidP instr_list_2_ptr;
+} PlmHeader_Size6;
+
+/* 5 */
+typedef struct  DebugDoorDef {  // 0x
+  VoidP room_definition_ptr;
+  uint8 door_bitflags;
+  uint8 door_orientation;
+  uint8 x_pos_plm;
+  uint8 y_pos_plm;
+  uint8 x_pos_in_room;
+  uint8 y_pos_in_room;
+  uint8 field_8;
+  uint16 field_9;
+} DebugDoorDef;
+
+enum kMessageBoxIndex {  // 0x85869B
   kMessageBox_1_EnergyTank = 0x1,
   kMessageBox_2_Missile = 0x2,
   kMessageBox_3_SuperMissile = 0x3,
@@ -1035,7 +1362,14 @@ enum kMessageBoxIndex {
   kMessageBox_29_Terminator2 = 0x1D,
 };
 
-enum kMessageBoxText {
+/* 10 */
+typedef struct MsgBoxConfig {  // 0x85869B
+  VoidP modify_box_func;
+  VoidP draw_initial_tilemap;
+  VoidP message_tilemap;
+} MsgBoxConfig;
+
+enum kMessageBoxText {  // 0x85877F
   kTxt_Empty = 0xE,
   kTxt_Dash = 0xCF,
   kTxt_A = 0xE0,
@@ -1067,194 +1401,122 @@ enum kMessageBoxText {
   kTxt_Space = 0x284E,
 };
 
-/* 53 */
-enum EnemyProps {
-  kEnemyProps_Invisible = 0x100,
-  kEnemyProps_Deleted = 0x200,
-  kEnemyProps_Tangible = 0x400,
-  kEnemyProps_ProcessedOffscreen = 0x800,
-  kEnemyProps_BlockPlasmaBeam = 0x1000,
-  kEnemyProps_DisableSamusColl = 0x2000,
-  kEnemyProps_RespawnIfKilled = 0x4000,
-};
-
-enum TourianEntranceStatueAnimationState {
-  kStatueState_PhantoonProcessing = 0x1,
-  kStatueState_RidleyProcessing = 0x2,
-  kStatueState_KraidProcessing = 0x4,
-  kStatueState_DraygonProcessing = 0x8,
-  kStatueState_ReleasingBossLock = 0x8000,
-};
-
-/* 54 */
-typedef struct EnemyPopulation {
-  VoidP enemy_ptr;
-  uint16 x_pos;
-  uint16 y_pos;
-  uint16 init_param;
+/* 11 */
+typedef struct EprojDef {  // 0x860000
+  VoidP init_code_ptr;
+  VoidP pre_instr_ptr;
+  VoidP instr_list;
+  uint16 radius;
   uint16 properties;
-  uint16 extra_properties;
-  uint16 parameter1;
-  uint16 parameter2;
-} EnemyPopulation;
+  VoidP hit_instruction_list;
+  VoidP shot_instruction_list;
+} EprojDef;
 
-/* 55 */
-typedef struct EnemySetName {
-  uint8 field_0[7];
-} EnemySetName;
+//typedef union AnimtilesEntry {  // 0x870000
+//  struct {
+//    uint16 timer;
+//    VoidP tile_src;
+//  };
+//  struct {
+//    uint16 func_ptr;
+//    union {
+//      struct {
+//        union {
+//          struct {
+//            uint8 boss_bit;
+//            uint8 area;
+//          };
+//          uint16 game_event;
+//        };
+//        uint16 instr_list_ptr2;
+//      };
+//      uint16 instr_list_ptr1;
+//      uint16 tourian_statue_state;
+//      uint16 palette_offset;
+//      uint16 eproj_param;
+//      uint16 palfx_id;
+//    };
+//  };
+//} AnimtilesEntry;
 
-/* 56 */
-typedef struct EnemyTileset {
-  VoidP enemy_def;
-  uint16 vram_dst;
-} EnemyTileset;
+/* 14 */
+typedef struct AnimtilesObject {  // 0x87824B
+  VoidP instruction_list;
+  uint16 size;
+  uint16 vram_addr;
+} AnimtilesObject;
 
-/* 57 */
-enum EnemyAiBits {
-  kEnemyAiBits_Grapple = 0x1,
-  kEnemyAiBits_Hurt = 0x2,
-  kEnemyAiBits_Frozen = 0x4,
+/* 15 */
+typedef struct HdmaScrollEntry {  // 0x88AEC1
+  uint16 top_pos;
+  uint16 scroll_subspeed;
+  uint16 scroll_speed;
+  VoidP hdma_data_table_entry;
+}HdmaScrollEntry;
+
+/* 17 */
+typedef struct CinematicSpriteObjectDef {  // 0x8B0000
+  VoidP init_func;
+  VoidP pre_instr_func;
+  VoidP instr_list;
+}CinematicSpriteObjectDef;
+
+///* 18 */
+//typedef struct Mode7ObjectDef {  // 0x8B0000
+//  VoidP object_def_ptr;
+//  VoidP pre_instr;
+//  VoidP instr_list;
+//}Mode7ObjectDef;
+
+///* 19 */
+//typedef struct Mode7TransferData {  // 0x8B0000
+//  uint8 field_0;
+//}Mode7TransferData;
+
+///* 20 */
+//typedef struct CinematicBgObjectDef {  // 0x8B0000
+//  VoidP init_func;
+//  VoidP pre_instr_func;
+//  VoidP instr_list;
+//}CinematicBgObjectDef;
+
+/* 21 */
+typedef struct PalFxDef {  // 0x8D0000
+  VoidP func;
+  VoidP instrs;
+}PalFxDef;
+
+/* 22 */
+typedef struct RoomDefStateSelect_E6E5_Finish { // 0x8F0000
+  VoidP code_ptr;
+}RoomDefStateSelect_E6E5_Finish;
+
+/* 23 */
+typedef struct LoadBg_E {  // 0x8F0000
+  uint16 bg_ptr;
+  uint16 field_2;
+}LoadBg_E;
+
+/* 26 */
+enum LoadLibaryOpcode {  // 0x8F0000
+  kLoadLibOp_0_DONE = 0x0,
+  kLoadBg_2_TransferToVram = 0x2,
+  kLoadBg_4_Decompress = 0x4,
+  kLoadLibOp_6_ClearFxTilemap = 0x6,
+  kLoadBg_8_TransferToVramSetBG3 = 0x8,
+  kLoadLibaryOpcode_A_ClearBG2Tilemap = 0xA,
+  kLoadLibaryOpcode_C_ClearKraidLayer2 = 0xC,
+  kLoadBg_E_DoorDepXferVram = 0xE,
 };
 
-/* 58 */
-typedef struct Vulnerability {
-  uint8 power;
-  uint8 wave;
-  uint8 ice;
-  uint8 ice_wave;
-  uint8 spazer;
-  uint8 spazer_wave;
-  uint8 spazer_ice;
-  uint8 spazer_ice_wave;
-  uint8 plasma;
-  uint8 plasma_wave;
-  uint8 plasma_ice;
-  uint8 plasma_ice_wave;
-  uint8 missile;
-  uint8 super_missile;
-  uint8 bomb;
-  uint8 power_bomb;
-  uint8 speed_booster;
-  uint8 shinespark;
-  uint8 screw_attack;
-  uint8 charged_beam;
-  uint8 pseudo_screw_attack;
-  uint8 field_15;
-} Vulnerability;
+/* 6 */
+typedef struct XraySpecialCasing {  // 0x8F91F8
+  uint8 x_block;
+  uint8 y_block;
+  uint16 level_data_block;
+} XraySpecialCasing;
 
-/* 59 */
-typedef struct EnemyDropChances {
-  uint8 field_0;
-  uint8 field_1;
-  uint8 field_2;
-  uint8 field_3;
-  uint8 field_4;
-  uint8 field_5;
-} EnemyDropChances;
-
-typedef struct SpriteDrawInstr {
-  uint16 timer;
-  VoidP sprite_ptr;
-} SpriteDrawInstr;
-
-/* 70 */
-typedef struct MaridiaSnailData {
-  uint16 field_0;
-  uint16 field_2;
-  VoidP field_4;
-  VoidP field_6;
-} MaridiaSnailData;
-
-/* 71 */
-typedef struct MaridiaSnailData2 {
-  VoidP field_0;
-  uint16 field_2;
-  VoidP field_4;
-  uint16 field_6;
-} MaridiaSnailData2;
-
-/* 73 */
-typedef struct  Mode7VramWriteQueue {
-  uint8 control;
-  uint16 src_addr;
-  uint8 gap3[2];
-  uint16 field_5;
-} Mode7VramWriteQueue;
-
-/* 74 */
-typedef struct KraidInstrList {
-  uint16 timer;
-  VoidP tilemap;
-  VoidP vuln_mouth_hitbox;
-  VoidP invuln_mouth_hitbox;
-} KraidInstrList;
-
-/* 75 */
-typedef struct KraidMouthHitbox {
-  uint16 field_0;
-  uint16 field_2;
-  uint16 field_4;
-  uint16 field_6;
-} KraidMouthHitbox;
-
-/* 76 */
-typedef struct KraidSinkTable {
-  uint16 kraid_y_pos;
-  uint16 vram_bg2_tilemap_offset;
-  VoidP func_ptr;
-} KraidSinkTable;
-
-/* 77 */
-typedef struct MotherBrainHitbox {
-  uint16 field_0;
-  uint16 field_2;
-  uint16 field_4;
-  uint16 field_6;
-} MotherBrainHitbox;
-
-/* 78 */
-typedef struct ShitroidMovementTable {
-  uint16 field_0;
-  uint16 field_2;
-  uint16 field_4;
-  VoidP field_6;
-} ShitroidMovementTable;
-
-/* 79 */
-typedef struct RoomPaletteInstrList {
-  uint16 field_0;
-  VoidP field_2;
-} RoomPaletteInstrList;
-
-/* 80 */
-typedef struct CorpseRottingVramTransferDefs {
-  uint16 field_0;
-  uint16 field_2;
-  uint16 field_4;
-  uint16 field_6;
-} CorpseRottingVramTransferDefs;
-
-/* 81 */
-typedef struct CorpseRottingDef {
-  VoidP field_0;
-  VoidP field_2;
-  VoidP field_4;
-  VoidP field_6;
-  uint16 field_8;
-  VoidP field_A;
-  VoidP field_C;
-  VoidP field_E;
-} CorpseRottingDef;
-
-/* 82 */
-typedef struct BotwoonMovementData {
-  VoidP field_0;
-  uint16 field_2;
-  uint16 field_4;
-  uint16 field_6;
-} BotwoonMovementData;
-
-typedef struct RoomDefHeader {
+typedef struct RoomDefHeader {  // 0x8F91F8
   uint8 semiunique_room_number;
   uint8 area_index_;
   uint8 x_coordinate_on_map;
@@ -1267,185 +1529,16 @@ typedef struct RoomDefHeader {
   VoidP ptr_to_doorout;
 } RoomDefHeader;
 
-/* 93 */
-enum GameState {
-  kGameState_0_Reset = 0x0,
-  kGameState_1_OpeningCinematic = 0x1,
-  kGameState_2_GameOptionsMenu = 0x2,
-  kGameState_3_Unused = 0x3,
-  kGameState_4_FileSelectMenus = 0x4,
-  kGameState_5_FileSelectMap = 0x5,
-  kGameState_6_LoadingGameData = 0x6,
-  kGameState_7_MainGameplayFadeIn = 0x7,
-  kGameState_8_MainGameplay = 0x8,
-  kGameState_9_HitDoorBlock = 0x9,
-  kGameState_10_LoadingNextRoom = 0xA,
-  kGameState_11_LoadingNextRoom = 0xB,
-  kGameState_12_Pausing = 0xC,
-  kGameState_13_Pausing = 0xD,
-  kGameState_14_Paused = 0xE,
-  kGameState_15_Paused = 0xF,
-  kGameState_16_Unpausing = 0x10,
-  kGameState_17_Unpausing = 0x11,
-  kGameState_18_Unpausing = 0x12,
-  kGameState_19_SamusNoHealth = 0x13,
-  kGameState_20_SamusNoHealth = 0x14,
-  kGameState_21_SamusNoHealth = 0x15,
-  kGameState_22_SamusNoHealth = 0x16,
-  kGameState_23_SamusNoHealth = 0x17,
-  kGameState_24_SamusNoHealth = 0x18,
-  kGameState_25_SamusNoHealth = 0x19,
-  kGameState_26_GameOverMenu = 0x1A,
-  kGameState_27_ReserveTanksAuto = 0x1B,
-  kGameState_28_Unused = 0x1C,
-  kGameState_29_DebugGameOverMenu = 0x1D,
-  kGameState_30_IntroCinematic = 0x1E,
-  kGameState_31_SetUpNewGame = 0x1F,
-  kGameState_32_MadeItToCeresElevator = 0x20,
-  kGameState_33_BlackoutFromCeres = 0x21,
-  kGameState_34_CeresGoesBoom = 0x22,
-  kGameState_35_TimeUp = 0x23,
-  kGameState_36_WhitingOutFromTimeUp = 0x24,
-  kGameState_37_CeresGoesBoomWithSamus = 0x25,
-  kGameState_38_SamusEscapesFromZebes = 0x26,
-  kGameState_39_EndingAndCredits = 0x27,
-  kGameState_40_TransitionToDemo = 0x28,
-  kGameState_41_TransitionToDemo = 0x29,
-  kGameState_42_PlayingDemo = 0x2A,
-  kGameState_43_TransitionFromDemo = 0x2B,
-  kGameState_44_TransitionFromDemo = 0x2C,
-};
-
-enum RoomScrolls {
-  kScroll_Red = 0x0,
-  kScroll_Blue = 0x1,
-  kScroll_Green = 0x2,
-};
-
-enum GameEvent {
-  kEvent_0_ZebesAwake = 0x0,
-  kEvent_1_ShitroidAteSidehopper = 0x1,
-  kEvent_2_MotherBrainGlassBroken = 0x2,
-  kEvent_3_Zebetite1Destroyed = 0x3,
-  kEvent_4_Zebetite2Destroyed = 0x4,
-  kEvent_5_Zebetite3Destroyed = 0x5,
-  kEvent_6_PhantoonStatueGray = 0x6,
-  kEvent_7_RidleyStatueGray = 0x7,
-  kEvent_8_DraygonStatueGray = 0x8,
-  kEvent_9_KraidStatueGray = 0x9,
-  kEvent_10_TourianEntranceUnlocked = 0xA,
-  kEvent_11_MaridiaNoobtubeBroken = 0xB,
-  kEvent_12_LowerNorfairChozoLoweredAcid = 0xC,
-  kEvent_13_ShaktoolPathCleared = 0xD,
-  kEvent_14_ZebesTimebombSet = 0xE,
-  kEvent_15_CrittersEscaped = 0xF,
-  kEvent_16_1stMetroidHallCleared = 0x10,
-  kEvent_17_1stMetroidShaftCleared = 0x11,
-  kEvent_18_2ndMetroidHallCleared = 0x12,
-  kEvent_19_2ndMetroidShaftCleared = 0x13,
-  kEvent_20_Empty14h_Unused = 0x14,
-  kEvent_21_OutranSpeedBoosterLavaquake = 0x15,
-};
-
-enum AreaIndex {
-  kArea_0_Crateria = 0x0,
-  kArea_1_Brinstar = 0x1,
-  kArea_2_Norfair = 0x2,
-  kArea_3_WreckedShip = 0x3,
-  kArea_4_Maridia = 0x4,
-  kArea_5_Tourian = 0x5,
-  kArea_6_Ceres = 0x6,
-  kArea_7_Debug = 0x7,
-};
-
-enum BossId {
-  kBossId_0_None = 0x0,
-  kBossId_1_CeresRidley = 0x1,
-  kBossId_2_Torizo = 0x2,
-  kBossId_3_Kraid = 0x3,
-  kBossId_4_SporeSpawn = 0x4,
-  kBossId_5_Ridley = 0x5,
-  kBossId_6_Crocomire = 0x6,
-  kBossId_7_Phantoon = 0x7,
-  kBossId_8_Draygon = 0x8,
-  kBossId_9_Botwoon = 0x9,
-  kBossId_10_MotherBrain = 0xA,
-};
-
-enum BossBits {
-  kBossBit_AreaBoss = 0x1,
-  kBossBit_AreaMiniBoss = 0x2,
-  kBossBit_AreaTorizo = 0x4,
-};
-
-/* 94 */
-enum LoadingGameState {
-  kLoadingGameState_0_Intro = 0x0,
-  kLoadingGameState_5_Main = 0x5,
-  kLoadingGameState_1F_StartingAtCeres = 0x1F,
-  kLoadingGameState_22_EscapingCeres = 0x22,
-};
-
-enum SamusItems {
-  kItem_VariaSuit = 0x1,
-  kItem_SpringBall = 0x2,
-  kItem_MorphBall = 0x4,
-  kItem_ScrewAttack = 0x8,
-  kItem_GravitySuit = 0x20,
-  kItem_HiJumpBoots = 0x100,
-  kItem_SpaceJump = 0x200,
-  kItem_Bombs = 0x1000,
-  kItem_SpeedBooster = 0x2000,
-  kItem_Grapple = 0x4000,
-  kItem_Xray = 0x8000,
-};
-
-enum SamusBeams {
-  kBeam_Wave = 0x1,
-  kBeam_Ice = 0x2,
-  kBeam_Spazer = 0x4,
-  kBeam_Plasma = 0x8,
-  kBeam_Charge = 0x1000,
-};
-
-/* 95 */
-typedef enum Buttons {
-  kButton_R = 0x10,
-  kButton_L = 0x20,
-  kButton_X = 0x40,
-  kButton_A = 0x80,
-  kButton_Right = 0x100,
-  kButton_Left = 0x200,
-  kButton_Down = 0x400,
-  kButton_Up = 0x800,
-  kButton_Start = 0x1000,
-  kButton_Select = 0x2000,
-  kButton_Y = 0x4000,
-  kButton_B = 0x8000,
-} Buttons;
-
-enum SaveConfirmationSelection {
-  kConfirmSave_Yes = 0x0,
-  kConfirmSave_No = 0x2,
-};
-
-/* 96 */
-typedef struct TileSet {
-  LongPtr tile_table_ptr;
-  LongPtr tiles_ptr;
-  LongPtr palette_ptr;
-} TileSet;
-
 /* 97 */
-typedef struct RoomDefRoomstate {
-  LongPtr compressed_room_map_ptr;
-  uint8 graphics_set;
-  uint8 music_track;
-  uint8 music_control;
-  VoidP room_layer3_fx_ptr;
+typedef struct RoomDefRoomstate {  // 0x8F91F8
+  LongPtr level_data_ptr;
+  uint8 tileset_;
+  uint8 music_data_index_;
+  uint8 music_track_index_;
+  VoidP room_layer3_fx_ptr_;
   VoidP enemy_population_ptr_;
   VoidP enemy_tilesets_ptr;
-  uint16 vertical_screen_nudge_limit;
+  uint16 layer2_scroll_;
   VoidP rdf_scroll_ptr;
   VoidP xray_special_casing_ptr;
   VoidP main_code_ptr;
@@ -1454,188 +1547,252 @@ typedef struct RoomDefRoomstate {
   VoidP room_setup_code;
 } RoomDefRoomstate;
 
-/* 98 */
-typedef struct RoomDefStateSelect_EBE5_Door {
-  VoidP code_ptr;
-  uint16 dddd;
-  uint16 ssss;
-} RoomDefStateSelect_EBE5_Door;
+/* 96 */
+typedef struct TileSet {  // 0x8FE6A2
+  LongPtr tile_table_ptr;
+  LongPtr tiles_ptr;
+  LongPtr palette_ptr;
+} TileSet;
 
-/* 99 */
-typedef struct RoomDefStateSelect_FFE5_TourianBoss01 {
-  VoidP code_ptr;
-  uint16 ssss;
-} RoomDefStateSelect_FFE5_TourianBoss01;
+/* 7 */
 
-/* 100 */
-typedef struct Ram7800_Kraid {
-  uint16 kraid_next;
+/* 12 */
+typedef struct Eproj_InitXYVelRandom_Args {  // 0x
+  VoidP field_0;
   uint16 field_2;
   uint16 field_4;
-  uint16 kraid_thinking;
-  uint16 kraid_min_y_pos_eject;
-  uint16 kraid_mouth_flags;
-  uint16 kraid_healths_8ths[8];
-  uint16 field_1C;
-  uint16 kraid_target_x;
-  uint16 kraid_healths_4ths[4];
-  uint16 field_28;
-  uint16 kraid_hurt_frame;
-  uint16 kraid_hurt_frame_timer;
-} Ram7800_Kraid;
+  uint16 field_6;
+  uint16 field_8;
+} Eproj_InitXYVelRandom_Args;
 
-/* 101 */
-typedef struct StartDmaCopy {
-  uint8 chan;
-  uint8 dmap;
-  uint8 bbad;
-  LongPtr a1;
-  VoidP das;
-} StartDmaCopy;
+/* 16 */
+typedef struct SpawnHdmaObject_Args {  // 0x
+  uint8 hdma_control;
+  uint8 hdma_target;
+  VoidP hdma_instr_list_ptr;
+}SpawnHdmaObject_Args;
 
-/* 103 */
-typedef struct  OpcodeData3 {
-  uint16 field_0;
-  uint8 field_2;
-} OpcodeData3;
+///* 25 */
+//typedef struct LoadBg_4 {
+//  uint16 field_0;
+//}LoadBg_4;
 
-/* 104 */
-typedef struct OamEnt {
-  uint8 xcoord;
-  uint8 ycoord;
-  uint8 charnum;
-  uint8 flags;
-} OamEnt;
+/* 33 */
+typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {  // 0x90A83A
+  uint16 boss_id_;
+  VoidP ptrs;
+} DisableMinimapAndMarkBossRoomAsExploredEnt;
 
-/* 105 */
-typedef struct  VramWriteEntry {
-  uint16 size;
+typedef struct MarkMapTileExplored {  // 0x90A852
+  uint16 x_offset;
+  uint16 y_offset;
+} MarkMapTileExplored;
+
+enum SamusCode {  // 0x90F084
+  kSamusCode_0_LockSamus = 0x0,
+  kSamusCode_1_UnlockSamus = 0x1,
+  kSamusCode_2_ReachCeresElevator = 0x2,
+  kSamusCode_3_UnspinSamus = 0x3,
+  kSamusCode_4_EndChargeBeam = 0x4,
+  kSamusCode_5_SetupDrained = 0x5,
+  kSamusCode_6_LockToStation = 0x6,
+  kSamusCode_7_SetupForElevator = 0x7,
+  kSamusCode_8_SetupForCeresStart = 0x8,
+  kSamusCode_9_SetupForZebesStart = 0x9,
+  kSamusCode_10_ClearDrawHandler = 0xA,
+  kSamusCode_11_DrawHandlerDefault = 0xB,
+  kSamusCode_12_UnlockFromMapStation = 0xC,
+  kSamusCode_13_IsGrappleActive = 0xD,
+  kSamusCode_14_UnlockFromCeresElevator = 0xE,
+  kSamusCode_15_EnableTimerHandling = 0xF,
+  kSamusCode_16_UnlockSamusFromReserveTank = 0x10,
+  kSamusCode_17_SetupForDeath = 0x11,
+  kSamusCode_18_EnableBlueFlashing = 0x12,
+  kSamusCode_19_DisableBlueFlashing = 0x13,
+  kSamusCode_20_QueueSfx = 0x14,
+  kSamusCode_21_LockToSuitAcquisition = 0x15,
+  kSamusCode_22_EnableRainbowSamus = 0x16,
+  kSamusCode_23_DisableRainbowSamusAndStandUp = 0x17,
+  kSamusCode_24_SetupDrainedAndDisableStandUp = 0x18,
+  kSamusCode_25_FreezeDrainedSamus = 0x19,
+  kSamusCode_26_EnterGunship = 0x1A,
+  kSamusCode_27_LockForReserveTank = 0x1B,
+  kSamusCode_28_PlaySpinSfxIfSpinJumping = 0x1C,
+  kSamusCode_29_ClearSoundInDoor = 0x1D,
+  kSamusCode_30_ResumeSfxAfterPowerBombExplosion = 0x1E,
+  kSamusCode_31_KillGrappleBeam = 0x1F,
+};
+
+/* 31 */
+typedef struct SamusSpeedTableEntry {  // 0x909F55
+  uint16 accel;
+  uint16 accel_sub;
+  uint16 max_speed;
+  uint16 max_speed_sub;
+  uint16 decel;
+  uint16 decel_sub;
+} SamusSpeedTableEntry;
+
+/* 36 */
+typedef struct DemoInputObject {  // 0x910000
+  VoidP ptr;
+  VoidP pre_instr;
+  VoidP instr_ptr;
+} DemoInputObject;
+
+/* 37 */
+typedef struct DemoSetDef {  // 0x918885
+  uint16 items;
+  uint16 missiles;
+  uint16 super_missiles;
+  uint16 power_bombs;
+  uint16 health;
+  uint16 collected_beams_;
+  uint16 equipped_beams_;
+  VoidP demo_obj;
+} DemoSetDef;
+
+///* 38 */
+//typedef union DemoInputEntry {  // 0x918ACE
+//  struct {
+//    uint16 timer;
+//    uint16 cur_input;
+//    uint16 new_input;
+//  };
+//  struct {
+//    uint16 func_ptr;
+//    uint16 instr_list_ptr;
+//  };
+//} DemoInputEntry;
+
+/* 39 */
+typedef struct PoseEntry {  // 0x919EE2
+  uint16 new_input;
+  uint16 cur_input;
+  uint16 new_pose;
+} PoseEntry;
+
+/* 30 */
+typedef struct SamusPoseParams {  // 0x91B629
+  uint8 pose_x_dir;
+  uint8 movement_type;
+  uint8 new_pose_unless_buttons;
+  uint8 direction_shots_fired;
+  uint8 y_offset_to_gfx;
+  uint8 UNUSED_field_5;
+  uint8 y_radius;
+  uint8 UNUSED_field_7;
+} SamusPoseParams;
+
+/* 40 */
+typedef struct XrayBlockData {  // 0x91D2D6
+  uint16 block_type;
+  VoidP instr_list;
+} XrayBlockData;
+
+/* 41 */
+typedef struct SamusCrystalFlashPalTable {  // 0x91DC00
+  VoidP pal_ptr;
+  uint16 timer;
+} SamusCrystalFlashPalTable;
+
+/* 43 */
+typedef struct SamusTileAnimationTileDefs {  // 0x92CBEE
   LongPtr src;
-  uint16 vram_dst;
-} VramWriteEntry;
+  uint16 part1_size;
+  uint16 part2_size;
+}SamusTileAnimationTileDefs;
 
-/* 106 */
-typedef struct  VramReadQueueEnt {
-  uint16 vram_target;
-  uint16 dma_parameters;
-  LongPtr src;
-  uint16 size;
-} VramReadQueueEnt;
+/* 42 */
+typedef struct SamusTileAnimationDefs {  // 0x92D94E
+  uint8 top_half_idx;
+  uint8 top_half_pos;
+  uint8 bottom_half_idx;
+  uint8 bottom_half_pos;
+} SamusTileAnimationDefs;
 
-/* 108 */
-typedef struct  EnemyTileLoadData {
-  uint16 tile_data_size;
-  LongPtr tile_data_ptr;
-  uint16 offset_into_ram;
-} EnemyTileLoadData;
+/* 34 */
+typedef struct ProjectileDamagesAndInstrPtr {  // 0x938431
+  uint16 damage;
+  VoidP instr_ptr;
+} ProjectileDamagesAndInstrPtr;
 
-/* 109 */
-typedef struct ExpandingSquareTransitionHdma {
-  uint8 height;
-  uint8 addr_lo;
-  uint8 addr_hi;
-} ExpandingSquareTransitionHdma;
-
-/* 110 */
-typedef struct TileTable {
-  uint16 top_left;
-  uint16 top_right;
-  uint16 bottom_left;
-  uint16 bottom_right;
-} TileTable;
-
-/* 111 */
-typedef struct TileTables {
-  TileTable tables[1024];
-} TileTables;
-
-/* 112 */
-typedef struct ElevatorsUsedConf {
-  uint8 source_area;
-  uint8 source_bit;
-  uint8 dest_area;
-  uint8 dest_bit;
-} ElevatorsUsedConf;
-
-/* 113 */
-typedef struct MenuTilemaps {
-  uint16 size;
-  VoidP src;
-  uint16 field_4;
-  VoidP vram_dst;
-} MenuTilemaps;
-
-/* 114 */
-typedef struct MapIconDataPointers {
-  VoidP crateria;
-  VoidP brinstar;
-  VoidP norfair;
-  VoidP wrecked_ship;
-  VoidP maraidia;
-  VoidP tourian;
-  VoidP ceres;
-  VoidP debug;
-} MapIconDataPointers;
-
-/* 115 */
-typedef struct ExpandingSquareVels {
-  uint16 left_subvel;
-  uint16 left_vel;
-  uint16 right_subvel;
-  uint16 right_vel;
-  uint16 top_subvel;
-  uint16 top_vel;
-  uint16 bottom_subvel;
-  uint16 bottom_vel;
-} ExpandingSquareVels;
-
-/* 116 */
-typedef struct MapScrollArrowData {
-  uint16 xpos;
-  uint16 ypos;
-  uint16 pause_screen_animation_id;
-  uint16 joypad_input;
-  uint16 map_scroll_dir;
-} MapScrollArrowData;
-
-/* 117 */
-typedef struct DemoRoomData {
-  VoidP room_ptr_;
-  uint16 door_ptr;
-  uint16 door_slot;
-  uint16 screen_x_pos;
-  uint16 screen_y_pos;
-  uint16 samus_y_offs;
-  uint16 samus_x_offs;
-  uint16 demo_length;
-  VoidP demo_code_ptr;
-} DemoRoomData;
-
-/* 118 */
-typedef union PauseScreenSpriteAnimationData {
-  struct {
-    VoidP unused;
-    VoidP lr_highlight;
-    VoidP item_selector;
-    VoidP unused2;
-    VoidP unused3;
-    VoidP map_scroll_arrow_up;
-    VoidP map_scroll_arrow_down;
-    VoidP map_scroll_arrow_right;
-    VoidP map_scroll_arrow_left;
+/* 44 */
+typedef struct ProjectileDataTable {  // 0x938431
+  uint16 damage;
+  union { 
+    uint16 instr_ptrs[10];
+    struct {
+      uint16 up_face_right;
+      uint16 up_right;
+      uint16 right;
+      uint16 down_right;
+      uint16 down_face_right;
+      uint16 down_face_left;
+      uint16 down_left;
+      uint16 left;
+      uint16 up_left;
+      uint16 up_face_left;
+    };
   };
-  VoidP arr[9];
-} PauseScreenSpriteAnimationData;
+} ProjectileDataTable;
 
-/* 119 */
-typedef struct FileCopyArrowStuff {
-  uint16 spritemap;
+///* 45 */
+//typedef union ProjectileInstr {  // 0x9386DB
+//  struct {
+//    uint16 timer;
+//    VoidP spritemap_ptr;
+//    uint8 x_radius;
+//    uint8 y_radius;
+//    uint16 trail_frame;
+//  };
+//  struct {
+//    VoidP func_ptr;
+//    VoidP instr_list_ptr;
+//  };
+//} ProjectileInstr;
+
+/* 46 */
+typedef struct GrappleBeamSpecialAngles {  // 0x9BC43E
+  uint16 angle;
+  uint16 pose;
+  uint16 x_offset;
+  uint16 y_offset;
+  VoidP grapple_function;
+} GrappleBeamSpecialAngles;
+
+/* 47 */
+typedef struct ExtendedSpriteMap {  // 0x
   uint16 xpos;
   uint16 ypos;
-} FileCopyArrowStuff;
+  VoidP spritemap;
+  VoidP hitbox_ptr_;
+} ExtendedSpriteMap;
+
+/* 48 */
+typedef struct Hitbox {  // 0x
+  uint16 left;
+  uint16 top;
+  uint16 right;
+  uint16 bottom;
+  VoidP samus_coll_ptr;
+  VoidP proj_coll_ptr;
+} Hitbox;
+
+/* 54 */
+typedef struct EnemyPopulation {  // 0x
+  VoidP enemy_ptr;
+  uint16 x_pos;
+  uint16 y_pos;
+  uint16 init_param;
+  uint16 properties;
+  uint16 extra_properties;
+  uint16 parameter1;
+  uint16 parameter2;
+} EnemyPopulation;
 
 /* 122 */
-typedef struct EnemyDef {
+typedef struct EnemyDef {  // 0xA0CEBF
   uint16 tile_data_size;
   VoidP palette_ptr;
   uint16 health;
@@ -1671,258 +1828,191 @@ typedef struct EnemyDef {
   VoidP name_ptr;
 } EnemyDef;
 
-//todo: make Structs/Unions for C000..C1FF: Palette Buffers and C200..C3FF: Target palettes
-typedef struct Ram_Palette_Buffer {
-  uint16 a;
-} Ram_Palette_Buffer;
-
-typedef struct Ram_Target_Palettes {
-  uint16 a;
-} Ram_Target_Palettes;
-
-typedef union Ram_HudTilemap_Row1 {
-  uint16 arr[64 >> 1];
-  struct {
-    uint8 pad0[2];
-    uint16 energy_tanks[14 >> 1];
-    uint16 auto_reserve[4 >> 1];
-    uint16 missiles[6 >> 1];
-    uint8 pad1[2];
-    uint16 super_missiles[4 >> 1];
-    uint8 pad2[2];
-    uint16 power_bombs[4 >> 1];
-    uint8 pad3[2];
-    uint16 grapple[4 >> 1];
-    uint8 pad4[2];
-    uint16 x_ray[4 >> 1];
-    uint8 pad5[2];
-    uint16 minimap[10 >> 1];
-    uint8 pad6[2];
-  };
-} Ram_HudTilemap_Row1;
-
-typedef union Ram_HudTilemap_Row2 {
-  uint16 arr[64 >> 1];
-  struct {
-    uint8 pad0[2];
-    uint16 energy_tanks[14 >> 1];
-    uint16 auto_reserve[4 >> 1];
-    uint16 missiles[6 >> 1];
-    uint8 pad1[2];
-    uint16 super_missiles[4 >> 1];
-    uint8 pad2[2];
-    uint16 power_bombs[4 >> 1];
-    uint8 pad3[2];
-    uint16 grapple[4 >> 1];
-    uint8 pad4[2];
-    uint16 x_ray[4 >> 1];
-    uint8 pad5[2];
-    union {
-      uint16 minimap[10 >> 1];
-      struct {
-        uint8 pad[4];
-        uint16 minimap_samus_pos;
-      };
-    };
-    uint8 pad6[2];
-  };
-} Ram_HudTilemap_Row2;
-
-typedef union Ram_HudTilemap_Row3 {
-  uint16 arr[64 >> 1];
-  struct {
-    uint8 pad0[12];
-    uint16 subtank_health[4 >> 1];
-    uint16 auto_reserve[4 >> 1];
-    uint16 missile_count[6 >> 1];
-    uint8 pad1[2];
-    uint16 super_missile_count[4 >> 1];
-    uint16 debug_extra_super_missile_count_digit[2 >> 1];
-    uint16 power_bomb_count[4 >> 1];
-    uint8 pad2[14];
-    uint16 minimap[10 >> 1];
-    uint8 pad3[2];
-  };
-} Ram_HudTilemap_Row3;
-
-typedef union Ram_HudTilemap {
-  uint16 arr[192 >> 1];
-  struct {
-    Ram_HudTilemap_Row1 row1;
-    Ram_HudTilemap_Row2 row2;
-    Ram_HudTilemap_Row3 row3;
-  };
-} Ram_HudTilemap;
-
-typedef struct Ram3000_MsgBox {
-  uint8 pad[188];
-  uint16 msg_box_anim_y_radius_neg[30];
-  uint16 msg_box_anim_y_radius[30];
-  uint8 field_134[204];
-  uint16 tilemap[192];
-  uint8 indirect_hdma[7];
-  uint8 field_387[99];
-  uint8 backup_of_enabled_hdma_channels;
-  uint8 backup_of_bg3_tilemap_and_size;
-} Ram3000_MsgBox;
-
-/* 134 */
-typedef struct Ram3000_Misc {
-  uint8 field_0[472];
-  uint16 pause_screen_samus_witeframe_tilemap[264];
-  uint8 field_3E8[24];
-} Ram3000_Misc;
-
-/* 135 */
-typedef struct Ram3000_Menu {
-  uint8 field_0[768];
-  uint16 palette_backup_in_menu[256];
-  uint8 backup_of_io_registers_in_gameover[54];
-  uint8 field_536[202];
-  uint8 menu_tilemap[512];
-} Ram3000_Menu;
-
-/* 136 */
-typedef union Ram3800 {
-  uint16 cinematic_bg_tilemap[1024];
-  uint16 equipment_screen_bg1_tilemap[1024];
-  uint16 debug_game_over_tilemap[1024];
-  uint16 cleared_message_box_bg3_tilemap[1024];
-} Ram3800;
-
-/* 137 */
-typedef struct Ram4000_Backups {
-  uint8 field_0[256];
-  uint16 backup_of_vram_0x5880_msgbox[896];
-  uint8 field_800[2048];
-  uint8 backup_of_0x3e00_in_kraid_pause[1024];
-} Ram4000_Backups;
-
-/* 138 */
-typedef union Ram4000 {
-  uint16 xray_tilemaps[6144];
-  uint16 bg2_tilemap[2048];
-  uint16 decomp_buffer_kraid[1024];
-  uint16 bg2_room_select_map_tilemap[1024];
-  uint16 intro_japanese_text_tiles[768];
-  Ram4000_Backups backups;
-} Ram4000;
-
-/* 139 */
-typedef struct Mode7CgvmWriteQueue {
-  uint8 tag;
-  LongPtr src_addr;
-  uint16 count;
-  uint16 vram_addr;
-  uint8 vmain;
-} Mode7CgvmWriteQueue;
-
-/* 145 */
-typedef union ExtraEnemyRam7800 {
-  Ram7800_Kraid kraid;
-  uint8 pad[64];
-}ExtraEnemyRam7800;
-
-/* 146 */
-typedef union ExtraEnemyRam8000 {
-  uint8 pad[64];
-}ExtraEnemyRam8000;
-
-/* 147 */
-typedef struct ExtraEnemyRam8800 {
-  uint8 pad[64];
-}ExtraEnemyRam8800;
-
-/* 149 */
-typedef union Ram3000 {
-  uint16 pause_menu_map_tilemap[1024];
-  uint16 cinematic_bg_tilemap[1024];
-  Ram3000_MsgBox msgbox;
-  uint8 msgbox_y_scroll_hdma[240];
-  Ram3000_Misc misc;
-  Ram3000_Menu menu;
-} Ram3000;
-
-/* 150 */
-typedef struct OptionsEntry {
-  VoidP func_ptr;
-  VoidP field_2;
+/* 70 */
+typedef struct MaridiaSnailData {  // 0xA30000
+  uint16 field_0;
+  uint16 field_2;
   VoidP field_4;
-} OptionsEntry;
+  VoidP field_6;
+} MaridiaSnailData;
 
-typedef struct Ram7800_Default {
-  uint16 var_00;
-  uint16 var_01;
-  uint16 var_02;
-  uint16 var_03;
-  uint16 var_04;
-  uint16 var_05;
-  uint16 var_06;
-  uint16 var_07;
-  uint16 var_08;
-  uint16 var_09;
-  uint16 var_0A;
-  uint16 var_0B;
-  uint16 var_0C;
-  uint16 var_0D;
-  uint16 var_0E;
-  uint16 var_0F;
-  uint16 var_10;
-  uint16 var_11;
-  uint16 var_12;
-  uint16 var_13;
-  uint16 var_14;
-  uint16 var_15;
-  uint16 var_16;
-  uint16 var_17;
-  uint16 var_18;
-  uint16 var_19;
-  uint16 var_1A;
-  uint16 var_1B;
-  uint16 var_1C;
-  uint16 var_1D;
-  uint16 var_1E;
-  uint16 var_1F;
-} Ram7800_Default;
+/* 71 */
+typedef struct MaridiaSnailData2 {  // 0xA30000
+  VoidP field_0;
+  uint16 field_2;
+  VoidP field_4;
+  uint16 field_6;
+} MaridiaSnailData2;
 
-enum MusicEntry {
-  kMusic_Stop = 0x0,
-  kMusic_SamusFanfare = 0x1,
-  kMusic_ItemFanfare = 0x2,
-  kMusic_Elevator = 0x3,
-  kMusic_PreStatueHall_PreRidleyFight_GameOver = 0x4,
-  kMusic_Song0 = 0x5,
-  kMusic_Song1 = 0x6,
-  kMusic_Song2 = 0x7,
-  kMusic_Song3 = 0x8,
-  kMusic_SpcEngine = 0xFF00,
-  kMusic_TitleSequence = 0xFF03,
-  kMusic_EmptyCrateria = 0xFF06,
-  kMusic_LowerCrateria = 0xFF09,
-  kMusic_UpperCrateria = 0xFF0C,
-  kMusic_GreenBrinstar = 0xFF0F,
-  kMusic_RedBrinstar = 0xFF12,
-  kMusic_UpperNorfair = 0xFF15,
-  kMusic_LowerNorfair = 0xFF18,
-  kMusic_Maridia = 0xFF1B,
-  kMusic_Tourian = 0xFF1E,
-  kMusic_MotherBrain = 0xFF21,
-  kMusic_BossFight1 = 0xFF24,
-  kMusic_BossFight2 = 0xFF27,
-  kMusic_MinibossFight = 0xFF2A,
-  kMusic_Ceres = 0xFF2D,
-  kMusic_WreckedShip = 0xFF30,
-  kMusic_ZebesBoom = 0xFF33,
-  kMusic_Intro = 0xFF36,
-  kMusic_Death = 0xFF39,
-  kMusic_Credits = 0xFF3C,
-  kMusic_TheLastMetroidIsInCaptivity = 0xFF3F,
-  kMusic_TheGalaxyIsAtPeace = 0xFF42,
-  kMusic_Shitroid = 0xFF45,
-  kMusic_SamusTheme = 0xFF48,
-};
+typedef struct SpriteDrawInstr {  // 0xA78B0A
+  uint16 timer;
+  VoidP sprite_ptr;
+} SpriteDrawInstr;
 
-enum SoundLibrary1 {
+/* 74 */
+typedef struct KraidInstrList {  // 0xA796D2
+  uint16 timer;
+  VoidP tilemap;
+  VoidP vuln_mouth_hitbox;
+  VoidP invuln_mouth_hitbox;
+} KraidInstrList;
+
+/* 75 */
+typedef struct KraidMouthHitbox {  // 0xA79788
+  uint16 left;
+  uint16 top;
+  uint16 right;
+  uint16 bottom;
+} KraidMouthHitbox;
+
+/* 76 */
+typedef struct KraidSinkTable {  // 0xA7C5E7
+  uint16 kraid_y_pos;
+  uint16 vram_bg2_tilemap_offset;
+  VoidP func_ptr;
+} KraidSinkTable;
+
+///* 77 */
+//typedef struct MotherBrainHitbox {  // 0xA90000
+//  uint16 field_0;
+//  uint16 field_2;
+//  uint16 field_4;
+//  uint16 field_6;
+//} MotherBrainHitbox;
+
+///* 78 */
+//typedef struct ShitroidMovementTable {  // 0xA90000
+//  uint16 field_0;
+//  uint16 field_2;
+//  uint16 field_4;
+//  VoidP field_6;
+//} ShitroidMovementTable;
+
+///* 79 */
+//typedef struct RoomPaletteInstrList {  // 0xA90000
+//  uint16 field_0;
+//  VoidP field_2;
+//} RoomPaletteInstrList;
+
+///* 80 */
+//typedef struct CorpseRottingVramTransferDefs {  // 0xA90000
+//  uint16 field_0;
+//  uint16 field_2;
+//  uint16 field_4;
+//  uint16 field_6;
+//} CorpseRottingVramTransferDefs;
+
+///* 81 */
+//typedef struct CorpseRottingDef {  // 0xA90000
+//  VoidP field_0;
+//  VoidP field_2;
+//  VoidP field_4;
+//  VoidP field_6;
+//  uint16 field_8;
+//  VoidP field_A;
+//  VoidP field_C;
+//  VoidP field_E;
+//} CorpseRottingDef;
+
+///* 82 */
+//typedef struct BotwoonMovementData {  // 0xB3A058
+//  VoidP field_0;
+//  uint16 field_2;
+//  uint16 field_4;
+//  uint16 field_6;
+//} BotwoonMovementData;
+
+/* 55 */
+typedef struct EnemySetName {  // 0xB40000
+  uint8 field_0[7];
+} EnemySetName;
+
+/* 56 */
+typedef struct EnemyTileset {  // 0xB40000
+  VoidP enemy_def;
+  uint16 vram_dst;
+} EnemyTileset;
+
+/* 58 */
+typedef struct Vulnerability {  // 0xB4EC1C
+  uint8 power;
+  uint8 wave;
+  uint8 ice;
+  uint8 ice_wave;
+  uint8 spazer;
+  uint8 spazer_wave;
+  uint8 spazer_ice;
+  uint8 spazer_ice_wave;
+  uint8 plasma;
+  uint8 plasma_wave;
+  uint8 plasma_ice;
+  uint8 plasma_ice_wave;
+  uint8 missile;
+  uint8 super_missile;
+  uint8 bomb;
+  uint8 power_bomb;
+  uint8 speed_booster;
+  uint8 shinespark;
+  uint8 screw_attack;
+  uint8 charged_beam;
+  uint8 pseudo_screw_attack;
+  uint8 field_15;
+} Vulnerability;
+
+/* 59 */
+typedef struct EnemyDropChances {  // 0xB4F1F4
+  uint8 small_health;
+  uint8 big_health;
+  uint8 missiles;
+  uint8 nothing;
+  uint8 super_missiles;
+  uint8 power_bombs;
+} EnemyDropChances;
+
+///* 98 */
+//typedef struct RoomDefStateSelect_EBE5_Door {  // 0x
+//  VoidP code_ptr;
+//  uint16 dddd;
+//  uint16 ssss;
+//} RoomDefStateSelect_EBE5_Door;
+
+///* 99 */
+//typedef struct RoomDefStateSelect_FFE5_TourianBoss01 {  // 0x
+//  VoidP code_ptr;
+//  uint16 ssss;
+//} RoomDefStateSelect_FFE5_TourianBoss01;
+
+/* 101 */
+typedef struct StartDmaCopy {  // 0x
+  uint8 chan;
+  uint8 dmap;
+  uint8 bbad;
+  LongPtr a1;
+  VoidP das;
+} StartDmaCopy;
+
+///* 103 */
+//typedef struct  OpcodeData3 {  // 0x
+//  uint16 field_0;
+//  uint8 field_2;
+//} OpcodeData3;
+
+///* 113 */
+//typedef struct MenuTilemaps {  // 0x
+//  uint16 size;
+//  VoidP src;
+//  uint16 field_4;
+//  VoidP vram_dst;
+//} MenuTilemaps;
+
+///* 150 */
+//typedef struct OptionsEntry {  // 0x
+//  VoidP func_ptr;
+//  VoidP field_2;
+//  VoidP field_4;
+//} OptionsEntry;
+
+enum SoundLibrary1 {  // 0x
   kSfx1_PowerBombExplosion = 0x1,
   kSfx1_Silence = 0x2,
   kSfx1_Missile = 0x3,
@@ -1991,7 +2081,7 @@ enum SoundLibrary1 {
   kSfx1_Unused42h = 0x42
 };
 
-enum SoundLibrary2 {
+enum SoundLibrary2 {  // 0x
   kSfx2_CollectSmallHealthDrop_HighPriority = 0x1,
   kSfx2_CollectBigHealthDrop_HighPriority = 0x2,
   kSfx2_CollectMissileDrop_HighPriority = 0x3,
@@ -2121,7 +2211,7 @@ enum SoundLibrary2 {
   kSfx2_MotherBrainChargingHerRainbow = 0x7F
 };
 
-enum SoundLibrary3 {
+enum SoundLibrary3 {  // 0x
   kSfx3_Silence = 0x1,
   kSfx3_LowHealthBeep = 0x2,
   kSfx3_SpeedBooster = 0x3,
@@ -2866,7 +2956,7 @@ enum Consts_A3 {
   addr_kMaridiaFish_Ilist_903C = 0x903C,
   addr_kMaridiaFish_Ilist_9060 = 0x9060,
   addr_kMaridiaFish_Ilist_9072 = 0x9072,
-  addr_kElevator_Ilist_94D6 = 0x94D6,
+  addr_kElevator_Ilist_Elevator = 0x94D6,
   addr_kPlatformThatFallsWithSamus_Ilist_9BBB = 0x9BBB,
   addr_kPlatformThatFallsWithSamus_Ilist_9BD1 = 0x9BD1,
   addr_kPlatformThatFallsWithSamus_Ilist_9BE7 = 0x9BE7,
@@ -2942,56 +3032,56 @@ enum Consts_A4 {
   addr_kCrocomire_Ilist_E1D2 = 0xE1D2,
 };
 enum Consts_A5 {
-  addr_kDraygon_Ilist_97B9 = 0x97B9,
-  addr_kDraygon_Ilist_97BB = 0x97BB,
-  addr_kDraygon_Ilist_97D1 = 0x97D1,
-  addr_kDraygon_Ilist_97E7 = 0x97E7,
-  addr_kDraygon_Ilist_9813 = 0x9813,
-  addr_kDraygon_Ilist_9825 = 0x9825,
-  addr_kDraygon_Ilist_9845 = 0x9845,
-  addr_kDraygon_Ilist_9867 = 0x9867,
-  addr_kDraygon_Ilist_9889 = 0x9889,
-  addr_kDraygon_Ilist_98ED = 0x98ED,
-  addr_kDraygon_Ilist_98FE = 0x98FE,
-  addr_kDraygon_Ilist_9922 = 0x9922,
-  addr_kDraygon_Ilist_9944 = 0x9944,
-  addr_kDraygon_Ilist_997A = 0x997A,
-  addr_kDraygon_Ilist_999C = 0x999C,
-  addr_kDraygon_Ilist_99AE = 0x99AE,
-  addr_kDraygon_Ilist_99B4 = 0x99B4,
-  addr_kDraygon_Ilist_99BA = 0x99BA,
-  addr_kDraygon_Ilist_99C0 = 0x99C0,
-  addr_kDraygon_Ilist_99FC = 0x99FC,
-  addr_kDraygon_Ilist_9A68 = 0x9A68,
-  addr_kDraygon_Ilist_9AE8 = 0x9AE8,
-  addr_kDraygon_Ilist_9B5A = 0x9B5A,
-  addr_kDraygon_Ilist_9BDA = 0x9BDA,
-  addr_kDraygon_Ilist_9C06 = 0x9C06,
-  addr_kDraygon_Ilist_9C18 = 0x9C18,
-  addr_kDraygon_Ilist_9C38 = 0x9C38,
-  addr_kDraygon_Ilist_9C5A = 0x9C5A,
-  addr_kDraygon_Ilist_9C90 = 0x9C90,
-  addr_kDraygon_Ilist_9CB4 = 0x9CB4,
-  addr_kDraygon_Ilist_9D1C = 0x9D1C,
-  addr_kDraygon_Ilist_9D3E = 0x9D3E,
-  addr_kDraygon_Ilist_9D50 = 0x9D50,
-  addr_kDraygon_Ilist_9D56 = 0x9D56,
-  addr_kDraygon_Ilist_9D5C = 0x9D5C,
-  addr_kDraygon_Ilist_9D62 = 0x9D62,
-  addr_kDraygon_Ilist_9D9E = 0x9D9E,
-  addr_kDraygon_Ilist_9E21 = 0x9E21,
-  addr_kDraygon_Ilist_9EA1 = 0x9EA1,
-  addr_kDraygon_Ilist_9F15 = 0x9F15,
-  addr_kDraygon_Palette = 0xA1F7,
-  addr_kDraygon_MorePalettes2 = 0xA277,
-  addr_word_A5A297 = 0xA297,
-  addr_kDraygon_BigSprmap_C08F = 0xC08F,
-  addr_kDraygon_BigSprmap_C11B = 0xC11B,
-  addr_kDraygon_Ilist_E6B9 = 0xE6B9,
-  addr_kDraygon_Ilist_E6C7 = 0xE6C7,
-  addr_kDraygon_Ilist_E6D5 = 0xE6D5,
-  addr_stru_A5E729 = 0xE729,
-  addr_kDraygon_Ilist_E77D = 0xE77D,
+  addr_kDraygon_Ilist_Sleep = 0x97B9,
+  addr_kDraygon_Ilist_Body_FaceL_Reset = 0x97BB,
+  addr_kDraygon_Ilist_Body_FaceR_Reset = 0x97D1,
+  addr_kDraygon_Ilist_Arms_FaceL_Idle = 0x97E7,
+  addr_kDraygon_Ilist_Arms_FaceL_NearSwoopApex = 0x9813,
+  addr_kDraygon_Ilist_Arms_FaceL_FakeGrab = 0x9825,
+  addr_kDraygon_Ilist_Arms_FaceL_Grab = 0x9845,
+  addr_kDraygon_Ilist_Body_FaceL_Dying = 0x9867,
+  addr_kDraygon_Ilist_Body_FaceL_Idle = 0x9889,
+  addr_kDraygon_Ilist_Delete = 0x98ED,
+  addr_kDraygon_Ilist_Body_FaceL_FireGoop = 0x98FE,
+  addr_kDraygon_Ilist_Body_FaceL_Roar = 0x9922,
+  addr_kDraygon_Ilist_Eye_FaceL_Idle = 0x9944,
+  addr_kDraygon_Ilist_Eye_FaceL_Dying = 0x997A,
+  addr_kDraygon_Ilist_Eye_FaceL_Dead = 0x999C,
+  addr_kDraygon_Ilist_Eye_FaceL_LookL = 0x99AE,
+  addr_kDraygon_Ilist_Eye_FaceL_LookR = 0x99B4,
+  addr_kDraygon_Ilist_Eye_FaceL_LookU = 0x99BA,
+  addr_kDraygon_Ilist_Eye_FaceL_LookD = 0x99C0,
+  addr_kDraygon_Ilist_Tail_FaceL_FakeTailWhip = 0x99FC,
+  addr_kDraygon_Ilist_Tail_FaceL_FinalTailWhips = 0x9A68,
+  addr_kDraygon_Ilist_Tail_FaceL_TailWhip = 0x9AE8,
+  addr_kDraygon_Ilist_Tail_FaceL_TailFlail = 0x9B5A,
+  addr_kDraygon_Ilist_Arms_FaceR_Idle = 0x9BDA,
+  addr_kDraygon_Ilist_Arms_FaceR_NearSwoopApex = 0x9C06,
+  addr_kDraygon_Ilist_Arms_FaceR_FakeGrab = 0x9C18,
+  addr_kDraygon_Ilist_Arms_FaceR_Grab = 0x9C38,
+  addr_kDraygon_Ilist_Body_FaceR_Dying = 0x9C5A,
+  addr_kDraygon_Ilist_Body_FaceR_FireGoop = 0x9C90,
+  addr_kDraygon_Ilist_Body_FaceR_Roar = 0x9CB4,
+  addr_kDraygon_Ilist_Eye_FaceR_Dying = 0x9D1C,
+  addr_kDraygon_Ilist_Eye_FaceR_Dead = 0x9D3E,
+  addr_kDraygon_Ilist_Eye_FaceR_LookR = 0x9D50,
+  addr_kDraygon_Ilist_Eye_FaceR_LookL = 0x9D56,
+  addr_kDraygon_Ilist_Eye_FaceR_LookU = 0x9D5C,
+  addr_kDraygon_Ilist_Eye_FaceR_LookD = 0x9D62,
+  addr_kDraygon_Ilist_Tail_FaceR_FakeTailWhip = 0x9D9E,
+  addr_kDraygon_Ilist_Tail_FaceR_FinalTailWhips = 0x9E21,
+  addr_kDraygon_Ilist_Tail_FaceR_TailWhip = 0x9EA1,
+  addr_kDraygon_Ilist_Tail_FaceR_TailFlail = 0x9F15,
+  addr_kDraygon_SpritePalette7 = 0xA1F7,
+  addr_kDraygon_Bg1And2Palette5 = 0xA277,
+  addr_kDraygon_FlashPalette = 0xA297,
+  //addr_kDraygon_BigSprmap_C08F = 0xC08F,
+  //addr_kDraygon_BigSprmap_C11B = 0xC11B,
+  addr_kSporeSpawn_Ilist_Init_Dead = 0xE6B9,
+  addr_kSporeSpawn_Ilist_Init_Alive = 0xE6C7,
+  addr_kSporeSpawn_Ilist_StartFight = 0xE6D5,
+  addr_kSporeSpawn_Ilist_CloseAndMove = 0xE729,
+  addr_kSporeSpawn_Ilist_DeathSequence = 0xE77D,
 };
 enum Consts_A6 {
   addr_kBoulder_Ilist_86A7 = 0x86A7,

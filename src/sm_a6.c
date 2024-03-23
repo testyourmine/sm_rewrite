@@ -1042,7 +1042,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
     earthquake_timer = 0;
     Ridley_Func_92();
     Ridley_Func_117();
-    if (area_index == 2) {
+    if (area_index == kArea_2_Norfair) {
       E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Tangible;
       E->base.x_pos = 96;
       E->base.y_pos = 394;
@@ -1063,8 +1063,8 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
       v4 = 15;
       do {
         int v5 = v3 >> 1;
-        target_palettes[v5 + 113] = 0;
-        target_palettes[v5 + 241] = 0;
+        target_palettes.bg1_bg2_pal_7[v5 + 1] = 0;
+        target_palettes.sprite_pal_7[v5 + 1] = 0;
         v3 += 2;
         --v4;
       } while (v4);
@@ -1085,10 +1085,10 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
       E->cry_var_22 = 40;
       E->cry_var_23 = 224;
       WriteColorsToTargetPalette(0xa6, 0x140, addr_word_A6E16F, 0x20);
-      uint16 v7 = 482;
+      uint16 v7 = 0;
       v8 = 15;
       do {
-        target_palettes[v7 >> 1] = 0;
+        target_palettes.sprite_pal_7[(v7 >> 1) + 1] = 0;
         v7 += 2;
         --v8;
       } while (v8);
@@ -1235,7 +1235,7 @@ void CeresRidley_Func_3(void) {  // 0xA6A35B
     Enemy_CeresRidley *E = Get_CeresRidley(0);
     E->cry_var_A = FUNC16(CeresRidley_A377);
     v1 = 512;
-    if (area_index == 2)
+    if (area_index == kArea_2_Norfair)
       v1 = 170;
     E->cry_var_F = v1;
     CeresRidley_A377();
@@ -1267,9 +1267,9 @@ void CeresRidley_Func_4(void) {  // 0xA6A389
       } else {
         E->cry_var_E = cry_var_E + 1;
         int v3 = (uint16)(6 * v2) >> 1;
-        palette_buffer[252] = kCeresRidley_PaletteTab0[v3];
-        palette_buffer[253] = kCeresRidley_PaletteTab0[v3 + 1];
-        palette_buffer[254] = kCeresRidley_PaletteTab0[v3 + 2];
+        palette_buffer.sprite_pal_7[12] = kCeresRidley_PaletteTab0[v3];
+        palette_buffer.sprite_pal_7[13] = kCeresRidley_PaletteTab0[v3 + 1];
+        palette_buffer.sprite_pal_7[14] = kCeresRidley_PaletteTab0[v3 + 2];
       }
     }
   }
@@ -1277,26 +1277,24 @@ void CeresRidley_Func_4(void) {  // 0xA6A389
 
 void CeresRidley_Func_5(void) {  // 0xA6A3DF
   int16 v2;
-  int16 v5;
 
   Enemy_CeresRidley *E = Get_CeresRidley(0);
   if (++E->cry_var_F >= 2) {
     E->cry_var_F = 0;
     uint16 cry_var_E = E->cry_var_E;
-    uint16 r18 = 290, r20 = 482;
+    uint16 r18 = 2, r20 = 2;
     v2 = 11;
     do {
-      v5 = v2;
       uint16 v3 = kCeresRidley_PaletteTab1[cry_var_E >> 1];
-      palette_buffer[r18 >> 1] = v3;
-      palette_buffer[r20 >> 1] = v3;
+      palette_buffer.sprite_pal_1[r18 >> 1] = v3;
+      palette_buffer.sprite_pal_7[r20 >> 1] = v3;
       cry_var_E += 2;
       r18 += 2;
       r20 += 2;
-      v2 = v5 - 1;
-    } while (v5 != 1);
+      v2 -= 1;
+    } while (v2 != 0);
     if (cry_var_E >= 0x160) {
-      if (area_index == 2)
+      if (area_index == kArea_2_Norfair)
         E->base.layer = 2;
       E->base.properties &= ~kEnemyProps_Tangible;
       E->cry_var_E = 0;
@@ -1315,7 +1313,7 @@ void CeresRidley_Func_6(void) {  // 0xA6A455
     Ridley_Func_99(addr_kRidley_Ilist_E690);
     E->cry_var_F = 0;
     E->cry_var_A = FUNC16(CeresRidley_Func_7);
-    if (area_index != 2)
+    if (area_index != kArea_2_Norfair)
       E->cry_var_F = 252;
   }
 }
@@ -1323,7 +1321,7 @@ void CeresRidley_Func_6(void) {  // 0xA6A455
 void CeresRidley_Func_7(void) {  // 0xA6A478
   Enemy_CeresRidley *E = Get_CeresRidley(0);
 
-  if (area_index == 2) {
+  if (area_index == kArea_2_Norfair) {
     bool v1 = (--E->cry_var_F & 0x8000) != 0;
     if (!v1)
       return;
@@ -2543,10 +2541,10 @@ void Ridley_Func_54(void) {  // 0xA6C04E
 }
 
 void Ridley_Func_55(void) {  // 0xA6C062
-  palette_buffer[97] = palette_buffer[1];
-  palette_buffer[99] = palette_buffer[3];
-  palette_buffer[81] = palette_buffer[17];
-  palette_buffer[83] = palette_buffer[19];
+  palette_buffer.bg1_bg2_pal_6[1] = palette_buffer.bg1_bg2_pal_0[1];
+  palette_buffer.bg1_bg2_pal_6[3] = palette_buffer.bg1_bg2_pal_0[3];
+  palette_buffer.bg1_bg2_pal_5[1] = palette_buffer.bg1_bg2_pal_1[1];
+  palette_buffer.bg1_bg2_pal_5[3] = palette_buffer.bg1_bg2_pal_1[3];
   Enemy_Ridley *E = Get_Ridley(0);
   E->ridley_var_E = -15157;
   ++E->ridley_var_F;
@@ -2621,7 +2619,7 @@ void Ridley_Func_58(void) {  // 0xA6C117
   E->ridley_var_A = FUNC16(CeresRidley_Func_26);
   timer_status = 1;
   ceres_status = 2;
-  SetBossBitForCurArea(1);
+  SetBossBitForCurArea(kBossBit_AreaBoss);
 }
 
 void Ridley_Func_59(void) {  // 0xA6C136
@@ -2645,7 +2643,7 @@ void Ridley_Func_60(void) {  // 0xA6C176
   if (!sign16(E->ridley_var_39 - 31))
     v1 = -31;
   E->ridley_var_39 = v1;
-  palette_buffer[11] = abs16(E->ridley_var_39) & 0x1F;
+  palette_buffer.bg1_bg2_pal_0[11] = abs16(E->ridley_var_39) & 0x1F;
 }
 
 void Ridley_Func_61(void) {  // 0xA6C19C
@@ -2656,15 +2654,15 @@ void Ridley_Func_61(void) {  // 0xA6C19C
       v1 = 0;
     E->ridley_var_38 = v1;
     int v2 = E->ridley_var_38 + 2 * v1;
-    palette_buffer[97] = kRidley_Bg1AndBg2Palette6[v2];
-    palette_buffer[98] = kRidley_Bg1AndBg2Palette6[v2 + 1];
-    palette_buffer[99] = kRidley_Bg1AndBg2Palette6[v2 + 2];
+    palette_buffer.bg1_bg2_pal_6[1] = kRidley_Bg1AndBg2Palette6[v2];
+    palette_buffer.bg1_bg2_pal_6[2] = kRidley_Bg1AndBg2Palette6[v2 + 1];
+    palette_buffer.bg1_bg2_pal_6[3] = kRidley_Bg1AndBg2Palette6[v2 + 2];
   }
 }
 
 void SetupZebesEscapeTypewriter(void) {  // 0xA6C23F
-  palette_buffer[157] = palette_buffer[125];
-  palette_buffer[158] = palette_buffer[126];
+  palette_buffer.sprite_pal_1[13] = palette_buffer.bg1_bg2_pal_7[13];
+  palette_buffer.sprite_pal_1[14] = palette_buffer.bg1_bg2_pal_7[14];
   Enemy_MotherBrain *E = Get_MotherBrain(0);
   E->mbn_var_3B = addr_loc_A6C49C;
   E->mbn_var_3C = 0;
@@ -2751,7 +2749,7 @@ uint8 HandleTypewriterText_Ext(uint16 a) {  // 0xA6C2A7
       E->mbn_var_3F = v14;
       if (!sign16(v14 - 2)) {
         E->mbn_var_3F = 0;
-        if (area_index == 6)
+        if (area_index == kArea_6_Ceres)
           QueueSfx2_Max3(kSfx2_TypewriterStroke_CeresSelfDestructSequence);
         else
           QueueSfx3_Max3(kSfx3_IntroTypewriterStroke);
@@ -2844,7 +2842,7 @@ void Ridley_Func_67(void) {  // 0xA6C5DA
   if ((--E->ridley_var_F & 0x8000) != 0) {
     uint16 k = 0;
     printf("Warning: X undefined\n");
-    SetBossBitForCurArea(1);
+    SetBossBitForCurArea(kBossBit_AreaBoss);
     Enemy_ItemDrop_Ridley(k);
     QueueMusic_Delayed8(kMusic_Elevator);
     E->base.properties |= kEnemyProps_Deleted;
@@ -3912,7 +3910,7 @@ void Ridley_Func_112(void) {  // 0xA6D86B
 }
 
 void Ridley_Func_113(uint16 k) {  // 0xA6D914
-  if (area_index != 2) {
+  if (area_index != kArea_2_Norfair) {
     Enemy_Ridley *E = Get_Ridley(k);
     uint16 r18 = abs16(E->ridley_var_B);
     uint16 v2 = abs16(E->ridley_var_C);
@@ -3920,7 +3918,7 @@ void Ridley_Func_113(uint16 k) {  // 0xA6D914
       v2 = r18;
     if (v2 >= 0x280) {
       uint16 v3;
-      if (area_index == 2)
+      if (area_index == kArea_2_Norfair)
         v3 = 24;
       else
         v3 = 33;
@@ -4242,7 +4240,7 @@ void Ridley_Func_125(void) {  // 0xA6DF66
 void Ridley_Shot(void) {  // 0xA6DF8A
   int16 v0;
 
-  if (area_index == 2) {
+  if (area_index == kArea_2_Norfair) {
     NormalEnemyShotAiSkipDeathAnim_CurEnemy();
   } else {
     v0 = 13;
@@ -4327,7 +4325,7 @@ const uint16 *Ridley_Instr_6(uint16 k, const uint16 *jp) {  // 0xA6E4CA
 }
 
 const uint16 *Ridley_Instr_10(uint16 k, const uint16 *jp) {  // 0xA6E4D2
-  if (area_index == 2 || !sign16(samus_health - 30))
+  if (area_index == kArea_2_Norfair || !sign16(samus_health - 30))
     return jp + 1;
   Get_Ridley(0)->ridley_var_00 = 8;
   return INSTR_RETURN_ADDR(jp[0]);

@@ -671,10 +671,10 @@ Point16U CalcCeresSteamPos_Mode7(Point16U pt) {  // 0x8B8B66
 }
 
 void CopyPalettesToFadingPalettes(void) {  // 0x8B8BE9
-  int v0 = 256;
+  int v0 = 0x100;
   uint16 v1 = 0;
   do {
-    tilemap_stuff[(v1 >> 1) + 256] = palette_buffer[v1 >> 1];
+    tilemap_stuff[(v1 >> 1) + 256] = palette_buffer.pal[v1 >> 1];
     v1 += 2;
     --v0;
   } while (v0);
@@ -732,14 +732,14 @@ void FadeInYColorsFromIndexX(uint16 k, uint16 j) {  // 0x8B8CB2
 
 void ComposeFadingPalettes(void) {  // 0x8B8CEA
   uint16 v0 = 0;
-  int v1 = 256;
+  int v1 = 0x100;
   do {
     int v2 = v0 >> 1;
     int r18 = HIBYTE(tilemap_stuff[v2 + 512]) & 0x1F;
     r18 |= (tilemap_stuff[v2 + 768] >> 3) & 0x3E0;
     uint16 v3 = r18 | (tilemap_stuff[v2 + 1024] << 2) & 0x7C00;
     tilemap_stuff[v2] = v3;
-    palette_buffer[v2] = v3;
+    palette_buffer.pal[v2] = v3;
     v0 += 2;
   } while (--v1);
 }
@@ -994,9 +994,9 @@ CoroutineRet InitializeIoDisplayLogo_Async(void) {  // 0x8B9146
   {
     uint16 v0 = 0;
     do {
-      palette_buffer[v0 >> 1] = kPalettes_TitleScreen[v0 >> 1];
+      palette_buffer.pal[v0 >> 1] = kPalettes_TitleScreen[v0 >> 1];
       v0 += 2;
-    } while ((int16)(v0 - 512) < 0);
+    } while ((int16)(v0 - 0x200) < 0);
   }
   EnableNMI();
   screen_fade_delay = 1;
@@ -1607,13 +1607,13 @@ void HandleCinematicsTransitions_2(void) {  // 0x8B9A9C
   mode7_y_speed = 0;
   mode7_y_subspeed = 0;
   cinematic_var18 = 3;
-  uint16 v2 = 256;
+  uint16 v2 = 0x100;
   do {
-    palette_buffer[v2 >> 1] = kPalettes_TitleScreen[v2 >> 1];
+    palette_buffer.pal[v2 >> 1] = kPalettes_TitleScreen[v2 >> 1];
     v2 += 2;
-  } while ((int16)(v2 - 512) < 0);
-  palette_buffer[201] = 0x7FFF;
-  palette_buffer[202] = 32128;
+  } while ((int16)(v2 - 0x200) < 0);
+  palette_buffer.sprite_pal_4[9] = 0x7FFF;
+  palette_buffer.sprite_pal_4[10] = 32128;
   ClearPaletteFXObjects();
   SpawnPalfxObject(addr_kPalfx_TitleScreen_BabyMetroidTubeLight);
   SpawnPalfxObject(addr_kPalfx_TitleScreen_FlickeringDisplays);
@@ -1679,9 +1679,9 @@ void LoadTitleSequenceGraphics(void) {  // 0x8B9B87
   irqhandler_next_handler = 0;
   uint16 v0 = 0;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_TitleScreen[v0 >> 1];
+    palette_buffer.pal[v0 >> 1] = kPalettes_TitleScreen[v0 >> 1];
     v0 += 2;
-  } while ((int16)(v0 - 512) < 0);
+  } while ((int16)(v0 - 0x200) < 0);
   DecompressToMem(0x94E000, g_ram + 0x10000);
   DecompressToMem(0x96FC04, g_ram + 0x14000);
   DecompressToMem(0x9580D8, g_ram + 0x15000);
@@ -2017,26 +2017,26 @@ static const uint16 kCinematicPal3[16] = { 0x3800, 0x77f8, 0x1344, 0x12a4, 0x120
 static const uint16 kCinematicPal4[16] = { 0x3800, 0x7ffb, 0x1fa7, 0x1f07, 0x1e67, 0x771f, 0x30ff, 0x28da, 0x20d0, 0x1cca, 0x67ff, 0x579b, 0x46d5, 0x7bd6, 0x7fff, 0x77a6 };
 
 uint16 CinematicSetPal1(uint16 k, uint16 j) {  // 0x8BA273
-  for (int i = 30; i >= 0; i -= 2)
-    palette_buffer[(i >> 1) + 48] = kCinematicPal1[i >> 1];
+  for (int i = 0x1E; i >= 0; i -= 2)
+    palette_buffer.bg1_bg2_pal_3[(i >> 1)] = kCinematicPal1[i >> 1];
   return j;
 }
 
 uint16 CinematicSetPal2(uint16 k, uint16 j) {  // 0x8BA284
-  for (int i = 30; i >= 0; i -= 2)
-    palette_buffer[(i >> 1) + 48] = kCinematicPal2[i >> 1];
+  for (int i = 0x1E; i >= 0; i -= 2)
+    palette_buffer.bg1_bg2_pal_3[(i >> 1)] = kCinematicPal2[i >> 1];
   return j;
 }
 
 uint16 CinematicSetPal3(uint16 k, uint16 j) {  // 0x8BA295
-  for (int i = 30; i >= 0; i -= 2)
-    palette_buffer[(i >> 1) + 48] = kCinematicPal3[i >> 1];
+  for (int i = 0x1E; i >= 0; i -= 2)
+    palette_buffer.bg1_bg2_pal_3[(i >> 1)] = kCinematicPal3[i >> 1];
   return j;
 }
 
 uint16 CinematicSetPal4(uint16 k, uint16 j) {  // 0x8BA2A6
-  for (int i = 30; i >= 0; i -= 2)
-    palette_buffer[(i >> 1) + 48] = kCinematicPal4[i >> 1];
+  for (int i = 0x1E; i >= 0; i -= 2)
+    palette_buffer.bg1_bg2_pal_3[(i >> 1)] = kCinematicPal4[i >> 1];
   return j;
 }
 
@@ -2066,7 +2066,7 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
   SetupPpu_Intro();
   cur_irq_handler = 0;
   irqhandler_next_handler = 0;
-  area_index = 0;
+  area_index = kArea_0_Crateria;
   room_width_in_blocks = 16;
   room_height_in_blocks = 16;
   Samus_Initialize();
@@ -2082,9 +2082,9 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
     *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)i) = 0;
   uint16 v1 = 0;
   do {
-    palette_buffer[v1 >> 1] = kPalettes_Intro[v1 >> 1];
+    palette_buffer.pal[v1 >> 1] = kPalettes_Intro[v1 >> 1];
     v1 += 2;
-  } while ((int16)(v1 - 512) < 0);
+  } while ((int16)(v1 - 0x200) < 0);
   DecompressToMem(0x95f90e, g_ram + 0x10000);
   DecompressToMem(0x95d089, g_ram + 0x18000);
   DecompressToMem(0x9788cc, g_ram + 0x19000);
@@ -2945,9 +2945,9 @@ void CinematicFunction_Intro_Fadestuff2(void) {  // 0x8BB458
     reg_CGADSUB = 0;
     uint16 v0 = 0;
     do {
-      palette_buffer[(v0 >> 1) + 224] = kPalettes_Intro[(v0 >> 1) + 224];
+      palette_buffer.sprite_pal_6[(v0 >> 1)] = kPalettes_Intro[(v0 >> 1) + 224];
       v0 += 2;
-    } while ((int16)(v0 - 14) < 0);
+    } while ((int16)(v0 - 0xE) < 0);
     cinematic_function = FUNC16(CinematicFunc_Nothing);
   }
 }
@@ -2978,9 +2978,9 @@ void CinematicFunction_Intro_Func19(uint16 k) {  // 0x8BB4DC
 
 void CinematicFunction_Intro_Func18(void) {  // 0x8BB4EB
   DisableCinematicBgTilemapUpdates();
-  palette_buffer[17] = kPalettes_Intro[17];
-  palette_buffer[18] = kPalettes_Intro[18];
-  palette_buffer[19] = kPalettes_Intro[19];
+  palette_buffer.bg3_pal_4[1] = kPalettes_Intro[17];
+  palette_buffer.bg3_pal_4[2] = kPalettes_Intro[18];
+  palette_buffer.bg3_pal_4[3] = kPalettes_Intro[19];
   CinematicFunction_Intro_Func20(addr_word_8BD389);
   CinematicFunction_Intro_Func20(addr_word_8BD389);
   TransferJapaneseTextTilesToVram();
@@ -2988,9 +2988,9 @@ void CinematicFunction_Intro_Func18(void) {  // 0x8BB4EB
 
 uint16 sub_8BB51E(uint16 k, uint16 j) {  // 0x8BB51E
   DisableCinematicBgTilemapUpdates();
-  palette_buffer[17] = kPalettes_Intro[17];
-  palette_buffer[18] = kPalettes_Intro[18];
-  palette_buffer[19] = kPalettes_Intro[19];
+  palette_buffer.bg3_pal_4[1] = kPalettes_Intro[17];
+  palette_buffer.bg3_pal_4[2] = kPalettes_Intro[18];
+  palette_buffer.bg3_pal_4[3] = kPalettes_Intro[19];
   ClearJapaneseTextTiles();
   CinematicFunction_Intro_Func20(addr_word_8BCF75);
   CinematicFunction_Intro_Func20(addr_word_8BCFBD);
@@ -3005,9 +3005,9 @@ uint16 EnableCinematicBgTilemapUpdates__0(uint16 k, uint16 j) {  // 0x8BB54F
 
 uint16 CinematicFunction_Intro_Func21(uint16 k, uint16 j) {  // 0x8BB554
   DisableCinematicBgTilemapUpdates();
-  palette_buffer[17] = kPalettes_Intro[17];
-  palette_buffer[18] = kPalettes_Intro[18];
-  palette_buffer[19] = kPalettes_Intro[19];
+  palette_buffer.bg3_pal_4[1] = kPalettes_Intro[17];
+  palette_buffer.bg3_pal_4[2] = kPalettes_Intro[18];
+  palette_buffer.bg3_pal_4[3] = kPalettes_Intro[19];
   ClearJapaneseTextTiles();
   CinematicFunction_Intro_Func20(addr_word_8BCFFD);
   CinematicFunction_Intro_Func20(addr_word_8BD055);
@@ -3038,9 +3038,9 @@ uint16 CinematicFunction_Intro_ThenWaitInputSetupBabyMetroid(uint16 k, uint16 j)
 
 uint16 CinematicFunction_Intro_Func23(uint16 k, uint16 j) {  // 0x8BB5C3
   DisableCinematicBgTilemapUpdates();
-  palette_buffer[17] = kPalettes_Intro[17];
-  palette_buffer[18] = kPalettes_Intro[18];
-  palette_buffer[19] = kPalettes_Intro[19];
+  palette_buffer.bg3_pal_4[1] = kPalettes_Intro[17];
+  palette_buffer.bg3_pal_4[2] = kPalettes_Intro[18];
+  palette_buffer.bg3_pal_4[3] = kPalettes_Intro[19];
   ClearJapaneseTextTiles();
   CinematicFunction_Intro_Func20(addr_word_8BD0F9);
   TransferJapaneseTextTilesToVram();
@@ -3069,9 +3069,9 @@ uint16 CinematicFunction_Intro_Func25(uint16 k, uint16 j) {  // 0x8BB61B
 
 uint16 CinematicFunction_Intro_Func26(uint16 k, uint16 j) {  // 0x8BB626
   DisableCinematicBgTilemapUpdates();
-  palette_buffer[17] = kPalettes_Intro[17];
-  palette_buffer[18] = kPalettes_Intro[18];
-  palette_buffer[19] = kPalettes_Intro[19];
+  palette_buffer.bg3_pal_4[1] = kPalettes_Intro[17];
+  palette_buffer.bg3_pal_4[2] = kPalettes_Intro[18];
+  palette_buffer.bg3_pal_4[3] = kPalettes_Intro[19];
   ClearJapaneseTextTiles();
   CinematicFunction_Intro_Func20(addr_word_8BD1B9);
   CinematicFunction_Intro_Func20(addr_word_8BD215);
@@ -3102,9 +3102,9 @@ uint16 CinematicFunction_Intro_Func28(uint16 k, uint16 j) {  // 0x8BB68A
 
 uint16 CinematicFunction_Intro_Func29(uint16 k, uint16 j) {  // 0x8BB695
   DisableCinematicBgTilemapUpdates();
-  palette_buffer[17] = kPalettes_Intro[17];
-  palette_buffer[18] = kPalettes_Intro[18];
-  palette_buffer[19] = kPalettes_Intro[19];
+  palette_buffer.bg3_pal_4[1] = kPalettes_Intro[17];
+  palette_buffer.bg3_pal_4[2] = kPalettes_Intro[18];
+  palette_buffer.bg3_pal_4[3] = kPalettes_Intro[19];
   ClearJapaneseTextTiles();
   CinematicFunction_Intro_Func20(addr_word_8BD2D5);
   TransferJapaneseTextTilesToVram();
@@ -3234,12 +3234,12 @@ void CinematicFunction_Intro_Func37(uint16 k) {  // 0x8BB846
   uint16 v1 = cinematicspr_arr6[k >> 1];
   if (v1) {
     if ((v1 & 1) != 0) {
-      for (int i = 30; i >= 0; i -= 2)
-        palette_buffer[(i >> 1) + 240] = kPalettes_Intro[(i >> 1) + 240];
+      for (int i = 0x1E; i >= 0; i -= 2)
+        palette_buffer.sprite_pal_7[(i >> 1)] = kPalettes_Intro[(i >> 1) + 240];
       v3 = k;
     } else {
-      for (j = 30; (j & 0x8000) == 0; j -= 2)
-        palette_buffer[(j >> 1) + 240] = 0x7FFF;
+      for (j = 0x1E; (j & 0x8000) == 0; j -= 2)
+        palette_buffer.sprite_pal_7[(j >> 1)] = 0x7FFF;
       v3 = k;
     }
     --cinematicspr_arr6[v3 >> 1];
@@ -3469,9 +3469,9 @@ void CinematicFunction_Intro_Func54(void) {  // 0x8BBCA0
   irqhandler_next_handler = 0;
   uint16 v0 = 0;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_SpaceGunshipCeres[v0 >> 1];
+    palette_buffer.pal[v0 >> 1] = kPalettes_SpaceGunshipCeres[v0 >> 1];
     v0 += 2;
-  } while ((int16)(v0 - 512) < 0);
+  } while ((int16)(v0 - 0x200) < 0);
   DecompressToMem(0x95A82F, g_ram + 0x10000);
   DecompressToMem(0x96FE69, g_ram + 0x14000);
   DecompressToMem(0x96D10A, g_ram + 0x15000);
@@ -3720,7 +3720,7 @@ void CinematicFunction_Intro_Func72(void) {  // 0x8BC0C5
 void CinematicFunction_Intro_Func73(void) {  // 0x8BC100
   loading_game_state = kLoadingGameState_1F_StartingAtCeres;
   game_state = kGameState_31_SetUpNewGame;
-  area_index = 6;
+  area_index = kArea_6_Ceres;
   load_station_index = 0;
   SaveToSram(selected_save_slot);
 }
@@ -3737,9 +3737,9 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
   layer1_y_pos = 0;
   uint16 v2 = 0;
   do {
-    palette_buffer[v2 >> 1] = kPalettes_SpaceGunshipCeres[v2 >> 1];
+    palette_buffer.pal[v2 >> 1] = kPalettes_SpaceGunshipCeres[v2 >> 1];
     v2 += 2;
-  } while ((int16)(v2 - 512) < 0);
+  } while ((int16)(v2 - 0x200) < 0);
   DecompressToMem(0x95A82F, g_ram + 0x10000);
   DecompressToMem(0x96FE69, g_ram + 0x14000);
   DecompressToMem(0x96D10A, g_ram + 0x15000);
@@ -4288,9 +4288,9 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
     *(uint16 *)((uint8 *)&mode7_transform_angle + (uint16)j) = 0;
   uint16 v2 = 0;
   do {
-    palette_buffer[v2 >> 1] = kPalettes_ZebesExplosionClouds[v2 >> 1];
+    palette_buffer.pal[v2 >> 1] = kPalettes_ZebesExplosionClouds[v2 >> 1];
     v2 += 2;
-  } while ((int16)(v2 - 512) < 0);
+  } while ((int16)(v2 - 0x200) < 0);
   DecompressToMem(0x98bcd6, g_ram + 0x10000);
   DecompressToMem(0x99a56f, g_ram + 0x14000);
   DecompressToMem(0x99d17e, g_ram + 0x18000);
@@ -4505,13 +4505,13 @@ void CinematicFunction_Intro_Func115(void) {  // 0x8BD837
   reg_OBSEL = 2;
   ClearPaletteFXObjects();
   ClearCinematicSprites();
-  uint16 v0 = 256;
+  uint16 v0 = 0x100;
   do {
     int v1 = v0 >> 1;
     uint16 v2 = kPalettes_ZebesExplosion[v1];
-    palette_buffer[v1] = v2;
+    palette_buffer.pal[v1] = v2;
     v0 += 2;
-  } while ((int16)(v0 - 512) < 0);
+  } while ((int16)(v0 - 0x200) < 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEE9D, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEAF, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEA3, 0);
@@ -4559,9 +4559,9 @@ void CinematicFunction_Intro_Func117(void) {  // 0x8BDA1A
   if ((--cinematic_func_timer & 0x8000) != 0) {
     uint16 v0 = 0;
     do {
-      palette_buffer[v0 >> 1] = kPalettes_ZebesExplosion[v0 >> 1];
+      palette_buffer.pal[v0 >> 1] = kPalettes_ZebesExplosion[v0 >> 1];
       v0 += 2;
-    } while ((int16)(v0 - 256) < 0);
+    } while ((int16)(v0 - 0x100) < 0);
     reg_M7SEL = 0;
     reg_BG1SC = 112;
     reg_BG2SC = 120;
@@ -4665,9 +4665,9 @@ void CinematicFunction_Intro_Func120(void) {  // 0x8BDBC4
     reg_COLDATA[2] = -97;
     reg_BG1SC = 0;
     reg_BG12NBA = 0;
-    palette_buffer[0] = 0;
-    palette_buffer[16] = 0;
-    palette_buffer[128] = 0;
+    palette_buffer.bg1_bg2_pal_0[0] = 0;
+    palette_buffer.bg1_bg2_pal_1[0] = 0;
+    palette_buffer.sprite_pal_0[0] = 0;
     SpawnPalfxObject(addr_kPalfx_ZebesExplosion_PlanetAfterglow);
     SpawnPalfxObject(addr_kPalfx_ZebesExplosion_GunshipEmerging);
     reg_M7X = 56;
@@ -4751,8 +4751,8 @@ void CinematicFunction_Intro_Func124(void) {  // 0x8BDDCD
   if (sign16(mode7_transform_zoom - 32)) {
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEC7, mode7_transform_zoom);
     cinematic_function = FUNC16(nullsub_126);
-    for (int i = 30; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 80] = g_word_8BDE43[i >> 1];
+    for (int i = 0x1E; i >= 0; i -= 2)
+      palette_buffer.bg1_bg2_pal_5[(i >> 1)] = g_word_8BDE43[i >> 1];
   } else {
     mode7_transform_zoom -= 4;
   }
@@ -4774,9 +4774,9 @@ void CinematicFunction_Intro_Func126(void) {  // 0x8BDE80
   ClearPaletteFXObjects();
   uint16 v0 = 0;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_Credits[v0 >> 1];
+    palette_buffer.pal[v0 >> 1] = kPalettes_Credits[v0 >> 1];
     v0 += 2;
-  } while ((int16)(v0 - 256) < 0);
+  } while ((int16)(v0 - 0x100) < 0);
   DecompressToMem(0x979803, g_ram + 0x10000);
   DecompressToMem(0x97B957, g_ram + 0x2000);
   DecompressToMem(0x97D7FC, g_ram + 0x6000);
@@ -5118,11 +5118,11 @@ void CinematicFunction_Intro_Func141(void) {  // 0x8BE48A
     reg_M7SEL = 0;
     reg_BG1SC = 78;
     reg_BG12NBA = 84;
-    uint16 v0 = 384;
+    uint16 v0 = 0;
     do {
-      palette_buffer[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
+      palette_buffer.sprite_pal_4[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
       v0 += 2;
-    } while ((int16)(v0 - 416) < 0);
+    } while ((int16)(v0 - 0x20) < 0);
     mode7_x_pos = 0;
     mode7_y_pos = 0;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func143);
@@ -5137,8 +5137,6 @@ void CinematicFunction_Intro_Func141(void) {  // 0x8BE48A
 }
 
 void CinematicFunction_Intro_Func143(void) {  // 0x8BE504
-  uint16 j;
-
   if (sign8(--reg_COLDATA[0] - 32))
     reg_COLDATA[0] = 32;
   if (sign8(--reg_COLDATA[1] - 64))
@@ -5156,26 +5154,24 @@ void CinematicFunction_Intro_Func143(void) {  // 0x8BE504
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEF87, 0);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEF8D, 0);
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEF93, 0);
-    for (int i = 30; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 16] = 0;
-    for (j = 30; (j & 0x8000) == 0; j -= 2)
-      palette_buffer[(j >> 1) + 240] = kPalettes_EndingSuperMetroidIconGlare[j >> 1];
+    for (int i = 0x1E; i >= 0; i -= 2)
+      palette_buffer.bg1_bg2_pal_1[(i >> 1)] = 0;
+    for (int j = 0x1E; j >= 0; j -= 2)
+      palette_buffer.sprite_pal_7[(j >> 1)] = kPalettes_EndingSuperMetroidIconGlare[j >> 1];
   }
 }
 
 void CinematicFunction_Intro_Func144(void) {  // 0x8BE58A
-  uint16 j;
-
   int v0 = (uint16)(4 * cinematic_func_timer) >> 1;
   uint16 v5 = kCinematicFunction_Intro_Func144_Tab0[v0 + 1];
   uint16 v1 = kCinematicFunction_Intro_Func144_Tab0[v0];
-  for (int i = 30; i >= 0; i -= 2) {
-    palette_buffer[(i >> 1) + 16] = *(uint16 *)RomPtr_8C(v1);
+  for (int i = 0x1E; i >= 0; i -= 2) {
+    palette_buffer.bg1_bg2_pal_1[(i >> 1)] = *(uint16 *)RomPtr_8C(v1);
     v1 -= 2;
   }
   uint16 v3 = v5;
-  for (j = 30; (j & 0x8000) == 0; j -= 2) {
-    palette_buffer[(j >> 1) + 240] = *(uint16 *)RomPtr_8C(v3);
+  for (int j = 0x1E; j >= 0; j -= 2) {
+    palette_buffer.sprite_pal_7[(j >> 1)] = *(uint16 *)RomPtr_8C(v3);
     v3 -= 2;
   }
   if (!sign16(++cinematic_func_timer - 16)) {
@@ -5297,7 +5293,7 @@ void CinematicFunction_Intro_Func149(void) {  // 0x8BE812
 
   if (eproj_pre_instr[1]) {
     int n = 40;
-    uint16 v0 = 0xe0c;
+    uint16 v0 = ADDR16_OF_RAM(*ending_shooting_stars);
     do {
       uint8 *v3 = RomPtr_RAM(v0);
       if (*(int16 *)v3 < 0) {
@@ -5629,14 +5625,14 @@ uint16 CinematicSprInstr_Func181(uint16 k, uint16 j) {  // 0x8BF25E
 
 uint16 CinematicSprInstr_Func182(uint16 k, uint16 j) {  // 0x8BF284
   SpawnPalfxObject(addr_kPalfx_ZebesExploding_FadeOutZoomedOut);
-  palette_buffer[254] = 1;
+  palette_buffer.sprite_pal_7[14] = 1;
   return j;
 }
 
 uint16 CinematicSprInstr_Func183(uint16 k, uint16 j) {  // 0x8BF295
   uint16 v0 = 0;
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BEEB5, v0);
-  palette_buffer[0] = 0x7FFF;
+  palette_buffer.bg1_bg2_pal_0[0] = 0x7FFF;
   return j;
 }
 
@@ -5680,10 +5676,10 @@ uint16 CinematicSprInstr_Func186(uint16 k, uint16 j) {  // 0x8BF2FA
 uint16 CinematicSprInstr_Func187(uint16 k, uint16 j) {  // 0x8BF32B
   reg_TM = 0;
   reg_TS = 0;
-  palette_buffer[0] = 0x7FFF;
-  palette_buffer[128] = 0x7FFF;
+  palette_buffer.bg1_bg2_pal_0[0] = 0x7FFF;
+  palette_buffer.sprite_pal_0[0] = 0x7FFF;
   for (int i = 30; i >= 0; i -= 2)
-    palette_buffer[(i >> 1) + 16] = 0x7FFF;
+    palette_buffer.bg1_bg2_pal_1[(i >> 1)] = 0x7FFF;
   cinematic_function = FUNC16(CinematicFunction_Intro_Func119);
   cinematic_func_timer = 120;
   return j;
@@ -5951,9 +5947,9 @@ uint16 CinematicFunction_Intro_Func219(uint16 k, uint16 j) {  // 0x8BF6FE
   DisableTextGlowObjects_();
   uint16 v0 = 8;
   do {
-    palette_buffer[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
+    palette_buffer.pal[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
     v0 += 2;
-  } while ((int16)(v0 - 512) < 0);
+  } while ((int16)(v0 - 0x200) < 0);
   reg_TM = 0;
   reg_INIDISP = 0x80;
   screen_fade_delay = 0;

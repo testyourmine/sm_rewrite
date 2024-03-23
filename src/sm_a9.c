@@ -1625,8 +1625,8 @@ void MotherBrain_Phase3_Death_3(void) {  // 0xA9AF54
     E1->mbn_var_14 = 0;
     E1->mbn_var_10 = 0;
     E1->mbn_var_11 = 0;
-    for (int i = 28; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 241] = palette_buffer[(i >> 1) + 145];
+    for (int i = 0x1C; i >= 0; i -= 2)
+      palette_buffer.sprite_pal_7[(i >> 1) + 1] = palette_buffer.sprite_pal_1[(i >> 1) + 1];
     MotherBrain_HealthBasedPaletteHandling();
     E->mbn_var_0D = 3584;
     E1->mbn_var_E = 0;
@@ -1868,7 +1868,7 @@ void MotherBrain_Phase3_Death_19_EscapeDoorExploding(void) {  // 0xA9B2F9
   if ((--E->mbn_var_F & 0x8000) != 0) {
     RunSamusCode(kSamusCode_15_EnableTimerHandling);
     timer_status = 2;
-    SetBossBitForCurArea(2);
+    SetBossBitForCurArea(kBossBit_AreaMiniBoss);
     SetEventHappened(kEvent_14_ZebesTimebombSet);
     E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_20_BlowUpEscapeDoor);
     Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
@@ -4110,12 +4110,12 @@ void MotherBrain_Pal_ProcessInvincibility(void) {  // 0xA9CFD4
     uint16 flash_timer = Get_MotherBrain(0x40)->base.flash_timer;
     if (flash_timer >> 1) {
       if (!(flash_timer & 1)) {
-        for (int i = 28; i >= 0; i -= 2) {
+        for (int i = 0x1C; i >= 0; i -= 2) {
           int v2 = i >> 1;
-          uint16 v3 = palette_buffer[v2 + 129];
-          palette_buffer[v2 + 145] = v3;
-          palette_buffer[v2 + 177] = v3;
-          palette_buffer[v2 + 65] = v3;
+          uint16 v3 = palette_buffer.sprite_pal_0[v2 + 1];
+          palette_buffer.sprite_pal_1[v2 + 1] = v3;
+          palette_buffer.sprite_pal_3[v2 + 1] = v3;
+          palette_buffer.bg1_bg2_pal_4[v2 + 1] = v3;
         }
       }
     }
@@ -4227,7 +4227,7 @@ void MotherBrain_HandleBrainPal(void) {  // 0xA9D206
 void WriteColorsToPalette(uint16 k, uint8 db, uint16 j, uint16 a) {  // 0xA9D2E4
   int n = a;
   do {
-    palette_buffer[k >> 1] = *(uint16 *)RomPtrWithBank(db, j);
+    palette_buffer.pal[k >> 1] = *(uint16 *)RomPtrWithBank(db, j);
     k += 2;
     j += 2;
   } while (--n);
@@ -4236,7 +4236,7 @@ void WriteColorsToPalette(uint16 k, uint8 db, uint16 j, uint16 a) {  // 0xA9D2E4
 void WriteColorsToTargetPalette(uint8 db, uint16 k, uint16 j, uint16 a) {  // 0xA9D2F6
   int n = a;
   do {
-    target_palettes[k >> 1] = *(uint16 *)RomPtrWithBank(db, j);
+    target_palettes.pal[k >> 1] = *(uint16 *)RomPtrWithBank(db, j);
     k += 2;
     j += 2;
   } while (--n);

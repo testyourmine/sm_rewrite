@@ -35,11 +35,11 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
   } else {
     if (loading_game_state != kLoadingGameState_5_Main) {
       if (loading_game_state == kLoadingGameState_1F_StartingAtCeres) {
-        area_index = 6;
+        area_index = kArea_6_Ceres;
         load_station_index = 0;
         ClearTimerRam();
       } else if (loading_game_state == kLoadingGameState_22_EscapingCeres) {
-        area_index = 0;
+        area_index = kArea_0_Crateria;
         load_station_index = 18;
         LoadMirrorOfExploredMapTiles();
       }
@@ -54,10 +54,10 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
   InitializeHud();
   //  nullsub_4();
   {
-    v0 = 32;
+    v0 = 0x20;
     uint16 v1 = 0;
     do {
-      target_palettes[(v1 >> 1) + 192] = palette_buffer[(v1 >> 1) + 192];
+      target_palettes.sprite_pal_4[(v1 >> 1)] = palette_buffer.sprite_pal_4[(v1 >> 1)];
       v1 += 2;
       v0 -= 2;
     } while (v0);
@@ -82,10 +82,10 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
     uint16 r18 = kDemoRoomData[demo_set][demo_scene - 1].demo_code_ptr;
     CallDemoRoomDataFunc(r18 | 0x820000);
     ++game_state;
-    v7 = 512;
+    v7 = 0x200;
     uint16 v8 = 0;
     do {
-      palette_buffer[v8 >> 1] = target_palettes[v8 >> 1];
+      palette_buffer.pal[v8 >> 1] = target_palettes.pal[v8 >> 1];
       v8 += 2;
       v7 -= 2;
     } while (v7);
@@ -98,10 +98,10 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
       --loop_counter_transfer_enemies_to_vram;
     } while ((loop_counter_transfer_enemies_to_vram & 0x8000) == 0);
     ++game_state;
-    v2 = 512;
+    v2 = 0x200;
     uint16 v3 = 0;
     do {
-      palette_buffer[v3 >> 1] = target_palettes[v3 >> 1];
+      palette_buffer.pal[v3 >> 1] = target_palettes.pal[v3 >> 1];
       v3 += 2;
       v2 -= 2;
     } while (v2);
@@ -113,15 +113,15 @@ CoroutineRet InitAndLoadGameData_Async(void) {  // 0x828000
       --loop_counter_transfer_enemies_to_vram;
     } while ((loop_counter_transfer_enemies_to_vram & 0x8000) == 0);
     game_state = kGameState_7_MainGameplayFadeIn;
-    v4 = 512;
+    v4 = 0x200;
     uint16 v5 = 0;
     do {
-      palette_buffer[v5 >> 1] = target_palettes[v5 >> 1];
+      palette_buffer.pal[v5 >> 1] = target_palettes.pal[v5 >> 1];
       v5 += 2;
       v4 -= 2;
     } while (v4);
     if (loading_game_state == kLoadingGameState_1F_StartingAtCeres) {
-      palette_buffer[223] = 0;
+      palette_buffer.sprite_pal_5[15] = 0;
       RunSamusCode(kSamusCode_8_SetupForCeresStart);
     } else {
       RunSamusCode(kSamusCode_9_SetupForZebesStart);
@@ -229,10 +229,10 @@ void InitPpuForGameplay(void) {  // 0x8281DD
 void LoadInitialPalette(void) {  // 0x8282C5
   int16 v0;
 
-  v0 = 512;
+  v0 = 0x200;
   uint16 v1 = 0;
   do {
-    palette_buffer[v1 >> 1] = kInitialPalette[v1 >> 1];
+    palette_buffer.pal[v1 >> 1] = kInitialPalette[v1 >> 1];
     v1 += 2;
     v0 -= 2;
   } while (v0);
@@ -534,7 +534,7 @@ void LoadDemoRoomData(void) {  // 0x828679
   } while ((int16)(v4 - 1536) < 0);
   samus_max_reserve_health = 0;
   samus_reserve_health = 0;
-  reserve_health_mode = 0;
+  reserve_health_mode = kReserveHealthMode_0_None;
   loading_game_state = kLoadingGameState_0_Intro;
   debug_disable_minimap = 0;
 }
@@ -1179,17 +1179,17 @@ void BackupGameplayPalettesAndLoadForPause(void) {  // 0x828FD4
   int16 v0;
   int16 v2;
 
-  v0 = 512;
+  v0 = 0x200;
   uint16 v1 = 0;
   do {
-    ram3000.pause_menu_map_tilemap[v1 + 384] = palette_buffer[v1];
+    ram3000.pause_menu_map_tilemap[v1 + 384] = palette_buffer.pal[v1];
     ++v1;
     v0 -= 2;
   } while (v0);
-  v2 = 512;
+  v2 = 0x200;
   uint16 v3 = 0;
   do {
-    palette_buffer[v3 >> 1] = kPauseScreenPalettes[v3 >> 1];
+    palette_buffer.pal[v3 >> 1] = kPauseScreenPalettes[v3 >> 1];
     v3 += 2;
     v2 -= 2;
   } while (v2);
@@ -1502,8 +1502,8 @@ void LoadPauseMenuMapTilemapAndAreaLabel(void) {  // 0x8293C3
   WriteReg(DAS1L, 0x18);
   WriteReg(DAS1H, 0);
   uint16 v0 = area_index;
-  if (!sign16(area_index - 7))
-    v0 = 0;
+  if (area_index >= kArea_7_Debug)
+    v0 = kArea_0_Crateria;
   WriteRegWord(A1T1L, kPauseAreaLabelTilemap[v0]);
   WriteReg(A1B1, 0x82);
   WriteReg(MDMAEN, 2);
@@ -1511,8 +1511,8 @@ void LoadPauseMenuMapTilemapAndAreaLabel(void) {  // 0x8293C3
 
 void LoadPauseMenuMapTilemap(void) {  // 0x82943D
   uint16 v0 = area_index;
-  if (!sign16(area_index - 7))
-    v0 = 0;
+  if (area_index >= kArea_7_Debug)
+    v0 = kArea_0_Crateria;
   const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[v0]));
   uint16 *r3 = (uint16 *)&ram4000;
   const uint16 *r6 = (const uint16 *)RomPtr_82(kPauseMenuMapData[v0]);
@@ -1571,8 +1571,8 @@ void DrawRoomSelectMap(void) {  // 0x829517
   reg_TM = 19;
   reg_BG1VOFS = -40;
   uint16 v0 = area_index;
-  if (!sign16(area_index - 7))
-    v0 = 0;
+  if (area_index >= kArea_7_Debug)
+    v0 = kArea_0_Crateria;
 
   const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[v0]));
   uint16 *r3 = (uint16 *)&ram3000;
@@ -1757,7 +1757,7 @@ void DetermineMapScrollLimits(void) {  // 0x829EC4
     r6 = map_tiles_explored;
   }
   map_min_x_scroll = DetermineLeftmostMapColumn(r6) * 8;
-  if (area_index == 4)
+  if (area_index == kArea_4_Maridia)
     map_min_x_scroll -= 24;
   map_max_x_scroll = DetermineRightmostMapColumn(r6 + 131) * 8;
   map_min_y_scroll = DetermineTopmostMapColumn(r6) * 8;
@@ -1874,10 +1874,10 @@ void ClearSamusBeamTiles(void) {  // 0x82A2BE
 void ContinueInitGameplayResume(void) {  // 0x82A2E3
   int16 v0;
 
-  v0 = 512;
+  v0 = 0x200;
   uint16 v1 = 0;
   do {
-    palette_buffer[v1] = ram3000.pause_menu_map_tilemap[v1 + 384];
+    palette_buffer.pal[v1] = ram3000.pause_menu_map_tilemap[v1 + 384];
     ++v1;
     v0 -= 2;
   } while (v0);
@@ -2277,7 +2277,7 @@ void HandlePauseScreenPaletteAnimation(void) {  // 0x82A92B
       HIBYTE(v2) = pausemenu_palette_animation_frame;
       uint16 v3 = (v2 >> 3) + 30;
       for (j = 30; (j & 0x8000) == 0; j -= 2) {
-        palette_buffer[(j >> 1) + 176] = kPauseAnimatedPalette[v3 >> 1];
+        palette_buffer.sprite_pal_3[(j >> 1)] = kPauseAnimatedPalette[v3 >> 1];
         v3 -= 2;
       }
     }
@@ -2293,9 +2293,9 @@ void EquipmentScreenSetupReserveMode(void) {  // 0x82AB47
   reg_BG4VOFS = reg_BG1VOFS;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
-  if (samus_max_reserve_health && reserve_health_mode) {
+  if ((samus_max_reserve_health != 0) && (reserve_health_mode != kReserveHealthMode_0_None)) {
     v0 = addr_kEquipmentScreenTilemap_AUTO;
-    if (reserve_health_mode != 1)
+    if (reserve_health_mode != kReserveHealthMode_1_Auto)
       v0 = addr_kEquipmentScreenTilemap_MANUAL;
     uint16 *table = (uint16 *)RomPtr_82(v0);
     for (int i = 0; i < 4; i++)
@@ -2306,7 +2306,7 @@ void EquipmentScreenSetupReserveMode(void) {  // 0x82AB47
   pausemenu_reserve_tank_animation_frame = 0;
   pausemenu_reserve_tank_animation_timer = kPauseReserveTankAnimationData[0];
   if (samus_max_reserve_health) {
-    pausemenu_equipment_category_item = 0;
+    pausemenu_equipment_category_item = kEquipmentCategory_0_Tanks;
   } else if (hyper_beam_flag) {
 LABEL_15:;
     uint16 v6 = 0;
@@ -2314,7 +2314,7 @@ LABEL_15:;
       if ((kEquipmentBitmasks_Suits[v6 >> 1] & collected_items) != 0) {
         LOBYTE(v7) = (uint16)(v6 >> 1) >> 8;
         HIBYTE(v7) = v6 >> 1;
-        pausemenu_equipment_category_item = v7 | 2;
+        pausemenu_equipment_category_item = v7 | kEquipmentCategory_2_SuitMisc;
         goto LABEL_21;
       }
       v6 += 2;
@@ -2332,7 +2332,7 @@ LABEL_15:;
     }
     LOBYTE(v5) = (uint16)(v4 >> 1) >> 8;
     HIBYTE(v5) = v4 >> 1;
-    pausemenu_equipment_category_item = v5 | 1;
+    pausemenu_equipment_category_item = v5 | kEquipmentCategory_1_Weapons;
   }
 LABEL_21:
   if (samus_reserve_health) {
@@ -2350,6 +2350,7 @@ void EquipmentScreenTransferBG1Tilemap(void) {  // 0x82AC22
   WriteReg(MDMAEN, 2);
   reg_BG1VOFS = 0;
 }
+
 static Func_V *const kEquipmentScreenCategories[4] = {  // 0x82AC4F
   EquipmentScreenCategory_Tanks,
   EquipmentScreenCategory_Weapons,
@@ -2357,11 +2358,12 @@ static Func_V *const kEquipmentScreenCategories[4] = {  // 0x82AC4F
   EquipmentScreenCategory_Boots,
 };
 void EquipmentScreenMain(void) {
-  kEquipmentScreenCategories[(uint8)pausemenu_equipment_category_item]();
+  kEquipmentScreenCategories[LOBYTE(pausemenu_equipment_category_item)]();
   EquipmentScreenDrawItemSelector();
   EquipmentScreenDisplayReserveTankAmount();
   WriteSamusWireframeTilemapAndQueue();
 }
+
 static Func_V *const kEquipmentScreenCategory_TanksFuncs[2] = {  // 0x82AC70
   EquipmentScreenCategory_Tanks_0,
   EquipmentScreenCategory_Tanks_1,
@@ -2378,14 +2380,14 @@ void EquipmentScreenHandleDpad(void) {  // 0x82AC8B
     if ((joypad1_newkeys & kButton_Down) != 0 || EquipmentScreenMoveLowerOnSuitsMisc(0) == 0xFFFF)
       EquipmentScreenMoveToHighJumpOrLowerInBoots(0, r18);
   } else if ((joypad1_newkeys & kButton_Up) != 0) {
-    if ((pausemenu_equipment_category_item & 0xFF00) != 0) {
+    if ((pausemenu_equipment_category_item & 0xFF00) != (kEquipmentItem_Tanks_0_Mode << 8)) {
       QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
       pausemenu_equipment_category_item -= 256;
     }
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
-    if ((pausemenu_equipment_category_item & 0xFF00) == 256
-        || reserve_health_mode == 1
-        || (pausemenu_equipment_category_item += 256, !samus_reserve_health)) {
+    if ((pausemenu_equipment_category_item & 0xFF00) == (kEquipmentItem_Tanks_1_Reserve << 8)
+        || reserve_health_mode == kReserveHealthMode_1_Auto
+        || (pausemenu_equipment_category_item += 256, samus_reserve_health != 0)) {
       EquipmentScreenMoveToBeams(0, r18);
     } else {
       QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
@@ -2398,7 +2400,7 @@ static Func_V *const kEquipmentScreenGlowingArrowFuncs[2] = {  // 0x82AD0A
 };
 
 void EquipmentScreenGlowingArrow(void) {
-  if ((uint8)pausemenu_equipment_category_item)
+  if (LOBYTE(pausemenu_equipment_category_item))
     EquipmentScreenGlowingArrowSolidOff();
   else
     kEquipmentScreenGlowingArrowFuncs[HIBYTE(pausemenu_equipment_category_item)]();
@@ -2408,27 +2410,27 @@ static const uint16 kEquipmentScreenGlowingArrowPalettes0[32] = { 0x39e, 0x77d, 
 static const uint16 kEquipmentScreenGlowingArrowPalettes1[32] = { 0x156, 0x155, 0x554, 0x954, 0xd53, 0xd52, 0x1152, 0x1551, 0x1970, 0x1d70, 0x1d6f, 0x216e, 0x256e, 0x296d, 0x296c, 0x318c, 0x318c, 0x296c, 0x296d, 0x256e, 0x216e, 0x1d6f, 0x1d70, 0x1970, 0x1551, 0x1152, 0xd52, 0xd53, 0x954, 0x554, 0x155, 0x156 };
 
 void EquipmentScreenGlowingArrowAnimated(void) {  // 0x82AD29
-  if (reserve_health_mode == 1) {
+  if (reserve_health_mode == kReserveHealthMode_1_Auto) {
     int v0 = nmi_frame_counter_byte & 0x1F;
-    palette_buffer[102] = kEquipmentScreenGlowingArrowPalettes0[v0];
-    palette_buffer[107] = kEquipmentScreenGlowingArrowPalettes1[v0];
+    palette_buffer.bg1_bg2_pal_6[6] = kEquipmentScreenGlowingArrowPalettes0[v0];
+    palette_buffer.bg1_bg2_pal_6[11] = kEquipmentScreenGlowingArrowPalettes1[v0];
     EquipmentScreenEnergyArrowGlow_On();
   } else {
-    palette_buffer[107] = 926;
-    palette_buffer[102] = 342;
+    palette_buffer.bg1_bg2_pal_6[11] = 926;
+    palette_buffer.bg1_bg2_pal_6[6] = 342;
     EquipmentScreenEnergyArrowGlow_Off();
   }
 }
 
 void EquipmentScreenGlowingArrowSolidOn(void) {  // 0x82ADDD
-  palette_buffer[107] = 926;
-  palette_buffer[102] = 342;
+  palette_buffer.bg1_bg2_pal_6[11] = 926;
+  palette_buffer.bg1_bg2_pal_6[6] = 342;
   EquipmentScreenEnergyArrowGlow_On();
 }
 
 void EquipmentScreenGlowingArrowSolidOff(void) {  // 0x82ADEF
-  palette_buffer[107] = 926;
-  palette_buffer[102] = 342;
+  palette_buffer.bg1_bg2_pal_6[11] = 926;
+  palette_buffer.bg1_bg2_pal_6[6] = 342;
   EquipmentScreenEnergyArrowGlow_Off();
 }
 
@@ -2505,8 +2507,8 @@ void EquipmentScreenCategory_Tanks_0(void) {
 
   if ((joypad1_newkeys & kButton_A) != 0 && samus_max_reserve_health) {
     QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
-    if (reserve_health_mode == 1) {
-      reserve_health_mode = 2;
+    if (reserve_health_mode == kReserveHealthMode_1_Auto) {
+      reserve_health_mode = kReserveHealthMode_2_Manual;
       EquipmentScreenHudReserveAutoTilemap_Off();
       v0 = 8;
       uint16 v1 = 0;
@@ -2516,7 +2518,7 @@ void EquipmentScreenCategory_Tanks_0(void) {
         v0 -= 2;
       } while (v0);
     } else {
-      reserve_health_mode = 1;
+      reserve_health_mode = kReserveHealthMode_1_Auto;
       EquipmentScreenHudReserveAutoTilemap_On_BUGGY();
       v2 = 8;
       uint16 v3 = 0;
@@ -2573,7 +2575,7 @@ void EquipmentScreenCategory_Tanks_1(void) {  // 0x82AF4F
   samus_reserve_health = 0;
   pausemenu_reserve_tank_delay_ctr = 0;
   EquipmentScreenEnergyArrowGlow_Off();
-  pausemenu_equipment_category_item = 0;
+  pausemenu_equipment_category_item = kEquipmentCategory_0_Tanks;
 }
 
 void EquipmentScreenCategory_Weapons(void) {  // 0x82AFBE
@@ -2581,7 +2583,7 @@ void EquipmentScreenCategory_Weapons(void) {  // 0x82AFBE
   uint16 R36 = equipped_beams;
   if (collected_beams) {
     // Fixed var bug
-    if ((uint8)pausemenu_equipment_category_item == 1) {
+    if (LOBYTE(pausemenu_equipment_category_item) == kEquipmentCategory_1_Weapons) {
       EquipmentScreenCategory_ButtonResponse(10);
       EquipmentScreenCategory_Weapons_PlazmaSpazerCheck(R36);
     }
@@ -2597,12 +2599,13 @@ void EquipmentScreenCategory_Weapons_MoveButtons(void) {  // 0x82AFDB
       EquipmentScreenMoveToHighJumpOrLowerInBoots(0, r18);
     }
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
-    if (!hyper_beam_flag && pausemenu_equipment_category_item != 1025) {
+    if (!hyper_beam_flag
+        && pausemenu_equipment_category_item != ((kEquipmentItem_Weapons_4_Plasma << 8) | kEquipmentCategory_1_Weapons)) {
       pausemenu_equipment_category_item += 256;
       EquipmentScreenMoveToBeams(2 * HIBYTE(pausemenu_equipment_category_item), r18);
     }
   } else if ((joypad1_newkeys & kButton_Up) != 0) {
-    if ((pausemenu_equipment_category_item & 0xFF00) == 0
+    if ((pausemenu_equipment_category_item & 0xFF00) == (kEquipmentItem_Weapons_0_Charge << 8)
         || (pausemenu_equipment_category_item -= 256,
             EquipmentScreenMoveToBottomOfBeams(2 * HIBYTE(pausemenu_equipment_category_item)) == 0xFFFF)) {
       if (!EquipmentScreenMoveToReserveTanks())
@@ -2627,7 +2630,7 @@ void EquipmentScreenCategory_Weapons_PlazmaSpazerCheck(uint16 R36) {  // 0x82B06
 void EquipmentScreenCategory_Suit(void) {  // 0x82B0C2
   EquipmentScreenCategory_Suit_MoveResponse();
   // Fixed var bug
-  if ((uint8)pausemenu_equipment_category_item == 2)
+  if (LOBYTE(pausemenu_equipment_category_item) == kEquipmentCategory_2_SuitMisc)
     EquipmentScreenCategory_ButtonResponse(18);
 }
 
@@ -2641,12 +2644,12 @@ void EquipmentScreenCategory_Suit_MoveResponse(void) {  // 0x82B0D2
     }
     EquipmentScreenMoveToBeams(0, r18);
   } else if ((joypad1_newkeys & kButton_Up) != 0) {
-    if ((pausemenu_equipment_category_item & 0xFF00) != 0) {
+    if ((pausemenu_equipment_category_item & 0xFF00) != (kEquipmentItem_SuitMisc_0_Varia << 8)) {
       pausemenu_equipment_category_item -= 256;
       EquipmentScreenMoveToScrewOrHigherOnSuits(2 * HIBYTE(pausemenu_equipment_category_item), r18);
     }
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
-    if ((pausemenu_equipment_category_item & 0xFF00) == 1280
+    if ((pausemenu_equipment_category_item & 0xFF00) == (kEquipmentItem_SuitMisc_5_ScrewAttack << 8)
         || (pausemenu_equipment_category_item += 256,
             EquipmentScreenMoveLowerOnSuitsMisc(2 * HIBYTE(pausemenu_equipment_category_item)) == 0xFFFF)) {
       EquipmentScreenMoveToHighJumpOrLowerInBoots(0, r18);
@@ -2657,7 +2660,7 @@ void EquipmentScreenCategory_Suit_MoveResponse(void) {  // 0x82B0D2
 void EquipmentScreenCategory_Boots(void) {  // 0x82B150
   EquipmentScreenCategory_Boots_MoveResponse();
   // Fixed var bug
-  if ((uint8)pausemenu_equipment_category_item == 3)
+  if (LOBYTE(pausemenu_equipment_category_item) == kEquipmentCategory_3_Boots)
     EquipmentScreenCategory_ButtonResponse(18);
 }
 
@@ -2669,12 +2672,12 @@ void EquipmentScreenCategory_Boots_MoveResponse(void) {  // 0x82B160
       pausemenu_equipment_category_item = r18;
     }
   } else if ((joypad1_newkeys & kButton_Down) != 0) {
-    if (pausemenu_equipment_category_item != 515) {
+    if (pausemenu_equipment_category_item != ((kEquipmentItem_Boots_2_SpeedBooster << 8) | kEquipmentCategory_3_Boots)) {
       pausemenu_equipment_category_item += 256;
       EquipmentScreenMoveToHighJumpOrLowerInBoots(2 * HIBYTE(pausemenu_equipment_category_item), r18);
     }
   } else if ((joypad1_newkeys & kButton_Up) != 0) {
-    if ((pausemenu_equipment_category_item & 0xFF00) == 0
+    if ((pausemenu_equipment_category_item & 0xFF00) == (kEquipmentItem_Boots_0_HiJumpBoots << 8)
         || (pausemenu_equipment_category_item -= 256,
             EquipmentScreenCategory_Boots_MoveUpInBoots(2 * HIBYTE(pausemenu_equipment_category_item)) == 0xFFFF)) {
       EquipmentScreenMoveToScrewOrHigherOnSuits(0xA, r18);
@@ -2800,13 +2803,12 @@ uint16 EquipmentScreenDisplayReserves_PaletteSetup(void) {  // 0x82B3F9
 }
 
 uint16 EquipmentScreenMoveToReserveTanks(void) {  // 0x82B43F
-  uint16 result = samus_max_reserve_health;
-  if (samus_max_reserve_health) {
-    pausemenu_equipment_category_item = 0;
+  if (samus_max_reserve_health != 0) {
+    pausemenu_equipment_category_item = ((kEquipmentItem_Tanks_0_Mode << 8) | kEquipmentCategory_0_Tanks);
     QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     return 1;
   }
-  return result;
+  return 0;
 }
 
 void EquipmentScreenMoveToBeams(uint16 v0, uint16 r18) {  // 0x82B456
@@ -2823,7 +2825,7 @@ LABEL_4:
     }
     LOBYTE(v1) = (uint16)(v0 >> 1) >> 8;
     HIBYTE(v1) = v0 >> 1;
-    pausemenu_equipment_category_item = v1 & 0xFF00 | 1;
+    pausemenu_equipment_category_item = v1 & 0xFF00 | kEquipmentCategory_1_Weapons;
     QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   }
 }
@@ -2837,7 +2839,7 @@ uint16 EquipmentScreenMoveToBottomOfBeams(uint16 k) {  // 0x82B489
       return -1;
   }
   QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
-  uint16 result = (k >> 1) << 8 | 1;
+  uint16 result = (k >> 1) << 8 | kEquipmentCategory_1_Weapons;
   pausemenu_equipment_category_item = result;
   return result;
 }
@@ -2853,7 +2855,7 @@ uint16 EquipmentScreenMoveLowerOnSuitsMisc(uint16 v0) {  // 0x82B4B7
   QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
   LOBYTE(v1) = (uint16)(v0 >> 1) >> 8;
   HIBYTE(v1) = v0 >> 1;
-  pausemenu_equipment_category_item = v1 & 0xFF00 | 2;
+  pausemenu_equipment_category_item = v1 & 0xFF00 | kEquipmentCategory_2_SuitMisc;
   return 0;
 }
 
@@ -2866,7 +2868,7 @@ void EquipmentScreenMoveToScrewOrHigherOnSuits(uint16 v0, uint16 r18) {  // 0x82
     }
   }
   QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
-  pausemenu_equipment_category_item = (v0 >> 1) << 8 | 2;
+  pausemenu_equipment_category_item = (v0 >> 1) << 8 | kEquipmentCategory_2_SuitMisc;
 }
 
 void EquipmentScreenMoveToHighJumpOrLowerInBoots(uint16 v0, uint16 r18) {  // 0x82B511
@@ -2878,7 +2880,7 @@ void EquipmentScreenMoveToHighJumpOrLowerInBoots(uint16 v0, uint16 r18) {  // 0x
     }
   }
   QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
-  pausemenu_equipment_category_item = (v0 >> 1) << 8 | 3;
+  pausemenu_equipment_category_item = (v0 >> 1) << 8 | kEquipmentCategory_3_Boots;
 }
 
 uint16 EquipmentScreenCategory_Boots_MoveUpInBoots(uint16 k) {  // 0x82B53F
@@ -2888,7 +2890,7 @@ uint16 EquipmentScreenCategory_Boots_MoveUpInBoots(uint16 k) {  // 0x82B53F
       return -1;
   }
   QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
-  uint16 result = (k >> 1) << 8 | 3;
+  uint16 result = (k >> 1) << 8 | kEquipmentCategory_3_Boots;
   pausemenu_equipment_category_item = result;
   return result;
 }
@@ -2897,7 +2899,7 @@ void EquipmentScreenCategory_ButtonResponse(uint16 r24) {  // 0x82B568
   if ((joypad1_newkeys & kButton_A) != 0) {
     QueueSfx1_Max6(kSfx1_MenuOptionSelected);
     int item = HIBYTE(pausemenu_equipment_category_item);
-    int category = (uint8)pausemenu_equipment_category_item;
+    int category = LOBYTE(pausemenu_equipment_category_item);
     uint8 *target = g_ram + *(uint16 *)RomPtr_82(kEquipmentPtrsToRamTilemapOffsets[category] + item * 2);
     uint16 *var = (uint16 *)RomPtr_RAM(kEquipmentPtrsToBitsets[category]);
     uint16 mask = *(uint16 *)RomPtr_82(kEquipmentPtrsToBitmasks[category] + item * 2);
@@ -2945,7 +2947,7 @@ void DrawMapIcons(void) {  // 0x82B672
   DrawSaveStationMapIcon(8, 0xC80B, 1024);
   if (enable_debug)
     DrawSimpleMapIcons(8, 0xC82B, 1024);
-  if (!area_index) {
+  if (area_index == kArea_0_Crateria) {
     DrawMenuSpritemap(0x63, kMap_Criteria_SavePoints[0] - reg_BG1HOFS, kMap_Criteria_SavePoints[1] - reg_BG1VOFS, 3584);
   }
 }
@@ -2967,7 +2969,7 @@ void DrawFileSelectMapIcons(void) {  // 0x82B6DD
     DrawDebugElevatorMapIcons(0x17, 0xC81B, 1536);
     DrawSimpleMapIcons(0xC, 0xC82B, 1536);
   }
-  if (!area_index)
+  if (area_index == kArea_0_Crateria)
     DrawMenuSpritemap(0x63, kMap_Criteria_SavePoints[0] - reg_BG1HOFS, kMap_Criteria_SavePoints[1] - reg_BG1VOFS, 3584);
 }
 
@@ -3158,7 +3160,7 @@ void DrawFileCopyArrow(void) {  // 0x82BABA
         v0 = 2;
     }
   }
-  DrawMenuSpritemap(file_copy_arrow_stuff[v0].spritemap, file_copy_arrow_stuff[v0].xpos, file_copy_arrow_stuff[v0].ypos, 512);
+  DrawMenuSpritemap(kFileCopyArrow_Tab0[v0].spritemap_idx, kFileCopyArrow_Tab0[v0].x_pos, kFileCopyArrow_Tab0[v0].y_pos, 512);
 }
 
 void DisplayMapElevatorDestinations(void) {  // 0x82BB30
@@ -3215,8 +3217,8 @@ void RestartGameOverBabyMetroidInstructionList(void) {  // 0x82BBDD
 
 void DrawBabyMetroid(uint16 k) {  // 0x82BB9E
   uint16 v1 = *((uint16 *)RomPtr_82(k) + 2);
-  for(int i = 0; i < 32; i += 2)
-    palette_buffer[(i >> 1) + 192] = *(uint16 *)RomPtr_82(v1 + i);
+  for(int i = 0; i < 0x20; i += 2)
+    palette_buffer.sprite_pal_4[(i >> 1)] = *(uint16 *)RomPtr_82(v1 + i);
   const uint8 *v3 = RomPtr_82(k);
   DrawMenuSpritemap(GET_WORD(v3 + 2), 0x7C, 0x50, 2048);
   DrawMenuSpritemap(0x64, 0x7C, 0x50, 2560);
@@ -3270,11 +3272,11 @@ uint8 AdvancePaletteFadeForAllPalettes_0xc(void) {  // 0x82D961
 uint8 AdvancePaletteFade_BgPalette6(void) {  // 0x82D96C
   palette_change_denom = 12;
   if (palette_change_num <= 0xD) {
-    for (int i = 192; i < 0xE0; i += 2)
-      palette_buffer[i >> 1] = CalculateNthTransitionColorFromXtoY(
+    for (int i = 0; i < 0x20; i += 2)
+      palette_buffer.bg1_bg2_pal_6[i >> 1] = CalculateNthTransitionColorFromXtoY(
         palette_change_num,
-        palette_buffer[i >> 1],
-        target_palettes[i >> 1]);
+        palette_buffer.bg1_bg2_pal_6[i >> 1],
+        target_palettes.bg1_bg2_pal_6[i >> 1]);
     ++palette_change_num;
     return 0;
   } else {
@@ -3288,10 +3290,10 @@ uint8 AdvanceGradualColorChangeOfPalette(uint16 k, uint16 j) {  // 0x82D9B8
   if ((int16)(15 - palette_change_num) >= 0) {
     uint16 R34 = j;
     do {
-      palette_buffer[k >> 1] = CalculateNthTransitionColorFromXtoY(
+      palette_buffer.pal[k >> 1] = CalculateNthTransitionColorFromXtoY(
         palette_change_num + 1,
-        palette_buffer[k >> 1],
-        target_palettes[k >> 1]);
+        palette_buffer.pal[k >> 1],
+        target_palettes.pal[k >> 1]);
       k += 2;
     } while (k < R34);
     ++palette_change_num;
@@ -3307,10 +3309,10 @@ uint8 AdvancePaletteFadeForAllPalettes(void) {  // 0x82DA02
     for (int i = 0; i < 0x200; i += 2) {
       palette_change_color_index = i;
       int v2 = i >> 1;
-      if (target_palettes[v2] != palette_buffer[v2]) {
-        uint16 v3 = CalculateNthTransitionColorFromXtoY(palette_change_num, palette_buffer[v2], target_palettes[v2]);
+      if (target_palettes.pal[v2] != palette_buffer.pal[v2]) {
+        uint16 v3 = CalculateNthTransitionColorFromXtoY(palette_change_num, palette_buffer.pal[v2], target_palettes.pal[v2]);
         i = palette_change_color_index;
-        palette_buffer[palette_change_color_index >> 1] = v3;
+        palette_buffer.pal[palette_change_color_index >> 1] = v3;
       }
     }
     ++palette_change_num;
@@ -3366,10 +3368,10 @@ void AdvancePaletteFadeForPaletteInX_0x20(void) {  // 0x82DB41
   uint16 v0 = palette_change_color_index;
   do {
     int v1 = v0 >> 1;
-    if (target_palettes[v1] != palette_buffer[v1]) {
-      uint16 v2 = CalculateNthTransitionColorFromXtoY(palette_change_num, palette_buffer[v1], target_palettes[v1]);
+    if (target_palettes.pal[v1] != palette_buffer.pal[v1]) {
+      uint16 v2 = CalculateNthTransitionColorFromXtoY(palette_change_num, palette_buffer.pal[v1], target_palettes.pal[v1]);
       v0 = palette_change_color_index;
-      palette_buffer[palette_change_color_index >> 1] = v2;
+      palette_buffer.pal[palette_change_color_index >> 1] = v2;
     }
     v0 += 2;
     palette_change_color_index = v0;
@@ -3378,7 +3380,7 @@ void AdvancePaletteFadeForPaletteInX_0x20(void) {  // 0x82DB41
 
 void HandleSamusOutOfHealthAndGameTile(void) {  // 0x82DB69
   if ((int16)samus_health <= 0) {
-    if ((reserve_health_mode & 1) != 0 && samus_reserve_health) {
+    if ((reserve_health_mode & kReserveHealthMode_1_Auto) != 0 && samus_reserve_health) {
       time_is_frozen_flag = 0x8000;
       game_state = kGameState_27_ReserveTanksAuto;
       RunSamusCode(kSamusCode_27_LockForReserveTank);
@@ -3444,18 +3446,18 @@ LABEL_9:
 CoroutineRet GameState_19_SamusNoHealth(void) {  // 0x82DC80
   COROUTINE_AWAIT_ONLY(GameState_8_MainGameplay());
   for (int i = 255; i >= 0; --i)
-    ram3000.pause_menu_map_tilemap[i + 384] = palette_buffer[i];
+    ram3000.pause_menu_map_tilemap[i + 384] = palette_buffer.pal[i];
   for (int j = 382; (j & 0x8000) == 0; j -= 2)
-    target_palettes[j >> 1] = 0;
+    target_palettes.pal[j >> 1] = 0;
   for (int k = 94; (k & 0x8000) == 0; k -= 2)
-    target_palettes[(k >> 1) + 208] = 0;
-  for (int m = 30; (m & 0x8000) == 0; m -= 2)
-    target_palettes[(m >> 1) + 192] = palette_buffer[(m >> 1) + 192];
+    target_palettes.pal[(k >> 1) + 208] = 0;
+  for (int m = 0x1E; (m & 0x8000) == 0; m -= 2)
+    target_palettes.sprite_pal_4[(m >> 1)] = palette_buffer.sprite_pal_4[(m >> 1)];
   game_options_screen_index = 3;
   samus_death_anim_timer = 0;
   samus_death_anim_counter = 0;
   samus_death_anim_pre_flash_timer = 0;
-  hud_item_index = kHudItem_0_Nothing;
+  hud_item_index = 0;
   samus_auto_cancel_hud_item_index = 0;
   samus_invincibility_timer = 0;
   samus_knockback_timer = 0;
@@ -3560,13 +3562,13 @@ void LoadDoorHeader(void) {  // 0x82DE12
   DoorDef = get_DoorDef(door_def_ptr);
   room_ptr = DoorDef->room_definition_ptr;
   elevator_door_properties_orientation = *(uint16 *)&DoorDef->door_bitflags;
-  elevator_flags = elevator_door_properties_orientation & 0x80;
-  door_direction = DoorDef->door_orientation;
+  elevator_properties = elevator_door_properties_orientation & kElevatorProperty_DoorIsElevator;
+  door_direction = DoorDef->door_direction_;
   door_destination_x_pos = DoorDef->x_pos_in_room << 8;
   door_destination_y_pos = DoorDef->y_pos_in_room << 8;
   samus_distance_from_door = DoorDef->samus_distance_from_door;
   if (samus_distance_from_door < 0) {
-    if ((door_direction & 2) != 0)
+    if ((door_direction & kDoorDirection_VerticalMask) != 0)
       samus_distance_from_door = 384;
     else
       samus_distance_from_door = 200;
@@ -3599,17 +3601,17 @@ void LoadRoomHeader(void) {  // 0x82DE6F
 void LoadStateHeader(void) {  // 0x82DEF2
   RoomDefRoomstate *RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
   //TileSet *TS = get_TileSet(kStateHeaderTileSets[RD->graphics_set]);
-  TileSet TS = kTileSetTable[RD->graphics_set];
+  TileSet TS = kTileSetTable[RD->tileset_];
   tileset_tile_table_pointer = TS.tile_table_ptr;
   tileset_tiles_pointer = TS.tiles_ptr;
   tileset_compr_palette_ptr = TS.palette_ptr;
-  room_compr_level_data_ptr = RD->compressed_room_map_ptr;
-  room_music_data_index = RD->music_track;
-  room_music_track_index = RD->music_control;
-  room_layer3_asm_ptr = RD->room_layer3_fx_ptr;
+  room_level_data_ptr = RD->level_data_ptr;
+  room_music_data_index = RD->music_data_index_;
+  room_music_track_index = RD->music_track_index_;
+  room_layer3_fx_ptr = RD->room_layer3_fx_ptr_;
   room_enemy_population_ptr = RD->enemy_population_ptr_;
   room_enemy_tilesets_ptr = RD->enemy_tilesets_ptr;
-  *(uint16 *)&layer2_scroll_x = RD->vertical_screen_nudge_limit;
+  WORD(layer2_scroll_x) = RD->layer2_scroll_;
   room_main_code_ptr = RD->main_code_ptr;
 }
 
@@ -3623,7 +3625,7 @@ void PointlessFunctionStupidToo(void) {  // 0x82DF80
 
 void SaveMapExploredifElevator(void) {  // 0x82DF99
   if ((elevator_door_properties_orientation & 0xF) != 0)
-    SetElevatorsAsUsed();
+    SetDebugElevatorsAsUsed();
   if ((get_DoorDef(door_def_ptr)->door_bitflags & 0x40) != 0)
     SaveExploredMapTilesToSaved();
 }
@@ -3634,7 +3636,7 @@ void LoadMapExploredIfElevator(void) {  // 0x82DFB6
 }
 
 void EnsureSamusDrawnEachFrame(void) {  // 0x82DFC7
-  if (!elevator_flags)
+  if (!elevator_properties)
     Samus_DrawWhenNotAnimatingOrDying();
 }
 
@@ -3709,11 +3711,11 @@ void LoadColorsForSpritesBeamsAndEnemies(void) {  // 0x82E139
   uint16 k;
 
   for (int i = 30; i >= 0; i -= 2)
-    target_palettes[(i >> 1) + 208] = kInitialPalette[(i >> 1) + 208];
+    target_palettes.sprite_pal_5[(i >> 1)] = kInitialPalette[(i >> 1) + 208]; //todo: fix mismatch with ceres door
   for (j = 30; (j & 0x8000) == 0; j -= 2)
-    target_palettes[(j >> 1) + 224] = palette_buffer[(j >> 1) + 224];
+    target_palettes.sprite_pal_6[(j >> 1)] = palette_buffer.sprite_pal_6[(j >> 1)];
   for (k = 30; (k & 0x8000) == 0; k -= 2)
-    target_palettes[(k >> 1) + 128] = kCommonSpritesPalette1[k >> 1];
+    target_palettes.sprite_pal_0[(k >> 1)] = kCommonSpritesPalette1[k >> 1];
 }
 
 CoroutineRet CallDoorTransitionFunction_Async(uint32 ea) {
@@ -3729,10 +3731,10 @@ CoroutineRet CallDoorTransitionFunction_Async(uint32 ea) {
   case fnDoorTransitionFunction_SetupScrolling: return DoorTransitionFunction_SetupScrolling();
   case fnDoorTransitionFunction_PlaceSamusLoadTiles: return DoorTransitionFunction_PlaceSamusLoadTiles();
   case fnDoorTransitionFunction_LoadMoreThings_Async: return DoorTransitionFunction_LoadMoreThings_Async();
-  case fnDoorTransition_C_HandleAnimTiles: return DoorTransition_C_HandleAnimTiles();
-  case fnDoorTransition_WaitForMusicToClear: return DoorTransition_WaitForMusicToClear();
-  case fnDoorTransition_HandleTransition: return DoorTransition_HandleTransition();
-  case fnDoorTransition_FadeInScreenAndFinish: return DoorTransition_FadeInScreenAndFinish();
+  case fnDoorTransitionFunction_HandleAnimTiles: return DoorTransitionFunction_HandleAnimTiles();
+  case fnDoorTransitionFunction_WaitForMusicToClear: return DoorTransitionFunction_WaitForMusicToClear();
+  case fnDoorTransitionFunction_HandleTransition: return DoorTransitionFunction_HandleTransition();
+  case fnDoorTransitionFunction_FadeInScreenAndFinish: return DoorTransitionFunction_FadeInScreenAndFinish();
   default: return Unreachable();
   }
 }
@@ -3742,12 +3744,12 @@ CoroutineRet GameState_9_HitDoorBlock(void) {  // 0x82E169
 }
 
 CoroutineRet DoorTransitionFunction_HandleElevator(void) {  // 0x82E17D
-  if (!elevator_flags) {
+  if (!elevator_properties) {
     ++game_state;
     return GameState_10_LoadingNextRoom_Async();
   }
   RunSamusCode(kSamusCode_0_LockSamus);
-  if ((elevator_direction & 0x8000) != 0) {
+  if ((elevator_direction & kElevatorDirection_Up) != 0) {
     ++game_state;
     return GameState_10_LoadingNextRoom_Async();
   }
@@ -3781,28 +3783,28 @@ CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
   LoaadDesinationRoomCreBitset();
   for (int i = 254; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    target_palettes[v1] = 0;
-    target_palettes[v1 + 128] = 0;
+    target_palettes.pal[v1] = 0;
+    target_palettes.pal[v1 + 128] = 0;
   }
-  target_palettes[9] = palette_buffer[9];
-  target_palettes[10] = palette_buffer[10];
-  target_palettes[13] = palette_buffer[13];
-  target_palettes[14] = palette_buffer[14];
-  target_palettes[17] = palette_buffer[17];
-  target_palettes[18] = palette_buffer[18];
-  target_palettes[19] = palette_buffer[19];
-  target_palettes[29] = palette_buffer[29];
+  target_palettes.bg3_pal_2[1] = palette_buffer.bg3_pal_2[1];
+  target_palettes.bg3_pal_2[2] = palette_buffer.bg3_pal_2[2];
+  target_palettes.bg3_pal_3[1] = palette_buffer.bg3_pal_3[1];
+  target_palettes.bg3_pal_3[2] = palette_buffer.bg3_pal_3[2];
+  target_palettes.bg3_pal_4[1] = palette_buffer.bg3_pal_4[1];
+  target_palettes.bg3_pal_4[2] = palette_buffer.bg3_pal_4[2];
+  target_palettes.bg3_pal_4[3] = palette_buffer.bg3_pal_4[3];
+  target_palettes.bg3_pal_7[1] = palette_buffer.bg3_pal_7[1];
   if (((previous_cre_bitset | cre_bitset) & 1) == 0) {
-    target_palettes[20] = palette_buffer[20];
-    target_palettes[21] = palette_buffer[21];
-    target_palettes[22] = palette_buffer[22];
-    target_palettes[23] = palette_buffer[23];
-    target_palettes[28] = palette_buffer[28];
+    target_palettes.bg3_pal_5[0] = palette_buffer.bg3_pal_5[0];
+    target_palettes.bg3_pal_5[1] = palette_buffer.bg3_pal_5[1];
+    target_palettes.bg3_pal_5[2] = palette_buffer.bg3_pal_5[2];
+    target_palettes.bg3_pal_5[3] = palette_buffer.bg3_pal_5[3];
+    target_palettes.bg3_pal_7[0] = palette_buffer.bg3_pal_7[0];
     if (timer_status) {
-      target_palettes[209] = palette_buffer[209];
-      target_palettes[210] = palette_buffer[210];
-      target_palettes[212] = palette_buffer[212];
-      target_palettes[221] = palette_buffer[221];
+      target_palettes.sprite_pal_5[1] = palette_buffer.sprite_pal_5[1];
+      target_palettes.sprite_pal_5[2] = palette_buffer.sprite_pal_5[2];
+      target_palettes.sprite_pal_5[4] = palette_buffer.sprite_pal_5[4];
+      target_palettes.sprite_pal_5[13] = palette_buffer.sprite_pal_5[13];
       DrawTimer();
     }
   }
@@ -3856,7 +3858,7 @@ CoroutineRet DoorTransitionFunction_LoadDoorHeaderEtc(void) {  // 0x82E2F7
 }
 
 CoroutineRet DoorTransitionFunction_ScrollScreenToAlignment(void) {  // 0x82E310
-  if ((door_direction & 2) != 0) {
+  if ((door_direction & kDoorDirection_VerticalMask) != 0) {
     if ((uint8)layer1_x_pos) {
       if ((layer1_x_pos & 0x80) != 0)
         ++layer1_x_pos;
@@ -3879,7 +3881,7 @@ LABEL_10:
 }
 
 CoroutineRet DoorTransitionFunction_FixDoorsMovingUp(void) {  // 0x82E353
-  if ((door_direction & 3) == 3)
+  if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Up)
     FixDoorsMovingUp();
   door_transition_function = FUNC16(DoorTransitionFunction_SetupNewRoom);
   return kCoroutineNone;
@@ -3900,9 +3902,9 @@ CoroutineRet DoorTransitionFunction_SetupScrolling(void) {  // 0x82E38E
   reg_BG2HOFS = 0;
   reg_BG2VOFS = 0;
   scrolling_finished_hook = 0;
-  if ((door_direction & 3) == 2)
+  if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Down)
     ++reg_BG1VOFS;
-  if ((door_direction & 3) != 3)
+  if ((door_direction & kDoorDirection_DirectionMask) != kDoorDirection_Up)
     door_transition_frame_counter = 0;
   DoorTransitionScrollingSetup();
   door_transition_function = FUNC16(DoorTransitionFunction_PlaceSamusLoadTiles);
@@ -3917,7 +3919,7 @@ CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
   samus_y_pos = layer1_y_pos + (uint8)samus_y_pos;
   samus_prev_y_pos = samus_y_pos;
   door_transition_flag = 0;
-  if ((door_direction & 3) == 2)
+  if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Down)
     v0 = 16;
   else
     v0 = 22;
@@ -3936,7 +3938,7 @@ CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
     CopyToVramNow(0x3000, 0x7e8000, 0x2000);
     CopyToVramNow(0x4000, 0x9ab200, 0x1000);
   }
-  if ((door_direction & 3) == 3)
+  if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Up)
     irqhandler_next_handler = 16;
   door_transition_function = FUNC16(DoorTransitionFunction_LoadMoreThings_Async);
   return kCoroutineNone;
@@ -3987,18 +3989,18 @@ CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
   while ((door_transition_flag & 0x8000) == 0) {
     COROUTINE_AWAIT(1, WaitForNMI_Async());
   }
-  palette_buffer[196] = 15328;
+  palette_buffer.sprite_pal_4[4] = 15328;
   SpawnBG3ScrollHdmaObject();
   hdma_objects_enable_flag |= 0x8000;
   COROUTINE_AWAIT(2, PlmHandler_Async());
 
-  if ((door_direction & 2) == 0) {
-    if ((door_direction & 3) != 0)
+  if ((door_direction & kDoorDirection_VerticalMask) == 0) {
+    if ((door_direction & kDoorDirection_Up) != 0)
       samus_x_pos &= 0xFFF8;
     else
       samus_x_pos |= 7;
   }
-  door_transition_function = FUNC16(DoorTransition_C_HandleAnimTiles);
+  door_transition_function = FUNC16(DoorTransitionFunction_HandleAnimTiles);
   COROUTINE_END(0);
 }
 
@@ -4071,21 +4073,21 @@ uint16 UpdateBackgroundCommand_C_ClearKraidBg2Tilemap(uint16 j) {  // 0x82E652
   return j;
 }
 
-CoroutineRet DoorTransition_C_HandleAnimTiles(void) {  // 0x82E659
+CoroutineRet DoorTransitionFunction_HandleAnimTiles(void) {  // 0x82E659
   AnimtilesHandler();
-  door_transition_function = FUNC16(DoorTransition_WaitForMusicToClear);
+  door_transition_function = FUNC16(DoorTransitionFunction_WaitForMusicToClear);
   return kCoroutineNone;
 }
 
-CoroutineRet DoorTransition_WaitForMusicToClear(void) {  // 0x82E664
+CoroutineRet DoorTransitionFunction_WaitForMusicToClear(void) {  // 0x82E664
   if (!HasQueuedMusic()) {
-    door_transition_function = FUNC16(DoorTransition_HandleTransition);
+    door_transition_function = FUNC16(DoorTransitionFunction_HandleTransition);
     LoadNewMusicTrackIfChanged();
   }
   return kCoroutineNone;
 }
 
-CoroutineRet DoorTransition_HandleTransition(void) {  // 0x82E6A2
+CoroutineRet DoorTransitionFunction_HandleTransition(void) {  // 0x82E6A2
   if ((samus_x_pos & 0xF0) == 16) {
     samus_x_pos = (samus_x_pos | 0xF) + 8;
   } else if ((samus_x_pos & 0xF0) == 224) {
@@ -4102,19 +4104,19 @@ CoroutineRet DoorTransition_HandleTransition(void) {  // 0x82E6A2
     v1 = 4;
   irqhandler_next_handler = v1;
   PointlessFunctionStupidToo();
-  if (elevator_flags) {
-    if ((elevator_direction & 0x8000) == 0)
+  if (elevator_properties) {
+    if ((elevator_direction & kElevatorDirection_Up) == 0)
       RunSamusCode(kSamusCode_7_SetupForElevator);
     else
       RunSamusCode(kSamusCode_0_LockSamus);
   }
   SetLiquidPhysicsType();
-  door_transition_function = FUNC16(DoorTransition_FadeInScreenAndFinish);
+  door_transition_function = FUNC16(DoorTransitionFunction_FadeInScreenAndFinish);
   *(uint16 *)&reg_INIDISP |= 0x1F;
   return kCoroutineNone;
 }
 
-CoroutineRet DoorTransition_FadeInScreenAndFinish(void) {  // 0x82E737
+CoroutineRet DoorTransitionFunction_FadeInScreenAndFinish(void) {  // 0x82E737
   AnimtilesHandler();
   DetermineWhichEnemiesToProcess();
   EnemyMain();
@@ -4141,7 +4143,7 @@ void LoadDestinationRoomThings(void) {  // 0x82E76B
 }
 
 void LoadCRETilesTilesetTilesAndPalette(void) {  // 0x82E783
-  elevator_flags = 0;
+  elevator_properties = 0;
   WriteRegWord(VMAIN, 0x80);
   WriteRegWord(VMADDL, addr_unk_605000 >> 1);
   DecompressToVRAM(0xb98000, addr_unk_605000);
@@ -4159,13 +4161,13 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
 
   for (int i = 25598; i >= 0; i -= 2)
     level_data[i >> 1] = 0x8000;
-  DecompressToMem(Load24(&room_compr_level_data_ptr), (uint8 *)&ram7F_start);
+  DecompressToMem(Load24(&room_level_data_ptr), (uint8 *)&ram7F_start);
 
   uint16 size = ram7F_start;
   memcpy(custom_background, (uint8 *)level_data + size + (size >> 1), size);
   memcpy(BTS, (uint8 *)level_data + size, size >> 1);
 
-  if (area_index == 6) {
+  if (area_index == kArea_6_Ceres) {
     DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa000);
   } else {
     DecompressToMem(0xb9a09d, g_ram + 0xa000);
@@ -4201,8 +4203,8 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
   }
   RunDoorSetupCode();
   RunRoomSetupCode();
-  if (elevator_flags)
-    elevator_status = 2;
+  if (elevator_properties)
+    elevator_status = kElevatorStatus_RoomTransition;
 }
 
 void SpawnDoorClosingPLM(void) {  // 0x82E8EB
@@ -4340,13 +4342,13 @@ void LoadLevelScrollAndCre(void) {  // 0x82EA73
     level_data[(i >> 1) + 3200 * 2] = 0x8000;
     level_data[(i >> 1) + 3200 * 3] = 0x8000;
   }
-  DecompressToMem(Load24(&room_compr_level_data_ptr), (uint8 *)&ram7F_start);
+  DecompressToMem(Load24(&room_level_data_ptr), (uint8 *)&ram7F_start);
 
   uint16 size = ram7F_start;
   memcpy(custom_background, (uint8*)level_data + size + (size >> 1), size);
   memcpy(BTS, (uint8 *)level_data + size, size >> 1);
 
-  if (area_index == 6) {
+  if (area_index == kArea_6_Ceres) {
     DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa000);
   } else {
     if ((cre_bitset & 2) != 0) {
@@ -4390,8 +4392,8 @@ void CreatePlmsExecuteDoorAsmRoomSetup(void) {  // 0x82EB6C
   }
   RunDoorSetupCode();
   RunRoomSetupCode();
-  if (elevator_flags)
-    elevator_status = 2;
+  if (elevator_properties)
+    elevator_status = kElevatorStatus_RoomTransition;
 }
 
 static Func_V *const kGameOptionsMenuFuncs[13] = {  // 0x82EB9F
@@ -4455,8 +4457,8 @@ void GameOptionsMenu_1_LoadingOptionsScreen(void) {  // 0x82EC11
   reg_BG2HOFS = 0;
   reg_BG2VOFS = 0;
   debug_invincibility = 0;
-  for (int i = 510; i >= 0; i -= 2)
-    palette_buffer[i >> 1] = kMenuPalettes_82[i >> 1];
+  for (int i = 0x1FE; i >= 0; i -= 2)
+    palette_buffer.pal[i >> 1] = kMenuPalettes_82[i >> 1];
   DecompressToMem(0x978DF4, g_ram + 0x1c000);
   DecompressToMem(0x978FCD, g_ram + 0x1c800);
   DecompressToMem(0x9791C4, g_ram + 0x1d000);
@@ -4591,7 +4593,7 @@ void GameOptionsMenu_4_StartGame(void) {  // 0x82EEB4
       loading_game_state = kLoadingGameState_5_Main;
       SaveToSram(selected_save_slot);
     }
-  } else if (loading_game_state) {
+  } else if (loading_game_state != kLoadingGameState_0_Intro) {
     game_state = loading_game_state;
     if (loading_game_state == kLoadingGameState_22_EscapingCeres)
       cinematic_function = FUNC16(CinematicFunctionBlackoutFromCeres);

@@ -396,10 +396,10 @@ void Crocomire_Init(void) {  // 0xA48A5A
     E->crocom_var_A = 0;
     E->crocom_var_E = 0;
     *(uint16 *)scrolls = kScroll_Red;
-    for (int i = 32; i >= 0; i -= 2) {
+    for (int i = 0x20; i >= 0; i -= 2) {
       int v3 = i >> 1;
-      target_palettes[v3 + 160] = kEnemyInit_Crocomire_Palette2[v3];
-      target_palettes[v3 + 208] = kEnemyInit_Crocomire_Palette5[v3];
+      target_palettes.sprite_pal_2[v3] = kEnemyInit_Crocomire_Palette2[v3];
+      target_palettes.sprite_pal_5[v3] = kEnemyInit_Crocomire_Palette5[v3];
     }
     E->crocom_var_C = 4;
     UNUSED_word_7E179E = 16;
@@ -500,11 +500,11 @@ void Crocomire_Func_31(void) {  // 0xA48CCB
 
   if (!door_transition_flag_enemies) {
     if (Get_Crocomire(0)->base.flash_timer && (random_enemy_counter & 2) != 0) {
-      for (int i = 14; i >= 0; i -= 2)
-        palette_buffer[(i >> 1) + 112] = 0x7FFF;
+      for (int i = 0xE; i >= 0; i -= 2)
+        palette_buffer.bg1_bg2_pal_7[(i >> 1)] = 0x7FFF;
     } else {
-      for (j = 14; (j & 0x8000) == 0; j -= 2)
-        palette_buffer[(j >> 1) + 112] = kCrocomire_Bg1AndBg2Palette7[j >> 1];
+      for (j = 0xE; (j & 0x8000) == 0; j -= 2)
+        palette_buffer.bg1_bg2_pal_7[(j >> 1)] = kCrocomire_Bg1AndBg2Palette7[j >> 1];
     }
   }
 }
@@ -1269,8 +1269,8 @@ void Crocomire_Func_70(void) {  // 0xA49859
   if (kCrocomire_Tab0[E0->crocom_var_D >> 1] == 0x8080) {
     E1->crocom_var_D = -32640;
     E0->crocom_var_D = 128;
-    for (int i = 30; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 176] = kCrocomire_Palette3[i >> 1];
+    for (int i = 0x1E; i >= 0; i -= 2)
+      palette_buffer.sprite_pal_3[(i >> 1)] = kCrocomire_Palette3[i >> 1];
     Crocomire_9BB3();
   } else {
     uint16 crocom_var_D = E0->crocom_var_D;
@@ -1335,8 +1335,8 @@ void Crocomire_Func_71(void) {  // 0xA4990A
     E->base.current_instruction = addr_kCrocomire_Ilist_E158;
     E->base.instruction_timer = 1;
     E->base.palette_index = 0;
-    for (int i = 30; i >= 0; i -= 2)
-      palette_buffer[(i >> 1) + 144] = kCrocomire_Palette1[i >> 1];
+    for (int i = 0x1E; i >= 0; i -= 2)
+      palette_buffer.sprite_pal_1[(i >> 1)] = kCrocomire_Palette1[i >> 1];
     ClearEprojs();
     uint16 v8 = 8;
     int n = 8;

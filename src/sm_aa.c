@@ -113,18 +113,18 @@ const uint16 *Torizo_Instr_37(uint16 k, const uint16 *jp) {  // 0xAAB22E
 }
 
 const uint16 *Torizo_Instr_35(uint16 k, const uint16 *jp) {  // 0xAAB238
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v3 = i >> 1;
-    target_palettes[v3 + 160] = 0;
-    target_palettes[v3 + 144] = 0;
+    target_palettes.sprite_pal_2[v3] = 0;
+    target_palettes.sprite_pal_1[v3] = 0;
   }
   return jp;
 }
 
 const uint16 *Torizo_Instr_38(uint16 k, const uint16 *jp) {  // 0xAAB24D
-  SetBossBitForCurArea(4);
+  SetBossBitForCurArea(kBossBit_AreaTorizo);
   QueueMusic_Delayed8(g_word_AAB09A);
-  if (area_index)
+  if (area_index != kArea_0_Crateria)
     Enemy_ItemDrop_GoldenTorizo(k);
   else
     Enemy_ItemDrop_BombTorizo(k);
@@ -176,42 +176,42 @@ void Torizo_C22D(uint16 k) {  // 0xAAC22D
 }
 
 void Torizo_C250(void) {  // 0xAAC250
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    target_palettes[v1 + 160] = kTorizo_Palettes_3[v1];
-    target_palettes[v1 + 144] = kTorizo_Palettes_2[v1];
+    target_palettes.sprite_pal_2[v1] = kTorizo_Palettes_3[v1];
+    target_palettes.sprite_pal_1[v1] = kTorizo_Palettes_2[v1];
   }
 }
 
 void Torizo_C268(void) {  // 0xAAC268
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    target_palettes[v1 + 160] = kTorizo_Palettes_5[v1];
-    target_palettes[v1 + 144] = kTorizo_Palettes_4[v1];
+    target_palettes.sprite_pal_2[v1] = kTorizo_Palettes_5[v1];
+    target_palettes.sprite_pal_1[v1] = kTorizo_Palettes_4[v1];
   }
 }
 
 void Torizo_C280(void) {  // 0xAAC280
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    target_palettes[v1 + 160] = kTorizo_Palettes_7[v1];
-    target_palettes[v1 + 144] = kTorizo_Palettes_6[v1];
+    target_palettes.sprite_pal_2[v1] = kTorizo_Palettes_7[v1];
+    target_palettes.sprite_pal_1[v1] = kTorizo_Palettes_6[v1];
   }
 }
 
 void Torizo_C298(void) {  // 0xAAC298
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    target_palettes[v1 + 160] = kTorizo_Palettes_10[v1];
-    target_palettes[v1 + 144] = kTorizo_Palettes_8[v1];
+    target_palettes.sprite_pal_2[v1] = kTorizo_Palettes_10[v1];
+    target_palettes.sprite_pal_1[v1] = kTorizo_Palettes_8[v1];
   }
 }
 
 void Torizo_C2B0(void) {  // 0xAAC2B0
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    palette_buffer[v1 + 160] = kTorizo_Palettes_5[v1];
-    palette_buffer[v1 + 144] = kTorizo_Palettes_4[v1];
+    palette_buffer.sprite_pal_2[v1] = kTorizo_Palettes_5[v1];
+    palette_buffer.sprite_pal_1[v1] = kTorizo_Palettes_4[v1];
   }
 }
 
@@ -232,7 +232,7 @@ const uint16 *Torizo_Instr_8(uint16 k, const uint16 *jp) {  // 0xAAC2D1
 const uint16 *Torizo_Instr_25(uint16 k, const uint16 *jp) {  // 0xAAC2D9
   if ((Get_Torizo(k)->toriz_parameter_2 & 0x4000) != 0)
     return INSTR_RETURN_ADDR(jp[0]);
-  if (area_index)
+  if (area_index != kArea_0_Crateria)
     return INSTR_RETURN_ADDR(jp[1]);
   else
     return jp + 2;
@@ -442,7 +442,7 @@ const uint16 *Torizo_Instr_13(uint16 k, const uint16 *jp) {  // 0xAAC618
 }
 
 void Torizo_C620(uint16 k) {  // 0xAAC620
-  if (!area_index && (random_number & 0x8142) == 0) {
+  if (area_index == kArea_0_Crateria && (random_number & 0x8142) == 0) {
     uint16 health = Get_Torizo(k)->base.health;
     if (health && health < 0x15E)
       SpawnEprojWithGfx(health, k, addr_kEproj_BombTorizoLowHealthInitialDrool);
@@ -466,10 +466,10 @@ void Torizo_C643(uint16 k) {  // 0xAAC643
 void Torizo_Hurt(void) {  // 0xAAC67E
   Torizo_C620(cur_enemy_index);
   if (Get_Torizo(cur_enemy_index)->base.flash_timer & 1) {
-    for (int i = 30; i >= 0; i -= 2) {
+    for (int i = 0x1E; i >= 0; i -= 2) {
       int v2 = i >> 1;
-      palette_buffer[v2 + 160] = 0x7FFF;
-      palette_buffer[v2 + 144] = 0x7FFF;
+      palette_buffer.sprite_pal_2[v2] = 0x7FFF;
+      palette_buffer.sprite_pal_1[v2] = 0x7FFF;
     }
   } else {
     Torizo_C2B0();
@@ -628,7 +628,7 @@ void Torizo_Func_7(uint16 k) {  // 0xAAC82C
 
 void Torizo_Init(void) {  // 0xAAC87F
   Enemy_Torizo *E = Get_Torizo(cur_enemy_index);
-  if (CheckBossBitForCurArea(4) & 1) {
+  if (CheckBossBitForCurArea(kBossBit_AreaTorizo) & 1) {
     E->base.properties |= kEnemyProps_Deleted;
   } else {
     int v2 = area_index >> 1;
@@ -647,12 +647,12 @@ void Torizo_Init(void) {  // 0xAAC87F
     E->base.y_pos = g_word_AAC963[v2];
     E->toriz_var_A = 0;
     E->toriz_var_B = 256;
-    for (int i = 30; i >= 0; i -= 2) {
+    for (int i = 0x1E; i >= 0; i -= 2) {
       int v4 = i >> 1;
-      target_palettes[v4 + 240] = kTorizo_Palettes_1[v4];
-      target_palettes[v4 + 176] = kTorizo_Palette[v4];
+      target_palettes.sprite_pal_7[v4] = kTorizo_Palettes_1[v4];
+      target_palettes.sprite_pal_3[v4] = kTorizo_Palette[v4];
     }
-    if (area_index) {
+    if (area_index != kArea_0_Crateria) {
       Torizo_C280();
       if (joypad1_lastkeys == (kButton_B | kButton_Y | kButton_A | kButton_X)) {
         samus_health = 700;
@@ -682,7 +682,7 @@ void GoldTorizo_Touch(void) {  // 0xAAC977
 }
 
 void Torizo_Shot(void) {  // 0xAAC97C
-  if (area_index) {
+  if (area_index != kArea_0_Crateria) {
     GoldTorizo_Shot();
   } else {
     Enemy_Torizo *E = Get_Torizo(cur_enemy_index);
@@ -700,7 +700,7 @@ void Torizo_Shot(void) {  // 0xAAC97C
 }
 
 void Torizo_Func_8(void) {  // 0xAAC9C2
-  if (area_index)
+  if (area_index != kArea_0_Crateria)
     Torizo_D658();
 }
 
@@ -806,10 +806,10 @@ void Torizo_Func_11(uint16 k) {  // 0xAAD3B2
 void GoldTorizo_Hurt(void) {  // 0xAAD3BA
   Torizo_C620(cur_enemy_index);
   if (gEnemyData(cur_enemy_index)->flash_timer & 1) {
-    for (int i = 30; i >= 0; i -= 2) {
+    for (int i = 0x1E; i >= 0; i -= 2) {
       int v2 = i >> 1;
-      palette_buffer[v2 + 160] = 0x7FFF;
-      palette_buffer[v2 + 144] = 0x7FFF;
+      palette_buffer.sprite_pal_2[v2] = 0x7FFF;
+      palette_buffer.sprite_pal_1[v2] = 0x7FFF;
     }
   } else {
     Torizo_Func_11(cur_enemy_index);
@@ -1079,10 +1079,10 @@ void TourianEntranceStatue_Init(void) {  // 0xAAD7C8
     SpawnEprojWithRoomGfx(addr_kEproj_TourianStatueRidley, 0);
     SpawnEprojWithRoomGfx(addr_kEproj_TourianStatuePhantoon, 0);
   }
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v5 = i >> 1;
-    target_palettes[v5 + 240] = kEnemyInit_TourianEntranceStatue_PaletteTab1[v5];
-    target_palettes[v5 + 160] = kEnemyInit_TourianEntranceStatue_PaletteTab0[v5];
+    target_palettes.sprite_pal_7[v5] = kEnemyInit_TourianEntranceStatue_PaletteTab1[v5];
+    target_palettes.sprite_pal_2[v5] = kEnemyInit_TourianEntranceStatue_PaletteTab0[v5];
   }
 }
 
@@ -1468,7 +1468,7 @@ const uint16 *Shaktool_Instr_14(uint16 k, const uint16 *jp) {  // 0xAAE6F0
 
 void N00bTubeCracks_Init(void) {  // 0xAAE716
   for (int i = 62; i >= 0; i -= 2)
-    target_palettes[(i >> 1) + 144] = kN00bTubeCracks_Palette2[i >> 1];
+    target_palettes.pal[(i >> 1) + 144] = kN00bTubeCracks_Palette2[i >> 1];
 }
 
 void ChozoStatue_Init(void) {  // 0xAAE725
@@ -1486,10 +1486,10 @@ void ChozoStatue_Init(void) {  // 0xAAE725
   if (parameter_2) {
     sub_AAE784();
   } else {
-    for (int i = 30; i >= 0; i -= 2) {
+    for (int i = 0x1E; i >= 0; i -= 2) {
       int v3 = i >> 1;
-      target_palettes[v3 + 160] = kChozoStatue_Palettes[v3];
-      target_palettes[v3 + 144] = kChozoStatue_Palette[v3];
+      target_palettes.sprite_pal_2[v3] = kChozoStatue_Palettes[v3];
+      target_palettes.sprite_pal_1[v3] = kChozoStatue_Palette[v3];
     }
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x4a, 0x17, 0xd6ee });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x17, 0x1d, 0xd6fc });
@@ -1497,10 +1497,10 @@ void ChozoStatue_Init(void) {  // 0xAAE725
 }
 
 void sub_AAE784(void) {  // 0xAAE784
-  for (int i = 30; i >= 0; i -= 2) {
+  for (int i = 0x1E; i >= 0; i -= 2) {
     int v1 = i >> 1;
-    target_palettes[v1 + 160] = kChozoStatue_Palettes3[v1];
-    target_palettes[v1 + 144] = kChozoStatue_Palettes2[v1];
+    target_palettes.sprite_pal_2[v1] = kChozoStatue_Palettes3[v1];
+    target_palettes.sprite_pal_1[v1] = kChozoStatue_Palettes2[v1];
   }
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0c, 0x1d, 0xd6d6 });
 }

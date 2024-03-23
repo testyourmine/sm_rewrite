@@ -210,7 +210,7 @@ void UNUSED_sub_878162(void) {  // 0x878162
 }
 
 uint16 AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet(uint16 k, uint16 j) {  // 0x8781BA
-  if (!(CheckBossBitForCurArea(1) & 1)) {
+  if (!(CheckBossBitForCurArea(kBossBit_AreaBoss) & 1)) {
     animtiles_instr_timers[k >> 1] = 1;
     return 0;
   }
@@ -221,7 +221,7 @@ uint16 AnimtilesInstr_GotoIfBossBitSetInArea(uint16 k, uint16 j) {  // 0x878303
   const AnimtilesEntry v2 = get_AnimtilesEntry(j);
   uint16 v3 = j + 2;
   if ((v2.boss_bit & boss_bits_for_area[v2.area]) != 0)
-    return AnimtilesInstr_Goto(k, get_AnimtilesEntry(j).instr_list_ptr2);
+    return AnimtilesInstr_Goto(k, v2.instr_list_ptr2);
   else
     return v3 + 2 + 2;
 }
@@ -260,9 +260,9 @@ uint16 AnimtilesInstr_TourianStatueClearState(uint16 k, uint16 j) {  // 0x878352
 uint16 AnimtilesInstr_Clear3PaletteColors(uint16 k, uint16 j) {  // 0x87835B
   //int v2 = *(uint16 *)RomPtr_87(j) >> 1;
   uint16 v2 = get_AnimtilesEntry(j).palette_offset >> 1;
-  palette_buffer[v2] = 0;
-  palette_buffer[v2 + 1] = 0;
-  palette_buffer[v2 + 2] = 0;
+  palette_buffer.pal[v2] = 0;
+  palette_buffer.pal[v2 + 1] = 0;
+  palette_buffer.pal[v2 + 2] = 0;
   return j + 2 + 2;
 }
 
@@ -277,7 +277,7 @@ uint16 AnimtilesInstr_Write8PaletteColors(uint16 k, uint16 j) {  // 0x87837F
 
   uint16 v2 = get_AnimtilesEntry(j).palette_offset;
   for (int i = 0; i != 16; i += 2) {
-    target_palettes[v2 >> 1] = kAnimtilesInstr_Write8PaletteColors[i >> 1];
+    target_palettes.pal[v2 >> 1] = kAnimtilesInstr_Write8PaletteColors[i >> 1];
     v2 += 2;
   }
   return j + 2 + 2;

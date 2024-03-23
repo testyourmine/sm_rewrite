@@ -6,11 +6,11 @@
 #include "sm_91.h"
 
 
-static void Xray_Func12(uint16 dst_r22, const uint8 *jp);
-static void Xray_Func13(uint16 dst_r22, uint16 j);
-static void Xray_Func14(uint16 dst_r22, const uint8 *jp);
-static void Xray_Func15(uint16 dst_r22, const uint8 *jp);
-static void Xray_Func16(uint16 dst_r22, uint16 j);
+static void CopyRevealedBlockToXrayBg2(uint16 dst_r22, const uint8 *jp);
+static void CopyBlockToXrayBg2(uint16 dst_r22, uint16 j);
+static void CopyRevealedBlockToXrayBg2OneBlockRight(uint16 dst_r22, const uint8 *jp);
+static void CopyRevealedBlockToXrayBg2OneBlockDown(uint16 dst_r22, const uint8 *jp);
+static void CopyFlippedBlockToXrayBg1(uint16 dst_r22, uint16 j);
 
 typedef struct Pair_R18_R20 {
   uint16 r18, r20;
@@ -54,7 +54,7 @@ void Samus_InputHandler(void) {  // 0x918000
 }
 
 void Samus_Input_00_Standing(void) {  // 0x91804D
-  if (samus_pose && samus_pose != kPose_9B_FaceF_VariaGravitySuit || !elevator_status)
+  if (samus_pose && samus_pose != kPose_9B_FaceF_VariaGravitySuit || elevator_status == kElevatorStatus_Inactive)
     Samus_LookupTransitionTable();
 }
 
@@ -199,7 +199,7 @@ void Samus_LookupTransitionTable(void) {  // 0x9181A9
     } while (pe->new_input != 0xFFFF);
   }
   UNUSED_word_7E0A18 = 0;
-  Samus_Pose_CancelGrapple();
+  Samus_LookupTransitionTableFailureHandler();
 }
 
 Pair_R18_R20 TranslateCustomControllerBindingsToDefault(void) {  // 0x9181F4
@@ -238,8 +238,8 @@ Pair_R18_R20 TranslateCustomControllerBindingsToDefault(void) {  // 0x9181F4
   return (Pair_R18_R20) { ~r18, ~r20 };
 }
 
-void Samus_Pose_CancelGrapple(void) {  // 0x9182D9
-  if (Samus_Pose_Func2() & 1 || kPoseParams[samus_pose].new_pose_unless_buttons == 0xFF)
+void Samus_LookupTransitionTableFailureHandler(void) {  // 0x9182D9
+  if (SetNewPoseCommand() & 1 || kPoseParams[samus_pose].new_pose_unless_buttons == 0xFF)
     samus_new_pose = samus_pose;
   else
     samus_new_pose = kPoseParams[samus_pose].new_pose_unless_buttons;
@@ -250,7 +250,7 @@ static const uint8 kSamus_Pose_Func2_Tab[28] = {  // 0x918304
   2, 6, 6, 6, 6, 2, 6, 2, 2, 2, 2, 2,
 };
 
-uint8 Samus_Pose_Func2(void) {
+uint8 SetNewPoseCommand(void) {
 
   uint16 v0 = kSamus_Pose_Func2_Tab[samus_movement_type];
   if (v0 != 1)
@@ -258,10 +258,10 @@ uint8 Samus_Pose_Func2(void) {
   if (!samus_x_base_speed && !samus_x_base_subspeed) {
     v0 = 2;
 LABEL_2:
-    samus_momentum_routine_index = v0;
+    samus_new_pose_command = v0;
     return 0;
   }
-  samus_momentum_routine_index = 1;
+  samus_new_pose_command = 1;
   return 1;
 }
 
@@ -521,7 +521,7 @@ void LoadDemoData(void) {
   kDemoSetFuncPtrs[demo_set][demo_scene]();
   frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Demo);
   frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_TitleDemo);
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   Samus_LoadSuitPalette();
@@ -837,7 +837,7 @@ void XrayRunHandler(void) {  // 0x91CAD6
   }
 }
 
-void Xray_SetupStage1_FreezeTimeBackup(uint16 k) {  // 0x91CAF9
+void Xray_SetupStage1_FreezeTime_BackupBg2(uint16 k) {  // 0x91CAF9
   LOBYTE(time_is_frozen_flag) = 1;
   *((uint8 *)hdma_object_A + (uint8)k) = reg_BG2HOFS;
   *((uint8 *)hdma_object_A + (uint8)k + 1) = HIBYTE(reg_BG2HOFS);
@@ -849,8 +849,8 @@ void Xray_SetupStage1_FreezeTimeBackup(uint16 k) {  // 0x91CAF9
 void Xray_SetupStage2_ReadBg1_2ndScreen(void) {  // 0x91CB1C
   uint16 v0 = vram_read_queue_tail;
   *(uint16 *)((uint8 *)&vram_read_queue[0].vram_target + v0) = ((reg_BG1SC & 0xFC) << 8) + 1024;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v0) = 129;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v0 + 1) = 57;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_control + v0) = 129;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_target + v0) = 57;
   *(VoidP *)((uint8 *)&vram_read_queue[0].src.addr + v0) = ADDR16_OF_RAM(ram4000) + 0x2800;
   *(uint16 *)(&vram_read_queue[0].src.bank + v0) = 126;
   *(uint16 *)((uint8 *)&vram_read_queue[0].size + v0) = 2048;
@@ -861,15 +861,15 @@ void Xray_SetupStage3_ReadBg1_1stScreen(void) {  // 0x91CB57
 
   uint16 v0 = vram_read_queue_tail;
   *(uint16 *)((uint8 *)&vram_read_queue[0].vram_target + v0) = (reg_BG1SC & 0xFC) << 8;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v0) = 129;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v0 + 1) = 57;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_control + v0) = 129;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_target + v0) = 57;
   *(VoidP *)((uint8 *)&vram_read_queue[0].src.addr + v0) = ADDR16_OF_RAM(ram4000) + 0x2000;
   *(uint16 *)(&vram_read_queue[0].src.bank + v0) = 126;
   *(uint16 *)((uint8 *)&vram_read_queue[0].size + v0) = 2048;
   vram_read_queue_tail = v0 + 9;
 }
 
-void Xray_SetupStage4(void) {  // 0x91CB8E
+void Xray_SetupStage4_SetupAndReadBg2_1stScreen(void) {  // 0x91CB8E
   uint16 r24 = 4 * ((layer1_y_pos + bg1_y_offset) & 0xF0);
   r24 += ((layer1_x_pos + bg1_x_offset) & 0xF0) >> 3;
   r24 += 4 * ((layer1_x_pos + bg1_x_offset) & 0x100);
@@ -898,7 +898,7 @@ void Xray_SetupStage4(void) {  // 0x91CB8E
       r22 += 4;
       r30 += 2;
     } while (--n);
-    Xray_SetupStage4_Func1(r22, r26, r28, r30);
+    CopyBottomBg1RowToXrayBg2(r22, r26, r28, r30);
     r24 = (r24 & 0x400) + ((r24 + 64) & 0x3FF);
     r22 += 64;
   } while (--m);
@@ -907,32 +907,32 @@ void Xray_SetupStage4(void) {  // 0x91CB8E
   r22 = 0;
   m = 16;
   do {
-    Xray_SetupStage4_Func2(r22, r34);
+    LoadRightHalfOfRevealedBlock(r22, r34);
     int n = 16;
     uint16 r36 = r34;
     do {
-      Xray_SetupStage4_Func3(n, r22, r36);
+      LoadRevealedBlock(n, r22, r36);
       r22 += 4;
       r36 += 1;
     } while (--n);
     uint16 v12 = r22;
     r22 += 1984;
-    Xray_SetupStage4_Func3(0, r22, r36);
+    LoadRevealedBlock(0, r22, r36);
     r22 = v12 + 64;
     r34 += room_width_in_blocks;
   } while (--m);
   LoadXrayBlocks();
   uint16 v7 = vram_read_queue_tail;
   *(uint16 *)((uint8 *)&vram_read_queue[0].vram_target + v7) = (reg_BG2SC & 0xFC) << 8;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v7) = 129;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v7 + 1) = 57;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_control + v7) = 129;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_target + v7) = 57;
   *(VoidP *)((uint8 *)&vram_read_queue[0].src.addr + v7) = 0x5000;
   *(uint16 *)(&vram_read_queue[0].src.bank + v7) = 126;
   *(uint16 *)((uint8 *)&vram_read_queue[0].size + v7) = 2048;
   vram_read_queue_tail = v7 + 9;
 }
 
-void Xray_SetupStage4_Func1(uint16 dst_r22, uint16 r26, uint16 r28, uint16 r30) {  // 0x91CCF1
+void CopyBottomBg1RowToXrayBg2(uint16 dst_r22, uint16 r26, uint16 r28, uint16 r30) {  // 0x91CCF1
   int16 v0;
 
   uint16 R32 = r26;
@@ -954,20 +954,20 @@ void Xray_SetupStage4_Func1(uint16 dst_r22, uint16 r26, uint16 r28, uint16 r30) 
 }
 
 static const uint8 *Xray_GetXrayedBlock(uint16 k) {  // 0x91CDD6
-  uint16 value;
+  uint16 block_type;
 
   uint16 bts = BTS[k];
   uint16 r40 = level_data[k] & 0xF000;
   for (int i = 0; ; ++i) {
-    value = kXrayBlockData[i].value;
-    if (value == 0xFFFF)
+    block_type = kXrayBlockData[i].block_type;
+    if (block_type == 0xFFFF)
       break;
-    if (value == r40) {
-      for (const uint8 *p = RomPtr_91(kXrayBlockData[i].addr); ; p += 4) {
-        value = GET_WORD(p);
-        if (value == 0xFFFF)
+    if (block_type == r40) {
+      for (const uint8 *p = RomPtr_91(kXrayBlockData[i].instr_list); ; p += 4) {
+        block_type = GET_WORD(p);
+        if (block_type == 0xFFFF)
           break;
-        if (value == 0xFF00 || value == bts)
+        if (block_type == 0xFF00 || block_type == bts)
           return RomPtr_91(GET_WORD(p + 2));
       }
       return NULL;
@@ -977,7 +977,7 @@ static const uint8 *Xray_GetXrayedBlock(uint16 k) {  // 0x91CDD6
 }
 
 
-void Xray_SetupStage4_Func2(uint16 dst_r22, uint16 r34) {  // 0x91CD42
+void LoadRightHalfOfRevealedBlock(uint16 dst_r22, uint16 r34) {  // 0x91CD42
   // bug: passing 0xffff to this function is invalid and will read invalid memory.
   if (r34 == 0)
     return;
@@ -987,8 +987,8 @@ void Xray_SetupStage4_Func2(uint16 dst_r22, uint16 r34) {  // 0x91CD42
   if (jp == NULL)
     return;
 
-  if (GET_WORD(jp) != FUNC16(Xray_Func9)) {
-    if (GET_WORD(jp) != FUNC16(Xray_Func11))
+  if (GET_WORD(jp) != FUNC16(RevealedBlock_Func_Copy2x1BlockToXrayBg2)) {
+    if (GET_WORD(jp) != FUNC16(RevealedBlock_Func_Copy2x2BlockToXrayBg2))
       return;
     TileTable *src = tile_table.tables + GET_WORD(jp + 8);
     dst[64] = src->top_left;
@@ -1012,7 +1012,7 @@ static void Xray_CombinedMove(uint16 dst_r22, uint16 r36, bool which_dir) {
     uint16 *variable = which_dir ? &y : &x;
     for (;;) {
       if ((int16)(*variable + step) < 0) {
-        Xray_Func13(dst_r22, 0xFF);
+        CopyBlockToXrayBg2(dst_r22, 0xFF);
         return;
       }
       *variable += step;
@@ -1030,42 +1030,42 @@ static void Xray_CombinedMove(uint16 dst_r22, uint16 r36, bool which_dir) {
     }
   }
 
-  if (kXrayBlockData[1].value == r48) {
-    uint16 *t = (uint16 *)RomPtr_91(kXrayBlockData[1].addr);
+  if (kXrayBlockData[1].block_type == r48) {
+    uint16 *t = (uint16 *)RomPtr_91(kXrayBlockData[1].instr_list);
     for (; t[0] != 0xffff; t += 2) {
       if (t[0] == 0xff00 || t[0] == (step & 0xff)) {
-        Xray_Func12(dst_r22, RomPtr_91(t[1] + 2));
+        CopyRevealedBlockToXrayBg2(dst_r22, RomPtr_91(t[1] + 2));
         return;
       }
     }
   }
 }
 
-static void Xray_Func7(uint16 dst_r22, const uint8 *jp) {  // 0x91CF36
-  Xray_Func12(dst_r22, jp + 2);
+static void RevealedBlock_Func_Copy1x1BlockToXrayBg2(uint16 dst_r22, const uint8 *jp) {  // 0x91CF36
+  CopyRevealedBlockToXrayBg2(dst_r22, jp + 2);
 }
 
-static void Xray_Func8(uint16 dst_r22, const uint8 *jp) {  // 0x91CF3E
-  if (area_index == 1)
-    Xray_Func12(dst_r22, jp + 2);
+static void RevealedBlock_Func_Copy1x1BlockToXrayBg2_Brinstar(uint16 dst_r22, const uint8 *jp) {  // 0x91CF3E
+  if (area_index == kArea_1_Brinstar)
+    CopyRevealedBlockToXrayBg2(dst_r22, jp + 2);
 }
 
-static void Xray_Func9(uint16 r18, uint16 dst_r22, const uint8 *jp) {  // 0x91CF4E
-  Xray_Func12(dst_r22, jp + 2);
+static void RevealedBlock_Func_Copy2x1BlockToXrayBg2(uint16 r18, uint16 dst_r22, const uint8 *jp) {  // 0x91CF4E
+  CopyRevealedBlockToXrayBg2(dst_r22, jp + 2);
   if (r18 != 1)
-    Xray_Func14(dst_r22, jp + 4);
+    CopyRevealedBlockToXrayBg2OneBlockRight(dst_r22, jp + 4);
 }
 
-static void Xray_Func10(uint16 dst_r22, const uint8 *jp) {  // 0x91CF62
-  Xray_Func12(dst_r22, jp + 2);
-  Xray_Func15(dst_r22, jp + 2);
+static void RevealedBlock_Func_Copy1x2BlockToXrayBg2(uint16 dst_r22, const uint8 *jp) {  // 0x91CF62
+  CopyRevealedBlockToXrayBg2(dst_r22, jp + 2);
+  CopyRevealedBlockToXrayBg2OneBlockDown(dst_r22, jp + 2);
 }
 
-static void Xray_Func11(uint16 r18, uint16 dst_r22, const uint8 *jp) {  // 0x91CF6F
-  Xray_Func12(dst_r22, jp + 2);
+static void RevealedBlock_Func_Copy2x2BlockToXrayBg2(uint16 r18, uint16 dst_r22, const uint8 *jp) {  // 0x91CF6F
+  CopyRevealedBlockToXrayBg2(dst_r22, jp + 2);
   if (r18 != 1)
-    Xray_Func14(dst_r22, jp + 4);
-  Xray_Func15(dst_r22, jp + 6);
+    CopyRevealedBlockToXrayBg2OneBlockRight(dst_r22, jp + 4);
+  CopyRevealedBlockToXrayBg2OneBlockDown(dst_r22, jp + 6);
   if (r18 != 1) {
     uint16 v5 = GET_WORD(jp + 8);
     uint16 top_left = tile_table.tables[v5].top_left;
@@ -1081,29 +1081,29 @@ static void Xray_Func11(uint16 r18, uint16 dst_r22, const uint8 *jp) {  // 0x91C
 
 static void CallXrayFunc(uint32 ea, const uint8 *jp, uint16 r18, uint16 r22, uint16 r36) {
   switch (ea) {
-  case fnXray_Func6: Xray_CombinedMove(r22, r36, true); return;
-  case fnXray_Func6B: Xray_CombinedMove(r22, r36, false); return;
-  case fnXray_Func7: Xray_Func7(r22, jp); return;
-  case fnXray_Func8: Xray_Func8(r22, jp); return;
-  case fnXray_Func9: Xray_Func9(r18, r22, jp); return;
-  case fnXray_Func10: Xray_Func10(r22, jp); return;
-  case fnXray_Func11: Xray_Func11(r18, r22, jp); return;
+  case fnRevealedBlock_Func_Vertical: Xray_CombinedMove(r22, r36, true); return;
+  case fnRevealedBlock_Func_Horizontal: Xray_CombinedMove(r22, r36, false); return;
+  case fnRevealedBlock_Func_Copy1x1BlockToXrayBg2: RevealedBlock_Func_Copy1x1BlockToXrayBg2(r22, jp); return;
+  case fnRevealedBlock_Func_Copy1x1BlockToXrayBg2_Brinstar: RevealedBlock_Func_Copy1x1BlockToXrayBg2_Brinstar(r22, jp); return;
+  case fnRevealedBlock_Func_Copy2x1BlockToXrayBg2: RevealedBlock_Func_Copy2x1BlockToXrayBg2(r18, r22, jp); return;
+  case fnRevealedBlock_Func_Copy1x2BlockToXrayBg2: RevealedBlock_Func_Copy1x2BlockToXrayBg2(r22, jp); return;
+  case fnRevealedBlock_Func_Copy2x2BlockToXrayBg2: RevealedBlock_Func_Copy2x2BlockToXrayBg2(r18, r22, jp); return;
   default: Unreachable();
   }
 }
 
-void Xray_SetupStage4_Func3(uint16 r18, uint16 r22, uint16 r36) {  // 0x91CDBE
+void LoadRevealedBlock(uint16 r18, uint16 r22, uint16 r36) {  // 0x91CDBE
   const uint8 *jp = Xray_GetXrayedBlock(r36);
   if (jp != NULL) {
     CallXrayFunc(GET_WORD(jp) | 0x910000, jp, r18, r22, r36);
   }
 }
 
-static void Xray_Func12(uint16 dst_r22, const uint8 *jp) {  // 0x91CFBF
-  Xray_Func13(dst_r22, GET_WORD(jp));
+static void CopyRevealedBlockToXrayBg2(uint16 dst_r22, const uint8 *jp) {  // 0x91CFBF
+  CopyBlockToXrayBg2(dst_r22, GET_WORD(jp));
 }
 
-static void Xray_Func13(uint16 dst_r22, uint16 a) {  // 0x91CFC1
+static void CopyBlockToXrayBg2(uint16 dst_r22, uint16 a) {  // 0x91CFC1
   uint16 top_left = tile_table.tables[a].top_left;
   uint16 top_right = tile_table.tables[a].top_right;
   uint16 bottom_left = tile_table.tables[a].bottom_left;
@@ -1114,7 +1114,7 @@ static void Xray_Func13(uint16 dst_r22, uint16 a) {  // 0x91CFC1
   *(uint16 *)((uint8 *)&ram4000.xray_tilemaps[0] + dst_r22) = top_left;
 }
 
-static void Xray_Func14(uint16 dst_r22, const uint8 *jp) {  // 0x91CFEE
+static void CopyRevealedBlockToXrayBg2OneBlockRight(uint16 dst_r22, const uint8 *jp) {  // 0x91CFEE
   uint16 a = GET_WORD(jp);
   uint16 top_left = tile_table.tables[a].top_left;
   uint16 top_right = tile_table.tables[a].top_right;
@@ -1126,7 +1126,7 @@ static void Xray_Func14(uint16 dst_r22, const uint8 *jp) {  // 0x91CFEE
   *(uint16 *)((uint8 *)&ram4000.xray_tilemaps[2] + dst_r22) = top_left;
 }
 
-static void Xray_Func15(uint16 dst_r22, const uint8 *jp) {  // 0x91D01D
+static void CopyRevealedBlockToXrayBg2OneBlockDown(uint16 dst_r22, const uint8 *jp) {  // 0x91D01D
   uint16 a = GET_WORD(jp);
   uint16 top_left = tile_table.tables[a].top_left;
   uint16 top_right = tile_table.tables[a].top_right;
@@ -1138,7 +1138,7 @@ static void Xray_Func15(uint16 dst_r22, const uint8 *jp) {  // 0x91D01D
   *(uint16 *)((uint8 *)&ram4000.xray_tilemaps[64] + dst_r22) = top_left;
 }
 
-static void Xray_Func16(uint16 dst_r22, uint16 a) {  // 0x91D0A6
+static void CopyFlippedBlockToXrayBg1(uint16 dst_r22, uint16 a) {  // 0x91D0A6
   uint16 top_left = tile_table.tables[a].top_left;
   uint16 top_right = tile_table.tables[a].top_right;
   uint16 bottom_left = tile_table.tables[a].bottom_left;
@@ -1149,19 +1149,19 @@ static void Xray_Func16(uint16 dst_r22, uint16 a) {  // 0x91D0A6
   *(uint16 *)((uint8 *)&ram4000.xray_tilemaps[32] + dst_r22) = top_left;
 }
 
-void LoadBlockToXrayTilemap(uint16 a, uint16 k, uint16 j) {  // 0x91D04C
+void LoadBlockToXrayBg2(uint16 a, uint16 k, uint16 j) {  // 0x91D04C
   uint16 R24 = k - (layer1_x_pos >> 4);
   uint16 R26 = j - (layer1_y_pos >> 4);
   if (!sign16(R24) && sign16(R24 - 16) && !sign16(R26) && sign16(R26 - 16)) {
     uint16 R22 = 4 * (R24 + 32 * R26);
     if ((a & 0x800) != 0)
-      Xray_Func16(R22, a & 0x3FF);
+      CopyFlippedBlockToXrayBg1(R22, a & 0x3FF);
     else
-      Xray_Func13(R22, a & 0x3FF);
+      CopyBlockToXrayBg2(R22, a & 0x3FF);
   }
 }
 
-void Xray_SetupStage5(void) {  // 0x91D0D3
+void Xray_SetupStage5_ReadBg2_2ndScreen(void) {  // 0x91D0D3
   unsigned int v1;
 
   if (CanXrayShowBlocks()) {
@@ -1176,7 +1176,7 @@ void Xray_SetupStage5(void) {  // 0x91D0D3
   uint16 v0 = vram_read_queue_tail;
   v1 = vram_read_queue_tail;
   *(uint16 *)((uint8 *)&vram_read_queue[0].vram_target + vram_read_queue_tail) = ((reg_BG2SC & 0xFC) << 8) + 1024;
-  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_parameters + v1 + 1) = 57;
+  *(uint16 *)((uint8 *)&vram_read_queue[0].dma_target + v1) = 57;
   *(VoidP *)((uint8 *)&vram_read_queue[0].src.addr + v0) = 0x5800;
   *(uint16 *)(&vram_read_queue[0].src.bank + v0) = 126;
   *(uint16 *)((uint8 *)&vram_read_queue[0].size + v0) = 2048;
@@ -1194,7 +1194,7 @@ bool CanXrayShowBlocks(void) {  // 0x91D143
   return true;
 }
 
-void Xray_SetupStage6(void) {  // 0x91D173
+void Xray_SetupStage6_TransferBg_1stScreen(void) {  // 0x91D173
   VramWriteEntry *v1;
 
   if (CanXrayShowBlocks()) {
@@ -1208,7 +1208,7 @@ void Xray_SetupStage6(void) {  // 0x91D173
   }
 }
 
-void Xray_SetupStage7(void) {  // 0x91D1A0
+void Xray_SetupStage7_InitXrayBeam_TransferBg_2ndScreen(void) {  // 0x91D1A0
   VramWriteEntry *v1;
 
   if (CanXrayShowBlocks()) {
@@ -1257,7 +1257,7 @@ LABEL_5:
 }
 
 void Xray_SetupStage8_SetBackdropColor(void) {  // 0x91D2BC
-  palette_buffer[0] = 3171;
+  palette_buffer.bg1_bg2_pal_0[0] = 3171;
 }
 
 void GameState_28_Unused_(void) {  // 0x91D4DA
@@ -1360,7 +1360,7 @@ void InitializeSuitPickupHdma(void) {  // 0x91D692
 }
 
 
-static Func_U8 *const off_91D72D[11] = {  // 0x91D6F7
+static Func_U8 *const kSamus_PaletteHandlerFuncs[11] = {  // 0x91D6F7
   Samus_HandleScrewAttackSpeedBoostingPals,
   Samus_SpeedBoosterShinePals,
   (Func_U8 *)HandleMiscSamusPalette,
@@ -1377,7 +1377,7 @@ static Func_U8 *const off_91D72D[11] = {  // 0x91D6F7
 void Samus_HandlePalette(void) {
   if ((samus_special_super_palette_flags & 0x8000) == 0
       && (HandleBeamChargePalettes() & 1
-          || !(off_91D72D[timer_for_shine_timer]() & 1))) {
+          || !(kSamus_PaletteHandlerFuncs[timer_for_shine_timer]() & 1))) {
     CopyToSamusSuitPalette(kSamusPalette_Normal[samus_suit_palette_index >> 1]);
   }
   HandleMiscSamusPalette();
@@ -1397,8 +1397,8 @@ uint8 HandleBeamChargePalettes(void) {  // 0x91D743
       return 0;
     }
     if (--charged_shot_glow_timer) {
-      for (int i = 28; i >= 0; i -= 2)
-        palette_buffer[(i >> 1) + 193] = 1023;
+      for (int i = 0x1C; i >= 0; i -= 2)
+        palette_buffer.sprite_pal_4[(i >> 1) + 1] = 1023;
       return 0;
     } else {
       return 1;
@@ -1432,7 +1432,7 @@ uint8 HandleVisorPalette(void) {  // 0x91D83F
     if ((uint8)v1)
       return 0;
     samus_visor_palette_timer_index = v1 | 5;
-    palette_buffer[196] = kSamus_VisorColors[HIBYTE(v1) >> 1];
+    palette_buffer.sprite_pal_4[4] = kSamus_VisorColors[HIBYTE(v1) >> 1];
     int v2 = HIBYTE(v1) + 2;
     if (sign16(v2 - 12)) {
       samus_visor_palette_timer_index = swap16(v2) | (uint8)samus_visor_palette_timer_index;
@@ -1629,7 +1629,7 @@ uint8 Samus_HandleCrystalFlashPals(void) {  // 0x91DB93
     bool v1 = (int16)-- * (uint16 *)&suit_pickup_color_math_B < 0;
     if (!*(uint16 *)&suit_pickup_color_math_B || v1) {
       *(uint16 *)&suit_pickup_color_math_B = *(uint16 *)((uint8 *)&kSamusPal_CrystalFlash0to9[0].timer + special_samus_palette_timer);
-      Samus_Copy10PalColors(*(VoidP *)((uint8 *)&kSamusPal_CrystalFlash0to9[0].ptr + special_samus_palette_timer));
+      Samus_Copy10PalColors(*(VoidP *)((uint8 *)&kSamusPal_CrystalFlash0to9[0].pal_ptr + special_samus_palette_timer));
       uint16 v2 = special_samus_palette_timer + 4;
       if (!sign16(special_samus_palette_timer - 36))
         v2 = 0;
@@ -1640,11 +1640,11 @@ uint8 Samus_HandleCrystalFlashPals(void) {  // 0x91DB93
 }
 
 void Samus_Copy10PalColors(uint16 v0) {  // 0x91DC34
-  memcpy(&palette_buffer[224], RomPtr_9B(v0), 20);
+  memcpy(&palette_buffer.sprite_pal_6[0], RomPtr_9B(v0), 20);
 }
 
 void Samus_Copy6PalColors(uint16 j) {  // 0x91DC82
-  memcpy(&palette_buffer[234], RomPtr_9B(j), 12);
+  memcpy(&palette_buffer.sprite_pal_6[10], RomPtr_9B(j), 12);
 }
 
 uint8 Samus_HandleXrayPals(void) {  // 0x91DCB4
@@ -1660,7 +1660,7 @@ uint8 Samus_HandleXrayPals(void) {  // 0x91DCB4
         bool v0 = (--special_samus_palette_timer & 0x8000) != 0;
         if (!special_samus_palette_timer || v0) {
           special_samus_palette_timer = 5;
-          palette_buffer[196] = kSamus_VisorColors[special_samus_palette_frame >> 1];
+          palette_buffer.sprite_pal_4[4] = kSamus_VisorColors[special_samus_palette_frame >> 1];
           if (sign16(special_samus_palette_frame - 4))
             special_samus_palette_frame += 2;
         }
@@ -1674,7 +1674,7 @@ uint8 Samus_HandleXrayPals(void) {  // 0x91DCB4
     if (special_samus_palette_timer && !v2)
       return 1;
     special_samus_palette_timer = 5;
-    palette_buffer[196] = kSamus_VisorColors[special_samus_palette_frame >> 1];
+    palette_buffer.sprite_pal_4[4] = kSamus_VisorColors[special_samus_palette_frame >> 1];
     uint16 v3 = special_samus_palette_frame + 2;
     if (!sign16(special_samus_palette_frame - 10))
       v3 = 6;
@@ -1688,11 +1688,11 @@ uint8 nullsub_164(void) {  // 0x91DD31
 }
 
 void CopyToSamusSuitPalette(uint16 k) {  // 0x91DD5B
-  memcpy(&palette_buffer[192], (uint16 *)RomPtr_9B(k), 32);
+  memcpy(&palette_buffer.sprite_pal_4[0], (uint16 *)RomPtr_9B(k), 32);
 }
 
 void CopyToSamusSuitTargetPalette(uint16 k) {  // 0x91DDD7
-  memcpy(&target_palettes[192], (uint16 *)RomPtr_9B(k), 32);
+  memcpy(&target_palettes.sprite_pal_4[0], (uint16 *)RomPtr_9B(k), 32);
 }
 
 void Samus_CancelSpeedBoost(void) {  // 0x91DE53
@@ -1742,16 +1742,16 @@ void Samus_LoadSuitTargetPalette(void) {  // 0x91DEE6
 }
 
 void Samus_RestoreHealth(uint16 a) {  // 0x91DF12
-  uint16 v1 = a + samus_health;
-  samus_health = v1;
-  if ((int16)(v1 - samus_max_health) >= 0) {
-    uint16 v2 = samus_reserve_health + v1 - samus_max_health;
-    if ((int16)(v2 - samus_max_reserve_health) >= 0)
-      v2 = samus_max_reserve_health;
-    samus_reserve_health = v2;
-    if (v2) {
-      if (!reserve_health_mode)
-        reserve_health_mode = 1;
+  samus_health += a;
+  if (samus_health >= samus_max_health) {
+    uint16 health_overflow = samus_health - samus_max_health;
+    uint16 min_health = samus_reserve_health + health_overflow;
+    if (min_health >= samus_max_reserve_health)
+        min_health = samus_max_reserve_health;
+    samus_reserve_health = min_health;
+    if (samus_reserve_health != 0) {
+      if (reserve_health_mode == kReserveHealthMode_0_None)
+        reserve_health_mode = kReserveHealthMode_1_Auto;
     }
     samus_health = samus_max_health;
   }
@@ -1770,16 +1770,16 @@ void Samus_DealDamage(uint16 a) {  // 0x91DF51
 }
 
 void Samus_RestoreMissiles(uint16 a) {  // 0x91DF80
-  uint16 v1 = samus_missiles + a;
-  samus_missiles = v1;
-  if ((int16)(v1 - samus_max_missiles) >= 0) {
-    if (sign16(samus_max_missiles - 99)) {
-      samus_reserve_missiles += v1 - samus_max_missiles;
-      if ((int16)(samus_reserve_missiles - samus_max_missiles) >= 0)
+  samus_missiles += a;
+  if (samus_missiles >= samus_max_missiles) {
+    uint16 missile_overflow = samus_missiles - samus_max_missiles;
+    if (samus_max_missiles < 99) {
+      samus_reserve_missiles += missile_overflow;
+      if (samus_reserve_missiles >= samus_max_missiles)
         samus_reserve_missiles = samus_max_missiles;
     } else {
-      samus_reserve_missiles += v1 - samus_max_missiles;
-      if (!sign16(samus_reserve_missiles - 99))
+      samus_reserve_missiles += missile_overflow;
+      if (samus_reserve_missiles >= 99)
         samus_reserve_missiles = 99;
     }
     samus_missiles = samus_max_missiles;
@@ -1787,16 +1787,14 @@ void Samus_RestoreMissiles(uint16 a) {  // 0x91DF80
 }
 
 void Samus_RestoreSuperMissiles(uint16 a) {  // 0x91DFD3
-  uint16 v1 = samus_super_missiles + a;
-  samus_super_missiles = v1;
-  if ((int16)(v1 - samus_max_super_missiles) >= 0 && v1 != samus_max_super_missiles)
+  samus_super_missiles += a;
+  if (samus_super_missiles > samus_max_super_missiles)
     samus_super_missiles = samus_max_super_missiles;
 }
 
 void Samus_RestorePowerBombs(uint16 a) {  // 0x91DFF0
-  uint16 v1 = samus_power_bombs + a;
-  samus_power_bombs = v1;
-  if ((int16)(v1 - samus_max_power_bombs) >= 0 && v1 != samus_max_power_bombs)
+  samus_power_bombs += a;
+  if (samus_power_bombs > samus_max_power_bombs)
     samus_power_bombs = samus_max_power_bombs;
 }
 
@@ -1817,7 +1815,7 @@ void Samus_Initialize(void) {  // 0x91E00D
     if (loading_game_state == kLoadingGameState_22_EscapingCeres) {
       frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_SamusLocked);
       samus_draw_handler = FUNC16(SamusDrawHandler_Default);
-      samus_momentum_routine_index = -1;
+      samus_new_pose_command = -1;
       samus_special_transgfx_index = 0;
       samus_hurt_switch_index = 0;
       Samus_LoadSuitPalette();
@@ -1825,7 +1823,7 @@ void Samus_Initialize(void) {  // 0x91E00D
     } else {
       frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_SamusAppears);
       samus_draw_handler = FUNC16(SamusDrawHandler_Default);
-      samus_momentum_routine_index = 0;
+      samus_new_pose_command = 0;
       samus_special_transgfx_index = 0;
       samus_hurt_switch_index = 0;
       samus_input_handler = FUNC16(Samus_InputHandler_Normal);
@@ -1835,7 +1833,7 @@ void Samus_Initialize(void) {  // 0x91E00D
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  if (area_index == 6)
+  if (area_index == kArea_6_Ceres)
     frame_handler_gamma = FUNC16(Samus_FrameHandlerGamma_HandleTimer);
   else
     frame_handler_gamma = FUNC16(nullsub_152);
@@ -1990,7 +1988,7 @@ void MakeSamusFaceForward(void) {  // 0x91E3F6
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   RunSamusCode(kSamusCode_31_KillGrappleBeam);
@@ -2029,7 +2027,7 @@ void DrainedSamusHandler(uint16 a) {
     samus_new_pose = -1;
     samus_new_pose_interrupted = -1;
     samus_new_pose_transitional = -1;
-    samus_momentum_routine_index = 0;
+    samus_new_pose_command = 0;
     samus_special_transgfx_index = 0;
     samus_hurt_switch_index = 0;
   }
@@ -2112,27 +2110,27 @@ uint8 DrainedSamusHandler_4_SetSamusCrouchOrFallDrainedPose(void) {  // 0x91E60C
 void nullsub_17(void) {}
 
 static Func_V *const off_91E6E1[28] = {  // 0x91E633
-  SamusFunc_E633_0,
+  Samus_UpdatePoseFromEquipmentChange_Standing,
   nullsub_17,
   nullsub_17,
-  SamusFunc_E633_3,
-  SamusFunc_E633_4,
-  nullsub_17,
-  nullsub_17,
-  nullsub_17,
-  SamusFunc_E633_4,
+  Samus_UpdatePoseFromEquipmentChange_SpinJump,
+  Samus_UpdatePoseFromEquipmentChange_MorphBall,
   nullsub_17,
   nullsub_17,
   nullsub_17,
+  Samus_UpdatePoseFromEquipmentChange_MorphBall,
   nullsub_17,
   nullsub_17,
   nullsub_17,
   nullsub_17,
   nullsub_17,
-  SamusFunc_E633_17,
-  SamusFunc_E633_17,
-  SamusFunc_E633_17,
-  SamusFunc_E633_20,
+  nullsub_17,
+  nullsub_17,
+  nullsub_17,
+  Samus_UpdatePoseFromEquipmentChange_SpringBall,
+  Samus_UpdatePoseFromEquipmentChange_SpringBall,
+  Samus_UpdatePoseFromEquipmentChange_SpringBall,
+  Samus_UpdatePoseFromEquipmentChange_WallJump,
   nullsub_17,
   nullsub_17,
   nullsub_17,
@@ -2142,7 +2140,7 @@ static Func_V *const off_91E6E1[28] = {  // 0x91E633
   nullsub_17,
 };
 
-void SamusFunc_E633(void) {
+void Samus_UpdatePoseFromEquipmentChange(void) {
   off_91E6E1[samus_movement_type]();
   if ((equipped_items & kItem_SpeedBooster) != 0) {
     if (samus_has_momentum_flag && !speed_boost_counter) {
@@ -2192,7 +2190,7 @@ void Samus_UpdatePreviousPose_0(void) {  // 0x91E719
   *(uint16 *)&samus_prev_pose_x_dir = *(uint16 *)&samus_pose_x_dir;
 }
 
-void SamusFunc_E633_0(void) {  // 0x91E733
+void Samus_UpdatePoseFromEquipmentChange_Standing(void) {  // 0x91E733
   if (samus_pose) {
     if (samus_pose == kPose_9B_FaceF_VariaGravitySuit && (equipped_items & kItem_VariaSuit) == 0 && (equipped_items & kItem_GravitySuit) == 0) {
       samus_pose = kPose_00_FaceF_Powersuit;
@@ -2207,7 +2205,7 @@ LABEL_10:
   }
 }
 
-void SamusFunc_E633_3(void) {  // 0x91E776
+void Samus_UpdatePoseFromEquipmentChange_SpinJump(void) {  // 0x91E776
   if (samus_pose_x_dir == kSamusXDir_FaceLeft)
     *(uint16 *)&samus_prev_pose_x_dir = 260;
   else
@@ -2241,7 +2239,7 @@ LABEL_18:
   Samus_UpdatePreviousPose_0();
 }
 
-void SamusFunc_E633_4(void) {  // 0x91E83A
+void Samus_UpdatePoseFromEquipmentChange_MorphBall(void) {  // 0x91E83A
   if ((equipped_items & kItem_SpringBall) != 0) {
     if (samus_pose_x_dir == kSamusXDir_FaceLeft)
       samus_pose = kPose_7A_FaceL_Springball_Ground;
@@ -2253,7 +2251,7 @@ void SamusFunc_E633_4(void) {  // 0x91E83A
   }
 }
 
-void SamusFunc_E633_17(void) {  // 0x91E867
+void Samus_UpdatePoseFromEquipmentChange_SpringBall(void) {  // 0x91E867
   if ((equipped_items & kItem_SpringBall) == 0) {
     if (samus_pose_x_dir == kSamusXDir_FaceLeft)
       samus_pose = kPose_41_FaceL_Morphball_Ground;
@@ -2265,7 +2263,7 @@ void SamusFunc_E633_17(void) {  // 0x91E867
   }
 }
 
-void SamusFunc_E633_20(void) {  // 0x91E894
+void Samus_UpdatePoseFromEquipmentChange_WallJump(void) {  // 0x91E894
   if ((equipped_items & kItem_ScrewAttack) != 0)
     samus_anim_frame = 23;
   else
@@ -2290,12 +2288,12 @@ void Samus_HandleTransFromBlockColl(void) {
 }
 void Samus_HandleTransFromBlockColl_3(void) {  // 0x91E8D8
   samus_new_pose = samus_pose;
-  samus_momentum_routine_index = 5;
+  samus_new_pose_command = 5;
 }
 
 void Samus_HandleTransFromBlockColl_4(void) {  // 0x91E8E5
   samus_new_pose = samus_pose;
-  samus_momentum_routine_index = 5;
+  samus_new_pose_command = 5;
 }
 
 uint8 nullsub_18_U8(void) {
@@ -2319,16 +2317,16 @@ void Samus_HandleTransFromBlockColl_2(void) {
       samus_new_pose = kSamusPose_Falling[(v0 >> 1) + 1];
     else
       samus_new_pose = kSamusPose_Falling[v0 >> 1];
-    samus_momentum_routine_index = 5;
+    samus_new_pose_command = 5;
   }
 }
 
 void Samus_HandleTransFromBlockColl_1(void) {  // 0x91E931
   if (HIBYTE(input_to_pose_calc) != 4) {
     if (off_91E951[HIBYTE(input_to_pose_calc)]() & 1)
-      samus_momentum_routine_index = 0;
+      samus_new_pose_command = 0;
     else
-      samus_momentum_routine_index = 5;
+      samus_new_pose_command = 5;
   }
 }
 
@@ -2434,7 +2432,7 @@ void Samus_HandleTransFromBlockColl_5(void) {  // 0x91EABE
     samus_new_pose = kPose_84_FaceL_Walljump;
   else
     samus_new_pose = kPose_83_FaceR_Walljump;
-  samus_momentum_routine_index = 5;
+  samus_new_pose_command = 5;
 }
 
 
@@ -2550,7 +2548,7 @@ LABEL_15:
   if ((samus_new_pose & 0x8000) == 0) {
     samus_pose = samus_new_pose;
     if (!(SamusFunc_F404() & 1))
-      kSamus_HandleTransitionsA[samus_momentum_routine_index]();
+      kSamus_HandleTransitionsA[samus_new_pose_command]();
     goto LABEL_15;
   }
 LABEL_16:
@@ -2919,14 +2917,14 @@ void HandleLandingSoundEffectsAndGfx(void) {  // 0x91F046
 }
 
 static Func_V *const kHandleLandingGraphicsAreaFuncs[8] = {  // 0x91F0A5
-  HandleLandingGraphics_Crateria,
-  HandleLandingGraphics_Brinstar,
-  HandleLandingGraphics_Norfair,
-  HandleLandingGraphics_Norfair,
-  HandleLandingGraphics_Maridia,
-  HandleLandingGraphics_Tourian,
-  HandleLandingGraphics_Ceres,
-  HandleLandingGraphics_Ceres,
+  [kArea_0_Crateria] = HandleLandingGraphics_Crateria,
+  [kArea_1_Brinstar] = HandleLandingGraphics_Brinstar,
+  [kArea_2_Norfair] = HandleLandingGraphics_Norfair_WreckedShip_Dust,
+  [kArea_3_WreckedShip] = HandleLandingGraphics_Norfair_WreckedShip_Dust,
+  [kArea_4_Maridia] = HandleLandingGraphics_Maridia_FootstepSplashes,
+  [kArea_5_Tourian] = HandleLandingGraphics_Tourian,
+  [kArea_6_Ceres] = HandleLandingGraphics_Ceres,
+  [kArea_7_Debug] = HandleLandingGraphics_Ceres,
 };
 void HandleLandingGraphics(void) {
   kHandleLandingGraphicsAreaFuncs[(area_index)]();
@@ -2945,7 +2943,7 @@ void HandleLandingGraphics_Crateria(void) {
   if (cinematic_function)
     goto LABEL_13;
   if (room_index == 28) {
-    HandleLandingGraphics_Norfair();
+    HandleLandingGraphics_Norfair_WreckedShip_Dust();
     return;
   }
   if ((int16)(room_index - 16) >= 0)
@@ -2964,10 +2962,10 @@ LABEL_13:
   if (fx_type != 10)
     goto LABEL_13;
 LABEL_14:
-  HandleLandingGraphics_Maridia();
+  HandleLandingGraphics_Maridia_FootstepSplashes();
 }
 
-void HandleLandingGraphics_Maridia(void) {  // 0x91F116
+void HandleLandingGraphics_Maridia_FootstepSplashes(void) {  // 0x91F116
   uint16 bottom = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
     if (sign16(fx_y_pos - bottom) && (fx_liquid_options & 4) == 0)
@@ -2987,7 +2985,7 @@ LABEL_7:
     goto LABEL_7;
 }
 
-void HandleLandingGraphics_Norfair(void) {  // 0x91F166
+void HandleLandingGraphics_Norfair_WreckedShip_Dust(void) {  // 0x91F166
   uint16 bottom = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
     if (sign16(fx_y_pos - bottom) && (fx_liquid_options & 4) == 0)
@@ -3009,14 +3007,14 @@ LABEL_7:
 
 void HandleLandingGraphics_Brinstar(void) {  // 0x91F1B2
   if (room_index == 8)
-    HandleLandingGraphics_Norfair();
+    HandleLandingGraphics_Norfair_WreckedShip_Dust();
   else
     HandleLandingGraphics_Tourian();
 }
 
 void HandleLandingGraphics_Tourian(void) {  // 0x91F1BA
   if (!sign16(room_index - 5) && (sign16(room_index - 9) || room_index == 11)) {
-    HandleLandingGraphics_Norfair();
+    HandleLandingGraphics_Norfair_WreckedShip_Dust();
   } else {
     atmospheric_gfx_frame_and_type[2] = 0;
     atmospheric_gfx_frame_and_type[3] = 0;
@@ -3446,7 +3444,7 @@ uint8 SamusFunc_F468_CrouchTransEtc(void) {
     if (sign16(samus_pose - kPose_DB)) {
       v0 = 2 * (samus_pose - 53);
 LABEL_4:
-      samus_momentum_routine_index = 7;
+      samus_new_pose_command = 7;
       return off_91F790[v0 >> 1]();
     }
     return off_91F7A8[samus_pose - 219]();
@@ -3455,7 +3453,7 @@ LABEL_4:
       v0 = 0;
       goto LABEL_4;
     }
-    samus_momentum_routine_index = 7;
+    samus_new_pose_command = 7;
   }
   return 0;
 }

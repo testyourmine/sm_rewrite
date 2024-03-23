@@ -32,7 +32,7 @@ void CalculateBgScrollAndLayerPositionBlocks(void);
 void CalculateBgScrolls(void);
 void CalculateLayer2PosAndScrollsWhenScrolling(void);
 void ClearBG2Tilemap(void);
-void ClearBossBitForCurArea(uint16 a);
+void ClearBossBitForCurArea_UNUSED(uint16 a);
 void ClearEventHappened(uint16 a);
 void ClearFXTilemap(void);
 void ClearOamExt(void);
@@ -133,7 +133,7 @@ void SaveExploredMapTilesToSaved(void);
 void ScreenOff(void);
 void ScreenOn(void);
 void SetBossBitForCurArea(uint16 a);
-void SetElevatorsAsUsed(void);
+void SetDebugElevatorsAsUsed(void);
 void SetEventHappened(uint16 a);
 void SetTimerMinutes(uint16 a);
 void SetupDmaTransfer(const void* p);
@@ -225,10 +225,10 @@ void FileSelectMenu_11_InitializeConfirm(void);
 void FileSelectMenu_12_FileCopyConfirm(void);
 void FileSelectMenu_13_FileCopyDoIt(void);
 void FileSelectMenu_14_CopyCompleted(void);
-void FileSelectMenu_15_FadeOutToMain(void);
-void FileSelectMenu_16(void);
-void FileSelectMenu_17_FadeInToMain(void);
-void FileSelectMenu_18(void);
+void FileSelectMenu_15_27_FadeOutToMain(void);
+void FileSelectMenu_16_28_ReloadMain(void);
+void FileSelectMenu_17_29_FadeInToMain(void);
+void FileSelectMenu_18_FileCopyMenuToMain(void);
 void FileSelectMenu_1_LoadFileSelectMenuBG2(void);
 void FileSelectMenu_20_FileClearInit(void);
 void FileSelectMenu_22_FileClearSelectSlot(void);
@@ -237,18 +237,18 @@ void FileSelectMenu_24_FileClearConfirm(void);
 void FileSelectMenu_25_FileClearDoClear(void);
 void FileSelectMenu_26_ClearCompleted(void);
 void FileSelectMenu_2_InitMain(void);
-void FileSelectMenu_30(void);
+void FileSelectMenu_30_FileClearMenuToMain(void);
 void FileSelectMenu_31_TurnSamusHelmet(void);
 void FileSelectMenu_32_FadeOutToOptions(void);
 void FileSelectMenu_33_FadeOutToTitle(void);
 void FileSelectMenu_3_FadeInToMain(void);
 void FileSelectMenu_4_Main(void);
-void FileSelectMenu_5_FadeOutFromMain(void);
+void FileSelectMenu_5_19_FadeOutFromMain(void);
 void FileSelectMenu_6_FileCopyInit(void);
-void FileSelectMenu_7_FadeInFromMain(void);
-void FileSelectMenu_8(void);
+void FileSelectMenu_7_21_FadeInFromMain(void);
+void FileSelectMenu_8_FileCopySelectSrc(void);
 void FileSelectMenu_9_InitializeSelectDest(void);
-void FileSelectMenu_Func1(void);
+void InitFileSelectMenuFileCopy(void);
 void GameOverMenu(void);
 void GameOverMenu_0_FadeOutConfigGfx(void);
 void GameOverMenu_1_Init(void);
@@ -370,9 +370,9 @@ CoroutineRet DoorTransitionFunction_ScrollScreenToAlignment(void);
 CoroutineRet DoorTransitionFunction_SetupNewRoom(void);
 CoroutineRet DoorTransitionFunction_SetupScrolling(void);
 CoroutineRet DoorTransitionFunction_WaitForSoundsToFinish(void);
-CoroutineRet DoorTransition_FadeInScreenAndFinish(void);
-CoroutineRet DoorTransition_HandleTransition(void);
-CoroutineRet DoorTransition_WaitForMusicToClear(void);
+CoroutineRet DoorTransitionFunction_FadeInScreenAndFinish(void);
+CoroutineRet DoorTransitionFunction_HandleTransition(void);
+CoroutineRet DoorTransitionFunction_WaitForMusicToClear(void);
 void DrawBabyMetroid(uint16 k);
 void DrawBorderAroundDataClearMode(void);
 void DrawBorderAroundDataCopyMode(void);
@@ -581,7 +581,7 @@ void SfxHandlers_3_WaitForAck(uint16 j);
 void SfxHandlers_4_Reset(uint16 j);
 void ShowSpareCpu(void);
 void SpawnDoorClosingPLM(void);
-CoroutineRet DoorTransition_C_HandleAnimTiles(void);
+CoroutineRet DoorTransitionFunction_HandleAnimTiles(void);
 void UpdateBeamTilesAndPalette_Unpause(void);
 void UpdateMusicTrackIndex(void);
 void UpdatePauseMenuLRStartVramTilemap(void);
@@ -1223,9 +1223,9 @@ void SamusDisplayHandler_UsingElevator(void);
 void SamusDrawHandler_Default(void);
 void SamusDrawSprites(void);
 void SamusMoveHandler_CrystalFlashMain(void);
-void SamusMoveHandler_CrystalFlashMain_0_DecMissiles(void);
-void SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles(void);
-void SamusMoveHandler_CrystalFlashMain_2_DecPowerBombs(void);
+void SamusMoveHandler_CrystalFlash_0_DecMissiles(void);
+void SamusMoveHandler_CrystalFlash_1_DecSuperMissiles(void);
+void SamusMoveHandler_CrystalFlash_2_DecPowerBombs(void);
 void SamusMoveHandler_CrystalFlashStart(void);
 void SamusMovementType_Xray(void);
 void Samus_AlignBottomWithPrevPose(void);
@@ -1486,7 +1486,7 @@ uint8 Samus_HandleXrayPals(void);
 uint8 Samus_MorphBallBounceNoSpringballTrans(void);
 uint8 Samus_MorphBallBounceSpringballTrans(void);
 uint8 Samus_MorphTrans(void);
-uint8 Samus_Pose_Func2(void);
+uint8 SetNewPoseCommand(void);
 uint8 Samus_SpeedBoosterShinePals(void);
 uint8 Samus_StandOrUnmorphTrans(void);
 uint8 DrainedSamusHandler_0_LetSamusFall(void);
@@ -1527,26 +1527,26 @@ void HandleLandingGraphics(void);
 void HandleLandingGraphics_Brinstar(void);
 void HandleLandingGraphics_Ceres(void);
 void HandleLandingGraphics_Crateria(void);
-void HandleLandingGraphics_Maridia(void);
-void HandleLandingGraphics_Norfair(void);
+void HandleLandingGraphics_Maridia_FootstepSplashes(void);
+void HandleLandingGraphics_Norfair_WreckedShip_Dust(void);
 void HandleLandingGraphics_Tourian(void);
 void HandleLandingSoundEffectsAndGfx(void);
 void HandleMiscSamusPalette(void);
 void HdmaobjPreInstr_XraySetup(uint16 k);
 void InitializeSuitPickupHdma(void);
-void LoadBlockToXrayTilemap(uint16 a, uint16 k, uint16 j);
+void LoadBlockToXrayBg2(uint16 a, uint16 k, uint16 j);
 void LoadDemoData(void);
 void LoadDemoInputObject(uint16 a, uint16 j);
 void MakeSamusFaceForward(void);
 void ProcessDemoInputObject(void);
 void ResetDemoData(void);
 void SetNonXraySamusPose(void);
-void SamusFunc_E633(void);
-void SamusFunc_E633_0(void);
-void SamusFunc_E633_17(void);
-void SamusFunc_E633_20(void);
-void SamusFunc_E633_3(void);
-void SamusFunc_E633_4(void);
+void Samus_UpdatePoseFromEquipmentChange(void);
+void Samus_UpdatePoseFromEquipmentChange_Standing(void);
+void Samus_UpdatePoseFromEquipmentChange_SpringBall(void);
+void Samus_UpdatePoseFromEquipmentChange_WallJump(void);
+void Samus_UpdatePoseFromEquipmentChange_SpinJump(void);
+void Samus_UpdatePoseFromEquipmentChange_MorphBall(void);
 void SamusFunc_EC80(void);
 void SamusFunc_F1D3(void);
 void SamusFunc_F433(void);
@@ -1626,7 +1626,7 @@ void Samus_Input_1B_ShinesparkEtc(void);
 void Samus_LoadSuitPalette(void);
 void Samus_LoadSuitTargetPalette(void);
 void Samus_LookupTransitionTable(void);
-void Samus_Pose_CancelGrapple(void);
+void Samus_LookupTransitionTableFailureHandler(void);
 void Samus_RestoreHealth(uint16 a);
 void Samus_RestoreMissiles(uint16 a);
 void Samus_RestorePowerBombs(uint16 a);
@@ -1636,16 +1636,16 @@ void Samus_UpdatePreviousPose_0(void);
 void DrainedSamusHandler(uint16 a);
 void VariaSuitPickup(void);
 void XrayRunHandler(void);
-void Xray_SetupStage1_FreezeTimeBackup(uint16 k);
+void Xray_SetupStage1_FreezeTime_BackupBg2(uint16 k);
 void Xray_SetupStage2_ReadBg1_2ndScreen(void);
 void Xray_SetupStage3_ReadBg1_1stScreen(void);
-void Xray_SetupStage4(void);
-void Xray_SetupStage4_Func1(uint16 dst_r22, uint16 r26, uint16 r28, uint16 r30);
-void Xray_SetupStage4_Func2(uint16 dst_r22, uint16 r34);
-void Xray_SetupStage4_Func3(uint16 r18, uint16 r22, uint16 r36);
-void Xray_SetupStage5(void);
-void Xray_SetupStage6(void);
-void Xray_SetupStage7(void);
+void Xray_SetupStage4_SetupAndReadBg2_1stScreen(void);
+void CopyBottomBg1RowToXrayBg2(uint16 dst_r22, uint16 r26, uint16 r28, uint16 r30);
+void LoadRightHalfOfRevealedBlock(uint16 dst_r22, uint16 r34);
+void LoadRevealedBlock(uint16 r18, uint16 r22, uint16 r36);
+void Xray_SetupStage5_ReadBg2_2ndScreen(void);
+void Xray_SetupStage6_TransferBg_1stScreen(void);
+void Xray_SetupStage7_InitXrayBeam_TransferBg_2ndScreen(void);
 void Xray_SetupStage8_SetBackdropColor(void);
 void sub_91EFC3(void);
 DemoInputEntry get_DemoInputEntry(uint16 demo_input_);
@@ -2275,12 +2275,12 @@ void Bang_Shot(void);
 void BigEyeBugs_Init(void);
 void Crab_Func_1(void);
 void Crab_Init(void);
-void Elevator_Frozen(void);
-void Elevator_Func3b(void);
-void Elevator_Func_1(void);
-void Elevator_Func_2(void);
-void Elevator_Func_3(void);
-void Elevator_Func_4(void);
+void Elevator_Main(void);
+void Elevator_Func_EnteringRoom(void);
+void Elevator_Func_Inactive(void);
+void Elevator_Func_LeavingRoom(void);
+void Elevator_Func_RoomTransition(void);
+void PlaceSamusOnElevator(void);
 void Elevator_Init(void);
 void Enemy_GrappleReact_CancelBeam_A3(void);
 void Enemy_GrappleReact_KillEnemy_A3(void);
@@ -2370,10 +2370,10 @@ void Metroid_Main(void);
 void Metroid_Powerbomb(uint16 k);
 void Metroid_Shot(void);
 void Metroid_Touch(void);
-void Mochtroid_Func_1(void);
-void Mochtroid_Func_2(void);
-void Mochtroid_Func_3(void);
-void Mochtroid_Func_4(uint16 k, uint16 a);
+void Mochtroid_Func_NotTouchingSamus(void);
+void Mochtroid_Func_2_UNUSED(void);
+void Mochtroid_Func_TouchingSamus(void);
+void SetMochtroidInstruction(uint16 k, uint16 a);
 void Mochtroid_Init(void);
 void Mochtroid_Main(void);
 void Mochtroid_Shot(void);
@@ -2589,20 +2589,20 @@ const uint16 *Draygon_Instr_15(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_16(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_17(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_18(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_19(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_LoadDeathSequenceTargetPaletteWithOffset(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_2(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_20(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_21(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_22(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_23(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_24(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_25(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_26(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_27(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_28(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_29(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_SetFunction(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_SetMaxXRadius_AngleDelta(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_SetGenerationFlag(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_QueueSfx2_Max6(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_ClearDamagedFlag(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_IncreaseMaxXRadius(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_SpawnDyingExplosion(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_Harden(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_SpawnHardeningDustCloud(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_LoadDeathSequencePaletteWithOffset(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_3(uint16 k, const uint16 *jp);
-const uint16 *Draygon_Instr_30(uint16 k, const uint16 *jp);
+const uint16 *SporeSpawn_Instr_SpawnItemDrops(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_4(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_5(uint16 k, const uint16 *jp);
 const uint16 *Draygon_Instr_6(uint16 k, const uint16 *jp);
@@ -2653,9 +2653,9 @@ void Draygon_Func_46(void);
 void Draygon_Func_48(uint16 k);
 void Draygon_Func_49(uint16 k);
 void Draygon_Func_5(void);
-void Draygon_Func_50(uint16 j);
-void Draygon_Func_51(uint16 j);
-void Draygon_Func_52(uint16 j);
+void SporeSpawn_Instr_SetMaxXRadius_AngleDelta_Angle_Unused(uint16 j);
+void SporeSpawn_Instr_SetMaxXRadius_Unused(uint16 j);
+void SporeSpawn_Instr_SetAngleDelta_Unused(uint16 j);
 void Draygon_Func_6(void);
 void Draygon_Func_7(void);
 void Draygon_Func_8(void);
@@ -2675,19 +2675,19 @@ void Enemy_GrappleReact_NoInteract_A5(void);
 void Enemy_NormalFrozenAI_A5(void);
 void Enemy_NormalShotAI_A5(void);
 void Enemy_NormalTouchAI_A5(void);
-void SporeSpawn_Func_1(void);
-void SporeSpawn_Func_2(uint16 k);
-void SporeSpawn_Func_3(void);
-void SporeSpawn_Func_4(void);
-void SporeSpawn_Func_5(void);
-void SporeSpawn_Func_6(void);
-void SporeSpawn_Func_7(uint16 a);
+void SporeSpawn_Func_Descent(void);
+void SporeSpawn_Func_Moving(uint16 k);
+void SporeSpawn_Func_SetUpDeath(void);
+void SporeSpawn_Func_Dying(void);
+void SporeSpawn_UpdateStalkSegmentPositions(void);
+void SporeSpawn_Reaction(void);
+void SporeSpawn_LoadHealthBasedPalette(uint16 a);
 void SporeSpawn_Init(void);
 void SporeSpawn_Main(void);
 void SporeSpawn_Shot(void);
 void SporeSpawn_Touch(void);
 void sub_A5960D(void);
-void sub_A5E9F5(void);
+void SporeSpawn_SpawnCeilingSmoke(void);
 
 // Bank A6
 uint16 BabyMetroid_Instr_1(uint16 k);
@@ -4360,10 +4360,10 @@ void VerifySRAM(void);
 #define fnDoorTransitionFunction_SetupScrolling 0x82E38E
 #define fnDoorTransitionFunction_PlaceSamusLoadTiles 0x82E3C0
 #define fnDoorTransitionFunction_LoadMoreThings_Async 0x82E4A9
-#define fnDoorTransition_C_HandleAnimTiles 0x82E659
-#define fnDoorTransition_WaitForMusicToClear 0x82E664
-#define fnDoorTransition_HandleTransition 0x82E6A2
-#define fnDoorTransition_FadeInScreenAndFinish 0x82E737
+#define fnDoorTransitionFunction_HandleAnimTiles 0x82E659
+#define fnDoorTransitionFunction_WaitForMusicToClear 0x82E664
+#define fnDoorTransitionFunction_HandleTransition 0x82E6A2
+#define fnDoorTransitionFunction_FadeInScreenAndFinish 0x82E737
 #define fnOptionsInit_MenuSelectMissile 0x82F296
 #define fnOptionsPreInstr_MenuSelectMissile 0x82F2A9
 #define fnOptionsInit_OptionModeBorder 0x82F34B
@@ -5795,20 +5795,20 @@ void VerifySRAM(void);
 #define fnDemoInstr_FaceSamusLeftAndDisableDemo 0x918739
 #define fnDemoPreInstr_CheckLeaveDemo 0x918A9B
 #define fnDemoPreInstr_CheckLeaveDemo_Shinespark 0x918AB0
-#define fnXray_SetupStage1_FreezeTimeBackup 0x91CAF9
+#define fnXray_SetupStage1_FreezeTime_BackupBg2 0x91CAF9
 #define fnXray_SetupStage2_ReadBg1_2ndScreen 0x91CB1C
 #define fnXray_SetupStage3_ReadBg1_1stScreen 0x91CB57
-#define fnXray_SetupStage4 0x91CB8E
-#define fnXray_Func6 0x91CE79
-#define fnXray_Func6B 0x91CEBB
-#define fnXray_Func7 0x91CF36
-#define fnXray_Func8 0x91CF3E
-#define fnXray_Func9 0x91CF4E
-#define fnXray_Func10 0x91CF62
-#define fnXray_Func11 0x91CF6F
-#define fnXray_SetupStage5 0x91D0D3
-#define fnXray_SetupStage6 0x91D173
-#define fnXray_SetupStage7 0x91D1A0
+#define fnXray_SetupStage4_SetupAndReadBg2_1stScreen 0x91CB8E
+#define fnRevealedBlock_Func_Vertical 0x91CE79
+#define fnRevealedBlock_Func_Horizontal 0x91CEBB
+#define fnRevealedBlock_Func_Copy1x1BlockToXrayBg2 0x91CF36
+#define fnRevealedBlock_Func_Copy1x1BlockToXrayBg2_Brinstar 0x91CF3E
+#define fnRevealedBlock_Func_Copy2x1BlockToXrayBg2 0x91CF4E
+#define fnRevealedBlock_Func_Copy1x2BlockToXrayBg2 0x91CF62
+#define fnRevealedBlock_Func_Copy2x2BlockToXrayBg2 0x91CF6F
+#define fnXray_SetupStage5_ReadBg2_2ndScreen 0x91D0D3
+#define fnXray_SetupStage6_TransferBg_1stScreen 0x91D173
+#define fnXray_SetupStage7_InitXrayBeam_TransferBg_2ndScreen 0x91D1A0
 #define fnHdmaobjPreInstr_XraySetup 0x91D27F
 #define fnXray_SetupStage8_SetBackdropColor 0x91D2BC
 #define fnVariaSuitPickup 0x91D4E4
@@ -6177,7 +6177,7 @@ void VerifySRAM(void);
 #define fnMaridiaFish_Func_3 0xA39224
 #define fnMaridiaFish_Func_4 0xA39256
 #define fnElevator_Init 0xA394E6
-#define fnElevator_Frozen 0xA3952A
+#define fnElevator_Main 0xA3952A
 #define fnCrab_Init 0xA396E3
 #define fnSlug_Init 0xA3993B
 #define fnPlatformThatFallsWithSamus_Instr_3 0xA39C6B
@@ -6439,25 +6439,25 @@ void VerifySRAM(void);
 #define fnnullsub_37 0xA5C5AA
 #define fnDraygonsArms_Init 0xA5C5AD
 #define fnnullsub_38 0xA5C5C4
-#define fnDraygon_Instr_25 0xA5E75F
-#define fnDraygon_Instr_24 0xA5E771
-#define fnDraygon_Instr_21 0xA5E82D
-#define fnDraygon_Instr_22 0xA5E872
-#define fnDraygon_Instr_27 0xA5E87C
-#define fnDraygon_Instr_23 0xA5E895
-#define fnDraygon_Instr_30 0xA5E8B1
-#define fnDraygon_Instr_20 0xA5E8BA
-#define fnDraygon_Instr_29 0xA5E8CA
-#define fnDraygon_Instr_19 0xA5E91C
-#define fnDraygon_Instr_28 0xA5E96E
-#define fnDraygon_Instr_26 0xA5E9B1
+#define fnSporeSpawn_Instr_IncreaseMaxXRadius 0xA5E75F
+#define fnSporeSpawn_Instr_ClearDamagedFlag 0xA5E771
+#define fnSporeSpawn_Instr_SetMaxXRadius_AngleDelta 0xA5E82D
+#define fnSporeSpawn_Instr_SetGenerationFlag 0xA5E872
+#define fnSporeSpawn_Instr_Harden 0xA5E87C
+#define fnSporeSpawn_Instr_QueueSfx2_Max6 0xA5E895
+#define fnSporeSpawn_Instr_SpawnItemDrops 0xA5E8B1
+#define fnSporeSpawn_Instr_SetFunction 0xA5E8BA
+#define fnSporeSpawn_Instr_LoadDeathSequencePaletteWithOffset 0xA5E8CA
+#define fnSporeSpawn_Instr_LoadDeathSequenceTargetPaletteWithOffset 0xA5E91C
+#define fnSporeSpawn_Instr_SpawnHardeningDustCloud 0xA5E96E
+#define fnSporeSpawn_Instr_SpawnDyingExplosion 0xA5E9B1
 #define fnSporeSpawn_Init 0xA5EA2A
 #define fnSporeSpawn_Main 0xA5EB13
-#define fnnullsub_223 0xA5EB1A
-#define fnSporeSpawn_Func_1 0xA5EB1B
-#define fnSporeSpawn_Func_2 0xA5EB52
-#define fnSporeSpawn_Func_3 0xA5EB9B
-#define fnSporeSpawn_Func_4 0xA5EBEE
+#define fnSporeSpawn_nullsub_223 0xA5EB1A
+#define fnSporeSpawn_Func_Descent 0xA5EB1B
+#define fnSporeSpawn_Func_Moving 0xA5EB52
+#define fnSporeSpawn_Func_SetUpDeath 0xA5EB9B
+#define fnSporeSpawn_Func_Dying 0xA5EBEE
 #define fnSporeSpawn_Shot 0xA5ED5A
 #define fnSporeSpawn_Touch 0xA5EDEC
 #define fnnullsub_39 0xA5EDF2

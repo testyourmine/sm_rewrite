@@ -311,7 +311,7 @@ const uint8 *EprojInstr_WriteColorsToPalette(uint16 k, const uint8 *epjp) {  // 
   int n = epjp[4];
   uint16 v4 = GET_WORD(epjp);
   do {
-    palette_buffer[v3 >> 1] = *(uint16 *)RomPtr_86(v4);
+    palette_buffer.pal[v3 >> 1] = *(uint16 *)RomPtr_86(v4);
     v4 += 2;
     v3 += 2;
   } while ((--n & 0x8000) == 0);
@@ -1130,9 +1130,9 @@ uint16 MoveEprojWithVelocityX(uint16 k) {  // 0x869311
 void SetAreaDependentEprojPropertiesEx(uint16 k, uint16 j) {  // 0x86932F
   uint16 v2;
   uint16 *p = (uint16 *)RomPtr_86(k);
-  if (area_index == 2) {
+  if (area_index == kArea_2_Norfair) {
     v2 = p[1];
-  } else if (area_index == 5) {
+  } else if (area_index == kArea_5_Tourian) {
     v2 = p[2];
   } else {
     v2 = p[0];
@@ -2618,8 +2618,8 @@ static void EprojInit_TourianStatueEyeGlow(uint16 j) {  // 0x86B88E
   eproj_x_pos[v3] = kEprojInit_TourianStatueEyeGlow_X[v2];
   eproj_y_pos[v3] = kEprojInit_TourianStatueEyeGlow_Y[v2];
   uint16 v4 = 4 * v1;
-  for (int i = 498; i != 506; i += 2) {
-    palette_buffer[i >> 1] = kEprojInit_TourianStatueEyeGlow_Colors[v4 >> 1];
+  for (int i = 0; i != 8; i += 2) {
+    palette_buffer.sprite_pal_7[(i >> 1) + 9] = kEprojInit_TourianStatueEyeGlow_Colors[v4 >> 1];
     v4 += 2;
   }
 }
@@ -4698,7 +4698,7 @@ void Eproj_Pickup_SmallHealth(void) {  // 0x86F0BB
 }
 
 void Eproj_Pickup_BigHealth(void) {  // 0x86F0CA
-  Samus_RestoreHealth(0x14);
+  Samus_RestoreHealth(20);
   QueueSfx2_Max1(kSfx2_CollectBigHealthDrop_HighPriority);
 }
 

@@ -511,7 +511,7 @@ void ProcessEnemyTilesets(void) {  // 0xA08D64
   EnemyTileLoadData *LD = enemy_tile_load_data;
   for (; ET->enemy_def != 0xffff; ET++) {
     EnemyDef *ED = get_EnemyDef_A2(ET->enemy_def);
-    memcpy(&target_palettes[(LOBYTE(ET->vram_dst) + 8) * 16], 
+    memcpy(&target_palettes.pal[(LOBYTE(ET->vram_dst) + 8) * 16], 
            RomPtrWithBank(ED->bank, ED->palette_ptr), 32);
     LD->tile_data_size = ED->tile_data_size & 0x7FFF;
     LD->tile_data_ptr = ED->tile_data;
@@ -693,7 +693,7 @@ void CallEnemyAi(uint32 ea) {
   case fnMaridiaFish_Init: MaridiaFish_Init(); return;
   case fnMaridiaFish_Main: MaridiaFish_Main(); return;
   case fnElevator_Init: Elevator_Init(); return;
-  case fnElevator_Frozen: Elevator_Frozen(); return;
+  case fnElevator_Main: Elevator_Main(); return;
   case fnCrab_Init: Crab_Init(); return;
   case fnSlug_Init: Slug_Init(); return;
   case fnPlatformThatFallsWithSamus_Init: PlatformThatFallsWithSamus_Init(); return;
@@ -1377,18 +1377,18 @@ const uint16 *CallEnemyInstr(uint32 ea, uint16 k, const uint16 *j) {
   case fnDraygon_Instr_12: return Draygon_Instr_12(k, j);
   case fnDraygon_Instr_18: return Draygon_Instr_18(k, j);
   case fnDraygon_Instr_3: return Draygon_Instr_3(k, j);
-  case fnDraygon_Instr_25: return Draygon_Instr_25(k, j);
-  case fnDraygon_Instr_24: return Draygon_Instr_24(k, j);
-  case fnDraygon_Instr_21: return Draygon_Instr_21(k, j);
-  case fnDraygon_Instr_22: return Draygon_Instr_22(k, j);
-  case fnDraygon_Instr_27: return Draygon_Instr_27(k, j);
-  case fnDraygon_Instr_23: return Draygon_Instr_23(k, j);
-  case fnDraygon_Instr_30: return Draygon_Instr_30(k, j);
-  case fnDraygon_Instr_20: return Draygon_Instr_20(k, j);
-  case fnDraygon_Instr_29: return Draygon_Instr_29(k, j);
-  case fnDraygon_Instr_19: return Draygon_Instr_19(k, j);
-  case fnDraygon_Instr_28: return Draygon_Instr_28(k, j);
-  case fnDraygon_Instr_26: return Draygon_Instr_26(k, j);
+  case fnSporeSpawn_Instr_IncreaseMaxXRadius: return SporeSpawn_Instr_IncreaseMaxXRadius(k, j);
+  case fnSporeSpawn_Instr_ClearDamagedFlag: return SporeSpawn_Instr_ClearDamagedFlag(k, j);
+  case fnSporeSpawn_Instr_SetMaxXRadius_AngleDelta: return SporeSpawn_Instr_SetMaxXRadius_AngleDelta(k, j);
+  case fnSporeSpawn_Instr_SetGenerationFlag: return SporeSpawn_Instr_SetGenerationFlag(k, j);
+  case fnSporeSpawn_Instr_Harden: return SporeSpawn_Instr_Harden(k, j);
+  case fnSporeSpawn_Instr_QueueSfx2_Max6: return SporeSpawn_Instr_QueueSfx2_Max6(k, j);
+  case fnSporeSpawn_Instr_SpawnItemDrops: return SporeSpawn_Instr_SpawnItemDrops(k, j);
+  case fnSporeSpawn_Instr_SetFunction: return SporeSpawn_Instr_SetFunction(k, j);
+  case fnSporeSpawn_Instr_LoadDeathSequencePaletteWithOffset: return SporeSpawn_Instr_LoadDeathSequencePaletteWithOffset(k, j);
+  case fnSporeSpawn_Instr_LoadDeathSequenceTargetPaletteWithOffset: return SporeSpawn_Instr_LoadDeathSequenceTargetPaletteWithOffset(k, j);
+  case fnSporeSpawn_Instr_SpawnHardeningDustCloud: return SporeSpawn_Instr_SpawnHardeningDustCloud(k, j);
+  case fnSporeSpawn_Instr_SpawnDyingExplosion: return SporeSpawn_Instr_SpawnDyingExplosion(k, j);
   case fnEnemyInstr_Goto_A6: return EnemyInstr_Goto(k, j);
   case fnEnemyInstr_Sleep_A6: return EnemyInstr_Sleep(k, j);
   case fnFireGeyser_Instr_1: return FireGeyser_Instr_1(k, j);
@@ -2744,7 +2744,7 @@ LABEL_9:;
             && (last_enemy_power & 0xF0) != 128
             && !v16->frozen_timer) {
           v20 = 400;
-          if (area_index == 2)
+          if (area_index == kArea_2_Norfair)
             v20 = 300;
           v16->frozen_timer = v20;
           v16->ai_handler_bits |= 4;
@@ -2782,7 +2782,7 @@ LABEL_18:;
   if (!v8->frozen_timer)
     QueueSfx3_Max3(kSfx3_EnemyFrozen_HighPriority);
   v9 = 400;
-  if (area_index == 2)
+  if (area_index == kArea_2_Norfair)
     v9 = 300;
   v8->frozen_timer = v9;
   v8->ai_handler_bits |= 4;

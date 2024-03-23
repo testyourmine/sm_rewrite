@@ -23,20 +23,27 @@ uint16 kFxTypeTilemapPtrs[] = {
 //#define kAreaPalFxListPointers ((uint16*)RomFixedPtr(0x83ac46))
 
 uint16 kAreaPalFxListPointers[] = {
-	0xac66, 0xac86, 0xaca6, 0xacc6, 0xace6, 0xad06, 0xad26, 0xad46,
+  [kArea_0_Crateria] = 0xac66,
+  [kArea_1_Brinstar] = 0xac86,
+  [kArea_2_Norfair] = 0xaca6,
+  [kArea_3_WreckedShip] = 0xacc6,
+  [kArea_4_Maridia] = 0xace6,
+  [kArea_5_Tourian] = 0xad06,
+  [kArea_6_Ceres] = 0xad26,
+  [kArea_7_Debug] = 0xad46,
 };
 
 //#define kAreaAnimtilesListPtrs ((uint16*)RomFixedPtr(0x83ac56))
 
 uint16 kAreaAnimtilesListPtrs[8][8] ={
-  [0] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_CrateriaLake, addr_kAnimTiles_CrateriaLava_Unused1, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [1] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_BrinstarMouth, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [2] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [3] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimtiles_WreckedShipTreadmillRight, addr_kAnimtiles_WreckedShipTreadmillLeft, addr_kAnimTiles_WreckedShipScreen, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [4] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_MaridiaSandCeiling, addr_kAnimTiles_MaridiaSandFalling, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [5] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [6] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [7] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_0_Crateria] =    { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_CrateriaLake, addr_kAnimTiles_CrateriaLava_Unused1, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_1_Brinstar] =    { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_BrinstarMouth, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_2_Norfair] =     { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_3_WreckedShip] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimtiles_WreckedShipTreadmillRight, addr_kAnimtiles_WreckedShipTreadmillLeft, addr_kAnimTiles_WreckedShipScreen, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_4_Maridia] =     { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_MaridiaSandCeiling, addr_kAnimTiles_MaridiaSandFalling, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_5_Tourian] =     { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_6_Ceres] =       { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
+  [kArea_7_Debug] =       { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
 };
 
 //#define kCereElevatorShaftMode7TransformationMatrix ((uint16*)RomFixedPtr(0x89ad5f))

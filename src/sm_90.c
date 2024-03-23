@@ -1862,7 +1862,7 @@ void Samus_Movement_00_Standing(void) {  // 0x90A383
     samus_x_base_subspeed = 0;
     samus_x_accel_mode = 0;
   } else {
-    if (elevator_status) {
+    if (elevator_status != kElevatorStatus_Inactive) {
       samus_collision_direction = 2;
       Samus_MoveDown_NoSolidColl(INT16_SHL16(1));
     }
@@ -2437,10 +2437,10 @@ void WriteBeamPalette_Y(uint16 j) {  // 0x90ACCD
   uint16 v1 = 0;
   uint16 v2 = 0;
   do {
-    palette_buffer[(v2 >> 1) + 224] = GET_WORD(RomPtr_90(r0 + v1));
+    palette_buffer.sprite_pal_6[(v2 >> 1)] = GET_WORD(RomPtr_90(r0 + v1));
     v2 += 2;
     v1 += 2;
-  } while ((int16)(v1 - 32) < 0);
+  } while ((int16)(v1 - 0x20) < 0);
 }
 
 void LoadProjectilePalette(uint16 a) {  // 0x90ACFC
@@ -2448,10 +2448,10 @@ void LoadProjectilePalette(uint16 a) {  // 0x90ACFC
   uint16 v1 = 0;
   uint16 v2 = 0;
   do {
-    palette_buffer[(v2 >> 1) + 224] = GET_WORD(RomPtr_90(r0 + v1));
+    palette_buffer.sprite_pal_6[(v2 >> 1)] = GET_WORD(RomPtr_90(r0 + v1));
     v2 += 2;
     v1 += 2;
-  } while ((int16)(v1 - 32) < 0);
+  } while ((int16)(v1 - 0x20) < 0);
 }
 
 void ResetProjectileData(void) {  // 0x90AD22
@@ -4840,9 +4840,9 @@ void SamusMoveHandler_CrystalFlashStart(void) {  // 0x90D678
 }
 
 static Func_V *const kSamusMoveHandler_CrystalFlashMainFuncs[3] = {  // 0x90D6CE
-  SamusMoveHandler_CrystalFlashMain_0_DecMissiles,
-  SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles,
-  SamusMoveHandler_CrystalFlashMain_2_DecPowerBombs,
+  SamusMoveHandler_CrystalFlash_0_DecMissiles,
+  SamusMoveHandler_CrystalFlash_1_DecSuperMissiles,
+  SamusMoveHandler_CrystalFlash_2_DecPowerBombs,
 };
 
 void SamusMoveHandler_CrystalFlashMain(void) {
@@ -4851,7 +4851,7 @@ void SamusMoveHandler_CrystalFlashMain(void) {
   samus_knockback_timer = 0;
 }
 
-void SamusMoveHandler_CrystalFlashMain_0_DecMissiles(void) {  // 0x90D6E3
+void SamusMoveHandler_CrystalFlash_0_DecMissiles(void) {  // 0x90D6E3
   if ((nmi_frame_counter_word & 7) == 0) {
     --samus_missiles;
     Samus_RestoreHealth(50);
@@ -4863,7 +4863,7 @@ void SamusMoveHandler_CrystalFlashMain_0_DecMissiles(void) {  // 0x90D6E3
   }
 }
 
-void SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles(void) {  // 0x90D706
+void SamusMoveHandler_CrystalFlash_1_DecSuperMissiles(void) {  // 0x90D706
   if ((nmi_frame_counter_word & 7) == 0) {
     --samus_super_missiles;
     Samus_RestoreHealth(50);
@@ -4875,10 +4875,10 @@ void SamusMoveHandler_CrystalFlashMain_1_DecSuperMissiles(void) {  // 0x90D706
   }
 }
 
-void SamusMoveHandler_CrystalFlashMain_2_DecPowerBombs(void) {  // 0x90D729
+void SamusMoveHandler_CrystalFlash_2_DecPowerBombs(void) {  // 0x90D729
   if ((nmi_frame_counter_word & 7) == 0) {
     --samus_power_bombs;
-    Samus_RestoreHealth(0x32);
+    Samus_RestoreHealth(50);
     bool v0 = (int16)(substate - 1) < 0;
     if (!--substate || v0) {
       samus_movement_handler = FUNC16(SamusMoveHandler_CrystalFlashFinish);
@@ -5655,7 +5655,7 @@ void Samus_FrameHandlerGamma_HandleTimer(void) {  // 0x90E0E6
   if (ProcessTimer() & 1) {
     game_state = kGameState_35_TimeUp;
     for (int i = 510; i >= 0; i -= 2)
-      target_palettes[i >> 1] = 0x7FFF;
+      target_palettes.pal[i >> 1] = 0x7FFF;
     frame_handler_gamma = FUNC16(Samus_FrameHandlerGamma_DrawTimer);
     DisablePaletteFx();
   }
@@ -5695,7 +5695,7 @@ void Samus_FrameHandlerGamma_PushOutOfRidleysWay(void) {  // 0x90E12E
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   ProcessTimer();
@@ -5712,7 +5712,7 @@ void Samus_FrameHandlerGamma_PushingOutOfRidleysWay(void) {  // 0x90E1C8
 
   if (samus_new_pose == kPose_4F_FaceL_Dmgboost || samus_new_pose == kPose_50_FaceR_Dmgboost) {
     samus_new_pose = -1;
-    samus_momentum_routine_index = 0;
+    samus_new_pose_command = 0;
   }
   kSamus_PushOutOfRidleysWay_Func[samus_push_direction]();
   input_to_pose_calc = 0;
@@ -5746,7 +5746,7 @@ void Samus_PushOutOfRidleysWay_Rightwards(void) {  // 0x90E21C
 void Samus_FrameHandlerGamma_GrabbedByDraygon(void) {  // 0x90E2A1
   if (grapple_beam_function == FUNC16(GrappleBeamFunc_ConnectedLockedInPlace)) {
     samus_new_pose = -1;
-    samus_momentum_routine_index = 0;
+    samus_new_pose_command = 0;
   }
   if ((joypad1_newkeys & (kButton_Up | kButton_Down | kButton_Left | kButton_Right)) != 0
       && (joypad1_newkeys & (kButton_Up | kButton_Down | kButton_Left | kButton_Right)) != suit_pickup_light_beam_pos) {
@@ -5775,7 +5775,7 @@ void Samus_SetGrabbedByDraygonPose(uint16 a) {  // 0x90E23B
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
 }
@@ -5802,7 +5802,7 @@ void Samus_ReleaseFromDraygon(void) {  // 0x90E2DE
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   samus_y_speed = 0;
@@ -5940,7 +5940,7 @@ void Samus_FrameHandlerAlfa_Normal(void) {  // 0x90E695
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   Samus_SetRadius();
@@ -5956,7 +5956,7 @@ void Samus_FrameHandlerAlfa_Demo(void) {  // 0x90E6C9
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   controller1_input_for_demo = joypad1_lastkeys;
@@ -6073,7 +6073,7 @@ void Samus_FrameHandlerBeta_SamusAppears(void) {  // 0x90E86A
   Samus_SetRadius();
   UpdateMinimap();
   Samus_Animate();
-  elevator_status = 0;
+  elevator_status = kElevatorStatus_Inactive;
   samus_prev_y_pos = samus_y_pos;
   if (PlaySamusFanfare() & 1) {
     if (sign16(debug_invincibility - 7) || (joypad2_last & 0x8000) == 0)
@@ -6235,7 +6235,7 @@ void Samus_PauseCheck(void) {  // 0x90EA45
   if (!power_bomb_flag
       && !time_is_frozen_flag
       && !door_transition_flag_enemies
-      && area_index != 6
+      && area_index != kArea_6_Ceres
       && game_state == kGameState_8_MainGameplay
       && (joypad1_newkeys & kButton_Start) != 0) {
     screen_fade_delay = 1;
@@ -6466,14 +6466,14 @@ void UNUSED_DisplayInGameTimeAsAmmo(void) {  // 0x90ED6C
 }
 
 static Func_V *const kSamus_FootstepGraphics[8] = {  // 0x90ED88
-  Samus_FootstepGraphics_Crateria,
-  Samus_FootstepGraphics_Common,
-  Samus_FootstepGraphics_Common,
-  Samus_FootstepGraphics_Common,
-  Samus_FootstepGraphics_Maridia,
-  Samus_FootstepGraphics_Common,
-  Samus_FootstepGraphics_Common,
-  Samus_FootstepGraphics_Common,
+  [kArea_0_Crateria] = Samus_FootstepGraphics_Crateria,
+  [kArea_1_Brinstar] = Samus_FootstepGraphics_Common,
+  [kArea_2_Norfair] = Samus_FootstepGraphics_Common,
+  [kArea_3_WreckedShip] = Samus_FootstepGraphics_Common,
+  [kArea_4_Maridia] = Samus_FootstepGraphics_Maridia,
+  [kArea_5_Tourian] = Samus_FootstepGraphics_Common,
+  [kArea_6_Ceres] = Samus_FootstepGraphics_Common,
+  [kArea_7_Debug] = Samus_FootstepGraphics_Common,
 };
 void Samus_FootstepGraphics(void) {
   kSamus_FootstepGraphics[area_index]();
@@ -6666,7 +6666,7 @@ uint16 RunSamusCode(uint16 a) {
   samus_new_pose = -1;
   samus_new_pose_interrupted = -1;
   samus_new_pose_transitional = -1;
-  samus_momentum_routine_index = 0;
+  samus_new_pose_command = 0;
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   return -1;
@@ -6806,7 +6806,7 @@ uint8 SamusCode_0B_UnlockFromFacingForward(void) {  // 0x90F295
 }
 
 uint8 SamusCode_0C_UpdateDueToUnpause(void) {  // 0x90F29E
-  SamusFunc_E633();
+  Samus_UpdatePoseFromEquipmentChange();
   if (frame_handler_beta == FUNC16(Samus_FrameHandlerBeta_SamusLockedToStation)) {
     frame_handler_alfa = FUNC16(Samus_FrameHandlerAlfa_Normal);
     frame_handler_beta = FUNC16(Samus_FrameHandlerBeta_Normal);

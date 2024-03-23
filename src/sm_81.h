@@ -12,7 +12,14 @@ uint8 kPackedBytesPerArea_Count[] ={ 74, 72, 76, 18, 66, 21, 8, };
 
 uint16 kPackedBytesPerArea_PackedOffs[] ={ 0, 74, 146, 222, 240, 306, 327, };
 
-static const uint16 kFileSelectMap_AreaIndexes[6] = { 0, 3, 5, 1, 4, 2 };
+static const uint16 kFileSelectMap_AreaIndexes[6] = {
+  [kArea_0_Crateria] = kArea_0_Crateria,
+  [kArea_1_Brinstar] = kArea_3_WreckedShip,
+  [kArea_2_Norfair] = kArea_5_Tourian,
+  [kArea_3_WreckedShip] = kArea_1_Brinstar,
+  [kArea_4_Maridia] = kArea_4_Maridia,
+  [kArea_5_Tourian] = kArea_2_Norfair,
+};
 
 //#define kPackedBytesPerArea_UnpackedOffs ((uint16*)RomFixedPtr(0x8182d6))
 
@@ -338,10 +345,17 @@ uint16 gFlareSpritemapTable[] = { 0xab6c, 0xab73, 0xab6c, 0xab73, 0xab6c, 0xab73
 
 //#define kExpandingSquareVels ((ExpandingSquareVels*)RomFixedPtr(0x81aa34))
 
-ExpandingSquareVels kExpandingSquareVels[] = { 0x3c00,0xfffe, 0x3400,0x3,  0x800,0xffff,    0x0,0x4, 
-											   0x3800,0xffff,    0x0,0x4, 0xa400,0xfffd, 0x6800,0x2, 
-											   0xf000,0xfffd, 0x9400,0x3,    0x0,0xfffc, 0xa800,0x1, 
-											      0x0,0xfffc, 0xf800,0x0, 0x7400,0xfffe, 0x6800,0x3, 
-											      0x0,0xfffc, 0xf800,0x0, 0xec00,0xfffc, 0xe000,0x1, 
-											   0x2000,0xfffc, 0x7800,0x3,    0x0,0xfffc, 0x5c00,0x3, 
+ExpandingSquareVels kExpandingSquareVels[] = {
+  [kArea_0_Crateria] =    { .left_subvel = 0x3c00, .left_vel = 0xfffe, .right_subvel = 0x3400, .right_vel = 0x3, 
+                            .top_subvel = 0x800, .top_vel = 0xffff, .bottom_subvel = 0x0,.bottom_vel = 0x4 },
+  [kArea_1_Brinstar] =    { .left_subvel = 0x3800, .left_vel = 0xffff, .right_subvel = 0x0, .right_vel = 0x4,
+                            .top_subvel = 0xa400, .top_vel = 0xfffd, .bottom_subvel = 0x6800, .bottom_vel = 0x2 },
+  [kArea_2_Norfair] =     { .left_subvel = 0xf000, .left_vel = 0xfffd, .right_subvel = 0x9400, .right_vel = 0x3,
+                            .top_subvel = 0x0, .top_vel = 0xfffc, .bottom_subvel = 0xa800, .bottom_vel = 0x1 },
+  [kArea_3_WreckedShip] = { .left_subvel = 0x0, .left_vel = 0xfffc, .right_subvel = 0xf800, .right_vel = 0x0,
+                            .top_subvel = 0x7400, .top_vel = 0xfffe, .bottom_subvel = 0x6800, .bottom_vel = 0x3 },
+  [kArea_4_Maridia] =     { .left_subvel = 0x0, .left_vel = 0xfffc, .right_subvel = 0xf800, .right_vel = 0x0,
+                            .top_subvel = 0xec00, .top_vel = 0xfffc, .bottom_subvel = 0xe000, .bottom_vel = 0x1 },
+  [kArea_5_Tourian] =     { .left_subvel = 0x2000, .left_vel = 0xfffc, .right_subvel = 0x7800, .right_vel = 0x3,
+                            .top_subvel = 0x0, .top_vel = 0xfffc, .bottom_subvel = 0x5c00, .bottom_vel = 0x3 },
 };

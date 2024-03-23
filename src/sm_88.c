@@ -527,13 +527,13 @@ void CallHdmaobjInstrFunc(uint32 ea, uint16 k) {
   case fnnullsub_114: return;
   case fnnullsub_357: return;
   case fnInitializeRainbowBeam: InitializeRainbowBeam(); return;
-  case fnXray_SetupStage1_FreezeTimeBackup: Xray_SetupStage1_FreezeTimeBackup(k); return;
+  case fnXray_SetupStage1_FreezeTime_BackupBg2: Xray_SetupStage1_FreezeTime_BackupBg2(k); return;
   case fnXray_SetupStage2_ReadBg1_2ndScreen: Xray_SetupStage2_ReadBg1_2ndScreen(); return;
   case fnXray_SetupStage3_ReadBg1_1stScreen: Xray_SetupStage3_ReadBg1_1stScreen(); return;
-  case fnXray_SetupStage4: Xray_SetupStage4(); return;
-  case fnXray_SetupStage5: Xray_SetupStage5(); return;
-  case fnXray_SetupStage6: Xray_SetupStage6(); return;
-  case fnXray_SetupStage7: Xray_SetupStage7(); return;
+  case fnXray_SetupStage4_SetupAndReadBg2_1stScreen: Xray_SetupStage4_SetupAndReadBg2_1stScreen(); return;
+  case fnXray_SetupStage5_ReadBg2_2ndScreen: Xray_SetupStage5_ReadBg2_2ndScreen(); return;
+  case fnXray_SetupStage6_TransferBg_1stScreen: Xray_SetupStage6_TransferBg_1stScreen(); return;
+  case fnXray_SetupStage7_InitXrayBeam_TransferBg_2ndScreen: Xray_SetupStage7_InitXrayBeam_TransferBg_2ndScreen(); return;
   case fnXray_SetupStage8_SetBackdropColor: Xray_SetupStage8_SetBackdropColor(); return;
   case fnInitializeSuitPickupHdma: InitializeSuitPickupHdma(); return;
   default: Unreachable();
@@ -765,7 +765,7 @@ void HdmaobjPreInstr_XrayFunc3_DeactivateBeam_RestoreBg2_Part1(uint16 k) {  // 0
       v1 = 0x4000;
   }
   fx_layer_blending_config_c |= v1;
-  palette_buffer[0] = 0;
+  palette_buffer.bg1_bg2_pal_0[0] = 0;
   int v2 = hdma_object_index >> 1;
   reg_BG2HOFS = hdma_object_A[v2];
   reg_BG2VOFS = hdma_object_B[v2];
@@ -1268,7 +1268,7 @@ void HdmaobjPreInstr_PowerBombExplode_PreExplosionYellow(uint16 k) {  // 0x8891A
 }
 
 void SpawnCrystalFlashHdmaObjs(void) {  // 0x88A2A6
-  power_bomb_explosion_status = FUNC16(LayerBlendingHandler);
+  power_bomb_explosion_status = 0x8000;
   static const SpawnHdmaObject_Args unk_88A2B0 = { 0x40, 0x28, 0xa2bd };
   static const SpawnHdmaObject_Args unk_88A2B8 = { 0x40, 0x29, 0xa32a };
   SpawnHdmaObject(0x88, &unk_88A2B0);
@@ -2420,7 +2420,7 @@ void HdmaobjPreInstr_BombTorizoHazeColorMathBgColor(uint16 k) {  // 0x88DD43
 void FxTypeFunc_2C_Haze(void) {  // 0x88DDC7
   static const SpawnHdmaObject_Args unk_88DDD4 = { 0x40, 0x32, 0xded3 };
   static const SpawnHdmaObject_Args unk_88DDDD = { 0x40, 0x32, 0xdeeb };
-  if (CheckBossBitForCurArea(1) & 1)
+  if (CheckBossBitForCurArea(kBossBit_AreaBoss) & 1)
     SpawnHdmaObject(0x88, &unk_88DDDD);
   else
     SpawnHdmaObject(0x88, &unk_88DDD4);
@@ -2438,7 +2438,7 @@ void SetupHazeColorMathSubscreenHdma(uint16 k, uint16 a) {  // 0x88DE18
   int v2 = (uint8)k >> 1;
   hdma_object_B[v2] = a;
   hdma_object_A[v2] = 0;
-  if (door_transition_function == FUNC16(DoorTransition_FadeInScreenAndFinish)) {
+  if (door_transition_function == FUNC16(DoorTransitionFunction_FadeInScreenAndFinish)) {
     hdma_object_pre_instructions[v2] = FUNC16(HdmaobjPreInstr_HazeColorMathSubscreen_FadingIn);
     HdmaobjPreInstr_HazeColorMathSubscreen_FadingIn(k);
   }
@@ -3161,7 +3161,7 @@ void SpawnWavySamusHdmaObject(void) {  // 0x88EC3B
   unsigned int v1; // kr04_4
 
   g_word_7E0D9C = 1;
-  *(uint16 *)&hdma_wavy_samus_amplitude_low = 0x4000;
+  WORD(hdma_wavy_samus_amplitude_low) = 0x4000;
   loop_counter_transfer_enemies_to_vram = 8;
   button_config_shoot_x_saved = 192;
   button_config_itemcancel_y_saved = 192;

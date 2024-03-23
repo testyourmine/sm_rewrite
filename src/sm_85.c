@@ -279,10 +279,10 @@ static void RestorePpuForMessageBox(void) {  // 0x85861A
   gameplay_CGWSEL = next_gameplay_CGWSEL;
   gameplay_CGADSUB = next_gameplay_CGADSUB;
   WriteReg(CGADD, 0x19);
-  WriteReg(CGDATA, palette_buffer[25]);
-  WriteReg(CGDATA, HIBYTE(palette_buffer[25]));
-  WriteReg(CGDATA, palette_buffer[26]);
-  WriteReg(CGDATA, HIBYTE(palette_buffer[26]));
+  WriteReg(CGDATA, palette_buffer.bg3_pal_6[1]);
+  WriteReg(CGDATA, HIBYTE(palette_buffer.bg3_pal_6[1]));
+  WriteReg(CGDATA, palette_buffer.bg3_pal_6[2]);
+  WriteReg(CGDATA, HIBYTE(palette_buffer.bg3_pal_6[2]));
 }
 
 static CoroutineRet OpenMessageBox_Async(void) {  // 0x85844C

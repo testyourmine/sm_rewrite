@@ -169,16 +169,25 @@ MapScrollArrowData kDownMapScrollArrowData = { 128, 184, 7, 1024, 4, };
 
 //#define file_copy_arrow_stuff ((FileCopyArrowStuff*)RomFixedPtr(0x82bb0c))
 
-FileCopyArrowStuff file_copy_arrow_stuff[] = { 66, 20, 104, 
-											   64, 20, 88, 
-											   64, 20, 120, 
-											   67, 20, 104, 
-											   65, 20, 88, 
-											   65, 20, 120, };
+FileCopyArrowStuff kFileCopyArrow_Tab0[] = {
+  [0] = { .spritemap_idx = 66, .x_pos = 20, .y_pos = 104, },
+  [1] = { .spritemap_idx = 64, .x_pos = 20, .y_pos = 88,  },
+  [2] = { .spritemap_idx = 64, .x_pos = 20, .y_pos = 120, },
+  [3] = { .spritemap_idx = 67, .x_pos = 20, .y_pos = 104, },
+  [4] = { .spritemap_idx = 65, .x_pos = 20, .y_pos = 88,  },
+  [5] = { .spritemap_idx = 65, .x_pos = 20, .y_pos = 120, },
+};
 
 //#define kMapElevatorDests ((uint16*)RomFixedPtr(0x82c74d))
 
-uint16 kMapElevatorDests[] = { 0xc759, 0xc779, 0xc799, 0xc7a1, 0xc7af, 0xc7c3, };
+uint16 kMapElevatorDests[] = {
+  [kArea_0_Crateria] = 0xc759,
+  [kArea_1_Brinstar] = 0xc779,
+  [kArea_2_Norfair] = 0xc799,
+  [kArea_3_WreckedShip] = 0xc7a1,
+  [kArea_4_Maridia] = 0xc7af,
+  [kArea_5_Tourian] = 0xc7c3,
+};
 
 //#define kStateHeaderTileSets ((uint16*)RomFixedPtr(0x8fe7a7))
 

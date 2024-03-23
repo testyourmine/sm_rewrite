@@ -356,13 +356,13 @@ uint32 PatchBugs(uint32 mode, uint32 addr) {
   // Fix VAR BEAM etc.
   // Prevent EquipmentScreenCategory_ButtonResponse from getting called when category changed
   } else if (FixBugHook(0x82AFD3)) {
-    if ((uint8)pausemenu_equipment_category_item != 1)
+    if ((uint8)pausemenu_equipment_category_item != kEquipmentCategory_1_Weapons)
       return 0x82AFD9;
   } else if (FixBugHook(0x82B0CD)) {
-    if ((uint8)pausemenu_equipment_category_item != 2)
+    if ((uint8)pausemenu_equipment_category_item != kEquipmentCategory_2_SuitMisc)
       return 0x82AFD9;
   } else if (FixBugHook(0x82B15B)) {
-    if ((uint8)pausemenu_equipment_category_item != 3)
+    if ((uint8)pausemenu_equipment_category_item != kEquipmentCategory_3_Boots)
       return 0x82AFD9;
   } else if (FixBugHook(0xA2D38C)) {
     // MaridiaLargeSnail_Touch uses uninitialized X

@@ -66,7 +66,7 @@ uint16 kFireFlea_Tab0[] = {
 };
 
 uint16 kElevator_ControllerInputs[] = {
-   0x400,  0x800,
+   kButton_Down,  kButton_Up,
 };
 
 uint16 kEnemyInit_Crab_InstrListPtrs[] = {

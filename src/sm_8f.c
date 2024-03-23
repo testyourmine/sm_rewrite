@@ -706,7 +706,7 @@ uint16 RoomDefStateSelect_Finish(uint16 k) {  // 0x8FE5E6
 }
 
 uint16 RoomDefStateSelect_TourianBoss01(uint16 k) {  // 0x8FE5FF
-  if (!(CheckBossBitForCurArea(1) & 1))
+  if (!(CheckBossBitForCurArea(kBossBit_AreaBoss) & 1))
     return k + 2;
   const uint16 *v1 = (const uint16 *)RomPtr_8F(k);
   return RoomDefStateSelect_Finish(*v1);
