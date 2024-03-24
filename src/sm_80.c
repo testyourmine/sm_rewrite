@@ -1287,7 +1287,7 @@ void AddToTilemapInner(uint16 k, const uint16 *j) {  // 0x809A4C
 }
 
 void InitializeHud(void) {  // 0x809A79
-  WriteRegWord(VMADDL, addr_unk_605800);
+  WriteRegWord(VMADDL, addr_kVram_HudTopRow);
   WriteRegWord(VMAIN, 0x80);
   static const StartDmaCopy kDmaCopy_HudTilemaps_TopRow = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x80988b), .das = 0x0040 };
   SetupDmaTransfer(&kDmaCopy_HudTilemaps_TopRow);
@@ -1394,7 +1394,7 @@ void HandleHudTilemap(void) {  // 0x809B44
   gVramWriteEntry(v5)->size = ADDR16_OF_RAM(hud_tilemap.arr[0]);
   v5 += 2;
   gVramWriteEntry(v5++)->size = 126;
-  gVramWriteEntry(v5)->size = addr_unk_605820;
+  gVramWriteEntry(v5)->size = addr_kVram_Hud;
   vram_write_queue_tail = v5 + 2;
 }
 
@@ -1673,7 +1673,7 @@ void QueueClearingOfFxTilemap(void) {  // 0x80A211
   v2->size = 3840;
   v2->src.addr = ADDR16_OF_RAM(ram4000);
   *(uint16 *)&v2->src.bank = 126;
-  v2->vram_dst = addr_unk_605880;
+  v2->vram_dst = addr_kVram_FxBackup;
   vram_write_queue_tail = v1 + 7;
 }
 
@@ -2086,9 +2086,9 @@ void UpdateLevelOrBackgroundDataColumn(uint16 k) {  // 0x80A9DE
   uint16 var935 = vram_blocks_to_update_x_block & 0x1F;
   uint16 v4 = 2 * var935;
   uint16 var933 = prod + v4;
-  uint16 v5 = addr_unk_605000;
+  uint16 v5 = addr_kVram_1stScreen;
   if (var935 >= 0x10)
-    v5 = addr_unk_6053E0;
+    v5 = addr_kVram_2ndScreenOffset;
   if (k)
     v5 -= size_of_bg2;
   uint16 var937 = v5;
@@ -2174,11 +2174,11 @@ void UpdateLevelOrBackgroundDataRow(uint16 v0) {  // 0x80AB78
   uint16 var935 = vram_blocks_to_update_x_block & 0x1F;
   uint16 v3 = 2 * var935;
   var933 = prod + v3;
-  uint16 var937 = addr_unk_605400;
-  uint16 v4 = addr_unk_605000;
+  uint16 var937 = addr_kVram_2ndScreen;
+  uint16 v4 = addr_kVram_1stScreen;
   if (var935 >= 0x10) {
-    var937 = addr_unk_605000;
-    v4 = addr_unk_6053E0;
+    var937 = addr_kVram_1stScreen;
+    v4 = addr_kVram_2ndScreenOffset;
   }
   if (v0)
     v4 -= size_of_bg2;
@@ -2468,12 +2468,10 @@ static uint8 DecompNextByte() {
 
 void DecompressToMem(uint32 src, uint8 *decompress_dst) {  // 0x80B119
   decompress_src = src;
-
   int src_pos, dst_pos = 0;
   while (1) {
     int len;
-    uint8 cmd, b;
-    b = DecompNextByte();
+    uint8 b = DecompNextByte(), cmd;
     if (b == 0xFF)
       break;
     if ((b & 0xE0) == 0xE0) {

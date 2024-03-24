@@ -2232,7 +2232,7 @@ void CinematicFunc_Intro_SetupTextPage2(void) {  // 0x8BA66F
   ClearCinematicBgObjects(0x2F);
   EnableCinematicBgObjects();
   EnableCinematicBgTilemapUpdates();
-  cinematicbg_vram_addr = addr_unk_604C00;
+  cinematicbg_vram_addr = addr_kVram_Bg3;
   for (int i = 127; i >= 0; --i) {
     ram3000.pause_menu_map_tilemap[i] = 15401;
     ram3000.pause_menu_map_tilemap[i + 896] = 15401;

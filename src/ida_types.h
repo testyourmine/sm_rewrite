@@ -848,7 +848,8 @@ typedef struct Ram3000_MsgBox {  // 0x7E30BC
   uint8 pad[188];
   uint16 msg_box_anim_y_radius_neg[30];
   uint16 msg_box_anim_y_radius[30];
-  uint8 field_134[204];
+  uint16 msg_box_anim_clear[86];
+  uint8 field_134[32];
   uint16 tilemap[192];
   uint8 indirect_hdma[7];
   uint8 field_387[99];
@@ -1370,7 +1371,7 @@ typedef struct MsgBoxConfig {  // 0x85869B
 } MsgBoxConfig;
 
 enum kMessageBoxText {  // 0x85877F
-  kTxt_Empty = 0xE,
+  kTxt_Nul = 0xE,
   kTxt_Dash = 0xCF,
   kTxt_A = 0xE0,
   kTxt_B = 0xE1,
@@ -1398,7 +1399,7 @@ enum kMessageBoxText {  // 0x85877F
   kTxt_X = 0xF7,
   kTxt_Y = 0xF8,
   kTxt_Z = 0xF9,
-  kTxt_Space = 0x284E,
+  kTxt_Sp = 0x4E,
 };
 
 /* 11 */
@@ -1498,15 +1499,15 @@ typedef struct LoadBg_E {  // 0x8F0000
 }LoadBg_E;
 
 /* 26 */
-enum LoadLibaryOpcode {  // 0x8F0000
-  kLoadLibOp_0_DONE = 0x0,
-  kLoadBg_2_TransferToVram = 0x2,
-  kLoadBg_4_Decompress = 0x4,
-  kLoadLibOp_6_ClearFxTilemap = 0x6,
-  kLoadBg_8_TransferToVramSetBG3 = 0x8,
-  kLoadLibaryOpcode_A_ClearBG2Tilemap = 0xA,
-  kLoadLibaryOpcode_C_ClearKraidLayer2 = 0xC,
-  kLoadBg_E_DoorDepXferVram = 0xE,
+enum UpdateBackgroundCommands {  // 0x8F0000
+  kUpdateBackgroundCommand_0_Finish = 0x0,
+  kUpdateBackgroundCommand_2_TransferToVram = 0x2,
+  kUpdateBackgroundCommand_4_Decompression = 0x4,
+  kUpdateBackgroundCommand_6_ClearFxTilemap = 0x6,
+  kUpdateBackgroundCommand_8_TransferToVramAndSetBg3 = 0x8,
+  kUpdateBackgroundCommand_A_ClearBg2Tilemap = 0xA,
+  kUpdateBackgroundCommand_C_ClearKraidBg2Tilemap = 0xC,
+  kUpdateBackgroundCommand_E_DoorDependentTransferToVRAM = 0xE,
 };
 
 /* 6 */
@@ -1896,22 +1897,22 @@ typedef struct KraidSinkTable {  // 0xA7C5E7
 
 ///* 80 */
 //typedef struct CorpseRottingVramTransferDefs {  // 0xA90000
-//  uint16 field_0;
-//  uint16 field_2;
-//  uint16 field_4;
-//  uint16 field_6;
+//  uint16 size;
+//  uint16 src_bank;
+//  uint16 src_addr;
+//  uint16 vram_addr;
 //} CorpseRottingVramTransferDefs;
 
 ///* 81 */
-//typedef struct CorpseRottingDef {  // 0xA90000
-//  VoidP field_0;
-//  VoidP field_2;
-//  VoidP field_4;
-//  VoidP field_6;
-//  uint16 field_8;
-//  VoidP field_A;
-//  VoidP field_C;
-//  VoidP field_E;
+//typedef struct CorpseRottingDef {  // 0xA9DD58
+//  VoidP ram_ptr_to_table;
+//  VoidP vram_ptr;
+//  VoidP copy_func;
+//  VoidP move_func;
+//  uint16 height;
+//  VoidP init_func_ptr;
+//  VoidP row_offset_ptr;
+//  VoidP finished_func;
 //} CorpseRottingDef;
 
 ///* 82 */
@@ -2262,18 +2263,19 @@ enum SoundLibrary3 {  // 0x
 };
 
 enum Consts_60 {
-  addr_unk_604800 = 0x4800,
-  addr_unk_604C00 = 0x4C00,
-  addr_unk_605000 = 0x5000,
-  addr_unk_6053E0 = 0x53E0,
-  addr_unk_605400 = 0x5400,
-  addr_unk_605800 = 0x5800,
-  addr_unk_605820 = 0x5820,
-  addr_unk_605880 = 0x5880,
-  addr_unk_6059A0 = 0x59A0,
-  addr_unk_605BE0 = 0x5BE0,
-  addr_unk_6061F0 = 0x61F0,
-  addr_unk_606300 = 0x6300,
+  addr_kVram_Cre = 0x2800,
+  addr_kVram_Bg2 = 0x4800,
+  addr_kVram_Bg3 = 0x4C00,
+  addr_kVram_1stScreen = 0x5000,
+  addr_kVram_2ndScreenOffset = 0x53E0,
+  addr_kVram_2ndScreen = 0x5400,
+  addr_kVram_HudTopRow = 0x5800,
+  addr_kVram_Hud = 0x5820,
+  addr_kVram_FxBackup = 0x5880,
+  addr_kVram_MessageBox = 0x59A0,
+  addr_kVram_Fx = 0x5BE0,
+  addr_kVram_UnclosedArmCannon = 0x61F0,
+  addr_kVram_Beam = 0x6300,
 };
 enum Consts_80 {
   //addr_kHudTilemaps_AutoReserve = 0x998B,

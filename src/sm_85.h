@@ -67,153 +67,154 @@ static const uint16 kSaveConfirmationSelectionTilemap[96] = {
 
 
 uint16 kEnergyTankMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, PR(kTxt_E), 0x28ed, 0x28e4, 0x28f1, 0x28e6, 0x28f8, 0x284e, 0x28f3, 0x28e0, 0x28ed, 0x28ea, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_E),    PR(kTxt_N),    PR(kTxt_E),    PR(kTxt_R),    PR(kTxt_G),    PR(kTxt_Y),   PR(kTxt_Sp),    PR(kTxt_T),    PR(kTxt_A),    PR(kTxt_N),    PR(kTxt_K),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kMissileMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28ec, 0x28e8, 0x28f2, 0x28f2, 0x28e8, 0x28eb, 0x28e4, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x304b, 0x3049, 0x704b, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x28b9, 0x28ba, 0x28bb, 0x284e, 0x304c, 0x304a, 0x704c, 0x284e, 0x28c8, 0x284e, 0x28b0, 0x28b1, 0x28b2, 0x28c0, 0x28c1, 0x28d1, 0x28e0, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x28cb, 0x284e, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_M),    PR(kTxt_I),    PR(kTxt_S),    PR(kTxt_S),    PR(kTxt_I),    PR(kTxt_L),    PR(kTxt_E),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),        0x304B,        0x3049,        0x704B,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),        0x28B9,        0x28BA,        0x28BB,   PR(kTxt_Sp),        0x304C,        0x304A,        0x704C,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28B0,        0x28B1,        0x28B2,        0x28C0,        0x28C1,        0x28D1,    PR(kTxt_A),        0x28D3,        0x28B5,        0x28B6,        0x28B7,        0x28CB,   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kSuperMissileMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f2, 0x28f4, 0x28ef, 0x28e4, 0x28f1, 0x284e, 0x28ec, 0x28e8, 0x28f2, 0x28f2, 0x28e8, 0x28eb, 0x28e4, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x3034, 0x7034, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x28b9, 0x28ba, 0x28bb, 0x284e, 0x3035, 0x7035, 0x284e, 0x28c8, 0x284e, 0x28b0, 0x28b1, 0x28b2, 0x28c0, 0x28c1, 0x28d1, 0x3ce1, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x28cb, 0x284e, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_U),    PR(kTxt_P),    PR(kTxt_E),    PR(kTxt_R),   PR(kTxt_Sp),    PR(kTxt_M),    PR(kTxt_I),    PR(kTxt_S),    PR(kTxt_S),    PR(kTxt_I),    PR(kTxt_L),    PR(kTxt_E),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),        0x3034,        0x7034,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),        0x28B9,        0x28BA,        0x28BB,   PR(kTxt_Sp),        0x3035,        0x7035,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28B0,        0x28B1,        0x28B2,        0x28C0,        0x28C1,        0x28D1,    YL(kTxt_B),        0x28D3,        0x28B5,        0x28B6,        0x28B7,        0x28CB,   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kPowerBombMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28ef, 0x28ee, 0x28f6, 0x28e4, 0x28f1, 0x284e, 0x28e1, 0x28ee, 0x28ec, 0x28e1, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x3036, 0x7036, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x28b9, 0x28ba, 0x28bb, 0x284e, 0x3037, 0x7037, 0x284e, 0x28c8, 0x284e, 0x28c5, 0x28c6, 0x28c7, 0x284e, 0x28be, 0x28bf, 0x28c0, 0x28c1, 0x28d1, 0x38f1, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x28cb, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_P),    PR(kTxt_O),    PR(kTxt_W),    PR(kTxt_E),    PR(kTxt_R),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_O),    PR(kTxt_M),    PR(kTxt_B),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),        0x3036,        0x7036,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),        0x28B9,        0x28BA,        0x28BB,   PR(kTxt_Sp),        0x3037,        0x7037,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28C5,        0x28C6,        0x28C7,   PR(kTxt_Sp),        0x28BE,        0x28BF,        0x28C0,        0x28C1,        0x28D1,    GN(kTxt_R),        0x28D3,        0x28B5,        0x28B6,        0x28B7,        0x28CB,   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kGrapplingBeamMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28e6, 0x28f1, 0x28e0, 0x28ef, 0x28ef, 0x28eb, 0x28e8, 0x28ed, 0x28e6, 0x284e, 0x28e1, 0x28e4, 0x28e0, 0x28ec, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x3038, 0x7038, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x28b9, 0x28ba, 0x28bb, 0x284e, 0x3039, 0x7039, 0x284e, 0x28b0, 0x28b1, 0x28b2, 0x284e, 0x28c8, 0x284e, 0x28b3, 0x28b4, 0x28c0, 0x28c1, 0x28d1, 0x38f8, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x28cb, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_G),    PR(kTxt_R),    PR(kTxt_A),    PR(kTxt_P),    PR(kTxt_P),    PR(kTxt_L),    PR(kTxt_I),    PR(kTxt_N),    PR(kTxt_G),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_E),    PR(kTxt_A),    PR(kTxt_M),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),        0x3038,        0x7038,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),        0x28B9,        0x28BA,        0x28BB,   PR(kTxt_Sp),        0x3039,        0x7039,   PR(kTxt_Sp),        0x28B0,        0x28B1,        0x28B2,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28B3,        0x28B4,        0x28C0,        0x28C1,        0x28D1,    GN(kTxt_Y),        0x28D3,        0x28B5,        0x28B6,        0x28B7,        0x28CB,   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kXrayScopeMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f7, 0x28cf, 0x28f1, 0x28e0, 0x28f8, 0x284e, 0x28f2, 0x28e2, 0x28ee, 0x28ef, 0x28e4, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x303a, 0x703a, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x28b9, 0x28ba, 0x28bb, 0x284e, 0x303b, 0x703b, 0x284e, 0x28b0, 0x28b1, 0x28b2, 0x284e, 0x28c8, 0x284e, 0x28b3, 0x28b4, 0x28c0, 0x28c1, 0x28d1, 0x2cf7, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x28cb, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_X), PR(kTxt_Dash),    PR(kTxt_R),    PR(kTxt_A),    PR(kTxt_Y),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_C),    PR(kTxt_O),    PR(kTxt_P),    PR(kTxt_E),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),        0x303A,        0x703A,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),        0x28B9,        0x28BA,        0x28BB,   PR(kTxt_Sp),        0x303B,        0x703B,   PR(kTxt_Sp),        0x28B0,        0x28B1,        0x28B2,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28B3,        0x28B4,        0x28C0,        0x28C1,        0x28D1,        0x2CF7,        0x28D3,        0x28B5,        0x28B6,        0x28B7,        0x28CB,   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kVariaSuitMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f5, 0x28e0, 0x28f1, 0x28e8, 0x28e0, 0x284e, 0x28f2, 0x28f4, 0x28e8, 0x28f3, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_V),    PR(kTxt_A),    PR(kTxt_R),    PR(kTxt_I),    PR(kTxt_A),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_U),    PR(kTxt_I),    PR(kTxt_T),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kSpringBallMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f2, 0x28ef, 0x28f1, 0x28e8, 0x28ed, 0x28e6, 0x284e, 0x28e1, 0x28e0, 0x28eb, 0x28eb, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_P),    PR(kTxt_R),    PR(kTxt_I),    PR(kTxt_N),    PR(kTxt_G),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_A),    PR(kTxt_L),    PR(kTxt_L),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kMorphingBallMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x28ec, 0x28ee, 0x28f1, 0x28ef, 0x28e7, 0x28e8, 0x28ed, 0x28e6, 0x284e, 0x28e1, 0x28e0, 0x28eb, 0x28eb, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_M),    PR(kTxt_O),    PR(kTxt_R),    PR(kTxt_P),    PR(kTxt_H),    PR(kTxt_I),    PR(kTxt_N),    PR(kTxt_G),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_A),    PR(kTxt_L),    PR(kTxt_L),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kScrewAttackMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x28f2, 0x28e2, 0x28f1, 0x28e4, 0x28f6, 0x284e, 0x28e0, 0x28f3, 0x28f3, 0x28e0, 0x28e2, 0x28ea, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_C),    PR(kTxt_R),    PR(kTxt_E),    PR(kTxt_W),   PR(kTxt_Sp),    PR(kTxt_A),    PR(kTxt_T),    PR(kTxt_T),    PR(kTxt_A),    PR(kTxt_C),    PR(kTxt_K),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kHiJumpBootsMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x28e7, 0x28e8, 0x28cf, 0x28e9, 0x28f4, 0x28ec, 0x28ef, 0x284e, 0x28e1, 0x28ee, 0x28ee, 0x28f3, 0x28f2, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_H),    PR(kTxt_I), PR(kTxt_Dash),    PR(kTxt_J),    PR(kTxt_U),    PR(kTxt_M),    PR(kTxt_P),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_O),    PR(kTxt_O),    PR(kTxt_T),    PR(kTxt_S),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kSpaceJumpMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f2, 0x28ef, 0x28e0, 0x28e2, 0x28e4, 0x284e, 0x28e9, 0x28f4, 0x28ec, 0x28ef, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_P),    PR(kTxt_A),    PR(kTxt_C),    PR(kTxt_E),   PR(kTxt_Sp),    PR(kTxt_J),    PR(kTxt_U),    PR(kTxt_M),    PR(kTxt_P),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kSpeedBoosterMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f2, 0x28ef, 0x28e4, 0x28e4, 0x28e3, 0x284e, 0x28e1, 0x28ee, 0x28ee, 0x28f2, 0x28f3, 0x28e4, 0x28f1, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x28b0, 0x28b1, 0x28b2, 0x284e, 0x28c8, 0x284e, 0x28b3, 0x28b4, 0x28c0, 0x28c1, 0x28d1, 0x38d0, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x284e, 0x28c2, 0x284e, 0x28bc, 0x28bd, 0x28cb, 0x284e, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_P),    PR(kTxt_E),    PR(kTxt_E),    PR(kTxt_D),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_O),    PR(kTxt_O),    PR(kTxt_S),    PR(kTxt_T),    PR(kTxt_E),    PR(kTxt_R),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),        0x28B0,        0x28B1,        0x28B2,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28B3,        0x28B4,        0x28C0,        0x28C1,        0x28D1,        0x38D0,        0x28D3,        0x28B5,        0x28B6,        0x28B7,   PR(kTxt_Sp),        0x28C2,   PR(kTxt_Sp),        0x28BC,        0x28BD,        0x28CB,   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kChargeBeamMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x28e2, 0x28e7, 0x28e0, 0x28f1, 0x28e6, 0x28e4, 0x284e, 0x28e1, 0x28e4, 0x28e0, 0x28ec, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_C),    PR(kTxt_H),    PR(kTxt_A),    PR(kTxt_R),    PR(kTxt_G),    PR(kTxt_E),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_E),    PR(kTxt_A),    PR(kTxt_M),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kIceBeamMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28e8, 0x28e2, 0x28e4, 0x284e, 0x28e1, 0x28e4, 0x28e0, 0x28ec, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_I),    PR(kTxt_C),    PR(kTxt_E),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_E),    PR(kTxt_A),    PR(kTxt_M),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kWaveBeamMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f6, 0x28e0, 0x28f5, 0x28e4, 0x284e, 0x28e1, 0x28e4, 0x28e0, 0x28ec, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_W),    PR(kTxt_A),    PR(kTxt_V),    PR(kTxt_E),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_E),    PR(kTxt_A),    PR(kTxt_M),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kSpazerMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28f2, 0x28ef, 0x28e0, 0x28f9, 0x28e4, 0x28f1, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_P),    PR(kTxt_A),    PR(kTxt_Z),    PR(kTxt_E),    PR(kTxt_R),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kPlasmaBeamMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x28ef, 0x28eb, 0x28e0, 0x28f2, 0x28ec, 0x28e0, 0x284e, 0x28e1, 0x28e4, 0x28e0, 0x28ec, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_P),    PR(kTxt_L),    PR(kTxt_A),    PR(kTxt_S),    PR(kTxt_M),    PR(kTxt_A),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_E),    PR(kTxt_A),    PR(kTxt_M),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kBombMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x28e1, 0x28ee, 0x28ec, 0x28e1, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x38dc, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x3cdd, 0x3cdf, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe, 0x284e, 0x284e, 0x3cde, 0x3ccc, 0x38cd, 0x3cc9, 0x284e, 0x28c8, 0x284e, 0x28c5, 0x28c6, 0x28c7, 0x284e, 0x28be, 0x28bf, 0x28c0, 0x28c1, 0x28d1, 0x38eb, 0x28d3, 0x28b5, 0x28b6, 0x28b7, 0x28cb, 0x284e, 0x284e,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_B),    PR(kTxt_O),    PR(kTxt_M),    PR(kTxt_B),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),        0x38DC,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),        0x3CDD,        0x3CDF,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),        0x3CDE,        0x3CCC,        0x38CD,        0x3CC9,   PR(kTxt_Sp),        0x28C8,   PR(kTxt_Sp),        0x28C5,        0x28C6,        0x28C7,   PR(kTxt_Sp),        0x28BE,        0x28BF,        0x28C0,        0x28C1,        0x28D1,    GN(kTxt_L),        0x28D3,        0x28B5,        0x28B6,        0x28B7,        0x28CB,   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kMapDataAccessCompletedMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cec, 0x3ce0, 0x3cef, 0x3c4e, 0x3ce3, 0x3ce0, 0x3cf3, 0x3ce0, 0x3c4e, 0x3ce0, 0x3ce2, 0x3ce2, 0x3ce4, 0x3cf2, 0x3cf2, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3ce2, 0x3cee, 0x3cec, 0x3cef, 0x3ceb, 0x3ce4, 0x3cf3, 0x3ce4, 0x3ce3, 0x3cfa, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_M),    YL(kTxt_A),    YL(kTxt_P),   YL(kTxt_Sp),    YL(kTxt_D),    YL(kTxt_A),    YL(kTxt_T),    YL(kTxt_A),   YL(kTxt_Sp),    YL(kTxt_A),    YL(kTxt_C),    YL(kTxt_C),    YL(kTxt_E),    YL(kTxt_S),    YL(kTxt_S),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_C),    YL(kTxt_O),    YL(kTxt_M),    YL(kTxt_P),    YL(kTxt_L),    YL(kTxt_E),    YL(kTxt_T),    YL(kTxt_E),    YL(kTxt_D),        0x3CFA,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kEnergyRechargeCompletedMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3ce4, 0x3ced, 0x3ce4, 0x3cf1, 0x3ce6, 0x3cf8, 0x3c4e, 0x3cf1, 0x3ce4, 0x3ce2, 0x3ce7, 0x3ce0, 0x3cf1, 0x3ce6, 0x3ce4, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3ce2, 0x3cee, 0x3cec, 0x3cef, 0x3ceb, 0x3ce4, 0x3cf3, 0x3ce4, 0x3ce3, 0x3cfa, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_E),    YL(kTxt_N),    YL(kTxt_E),    YL(kTxt_R),    YL(kTxt_G),    YL(kTxt_Y),   YL(kTxt_Sp),    YL(kTxt_R),    YL(kTxt_E),    YL(kTxt_C),    YL(kTxt_H),    YL(kTxt_A),    YL(kTxt_R),    YL(kTxt_G),    YL(kTxt_E),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_C),    YL(kTxt_O),    YL(kTxt_M),    YL(kTxt_P),    YL(kTxt_L),    YL(kTxt_E),    YL(kTxt_T),    YL(kTxt_E),    YL(kTxt_D),        0x3CFA,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kMissileReloadCompletedMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cec, 0x3ce8, 0x3cf2, 0x3cf2, 0x3ce8, 0x3ceb, 0x3ce4, 0x3c4e, 0x3cf1, 0x3ce4, 0x3ceb, 0x3cee, 0x3ce0, 0x3ce3, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x384e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x384e, 0x384e, 0x3ce2, 0x3cee, 0x3cec, 0x3cef, 0x3ceb, 0x3ce4, 0x3cf3, 0x3ce4, 0x3ce3, 0x3cfa, 0x384e, 0x384e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_M),    YL(kTxt_I),    YL(kTxt_S),    YL(kTxt_S),    YL(kTxt_I),    YL(kTxt_L),    YL(kTxt_E),   YL(kTxt_Sp),    YL(kTxt_R),    YL(kTxt_E),    YL(kTxt_L),    YL(kTxt_O),    YL(kTxt_A),    YL(kTxt_D),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   GN(kTxt_Sp),   GN(kTxt_Sp),    YL(kTxt_C),    YL(kTxt_O),    YL(kTxt_M),    YL(kTxt_P),    YL(kTxt_L),    YL(kTxt_E),    YL(kTxt_T),    YL(kTxt_E),    YL(kTxt_D),        0x3CFA,   GN(kTxt_Sp),   GN(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kWouldYouLikeToSaveMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cf6, 0x3cee, 0x3cf4, 0x3ceb, 0x3ce3, 0x3c4e, 0x3cf8, 0x3cee, 0x3cf4, 0x3c4e, 0x3ceb, 0x3ce8, 0x3cea, 0x3ce4, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cf3, 0x3cee, 0x3c4e, 0x3cf2, 0x3ce0, 0x3cf5, 0x3ce4, 0x3cfe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x38cc, 0x38cd, 0x3cf8, 0x3ce4, 0x3cf2, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x2ced, 0x2cee, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_W),    YL(kTxt_O),    YL(kTxt_U),    YL(kTxt_L),    YL(kTxt_D),   YL(kTxt_Sp),    YL(kTxt_Y),    YL(kTxt_O),    YL(kTxt_U),   YL(kTxt_Sp),    YL(kTxt_L),    YL(kTxt_I),    YL(kTxt_K),    YL(kTxt_E),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_T),    YL(kTxt_O),   YL(kTxt_Sp),    YL(kTxt_S),    YL(kTxt_A),    YL(kTxt_V),    YL(kTxt_E),        0x3CFE,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),        0x38CC,        0x38CD,    YL(kTxt_Y),    YL(kTxt_E),    YL(kTxt_S),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),        0x2CED,        0x2CEE,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kSaveCompletedMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cf2, 0x3ce0, 0x3cf5, 0x3ce4, 0x3c4e, 0x3ce2, 0x3cee, 0x3cec, 0x3cef, 0x3ceb, 0x3ce4, 0x3cf3, 0x3ce4, 0x3ce3, 0x3cfa, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_S),    YL(kTxt_A),    YL(kTxt_V),    YL(kTxt_E),   YL(kTxt_Sp),    YL(kTxt_C),    YL(kTxt_O),    YL(kTxt_M),    YL(kTxt_P),    YL(kTxt_L),    YL(kTxt_E),    YL(kTxt_T),    YL(kTxt_E),    YL(kTxt_D),        0x3CFA,   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kReserveTankMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x28f1, 0x28e4, 0x28f2, 0x28e4, 0x28f1, 0x28f5, 0x28e4, 0x284e, 0x28f3, 0x28e0, 0x28ed, 0x28ea, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_R),    PR(kTxt_E),    PR(kTxt_S),    PR(kTxt_E),    PR(kTxt_R),    PR(kTxt_V),    PR(kTxt_E),   PR(kTxt_Sp),    PR(kTxt_T),    PR(kTxt_A),    PR(kTxt_N),    PR(kTxt_K),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kGravitySuitMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x284e, 0x284e, 0x284e, 0x28e6, 0x28f1, 0x28e0, 0x28f5, 0x28e8, 0x28f3, 0x28f8, 0x284e, 0x28f2, 0x28f4, 0x28e8, 0x28f3, 0x284e, 0x284e, 0x284e, 0x284e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),    PR(kTxt_G),    PR(kTxt_R),    PR(kTxt_A),    PR(kTxt_V),    PR(kTxt_I),    PR(kTxt_T),    PR(kTxt_Y),   PR(kTxt_Sp),    PR(kTxt_S),    PR(kTxt_U),    PR(kTxt_I),    PR(kTxt_T),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),   PR(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kTerminator1MsgBoxTilemap[] = {
-     0x0,
+         0x0000,
 };
 
 uint16 kWouldYouLikeToSaveGunshipMsgBoxTilemap[] = {
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cf6, 0x3cee, 0x3cf4, 0x3ceb, 0x3ce3, 0x3c4e, 0x3cf8, 0x3cee, 0x3cf4, 0x3c4e, 0x3ceb, 0x3ce8, 0x3cea, 0x3ce4, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3cf3, 0x3cee, 0x3c4e, 0x3cf2, 0x3ce0, 0x3cf5, 0x3ce4, 0x3cfe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 
-     0xe,    0xe,    0xe,    0xe,    0xe,    0xe, 0x3c4e, 0x3c4e, 0x38cc, 0x38cd, 0x3cf8, 0x3ce4, 0x3cf2, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e, 0x2ced, 0x2cee, 0x3c4e, 0x3c4e, 0x3c4e, 0x3c4e,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,    0xe,
-};
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_W),    YL(kTxt_O),    YL(kTxt_U),    YL(kTxt_L),    YL(kTxt_D),   YL(kTxt_Sp),    YL(kTxt_Y),    YL(kTxt_O),    YL(kTxt_U),   YL(kTxt_Sp),    YL(kTxt_L),    YL(kTxt_I),    YL(kTxt_K),    YL(kTxt_E),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),    YL(kTxt_T),    YL(kTxt_O),   YL(kTxt_Sp),    YL(kTxt_S),    YL(kTxt_A),    YL(kTxt_V),    YL(kTxt_E),        0x3CFE,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+       kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,   YL(kTxt_Sp),   YL(kTxt_Sp),        0x38CC,        0x38CD,    YL(kTxt_Y),    YL(kTxt_E),    YL(kTxt_S),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),        0x2CED,        0x2CEE,   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),   YL(kTxt_Sp),      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,      kTxt_Nul,
+ };
 
 uint16 kTerminatorSaveCompletedUnusedMsgBoxTilemap[] = {
-     0xe,
+       kTxt_Nul,
 };
+
 
 uint16* getMessageTilemap(uint16 tilemap) {
   switch(tilemap) {

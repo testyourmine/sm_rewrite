@@ -3929,7 +3929,7 @@ CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
     DecompressToMem(0xb98000, g_ram + 0x7000);
   }
   DecompressToMem(Load24(&tileset_tiles_pointer), g_ram + 0x2000);
-  DecompressToMem(Load24(&tileset_compr_palette_ptr), g_ram + 0xc200);
+  DecompressToMem(Load24(&tileset_compr_palette_ptr), (uint8*)&target_palettes);
   CopyToVramNow(0x0000, 0x7e2000, 0x2000);
   CopyToVramNow(0x1000, 0x7e4000, 0x2000);
   CopyToVramNow(0x2000, 0x7e6000, 0x1000);
@@ -3977,7 +3977,7 @@ CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
   Samus_LoadSuitTargetPalette();
   ClearFxTilemap();
   if (fx_tilemap_ptr)
-    CopyToVramNow(addr_unk_605BE0, 0x8a0000 | fx_tilemap_ptr, 2112);
+    CopyToVramNow(addr_kVram_Fx, 0x8a0000 | fx_tilemap_ptr, 2112);
   bg_data_ptr = get_RoomDefRoomstate(roomdefroomstate_ptr)->bg_data_ptr;
   if (bg_data_ptr & 0x8000) {
     do {
@@ -4145,11 +4145,11 @@ void LoadDestinationRoomThings(void) {  // 0x82E76B
 void LoadCRETilesTilesetTilesAndPalette(void) {  // 0x82E783
   elevator_properties = 0;
   WriteRegWord(VMAIN, 0x80);
-  WriteRegWord(VMADDL, addr_unk_605000 >> 1);
-  DecompressToVRAM(0xb98000, addr_unk_605000);
+  WriteRegWord(VMADDL, addr_kVram_Cre);
+  DecompressToVRAM(0xb98000, addr_kVram_1stScreen);
   WriteRegWord(VMADDL, 0);
   DecompressToVRAM(Load24(&tileset_tiles_pointer), 0);
-  DecompressToMem(Load24(&tileset_compr_palette_ptr),  &g_ram[0xc200]);
+  DecompressToMem(Load24(&tileset_compr_palette_ptr),  (uint8*)&target_palettes);
 }
 
 void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
@@ -4159,7 +4159,7 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
   int8 v11;
   uint16 n;
 
-  for (int i = 25598; i >= 0; i -= 2)
+  for (int i = 0x63FE; i >= 0; i -= 2)
     level_data[i >> 1] = 0x8000;
   DecompressToMem(Load24(&room_level_data_ptr), (uint8 *)&ram7F_start);
 
@@ -4263,7 +4263,7 @@ void LoadLibraryBackground(void) {
   ClearFXTilemap();
   if (fx_tilemap_ptr) {
     WriteRegWord(A1T1L, fx_tilemap_ptr);
-    WriteRegWord(VMADDL, addr_unk_605BE0);
+    WriteRegWord(VMADDL, addr_kVram_Fx);
     WriteRegWord(DMAP1, 0x1801);
     WriteRegWord(A1B1, 0x8A);
     WriteRegWord(DAS1L, 0x840);
@@ -4336,7 +4336,7 @@ void LoadLevelScrollAndCre(void) {  // 0x82EA73
   int8 v11;
   int8 v12;
 
-  for (int i = 6398; i >= 0; i -= 2) {
+  for (int i = 0x18FE; i >= 0; i -= 2) {
     level_data[i >> 1] = 0x8000;
     level_data[(i >> 1) + 3200 * 1] = 0x8000;
     level_data[(i >> 1) + 3200 * 2] = 0x8000;

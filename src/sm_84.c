@@ -725,9 +725,9 @@ const uint8 *PlmInstr_ActivateMissileStation(const uint8 *plmp, uint16 k) {  // 
 
 const uint8 *PlmInstr_ActivateSaveStationAndGotoIfNo(const uint8 *plmp, uint16 k) {  // 0x848CF1
   int r = DisplayMessageBox_Poll(kMessageBox_23_WouldYouLikeToSave);
-  if (r < 0)
+  if (r < kConfirmSave_Yes)
     return plmp - 2; // restart plm instr
-  if (r == 2)
+  if (r == kConfirmSave_No)
     return INSTRB_RETURN_ADDR(GET_WORD(plmp));
   SpawnEprojWithRoomGfx(addr_kEproj_SaveStationElectricity, 0);
   load_station_index = plm_room_arguments[plm_id >> 1] & 7;
@@ -792,8 +792,8 @@ void DrawPlm(uint16 k) {  // 0x848DAA
   uint16 v35, r26, r22;
   uint16 a, r24;
   uint16 r20, r18;
-  uint16 r9 = addr_unk_605000;
-  uint16 r12 = addr_unk_6053E0;
+  uint16 r9 = addr_kVram_1stScreen;
+  uint16 r12 = addr_kVram_2ndScreenOffset;
   uint16 v1 = plm_instruction_draw_ptr[k >> 1];
   uint16 x = plm_x_block;
   uint16 y = plm_y_block;

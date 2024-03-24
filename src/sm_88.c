@@ -1785,7 +1785,7 @@ void HdmaobjPreInstr_FirefleaBG3XScroll(uint16 k) {  // 0x88B0BC
 }
 
 
-void ExpandingContractingHdmaEffect(void) {  // 0x88B17F
+void UNUSED_ExpandingContractingHdmaEffect(void) {  // 0x88B17F
   if (!sign16(++set_to_e0_by_scrolling_sky - 4)) {
     set_to_e0_by_scrolling_sky = 0;
     if (UNUSED_hdma_contracting_flag) {

@@ -663,6 +663,7 @@ void WriteLevelDataBlockTypeAndBts(uint16 k, uint16 a);
 void Create3BlocksVerticalExtension(uint16 k);
 
 // Bank 85
+
 int DisplayMessageBox_Poll(uint16 a);
 void DisplayMessageBox(uint16 a);
 CoroutineRet DisplayMessageBox_Async(uint16 a);
@@ -812,7 +813,7 @@ void CrystalFlashSetupPart2(void);
 void DamageSamusInTopRow(void);
 void DisableHdmaObjects(void);
 void EnableHdmaObjects(void);
-void ExpandingContractingHdmaEffect(void);
+void UNUSED_ExpandingContractingHdmaEffect(void);
 void FxHandleTide(void);
 void FxRisingFunction_C428_WaterNormal(void);
 void FxRisingFunction_LavaAcid(void);

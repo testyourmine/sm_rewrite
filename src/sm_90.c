@@ -2423,7 +2423,7 @@ void UpdateBeamTilesAndPalette(void) {  // 0x90AC8D
   gVramWriteEntry(v1)->size = kBeamTilePtrs[v0 >> 1];
   v1 += 2;
   LOBYTE(gVramWriteEntry(v1++)->size) = -102;
-  gVramWriteEntry(v1)->size = addr_unk_606300;
+  gVramWriteEntry(v1)->size = addr_kVram_Beam;
   vram_write_queue_tail = v1 + 2;
   WriteBeamPalette_Y(v0);
 }
@@ -4227,7 +4227,7 @@ void Samus_ArmCannon_Draw(void) {  // 0x90C663
     gVramWriteEntry(v14)->size = v15;
     v14 += 2;
     LOBYTE(gVramWriteEntry(v14++)->size) = -102;
-    gVramWriteEntry(v14)->size = addr_unk_6061F0;
+    gVramWriteEntry(v14)->size = addr_kVram_UnclosedArmCannon;
     vram_write_queue_tail = v14 + 2;
   }
 }

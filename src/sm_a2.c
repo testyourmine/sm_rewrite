@@ -1549,10 +1549,10 @@ void GunshipTop_12(uint16 k) {  // 0xA2AAA2
 void GunshipTop_13(uint16 k) {  // 0xA2AB1F
   // Returns rv >= 0 once it's done
   int rv = DisplayMessageBox_Poll(kMessageBox_28_WouldYouLikeToSave_Gunship);
-  if (rv < 0)
+  if (rv < kConfirmSave_Yes)
     return;
 
-  if (rv != 2) {
+  if (rv != kConfirmSave_No) {
     *(uint16 *)used_save_stations_and_elevators |= 1;
     load_station_index = 0;
     SaveToSram(selected_save_slot);

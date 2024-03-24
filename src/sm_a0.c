@@ -1991,7 +1991,7 @@ void QueueEnemyBG2TilemapTransfers(void) {  // 0xA09726
     v0->size = enemy_bg2_tilemap_size;
     v0->src.addr = ADDR16_OF_RAM(*tilemap_stuff);
     v0->src.bank = 126;
-    v0->vram_dst = addr_unk_604800;
+    v0->vram_dst = addr_kVram_Bg2;
     vram_write_queue_tail += 7;
   }
   nmi_flag_bg2_enemy_vram_transfer = 0;
