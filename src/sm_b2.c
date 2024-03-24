@@ -1,4 +1,4 @@
-// $B2 - Enemy AI - space pirates
+// Enemy AI - space pirates
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

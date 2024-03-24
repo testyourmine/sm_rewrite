@@ -1,4 +1,4 @@
-// B4 - Enemy instructions, sets, drop chances, resistances (complete)
+// Enemy instructions, sets, drop chances, resistances
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

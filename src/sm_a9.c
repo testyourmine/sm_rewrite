@@ -1,5 +1,4 @@
-// Enemy AI - Mother Brain(complete), Shitroid &dead monsters
-
+// Enemy AI - Mother Brain, Shitroid & dead monsters
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

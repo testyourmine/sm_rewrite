@@ -1,5 +1,4 @@
-//  Enemy AI - Draygon & Spore Spawn
-
+// Enemy AI - Draygon & Spore Spawn
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

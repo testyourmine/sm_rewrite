@@ -1,3 +1,4 @@
+// Grapple beam and Samus graphics
 #include "sm_cpu_infra.h"
 #include "ida_types.h"
 #include "variables.h"

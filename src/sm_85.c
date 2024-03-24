@@ -32,9 +32,7 @@ static void InitializePpuForMessageBoxes(void) {  // 0x858143
   ReadReg(BG3VOFS);         // Triply useless
   WriteReg(BG3VOFS, 0);
   WriteReg(BG3VOFS, 0);     // Combo breaker
-  for (int tilemap_offset = 0x80; tilemap_offset >= 0; tilemap_offset -= 2) {
-    ram3000.pause_menu_map_tilemap[tilemap_offset >> 1] = 0;
-  }
+  memset(ram3000.pause_menu_map_tilemap, 0, 0x80);
   WriteRegWord(VMADDL, addr_kVram_FxBackup);
   ReadRegWord(RDVRAML);
   WriteRegWord(DMAP1, 0x3981);
@@ -51,9 +49,7 @@ static void InitializePpuForMessageBoxes(void) {  // 0x858143
 * @brief Clears the message box BG3 tilemap and transfers VRAM $5880 to the tilemap
 */
 static void ClearMessageBoxBg3Tilemap(void) {  // 0x8581F3
-  for (int tilemap_offset = 0x6FE; tilemap_offset >= 0; tilemap_offset -= 2) {
-    ram3800.cleared_message_box_bg3_tilemap[tilemap_offset >> 1] = kTxt_Nul;
-  }
+  memset7E(ram3800.cleared_message_box_bg3_tilemap, kTxt_Nul, 0x700);
   WriteRegWord(VMADDL, addr_kVram_FxBackup);
   WriteRegWord(DMAP1, 0x1801);
   WriteRegWord(A1T1L, ADDR16_OF_RAM(ram3800));
@@ -67,63 +63,38 @@ static void ClearMessageBoxBg3Tilemap(void) {  // 0x8581F3
 
 /**
 * @brief Writes the message box tilemap to RAM
-* @return uint16 The offset into the tilemap after the message has been displayed based on the size
+* @return uint16 The offset into the bottom border tilemap
 */
 static uint16 WriteMessageTilemap(void) {  // 0x8582B8
   message_box_animation_y1_bottom_half = 112;
   message_box_animation_y0_bottom_half = 124;
   message_box_animation_y_radius = 0;
-  for (int i = 0; i < 0xE0; i += 2)
-    ram3000.pause_menu_map_tilemap[i >> 1] = 0;
+  memset(ram3000.pause_menu_map_tilemap, 0, 0xE0);
   uint16 message_src = kMessageBoxDefs[message_box_index - 1].message_tilemap;
   uint16 message_size = kMessageBoxDefs[message_box_index].message_tilemap - message_src;
   message_box_tilemap_size = message_size + 128;
-  uint16 tilemap_offset = 0x40;
-  uint16 message_offset = 0;
-  for (int n = message_size >> 1; n > 0; n--) {
-    ram3000.msgbox.tilemap[tilemap_offset >> 1] = getMessageTilemap(message_src)[message_offset >> 1];
-    tilemap_offset += 2;
-    message_offset += 2;
-  }
-  return tilemap_offset;
+  const uint16* message_tilemap = getMessageTilemap(message_src);
+  uint16 tilemap_offset = 0x40 >> 1;
+  MemCpy(ram3000.msgbox.tilemap + tilemap_offset, message_tilemap, message_size);
+  return tilemap_offset + message_size;
 }
 
 /**
-* @brief Writes the large message box border to RAM
+* @brief Writes the large message box top border, message, and bottom border to RAM
 */
 static void WriteLargeMessageBoxTilemap(void) {  // 0x85825A
-  for (int tilemap_offset = 0; tilemap_offset < 0x40; tilemap_offset += 2)
-    ram3000.msgbox.tilemap[tilemap_offset >> 1] = kLargeMsgBoxTopBottomBorderTilemap[tilemap_offset >> 1];
-  uint16 tilemap_offset = WriteMessageTilemap();
-  uint16 msg_border_offset = 0;
-  for (int n = 32; n > 0; n--) {
-    ram3000.msgbox.tilemap[tilemap_offset >> 1] = kLargeMsgBoxTopBottomBorderTilemap[msg_border_offset >> 1];
-    msg_border_offset += 2;
-    tilemap_offset += 2;
-  }
+  MemCpy(ram3000.msgbox.tilemap, kLargeMsgBoxTopBottomBorderTilemap, 0x40);
+  uint16 bottom_border_offset = WriteMessageTilemap() >> 1;
+  MemCpy(ram3000.msgbox.tilemap + bottom_border_offset, kLargeMsgBoxTopBottomBorderTilemap, 0x40);
 }
 
 /**
-* @brief Writes the small message box border to RAM
+* @brief Writes the small message box top border, message, and bottom border to RAM
 */
 static void WriteSmallMessageBoxTilemap(void) {  // 0x858289
-  for (int tilemap_offset = 0; tilemap_offset < 0x40; tilemap_offset += 2)
-    ram3000.msgbox.tilemap[tilemap_offset >> 1] = kSmallMsgBoxTopBottomBorderTilemap[tilemap_offset >> 1];
-  uint16 tilemap_offset = WriteMessageTilemap();
-  uint16 msg_border_offset = 0;
-  for (int n = 32; n > 0; n--) {
-    ram3000.msgbox.tilemap[tilemap_offset >> 1] = kSmallMsgBoxTopBottomBorderTilemap[msg_border_offset >> 1];
-    msg_border_offset += 2;
-    tilemap_offset += 2;
-  }
-}
-
-static void CallMsgBoxDraw(uint32 ea) {
-  switch (ea) {
-  case fnWriteLargeMessageBoxTilemap: WriteLargeMessageBoxTilemap(); return;
-  case fnWriteSmallMessageBoxTilemap: WriteSmallMessageBoxTilemap(); return;
-  default: Unreachable();
-  }
+  MemCpy(ram3000.msgbox.tilemap, kSmallMsgBoxTopBottomBorderTilemap, 0x40);
+  uint16 bottom_border_offset = WriteMessageTilemap() >> 1;
+  MemCpy(ram3000.msgbox.tilemap + bottom_border_offset, kSmallMsgBoxTopBottomBorderTilemap, 0x40);
 }
 
 /**
@@ -150,9 +121,7 @@ static void MsgBoxMakeHdmaTable(void) {
     ++message_box_animation_y0_bottom_half;
     ++y_bottom_pos;
   }
-  for (int index = 0; index < sizeof(ram3000.msgbox.msg_box_anim_clear); index += 2) {
-    ram3000.msgbox.msg_box_anim_clear[index >> 1] = 0;
-  }
+  memset(ram3000.msgbox.msg_box_anim_clear, 0, sizeof(ram3000.msgbox.msg_box_anim_clear));
 }
 
 /**
@@ -257,6 +226,14 @@ static void SetupPpuForLargeMessageBox(void) {  // 0x858441
   SetupPpuForActiveMessageBox(0x1A0);
 }
 
+static void CallMsgBoxDraw(uint32 ea) {
+  switch (ea) {
+  case fnWriteLargeMessageBoxTilemap: WriteLargeMessageBoxTilemap(); return;
+  case fnWriteSmallMessageBoxTilemap: WriteSmallMessageBoxTilemap(); return;
+  default: Unreachable();
+  }
+}
+
 static void CallMsgBoxModify(uint32 ea) {
   switch (ea) {
   case fnDrawShootButtonAndSetupPpuForLargeMessageBox: DrawShootButtonAndSetupPpuForLargeMessageBox(); return;
@@ -282,15 +259,11 @@ static void InitializeMessageBox(void) {  // 0x858241
 */
 static void ToggleSaveConfirmationSelection(void) {  // 0x858507
   save_confirmation_selection ^= kConfirmSave_No;
-  uint16 confirm_select_offset = 0x40;
+  uint16 confirm_select_offset = 0x40 >> 1;
   if (save_confirmation_selection == kConfirmSave_No)
-    confirm_select_offset = 0x80;
-  uint16 index = 256;
-  for (int r52 = 32; r52 > 0; r52--) {
-    ram3000.msgbox.tilemap[index >> 1] = kSaveConfirmationSelectionTilemap[confirm_select_offset >> 1];
-    index += 2;
-    confirm_select_offset += 2;
-  }
+    confirm_select_offset = 0x80 >> 1;
+  uint16 index = 256 >> 1;
+  MemCpy(ram3000.msgbox.tilemap + index, kSaveConfirmationSelectionTilemap + confirm_select_offset, 0x40);
   WriteRegWord(VMADDL, addr_kVram_MessageBox);
   WriteRegWord(DMAP1, 0x1801);
   WriteRegWord(A1T1L, ADDR16_OF_RAM(ram3000.msgbox.tilemap));
@@ -465,6 +438,6 @@ int DisplayMessageBox_Poll(uint16 message) {
 * @brief Queues the message to be displayed
 * @param message The index into the message to be displayed
 */
-void DisplayMessageBox(uint16 message) {  // 0x858080
+void DisplayMessageBox(uint16 message) {
   queued_message_box_index = message;
 }
