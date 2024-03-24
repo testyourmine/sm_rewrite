@@ -209,9 +209,6 @@
     <ClInclude Include="config.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="features.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="util.h">
       <Filter>Header Files</Filter>
     </ClInclude>

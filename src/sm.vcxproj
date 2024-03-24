@@ -234,7 +234,6 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="enemy_defs.h" />
     <ClInclude Include="enemy_types.h" />
-    <ClInclude Include="features.h" />
     <ClInclude Include="funcs.h" />
     <ClInclude Include="glsl_shader.h" />
     <ClInclude Include="ida_types.h" />
