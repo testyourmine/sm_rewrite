@@ -7,7 +7,7 @@
 uint16 message_box_tilemap_size;
 
 /**
-* Sets up the PPU to display Message Boxes
+* @brief Sets up the PPU to display Message Boxes
 */
 static void InitializePpuForMessageBoxes(void) {  // 0x858143
   save_confirmation_selection = kConfirmSave_Yes;
@@ -48,7 +48,7 @@ static void InitializePpuForMessageBoxes(void) {  // 0x858143
 }
 
 /**
-* Clears the message box BG3 tilemap and transfers VRAM $5880 to the tilemap
+* @brief Clears the message box BG3 tilemap and transfers VRAM $5880 to the tilemap
 */
 static void ClearMessageBoxBg3Tilemap(void) {  // 0x8581F3
   for (int tilemap_offset = 0x6FE; tilemap_offset >= 0; tilemap_offset -= 2) {
@@ -66,7 +66,7 @@ static void ClearMessageBoxBg3Tilemap(void) {  // 0x8581F3
 }
 
 /**
-* Writes the message box tilemap to RAM
+* @brief Writes the message box tilemap to RAM
 * @return uint16 The offset into the tilemap after the message has been displayed based on the size
 */
 static uint16 WriteMessageTilemap(void) {  // 0x8582B8
@@ -89,7 +89,7 @@ static uint16 WriteMessageTilemap(void) {  // 0x8582B8
 }
 
 /**
-* Writes the large message box border to RAM
+* @brief Writes the large message box border to RAM
 */
 static void WriteLargeMessageBoxTilemap(void) {  // 0x85825A
   for (int tilemap_offset = 0; tilemap_offset < 0x40; tilemap_offset += 2)
@@ -104,7 +104,7 @@ static void WriteLargeMessageBoxTilemap(void) {  // 0x85825A
 }
 
 /**
-* Writes the small message box border to RAM
+* @brief Writes the small message box border to RAM
 */
 static void WriteSmallMessageBoxTilemap(void) {  // 0x858289
   for (int tilemap_offset = 0; tilemap_offset < 0x40; tilemap_offset += 2)
@@ -127,8 +127,8 @@ static void CallMsgBoxDraw(uint32 ea) {
 }
 
 /**
-* Creates a squishing effect using an HDMA table as the message box expands/contracts
-* Expands the message box until it reaches the desired Y radius
+* @brief Creates a squishing effect using an HDMA table as the message box expands/contracts
+  until it reaches the desired Y radius
 */
 static void MsgBoxMakeHdmaTable(void) {
   message_box_animation_y2_top_half = (uint16)(0x7B00 - message_box_animation_y_radius) >> 8;
@@ -156,7 +156,7 @@ static void MsgBoxMakeHdmaTable(void) {
 }
 
 /**
-* Sets up an indirect HDMA to BG3 Y scroll for the expanding/contracting squish effect
+* @brief Sets up an indirect HDMA to BG3 Y scroll for the expanding/contracting squish effect
 */
 static void SetupMessageBoxBg3YscrollHdma(void) {  // 0x858363
   ram3000.msgbox.indirect_hdma[0] = 0xFF;
@@ -180,7 +180,7 @@ static void SetupMessageBoxBg3YscrollHdma(void) {  // 0x858363
 }
 
 /**
-* Transfers the message box tilemap to VRAM
+* @brief Transfers the message box tilemap to VRAM
 * @param bg3_tilemap_offset The offset into VRAM based off the message box size
 */
 static void SetupPpuForActiveMessageBox(uint16 bg3_tilemap_offset) {  // 0x85831E
@@ -198,8 +198,8 @@ static void SetupPpuForActiveMessageBox(uint16 bg3_tilemap_offset) {  // 0x85831
 }
 
 /**
-* Gets the button config assigned to the action and draws the button letter tile
-* Sets up the PPU for a large message box
+* @brief Gets the button config assigned to the action, draws the button letter tile, and
+  sets up the PPU for a large message box.
 * @param special_button The binding assigned to the specified action button
 */
 static void DrawSpecialButtonAndSetupPpuForLargeMessageBox(uint16 special_button) {  // 0x8583D1
@@ -230,28 +230,28 @@ static void DrawSpecialButtonAndSetupPpuForLargeMessageBox(uint16 special_button
 }
 
 /**
-* Draws the button assigned to shoot and sets up the PPU for a large message box
+* @brief Draws the button assigned to shoot and sets up the PPU for a large message box
 */
 static void DrawShootButtonAndSetupPpuForLargeMessageBox(void) {  // 0x8583C5
   DrawSpecialButtonAndSetupPpuForLargeMessageBox(button_config_shoot_x);
 }
 
 /**
-* Draws the button assigned to run and sets up the PPU for a large message box
+* @brief Draws the button assigned to run and sets up the PPU for a large message box
 */
 static void DrawRunButtonAndSetupPpuForLargeMessageBox(void) {  // 0x8583CC
   DrawSpecialButtonAndSetupPpuForLargeMessageBox(button_config_run_b);
 }
 
 /**
-* Sets up the PPU with the VRAM offset for a small message box
+* @brief Sets up the PPU with the VRAM offset for a small message box
 */
 static void SetupPpuForSmallMessageBox(void) {  // 0x858436
   SetupPpuForActiveMessageBox(0x1C0);
 }
 
 /**
-* Sets up the PPU with the VRAM offset for a large message box
+* @brief Sets up the PPU with the VRAM offset for a large message box
 */
 static void SetupPpuForLargeMessageBox(void) {  // 0x858441
   SetupPpuForActiveMessageBox(0x1A0);
@@ -268,7 +268,7 @@ static void CallMsgBoxModify(uint32 ea) {
 }
 
 /**
-* Writes the message box tilemap to RAM and sets up the PPU
+* @brief Writes the message box tilemap to RAM and sets up the PPU
 */
 static void InitializeMessageBox(void) {  // 0x858241
   int v0 = message_box_index - 1;
@@ -277,8 +277,8 @@ static void InitializeMessageBox(void) {  // 0x858241
 }
 
 /**
-* Toggles the save confirmation and writes the highlighted save confirmation tilemap to RAM
-* Writes the message box tilemap in VRAM to RAM
+* @brief Toggles the save confirmation and writes the highlighted save confirmation tilemap to RAM
+* @brief Writes the message box tilemap in VRAM to RAM
 */
 static void ToggleSaveConfirmationSelection(void) {  // 0x858507
   save_confirmation_selection ^= kConfirmSave_No;
@@ -303,7 +303,7 @@ static void ToggleSaveConfirmationSelection(void) {  // 0x858507
 }
 
 /**
-* Restores VRAM, HDMA channels, BG3 tilemap, and main screen layers and colors
+* @brief Restores VRAM, HDMA channels, BG3 tilemap, and main screen layers and colors
 */
 static void RestorePpuForMessageBox(void) {  // 0x85861A
   WriteRegWord(VMADDL, addr_kVram_FxBackup);
@@ -329,7 +329,7 @@ static void RestorePpuForMessageBox(void) {  // 0x85861A
 }
 
 /**
-* Expands the message box until it's reached the max radius
+* @brief Expands the message box until it's reached the max radius
 */
 static CoroutineRet OpenMessageBox_Async(void) {  // 0x85844C
   COROUTINE_BEGIN(coroutine_state_4, 0);
@@ -345,7 +345,7 @@ static CoroutineRet OpenMessageBox_Async(void) {  // 0x85844C
 }
 
 /**
-* Checks for input and handles the message box and sound depending on the message type
+* @brief Checks for input and handles the message box and sound depending on the message type
 */
 static CoroutineRet HandleMessageBoxInteraction_Async(void) {  // 0x85846D
   COROUTINE_BEGIN(coroutine_state_4, 0);
@@ -389,7 +389,7 @@ static CoroutineRet HandleMessageBoxInteraction_Async(void) {  // 0x85846D
 }
 
 /**
-* Shrinks the message box until it's gone
+* @brief Shrinks the message box until it's gone
 */
 static CoroutineRet CloseMessageBox_Async(void) {  // 0x858589
   COROUTINE_BEGIN(coroutine_state_4, 0);
@@ -404,8 +404,8 @@ static CoroutineRet CloseMessageBox_Async(void) {  // 0x858589
 }
 
 /**
-* Creates the message box and sets up the sound and PPU depending on the type of message
-* Runs until the message box is no longer displayed
+* @brief Creates the message box and sets up the sound and PPU depending on the type of message
+* @brief Runs until the message box is no longer displayed
 * @param queued_message The message that has been queued for display
 */
 CoroutineRet DisplayMessageBox_Async(uint16 queued_message) {  // 0x858080
@@ -448,7 +448,7 @@ CoroutineRet DisplayMessageBox_Async(uint16 queued_message) {  // 0x858080
 }
 
 /**
-* Queues the message if it is not being displayed
+* @brief Queues the message if it is not being displayed
 * @param message The index into the message to be displayed
 * @return int -1 if the message is not done being displayed, otherwise returns the save selection index
 */
@@ -462,7 +462,7 @@ int DisplayMessageBox_Poll(uint16 message) {
 }
 
 /**
-* Queues the message to be displayed
+* @brief Queues the message to be displayed
 * @param message The index into the message to be displayed
 */
 void DisplayMessageBox(uint16 message) {  // 0x858080
