@@ -376,7 +376,7 @@ void Write0x800BytesToRam6000(uint16 a) {  // 0x808911
 }
 
 void HandleFadeOut(void) {  // 0x808924
-  if ((int16)(screen_fade_counter - 1) < 0) {
+  if (screen_fade_counter < 1) {
     screen_fade_counter = screen_fade_delay;
     if ((reg_INIDISP & 0xF) != 0) {
       if ((reg_INIDISP & 0xF) == 1)
@@ -390,7 +390,7 @@ void HandleFadeOut(void) {  // 0x808924
 }
 
 void HandleFadeIn(void) {  // 0x80894D
-  if ((int16)(screen_fade_counter - 1) < 0) {
+  if (screen_fade_counter < 1) {
     screen_fade_counter = screen_fade_delay;
     if (((reg_INIDISP + 1) & 0xF) != 0)
       reg_INIDISP = (reg_INIDISP + 1) & 0xF;
@@ -1070,7 +1070,7 @@ void Vector_NMI(void) {  // 0x809583
   ++nmi_frame_counter_including_lag;
 }
 
-void CopyToVramNow(uint16 vram_dst, uint32 src, uint16 size) {
+void CopyToVramNow(uint16 vram_dst, uint32 src, uint16 size) {  // 0x809632
   // src can point either to ram or rom
   WriteReg(INIDISP, 0x80);
   WriteRegWord(VMADDL, vram_dst);
@@ -1097,7 +1097,7 @@ void IrqHandler_0_Nothing(void) {  // 0x80966E
 }
 
 void IrqHandler_2_DisableIRQ(void) {  // 0x809680
-  *(uint16 *)&reg_NMITIMEN &= ~0x30;
+  WORD(reg_NMITIMEN) &= ~0x30;
   IrqHandler_SetResult(0, 0, 0);
 }
 
@@ -1249,40 +1249,58 @@ void Vector_IRQ(void) {
   kIrqHandlers[cur_irq_handler >> 1]();
 }
 
+/**
+* @brief Writes the top and bottom row of the HUD missile icon to RAM
+*/
 void AddMissilesToHudTilemap(void) {  // 0x8099CF
   if ((hud_tilemap.row1.missiles[0] & 0x3FF) == 15) {
-    hud_tilemap.row1.missiles[0] = kHudTilemaps_Missiles[0];
-    hud_tilemap.row1.missiles[1] = kHudTilemaps_Missiles[1];
-    hud_tilemap.row1.missiles[2] = kHudTilemaps_Missiles[2];
-    hud_tilemap.row2.missiles[0] = kHudTilemaps_Missiles[3];
-    hud_tilemap.row2.missiles[1] = kHudTilemaps_Missiles[4];
-    hud_tilemap.row2.missiles[2] = kHudTilemaps_Missiles[5];
+    MemCpy(hud_tilemap.row1.missiles, &kHudTilemaps_Missiles[0], 6);
+    MemCpy(hud_tilemap.row2.missiles, &kHudTilemaps_Missiles[3], 6);
   }
 }
 
+/**
+* @brief Writes the HUD super missile icon to RAM
+*/
 void AddSuperMissilesToHudTilemap(void) {  // 0x809A0E
-  AddToTilemapInner(0x1C, kHudTilemaps_SuperMissiles);
+  uint16 super_missile_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.super_missiles) - ADDR16_OF_RAM(hud_tilemap.row1);
+  AddToTilemapInner(super_missile_tilemap_offset, kHudTilemaps_SuperMissiles);
 }
 
+/**
+* @brief Writes the HUD power bomb icon to RAM
+*/
 void AddPowerBombsToHudTilemap(void) {  // 0x809A1E
-  AddToTilemapInner(0x22, kHudTilemaps_PowerBombs);
+  uint16 power_bomb_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.power_bombs) - ADDR16_OF_RAM(hud_tilemap.row1);
+  AddToTilemapInner(power_bomb_tilemap_offset, kHudTilemaps_PowerBombs);
 }
 
+/**
+* @brief Writes the HUD grapple icon to RAM
+*/
 void AddGrappleToHudTilemap(void) {  // 0x809A2E
-  AddToTilemapInner(0x28, kHudTilemaps_Grapple);
+  uint16 grapple_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.grapple) - ADDR16_OF_RAM(hud_tilemap.row1);
+  AddToTilemapInner(grapple_tilemap_offset, kHudTilemaps_Grapple);
 }
 
+/**
+* @brief Writes the HUD x-ray icon to RAM
+*/
 void AddXrayToHudTilemap(void) {  // 0x809A3E
-  AddToTilemapInner(0x2E, kHudTilemaps_Xray);
+  uint16 xray_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap.row1);
+  AddToTilemapInner(xray_tilemap_offset, kHudTilemaps_Xray);
 }
 
-void AddToTilemapInner(uint16 k, const uint16 *j) {  // 0x809A4C
-  int v2 = k >> 1;
-  if ((hud_tilemap.arr[v2] & 0x3FF) == 15) {
-    hud_tilemap.row1.arr[v2] = j[0];
-    hud_tilemap.row1.arr[v2 + 1] = j[1];
-    hud_tilemap.row2.arr[v2] = j[2];
-    hud_tilemap.row2.arr[v2 + 1] = j[3];
+/**
+* @brief Transfers the top and bottom row of the HUD source icon to the offset in RAM
+* @param hud_tilemap_offset The offset into the HUD tilemap RAM
+* @param tilemap_src The source of the HUD icon tilemap
+*/
+void AddToTilemapInner(uint16 hud_tilemap_offset, const uint16 *tilemap_src) {  // 0x809A4C
+  int offset = hud_tilemap_offset >> 1;
+  if ((hud_tilemap.arr[offset] & 0x3FF) == 15) {
+    MemCpy(hud_tilemap.row1.arr + offset, &tilemap_src[0], 4);
+    MemCpy(hud_tilemap.row2.arr + offset, &tilemap_src[2], 4);
   }
 }
 
@@ -1292,17 +1310,16 @@ void InitializeHud(void) {  // 0x809A79
   static const StartDmaCopy kDmaCopy_HudTilemaps_TopRow = { .chan = 1, .dmap = 1, .bbad = 0x18, .a1 = LONGPTR(0x80988b), .das = 0x0040 };
   SetupDmaTransfer(&kDmaCopy_HudTilemaps_TopRow);
   WriteReg(MDMAEN, 2);
-  for (int i = 0; i != 192; i += 2)
-    hud_tilemap.arr[i >> 1] = kHudTilemaps_Row1to3[i >> 1];
-  if ((equipped_items & kItem_Xray) != 0)
+  MemCpy(hud_tilemap.arr, kHudTilemaps_Row1to3, sizeof(hud_tilemap));
+  if (equipped_items & kItem_Xray)
     AddXrayToHudTilemap();
-  if ((equipped_items & kItem_Grapple) != 0)
+  if (equipped_items & kItem_Grapple)
     AddGrappleToHudTilemap();
-  if (samus_max_missiles)
+  if (samus_max_missiles != 0)
     AddMissilesToHudTilemap();
-  if (samus_max_super_missiles)
+  if (samus_max_super_missiles != 0)
     AddSuperMissilesToHudTilemap();
-  if (samus_max_power_bombs)
+  if (samus_max_power_bombs != 0)
     AddPowerBombsToHudTilemap();
   samus_prev_health = 0;
   samus_prev_missiles = 0;
@@ -1316,8 +1333,10 @@ void InitializeHud(void) {  // 0x809A79
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_super_missiles, 0x9C);
   if (samus_max_power_bombs)
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
-  ToggleHudItemHighlight(hud_item_index, 0x1000);
-  ToggleHudItemHighlight(samus_prev_hud_item_index, 0x1400);
+  uint16 highlighted_palette = 4 * 0x400;
+  uint16 unhighlighted_palette = 5 * 0x400;
+  ToggleHudItemHighlight(hud_item_index, highlighted_palette);
+  ToggleHudItemHighlight(samus_prev_hud_item_index, unhighlighted_palette);
   HandleHudTilemap();
 }
 
@@ -1355,84 +1374,113 @@ void HandleHudTilemap(void) {  // 0x809B44
       }
       hud_tilemap.arr[kEnergyTankIconTilemapOffsets[v2 >> 1] >> 1] = v3;
       v2 += 2;
-    } while ((int16)(v2 - 28) < 0);
-    DrawTwoHudDigits(kDigitTilesetsHealth, r18, 0x8C);
+    } while (v2 < 28);
+    uint16 health_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.subtank_health) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    DrawTwoHudDigits(kDigitTilesetsHealth, r18, health_digits_offset);
   }
   if (samus_max_missiles && samus_missiles != samus_prev_missiles) {
     samus_prev_missiles = samus_missiles;
-    DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, 0x94);
+    uint16 missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, missile_digits_offset);
   }
   if (samus_max_super_missiles && samus_super_missiles != samus_prev_super_missiles) {
     samus_prev_super_missiles = samus_super_missiles;
+    uint16 super_missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
     if ((joypad_dbg_flags & 0x1F40) != 0)
-      DrawThreeHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
+      DrawThreeHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, super_missile_digits_offset);
     else
-      DrawTwoHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, 0x9C);
+      DrawTwoHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, super_missile_digits_offset);
   }
   if (samus_max_power_bombs && samus_power_bombs != samus_prev_power_bombs) {
     samus_prev_power_bombs = samus_power_bombs;
-    DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, 0xA2);
+    uint16 power_bomb_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.power_bomb_count) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, power_bomb_digits_offset);
   }
+  uint16 highlighted_palette = 4 * 0x400;
+  uint16 unhighlighted_palette = 5 * 0x400;
   if (hud_item_index != samus_prev_hud_item_index) {
-    ToggleHudItemHighlight(hud_item_index, 0x1000);
-    ToggleHudItemHighlight(samus_prev_hud_item_index, 0x1400);
+    ToggleHudItemHighlight(hud_item_index, highlighted_palette);
+    ToggleHudItemHighlight(samus_prev_hud_item_index, unhighlighted_palette);
     samus_prev_hud_item_index = hud_item_index;
     if (samus_movement_type != kMovementType_03_SpinJumping
         && samus_movement_type != kMovementType_14_WallJumping
-        && grapple_beam_function == 0xC4F0
+        && grapple_beam_function == FUNC16(GrappleBeamFunc_Inactive)
         && !time_is_frozen_flag) {
       QueueSfx1_Max6(kSfx1_SwitchHudItem);
     }
   }
-  uint16 v4 = 5120;
+  uint16 hud_palette = unhighlighted_palette;
   if ((nmi_frame_counter_byte & 0x10) != 0)
-    v4 = 4096;
-  ToggleHudItemHighlight(samus_auto_cancel_hud_item_index, v4);
-  uint16 v5 = vram_write_queue_tail;
-  gVramWriteEntry(vram_write_queue_tail)->size = 192;
-  v5 += 2;
-  gVramWriteEntry(v5)->size = ADDR16_OF_RAM(hud_tilemap.arr[0]);
-  v5 += 2;
-  gVramWriteEntry(v5++)->size = 126;
-  gVramWriteEntry(v5)->size = addr_kVram_Hud;
-  vram_write_queue_tail = v5 + 2;
+    hud_palette = highlighted_palette;
+  ToggleHudItemHighlight(samus_auto_cancel_hud_item_index, hud_palette);
+  VramWriteEntry* vram_entry = gVramWriteEntry(vram_write_queue_tail);
+  vram_entry->size = sizeof(RamHudTilemap);
+  vram_entry->src.addr = ADDR16_OF_RAM(hud_tilemap.arr[0]);
+  vram_entry->src.bank = 0x7E;
+  vram_entry->vram_dst = addr_kVram_Hud;
+  vram_write_queue_tail += sizeof(VramWriteEntry);
 }
 
-static const uint16 kHudItemTilemapOffsets[5] = { 0x14, 0x1c, 0x22, 0x28, 0x2e };
+static const uint16 kHudItemTilemapOffsets[5] = {
+  [kHudItem_1_Missile-1]      = 0x14,  // ADDR16_OF_RAM(hud_tilemap.row1.missiles) - ADDR16_OF_RAM(hud_tilemap.row1.arr[0])
+  [kHudItem_2_SuperMissile-1] = 0x1c,  // ADDR16_OF_RAM(hud_tilemap.row1.super_missiles) - ADDR16_OF_RAM(hud_tilemap.row1.arr[0])
+  [kHudItem_3_PowerBomb-1]    = 0x22,  // ADDR16_OF_RAM(hud_tilemap.row1.power_bombs) - ADDR16_OF_RAM(hud_tilemap.row1.arr[0])
+  [kHudItem_4_Grapple-1]      = 0x28,  // ADDR16_OF_RAM(hud_tilemap.row1.grapple) - ADDR16_OF_RAM(hud_tilemap.row1.arr[0])
+  [kHudItem_5_Xray-1]         = 0x2e,  // ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap.row1.arr[0])
+};
 
-void ToggleHudItemHighlight(uint16 a, uint16 k) {  // 0x809CEA
-  int16 v2;
-
-  hud_item_tilemap_palette_bits = k;
-  v2 = a - 1;
-  if (v2 >= 0) {
-    int v3 = kHudItemTilemapOffsets[v2] >> 1;
-    if (hud_tilemap.row1.arr[v3] != 0x2C0F)
-      hud_tilemap.row1.arr[v3] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[v3] & 0xE3FF;
-    if (hud_tilemap.row1.arr[v3 + 1] != 0x2C0F)
-      hud_tilemap.row1.arr[v3 + 1] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[v3 + 1] & 0xE3FF;
-    if (hud_tilemap.row2.arr[v3] != 0x2C0F)
-      hud_tilemap.row2.arr[v3] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[v3] & 0xE3FF;
-    if (hud_tilemap.row2.arr[v3 + 1] != 0x2C0F)
-      hud_tilemap.row2.arr[v3 + 1] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[v3 + 1] & 0xE3FF;
-    if (!(2 * v2)) {
-      if (hud_tilemap.row1.arr[v3 + 2] != 0x2C0F)
-        hud_tilemap.row1.arr[v3 + 2] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[v3 + 2] & 0xE3FF;
-      if (hud_tilemap.row2.arr[v3 + 2] != 0x2C0F)
-        hud_tilemap.row2.arr[v3 + 2] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[v3 + 2] & 0xE3FF;
+/**
+* @brief Toggles the highlight palette of the HUD item
+* @param hud_item_index_ The index of the item to toggle
+* @param tilemap_palette_bits The palette of the HUD item
+*/
+void ToggleHudItemHighlight(uint16 hud_item_index_, uint16 tilemap_palette_bits) {  // 0x809CEA
+  hud_item_tilemap_palette_bits = tilemap_palette_bits;
+  (ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap.row1.arr[0]));
+  int16 item_index = hud_item_index_ - 1;
+  if (item_index >= 0) {
+    int offset = kHudItemTilemapOffsets[item_index] >> 1;
+    if (hud_tilemap.row1.arr[offset] != 0x2C0F)
+      hud_tilemap.row1.arr[offset] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[offset] & 0xE3FF;
+    if (hud_tilemap.row1.arr[offset + 1] != 0x2C0F)
+      hud_tilemap.row1.arr[offset + 1] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[offset + 1] & 0xE3FF;
+    if (hud_tilemap.row2.arr[offset] != 0x2C0F)
+      hud_tilemap.row2.arr[offset] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[offset] & 0xE3FF;
+    if (hud_tilemap.row2.arr[offset + 1] != 0x2C0F)
+      hud_tilemap.row2.arr[offset + 1] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[offset + 1] & 0xE3FF;
+    if ((2 * item_index) == (kHudItem_1_Missile-1)) {
+      if (hud_tilemap.row1.arr[offset + 2] != 0x2C0F)
+        hud_tilemap.row1.arr[offset + 2] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[offset + 2] & 0xE3FF;
+      if (hud_tilemap.row2.arr[offset + 2] != 0x2C0F)
+        hud_tilemap.row2.arr[offset + 2] = hud_item_tilemap_palette_bits | hud_tilemap.row2.arr[offset + 2] & 0xE3FF;
     }
   }
 }
 
-void DrawThreeHudDigits(const uint16* addr, uint16 a, uint16 k) {  // 0x809D78
-  hud_tilemap.arr[k >> 1] = addr[(2 * (a / 100)) >> 1];
-  DrawTwoHudDigits(addr, a % 100, k + 2);
+/**
+* @brief Transfers the hundreds digit of the number in the HUD to RAM
+* @param digits_tilemap The tilemap of the digits to draw
+* @param num The number to draw
+* @param hud_tilemap_offset The index of the HUD digit into RAM
+*/
+void DrawThreeHudDigits(const uint16* digits_tilemap, uint16 num, uint16 hud_tilemap_offset) {  // 0x809D78
+  uint16 hundreds_digit = 2 * (num / 100);
+  hud_tilemap.arr[hud_tilemap_offset >> 1] = digits_tilemap[hundreds_digit >> 1];
+  DrawTwoHudDigits(digits_tilemap, num % 100, hud_tilemap_offset + 2);
 }
 
-void DrawTwoHudDigits(const uint16* addr, uint16 a, uint16 k) {  // 0x809D98
-  int v3 = k >> 1;
-  hud_tilemap.arr[v3] = addr[(2 * (a / 10)) >> 1];
-  hud_tilemap.arr[v3 + 1] = addr[(2 * (a % 10)) >> 1];
+/**
+* @brief Transfers the tens and ones digit of the number in the HUD to RAM
+* @param digits_tilemap The tilemap of the digits to draw
+* @param num The number to draw
+* @param hud_tilemap_offset The index of the HUD digit into RAM
+*/
+void DrawTwoHudDigits(const uint16* digits_tilemap, uint16 num, uint16 hud_tilemap_offset) {  // 0x809D98
+  int offset = hud_tilemap_offset >> 1;
+  uint16 tens_digit = 2 * (num / 10);
+  hud_tilemap.arr[offset] = digits_tilemap[tens_digit >> 1];
+  uint16 ones_digit = 2 * (num % 10);
+  hud_tilemap.arr[offset + 1] = digits_tilemap[ones_digit >> 1];
 }
 
 static Func_U8 *const kTimerProcessFuncs[7] = {  // 0x809DE7
@@ -1442,7 +1490,7 @@ static Func_U8 *const kTimerProcessFuncs[7] = {  // 0x809DE7
   ProcessTimer_InitialDelay,
   ProcessTimer_MovementDelayed,
   ProcessTimer_MovingIntoPlace,
-  ProcessTimer_Decrement,
+  ProcessTimer_MovedIntoPlace,
 };
 
 uint8 ProcessTimer(void) {
@@ -1452,7 +1500,7 @@ uint8 ProcessTimer(void) {
 uint8 ProcessTimer_CeresStart(void) {  // 0x809E09
   ClearTimerRam();
   SetTimerMinutes(0x100);
-  timer_status = -32765;
+  timer_status = 0x8000 | kTimerStatus_3_InitialDelay;
   return 0;
 }
 
@@ -1463,14 +1511,14 @@ uint8 ProcessTimer_Empty(void) {  // 0x809E1A
 uint8 ProcessTimer_MotherBrainStart(void) {  // 0x809E1C
   ClearTimerRam();
   SetTimerMinutes(0x300);
-  timer_status = -32765;
+  timer_status = 0x8000 | kTimerStatus_3_InitialDelay;
   return 0;
 }
 
 uint8 ProcessTimer_InitialDelay(void) {  // 0x809E2F
   LOBYTE(timer_x_pos) = timer_x_pos + 1;
   if ((uint8)timer_x_pos >= 0x10)
-    LOBYTE(timer_status) = timer_status + 1;
+    LOBYTE(timer_status) = timer_status + 1;  // timer_status = kTimerStatus_4_Counting_DelayMovement;
   return 0;
 }
 
@@ -1478,7 +1526,7 @@ uint8 ProcessTimer_MovementDelayed(void) {  // 0x809E41
   LOBYTE(timer_x_pos) = timer_x_pos + 1;
   if ((uint8)timer_x_pos >= 0x60) {
     LOBYTE(timer_x_pos) = 0;
-    LOBYTE(timer_status) = timer_status + 1;
+    LOBYTE(timer_status) = timer_status + 1;  // timer_status = kTimerStatus_5_Counting_MovingIntoPlace;
   }
   return ProcessTimer_Decrement();
 }
@@ -1498,9 +1546,14 @@ uint8 ProcessTimer_MovingIntoPlace(void) {  // 0x809E58
   }
   timer_y_pos = v2;
   if (v0 == 2)
-    ++timer_status;
+    ++timer_status;  // timer_status = kTimerStatus_6_Counting_MovedIntoPlace;
   return ProcessTimer_Decrement();
 }
+
+uint8 ProcessTimer_MovedIntoPlace(void) {  // 0x809E89
+  return ProcessTimer_Decrement();
+}
+
 
 void SetTimerMinutes(uint16 a) {  // 0x809E8C
   *(uint16 *)&timer_centiseconds = 0;
@@ -1607,7 +1660,7 @@ CoroutineRet StartGameplay_Async(void) {  // 0x80A07B
   irqhandler_next_handler = (room_loading_irq_handler == 0) ? 4 : room_loading_irq_handler;
   EnableIrqInterrupts();
   COROUTINE_AWAIT(3, Play20FramesOfMusic_Async());
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x08, 0x08, 0xb7eb });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x08, .y_pos = 0x08, .plm_id_ = addr_kPlmHeader_B7EB_EnableSound_32FramesNormal_240FramesCeres });
   door_transition_function = FUNC16(DoorTransitionFunction_FadeInScreenAndFinish);
   COROUTINE_END(0);
 }
@@ -2618,14 +2671,14 @@ void LoadFromLoadStation(void) {  // 0x80C437
   samus_prev_x_pos = samus_x_pos;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
-  LOBYTE(area_index) = get_RoomDefHeader(room_ptr)->area_index_;
+  LOBYTE(area_index) = get_RoomDefHeader(room_ptr).area_index_;
   LOBYTE(debug_disable_minimap) = 0;
 }
 
 
 void SetDebugElevatorsAsUsed(void) {  // 0x80CD07
   //const uint8 *v0 = RomPtr_80(kAreaElevatorBitsPtr[area_index] + 4 * ((elevator_door_properties_orientation & 0xF) - 1));
-  const ElevatorsUsedConf E = kAreaElevatorBits[area_index][(elevator_door_properties_orientation & 0xF) - 1];
+  const ElevatorsUsedConf E = kAreaElevatorBits[area_index][(elevator_door_properties & kElevatorDoor_DebugElevatorBitmask) - 1];
   used_save_stations_and_elevators[E.src_area] |= E.src_bit;
   used_save_stations_and_elevators[E.dst_area] |= E.dst_bit;
 }

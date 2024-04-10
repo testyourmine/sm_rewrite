@@ -1288,7 +1288,7 @@ void Kago_Shot(void) {  // 0xA8AB83
   int16 v2;
 
   NormalEnemyShotAi();
-  earthquake_type = 2;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer = 16;
   Enemy_Kago *E = Get_Kago(cur_enemy_index);
   if (!E->kago_var_B) {

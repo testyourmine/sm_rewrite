@@ -59,7 +59,8 @@ void PaletteFxHandler(void) {  // 0x8DC527
 void PalFx_ProcessOne(uint16 k) {  // 0x8DC54A
   CallPalFxPreInstr(palettefx_pre_instr[k >> 1] | 0x8D0000, k);
   uint16 v1 = palettefx_index;
-  if (palettefx_instr_timers[v1 >> 1]-- != 1)
+  --palettefx_instr_timers[v1 >> 1];
+  if (palettefx_instr_timers[v1 >> 1] != 0)
     return;
   uint16 j = palettefx_instr_list_ptrs[v1 >> 1], v6;
   while (1) {
@@ -147,19 +148,20 @@ PairU16 PalInstr_DecTimerGoto(uint16 k, uint16 j) {  // 0x8DC639
   PairU16 v4;
 
   int v2 = k >> 1;
-  if (palettefx_timers[v2]-- == 1)
+  --palettefx_timers[v2];
+  if (palettefx_timers[v2] == 0)
     return MakePairU16(k, j + 2);
   v4 = PalInstr_Goto(k, j);
   return MakePairU16(v4.k, v4.j);
 }
 
 PairU16 PalInstr_SetTimer(uint16 k, uint16 j) {  // 0x8DC648
-  *((uint8 *)palettefx_timers + k) = *RomPtr_8D(j);
+  palettefx_timers[k >> 1] = *RomPtr_8D(j);
   return MakePairU16(k, j + 1);
 }
 
 PairU16 PalInstr_SetColorIndex(uint16 k, uint16 j) {  // 0x8DC655
-  palettefx_color_indexes[k >> 1] = *(uint16 *)RomPtr_8D(j);
+  palettefx_color_indexes[k >> 1] = WORD(*RomPtr_8D(j));
   return MakePairU16(k, j + 2);
 }
 
@@ -200,14 +202,14 @@ void PalPreInstr_DisableBgLightsIfIntroPage2(uint16 k) {  // 0x8DE20B
 }
 
 void PalPreInstr_CheckEnemy0Health(uint16 k) {  // 0x8DE2E0
-  if (!enemy_data[0].health)
+  if (enemy_data[0].health == 0)
     palettefx_ids[k >> 1] = 0;
 }
 
 void PalPreInstr_SamusInHeat(uint16 k) {  // 0x8DE379
   if ((equipped_items & (kItem_GravitySuit | kItem_VariaSuit)) == 0) {
     AddToHiLo(&samus_periodic_damage, &samus_periodic_subdamage, 0x4000);
-    if ((nmi_frame_counter_word & 7) == 0 && samus_health > 0x46)
+    if ((nmi_frame_counter_word & 7) == 0 && samus_health > 70)
       QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
   }
   if (samus_in_heat_palfx_index != samus_in_heat_palettefx_prev_index) {
@@ -255,7 +257,7 @@ void PalPreInstr_SwitchIfYpos2(uint16 k) {  // 0x8DED84
 }
 
 void PalPreInstr_DeletePalfxIfMinibossDead(uint16 k) {  // 0x8DEEC5
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0)
+  if ((WORD(boss_bits_for_area[area_index]) & kBossBit_AreaMiniBoss) != 0)
     palettefx_ids[k >> 1] = 0;
 }
 
@@ -270,7 +272,7 @@ void PalPreInstr_DeletePalfxIfTwoMoreFxActive(uint16 k) {  // 0x8DF621
 }
 
 void PalInit_F779_Brinstar8(uint16 k, uint16 j) {  // 0x8DF730
-  if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0)
+  if ((WORD(boss_bits_for_area[area_index]) & kBossBit_AreaMiniBoss) != 0)
     palettefx_ids[j >> 1] = 0;
 }
 

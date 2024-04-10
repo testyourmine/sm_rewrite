@@ -284,7 +284,7 @@ extern int32 *cur_coll_amt32;
 #define door_def_ptr (*(uint16*)(g_ram+0x78D))
 #define REMOVED_door_bts (*(uint16*)(g_ram+0x78F))
 #define door_direction (*(uint16*)(g_ram+0x791))
-#define elevator_door_properties_orientation (*(uint16*)(g_ram+0x793))
+#define elevator_door_properties (*(uint16*)(g_ram+0x793))
 #define door_transition_flag_elevator_zebetites (*(uint16*)(g_ram+0x795))
 #define door_transition_flag_enemies (*(uint16*)(g_ram+0x797))
 #define elevator_direction (*(uint16*)(g_ram+0x799))

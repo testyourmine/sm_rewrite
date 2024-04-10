@@ -10,6 +10,8 @@
 
 #pragma pack(push, 1)
 
+#define EARTHQUAKE(dir, disp, lyr) (dir + 3*disp + 9*lyr)
+
 /* 95 */
 typedef enum Buttons {  // 0x7E008B
   kButton_R = 0x10,
@@ -25,6 +27,23 @@ typedef enum Buttons {  // 0x7E008B
   kButton_Y = 0x4000,
   kButton_B = 0x8000,
 } Buttons;
+
+enum InterruptCommands {  // 0x7E00AB
+  kInterruptCommand_0_Nothing = 0x0,
+  kInterruptCommand_2_DisableIRQ = 0x2,
+  kInterruptCommand_4_Main_BeginHudDraw = 0x4,
+  kInterruptCommand_6_Main_EndHudDraw = 0x6,
+  kInterruptCommand_8_StartOfDoor_BeginHud = 0x8,
+  kInterruptCommand_10_StartOfDoor_EndHud = 0xA,
+  kInterruptCommand_12_Draygon_BeginHud = 0xC,
+  kInterruptCommand_14_Draygon_EndHud = 0xE,
+  kInterruptCommand_16_VerticalDoor_BeginHud = 0x10,
+  kInterruptCommand_18_VerticalDoor_EndHud = 0x12,
+  kInterruptCommand_20_VerticalDoor_EndDraw = 0x14,
+  kInterruptCommand_22_HorizDoor_BeginHud = 0x16,
+  kInterruptCommand_24_HorizDoor_EndHud = 0x18,
+  kInterruptCommand_26_HorizDoor_EndDraw = 0x1A,
+};
 
 /* 105 */
 typedef struct  VramWriteEntry {  // 0x7E00D0
@@ -239,9 +258,15 @@ enum DoorDirection {  // 0x7E0791
   kDoorDirection_Left = 0x1,
   kDoorDirection_Down = 0x2,
   kDoorDirection_Up = 0x3,
-  kDoorDirection_HorizontalMask = 0x1,
+  kDoorDirection_Closed = 0x4,
   kDoorDirection_VerticalMask = 0x2,
   kDoorDirection_DirectionMask = 0x3,
+};
+
+enum ElevatorDoorProperties {  // 0x7E0793
+  kElevatorDoor_DebugElevatorBitmask = 0xF,
+  kElevatorDoor_NewMapArea = 0x40,
+  kEleavtorDoor_DoorIsElevator = 0x80,
 };
 
 enum ElevatorDirection {  // 0x7E0799
@@ -258,6 +283,23 @@ enum AreaIndex {  // 0x7E079F
   kArea_5_Tourian = 0x5,
   kArea_6_Ceres = 0x6,
   kArea_7_Debug = 0x7,
+};
+
+enum CeresStatus {  // 0x7E093F
+  kCeresStatus_0_BeforeRidleyEscape = 0x0,
+  kCeresStatus_1_DuringRidleyEscapeCutscene = 0x1,
+  kCeresStatus_2_DuringEscapeSequence = 0x2,
+  kCeresStatus_8000_ElevatorRoomRotate = 0x8000
+};
+
+enum TimerStatus {  // 0x7E0943
+  kTimerStatus_0_Inactive = 0x0,
+  kTimerStatus_1_CeresStart = 0x1,
+  kTimerStatus_2_MotherBrainStart = 0x2,
+  kTimerStatus_3_InitialDelay = 0x3,
+  kTimerStatus_4_Counting_DelayMovement = 0x4,
+  kTimerStatus_5_Counting_MovingIntoPlace = 0x5,
+  kTimerStatus_6_Counting_MovedIntoPlace = 0x6,
 };
 
 /* 93 */
@@ -834,6 +876,45 @@ enum BossId {  // 0x7E179C
   kBossId_8_Draygon = 0x8,
   kBossId_9_Botwoon = 0x9,
   kBossId_10_MotherBrain = 0xA,
+};
+
+enum EarthquakeType {  // 0x7E183E
+  kEarthquake_Direction_Horiz = 0x0,
+  kEarthquake_Direction_Vert = 0x1,
+  kEarthquake_Direction_Diag = 0x2,
+  kEarthquake_Intensity_1 = 0x0,
+  kEarthquake_Intensity_2 = 0x1,
+  kEarthquake_Intensity_3 = 0x2,
+  kEarthquake_Layers_Bg1 = 0x0,
+  kEarthquake_Layers_Bg1_Bg2 = 0x1,
+  kEarthquake_Layers_Bg1_Bg2_Enemies = 0x2,
+  kEarthquake_Layers_Bg2_Enemies = 0x3,
+};
+
+enum FxTypes {  // 0x7E196E
+  kFxType_0_None = 0x0,
+  kFxType_2_Lava = 0x2,
+  kFxType_4_Acid = 0x4,
+  kFxType_6_Water = 0x6,
+  kFxType_8_Spores = 0x8,
+  kFxType_A_Rain = 0xA,
+  kFxType_C_Fog = 0xC,
+  kFxType_20_ScrollingSkyLand = 0x20,
+  kFxType_22_Unused = 0x22,
+  kFxType_24_Fireflea = 0x24,
+  kFxType_26_TourianEntranceStatue = 0x26,
+  kFxType_28_CeresRidley = 0x28,
+  kFxType_2A_CeresElevator = 0x2A,
+  kFxType_2C_Haze = 0x2C,
+};
+
+enum FxLiquidOptions {  // 0x7E197E
+  kFxLiquidOption_1_LiquidFlows = 0x1,
+  kFxLiquidOption_2_WavyLayer2 = 0x2,
+  kFxLiquidOption_4_LiquidPhysicsDisabled = 0x4,
+  kFxLiquidOption_8_NoEffect = 0x8,
+  kFxLiquidOption_40_BigTide = 0x40,
+  kFxLiquidOption_80_SmallTide = 0x80,
 };
 
 enum TourianEntranceStatueAnimationState {  // 0x7E1E6F
@@ -1488,9 +1569,14 @@ typedef struct PalFxDef {  // 0x8D0000
 }PalFxDef;
 
 /* 22 */
-typedef struct RoomDefStateSelect_E6E5_Finish { // 0x8F0000
-  VoidP code_ptr;
-}RoomDefStateSelect_E6E5_Finish;
+typedef struct RoomDefStateSelect { // 0x8F0000
+  VoidP func_ptr;
+  union {
+    uint8 event_;
+    uint8 area_boss;
+  };
+  VoidP state_ptr;
+}RoomDefStateSelect;
 
 /* 23 */
 typedef struct LoadBg_E {  // 0x8F0000
@@ -1510,14 +1596,280 @@ enum UpdateBackgroundCommands {  // 0x8F0000
   kUpdateBackgroundCommand_E_DoorDependentTransferToVRAM = 0xE,
 };
 
+enum RoomNames {  // 0x8F0000
+  kRoom_91F8_Landing_site = 0x91F8,
+  kRoom_92B3_Gauntlet_east = 0x92B3,
+  kRoom_92FD_Crateria_mainstreet = 0x92FD,
+  kRoom_93AA_Landing_site_power_bombs_cave = 0x93AA,
+  kRoom_93D5_Crateria_save_station = 0x93D5,
+  kRoom_93FE_Wrecked_Ship_entrance = 0x93FE,
+  kRoom_9461_Pre_orange_zoomer_hall = 0x9461,
+  kRoom_948C_Pre_moat_room = 0x948C,
+  kRoom_94CC_Crateria_to_Maridia_elevator = 0x94CC,
+  kRoom_94FD_Wrecked_Ship_back_door = 0x94FD,
+  kRoom_9552_East_Crateria_kago_shaft = 0x9552,
+  kRoom_957D_East_Crateria_maze = 0x957D,
+  kRoom_95A8_Post_Crateria_maze_yellow_door = 0x95A8,
+  kRoom_95D4_Crateria_pipe_tunnel = 0x95D4,
+  kRoom_95FF_Moat = 0x95FF,
+  kRoom_962A_Crateria_to_Red_Brinstar_elevator = 0x962A,
+  kRoom_965B_Gauntlet_west = 0x965B,
+  kRoom_968F_Orange_zoomer_hall = 0x968F,
+  kRoom_96BA_Old_Tourian_escape_shaft = 0x96BA,
+  kRoom_975C_Old_Mother_Brain_room = 0x975C,
+  kRoom_97B5_Crateria_to_Blue_Brinstar_elevator = 0x97B5,
+  kRoom_9804_Bomb_Torizo = 0x9804,
+  kRoom_9879_Pre_Bomb_Torizo_hall = 0x9879,
+  kRoom_98E2_Pre_Crateria_map_station_hall = 0x98E2,
+  kRoom_990D_Crateria_slope = 0x990D,
+  kRoom_9938_Crateria_to_Green_Brinstar_elevator = 0x9938,
+  kRoom_9969_West_Crateria_kago_hall = 0x9969,
+  kRoom_9994_Crateria_map_station = 0x9994,
+  kRoom_99BD_Crateria_space_pirate_shaft = 0x99BD,
+  kRoom_99F9_Crateria_spike_floor_room = 0x99F9,
+  kRoom_9A44_Crateria_bomb_block_hall = 0x9A44,
+  kRoom_9A90_Crateria_chozo_missile = 0x9A90,
+  kRoom_9AD9_Green_Brinstar_mainstreet = 0x9AD9,
+  kRoom_9B5B_Spore_Spawns_super_missile_shaft = 0x9B5B,
+  kRoom_9B9D_Pre_Brinstar_map_room_hall = 0x9B9D,
+  kRoom_9BC8_Early_supers_room = 0x9BC8,
+  kRoom_9C07_Brinstar_reserve_tank_room = 0x9C07,
+  kRoom_9C35_Brinstar_map_station = 0x9C35,
+  kRoom_9C5E_Fireflea_room = 0x9C5E,
+  kRoom_9C89_Green_Brinstar_missile_station = 0x9C89,
+  kRoom_9CB3_Dachora_room = 0x9CB3,
+  kRoom_9D19_Charge_beam_room = 0x9D19,
+  kRoom_9D9C_Pre_Spore_Spawn_hall = 0x9D9C,
+  kRoom_9DC7_Spore_Spawn = 0x9DC7,
+  kRoom_9E11_Brinstar_false_wall_super_sidehopper_power_bomb_room = 0x9E11,
+  kRoom_9E52_Brinstar_diagonal_room = 0x9E52,
+  kRoom_9E9F_Morph_ball_room = 0x9E9F,
+  kRoom_9F11_Old_Kraid_entrance = 0x9F11,
+  kRoom_9F64_Blue_Brinstar_ceiling_e_tank_hall = 0x9F64,
+  kRoom_9FBA_n00b_bridge = 0x9FBA,
+  kRoom_9FE5_Brinstar_false_floor_beetom_room = 0x9FE5,
+  kRoom_A011_Brinstar_false_floor_spike_hall = 0xA011,
+  kRoom_A051_Brinstar_post_false_floor_super_missiles = 0xA051,
+  kRoom_A07B_Dachora_energy_station = 0xA07B,
+  kRoom_A0A4_Post_Spore_Spawn_supers_hall = 0xA0A4,
+  kRoom_A0D2_Pink_Brinstar_flooded_hall = 0xA0D2,
+  kRoom_A107_Blue_Brinstar_missile_room = 0xA107,
+  kRoom_A130_Brinstar_sidehopper_wave_gate_room = 0xA130,
+  kRoom_A15B_Brinstar_post_side_hopper_wave_gate_energy_tank = 0xA15B,
+  kRoom_A184_Pre_Spore_Spawn_save_station = 0xA184,
+  kRoom_A1AD_Blue_Brinstar_boulder_room = 0xA1AD,
+  kRoom_A1D8_Blue_Brinstar_double_missile_room = 0xA1D8,
+  kRoom_A201_Green_Brinstar_mainstreet_save_station = 0xA201,
+  kRoom_A22A_Brinstar_false_floor_save_station = 0xA22A,
+  kRoom_A253_Red_Brinstar_mainstreet = 0xA253,
+  kRoom_A293_Pre_x_ray_spike_hall = 0xA293,
+  kRoom_A2CE_X_ray_room = 0xA2CE,
+  kRoom_A2F7_Red_Brinstar_damage_boost_hall = 0xA2F7,
+  kRoom_A322_Red_Brinstar_to_Crateria_elevator = 0xA322,
+  kRoom_A37C_Red_Brinstar_super_sidehopper_power_bomb_floor_room = 0xA37C,
+  kRoom_A3AE_Early_power_bombs_room = 0xA3AE,
+  kRoom_A3DD_Red_Brinstar_skree_duo_hall = 0xA3DD,
+  kRoom_A408_Pre_spazer_room = 0xA408,
+  kRoom_A447_Spazer_room = 0xA447,
+  kRoom_A471_Kraid_BTS_madness = 0xA471,
+  kRoom_A4B1_Kraid_beetom_room = 0xA4B1,
+  kRoom_A4DA_Kraid_kihunter_hall = 0xA4DA,
+  kRoom_A521_Fake_Kraids_room = 0xA521,
+  kRoom_A56B_Pre_Kraid_room = 0xA56B,
+  kRoom_A59F_Kraid = 0xA59F,
+  kRoom_A5ED_Pre_Tourian_hall = 0xA5ED,
+  kRoom_A618_Red_Brinstar_energy_station = 0xA618,
+  kRoom_A641_Kraid_refill_station = 0xA641,
+  kRoom_A66A_Tourian_entrance = 0xA66A,
+  kRoom_A6A1_Kraids_lair_entrance = 0xA6A1,
+  kRoom_A6E2_Varia_suit_room = 0xA6E2,
+  kRoom_A70B_Kraid_save_station = 0xA70B,
+  kRoom_A734_Red_Brinstar_save_station = 0xA734,
+  kRoom_A75D_Post_ice_beam_mockball_hall = 0xA75D,
+  kRoom_A788_Norfair_lava_hidden_missile_room = 0xA788,
+  kRoom_A7B3_First_hot_room = 0xA7B3,
+  kRoom_A7DE_Norfair_mainstreet = 0xA7DE,
+  kRoom_A815_Ice_beam_mockball_hall = 0xA815,
+  kRoom_A865_Ice_beam_practice_room = 0xA865,
+  kRoom_A890_Ice_beam_room = 0xA890,
+  kRoom_A8B9_Pre_ice_beam_shaft = 0xA8B9,
+  kRoom_A8F8_Crumble_block_platform_shaft = 0xA8F8,
+  kRoom_A923_Norfair_slope = 0xA923,
+  kRoom_A98D_Crocomire = 0xA98D,
+  kRoom_A9E5_Hi_jump_room = 0xA9E5,
+  kRoom_AA0E_Norfair_grapple_ceiling_room = 0xAA0E,
+  kRoom_AA41_Pre_hi_jump_room = 0xAA41,
+  kRoom_AA82_Post_Crocomire_room = 0xAA82,
+  kRoom_AAB5_Post_Crocomire_save_station = 0xAAB5,
+  kRoom_AADE_Post_Crocomire_power_bombs_room = 0xAADE,
+  kRoom_AB07_Post_Crocomire_shaft = 0xAB07,
+  kRoom_AB3B_Post_Crocomire_fluctuating_acid_missiles_cave = 0xAB3B,
+  kRoom_AB64_Double_lake_grapple_practice_room = 0xAB64,
+  kRoom_AB8F_Huge_jump_room = 0xAB8F,
+  kRoom_ABD2_Grapple_practice_shaft = 0xABD2,
+  kRoom_AC00_Single_lake_grapple_practice_room = 0xAC00,
+  kRoom_AC2B_Grapple_room = 0xAC2B,
+  kRoom_AC5A_Bubble_Norfair_reserve_tank_room = 0xAC5A,
+  kRoom_AC83_Bubble_Norfair_pre_reserve_tank_room = 0xAC83,
+  kRoom_ACB3_Bubble_Norfair_mainstreet = 0xACB3,
+  kRoom_ACF0_Speed_booster_lavaquake = 0xACF0,
+  kRoom_AD1B_Speed_booster_room = 0xAD1B,
+  kRoom_AD5E_Lower_Norfair_to_Bubble_Norfair = 0xAD5E,
+  kRoom_ADAD_Pre_wave_beam_room = 0xADAD,
+  kRoom_ADDE_Wave_beam_room = 0xADDE,
+  kRoom_AE07_Norfair_sinking_kamer_hall = 0xAE07,
+  kRoom_AE32_Norfair_funes_and_lavaquake_room = 0xAE32,
+  kRoom_AE74_Pre_Lower_Norfair_entrance_shaft = 0xAE74,
+  kRoom_AEB4_Norfair_multiviola_and_lavamen_hall = 0xAEB4,
+  kRoom_AEDF_Pre_useless_cave_shaft = 0xAEDF,
+  kRoom_AF14_Lower_Norfair_entrance = 0xAF14,
+  kRoom_AF3F_Norfair_to_Lower_Norfair_elevator = 0xAF3F,
+  kRoom_AF72_Norfair_wave_gate_room = 0xAF72,
+  kRoom_AFA3_Norfair_long_lavaquake_hall = 0xAFA3,
+  kRoom_AFCE_Boring_near_Crocomire_hall = 0xAFCE,
+  kRoom_AFFB_Norfair_spike_floor_hall = 0xAFFB,
+  kRoom_B026_Norfair_energy_station = 0xB026,
+  kRoom_B051_useless_cave = 0xB051,
+  kRoom_B07A_Pre_speed_booster_lavaquake_room = 0xB07A,
+  kRoom_B0B4_Norfair_map_station = 0xB0B4,
+  kRoom_B0DD_Bubble_Norfair_save_station = 0xB0DD,
+  kRoom_B106_Norfair_speed_blockade_hall = 0xB106,
+  kRoom_B139_Norfair_stone_zoomer_shaft = 0xB139,
+  kRoom_B167_Rock_Norfair_save_station = 0xB167,
+  kRoom_B192_Pre_Crocomire_save_station = 0xB192,
+  kRoom_B1BB_Pre_Lower_Norfair_save_station = 0xB1BB,
+  kRoom_B1E5_Golden_chozo_statue_lava_lake = 0xB1E5,
+  kRoom_B236_Lower_Norfair_mainstreet = 0xB236,
+  kRoom_B283_Golden_Torizo = 0xB283,
+  kRoom_B2DA_Screw_attack_practice = 0xB2DA,
+  kRoom_B305_Lower_Norfair_energy_station = 0xB305,
+  kRoom_B32E_Ridley = 0xB32E,
+  kRoom_B37A_Pre_Ridley_hall = 0xB37A,
+  kRoom_B3A5_Lower_Norfair_power_bomb_floor_shaft = 0xB3A5,
+  kRoom_B3E1_Unused_room = 0xB3E1,
+  kRoom_B40A_Lower_Norfair_multi_level_one_way_shaft = 0xB40A,
+  kRoom_B457_Lower_Norfair_breakable_pillars_hall = 0xB457,
+  kRoom_B482_Lower_Norfair_holtz_room = 0xB482,
+  kRoom_B4AD_Lower_Norfair_wall_jumping_space_pirates_shaft = 0xB4AD,
+  kRoom_B4E5_Lower_Norfair_lavaquake_room = 0xB4E5,
+  kRoom_B510_Lower_Norfair_mini_metal_maze_room = 0xB510,
+  kRoom_B55A_Lower_Norfair_crumble_walls_power_bomb_room = 0xB55A,
+  kRoom_B585_Lower_Norfair_kihunter_shaft = 0xB585,
+  kRoom_B5D5_Lower_Norfair_super_desgeega_hall = 0xB5D5,
+  kRoom_B62B_Elite_pirate_hall = 0xB62B,
+  kRoom_B656_Impossibles_x_ray_room = 0xB656,
+  kRoom_B698_Ridleys_energy_tank = 0xB698,
+  kRoom_B6C1_Screw_attack_shaft = 0xB6C1,
+  kRoom_B6EE_Norfair_rolling_boulder_shaft = 0xB6EE,
+  kRoom_B741_Lower_Norfair_save_station = 0xB741,
+  kRoom_C98E_Wrecked_Ship_spike_floor_hall = 0xC98E,
+  kRoom_CA08_Wrecked_Ship_entrance_treadmill = 0xCA08,
+  kRoom_CA52_Wrecked_Ship_attic = 0xCA52,
+  kRoom_CAAE_Wrecked_Ship_attic_missile_tank_room = 0xCAAE,
+  kRoom_CAF6_Wrecked_Ship_mainstreet = 0xCAF6,
+  kRoom_CB8B_Wrecked_Ship_flooded_spikey_hall = 0xCB8B,
+  kRoom_CBD5_Wrecked_Ship_east_exit = 0xCBD5,
+  kRoom_CC27_Wrecked_Ship_chozo_energy_tank_room = 0xCC27,
+  kRoom_CC6F_Pre_Phantoon_hall = 0xCC6F,
+  kRoom_CCCB_Wrecked_Ship_map_station = 0xCCCB,
+  kRoom_CD13_Phantoon = 0xCD13,
+  kRoom_CD5C_Wrecked_Ship_first_flooded_room = 0xCD5C,
+  kRoom_CDA8_Wrecked_Ship_obvious_super_missile_room = 0xCDA8,
+  kRoom_CDF1_Wrecked_Ship_hidden_super_missile_hall = 0xCDF1,
+  kRoom_CE40_Gravity_suit_room = 0xCE40,
+  kRoom_CE8A_Wrecked_Ship_save_station = 0xCE8A,
+  kRoom_CED2_n00b_tube_save_station = 0xCED2,
+  kRoom_CEFB_n00b_tube = 0xCEFB,
+  kRoom_CF54_n00b_tube_west = 0xCF54,
+  kRoom_CF80_n00b_tube_east = 0xCF80,
+  kRoom_CFC9_Maridia_mainstreet = 0xCFC9,
+  kRoom_D017_Maridia_space_pirate_room = 0xD017,
+  kRoom_D055_Maridia_spinning_turtle_room = 0xD055,
+  kRoom_D08A_Maridia_green_gate_hall = 0xD08A,
+  kRoom_D0B9_Mt_Doom = 0xD0B9,
+  kRoom_D104_Maridia_to_Red_Brinstar_room = 0xD104,
+  kRoom_D13B_Sandy_Maridia_missile_and_super_missile_room = 0xD13B,
+  kRoom_D16D_Sandy_Maridia_memu_room = 0xD16D,
+  kRoom_D1A3_Maridia_pink_room = 0xD1A3,
+  kRoom_D1DD_Sandy_Maridia_unused_passage_to_Sandy_Maridia_mainstreet = 0xD1DD,
+  kRoom_D21C_Maridia_broken_glass_tube_room = 0xD21C,
+  kRoom_D252_Maridia_broken_glass_tube_room_east = 0xD252,
+  kRoom_D27E_Plasma_beam_puyo_room = 0xD27E,
+  kRoom_D2AA_Plasma_beam_room = 0xD2AA,
+  kRoom_D2D9_Sandy_Maridia_thin_platform_hall = 0xD2D9,
+  kRoom_D30B_Maridia_to_Crateria_elevator = 0xD30B,
+  kRoom_D340_Sandy_Maridia_mainstreet = 0xD340,
+  kRoom_D387_Pre_plasma_beam_shaft = 0xD387,
+  kRoom_D3B6_Maridia_map_station = 0xD3B6,
+  kRoom_D3DF_Sandy_Maridia_save_station = 0xD3DF,
+  kRoom_D408_Maridia_elevatube = 0xD408,
+  kRoom_D433_Sandy_Maridia_drowning_sand_pit_room = 0xD433,
+  kRoom_D461_Sand_falls_west = 0xD461,
+  kRoom_D48E_Elevatube_south = 0xD48E,
+  kRoom_D4C2_Sand_falls_east = 0xD4C2,
+  kRoom_D4EF_Maridia_reserve_tank_room = 0xD4EF,
+  kRoom_D51E_PB_66_room = 0xD51E,
+  kRoom_D54D_Pre_Maridia_reserve_tank_room_sand_fall_room = 0xD54D,
+  kRoom_D57A_Pre_PB_66_room_sand_fall_room = 0xD57A,
+  kRoom_D5A7_Snail_room = 0xD5A7,
+  kRoom_D5EC_Sandy_Maridia_sand_pit_room = 0xD5EC,
+  kRoom_D617_Mochtroid_room = 0xD617,
+  kRoom_D646_Pre_Shaktool_shaft = 0xD646,
+  kRoom_D69A_Pre_Shaktool_shaft_section = 0xD69A,
+  kRoom_D6D0_Springball_room = 0xD6D0,
+  kRoom_D6FD_Sand_falls_sand_pit = 0xD6FD,
+  kRoom_D72A_Maridia_grapple_room = 0xD72A,
+  kRoom_D765_Snail_room_save_station = 0xD765,
+  kRoom_D78F_Pre_Draygon_room = 0xD78F,
+  kRoom_D7E4_Maridia_speed_blockade_hall = 0xD7E4,
+  kRoom_D81A_Draygon_save_station = 0xD81A,
+  kRoom_D845_Maridia_missile_station = 0xD845,
+  kRoom_D86E_Sandy_Maridia_sand_falls_room = 0xD86E,
+  kRoom_D898_Sand_falls = 0xD898,
+  kRoom_D8C5_Shaktool = 0xD8C5,
+  kRoom_D913_Maridia_grapple_wall_shaft = 0xD913,
+  kRoom_D95E_Botwoon = 0xD95E,
+  kRoom_D9AA_Space_jump_room = 0xD9AA,
+  kRoom_D9D4_Maridia_energy_station = 0xD9D4,
+  kRoom_D9FE_Plasma_beam_shortcut_cacatac_room = 0xD9FE,
+  kRoom_DA2B_Plasma_beam_shortcut_spike_room = 0xDA2B,
+  kRoom_DA60_Draygon = 0xDA60,
+  kRoom_DAAE_Tourian_to_Crateria_elevator = 0xDAAE,
+  kRoom_DAE1_Metroid_room_1 = 0xDAE1,
+  kRoom_DB31_Metroid_room_2 = 0xDB31,
+  kRoom_DB7D_Metroid_room_3 = 0xDB7D,
+  kRoom_DBCD_Metroid_room_4 = 0xDBCD,
+  kRoom_DC19_Tourian_super_sidehopper_room = 0xDC19,
+  kRoom_DC65_Drained_Torizo_room = 0xDC65,
+  kRoom_DCB1_Shitroid_room = 0xDCB1,
+  kRoom_DCFF_Post_Shitroid_room = 0xDCFF,
+  kRoom_DD2E_Tourian_refill_station = 0xDD2E,
+  kRoom_DD58_Mother_Brain = 0xDD58,
+  kRoom_DDC4_Tourian_eye_door_room = 0xDDC4,
+  kRoom_DDF3_Pre_Mother_Brain_shaft = 0xDDF3,
+  kRoom_DE23_Pre_Mother_Brain_save_station_trap = 0xDE23,
+  kRoom_DE4D_Escape_room_1 = 0xDE4D,
+  kRoom_DE7A_Escape_room_2 = 0xDE7A,
+  kRoom_DEA7_Escape_room_3 = 0xDEA7,
+  kRoom_DEDE_Escape_room_4 = 0xDEDE,
+  kRoom_DF1B_Tourian_save_station = 0xDF1B,
+  kRoom_DF45_Ceres_elevator_shaft = 0xDF45,
+  kRoom_DF8D_Ceres_pre_elevator_hall = 0xDF8D,
+  kRoom_DFD7_Ceres_stairs = 0xDFD7,
+  kRoom_E021_Ceres_baby_metroid_hall = 0xE021,
+  kRoom_E06B_Pre_Ceres_Ridley_hall = 0xE06B,
+  kRoom_E0B5_Ceres_Ridley = 0xE0B5,
+  kRoom_E82C_Debug_room = 0xE82C,
+};
+
 /* 6 */
-typedef struct XraySpecialCasing {  // 0x8F91F8
+typedef struct XraySpecialCasing {  // 0x8F0000
   uint8 x_block;
   uint8 y_block;
   uint16 level_data_block;
 } XraySpecialCasing;
 
-typedef struct RoomDefHeader {  // 0x8F91F8
+typedef struct RoomDefHeader {  // 0x8F0000
   uint8 semiunique_room_number;
   uint8 area_index_;
   uint8 x_coordinate_on_map;
@@ -1531,7 +1883,7 @@ typedef struct RoomDefHeader {  // 0x8F91F8
 } RoomDefHeader;
 
 /* 97 */
-typedef struct RoomDefRoomstate {  // 0x8F91F8
+typedef struct RoomDefRoomstate {  // 0x8F0000
   LongPtr level_data_ptr;
   uint8 tileset_;
   uint8 music_data_index_;
@@ -1554,6 +1906,38 @@ typedef struct TileSet {  // 0x8FE6A2
   LongPtr tiles_ptr;
   LongPtr palette_ptr;
 } TileSet;
+
+enum TileSets {
+  kTileSet_0_UpperCrateria = 0x0,
+  kTileSet_1_RedCrateria = 0x1,
+  kTileSet_2_LowerCrateria = 0x2,
+  kTileSet_3_OldTourian = 0x3,
+  kTileSet_4_WreckedShip_On = 0x4,
+  kTileSet_5_WreckedShip_Off = 0x5,
+  kTileSet_6_GreenBrinstar_BlueBrinstar = 0x6,
+  kTileSet_7_RedBrinstar_KraidsLair = 0x7,
+  kTileSet_8_PreTourianEntranceCorrdior = 0x8,
+  kTileSet_9_HeatedNorfair = 0x9,
+  kTileSet_10_UnheatedNorfair = 0xA,
+  kTileSet_11_SandlessMaridia = 0xB,
+  kTileSet_12_SandyMaridia = 0xC,
+  kTileSet_13_Tourian = 0xD,
+  kTileSet_14_MotherBrainsRoom = 0xE,
+  kTileSet_15_BlueCeres = 0xF,
+  kTileSet_16_WhiteCeres = 0x10,
+  kTileSet_17_BlueCeresElevator = 0x11,
+  kTileSet_18_WhiteCeresElevator = 0x12,
+  kTileSet_19_BlueCeresRidleysRoom = 0x13,
+  kTileSet_20_WhiteCeresRidleysRoom = 0x14,
+  kTileSet_21_MapRoom_TourianEntrance = 0x15,
+  kTileSet_22_WreckedShipMapRoom_Off = 0x16,
+  kTileSet_23_BlueRefillRoom = 0x17,
+  kTileSet_24_YellowRefillRoom = 0x18,
+  kTileSet_25_SaveRoom = 0x19,
+  kTileSet_26_KraidsRoom = 0x1A,
+  kTileSet_27_CrocomiresRoom = 0x1B,
+  kTileSet_28_DraygonsRoom = 0x1C,
+};
 
 /* 7 */
 
@@ -2351,13 +2735,70 @@ enum Consts_84 {
   addr_locret_848AE0 = 0x8AE0,
   addr_kDefaultPlmDrawInstruction = 0x8DA0,
   addr_kPlmInstrList_MapStation = 0xAD76,
-  addr_kPlmHeader_B6FF = 0xB6FF,
+  addr_kPlmHeader_B64B_WreckedShip_EntranceTreadmill_West = 0xB64B,
+  addr_kPlmHeader_B64F_WreckedShip_EntranceTreadmill_East = 0xB64F,
+  addr_kPlmHeader_B673_MotherBrainsRoom_FillWall = 0xB673,
+  addr_kPlmHeader_B677_MotherBrainsRoom_EscapeDoor = 0xB677,
+  addr_kPlmHeader_B67B_MotherBrainsRoom_BgRow2 = 0xB67B,
+  addr_kPlmHeader_B67F_MotherBrainsRoom_BgRow3 = 0xB67F,
+  addr_kPlmHeader_B683_MotherBrainsRoom_BgRow4 = 0xB683,
+  addr_kPlmHeader_B687_MotherBrainsRoom_BgRow5 = 0xB687,
+  addr_kPlmHeader_B68B_MotherBrainsRoom_BgRow6 = 0xB68B,
+  addr_kPlmHeader_B68F_MotherBrainsRoom_BgRow7 = 0xB68F,
+  addr_kPlmHeader_B693_MotherBrainsRoom_BgRow8 = 0xB693,
+  addr_kPlmHeader_B697_MotherBrainsRoom_BgRow9 = 0xB697,
+  addr_kPlmHeader_B69B_MotherBrainsRoom_BgRow10 = 0xB69B,
+  addr_kPlmHeader_B69F_MotherBrainsRoom_BgRow11 = 0xB69F,
+  addr_kPlmHeader_B6A3_MotherBrainsRoom_BgRow12 = 0xB6A3,
+  addr_kPlmHeader_B6A7_MotherBrainsRoom_BgRow13 = 0xB6A7,
+  addr_kPlmHeader_B6B3_MotherBrainsRoom_ClearCeilingBlock = 0xB6B3,
+  addr_kPlmHeader_B6B7_MotherBrainsRoom_ClearCeilingTube = 0xB6B7,
+  addr_kPlmHeader_B6BB_MotherBrain_ClearBottomMiddleSideTube = 0xB6BB,
+  addr_kPlmHeader_B6BF_MotherBrain_ClearBottomMiddleTubes = 0xB6BF,
+  addr_kPlmHeader_B6C3_MotherBrain_ClearBottomLeftTube = 0xB6C3,
+  addr_kPlmHeader_B6C7_MotherBrain_ClearBottomRightTube = 0xB6C7,
+  addr_kPlmHeader_B6FF_CollReact_SpecialAir_70 = 0xB6FF,
+  addr_kPlmHeader_B747_Crocomire_ClearBridge = 0xB747,
+  addr_kPlmHeader_B74B_Crocomire_CrumbleBlockInBridge = 0xB74B,
+  addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge = 0xB74F,
+  addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall = 0xB753,
+  addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall = 0xB757,
+  addr_kPlmHeader_B763_Shitroid_ClearInvisibleWall = 0xB763,
+  addr_kPlmHeader_B767_Shitroid_CreateInvisibleWall = 0xB767,
+  addr_kPlmHeader_B773_TourianEntrance_CrumbleAccessToElevator = 0xB773,
+  addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator = 0xB777,
+  addr_kPlmHeader_B781_Phantoon_DrawDoorDuringFight = 0xB781,
+  addr_kPlmHeader_B78B_Phantoon_RestoreDoorAfterFight = 0xB78B,
+  addr_kPlmHeader_B78F_SporeSpawn_CrumbleCeiling = 0xB78F,
+  addr_kPlmHeader_B793_SporeSpawn_ClearCeiling = 0xB793,
+  addr_kPlmHeader_B797_Botwoon_ClearWall = 0xB797,
+  addr_kPlmHeader_B79B_Botwoon_CrumbleWall = 0xB79B,
+  addr_kPlmHeader_B7A3_Kraid_CrumbleCeilingBlockIntoBg1 = 0xB7A3,
+  addr_kPlmHeader_B7A7_Kraid_SetCeilingBlockToBg2 = 0xB7A7,
+  addr_kPlmHeader_B7AB_Kraid_CrumbleCeilingBlockIntoBg2 = 0xB7AB,
+  addr_kPlmHeader_B7AF_Kraid_SetCeilingBlockIntoBg3 = 0xB7AF,
+  addr_kPlmHeader_B7B3_Kraid_CrumbleCeilingBlockIntoBg3 = 0xB7B3,
+  addr_kPlmHeader_B7B7_Kraid_ClearCeilingBlocks = 0xB7B7,
+  addr_kPlmHeader_B7BB_Kraid_ClearSpikeBlocks = 0xB7BB,
+  addr_kPlmHeader_B7BF_Kraid_CrumbleSpikeBlocks = 0xB7BF,
+  addr_kPlmHeader_B7EB_EnableSound_32FramesNormal_240FramesCeres = 0xB7EB,
+  addr_kPlmHeader_B8EB_ShaktoolsRoom = 0xB8EB,
+  addr_kPlmHeader_B8F9_Maridia_Elevatube = 0xB8F9,
+  addr_kPlmHeader_B964_OldTourianEscapeShaft_ExplodeFakeWall = 0xB964,
+  addr_kPlmHeader_B968_EscapeRoom4_RaiseAcid = 0xB968,
+  addr_kPlmHeader_B9ED_CrittersEscapeBlock = 0xB9ED,
+  addr_kPlmHeader_BA48_Ceres_ElevatorShaft_TurnDoorSolidDuringEscape = 0xBA48,
+  addr_kPlmHeader_BB30_Crateria_Mainstreet_ClearPassageIfCrittersEscaped = 0xBB30,
   addr_locret_84BB6A = 0xBB6A,
   addr_locret_84BBDC = 0xBBDC,
-  addr_kPlmInstrList_C91C = 0xC91C,
-  addr_kPlmInstrList_C922 = 0xC922,
-  addr_kPlmHeader_D113 = 0xD113,
-  addr_kPlmHeader_D6EA = 0xD6EA,
+  addr_kPlmInstrList_C91C_PowerBombBlockBombed_Unused = 0xC91C,
+  addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused = 0xC922,
+  addr_kPlmHeader_D113_LowerNorfair_ChozoRoom_CrumblePlug = 0xD113,
+  addr_kPlmHeader_D6D6_LowerNorfair_ChozoHand = 0xD6D6,
+  addr_kPlmHeader_D6EA_BombTorizo_CrumbleChozo = 0xD6EA,
+  addr_kPlmHeader_D6EE_WreckedShip_ChozoHand = 0xD6EE,
+  addr_kPlmHeader_D6F8_WreckedShip_ClearChozoSlopeAccess = 0xD6F8,
+  addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess = 0xD6FC,
   addr_locret_84D779 = 0xD779,
 };
 enum Consts_85 {
@@ -2412,8 +2853,8 @@ enum Consts_86 {
   addr_stru_86967A = 0x967A,
   addr_stru_869688 = 0x9688,
   addr_stru_869696 = 0x9696,
-  addr_stru_869734 = 0x9734,
-  addr_stru_869742 = 0x9742,
+  addr_kEproj_CeresFallingDebris_Light = 0x9734,
+  addr_kEproj_CeresFallingDebris_Dark = 0x9742,
   addr_word_86976C = 0x976C,
   addr_word_869772 = 0x9772,
   addr_word_869782 = 0x9782,
@@ -2696,7 +3137,6 @@ enum Consts_8B {
   addr_kMode7ObjectDef_8BD42B = 0xD42B,
   addr_kMode7ObjectDef_8BD431 = 0xD431,
   addr_kMode7ObjectDef_8BD437 = 0xD437,
-  addr_loc_8BE1B4 = 0xE1B4,
   addr_word_8BED95 = 0xED95,
   addr_word_8BED9D = 0xED9D,
   addr_off_8BEE9B = 0xEE9B,
@@ -2758,7 +3198,8 @@ enum Consts_8D {
   addr_kPalfx_TitleScreen_FlickeringDisplays = 0xE1A4,
   addr_kPalfx_Cutscene_GunshipEngineFlicker = 0xE1A8,
   addr_kPalfx_Cutscene_SpriteCeresNavigationLights = 0xE1AC,
-  addr_kPalfx_PlantZebesText_FadeIn = 0xE1B0,
+  addr_kPalfx_PlanetZebesText_FadeIn = 0xE1B0,
+  addr_kPalfx_PlanetZebesText_FadeOut = 0xE1B4,
   addr_kPalfx_Cutscene_BgCeresNavigationLights = 0xE1B8,
   addr_kPalfx_OldMotherBrainFightBgLights = 0xE1BC,
   addr_kPalfx_GunshipGlow = 0xE1C0,
@@ -3512,9 +3953,12 @@ enum Consts_B7 {
 
 static inline OamEnt *gOamEnt(int v) { return (OamEnt *)&g_ram[0x370 + v]; }
 static inline VramWriteEntry *gVramWriteEntry(int a) { return (VramWriteEntry *)&g_ram[0xd0 + a]; }
-struct DoorDef; static inline DoorDef *get_DoorDef(uint16 a) { return (DoorDef *)RomPtr(0x830000 | a); }
-struct RoomDefHeader; static inline RoomDefHeader *get_RoomDefHeader(uint16 a) { return (RoomDefHeader *)RomPtr(0x8F0000 | a); }
-struct RoomDefRoomstate; static inline RoomDefRoomstate *get_RoomDefRoomstate(uint16 a) { return (RoomDefRoomstate *)RomPtr(0x8F0000 | a); }
+//struct DoorDef; static inline DoorDef *get_DoorDef1(uint16 a) { return (DoorDef *)RomPtr(0x830000 | a); }
+extern DoorDef get_DoorDef(uint16 a);
+//struct RoomDefHeader; static inline RoomDefHeader *get_RoomDefHeader(uint16 a) { return (RoomDefHeader *)RomPtr(0x8F0000 | a); }
+extern RoomDefHeader get_RoomDefHeader(uint16 a);
+//struct RoomDefRoomstate; static inline RoomDefRoomstate *get_RoomDefRoomstate(uint16 a) { return (RoomDefRoomstate *)RomPtr(0x8F0000 | a); }
+extern RoomDefRoomstate get_RoomDefRoomstate(uint16 a);
 //struct TileSet; static inline TileSet *get_TileSet(uint16 a) { return (TileSet *)RomPtr(0x8F0000 | a); }
 struct EnemyDef; static inline EnemyDef *get_EnemyDef_A2(uint16 a) { return (EnemyDef *)RomPtr(0xA00000 | a); }
 struct EnemyTileset; static inline EnemyTileset *get_EnemyTileset(uint16 a) { return (EnemyTileset *)RomPtr(0xB40000 | a); }
@@ -3530,13 +3974,15 @@ struct ExtendedSpriteMap; static inline ExtendedSpriteMap *get_ExtendedSpriteMap
 //struct DemoRoomData; static inline DemoRoomData *get_DemoRoomData(uint16 a) { return (DemoRoomData *)RomPtr(0x820000 | a); }
 //struct DemoSetDef; static inline DemoSetDef *get_DemoSetDef(uint16 a) { return (DemoSetDef *)RomPtr(0x910000 | a); }
 struct EnemyPopulation; static inline EnemyPopulation *get_EnemyPopulation(uint8 db, uint16 a) { return (EnemyPopulation *)RomPtr(db << 16 | a); }
-struct FxDef; static inline FxDef *get_FxDef(uint16 a) { return (FxDef *)RomPtr(0x830000 | a); }
+//struct FxDef; static inline FxDef *get_FxDef(uint16 a) { return (FxDef *)RomPtr(0x830000 | a); }
+extern FxDef get_FxDef(uint16 a);
 struct LoadBg_E; static inline LoadBg_E *get_LoadBg_E(uint16 a) { return (LoadBg_E *)RomPtr(0x8F0000 | a); }
 //struct Mode7VramWriteQueue; static inline Mode7VramWriteQueue *get_Mode7VramWriteQueue(uint16 a) { return (Mode7VramWriteQueue *)RomPtr(0xA60000 | a); }
 //struct ProjectileInstr; static inline ProjectileInstr *get_ProjectileInstr(uint16 a) { return (ProjectileInstr *)RomPtr(0x930000 | a); }
 struct PlmHeader_Size4; static inline PlmHeader_Size4 *get_PlmHeader_Size4(uint16 a) { return (PlmHeader_Size4 *)RomPtr(0x840000 | a); }
 struct PlmHeader_Size6; static inline PlmHeader_Size6 *get_PlmHeader_Size6(uint16 a) { return (PlmHeader_Size6 *)RomPtr(0x840000 | a); }
-struct RoomDefStateSelect_E6E5_Finish; static inline RoomDefStateSelect_E6E5_Finish *get_RoomDefStateSelect_E6E5_Finish(uint16 a) { return (RoomDefStateSelect_E6E5_Finish *)RomPtr(0x8F0000 | a); }
+//struct RoomDefStateSelect; static inline RoomDefStateSelect *get_RoomDefStateSelect(uint16 a) { return (RoomDefStateSelect *)RomPtr(0x8F0000 | a); }
+extern RoomDefStateSelect get_RoomDefStateSelect(uint16 a);
 struct SamusSpeedTableEntry; static inline SamusSpeedTableEntry *get_SamusSpeedTableEntry(uint16 a) { return (SamusSpeedTableEntry *)RomPtr(0x900000 | a); }
 struct SamusTileAnimationDefs; static inline SamusTileAnimationDefs *get_SamusTileAnimationDefs(uint16 a) { return (SamusTileAnimationDefs *)RomPtr(0x920000 | a); }
 struct PalFxDef; static inline PalFxDef *get_PalFxDef(uint16 a) { return (PalFxDef *)RomPtr(0x8D0000 | a); }

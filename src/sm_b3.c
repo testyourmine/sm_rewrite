@@ -672,7 +672,7 @@ void Botwoon_QueueExplosionSfx(void) {  // 0xB3957B
 void Botwoon_Init(void) {  // 0xB39583
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if ((boss_bits_for_area[4] & kBossBit_AreaMiniBoss) != 0) {
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0f, 0x04, 0xb797 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x04, .plm_id_ = addr_kPlmHeader_B797_Botwoon_ClearWall });
     *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
     E->base.current_instruction = addr_kBotwoon_Ilist_Hide;
     E->base.properties |= kEnemyProps_Deleted;
@@ -957,7 +957,7 @@ void Botwoon_Func_WaitForBodyToFall(void) {  // 0xB39ACA
 }
 
 void Botwoon_Func_SpawnCrumbleWall(uint16 k) {  // 0xB39ADD
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0f, 0x04, 0xb79b });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x04, .plm_id_ = addr_kPlmHeader_B79B_Botwoon_CrumbleWall });
   Enemy_ItemDrop_Botwoon(k);
   Enemy_Botwoon *E = Get_Botwoon(k);
   E->botwoon_var_23 = 0;

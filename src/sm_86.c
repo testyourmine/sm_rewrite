@@ -434,7 +434,8 @@ void DrawEprojs(uint16 k, Point16U pt) {  // 0x8683D6
 
 Point16U GetValuesForScreenShaking(void) {  // 0x868427
   uint16 R34, R36;
-  if (earthquake_timer && !time_is_frozen_flag && sign16(earthquake_type - 36)) {
+  uint16 max_earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg2_Enemies);
+  if (earthquake_timer && !time_is_frozen_flag && earthquake_type <= max_earthquake) {
     int v0 = (uint16)(4 * earthquake_type) >> 1;
     if ((earthquake_timer & 2) != 0) {
       R36 = -kScreenShakeOffsets[v0];
@@ -2586,7 +2587,7 @@ const uint8 *EprojInstr_SpawnTourianStatueUnlockingParticle(uint16 k, const uint
 }
 
 const uint8 *EprojInstr_Earthquake(uint16 k, const uint8 *epjp) {  // 0x86B7F5
-  earthquake_type = 1;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer |= 0x20;
   return epjp;
 }
@@ -3183,7 +3184,7 @@ Rect16U Eproj_GetCollDetectRect(uint16 k) {  // 0x86C3E9
 
 void BlueRingContactEarthquake(uint16 k) {  // 0x86C404
   earthquake_timer = 10;
-  earthquake_type = 5;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
   BlueRingContactExplosion(k);
 }
 
@@ -3298,7 +3299,7 @@ static void EprojInit_MotherBrainDeathBeemFired(uint16 j) {  // 0x86C684
     SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x1D);
     QueueSfx3_Max6(kSfx3_MotherBrain_TorizoProjectileHitsSurface_ShitroidExploding);
     earthquake_timer = 10;
-    earthquake_type = 5;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
   } else {
     eproj_E[v1] = (eproj_E[v1] + 1) & 3;
     eproj_F[v1] = 0;

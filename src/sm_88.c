@@ -344,15 +344,15 @@ void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
   }
   debug_disable_minimap = 0;
   for (int i = 32; i != 0x80; i += 16) {
-    WriteReg((SnesRegs)(i + 17152), 0);
-    WriteReg((SnesRegs)(i + 17153), 0x13);
-    WriteReg((SnesRegs)(i + 17154), 0);
-    WriteReg((SnesRegs)(i + 17155), 0);
-    WriteReg((SnesRegs)(i + 17156), 0);
-    WriteReg((SnesRegs)(i + 17157), 0);
-    WriteReg((SnesRegs)(i + 17158), 0);
-    WriteReg((SnesRegs)(i + 17160), 0);
-    WriteReg((SnesRegs)(i + 17161), 0);
+    WriteReg((SnesRegs)(i + DMAP0), 0);
+    WriteReg((SnesRegs)(i + BBAD0), 0x13);
+    WriteReg((SnesRegs)(i + A1T0L), 0);
+    WriteReg((SnesRegs)(i + A1T0H), 0);
+    WriteReg((SnesRegs)(i + A1B0), 0);
+    WriteReg((SnesRegs)(i + DAS0L), 0);
+    WriteReg((SnesRegs)(i + DAS0H), 0);
+    WriteReg((SnesRegs)(i + A2A0L), 0);
+    WriteReg((SnesRegs)(i + A2A0H), 0);
   }
   fx_y_subpos = 0;
   fx_y_pos = -1;
@@ -388,16 +388,16 @@ void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
   layer2_x_pos = 0;
   layer2_y_pos = 0;
   room_loading_irq_handler = 0;
-  *(VoidP *)((uint8 *)&pause_hook.addr + 1) = -30720;
-  *(VoidP *)((uint8 *)&unpause_hook.addr + 1) = -30720;
+  *(VoidP *)((uint8 *)&pause_hook.addr + 1) = 0x8800;
+  *(VoidP *)((uint8 *)&unpause_hook.addr + 1) = 0x8800;
   pause_hook.addr = FUNC16(PauseHook_Empty);
   unpause_hook.addr = FUNC16(PauseHook_Empty);
   WriteReg(WMADDL, 0xF0);
   WriteReg(WMADDM, 0xFF);
   WriteReg(WMADDH, 1);
   reg_HDMAEN = 0;
-  reg_COLDATA[0] = 32;
-  reg_COLDATA[1] = 64;
+  reg_COLDATA[0] = 0x20;
+  reg_COLDATA[1] = 0x40;
   reg_COLDATA[2] = 0x80;
   reg_MOSAIC = 0;
   reg_TM = 19;
@@ -1448,7 +1448,7 @@ void HdmaobjPreInstr_CrystalFlash_Stage1_Explosion(uint16 k) {  // 0x88A552
   }
 }
 
-void FxTypeFunc_22_ScrollingSky(void) {  // 0x88A61B
+void FxTypeFunc_22_Unused(void) {  // 0x88A61B
   fx_y_pos = 1248;
   fx_type = 6;
 
@@ -1914,7 +1914,7 @@ LABEL_8:
 
 void FxRisingFunction_LavaAcid_WaitToRise(void) {  // 0x88B367
   HandleEarthquakeSoundEffect();
-  earthquake_type = 21;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2_Enemies);
   earthquake_timer |= 0x20;
   if (!--fx_timer)
     fx_rising_function_bank_88 = FUNC16(FxRisingFunction_LavaAcid_Raising);
@@ -1922,7 +1922,7 @@ void FxRisingFunction_LavaAcid_WaitToRise(void) {  // 0x88B367
 
 void FxRisingFunction_LavaAcid_Raising(void) {  // 0x88B382
   HandleEarthquakeSoundEffect();
-  earthquake_type = 21;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2_Enemies);
   earthquake_timer |= 0x20;
   if (RaiseOrLowerFx() & 1) {
     fx_y_vel = 0;
@@ -2230,7 +2230,7 @@ void HdmaobjInstr_SetVideoMode1_FloorAndHud(void) {  // 0x88D916
   hdma_data_table_in_ceres = 9;
 }
 
-void FxTypeFunc_CeresElevator(void) {  // 0x88D928
+void FxTypeFunc_2A_CeresElevator(void) {  // 0x88D928
   static const SpawnHdmaObject_Args unk_88D92C = { 0x40, 0x05, 0xd939 };
   SpawnHdmaObject(0x88, &unk_88D92C);
 }
@@ -2310,18 +2310,18 @@ void HdmaobjPreInstr_FogBG3Scroll(uint16 k) {  // 0x88DB36
 }
 
 void FxTypeFunc_26_TourianEntranceStatue(void) {  // 0x88DB8A
-  static const SpawnHdmaObject_Args unk_88DBBA = { 0x42, 0x11, 0xd856 };
-  static const SpawnHdmaObject_Args unk_88DBC2 = { 0x42, 0x10, 0xdcfa };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_Bg3XScroll = { 0x42, 0x11, 0xd856 };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_Bg3YScroll = { 0x42, 0x10, 0xdcfa };
 
   if (CheckEventHappened(kEvent_10_TourianEntranceUnlocked) & 1) {
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x0c, 0xb777 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x0c, .plm_id_ = addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator });
     *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
   }
   reg_BG2SC = 74;
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_C428_WaterNormal);
   fx_y_pos = fx_base_y_pos;
-  SpawnHdmaObject(0x88, &unk_88DBBA);
-  SpawnHdmaObject(0x88, &unk_88DBC2);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_Bg3XScroll);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_Bg3YScroll);
   SpawnBG3ScrollHdmaObject();
 }
 
@@ -2353,7 +2353,7 @@ void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_DescentDelay(uint16 k) {  /
   uint16 v0 = k;
 
   HandleEarthquakeSoundEffect();
-  earthquake_type = 13;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2);
   earthquake_timer |= 0x20;
   int v1 = (uint8)v0 >> 1;
   if ((--hdma_object_C[v1] & 0x8000) != 0) {
@@ -2369,13 +2369,13 @@ void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_DescentDelay(uint16 k) {  /
 
 void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending(uint16 k) {  // 0x88DC69
   HandleEarthquakeSoundEffect();
-  earthquake_type = 13;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2);
   earthquake_timer |= 0x20;
   if (!time_is_frozen_flag) {
     int v1 = k >> 1;
     AddToHiLo(&hdma_object_B[v1], &hdma_object_A[v1], -0x4000);
     if (hdma_object_B[v1] == 0xFF10) {
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x0c, 0xb773 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x0c, .plm_id_ = addr_kPlmHeader_B773_TourianEntrance_CrumbleAccessToElevator });
       SetEventHappened(kEvent_10_TourianEntranceUnlocked);
       hdma_object_instruction_timers[v1] = 1;
       hdma_object_instruction_list_pointers[v1] += 2;

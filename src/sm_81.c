@@ -2180,10 +2180,10 @@ void FileSelectMap_9_InitRoomSelectMap(void) {  // 0x81AD17
   LoadFromLoadStation();
   DisableHdmaObjects();
   WaitUntilEndOfVblankAndClearHdma();
-  RoomDefHeader *RoomDefHeader = get_RoomDefHeader(room_ptr);
-  LOBYTE(area_index) = RoomDefHeader->area_index_;
-  LOBYTE(room_x_coordinate_on_map) = RoomDefHeader->x_coordinate_on_map;
-  LOBYTE(room_y_coordinate_on_map) = RoomDefHeader->y_coordinate_on_map;
+  RoomDefHeader RoomDefHeader = get_RoomDefHeader(room_ptr);
+  LOBYTE(area_index) = RoomDefHeader.area_index_;
+  LOBYTE(room_x_coordinate_on_map) = RoomDefHeader.x_coordinate_on_map;
+  LOBYTE(room_y_coordinate_on_map) = RoomDefHeader.y_coordinate_on_map;
   SetupMapScrollingForFileSelectMap();
   map_min_y_scroll += 24;
   reg_BG2VOFS = 24;

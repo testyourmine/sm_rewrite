@@ -454,7 +454,7 @@ void Torizo_C643(uint16 k) {  // 0xAAC643
   if (Enemy_MoveDown(k, INT16_SHL8(E->toriz_var_B))) {
     int16 v3 = E->toriz_var_B;
     if (v3 >= 0 && v3 != 256) {
-      earthquake_type = 4;
+      earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
       earthquake_timer = 32;
       E->toriz_var_B = 256;
     }
@@ -510,7 +510,7 @@ void Torizo_Func_4(uint16 k) {  // 0xAAC6C6
   Enemy_Torizo *E = Get_Torizo(k);
   E->base.properties |= kEnemyProps_Tangible;
   uint16 v2 = 78;
-  while (plm_header_ptr[v2 >> 1] != addr_kPlmHeader_D6EA) {
+  while (plm_header_ptr[v2 >> 1] != addr_kPlmHeader_D6EA_BombTorizo_CrumbleChozo) {
     v2 -= 2;
     if ((v2 & 0x8000) != 0) {
       QueueMusic_Delayed8(g_word_AAB096);
@@ -619,7 +619,7 @@ void Torizo_Func_7(uint16 k) {  // 0xAAC82C
     E->base.current_instruction = E->toriz_var_00;
     E->base.instruction_timer = 1;
     E->toriz_var_B = 256;
-    earthquake_type = 4;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
     earthquake_timer = 32;
   } else {
     E->toriz_var_B += E->toriz_var_C;
@@ -1438,7 +1438,7 @@ const uint16 *Shaktool_Instr_12(uint16 k, const uint16 *jp) {  // 0xAAE58F
 
   CalculateBlockContainingPixelPos(e->base.x_pos + arg, e->base.y_pos + 28);
   if ((level_data[room_width_in_blocks + cur_block_index] & 0xF000) == 0xA000) {
-    SpawnPLM(addr_kPlmHeader_D113);
+    SpawnPLM(addr_kPlmHeader_D113_LowerNorfair_ChozoRoom_CrumblePlug);
     SpawnEprojWithRoomGfx(addr_kEproj_WreckedShipChozoSpikeFootsteps_1, arg);
   }
   return jp + 1;
@@ -1462,7 +1462,7 @@ const uint16 *Shaktool_Instr_14(uint16 k, const uint16 *jp) {  // 0xAAE6F0
   *(uint16 *)&scrolls[8] = kScroll_Red;
   *(uint16 *)&scrolls[9] = kScroll_Red;
   *(uint16 *)&scrolls[13] = kScroll_Blue;
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x17, 0x1d, 0xd6fc });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x17, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
   return jp;
 }
 
@@ -1491,8 +1491,8 @@ void ChozoStatue_Init(void) {  // 0xAAE725
       target_palettes.sprite_pal_2[v3] = kChozoStatue_Palettes[v3];
       target_palettes.sprite_pal_1[v3] = kChozoStatue_Palette[v3];
     }
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x4a, 0x17, 0xd6ee });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x17, 0x1d, 0xd6fc });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x4a, .y_pos = 0x17, .plm_id_ = addr_kPlmHeader_D6EE_WreckedShip_ChozoHand });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x17, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
   }
 }
 
@@ -1502,7 +1502,7 @@ void sub_AAE784(void) {  // 0xAAE784
     target_palettes.sprite_pal_2[v1] = kChozoStatue_Palettes3[v1];
     target_palettes.sprite_pal_1[v1] = kChozoStatue_Palettes2[v1];
   }
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0c, 0x1d, 0xd6d6 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0c, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6D6_LowerNorfair_ChozoHand });
 }
 
 void ChozoStatue_Main(void) {  // 0xAAE7A7

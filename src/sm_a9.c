@@ -407,7 +407,7 @@ void MotherBrainBody_FakeDeath_Descent_4(void) {  // 0xA98884
     E->mbn_var_A = FUNC16(MotherBrainBody_FakeDeath_Descent_5);
     E->mbn_var_F = 0;
     E->mbn_var_37 = 0;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0e, 0x02, 0xb6b3 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0e, .y_pos = 0x02, .plm_id_ = addr_kPlmHeader_B6B3_MotherBrainsRoom_ClearCeilingBlock });
   }
 }
 
@@ -468,7 +468,7 @@ void MotherBrainBody_0_Wait(void) {  // 0xA98949
 }
 
 void MotherBrainBody_1_ClearBottomLeftTube(void) {  // 0xA9896E
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x05, 0x09, 0xb6c3 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x05, .y_pos = 0x09, .plm_id_ = addr_kPlmHeader_B6C3_MotherBrain_ClearBottomLeftTube });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_2_SpawnTopRightTubeFalling);
   E->mbby_var_F = 32;
@@ -484,7 +484,7 @@ void MotherBrainBody_2_SpawnTopRightTubeFalling(void) {  // 0xA98983
 }
 
 void MotherBrainBody_3_ClearCeilingBlock9(void) {  // 0xA989A0
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x09, 0x02, 0xb6b3 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x09, .y_pos = 0x02, .plm_id_ = addr_kPlmHeader_B6B3_MotherBrainsRoom_ClearCeilingBlock });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_4_SpawnTopLeftTubeFalling);
   E->mbby_var_F = 32;
@@ -500,7 +500,7 @@ void MotherBrainBody_4_SpawnTopLeftTubeFalling(void) {  // 0xA989B5
 }
 
 void MotherBrainBody_4_ClearCeilingBlock6(void) {  // 0xA989D2
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x02, 0xb6b3 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x02, .plm_id_ = addr_kPlmHeader_B6B3_MotherBrainsRoom_ClearCeilingBlock });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_5_SpawnTubeFallingEnemy1);
   E->mbby_var_F = 32;
@@ -515,7 +515,7 @@ void MotherBrainBody_5_SpawnTubeFallingEnemy1(void) {  // 0xA989E7
 }
 
 void MotherBrainBody_6_ClearBottomRightTube(void) {  // 0xA989FA
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0a, 0x09, 0xb6c7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0a, .y_pos = 0x09, .plm_id_ = addr_kPlmHeader_B6C7_MotherBrain_ClearBottomRightTube });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_7_SpawnTubeFallingEnemy2);
   E->mbby_var_F = 32;
@@ -530,7 +530,7 @@ void MotherBrainBody_7_SpawnTubeFallingEnemy2(void) {  // 0xA98A0F
 }
 
 void MotherBrainBody_8_ClearBottomMiddleLeftTube(void) {  // 0xA98A22
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x0a, 0xb6bb });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x0a, .plm_id_ = addr_kPlmHeader_B6BB_MotherBrain_ClearBottomMiddleSideTube });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_9_SpawnTopMiddleLeftFalling);
   E->mbby_var_F = 32;
@@ -546,7 +546,7 @@ void MotherBrainBody_9_SpawnTopMiddleLeftFalling(void) {  // 0xA98A37
 }
 
 void MotherBrainBody_10_ClearCeilingTubeColumn7(void) {  // 0xA98A54
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x07, 0x02, 0xb6b7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x07, .y_pos = 0x02, .plm_id_ = addr_kPlmHeader_B6B7_MotherBrainsRoom_ClearCeilingTube });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_11_SpawnTopMiddleRightFalling);
   E->mbby_var_F = 32;
@@ -562,7 +562,7 @@ void MotherBrainBody_11_SpawnTopMiddleRightFalling(void) {  // 0xA98A69
 }
 
 void MotherBrainBody_12_ClearCeilingTubeColumn8(void) {  // 0xA98A86
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x08, 0x02, 0xb6b7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x08, .y_pos = 0x02, .plm_id_ = addr_kPlmHeader_B6B7_MotherBrainsRoom_ClearCeilingTube });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_13_SpawnTubeFallingEnemy3);
   E->mbby_var_F = 32;
@@ -577,7 +577,7 @@ void MotherBrainBody_13_SpawnTubeFallingEnemy3(void) {  // 0xA98A9B
 }
 
 void MotherBrainBody_14_ClearBottomMiddleRightTube(void) {  // 0xA98AAE
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x09, 0x0a, 0xb6bb });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x09, .y_pos = 0x0a, .plm_id_ = addr_kPlmHeader_B6BB_MotherBrain_ClearBottomMiddleSideTube });
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_E = FUNC16(MotherBrainBody_15_SpawnTubeFallingEnemy4);
   E->mbby_var_F = 2;
@@ -592,7 +592,7 @@ void MotherBrainBody_15_SpawnTubeFallingEnemy4(void) {  // 0xA98AC3
 }
 
 void MotherBrainBody_16_ClearBottomMiddleTubes(void) {  // 0xA98AD6
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x07, 0x07, 0xb6bf });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x07, .y_pos = 0x07, .plm_id_ = addr_kPlmHeader_B6BF_MotherBrain_ClearBottomMiddleTubes });
   Get_MotherBrainBody(0x40)->mbby_var_E = addr_kMotherBrainBody_Return;
 }
 
@@ -669,7 +669,8 @@ void MotherBrainsTubesFalling_Falling(uint16 k) {  // 0xA98BD6
     MotherBrainsTubesFalling_HandleSmoke(k);
   } else {
     MotherBrain_Pal_EndScreenFlash();
-    EnableEarthquakeAframes(0x19);
+    uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1_Bg2_Enemies);
+    EnableEarthquakeTypeAFor20Frames(earthquake);
     hdma_object_channels_bitmask[0] = 0;
     hdma_object_channels_bitmask[1] = 0;
     // BUG!
@@ -694,38 +695,38 @@ void MotherBrainsTubesFalling_SpawnSmoke(uint16 k) {  // 0xA98C36
 }
 
 void MotherBrainBody_FakeDeath_Ascent_0_DrawBG1Row23(void) {  // 0xA98C87
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x02, 0xb67b });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x03, 0xb67f });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x02, .plm_id_ = addr_kPlmHeader_B67B_MotherBrainsRoom_BgRow2 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B67F_MotherBrainsRoom_BgRow3 });
   Get_MotherBrainBody(0)->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_1_DrawBG1Row45);
 }
 
 void MotherBrainBody_FakeDeath_Ascent_1_DrawBG1Row45(void) {  // 0xA98C9E
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x04, 0xb683 });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x05, 0xb687 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x04, .plm_id_ = addr_kPlmHeader_B683_MotherBrainsRoom_BgRow4 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x05, .plm_id_ = addr_kPlmHeader_B687_MotherBrainsRoom_BgRow5 });
   Get_MotherBrainBody(0)->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_2_DrawBG1Row67);
 }
 
 void MotherBrainBody_FakeDeath_Ascent_2_DrawBG1Row67(void) {  // 0xA98CB5
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x06, 0xb68b });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x07, 0xb68f });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x06, .plm_id_ = addr_kPlmHeader_B68B_MotherBrainsRoom_BgRow6 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x07, .plm_id_ = addr_kPlmHeader_B68F_MotherBrainsRoom_BgRow7 });
   Get_MotherBrainBody(0)->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_3_DrawBG1Row89);
 }
 
 void MotherBrainBody_FakeDeath_Ascent_3_DrawBG1Row89(void) {  // 0xA98CCC
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x08, 0xb693 });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x09, 0xb697 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x08, .plm_id_ = addr_kPlmHeader_B693_MotherBrainsRoom_BgRow8 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x09, .plm_id_ = addr_kPlmHeader_B697_MotherBrainsRoom_BgRow9 });
   Get_MotherBrainBody(0)->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_4_DrawBG1RowAB);
 }
 
 void MotherBrainBody_FakeDeath_Ascent_4_DrawBG1RowAB(void) {  // 0xA98CE3
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x0a, 0xb69b });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x0b, 0xb69f });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x0a, .plm_id_ = addr_kPlmHeader_B69B_MotherBrainsRoom_BgRow10 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B69F_MotherBrainsRoom_BgRow11 });
   Get_MotherBrainBody(0)->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_5_DrawBG1RowCD);
 }
 
 void MotherBrainBody_FakeDeath_Ascent_5_DrawBG1RowCD(void) {  // 0xA98CFA
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x0c, 0xb6a3 });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x0d, 0xb6a7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x0c, .plm_id_ = addr_kPlmHeader_B6A3_MotherBrainsRoom_BgRow12 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x0d, .plm_id_ = addr_kPlmHeader_B6A7_MotherBrainsRoom_BgRow13 });
   Get_MotherBrainBody(0)->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_6_SetupPhase2Gfx);
 }
 
@@ -804,7 +805,7 @@ void MotherBrainBody_FakeDeath_Ascent_12_StartMusic(void) {  // 0xA98DEC
   reg_BG2HOFS = -27;
   reg_BG2VOFS = -217;
   QueueMusic_Delayed8(kMusic_Song0);
-  earthquake_type = 2;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer = 256;
   E1->mbn_var_34 = 80;
   E1->mbn_var_31 = 1;
@@ -1225,7 +1226,7 @@ void MotherBrain_MoveBodyDown(uint16 a) {  // 0xA99579
 }
 
 void MotherBrain_FootstepEffect(void) {  // 0xA99599
-  earthquake_type = 1;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer = 4;
   if (Get_MotherBrain(0)->mbn_var_00 == 3)
     printf("Write to rom!\n");
@@ -1731,7 +1732,8 @@ void MotherBrain_Phase3_Death_8(void) {  // 0xA9B12D
   Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
   v3 = E1->base.y_pos + HIBYTE(v1);
   if ((uint16)v3 >= 0xC4) {
-    EnableEarthquakeAframes(2);
+    uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
+    EnableEarthquakeTypeAFor20Frames(earthquake);
     E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_9);
     E->mbn_var_F = 256;
     v3 = 196;
@@ -1827,7 +1829,7 @@ void MotherBrain_Phase3_Death_16_StartEscape(void) {  // 0xA9B26D
   if (ProcessSpriteTilesTransfers(0xa9, addr_kMotherBrainExplodeEscapeDoor_SpriteTileTransfers)) {
     WriteColorsToPalette(0x122, 0xa9, addr_kMotherBrainPalette1_ExplodeEscapeDoorParticles + 2, 0xE);
     QueueMusic_Delayed8(kMusic_Song2);
-    earthquake_type = 5;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
     earthquake_timer = -1;
     SpawnPalfxObject(addr_kPalfx_Tourian8_RedFlashing_Shutter);
     SpawnPalfxObject(addr_kPalfx_Tourian16_RedFlashing_Background);
@@ -1866,7 +1868,7 @@ void MotherBrain_Phase3_Death_19_EscapeDoorExploding(void) {  // 0xA9B2F9
   Enemy_MotherBrain *E = Get_MotherBrain(0);
   if ((--E->mbn_var_F & 0x8000) != 0) {
     RunSamusCode(kSamusCode_15_EnableTimerHandling);
-    timer_status = 2;
+    timer_status = kTimerStatus_2_MotherBrainStart;
     SetBossBitForCurArea(kBossBit_AreaMiniBoss);
     SetEventHappened(kEvent_14_ZebesTimebombSet);
     E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_20_BlowUpEscapeDoor);
@@ -1879,7 +1881,7 @@ void MotherBrain_Phase3_Death_19_EscapeDoorExploding(void) {  // 0xA9B2F9
 void MotherBrain_Phase3_Death_20_BlowUpEscapeDoor(void) {  // 0xA9B32A
   MotherBrain_ExplodeEscapeDoor();
   Get_MotherBrain(0)->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_21_KeepEarthquakeGoing);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x00, 0x06, 0xb677 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x00, .y_pos = 0x06, .plm_id_ = addr_kPlmHeader_B677_MotherBrainsRoom_EscapeDoor });
 }
 
 void MotherBrain_Phase3_Death_21_KeepEarthquakeGoing(void) {  // 0xA9B33C
@@ -2443,7 +2445,7 @@ void MotherBomb_FiringRainbowBeam_7_DelayFrame(void) {  // 0xA9BA00
   MotherBrain_MoveSamusTowardsWallDueToBeam();
   Enemy_MotherBomb *E = Get_MotherBomb(0);
   if ((--E->mbb_var_F & 0x8000) != 0) {
-    earthquake_type = 8;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1);
     earthquake_timer = 8;
     E->mbb_var_A = FUNC16(MotherBomb_FiringRainbowBeam_8_StartDrainSamus);
   }
@@ -2454,7 +2456,7 @@ void MotherBomb_FiringRainbowBeam_8_StartDrainSamus(void) {  // 0xA9BA27
   E->mbb_var_A = FUNC16(MotherBomb_FiringRainbowBeam_9_DrainingSamus);
   E->mbb_var_F = 299;
   earthquake_timer = 299;
-  earthquake_type = 8;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1);
   MotherBomb_FiringRainbowBeam_9_DrainingSamus();
 }
 
@@ -5884,8 +5886,8 @@ void Shitroid_Func_4(void) {  // 0xA9EFE6
     layer1_x_pos = 512;
     *(uint16 *)scrolls = scrolls[0];
     *(uint16 *)&scrolls[2] = scrolls[2];
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb767 });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1f, 0x03, 0xb767 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x30, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B767_Shitroid_CreateInvisibleWall });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x1f, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B767_Shitroid_CreateInvisibleWall });
     Enemy_Shitroid *E = Get_Shitroid(cur_enemy_index);
     E->shitr_var_A = FUNC16(Shitroid_Func_5);
     E->shitr_var_04 = 1;
@@ -5971,8 +5973,8 @@ void Shitroid_Func_12(uint16 k) {  // 0xA9F138
     E->shitr_parameter_2 = 1;
     *(uint16 *)scrolls |= (kScroll_Blue << 8);
     *(uint16 *)&scrolls[2] |= (kScroll_Blue << 8);
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb763 });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1f, 0x03, 0xb763 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x30, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B763_Shitroid_ClearInvisibleWall });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x1f, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B763_Shitroid_ClearInvisibleWall });
   }
 }
 

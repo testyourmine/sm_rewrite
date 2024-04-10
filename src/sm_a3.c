@@ -1994,7 +1994,8 @@ void MaridiaSnail_Main(void) {  // 0xA3CE64
 
 void MaridiaSnail_Func_4(uint16 k) {  // 0xA3CE73
   uint16 msl_var_08 = Get_MaridiaSnail(k)->msl_var_08;
-  if (msl_var_08 != 3 && msl_var_08 != 4 && msl_var_08 != 5 && earthquake_timer == 30 && earthquake_type == 20)
+  uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
+  if (msl_var_08 != 3 && msl_var_08 != 4 && msl_var_08 != 5 && earthquake_timer == 30 && earthquake_type == earthquake)
     MaridiaSnail_Func_14(k);
 }
 
@@ -2482,7 +2483,8 @@ void WreckedShipOrangeZoomer_Func_2(uint16 k) {  // 0xA3E091
   uint16 v12;
   Enemy_WreckedShipOrangeZoomer *E = Get_WreckedShipOrangeZoomer(k);
 
-  if (earthquake_timer == 30 && earthquake_type == 20) {
+  uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
+  if (earthquake_timer == 30 && earthquake_type == earthquake) {
     E->wsozr_var_03 = E->wsozr_var_F;
     E->wsozr_var_F = FUNC16(FireZoomer_Func_2);
   }
@@ -2532,7 +2534,8 @@ void sub_A3E168(uint16 k) {  // 0xA3E168
   uint16 v12;
   Enemy_WreckedShipOrangeZoomer *E = Get_WreckedShipOrangeZoomer(k);
 
-  if (earthquake_timer == 30 && earthquake_type == 20) {
+  uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
+  if (earthquake_timer == 30 && earthquake_type == earthquake) {
     E->wsozr_var_03 = E->wsozr_var_F;
     E->wsozr_var_F = FUNC16(FireZoomer_Func_2);
   }
@@ -2623,7 +2626,8 @@ void StoneZoomer_Main(void) {  // 0xA3E6C2
 
 void FireZoomer_Func_1(uint16 k) {  // 0xA3E6C8
   Enemy_FireZoomer *E = Get_FireZoomer(k);
-  if (earthquake_timer == 30 && earthquake_type == 20) {
+  uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
+  if (earthquake_timer == 30 && earthquake_type == earthquake) {
     E->fzr_var_03 = E->fzr_var_F;
     E->fzr_var_F = FUNC16(FireZoomer_Func_2);
   }
@@ -2680,8 +2684,8 @@ void FireZoomer_Func_2(uint16 k) {  // 0xA3E785
 
 void FireZoomer_Func_3(uint16 k) {  // 0xA3E7F2
   Enemy_FireZoomer *E = Get_FireZoomer(k);
-
-  if (earthquake_timer == 30 && earthquake_type == 20) {
+  uint16 earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
+  if (earthquake_timer == 30 && earthquake_type == earthquake) {
     E->fzr_var_03 = E->fzr_var_F;
     E->fzr_var_F = FUNC16(FireZoomer_Func_2);
   }

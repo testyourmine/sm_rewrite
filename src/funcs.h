@@ -19,6 +19,7 @@ uint8 ProcessTimer_Decrement(void);
 uint8 ProcessTimer_Empty(void);
 uint8 ProcessTimer_InitialDelay(void);
 uint8 ProcessTimer_MotherBrainStart(void);
+uint8 ProcessTimer_MovedIntoPlace(void);
 uint8 ProcessTimer_MovementDelayed(void);
 uint8 ProcessTimer_MovingIntoPlace(void);
 void APU_UploadBank(uint32 addr);
@@ -822,7 +823,7 @@ void FxRisingFunction_LavaAcid_WaitToRise(void);
 void FxRisingFunction_WaterRising(void);
 void FxRisingFunction_WaterWaitToRise(void);
 void FxTypeFunc_20_ScrollingSkyLand(void);
-void FxTypeFunc_22_ScrollingSky(void);
+void FxTypeFunc_22_Unused(void);
 void FxTypeFunc_24_Fireflea(void);
 void FxTypeFunc_26_TourianEntranceStatue(void);
 void FxTypeFunc_28_CeresRidley(void);
@@ -833,7 +834,7 @@ void FxTypeFunc_6_Water(void);
 void FxTypeFunc_8_Spores(void);
 void FxTypeFunc_A_Rain(void);
 void FxTypeFunc_C_Fog(void);
-void FxTypeFunc_CeresElevator(void);
+void FxTypeFunc_2A_CeresElevator(void);
 void HandleEarthquakeSoundEffect(void);
 void HandleLayerBlendingPowerBomb(uint16 j);
 void HandleLayerBlendingXrayCanShowBlocks(void);
@@ -1000,9 +1001,9 @@ void SpawnPalfxObject(uint16 j);
 uint16 RoomDefStateSelect_Finish(uint16 k);
 uint16 RoomDefStateSelect_IsBossDead(uint16 k);
 uint16 RoomDefStateSelect_IsEventSet(uint16 k);
-uint16 RoomDefStateSelect_MorphBallMissiles(uint16 k);
-uint16 RoomDefStateSelect_PowerBombs(uint16 k);
-uint16 RoomDefStateSelect_TourianBoss01(uint16 k);
+uint16 RoomDefStateSelect_CollectedMorphBallAndMissiles(uint16 k);
+uint16 RoomDefStateSelect_CollectedPowerBombs(uint16 k);
+uint16 RoomDefStateSelect_MainAreaBossDead(uint16 k);
 void HandleRoomDefStateSelect(uint16 k);
 void PauseHook_DraygonRoom(void);
 void RunDoorSetupCode(void);
@@ -4122,7 +4123,7 @@ uint8 MotherBrain_FadeToGray_Drained(uint16 a);
 uint8 MotherBrain_FadeToGray_FakeDeath(uint16 a);
 uint8 MotherBrain_FadeToGray_RealDeath(uint16 a);
 uint8 MotherBrain_Phase3_TurnLightsBackOn(uint16 a);
-void EnableEarthquakeAframes(uint16 a);
+void EnableEarthquakeTypeAFor20Frames(uint16 a);
 void HandleMotherBrainBodyFlickering(void);
 void MotherBrain_CalcHdma(void);
 void MotherBrain_CalcHdma_BeamAimedRight(uint16 r22, uint16 r24);
@@ -5543,7 +5544,7 @@ void VerifySRAM(void);
 #define fnnullsub_139 0x8F91F5
 #define fnnullsub_140 0x8F91F6
 #define fnnullsub_141 0x8F91F7
-#define fnDoorCode_StartWreckedShipTreadmillWest 0x8FB971
+#define fnDoorCode_StartWreckedShipTreadmill_West 0x8FB971
 #define fnDoorCode_Scroll6_Green 0x8FB981
 #define fnDoorCode_Scroll0_Blue 0x8FB98C
 #define fnDoorCode_Scroll13_Blue 0x8FB997
@@ -5623,8 +5624,8 @@ void VerifySRAM(void);
 #define fnRoomCode_SetMediumHorizRoomShake 0x8FC946
 #define fnRoomCode_Escape4_SetMediumHorizRoomShake 0x8FC953
 #define fnRoomCode_SetCeresDoorSolid 0x8FC96E
-#define fnRoomCode_CeresColorMathHdma 0x8FC976
-#define fnRoomCode_CeresColorMathHdma_BgBase 0x8FC97B
+#define fnRoomCode_SpawnHaze 0x8FC976
+#define fnRoomCode_SpawnHaze_BgBase 0x8FC97B
 #define fnDoorCode_StartWreckedSkipTreadmill_East 0x8FE1D8
 #define fnDoorCode_SetScroll_44 0x8FE1E8
 #define fnDoorCode_SetScroll_45 0x8FE1F3
@@ -5650,22 +5651,22 @@ void VerifySRAM(void);
 #define fnDoorCode_SetScroll_63 0x8FE3D9
 #define fnDoorCode_SetScroll_64 0x8FE4C0
 #define fnDoorCode_SetScroll_65 0x8FE4CF
-#define fnDoorCode_CeresElevatorShaft 0x8FE4E0
-#define fnDoorCode_CeresElevatorShaft_2 0x8FE513
+#define fnDoorCode_ToCeresElevatorShaft 0x8FE4E0
+#define fnDoorCode_FromCeresElevatorShaft 0x8FE513
 #define fnRoomCode_CeresElevatorShaft_ 0x8FE51F
 #define fnnullsub_148 0x8FE524
 #define fnRoomCode_SpawnCeresFallingDebris 0x8FE525
 #define fnRoomCode_HandleCeresRidleyGetaway 0x8FE571
 #define fnRoomCode_ShakeScreenHorizDiag 0x8FE57C
-#define fnRoomCode_GenRandomExplodes_4th_ 0x8FE5A0
+#define fnRoomCode_GenRandomExplodes_Every4Frames 0x8FE5A0
 #define fnRoomCode_ShakeScreenHorizDiagStrong 0x8FE5A4
 #define fnRoomDefStateSelect_Finish 0x8FE5E6
-#define fnRoomDefStateSelect_TourianBoss01 0x8FE5FF
+#define fnRoomDefStateSelect_MainAreaBossDead 0x8FE5FF
 #define fnRoomDefStateSelect_IsEventSet 0x8FE612
 #define fnRoomDefStateSelect_IsBossDead 0x8FE629
-#define fnRoomDefStateSelect_MorphBallMissiles 0x8FE652
-#define fnRoomDefStateSelect_PowerBombs 0x8FE669
-#define fnRoomCode_CrocomireShaking 0x8FE8CD
+#define fnRoomDefStateSelect_CollectedMorphBallAndMissiles 0x8FE652
+#define fnRoomDefStateSelect_CollectedPowerBombs 0x8FE669
+#define fnRoomCode_CrocomireRoomShaking 0x8FE8CD
 #define fnRoomCode_RidleyRoomShaking 0x8FE950
 #define fnnullsub_12 0x908077
 #define fnSamus_Draw 0x9085E2

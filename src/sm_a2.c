@@ -460,7 +460,7 @@ void MaridiaBeybladeTurtle_Func8(uint16 k) {  // 0xA28FEB
   if (Enemy_MoveRight_IgnoreSlopes(k, __PAIR32__(E->mte_var_E, E->mte_var_03))) {
     SetHiLo(&E->mte_var_E, &E->mte_var_03, -IPAIR32(E->mte_var_E, E->mte_var_03));
     SetHiLo(&E->mte_var_02, &E->mte_var_01, -IPAIR32(E->mte_var_02, E->mte_var_01));
-    earthquake_type = 0;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
     earthquake_timer = 16;
     QueueSfx2_Max6(kSfx2_SpikeyPlatformStops_MaridiaBeybladeTurtleHitsWall);
   } else {

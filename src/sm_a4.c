@@ -372,9 +372,9 @@ void Crocomire_Init(void) {  // 0xA48A5A
     croco_target_0688 = 0;
     Enemy_Crocomire *E = Get_Crocomire(0);
     E->base.properties = E->base.properties & 0x7BFF | 0x400;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x20, 0x03, 0xb753 });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1e, 0x03, 0xb753 });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x61, 0x0b, 0xb747 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x20, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x1e, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x61, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B747_Crocomire_ClearBridge });
     E->crocom_var_A = 84;
     E->base.current_instruction = addr_kCrocomire_Ilist_E1CC;
     E->base.instruction_timer = 1;
@@ -576,7 +576,7 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
   } else if (sign16(E0->base.x_pos - 1568)) {
     if (!g_word_7E9002) {
       g_word_7E9002 = 1;
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x61, 0x0b, 0xb74b });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x61, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74B_Crocomire_CrumbleBlockInBridge });
       eproj_spawn_pt = (Point16U){ 1568, 176 };
       SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x15);
     }
@@ -588,8 +588,8 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
     } else if (sign16(x_pos - 1584)) {
       if (!g_word_7E9006) {
         g_word_7E9006 = 1;
-        SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x62, 0x0b, 0xb74b });
-        SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x63, 0x0b, 0xb74b });
+        SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x62, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74B_Crocomire_CrumbleBlockInBridge });
+        SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x63, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74B_Crocomire_CrumbleBlockInBridge });
         eproj_spawn_pt = (Point16U){ 1584, 176 };
         SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x15);
       }
@@ -614,7 +614,7 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
       Get_Crocomire(0x140)->crocom_var_01 = 0;
       QueueSfx2_Max6(kSfx2_DachoraShinespark);
       *(uint16 *)((uint8 *)&g_word_7E9015 + 1) = 0;
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x4e, 0x03, 0xb757 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x4e, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall });
       EK->base.current_instruction = addr_kCrocomire_Ilist_BFB0;
       EK->base.instruction_timer = 1;
       EK->base.properties |= kEnemyProps_Tangible;
@@ -631,16 +631,16 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
 }
 
 void Crocomire_8EE5(void) {  // 0xA48EE5
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x61, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x62, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x63, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x64, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x65, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x66, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x67, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x68, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x69, 0x0b, 0xb74f });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x6a, 0x0b, 0xb74f });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x61, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x62, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x63, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x64, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x65, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x66, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x67, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x68, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x69, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x6a, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge });
   eproj_spawn_pt = (Point16U){ 1536, 176 };
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x15);
   eproj_spawn_pt = (Point16U){ 1552, 192 };
@@ -658,7 +658,7 @@ void Crocomire_8EE5(void) {  // 0xA48EE5
 }
 
 const uint16 *Crocomire_Instr_2(uint16 k, const uint16 *jp) {  // 0xA48FC7
-  earthquake_type = 4;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
   earthquake_timer = 5;
   QueueSfx2_Max6(kSfx2_Quake);
   return jp;
@@ -733,7 +733,7 @@ void Crocomire_Func_49(void) {  // 0xA49099
     *(uint16 *)&scrolls[4] = (kScroll_Blue << 8) | kScroll_Blue;
     debug_disable_minimap = 0;
     Get_Crocomire(0x40)->base.properties |= 0x200;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x4e, 0x03, 0xb753 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x4e, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
     camera_distance_index = 0;
     croco_target_0688 = 0;
   }
@@ -1232,7 +1232,7 @@ void Crocomire_Func_68(void) {  // 0xA497D3
   if (sign16(samus_x_pos - 640)) {
     QueueMusic_Delayed8(kMusic_Song0);
     *(uint16 *)&scrolls[3] = kScroll_Blue << 8;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb757 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x30, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall });
     camera_distance_index = 6;
     Enemy_Crocomire *E0 = Get_Crocomire(0);
     E0->base.properties = E0->base.properties & 0x7BFF | kEnemyProps_Tangible;
@@ -1328,9 +1328,9 @@ void Crocomire_Func_71(void) {  // 0xA4990A
     Get_Crocomire(0x80)->crocom_var_D = 80;
     E->crocom_var_E = 0;
     E->crocom_var_F = 0;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x20, 0x03, 0xb753 });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1e, 0x03, 0xb757 });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x70, 0x0b, 0xb747 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x20, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x1e, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x70, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_B747_Crocomire_ClearBridge });
     QueueSfx2_Max6(kSfx2_MotherBrainRisingIntoPhase2_CrocomiresWallExplodes_SporeSpawnGetsHard);
     E->base.current_instruction = addr_kCrocomire_Ilist_E158;
     E->base.instruction_timer = 1;
@@ -1456,7 +1456,7 @@ void Crocomire_Func_88(void) {  // 0xA49B06
     E->base.y_pos += 21;
     E->base.y_height = 28;
     E->base.x_width = 40;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x30, 0x03, 0xb753 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x30, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
     Enemy_ItemDrop_Crocomire(0);
     Crocomire_9BB3();
   }
@@ -1465,7 +1465,7 @@ void Crocomire_Func_88(void) {  // 0xA49B06
 void Crocomire_9B65(void) {  // 0xA49B65
   *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
   *(uint16 *)&scrolls[2] = (kScroll_Blue << 8) | kScroll_Blue;
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x1e, 0x03, 0xb753 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x1e, .y_pos = 0x03, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
   Crocomire_9BB3();
 }
 

@@ -39,14 +39,15 @@ static const uint8 kIsGrappleBannedForMovementType[28] = {
 void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
   uint16 R22 = GetProjectileTrailFrame(k);
   uint16 r18, r20;
-  if ((ceres_status & 0x8000) == 0) {
-    int v2 = k >> 1;
-    r18 = projectile_x_pos[v2];
-    r20 = projectile_y_pos[v2];
-  } else {
+
+  if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate) {
     Point16U pt = CalcExplosion_Mode7(k);
     r18 = layer1_x_pos + pt.x;
     r20 = layer1_y_pos + pt.y;
+  } else {
+    int v2 = k >> 1;
+    r18 = projectile_x_pos[v2];
+    r20 = projectile_y_pos[v2];
   }
   int v3 = k >> 1;
   uint16 v4 = projectile_type[v3], v5;

@@ -87,7 +87,8 @@ uint16 CallAnimtilesInstr(uint32 ea, uint16 j, uint16 k) {
 void ProcessAnimtilesObject(void) {  // 0x878085
   uint16 v0 = animtiles_object_index;
   int v1 = animtiles_object_index >> 1;
-  if (animtiles_instr_timers[v1]-- == 1) {
+  --animtiles_instr_timers[v1];
+  if (animtiles_instr_timers[v1] == 0) {
     uint16 v3 = animtiles_instr_list_ptrs[v1];
     AnimtilesEntry AtE;
     while (1) {
@@ -201,11 +202,11 @@ uint16 AnimtilesInstr_SetEventHappened(uint16 k, uint16 j) {  // 0x878150
   return j + 2 + 2;
 }
 
-void UNUSED_sub_87815A(void) {  // 0x87815A
+void AnimtilesInstr_LockSamus_Unused(void) {  // 0x87815A
   RunSamusCode(kSamusCode_0_LockSamus);
 }
 
-void UNUSED_sub_878162(void) {  // 0x878162
+void AnimtilesInstr_UnlockSamus_Unused(void) {  // 0x878162
   RunSamusCode(kSamusCode_1_UnlockSamus);
 }
 
@@ -276,7 +277,7 @@ uint16 AnimtilesInstr_Write8PaletteColors(uint16 k, uint16 j) {  // 0x87837F
   static const uint16 kAnimtilesInstr_Write8PaletteColors[8] = { 0x3800, 0x7f58, 0x6ed5, 0x5a71, 0x49ee, 0x356a, 0x24e7, 0x1083 };
 
   uint16 v2 = get_AnimtilesEntry(j).palette_offset;
-  for (int i = 0; i != 16; i += 2) {
+  for (int i = 0; i < 16; i += 2) {
     target_palettes.pal[v2 >> 1] = kAnimtilesInstr_Write8PaletteColors[i >> 1];
     v2 += 2;
   }

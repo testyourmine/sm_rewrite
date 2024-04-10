@@ -1,4 +1,5 @@
 // Top level main game routines
+
 #include "sm_rtl.h"
 #include "ida_types.h"
 #include "variables.h"
@@ -267,7 +268,7 @@ void LoadStdBG3andSpriteTilesClearTilemaps(void) {  // 0x8282E2
 }
 
 CoroutineRet GameState_32_MadeItToCeresElevator(void) {  // 0x828367
-  if (timer_status)
+  if (timer_status != kTimerStatus_0_Inactive)
     DrawTimer();
   COROUTINE_AWAIT_ONLY(GameState_8_MainGameplay());
   bool v0 = (--reached_ceres_elevator_fade_timer & 0x8000) != 0;
@@ -280,7 +281,7 @@ CoroutineRet GameState_32_MadeItToCeresElevator(void) {  // 0x828367
 }
 
 CoroutineRet GameState_33_BlackoutFromCeres(void) {  // 0x828388
-  if (timer_status)
+  if (timer_status != kTimerStatus_0_Inactive)
     DrawTimer();
   COROUTINE_AWAIT_ONLY(GameState_8_MainGameplay());
   HandleFadeOut();
@@ -304,7 +305,7 @@ CoroutineRet GameState_33_BlackoutFromCeres(void) {  // 0x828388
     SaveToSram(selected_save_slot);
     cinematic_function = FUNC16(CinematicFunctionBlackoutFromCeres);
     ceres_status = 0;
-    timer_status = 0;
+    timer_status = kTimerStatus_0_Inactive;
     QueueMusic_Delayed8(kMusic_Stop);
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
@@ -342,7 +343,7 @@ CoroutineRet GameState_36_WhitingOutFromTimeUp(void) {  // 0x828431
     screen_fade_delay = 0;
     screen_fade_counter = 0;
     ceres_status = 0;
-    timer_status = 0;
+    timer_status = kTimerStatus_0_Inactive;
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
     QueueSfx3_Max15(kSfx3_Silence);
@@ -379,7 +380,7 @@ CoroutineRet GameState_38_SamusEscapesFromZebes(void) {  // 0x8284BD
     screen_fade_counter = 0;
     game_state = kGameState_39_EndingAndCredits;
     cinematic_function = FUNC16(CinematicFunctionEscapeFromCebes);
-    timer_status = 0;
+    timer_status = kTimerStatus_0_Inactive;
     QueueMusic_Delayed8(kMusic_Stop);
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
@@ -502,7 +503,7 @@ void LoadDemoRoomData(void) {  // 0x828679
   samus_x_pos = drd.samus_x_offs + layer1_x_pos + 128;
   samus_prev_x_pos = samus_x_pos;
   demo_timer = drd.demo_length;
-  LOBYTE(area_index) = get_RoomDefHeader(room_ptr)->area_index_;
+  LOBYTE(area_index) = get_RoomDefHeader(room_ptr).area_index_;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
   ++demo_scene;
@@ -3550,23 +3551,23 @@ CoroutineRet GameState_25_SamusNoHealth_BlackOut(void) {  // 0x82DDC7
 }
 
 void LoaadDesinationRoomCreBitset(void) {  // 0x82DDF1
-  uint16 room_definition_ptr = get_DoorDef(door_def_ptr)->room_definition_ptr;
+  uint16 room_definition_ptr = get_DoorDef(door_def_ptr).room_definition_ptr;
   previous_cre_bitset = cre_bitset;
-  cre_bitset = get_RoomDefHeader(room_definition_ptr)->cre_bitset_;
+  cre_bitset = get_RoomDefHeader(room_definition_ptr).cre_bitset_;
 }
 
 void LoadDoorHeader(void) {  // 0x82DE12
-  DoorDef *DoorDef;
+  DoorDef DoorDef;
   int16 samus_distance_from_door;
 
   DoorDef = get_DoorDef(door_def_ptr);
-  room_ptr = DoorDef->room_definition_ptr;
-  elevator_door_properties_orientation = *(uint16 *)&DoorDef->door_bitflags;
-  elevator_properties = elevator_door_properties_orientation & kElevatorProperty_DoorIsElevator;
-  door_direction = DoorDef->door_direction_;
-  door_destination_x_pos = DoorDef->x_pos_in_room << 8;
-  door_destination_y_pos = DoorDef->y_pos_in_room << 8;
-  samus_distance_from_door = DoorDef->samus_distance_from_door;
+  room_ptr = DoorDef.room_definition_ptr;
+  elevator_door_properties = WORD(DoorDef.door_bitflags);
+  elevator_properties = elevator_door_properties & kElevatorProperty_DoorIsElevator;
+  door_direction = DoorDef.door_direction_;
+  door_destination_x_pos = DoorDef.x_pos_in_room << 8;
+  door_destination_y_pos = DoorDef.y_pos_in_room << 8;
+  samus_distance_from_door = DoorDef.samus_distance_from_door;
   if (samus_distance_from_door < 0) {
     if ((door_direction & kDoorDirection_VerticalMask) != 0)
       samus_distance_from_door = 384;
@@ -3579,40 +3580,40 @@ void LoadDoorHeader(void) {  // 0x82DE12
 }
 
 void LoadRoomHeader(void) {  // 0x82DE6F
-  RoomDefHeader *RoomDefHeader;
+  RoomDefHeader RoomDefHeader;
 
   RoomDefHeader = get_RoomDefHeader(room_ptr);
-  room_index = RoomDefHeader->semiunique_room_number;
-  area_index = RoomDefHeader->area_index_;
-  room_x_coordinate_on_map = RoomDefHeader->x_coordinate_on_map;
-  room_y_coordinate_on_map = RoomDefHeader->y_coordinate_on_map;
-  room_width_in_scrolls = RoomDefHeader->width;
+  room_index = RoomDefHeader.semiunique_room_number;
+  area_index = RoomDefHeader.area_index_;
+  room_x_coordinate_on_map = RoomDefHeader.x_coordinate_on_map;
+  room_y_coordinate_on_map = RoomDefHeader.y_coordinate_on_map;
+  room_width_in_scrolls = RoomDefHeader.width;
   room_width_in_blocks = 16 * room_width_in_scrolls;
-  room_height_in_scrolls = RoomDefHeader->height;
+  room_height_in_scrolls = RoomDefHeader.height;
   room_height_in_blocks = 16 * room_height_in_scrolls;
-  up_scroller = RoomDefHeader->up_scroller_;
-  down_scroller = RoomDefHeader->down_scroller_;
-  door_list_pointer = RoomDefHeader->ptr_to_doorout;
+  up_scroller = RoomDefHeader.up_scroller_;
+  down_scroller = RoomDefHeader.down_scroller_;
+  door_list_pointer = RoomDefHeader.ptr_to_doorout;
   HandleRoomDefStateSelect(room_ptr);
   uint16 prod = Mult8x8(room_width_in_blocks, room_height_in_blocks);
   room_size_in_blocks = 2 * prod;
 }
 
 void LoadStateHeader(void) {  // 0x82DEF2
-  RoomDefRoomstate *RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
+  RoomDefRoomstate RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
   //TileSet *TS = get_TileSet(kStateHeaderTileSets[RD->graphics_set]);
-  TileSet TS = kTileSetTable[RD->tileset_];
+  TileSet TS = kTileSetTable[RD.tileset_];
   tileset_tile_table_pointer = TS.tile_table_ptr;
   tileset_tiles_pointer = TS.tiles_ptr;
   tileset_compr_palette_ptr = TS.palette_ptr;
-  room_level_data_ptr = RD->level_data_ptr;
-  room_music_data_index = RD->music_data_index_;
-  room_music_track_index = RD->music_track_index_;
-  room_layer3_fx_ptr = RD->room_layer3_fx_ptr_;
-  room_enemy_population_ptr = RD->enemy_population_ptr_;
-  room_enemy_tilesets_ptr = RD->enemy_tilesets_ptr;
-  WORD(layer2_scroll_x) = RD->layer2_scroll_;
-  room_main_code_ptr = RD->main_code_ptr;
+  room_level_data_ptr = RD.level_data_ptr;
+  room_music_data_index = RD.music_data_index_;
+  room_music_track_index = RD.music_track_index_;
+  room_layer3_fx_ptr = RD.room_layer3_fx_ptr_;
+  room_enemy_population_ptr = RD.enemy_population_ptr_;
+  room_enemy_tilesets_ptr = RD.enemy_tilesets_ptr;
+  WORD(layer2_scroll_x) = RD.layer2_scroll_;
+  room_main_code_ptr = RD.main_code_ptr;
 }
 
 void WaitUntilEndOfVblankAndEnableIrq(void) {  // 0x82DF69
@@ -3624,14 +3625,14 @@ void PointlessFunctionStupidToo(void) {  // 0x82DF80
 }
 
 void SaveMapExploredifElevator(void) {  // 0x82DF99
-  if ((elevator_door_properties_orientation & 0xF) != 0)
+  if ((elevator_door_properties & kElevatorDoor_DebugElevatorBitmask) != 0)
     SetDebugElevatorsAsUsed();
-  if ((get_DoorDef(door_def_ptr)->door_bitflags & 0x40) != 0)
+  if ((get_DoorDef(door_def_ptr).door_bitflags & kElevatorDoor_NewMapArea) != 0)
     SaveExploredMapTilesToSaved();
 }
 
 void LoadMapExploredIfElevator(void) {  // 0x82DFB6
-  if ((get_DoorDef(door_def_ptr)->door_bitflags & 0x40) != 0)
+  if ((get_DoorDef(door_def_ptr).door_bitflags & kElevatorDoor_NewMapArea) != 0)
     LoadMirrorOfExploredMapTiles();
 }
 
@@ -3800,7 +3801,7 @@ CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
     target_palettes.bg3_pal_5[2] = palette_buffer.bg3_pal_5[2];
     target_palettes.bg3_pal_5[3] = palette_buffer.bg3_pal_5[3];
     target_palettes.bg3_pal_7[0] = palette_buffer.bg3_pal_7[0];
-    if (timer_status) {
+    if (timer_status != kTimerStatus_0_Inactive) {
       target_palettes.sprite_pal_5[1] = palette_buffer.sprite_pal_5[1];
       target_palettes.sprite_pal_5[2] = palette_buffer.sprite_pal_5[2];
       target_palettes.sprite_pal_5[4] = palette_buffer.sprite_pal_5[4];
@@ -3818,7 +3819,7 @@ CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
 
 CoroutineRet GameState_11_LoadingNextRoom_Async(void) {  // 0x82E288
   COROUTINE_AWAIT_ONLY(CallDoorTransitionFunction_Async(door_transition_function | 0x820000));
-  if (timer_status)
+  if (timer_status != kTimerStatus_0_Inactive)
     DrawTimer();
   return kCoroutineNone;
 }
@@ -3978,7 +3979,7 @@ CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
   ClearFxTilemap();
   if (fx_tilemap_ptr)
     CopyToVramNow(addr_kVram_Fx, 0x8a0000 | fx_tilemap_ptr, 2112);
-  bg_data_ptr = get_RoomDefRoomstate(roomdefroomstate_ptr)->bg_data_ptr;
+  bg_data_ptr = get_RoomDefRoomstate(roomdefroomstate_ptr).bg_data_ptr;
   if (bg_data_ptr & 0x8000) {
     do {
       int v1 = *(uint16 *)RomPtr_8F(bg_data_ptr) >> 1;
@@ -4173,10 +4174,10 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
     DecompressToMem(0xb9a09d, g_ram + 0xa000);
     DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa800);
   }
-  RoomDefRoomstate *RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
-  rdf_scroll_ptr = RD->rdf_scroll_ptr;
+  RoomDefRoomstate RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
+  rdf_scroll_ptr = RD.rdf_scroll_ptr;
   if (rdf_scroll_ptr >= 0) {
-    uint16 scrollval = RD->rdf_scroll_ptr;
+    uint16 scrollval = RD.rdf_scroll_ptr;
     uint8 r20 = room_height_in_scrolls - 1;
     uint8 v8 = 2;
     uint8 v9 = 0;
@@ -4197,8 +4198,8 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
       rdf_scroll_ptr += 2;
     }
   }
-  if (RD->room_plm_header_ptr) {
-    for (n = RD->room_plm_header_ptr; get_RoomPlmEntry(n)->plm_header_ptr_; n += 6)
+  if (RD.room_plm_header_ptr) {
+    for (n = RD.room_plm_header_ptr; get_RoomPlmEntry(n)->plm_header_ptr_ != 0; n += 6)
       SpawnRoomPLM(n);
   }
   RunDoorSetupCode();
@@ -4212,8 +4213,9 @@ void SpawnDoorClosingPLM(void) {  // 0x82E8EB
     const uint16 *v0 = (const uint16 *)RomPtr_8F(2 * door_direction + addr_kDoorClosingPlmIds);
     if (*v0) {
       RoomPlmEntry *rp = (RoomPlmEntry *)(g_ram + 0x12);
+      DoorDef DD = get_DoorDef(door_def_ptr);
       rp->plm_header_ptr_ = *v0;
-      WORD(rp->x_block) = *(uint16 *)&get_DoorDef(door_def_ptr)->x_pos_plm;
+      WORD(rp->x_block) = WORD(DD.x_pos_plm);
       rp->plm_room_argument = 0;
       SpawnRoomPLM(0x12); // This reads from r18
     }
@@ -4221,8 +4223,8 @@ void SpawnDoorClosingPLM(void) {  // 0x82E8EB
 }
 
 uint8 CheckIfColoredDoorCapSpawned(void) {  // 0x82E91C
-  DoorDef *DD = get_DoorDef(door_def_ptr);
-  uint16 v2 = 2 * (Mult8x8(DD->y_pos_plm, room_width_in_blocks) + DD->x_pos_plm);
+  DoorDef DD = get_DoorDef(door_def_ptr);
+  uint16 v2 = 2 * (Mult8x8(DD.y_pos_plm, room_width_in_blocks) + DD.x_pos_plm);
   uint16 v3 = 78;
   while (v2 != plm_block_indices[v3 >> 1]) {
     v3 -= 2;
@@ -4270,7 +4272,7 @@ void LoadLibraryBackground(void) {
     WriteReg(VMAIN, 0x80);
     WriteReg(MDMAEN, 2);
   }
-  bg_data_ptr = get_RoomDefRoomstate(roomdefroomstate_ptr)->bg_data_ptr;
+  bg_data_ptr = get_RoomDefRoomstate(roomdefroomstate_ptr).bg_data_ptr;
   if (bg_data_ptr & 0x8000) {
     do {
       uint16 v1 = *(uint16 *)RomPtr_8F(bg_data_ptr);
@@ -4356,10 +4358,10 @@ void LoadLevelScrollAndCre(void) {  // 0x82EA73
     }
     DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa800);
   }
-  RoomDefRoomstate *RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
-  rdf_scroll_ptr = RD->rdf_scroll_ptr;
+  RoomDefRoomstate RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
+  rdf_scroll_ptr = RD.rdf_scroll_ptr;
   if (rdf_scroll_ptr >= 0) {
-    uint16 r18 = RD->rdf_scroll_ptr;
+    uint16 r18 = RD.rdf_scroll_ptr;
     uint8 r20 = room_height_in_scrolls - 1;
     uint8 v8 = 2;
     uint8 v9 = 0;
@@ -4384,10 +4386,10 @@ void LoadLevelScrollAndCre(void) {  // 0x82EA73
 }
 
 void CreatePlmsExecuteDoorAsmRoomSetup(void) {  // 0x82EB6C
-  RoomDefRoomstate *RoomDefRoomstate;
+  RoomDefRoomstate RoomDefRoomstate;
   RoomDefRoomstate = get_RoomDefRoomstate(roomdefroomstate_ptr);
-  if (RoomDefRoomstate->room_plm_header_ptr) {
-    for (int i = RoomDefRoomstate->room_plm_header_ptr; get_RoomPlmEntry(i)->plm_header_ptr_; i += 6)
+  if (RoomDefRoomstate.room_plm_header_ptr) {
+    for (int i = RoomDefRoomstate.room_plm_header_ptr; get_RoomPlmEntry(i)->plm_header_ptr_ != 0; i += 6)
       SpawnRoomPLM(i);
   }
   RunDoorSetupCode();

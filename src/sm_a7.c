@@ -235,7 +235,7 @@ void Kraid_Init(void) {  // 0xA7A959
     DisableMinimapAndMarkBossRoomAsExplored();
     for (j = 62; (j & 0x8000) == 0; j -= 2)
       tilemap_stuff[(j >> 1) + 2016] = 824;
-    earthquake_type = 5;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
     uint16 v14 = 0;
     do {
       target_palettes.sprite_pal_3[(v14 >> 1)] = kKraid_BgTargetPalette3[v14 >> 1];
@@ -360,31 +360,31 @@ void Kraid_GetsBig_BreakCeilingPlatforms(void) {  // 0xA7AC4D
     SpawnEprojWithGfx(kEproj_RocksFallingKraidCeilingXPositions[kraid_var_F >> 1], cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
     switch (E->kraid_var_F >> 1) {
     case 0:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x06, 0x12, 0xb7b3 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7B3_Kraid_CrumbleCeilingBlockIntoBg3 });
       break;
     case 1:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0d, 0x12, 0xb7ab });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0d, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AB_Kraid_CrumbleCeilingBlockIntoBg2 });
       break;
     case 2:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x12, 0xb7a3 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7A3_Kraid_CrumbleCeilingBlockIntoBg1 });
       break;
     case 3:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0a, 0x12, 0xb7b3 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0a, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7B3_Kraid_CrumbleCeilingBlockIntoBg3 });
       break;
     case 4:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x05, 0x12, 0xb7ab });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x05, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AB_Kraid_CrumbleCeilingBlockIntoBg2 });
       break;
     case 5:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0c, 0x12, 0xb7b3 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0c, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7B3_Kraid_CrumbleCeilingBlockIntoBg3 });
       break;
     case 6:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x03, 0x12, 0xb7ab });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x03, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AB_Kraid_CrumbleCeilingBlockIntoBg2 });
       break;
     case 7:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0b, 0x12, 0xb7ab });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0b, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AB_Kraid_CrumbleCeilingBlockIntoBg2 });
       break;
     case 8:
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x04, 0x12, 0xb7b3 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x04, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7B3_Kraid_CrumbleCeilingBlockIntoBg3 });
       break;
     }
     E->kraid_var_F += 2;
@@ -848,7 +848,7 @@ const uint16 *Kraid_Instr_DecYpos(uint16 k, const uint16 *jp) {  // 0xA7B636
 const uint16 *Kraid_Instr_IncrYpos_Shake(uint16 k, const uint16 *jp) {  // 0xA7B63C
   Enemy_Kraid *E = Get_Kraid(0);
   ++E->base.y_pos;
-  earthquake_type = 1;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer = 10;
   return jp;
 }
@@ -882,7 +882,7 @@ const uint16 *Kraid_Instr_MoveHimRight(uint16 k, const uint16 *jp) {  // 0xA7B68
   Enemy_Kraid *E = Get_Kraid(0);
   if (sign16(E->base.x_pos - 320) || (v3 = E->kraid_target_x - 1, (E->kraid_target_x = v3) == 0)) {
     if (Enemy_MoveRight_IgnoreSlopes(0, INT16_SHL16(g_word_A7A922))) {
-      earthquake_type = 0;
+      earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
       earthquake_timer = 7;
       uint16 x_pos = Get_Kraid(0)->base.x_pos;
       Get_Kraid(0x140)->base.x_pos = x_pos;
@@ -1464,7 +1464,7 @@ void Kraid_HandleFirstPhase(void) {  // 0xA7C005
     }
     E0->kraid_var_B = v3 - 26918;
     E0->kraid_var_C = *(uint16 *)((uint8 *)&kKraid_InvulnerableRoarInstrLists.timer + v3);
-    earthquake_type = 4;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
     earthquake_timer = 340;
     Enemy_Kraid *E5 = Get_Kraid(0x140);
     E5->base.current_instruction = addr_kKraid_Ilist_86E7;
@@ -1492,11 +1492,11 @@ void Kraid_GetsBig_ReleaseCamera(void) {  // 0xA7C0A1
 }
 
 void Kraid_SpawnPlmToClearCeiling(void) {  // 0xA7C168
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x02, 0x12, 0xb7b7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x02, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7B7_Kraid_ClearCeilingBlocks });
 }
 
 void Kraid_ClearSomeSpikes(void) {  // 0xA7C171
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x05, 0x1b, 0xb7bb });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x05, .y_pos = 0x1b, .plm_id_ = addr_kPlmHeader_B7BB_Kraid_ClearSpikeBlocks });
 }
 
 CoroutineRet UnpauseHook_Kraid_IsDead(void) {  // 0xA7C1FB
@@ -1616,7 +1616,7 @@ void Kraid_Death_Init(void) {  // 0xA7C360
     cur_enemy_index = 256;
     EnemyDeathAnimation(v4, 0x100);
     cur_enemy_index = v7;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x05, 0x1b, 0xb7bf });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x05, .y_pos = 0x1b, .plm_id_ = addr_kPlmHeader_B7BF_Kraid_CrumbleSpikeBlocks });
   }
 }
 
@@ -1669,7 +1669,7 @@ void Kraid_Death_UpdateBG2TilemapBottomHalf(void) {  // 0xA7C4C8
   E->kraid_var_A = FUNC16(Kraid_Death_SinkThroughFloor);
   kraid_unk9000 = 43;
   E->base.properties |= 0x8000;
-  earthquake_type = 1;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer = 256;
   Enemy_Kraid *E1 = Get_Kraid(0x40);
   E1->base.current_instruction = addr_kKraid_Ilist_8AA4;
@@ -1739,32 +1739,32 @@ void Kraid_Death_SinkThroughFloor(void) {  // 0xA7C537
 
 void Kraid_CrumbleLeftPlatform_Left(void) {  // 0xA7C691
   SpawnEprojWithGfx(0x70, cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x07, 0x12, 0xb7a7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x07, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7A7_Kraid_SetCeilingBlockToBg2 });
 }
 
 void Kraid_CrumbleRightPlatform_Middle(void) {  // 0xA7C6A7
   SpawnEprojWithGfx(0xF0, cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0f, 0x12, 0xb7a7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7A7_Kraid_SetCeilingBlockToBg2 });
 }
 
 void Kraid_CrumbleRightPlatform_Left(void) {  // 0xA7C6BD
   SpawnEprojWithGfx(0xE0, cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0e, 0x12, 0xb7af });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0e, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AF_Kraid_SetCeilingBlockIntoBg3 });
 }
 
 void Kraid_CrumbleLeftPlatform_Right(void) {  // 0xA7C6D3
   SpawnEprojWithGfx(0x90, cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x09, 0x12, 0xb7a7 });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x09, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7A7_Kraid_SetCeilingBlockToBg2 });
 }
 
 void Kraid_CrumbleLeftPlatform_Middle(void) {  // 0xA7C6E9
   SpawnEprojWithGfx(0x80, cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x08, 0x12, 0xb7af });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x08, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AF_Kraid_SetCeilingBlockIntoBg3 });
 }
 
 void Kraid_CrumbleRightPlatform_Right(void) {  // 0xA7C6FF
   SpawnEprojWithGfx(0x100, cur_enemy_index, addr_kEproj_RocksFallingKraidCeiling);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x10, 0x12, 0xb7af });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x10, .y_pos = 0x12, .plm_id_ = addr_kPlmHeader_B7AF_Kraid_SetCeilingBlockIntoBg3 });
 }
 
 void CallKraidSinkTableFunc(uint32 ea) {
@@ -2497,7 +2497,7 @@ void Phantoon_Spawn8FireballsInCircleAtStart(uint16 k) {  // 0xA7D4A9
       Get_Phantoon(k + 128)->phant_var_B = 0;
       EK->phant_var_F = FUNC16(Phantoon_WaitBetweenSpawningAndSpinningFireballs);
       EK->phant_var_E = 30;
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x00, 0x06, 0xb781 });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x00, .y_pos = 0x06, .plm_id_ = addr_kPlmHeader_B781_Phantoon_DrawDoorDuringFight });
     }
   }
 }
@@ -2991,7 +2991,7 @@ void Phantoon_Dead(uint16 k) {  // 0xA7DB3D
       Get_Phantoon(0x80)->base.properties = v4;
       Get_Phantoon(0xC0)->base.properties = v4;
       *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaBoss;
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x00, 0x06, 0xb78b });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x00, .y_pos = 0x06, .plm_id_ = addr_kPlmHeader_B78B_Phantoon_RestoreDoorAfterFight });
       QueueMusic_Delayed8(kMusic_Elevator);
     }
   }

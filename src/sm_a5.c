@@ -1025,7 +1025,7 @@ const uint16 *Draygon_Instr_15(uint16 k, const uint16 *jp) {  // 0xA59B9A
   const uint8 *v3 = RomPtr_A0(E->base.enemy_ptr);
   Samus_DealDamage(SuitDamageDivision(GET_WORD(v3 + 6)));
   earthquake_timer = 32;
-  earthquake_type = 7;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1);
   CreateSpriteAtPos(samus_x_pos, samus_y_pos + 16, 21, 0);
   return jp;
 }
@@ -1378,7 +1378,7 @@ void SporeSpawn_Init(void) {  // 0xA5EA2A
     E0->function = FUNC16(SporeSpawn_nullsub_223);
     E0->base.properties |= 0x8000;
     SporeSpawn_UpdateStalkSegmentPositions();
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 7, .y_pos = 30, .plm_id_ = 0xb793 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 7, .y_pos = 30, .plm_id_ = addr_kPlmHeader_B793_SporeSpawn_ClearCeiling });
     scrolling_finished_hook = 0;
   } else {
     E0->base.current_instruction = addr_kSporeSpawn_Ilist_Init_Alive;
@@ -1575,7 +1575,7 @@ void SporeSpawn_Reaction(void) {  // 0xA5EDF3
     E0->base.instruction_timer = 1;
     WORD(boss_bits_for_area[area_index]) |= kBossBit_AreaMiniBoss;
     scrolling_finished_hook = 0;
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 7, .y_pos = 30, .plm_id_ = 0xb78f });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 7, .y_pos = 30, .plm_id_ = addr_kPlmHeader_B78F_SporeSpawn_CrumbleCeiling });
   }
 }
 

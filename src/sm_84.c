@@ -92,9 +92,9 @@ void LoadXrayBlocks(void) {  // 0x84831A
       }
     }
   }
-  RoomDefRoomstate *RS = get_RoomDefRoomstate(roomdefroomstate_ptr);
-  if (RS->xray_special_casing_ptr) {
-    const XraySpecialCasing *p = (const XraySpecialCasing *)RomPtr_8F(RS->xray_special_casing_ptr);
+  RoomDefRoomstate RS = get_RoomDefRoomstate(roomdefroomstate_ptr);
+  if (RS.xray_special_casing_ptr) {
+    const XraySpecialCasing *p = (const XraySpecialCasing *)RomPtr_8F(RS.xray_special_casing_ptr);
     for (; p->x_block || p->y_block; p++)
       LoadBlockToXrayBg2(p->level_data_block, p->x_block, p->y_block);
   }
@@ -1739,8 +1739,7 @@ const uint8 *PlmInstr_MovePlmRight4Blocks(const uint8 *plmp, uint16 k) {  // 0x8
 void PlmPreInstr_WakePlmIfTriggered(uint16 k) {  // 0x84BB52
   int v1 = k >> 1;
   if (plm_timers[v1]) {
-    ++plm_instr_list_ptrs[v1];
-    ++plm_instr_list_ptrs[v1];
+    plm_instr_list_ptrs[v1] += 2;
     plm_instruction_timer[v1] = 1;
     plm_pre_instrs[v1] = addr_locret_84BB6A;
   }
@@ -2235,7 +2234,7 @@ uint8 PlmSetup_RespawningPowerBombBlock(uint16 j) {  // 0x84CF2E
 
   v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
   if (v1 == kProjectileType_Bomb) {
-    plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C91C;
+    plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C91C_PowerBombBlockBombed_Unused;
   } else if (v1 == kProjectileType_PowerBomb) {
     int v2 = j >> 1;
     int v3 = plm_block_indices[v2] >> 1;
@@ -2253,7 +2252,7 @@ uint8 PlmSetup_D08C_SuperMissileBlockRespawning(uint16 j) {  // 0x84CF67
 
   v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
   if (v1 == kProjectileType_Bomb) {
-    plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C922;
+    plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused;
   } else if (v1 == kProjectileType_SuperMissile) {
     int v2 = j >> 1;
     int v3 = plm_block_indices[v2] >> 1;
@@ -2334,7 +2333,7 @@ uint8 PlmSetup_D6DA_LowerNorfairChozoHandTrigger(uint16 j) {  // 0x84D18F
     int v2 = plm_block_indices[j >> 1] >> 1;
     level_data[v2] &= 0xFFF;
     RunSamusCode(kSamusCode_0_LockSamus);
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x0c, 0x1d, 0xd113 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0c, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D113_LowerNorfair_ChozoRoom_CrumblePlug });
   }
   plm_header_ptr[j >> 1] = 0;
   return 1;
@@ -2419,7 +2418,7 @@ const uint8 *PlmInstr_SpawnN00bTubeCrackEproj(const uint8 *plmp, uint16 k) {  //
 }
 
 const uint8 *PlmInstr_DiagonalEarthquake(const uint8 *plmp, uint16 k) {  // 0x84D536
-  earthquake_type = 11;
+  earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2);
   earthquake_timer = 64;
   return plmp;
 }
@@ -2484,7 +2483,7 @@ uint8 PlmSetup_D6F2_WreckedShipChozoHandTrigger(uint16 j) {  // 0x84D620
     int v1 = plm_block_indices[j >> 1] >> 1;
     level_data[v1] &= 0xFFF;
     RunSamusCode(kSamusCode_0_LockSamus);
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { 0x17, 0x1d, 0xd6f8 });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x17, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6F8_WreckedShip_ClearChozoSlopeAccess });
   }
   plm_header_ptr[j >> 1] = 0;
   return 1;

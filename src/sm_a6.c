@@ -1072,7 +1072,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
       E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Tangible;
       E->base.x_pos = 186;
       E->base.y_pos = 169;
-      ceres_status = 0;
+      ceres_status = kCeresStatus_0_BeforeRidleyEscape;
       E->cry_var_10 = 0;
       E->cry_var_02 = 0;
       tilemap_stuff[1] = 1;
@@ -1172,7 +1172,7 @@ void CeresRidley_Main(void) {  // 0xA6A288
   Enemy_CeresRidley *E = Get_CeresRidley(0);
   E->base.health = 0x7FFF;
   CallRidleyFunc(E->cry_var_A | 0xA60000);
-  if (!ceres_status) {
+  if (ceres_status == kCeresStatus_0_BeforeRidleyEscape) {
     if (Get_CeresRidley(0)->cry_var_02) {
       Ridley_Func_102();
       Ridley_Func_112();
@@ -1210,7 +1210,7 @@ void Ridley_A2DC(void) {  // 0xA6A2DC
 }
 
 void Ridley_A2F2(void) {  // 0xA6A2F2
-  if (!ceres_status)
+  if (ceres_status == kCeresStatus_0_BeforeRidleyEscape)
     DrawBabyMetroid_0();
   Enemy_CeresRidley *E = Get_CeresRidley(0x40);
   if (E->cry_var_B) {
@@ -1548,7 +1548,7 @@ void CeresRidley_Func_23(void) {  // 0xA6A9A0
 
 void CeresRidley_Func_24(void) {  // 0xA6AA11
   Get_CeresRidley(0)->cry_var_A = FUNC16(nullsub_233);
-  ceres_status = 1;
+  ceres_status = kCeresStatus_1_DuringRidleyEscapeCutscene;
   CeresRidley_Func_27();
 }
 
@@ -1596,7 +1596,7 @@ void CeresRidley_Func_28(void) {  // 0xA6AABD
     QueueSfx2_Max6(kSfx2_CeresRidleyGetaway_HighPriority);
   if (cry_var_33 == 208) {
     Samus_SetPushedOutOfCeresRidley();
-    earthquake_type = 35;
+    earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg2_Enemies);
     earthquake_timer = 64;
   }
   int v2 = cry_var_33 >> 1;
@@ -2004,7 +2004,7 @@ void Ridley_Func_21(void) {  // 0xA6B70E
       eproj_spawn_pt = (Point16U) { tilemap_stuff[82], tilemap_stuff[83] + 12 };
       SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
       QueueSfx2_Max6(kSfx2_Quake);
-      earthquake_type = 13;
+      earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2);
       earthquake_timer = 4;
       Ridley_Func_28();
       Ridley_Func_29();
@@ -2617,8 +2617,8 @@ void Ridley_Func_58(void) {  // 0xA6C117
   Enemy_Ridley *E = Get_Ridley(0);
   E->ridley_var_F = 0;
   E->ridley_var_A = FUNC16(CeresRidley_Func_26);
-  timer_status = 1;
-  ceres_status = 2;
+  timer_status = kTimerStatus_1_CeresStart;
+  ceres_status = kCeresStatus_2_DuringEscapeSequence;
   SetBossBitForCurArea(kBossBit_AreaBoss);
 }
 
@@ -3917,12 +3917,12 @@ void Ridley_Func_113(uint16 k) {  // 0xA6D914
     if (v2 < r18)
       v2 = r18;
     if (v2 >= 0x280) {
-      uint16 v3;
+      uint16 earthquake;
       if (area_index == kArea_2_Norfair)
-        v3 = 24;
+        earthquake = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1_Bg2_Enemies);
       else
-        v3 = 33;
-      earthquake_type = v3;
+        earthquake = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_3, kEarthquake_Layers_Bg2_Enemies);
+      earthquake_type = earthquake;
       earthquake_timer = 12;
     }
   }
@@ -4538,15 +4538,15 @@ const uint16 *CeresDoor_Instr_4(uint16 k, const uint16 *jp) {  // 0xA6F66A
 }
 
 const uint16 *CeresDoor_Instr_8(uint16 k, const uint16 *jp) {  // 0xA6F678
-  if (ceres_status)
-    return jp + 1;
-  else
+  if (ceres_status == kCeresStatus_0_BeforeRidleyEscape) 
     return INSTR_RETURN_ADDR(*jp);
+  else
+    return jp + 1;
 }
 
 void CeresDoor_Func_6b(void) {  // 0xA6F67F
-  if (ceres_status)
-    ceres_status = 0x8000;
+  if (ceres_status != kCeresStatus_0_BeforeRidleyEscape)
+    ceres_status = kCeresStatus_8000_ElevatorRoomRotate;
 }
 
 const uint16 *CeresSteam_Instr_4(uint16 k, const uint16 *jp) {  // 0xA6F68B
@@ -4601,7 +4601,7 @@ void CeresDoor_Init(void) {  // 0xA6F6C5
   E->cdr_var_B = 0;
   CeresDoor_Func_1(cur_enemy_index);
   uint16 v3;
-  if (ceres_status) {
+  if (ceres_status != kCeresStatus_0_BeforeRidleyEscape) {
     v3 = addr_word_A6F50C + 2;
   } else {
     if (E->cdr_parameter_1 == 3) {
@@ -4647,15 +4647,15 @@ void CeresDoor_Main(void) {  // 0xA6F765
 }
 
 void CeresDoor_Func_2(void) {  // 0xA6F76B
-  CeresDoor_F773(0x14);
+  CeresDoor_F773(EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies));
 }
 
 void CeresDoor_Func_3(void) {  // 0xA6F770
-  CeresDoor_F773(0x1D);
+  CeresDoor_F773(EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg2_Enemies));
 }
 
 void CeresDoor_F773(uint16 j) {  // 0xA6F773
-  if (ceres_status >= 2 && !earthquake_timer) {
+  if (ceres_status >= kCeresStatus_2_DuringEscapeSequence && !earthquake_timer) {
     if ((random_number & 0xFFF) < 0x80) {
       earthquake_timer = 4;
       earthquake_type = j + 6;
@@ -4668,7 +4668,7 @@ void CeresDoor_F773(uint16 j) {  // 0xA6F773
 
 void CeresDoor_Func_4(void) {  // 0xA6F7A5
   CeresSteam_Instr_5(cur_enemy_index, 0);
-  if (ceres_status & 1) {
+  if (ceres_status & kCeresStatus_1_DuringRidleyEscapeCutscene) {
     Get_CeresDoor(cur_enemy_index)->base.palette_index = 3584;
     CeresDoor_Instr_2(cur_enemy_index, 0);
   }
@@ -4676,7 +4676,7 @@ void CeresDoor_Func_4(void) {  // 0xA6F7A5
 
 void CeresDoor_Func_5(uint16 k) {  // 0xA6F7BD
   CeresDoor_Func_7();
-  if (ceres_status >= 2) {
+  if (ceres_status >= kCeresStatus_2_DuringEscapeSequence) {
     Enemy_CeresDoor *E = Get_CeresDoor(k);
     E->cdr_var_A = FUNC16(CeresDoor_Func_6);
     E->cdr_var_D = 48;

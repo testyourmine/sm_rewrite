@@ -4180,7 +4180,7 @@ void CinematicFunction_Intro_Func102(uint16 j) {  // 0x8BC992
 }
 
 uint16 CinematicSprInstr_C9A5(uint16 k, uint16 j) {  // 0x8BC9A5
-  SpawnPalfxObject(addr_kPalfx_PlantZebesText_FadeIn);
+  SpawnPalfxObject(addr_kPalfx_PlanetZebesText_FadeIn);
   return j;
 }
 
@@ -4191,7 +4191,7 @@ uint16 CinematicSprInstr_C9AF(uint16 k, uint16 j) {  // 0x8BC9AF
 }
 
 uint16 CinematicSprInstr_C9BD(uint16 k, uint16 j) {  // 0x8BC9BD
-  SpawnPalfxObject(addr_loc_8BE1B4);
+  SpawnPalfxObject(addr_kPalfx_PlanetZebesText_FadeOut);
   return j;
 }
 

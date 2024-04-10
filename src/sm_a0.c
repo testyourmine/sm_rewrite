@@ -228,8 +228,8 @@ static const uint16 kRoomShakes[144] = {  // 0xA08687
 };
 
 void HandleRoomShaking(void) {
-
-  if (earthquake_timer && !time_is_frozen_flag && sign16(earthquake_type - 36)) {
+  uint16 max_earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg2_Enemies);
+  if (earthquake_timer && !time_is_frozen_flag && earthquake_type <= max_earthquake) {
     int v0 = (8 * earthquake_type) >> 1;
     if ((earthquake_timer & 2) != 0) {
       reg_BG1HOFS -= kRoomShakes[v0];
@@ -243,7 +243,7 @@ void HandleRoomShaking(void) {
       reg_BG2VOFS += kRoomShakes[v0 + 3];
     }
     --earthquake_timer;
-    if (!sign16(earthquake_type - 18))
+    if (earthquake_type >= EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies))
       SetAllEnemiesToShakeFor2Frames();
   }
   ++frame_counter_every_frame;
@@ -2254,7 +2254,7 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
             (int16)(projectile_y_pos[pidx] - projectile_y_radius[pidx] - (coll_y_pos + hb->bottom)) < 0) {
           if ((projectile_type[pidx] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
             earthquake_timer = 30;
-            earthquake_type = 18;
+            earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
           }
           if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & kProjectileType_Plasma) == 0)
             projectile_dir[pidx] |= kProjectileDir_Delete;
@@ -2458,7 +2458,7 @@ void EprojCollHandler(void) {  // 0xA0A143
         if (y - projectile_y_radius[pidx] < E->y_height) {
           if ((projectile_type[pidx] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
             earthquake_timer = 30;
-            earthquake_type = 18;
+            earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
           }
           if ((E->properties & 0x1000) != 0 || (projectile_type[pidx] & kProjectileType_Plasma) == 0)
             projectile_dir[pidx] |= kProjectileDir_Delete;

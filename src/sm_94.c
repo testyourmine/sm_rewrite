@@ -854,7 +854,7 @@ uint8 BlockColl_Horiz_Door(CollInfo *ci) {  // 0x94938B
   door_transition_function = FUNC16(DoorTransitionFunction_HandleElevator);
   uint8 door_bts = BTS[cur_block_index];
   uint16 v0 = *(uint16 *)RomPtr_8F(door_list_pointer + 2 * (door_bts & 0x7F));
-  if ((get_DoorDef(v0)->room_definition_ptr & 0x8000) == 0) {
+  if ((get_DoorDef(v0).room_definition_ptr & 0x8000) == 0) {
     if (samus_pose < kPose_09_MoveR_NoAim)
       elevator_properties = kElevatorProperty_StandingOnElevator;
     return BlockColl_Horiz_SolidShootGrappleBlock(ci);
@@ -869,7 +869,7 @@ uint8 BlockColl_Vert_Door(CollInfo *ci) {  // 0x9493CE
   door_transition_function = FUNC16(DoorTransitionFunction_HandleElevator);
   uint8 door_bts = BTS[cur_block_index];
   uint16 v0 = *(uint16 *)RomPtr_8F(door_list_pointer + 2 * (door_bts & 0x7F));
-  if ((get_DoorDef(v0)->room_definition_ptr & 0x8000) == 0) {
+  if ((get_DoorDef(v0).room_definition_ptr & 0x8000) == 0) {
     if (samus_pose < kPose_09_MoveR_NoAim)
       elevator_properties = kElevatorProperty_StandingOnElevator;
     return BlockColl_Vert_SolidShootGrappleBlock(ci);
@@ -1175,7 +1175,7 @@ static void BlockInsideReact_SpecialAir_11(void) {  // 0x949946
 
 static void BlockInsideReact_SpecialAir_70(void) {  // 0x949956
   if (inside_block_reaction_samus_point == 1)
-    SpawnPLM(addr_kPlmHeader_B6FF);
+    SpawnPLM(addr_kPlmHeader_B6FF_CollReact_SpecialAir_70);
 }
 
 static const uint16 kBlockInsideReact_SpecialAir_PlmTab0[8] = {  // 0x949B16

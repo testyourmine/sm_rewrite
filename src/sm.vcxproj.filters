@@ -42,9 +42,6 @@
     <ClCompile Include="sm_84.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sm_85.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sm_86.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -179,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="..\third_party\gl_core\gl_core_3_1.c">
       <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="sm_83.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm_85.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +354,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="sm_87.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_8f.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm_83.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

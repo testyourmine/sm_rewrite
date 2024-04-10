@@ -61,7 +61,7 @@ void KillProjectileInner(uint16 k) {  // 0x9380CF
     projectile_type[v1] = v2 & 0xF0FF | kProjectileType_MissileExplosion;
     if ((v2 & kProjectileType_SuperMissile) != 0) {
       projectile_instruction_ptr[v1] = kProjInstrList_SuperMissileExplosion.instr_ptr;
-      earthquake_type = 20;
+      earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
       earthquake_timer = 30;
     } else {
       projectile_instruction_ptr[v1] = kProjInstrList_MissileExplosion.instr_ptr;
@@ -177,14 +177,14 @@ void DrawProjectiles(void) {  // 0x938254
     } else if ((nmi_frame_counter_word & 1) == 0) {
       goto LABEL_25;
     }
-    if ((ceres_status & 0x8000) == 0) {
-      r20 = projectile_x_pos[v1] - layer1_x_pos;
-      v3 = projectile_y_pos[v1] - layer1_y_pos;
-      r18 = v3;
-    } else {
+    if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate) {
       Point16U pt = CalcExplosion_Mode7(v0);
       v3 = pt.y;
       r20 = pt.x;
+    } else {
+      r20 = projectile_x_pos[v1] - layer1_x_pos;
+      v3 = projectile_y_pos[v1] - layer1_y_pos;
+      r18 = v3;
     }
     if ((v3 & 0xFF00) == 0 && (projectile_spritemap_pointers[v1] & 0x8000) != 0) {
       DrawProjectileSpritemap(v0, r20, r18);
@@ -238,7 +238,8 @@ LABEL_9:;
       r18 = v2;
       goto LABEL_12;
     }
-    if ((projectile_type[v1] & kProjectileType_TypeMask) == kProjectileType_Bomb || (ceres_status & 0x8000) == 0)
+    if ((projectile_type[v1] & kProjectileType_TypeMask) == kProjectileType_Bomb 
+        || !(ceres_status & kCeresStatus_8000_ElevatorRoomRotate))
       goto LABEL_9;
     CalcExplosion_Mode7(v0);
     v2 = r18;

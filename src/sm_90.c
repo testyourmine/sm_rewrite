@@ -775,14 +775,14 @@ static Func_Y_To_PairU16 *const kSamus_CalcSpritemapPos[28] = {  // 0x908C1F
 PairU16 Samus_CalcSpritemapPos(uint16 k) {
   PairU16 v1;
 
-  if ((ceres_status & 0x8000) == 0) {
-    v1 = kSamus_CalcSpritemapPos[samus_movement_type](k);
-  } else {
+  if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate) {
     uint16 old_x = samus_x_pos, old_y = samus_y_pos;
     Samus_CalcPos_Mode7();
     v1 = kSamus_CalcSpritemapPos[samus_movement_type](k);
     samus_y_pos = old_y;
     samus_x_pos = old_x;
+  } else {
+    v1 = kSamus_CalcSpritemapPos[samus_movement_type](k);
   }
   return MakePairU16(v1.k, v1.j);
 }
@@ -3650,7 +3650,7 @@ void DrawFlareAnimationComponent(uint16 k) {  // 0x90BBE1
   if (v2 != 255 && v2 != 16) {
     uint16 v3 = 2 * (v2 & 0xF);
     uint16 old_x = samus_x_pos, old_y = samus_y_pos;
-    if ((ceres_status & 0x8000) != 0)
+    if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate)
       Samus_CalcPos_Mode7();
     int v4 = v3 >> 1;
     uint16 v5;
@@ -3664,7 +3664,7 @@ void DrawFlareAnimationComponent(uint16 k) {  // 0x90BBE1
     r18 = v5;
     if ((v5 & 0xFF00) == 0)
       DrawBeamGrappleSpritemap(r22, r20, r18);
-    if ((ceres_status & 0x8000) != 0)
+    if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate)
       samus_y_pos = old_y, samus_x_pos = old_x;
   }
 }
@@ -5659,7 +5659,7 @@ void Samus_FrameHandlerGamma_HandleTimer(void) {  // 0x90E0E6
     frame_handler_gamma = FUNC16(Samus_FrameHandlerGamma_DrawTimer);
     DisablePaletteFx();
   }
-  if (timer_status)
+  if (timer_status != kTimerStatus_0_Inactive)
     DrawTimer();
 }
 
@@ -5699,7 +5699,7 @@ void Samus_FrameHandlerGamma_PushOutOfRidleysWay(void) {  // 0x90E12E
   samus_special_transgfx_index = 0;
   samus_hurt_switch_index = 0;
   ProcessTimer();
-  if (timer_status)
+  if (timer_status != kTimerStatus_0_Inactive)
     DrawTimer();
 }
 
@@ -5717,7 +5717,7 @@ void Samus_FrameHandlerGamma_PushingOutOfRidleysWay(void) {  // 0x90E1C8
   kSamus_PushOutOfRidleysWay_Func[samus_push_direction]();
   input_to_pose_calc = 0;
   ProcessTimer();
-  if (timer_status)
+  if (timer_status != kTimerStatus_0_Inactive)
     DrawTimer();
 }
 
