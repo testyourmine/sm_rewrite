@@ -1899,7 +1899,7 @@ uint8 ProcessTimer_MotherBrainStart(void) {  // 0x809E1C
 * @return 0 timer has not reached zero
 */
 uint8 ProcessTimer_InitialDelay(void) {  // 0x809E2F
-  (uint8)timer_x_pos++;
+  timer_x_pos++;
   if ((uint8)timer_x_pos >= 0x10)
     LOBYTE(timer_status) = kTimerStatus_4_Counting_MovementDelayed;
   return 0;
@@ -1910,7 +1910,7 @@ uint8 ProcessTimer_InitialDelay(void) {  // 0x809E2F
 * @return uint8 1 if timer is zero, 0 if timer is not zero
 */
 uint8 ProcessTimer_MovementDelayed(void) {  // 0x809E41
-  (uint8)timer_x_pos++;
+  timer_x_pos++;
   if ((uint8)timer_x_pos >= 0x60) {
     LOBYTE(timer_x_pos) = 0;
     LOBYTE(timer_status) = kTimerStatus_5_Counting_MovingIntoPlace;

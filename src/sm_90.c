@@ -358,7 +358,7 @@ static void Samus_HandleAnimDelay(void) {
   const uint8 *p = RomPtr_91(kSamusAnimationDelayData[samus_pose]);
   if ((p[samus_anim_frame] & 0x80) != 0) {
     uint8 v1 = Samus_HandleSpeedBoosterAnimDelay(p + samus_anim_frame);
-    printf("v1=%x\n", v1);
+    //  printf("v1=%x\n", v1);
     if (kAnimDelayFuncs[v1 & 0xF](p + samus_anim_frame))
       samus_anim_frame_timer = samus_anim_frame_buffer + p[samus_anim_frame];
   } else {

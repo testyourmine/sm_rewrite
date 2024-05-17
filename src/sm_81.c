@@ -2036,11 +2036,11 @@ void DrawAreaSelectMapLabels(void) {
       if (!--R30) {
         if (enable_debug && *v2 != 0xFFFF) {
 LABEL_11:;
-          int j = 4 * kFileSelectMap_AreaIndexes[i] >> 1;
+          int map_area_index = kFileSelectMap_AreaIndexes[i];
           DrawMenuSpritemap(
             gAreaSelectSpritemapOffset[0] + kFileSelectMap_AreaIndexes[i] + 1,
-            kAreaSelectMapLabelPositions[j].x,
-            kAreaSelectMapLabelPositions[j].y, r3);
+            kAreaSelectMapLabelPositions[map_area_index].x,
+            kAreaSelectMapLabelPositions[map_area_index].y, r3);
           break;
         }
         break;
