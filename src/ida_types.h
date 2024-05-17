@@ -764,7 +764,7 @@ enum ProjectileType {  // 0x7E0C18
   kProjectileType_Bomb = 0x500,
   kProjectileType_BeamExplosion = 0x700,
   kProjectileType_MissileExplosion = 0x800,
-  kProjectileType_TypeMask = 0xF00,
+  kProjectileType_ProjMask = 0xF00,
   kProjectileType_ChargeBeamEquipped = 0x1000,
   kProjectileType_DontInteractWithSamus = 0x8000,
 };

@@ -59,7 +59,7 @@ void SpacePirates_Shot_LowerNorfairPirateVulnerable(void) {  // 0xB287C8
   if (Get_SpacePirates(cur_enemy_index)->base.enemy_ptr != addr_kEnemyDef_GoldNinjaSpacePirate)
     goto LABEL_2;
   uint16 r18 = projectile_type[collision_detection_index];
-  if (sign16((r18 & kProjectileType_TypeMask) - kProjectileType_PowerBomb)) {
+  if (sign16((r18 & kProjectileType_ProjMask) - kProjectileType_PowerBomb)) {
     uint16 enemy_ptr;
     uint16 vulnerability_ptr;
     enemy_ptr = Get_SpacePirates(cur_enemy_index)->base.enemy_ptr;
@@ -67,10 +67,10 @@ void SpacePirates_Shot_LowerNorfairPirateVulnerable(void) {  // 0xB287C8
     if (!vulnerability_ptr)
       vulnerability_ptr = addr_kEnemyVulnerability;
     uint16 r20 = vulnerability_ptr;
-    if ((r18 & kProjectileType_TypeMask) != 0) {
-      if ((r18 & kProjectileType_TypeMask) != kProjectileType_Missile && (r18 & kProjectileType_TypeMask) != kProjectileType_SuperMissile)
+    if ((r18 & kProjectileType_ProjMask) != 0) {
+      if ((r18 & kProjectileType_ProjMask) != kProjectileType_Missile && (r18 & kProjectileType_ProjMask) != kProjectileType_SuperMissile)
         goto LABEL_2;
-      v3 = (uint16)(r18 & kProjectileType_TypeMask) >> 8;
+      v3 = (uint16)(r18 & kProjectileType_ProjMask) >> 8;
       v = get_Vulnerability(r20 + v3);
       if ((v->plasma_ice_wave & 0xF) != 0 && (v->plasma_ice_wave & 0xF) != 15)
         goto LABEL_2;
@@ -94,10 +94,10 @@ void SpacePirates_Shot_LowerNorfairPirateInvincible(void) {  // 0xB2883E
   uint16 v0 = 2 * collision_detection_index;
   int v1 = collision_detection_index;
   uint16 r18 = projectile_type[v1];
-  if ((r18 & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
+  if ((r18 & kProjectileType_ProjMask) == kProjectileType_SuperMissile) {
     if (!projectile_variables[v1])
       return;
-  } else if (!sign16((r18 & kProjectileType_TypeMask) - kProjectileType_PowerBomb)) {
+  } else if (!sign16((r18 & kProjectileType_ProjMask) - kProjectileType_PowerBomb)) {
     return;
   }
   Get_SpacePirates(cur_enemy_index)->base.invincibility_timer = 10;

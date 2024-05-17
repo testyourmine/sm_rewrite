@@ -2098,7 +2098,7 @@ uint8 PlmSetup_Door_Colored(uint16 j) {  // 0x84C7B1
 uint8 PlmSetup_Door_Blue(uint16 j) {  // 0x84C7BB
 //  if (sign16(projectile_index))
 //    printf("BUG: projectile_index invalid\n");
-  if (!sign16(projectile_index) && (projectile_type[projectile_index >> 1] & kProjectileType_TypeMask) == kProjectileType_PowerBomb) {
+  if (!sign16(projectile_index) && (projectile_type[projectile_index >> 1] & kProjectileType_ProjMask) == kProjectileType_PowerBomb) {
     plm_header_ptr[j >> 1] = 0;
   } else {
     uint16 v1 = plm_block_indices[j >> 1];
@@ -2208,7 +2208,7 @@ uint8 PlmSetup_RespawningBombBlock(uint16 j) {  // 0x84CE83
 uint8 PlmSetup_RespawningBombBlock2(uint16 j) {  // 0x84CEDA
   int16 v1;
 
-  v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
+  v1 = projectile_type[projectile_index >> 1] & kProjectileType_ProjMask;
   if (v1 == kProjectileType_Bomb) {
     int v5 = j >> 1;
     plm_instr_list_ptrs[v5] += 3;
@@ -2231,7 +2231,7 @@ uint8 PlmSetup_RespawningBombBlock2(uint16 j) {  // 0x84CEDA
 uint8 PlmSetup_RespawningPowerBombBlock(uint16 j) {  // 0x84CF2E
   int16 v1;
 
-  v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
+  v1 = projectile_type[projectile_index >> 1] & kProjectileType_ProjMask;
   if (v1 == kProjectileType_Bomb) {
     plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C91C_PowerBombBlockBombed_Unused;
   } else if (v1 == kProjectileType_PowerBomb) {
@@ -2249,7 +2249,7 @@ uint8 PlmSetup_RespawningPowerBombBlock(uint16 j) {  // 0x84CF2E
 uint8 PlmSetup_D08C_SuperMissileBlockRespawning(uint16 j) {  // 0x84CF67
   int16 v1;
 
-  v1 = projectile_type[projectile_index >> 1] & kProjectileType_TypeMask;
+  v1 = projectile_type[projectile_index >> 1] & kProjectileType_ProjMask;
   if (v1 == kProjectileType_Bomb) {
     plm_instr_list_ptrs[j >> 1] = addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused;
   } else if (v1 == kProjectileType_SuperMissile) {
@@ -2265,7 +2265,7 @@ uint8 PlmSetup_D08C_SuperMissileBlockRespawning(uint16 j) {  // 0x84CF67
 }
 
 uint8 PlmSetup_D08C_CrumbleBlock(uint16 j) {  // 0x84CFA0
-  if ((projectile_type[projectile_index >> 1] & kProjectileType_TypeMask) != kProjectileType_Bomb)
+  if ((projectile_type[projectile_index >> 1] & kProjectileType_ProjMask) != kProjectileType_Bomb)
     plm_header_ptr[j >> 1] = 0;
   return 0;
 }

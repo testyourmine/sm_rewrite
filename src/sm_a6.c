@@ -3490,8 +3490,8 @@ uint8 Ridley_Func_90(Point16U *out) {  // 0xA6D242
   uint16 v1 = 0;
   while (1) {
     int v2 = v1 >> 1;
-    if ((HIBYTE(projectile_type[v2]) & (kProjectileType_TypeMask >> 8)) == (kProjectileType_Missile >> 8) ||
-        (HIBYTE(projectile_type[v2]) & (kProjectileType_TypeMask >> 8)) == (kProjectileType_SuperMissile >> 8)) {
+    if ((HIBYTE(projectile_type[v2]) & (kProjectileType_ProjMask >> 8)) == (kProjectileType_Missile >> 8) ||
+        (HIBYTE(projectile_type[v2]) & (kProjectileType_ProjMask >> 8)) == (kProjectileType_SuperMissile >> 8)) {
       uint16 v3 = abs16(projectile_x_pos[v2] - rect.x);
       bool v4 = v3 < projectile_x_radius[v2];
       uint16 v5 = v3 - projectile_x_radius[v2];
@@ -4171,7 +4171,7 @@ uint16 Ridley_Func_122(Rect16U rect) {  // 0xA6DEA6
     int v1 = result >> 1;
     v2 = projectile_type[v1];
     if (v2 < 0) {
-      if (sign16((HIBYTE(v2) & (kProjectileType_TypeMask >> 8)) - (kProjectileType_PowerBomb >> 8))) {
+      if (sign16((HIBYTE(v2) & (kProjectileType_ProjMask >> 8)) - (kProjectileType_PowerBomb >> 8))) {
         uint16 v3 = abs16(projectile_x_pos[v1] - rect.x);
         bool v4 = v3 < projectile_x_radius[v1];
         uint16 v5 = v3 - projectile_x_radius[v1];
@@ -4305,7 +4305,7 @@ void Ridley_Func_129(void) {  // 0xA6E088
     int v1 = v0 >> 1;
     eproj_spawn_pt = (Point16U){ projectile_x_pos[v1], projectile_y_pos[v1] };
     uint16 v2 = 12;
-    if ((HIBYTE(projectile_type[v1]) & (kProjectileType_TypeMask >> 8)) == (kProjectileType_Missile >> 8)) {
+    if ((HIBYTE(projectile_type[v1]) & (kProjectileType_ProjMask >> 8)) == (kProjectileType_Missile >> 8)) {
       QueueSfx1_Max6(kSfx1_DudShot);
       v2 = 6;
     }

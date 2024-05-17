@@ -1002,7 +1002,7 @@ void GoldTorizo_Shot(void) {  // 0xAAD667
       goto LABEL_11;
     uint16 v2, v3;
     v2 = 2 * collision_detection_index;
-    v3 = projectile_type[collision_detection_index] & kProjectileType_TypeMask;
+    v3 = projectile_type[collision_detection_index] & kProjectileType_ProjMask;
     E->toriz_var_05 = v3;
     if (v3 == kProjectileType_Missile) {
       Torizo_D6D1(cur_enemy_index, v2);

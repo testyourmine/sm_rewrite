@@ -14,14 +14,14 @@ void InitializeProjectile(uint16 proj_index) {  // 0x938000
   int proj_dir = (projectile_dir[index] & kProjectileDir_DirMask);
   uint16 proj_type = projectile_type[index];
   ProjectileDataTable PD;
-  if (proj_type & kProjectileType_TypeMask) {
-    PD = kProjectileData_NonBeams[HIBYTE(proj_type) & (kProjectileType_TypeMask >> 8)];
+  if (proj_type & kProjectileType_ProjMask) {
+    PD = kProjectileData_NonBeams[GET_HIBYTE(proj_type & kProjectileType_ProjMask)];
   } 
   else if (proj_type & kProjectileType_Charged) {
-    PD = kProjectileData_ChargedBeams[projectile_type[index] & kProjectileType_BeamMask];
+    PD = kProjectileData_ChargedBeams[proj_type & kProjectileType_BeamMask];
   } 
   else {
-    PD = kProjectileData_UnchargedBeams[projectile_type[index] & kProjectileType_BeamMask];
+    PD = kProjectileData_UnchargedBeams[proj_type & kProjectileType_BeamMask];
   }
   if (sign16(PD.damage))
     InvalidInterrupt_Crash();
@@ -40,7 +40,7 @@ void InitializeProjectile(uint16 proj_index) {  // 0x938000
 */
 void InitializeInstrForSuperMissile(uint16 proj_index) {  // 0x938071
   int index = proj_index >> 1;
-  ProjectileDataTable super_missile_data = kRunInstrForSuperMissile[HIBYTE(projectile_type[index]) & (kProjectileType_TypeMask >> 8)];
+  ProjectileDataTable super_missile_data = kRunInstrForSuperMissile[GET_HIBYTE(projectile_type[index] & kProjectileType_ProjMask)];
   projectile_damage[index] = super_missile_data.damage;
   if ((int16)projectile_damage[index] < 0)
     InvalidInterrupt_Crash();
@@ -54,7 +54,7 @@ void InitializeInstrForSuperMissile(uint16 proj_index) {  // 0x938071
 */
 void InitializeInstrForBombOrPowerBomb(uint16 proj_index) {  // 0x9380A0
   int index = proj_index >> 1;
-  ProjectileDataTable bomb_data = kProjectileData_NonBeams[HIBYTE(projectile_type[index]) & (kProjectileType_TypeMask >> 8)];
+  ProjectileDataTable bomb_data = kProjectileData_NonBeams[GET_HIBYTE(projectile_type[index] & kProjectileType_ProjMask)];
   projectile_damage[index] = bomb_data.damage;
   if ((int16)projectile_damage[index] < 0)
     InvalidInterrupt_Crash();
@@ -68,11 +68,11 @@ void InitializeInstrForBombOrPowerBomb(uint16 proj_index) {  // 0x9380A0
 */
 void KillProjectileInner(uint16 proj_index) {  // 0x9380CF
   int index = proj_index >> 1;
-  if (projectile_type[index] & kProjectileType_TypeMask) {
+  uint16 proj_type = projectile_type[index];
+  if (proj_type & kProjectileType_ProjMask) {
     if (!cinematic_function) {
       QueueSfx2_Max6(kSfx2_SuperOrMissileHitWall);
     }
-    uint16 proj_type = projectile_type[index];
     projectile_type[index] = proj_type & 0xF0FF | kProjectileType_MissileExplosion;
 
     if (proj_type & kProjectileType_SuperMissile) {
@@ -80,14 +80,14 @@ void KillProjectileInner(uint16 proj_index) {  // 0x9380CF
       earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
       earthquake_timer = 30;
     }
-    else {
+    else { /* proj_type & kProjectileType_BeamMask */
       projectile_instruction_ptr[index] = kProjInstrList_MissileExplosion.instr_ptr;
     }
 
     cooldown_timer = IntMin(20, cooldown_timer);
   }
   else {
-    projectile_type[index] = projectile_type[index] & 0xF0FF | kProjectileType_BeamExplosion;
+    projectile_type[index] = proj_type & 0xF0FF | kProjectileType_BeamExplosion;
     projectile_instruction_ptr[index] = kProjInstrList_BeamExplosion.instr_ptr;
     QueueSfx2_Max6(kSfx2_BeamHitWall_TorizoStatueCrumbles);
   }
@@ -212,8 +212,8 @@ void DrawProjectiles(void) {  // 0x938254
     if (projectile_instruction_ptr[index] == 0)
       goto NEXT_PROJ;
     uint16 proj_type = projectile_type[index];
-    if (proj_type & (kProjectileType_TypeMask | kProjectileType_Charged)) {
-      if (!sign16((proj_type & kProjectileType_TypeMask) - kProjectileType_PowerBomb))
+    if (proj_type & (kProjectileType_ProjMask | kProjectileType_Charged)) {
+      if (!sign16((proj_type & kProjectileType_ProjMask) - kProjectileType_PowerBomb))
         goto NEXT_PROJ;
     }
     else if (proj_type & (kProjectileType_Plasma | kProjectileType_Spazer)) {
@@ -289,7 +289,7 @@ void DrawBombAndProjectileExplosions(void) {  // 0x93834D
   do {
     int index = curr_proj_index >> 1;
     uint16 proj_instr = projectile_instruction_ptr[index];
-    uint16 proj_type = projectile_type[index] & kProjectileType_TypeMask;
+    uint16 proj_type = projectile_type[index] & kProjectileType_ProjMask;
     uint16 bomb_timer = projectile_variables[index];
     if (proj_instr != 0 && proj_type >= kProjectileType_PowerBomb) {
 

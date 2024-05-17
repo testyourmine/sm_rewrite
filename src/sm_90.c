@@ -2546,7 +2546,7 @@ static Func_Y_V *const kKillProjectileFuncs[10] = {  // 0x90AE06
 void KillProjectile(uint16 k) {
 
   int v1 = k >> 1;
-  if ((projectile_type[v1] & kProjectileType_TypeMask) != 0) {
+  if ((projectile_type[v1] & kProjectileType_ProjMask) != 0) {
     if (!sign16((HIBYTE(projectile_type[v1]) & kProjectileType_BeamMask) - ((kProjectileType_SuperMissile | kProjectileType_Missile) >> 8))) {
       ClearProjectile(k);
       return;
@@ -3056,14 +3056,14 @@ void AccelerateMissileOrSuperMissile(uint16 k) {  // 0x90B2F6
 
 void SuperMissileBlockCollDetect_Y(void) {  // 0x90B366
   int v0 = projectile_index >> 1;
-  if ((projectile_type[v0] & kProjectileType_TypeMask) == kProjectileType_SuperMissile 
-      || (projectile_type[v0] & kProjectileType_TypeMask) == kProjectileType_MissileExplosion) {
+  if ((projectile_type[v0] & kProjectileType_ProjMask) == kProjectileType_SuperMissile 
+      || (projectile_type[v0] & kProjectileType_ProjMask) == kProjectileType_MissileExplosion) {
     uint8 v5 = projectile_variables[v0];
     if (*((uint8 *)projectile_variables + projectile_index + 1)) {
       uint16 v1 = abs16(projectile_y_speed[v0]) & 0xFF00;
       if (sign16(v1 - 2816)) {
         int v4 = projectile_index >> 1;
-        if ((projectile_type[v4] & kProjectileType_TypeMask) != kProjectileType_MissileExplosion) {
+        if ((projectile_type[v4] & kProjectileType_ProjMask) != kProjectileType_MissileExplosion) {
           projectile_y_pos[v5 >> 1] = projectile_y_pos[v4];
           return;
         }
@@ -3075,7 +3075,7 @@ void SuperMissileBlockCollDetect_Y(void) {  // 0x90B366
           projectile_index = v5;
           BlockCollMissileVert(v5);
           projectile_index = v6;
-          if ((projectile_type[v6 >> 1] & kProjectileType_TypeMask) == kProjectileType_MissileExplosion)
+          if ((projectile_type[v6 >> 1] & kProjectileType_ProjMask) == kProjectileType_MissileExplosion)
             ClearProjectile(v5);
           return;
         }
@@ -3084,7 +3084,7 @@ void SuperMissileBlockCollDetect_Y(void) {  // 0x90B366
         projectile_index = v5;
         BlockCollMissileVert(v5);
         projectile_index = v7;
-        if ((projectile_type[v7 >> 1] & kProjectileType_TypeMask) != kProjectileType_MissileExplosion)
+        if ((projectile_type[v7 >> 1] & kProjectileType_ProjMask) != kProjectileType_MissileExplosion)
           return;
       }
       ClearProjectile(v5);
@@ -3095,20 +3095,20 @@ void SuperMissileBlockCollDetect_Y(void) {  // 0x90B366
 void UNUSED_ClearSuperMissileLinkIfExplosion(uint16 k) {  // 0x90B4A6
   int v1 = k >> 1;
   if (*((uint8 *)projectile_variables + k + 1)) {
-    if ((projectile_type[v1] & kProjectileType_TypeMask) == kProjectileType_MissileExplosion)
+    if ((projectile_type[v1] & kProjectileType_ProjMask) == kProjectileType_MissileExplosion)
       ClearProjectile((uint8)projectile_variables[v1]);
   }
 }
 
 void SuperMissileBlockCollDetect_X(void) {  // 0x90B406
   int v0 = projectile_index >> 1;
-  if ((projectile_type[v0] & kProjectileType_TypeMask) == kProjectileType_SuperMissile || (projectile_type[v0] & kProjectileType_TypeMask) == kProjectileType_MissileExplosion) {
+  if ((projectile_type[v0] & kProjectileType_ProjMask) == kProjectileType_SuperMissile || (projectile_type[v0] & kProjectileType_ProjMask) == kProjectileType_MissileExplosion) {
     uint8 v5 = projectile_variables[v0];
     if (*((uint8 *)projectile_variables + projectile_index + 1)) {
       uint16 v1 = abs16(projectile_x_speed[v0]) & 0xFF00;
       if (sign16(v1 - 2816)) {
         int v4 = projectile_index >> 1;
-        if ((projectile_type[v4] & kProjectileType_TypeMask) != kProjectileType_MissileExplosion) {
+        if ((projectile_type[v4] & kProjectileType_ProjMask) != kProjectileType_MissileExplosion) {
           projectile_x_pos[v5 >> 1] = projectile_x_pos[v4];
           return;
         }
@@ -3120,7 +3120,7 @@ void SuperMissileBlockCollDetect_X(void) {  // 0x90B406
           projectile_index = v5;
           BlockCollMissileHoriz(v5);
           projectile_index = v6;
-          if ((projectile_type[v6 >> 1] & kProjectileType_TypeMask) == kProjectileType_MissileExplosion)
+          if ((projectile_type[v6 >> 1] & kProjectileType_ProjMask) == kProjectileType_MissileExplosion)
             ClearProjectile(v5);
           return;
         }
@@ -3129,7 +3129,7 @@ void SuperMissileBlockCollDetect_X(void) {  // 0x90B406
         projectile_index = v5;
         BlockCollMissileHoriz(v5);
         projectile_index = v7;
-        if ((projectile_type[v7 >> 1] & kProjectileType_TypeMask) != kProjectileType_MissileExplosion)
+        if ((projectile_type[v7 >> 1] & kProjectileType_ProjMask) != kProjectileType_MissileExplosion)
           return;
       }
       ClearProjectile(v5);
@@ -3153,8 +3153,8 @@ void SpawnProjectileTrail(uint16 k) {  // 0x90B657
   int16 v2;
 
   uint16 v1 = projectile_type[k >> 1];
-  if ((v1 & kProjectileType_TypeMask) != 0) {
-    uint16 v3 = HIBYTE(v1) & (kProjectileType_TypeMask >> 8);
+  if ((v1 & kProjectileType_ProjMask) != 0) {
+    uint16 v3 = HIBYTE(v1) & (kProjectileType_ProjMask >> 8);
     if (v3 >= ((kProjectileType_SuperMissile | kProjectileType_Missile) >> 8))
       return;
     v2 = v3 + 31;
@@ -3429,7 +3429,7 @@ LABEL_17:
           projectile_index = v1;
           CheckBeamCollByDir(v1);
           v1 = projectile_index;
-          if ((projectile_type[projectile_index >> 1] & kProjectileType_TypeMask) != 0)
+          if ((projectile_type[projectile_index >> 1] & kProjectileType_ProjMask) != 0)
             return;
           goto LABEL_20;
         }
@@ -3502,7 +3502,7 @@ void FireChargedBeam(void) {
         projectile_index = v1;
         CheckBeamCollByDir(v1);
         v1 = projectile_index;
-        if ((projectile_type[projectile_index >> 1] & kProjectileType_TypeMask) != 0) {
+        if ((projectile_type[projectile_index >> 1] & kProjectileType_ProjMask) != 0) {
 LABEL_14:
           charged_shot_glow_timer = 4;
           return;
@@ -5079,7 +5079,7 @@ void BombSpread(void) {  // 0x90D849
       v0 += 2;
     } while ((int16)(v0 - 20) < 0);
     bomb_counter = 5;
-    cooldown_timer = kNonBeamProjectileCooldowns[HIBYTE(projectile_type[5]) & (kProjectileType_TypeMask >> 8)];
+    cooldown_timer = kNonBeamProjectileCooldowns[HIBYTE(projectile_type[5]) & (kProjectileType_ProjMask >> 8)];
     bomb_spread_charge_timeout_counter = 0;
     flare_counter = 0;
   }

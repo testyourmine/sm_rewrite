@@ -1389,8 +1389,8 @@ static const int8 kProtoWeapon_NonBeams[18] = {
 
 uint16 GetProjProtoType(uint16 v0) {
   int v1 = v0 >> 1;
-  if ((projectile_type[v1] & kProjectileType_TypeMask) != 0) {
-    return kProtoWeapon_NonBeams[2 * (HIBYTE(projectile_type[v1]) & (kProjectileType_TypeMask >> 8)) + 1];
+  if ((projectile_type[v1] & kProjectileType_ProjMask) != 0) {
+    return kProtoWeapon_NonBeams[2 * (HIBYTE(projectile_type[v1]) & (kProjectileType_ProjMask >> 8)) + 1];
   } else {
     int r18 = projectile_type[v1] & kProjectileType_BeamMask;
     return kProtoWeapon_Beams[3 * r18 + 2];

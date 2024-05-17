@@ -1913,7 +1913,7 @@ void Skree_Shot(void) {  // 0xA3C7F5
     SpawnEprojWithGfx(0, v1, addr_kEproj_SkreeParticles_DownLeft);
     SpawnEprojWithGfx(0, v1, addr_kEproj_SkreeParticles_UpLeft);
     uint16 v5 = 2;
-    if ((projectile_type[collision_detection_index] & kProjectileType_TypeMask) != kProjectileType_SuperMissile)
+    if ((projectile_type[collision_detection_index] & kProjectileType_ProjMask) != kProjectileType_SuperMissile)
       v5 = 0;
     EnemyDeathAnimation(2 * collision_detection_index, v5);
   }
@@ -3011,7 +3011,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
   uint16 v0 = 2 * collision_detection_index;
   Enemy_Metroid *E = Get_Metroid(cur_enemy_index);
   if (E->base.frozen_timer) {
-    uint16 v3 = projectile_type[v0 >> 1] & kProjectileType_TypeMask;
+    uint16 v3 = projectile_type[v0 >> 1] & kProjectileType_ProjMask;
     if (v3 == kProjectileType_Missile || v3 == kProjectileType_SuperMissile) {
       special_death_item_drop_x_origin_pos = E->base.x_pos;
       special_death_item_drop_y_origin_pos = E->base.y_pos;
@@ -3028,7 +3028,7 @@ void Metroid_Shot(void) {  // 0xA3EF07
     }
   } else {
     if (E->metroid_var_F == 2) {
-      if ((projectile_type[v0 >> 1] & kProjectileType_TypeMask) == kProjectileType_Bomb) {
+      if ((projectile_type[v0 >> 1] & kProjectileType_ProjMask) == kProjectileType_Bomb) {
         E->metroid_var_E = 4;
         E->metroid_var_F = 3;
         E->base.current_instruction = addr_kMetroid_Ilist_E9CF;

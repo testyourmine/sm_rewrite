@@ -2027,7 +2027,7 @@ void SamusProjectileInteractionHandler(void) {  // 0xA09785
     return;
   for (int pidx = 0; pidx != num_colls_to_check;pidx++) {
     collision_detection_index = pidx;
-    if (!projectile_damage[pidx] || sign16(projectile_type[pidx]) || !sign16((projectile_type[pidx] & kProjectileType_TypeMask) - kProjectileType_BeamExplosion))
+    if (!projectile_damage[pidx] || sign16(projectile_type[pidx]) || !sign16((projectile_type[pidx] & kProjectileType_ProjMask) - kProjectileType_BeamExplosion))
       continue;
     if ((projectile_dir[pidx] & kProjectileDir_Delete) != 0)
       continue;
@@ -2095,8 +2095,8 @@ void EprojProjCollDet(void) {  // 0xA0996C
       if (eproj_flags[i] == 2)
         break;
       uint16 v4 = projectile_type[j];
-      if (v4 && (v4 & kProjectileType_TypeMask) != kProjectileType_PowerBomb && (v4 & kProjectileType_TypeMask) != kProjectileType_Bomb 
-          && sign16((v4 & kProjectileType_TypeMask) - kProjectileType_BeamExplosion)) {
+      if (v4 && (v4 & kProjectileType_ProjMask) != kProjectileType_PowerBomb && (v4 & kProjectileType_ProjMask) != kProjectileType_Bomb 
+          && sign16((v4 & kProjectileType_ProjMask) - kProjectileType_BeamExplosion)) {
         if ((eproj_x_pos[i] & 0xFFE0) == (projectile_x_pos[j] & 0xFFE0) && 
             (eproj_y_pos[i] & 0xFFE0) == (projectile_y_pos[j] & 0xFFE0)) {
           HandleEprojCollWithProj(i * 2, j * 2);
@@ -2237,8 +2237,8 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
     return;
   for(int pidx = 0; pidx < 5; pidx++) {
     uint16 v4 = projectile_type[pidx];
-    if (!(v4 && (v4 & kProjectileType_TypeMask) != kProjectileType_PowerBomb && (v4 & kProjectileType_TypeMask) != kProjectileType_Bomb
-        && sign16((v4 & kProjectileType_TypeMask) - kProjectileType_BeamExplosion)))
+    if (!(v4 && (v4 & kProjectileType_ProjMask) != kProjectileType_PowerBomb && (v4 & kProjectileType_ProjMask) != kProjectileType_Bomb
+        && sign16((v4 & kProjectileType_ProjMask) - kProjectileType_BeamExplosion)))
       continue;
     if (!sign16(E->spritemap_pointer))
       Unreachable();
@@ -2253,7 +2253,7 @@ void EprojCollHandler_Multibox(void) {  // 0xA09B7F
             (int16)(projectile_x_pos[pidx] - projectile_x_radius[pidx] - (coll_x_pos + hb->right)) < 0 &&
             (int16)(projectile_y_radius[pidx] + projectile_y_pos[pidx] - (coll_y_pos + hb->top)) >= 0 &&
             (int16)(projectile_y_pos[pidx] - projectile_y_radius[pidx] - (coll_y_pos + hb->bottom)) < 0) {
-          if ((projectile_type[pidx] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
+          if ((projectile_type[pidx] & kProjectileType_ProjMask) == kProjectileType_SuperMissile) {
             earthquake_timer = 30;
             earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
           }
@@ -2280,7 +2280,7 @@ void EnemyBombCollHandler_Multibox(void) {  // 0xA09D23
     if (!projectile_x_pos[pidx])
       continue;
     uint16 v4 = projectile_type[pidx];
-    if (!(v4 && (v4 & kProjectileType_TypeMask) == kProjectileType_Bomb && !projectile_variables[pidx]))
+    if (!(v4 && (v4 & kProjectileType_ProjMask) == kProjectileType_Bomb && !projectile_variables[pidx]))
       continue;
     if (!sign16(E->spritemap_pointer))
       Unreachable();
@@ -2452,13 +2452,13 @@ void EprojCollHandler(void) {  // 0xA0A143
     return;
   for (int pidx = 0; pidx < 5; pidx++) {
     uint16 j = projectile_type[pidx];
-    if (j && (j & kProjectileType_TypeMask) != kProjectileType_PowerBomb && (j & kProjectileType_TypeMask) != kProjectileType_Bomb
-        && sign16((j & kProjectileType_TypeMask) - kProjectileType_BeamExplosion)) {
+    if (j && (j & kProjectileType_ProjMask) != kProjectileType_PowerBomb && (j & kProjectileType_ProjMask) != kProjectileType_Bomb
+        && sign16((j & kProjectileType_ProjMask) - kProjectileType_BeamExplosion)) {
       uint16 x = abs16(projectile_x_pos[pidx] - E->x_pos);
       uint16 y = abs16(projectile_y_pos[pidx] - E->y_pos);
       if (x - projectile_x_radius[pidx] < E->x_width) {
         if (y - projectile_y_radius[pidx] < E->y_height) {
-          if ((projectile_type[pidx] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
+          if ((projectile_type[pidx] & kProjectileType_ProjMask) == kProjectileType_SuperMissile) {
             earthquake_timer = 30;
             earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
           }
@@ -2481,7 +2481,7 @@ void EnemyBombCollHandler(void) {  // 0xA0A236
     return;
   for(int pidx = 5; pidx < 10; pidx++) {
     if (!projectile_type[pidx] || projectile_variables[pidx] ||
-        (projectile_type[pidx] & kProjectileType_TypeMask) != kProjectileType_Bomb && (projectile_type[pidx] & kProjectileType_DontInteractWithSamus) == 0)
+        (projectile_type[pidx] & kProjectileType_ProjMask) != kProjectileType_Bomb && (projectile_type[pidx] & kProjectileType_DontInteractWithSamus) == 0)
       continue;
     if (abs16(projectile_x_pos[pidx] - E->x_pos) - projectile_x_radius[pidx] < E->x_width && 
         abs16(projectile_y_pos[pidx] - E->y_pos) - projectile_y_radius[pidx] < E->y_height) {
@@ -2666,7 +2666,7 @@ void NormalEnemyShotAi(void) {  // 0xA0A63D
     CreateSpriteAtPos(E->x_pos, E->y_pos, 55, 0);
   }
   if (!E->health) {
-    uint16 j = HIBYTE(projectile_type[collision_detection_index]) & (kProjectileType_TypeMask >> 8);
+    uint16 j = HIBYTE(projectile_type[collision_detection_index]) & (kProjectileType_ProjMask >> 8);
     gEnemySpawnData(cur_enemy_index)->cause_of_death = j;
     uint16 death_anim = 2;
     if (j == 2) {
@@ -2710,10 +2710,10 @@ uint16 NormalEnemyShotAiSkipDeathAnim(void) {  // 0xA0A6DE
   if (!vulnerability_ptr)
     vulnerability_ptr = addr_kEnemyVulnerability;
   uint16 r20 = vulnerability_ptr;
-  if ((r18 & kProjectileType_TypeMask) != 0) {
-    v5 = r18 & kProjectileType_TypeMask;
-    if ((r18 & kProjectileType_TypeMask) == kProjectileType_Missile || v5 == kProjectileType_SuperMissile) {
-      v6 = (r18 & kProjectileType_TypeMask) >> 8;
+  if ((r18 & kProjectileType_ProjMask) != 0) {
+    v5 = r18 & kProjectileType_ProjMask;
+    if ((r18 & kProjectileType_ProjMask) == kProjectileType_Missile || v5 == kProjectileType_SuperMissile) {
+      v6 = (r18 & kProjectileType_ProjMask) >> 8;
       varE32 = get_Vulnerability(r20 + v6)->plasma_ice_wave & 0x7F;
     } else if (v5 == kProjectileType_Bomb) {
       varE32 = get_Vulnerability(r20)->bomb & 0x7F;

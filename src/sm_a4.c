@@ -1568,8 +1568,8 @@ void Crocomire_Func_95(void) {  // 0xA4BA05
     goto LABEL_10;
   uint16 v1, v2;
   v1 = projectile_type[collision_detection_index];
-  if ((v1 & kProjectileType_TypeMask) != 0) {
-    v3 = v1 & kProjectileType_TypeMask;
+  if ((v1 & kProjectileType_ProjMask) != 0) {
+    v3 = v1 & kProjectileType_ProjMask;
     v2 = g_word_A4869A;
     if (v3 != kProjectileType_Missile) {
       v2 = g_word_A4869C;

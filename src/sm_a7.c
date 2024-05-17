@@ -641,7 +641,7 @@ void Kraid_Shot_Mouth(void) {  // 0xA7AFAA
       }
       uint16 v8;
       v8 = projectile_type[v7];
-      if ((v8 & kProjectileType_TypeMask) != 0)
+      if ((v8 & kProjectileType_ProjMask) != 0)
         goto LABEL_12;
       if ((v8 & kProjectileType_Charged) != 0)
         break;
@@ -3149,7 +3149,7 @@ LABEL_20:
       }
       health -= EK->base.health;
       if (sign16(health - 300)
-          || (projectile_type[collision_detection_index] & kProjectileType_TypeMask) != kProjectileType_SuperMissile) {
+          || (projectile_type[collision_detection_index] & kProjectileType_ProjMask) != kProjectileType_SuperMissile) {
         Enemy_Phantoon *E2 = Get_Phantoon(v1 + 0x80);
         uint16 v7 = health + E2->phant_var_B;
         E2->phant_var_B = v7;
@@ -3160,7 +3160,7 @@ LABEL_20:
       goto LABEL_23;
     }
     health -= EK->base.health;
-    if (!sign16(health - 300) && (projectile_type[collision_detection_index] & kProjectileType_TypeMask) == kProjectileType_SuperMissile) {
+    if (!sign16(health - 300) && (projectile_type[collision_detection_index] & kProjectileType_ProjMask) == kProjectileType_SuperMissile) {
 LABEL_23:
       EK->phant_var_F = FUNC16(Phantoon_FadeOutBeforeEnrage);
       goto LABEL_22;

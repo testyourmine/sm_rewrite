@@ -3042,7 +3042,7 @@ static uint8 Eproj_CheckForBombCollisionWithRect(Rect16U rect) {  // 0x86C1B8
     return 0;
   for(int v1 = 10; v1 < 20; v1 += 2) {
     int v2 = v1 >> 1;
-    if ((projectile_type[v2] & kProjectileType_TypeMask) == kProjectileType_Bomb && !projectile_variables[v2]) {
+    if ((projectile_type[v2] & kProjectileType_ProjMask) == kProjectileType_Bomb && !projectile_variables[v2]) {
       uint16 x = abs16(projectile_x_pos[v2] - rect.x);
       if (x < projectile_x_radius[v2] || (uint16)(x - projectile_x_radius[v2]) < rect.w) {
         uint16 y = abs16(projectile_y_pos[v2] - rect.y);

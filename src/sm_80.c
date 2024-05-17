@@ -1827,8 +1827,8 @@ void ToggleHudItemHighlight(uint16 hud_item_index_, uint16 tilemap_palette_bits)
 * @param hud_tilemap_offset The index of the HUD digit into RAM
 */
 void DrawThreeHudDigits(const uint16* digits_tilemap, uint16 num, uint16 hud_tilemap_offset) {  // 0x809D78
-  uint16 hundreds_digit = 2 * (num / 100);
-  hud_tilemap.arr[hud_tilemap_offset >> 1] = digits_tilemap[hundreds_digit >> 1];
+  uint16 hundreds_digit = num / 100;
+  hud_tilemap.arr[hud_tilemap_offset >> 1] = digits_tilemap[hundreds_digit];
   DrawTwoHudDigits(digits_tilemap, num % 100, hud_tilemap_offset + 2);
 }
 
@@ -1840,10 +1840,10 @@ void DrawThreeHudDigits(const uint16* digits_tilemap, uint16 num, uint16 hud_til
 */
 void DrawTwoHudDigits(const uint16* digits_tilemap, uint16 num, uint16 hud_tilemap_offset) {  // 0x809D98
   int offset = hud_tilemap_offset >> 1;
-  uint16 tens_digit = 2 * (num / 10);
-  hud_tilemap.arr[offset] = digits_tilemap[tens_digit >> 1];
-  uint16 ones_digit = 2 * (num % 10);
-  hud_tilemap.arr[offset + 1] = digits_tilemap[ones_digit >> 1];
+  uint16 tens_digit = num / 10;
+  hud_tilemap.arr[offset] = digits_tilemap[tens_digit];
+  uint16 ones_digit = num % 10;
+  hud_tilemap.arr[offset + 1] = digits_tilemap[ones_digit];
 }
 
 static Func_U8 *const kTimerProcessFuncs[7] = {  // 0x809DE7
@@ -1899,7 +1899,7 @@ uint8 ProcessTimer_MotherBrainStart(void) {  // 0x809E1C
 * @return 0 timer has not reached zero
 */
 uint8 ProcessTimer_InitialDelay(void) {  // 0x809E2F
-  ++(uint8)timer_x_pos;
+  (uint8)timer_x_pos++;
   if ((uint8)timer_x_pos >= 0x10)
     LOBYTE(timer_status) = kTimerStatus_4_Counting_MovementDelayed;
   return 0;
@@ -1910,7 +1910,7 @@ uint8 ProcessTimer_InitialDelay(void) {  // 0x809E2F
 * @return uint8 1 if timer is zero, 0 if timer is not zero
 */
 uint8 ProcessTimer_MovementDelayed(void) {  // 0x809E41
-  ++(uint8)timer_x_pos;
+  (uint8)timer_x_pos++;
   if ((uint8)timer_x_pos >= 0x60) {
     LOBYTE(timer_x_pos) = 0;
     LOBYTE(timer_status) = kTimerStatus_5_Counting_MovingIntoPlace;
@@ -2000,7 +2000,7 @@ uint8 ProcessTimer_Decrement(void) {  // 0x809EA9
       }
       // If minutes wrapped
       else {
-        timer_seconds = 89;
+        timer_seconds = 0x59;
       }
     }
   }
