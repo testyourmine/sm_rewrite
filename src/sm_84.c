@@ -1047,7 +1047,7 @@ const uint8 *PlmInstr_MovePlmDownOneBlock_0(const uint8 *plmp, uint16 k) {  // 0
   return plmp;
 }
 
-const uint8 *PlmInstr_ABD6(const uint8 *plmp, uint16 k) {  // 0x84ABD6
+const uint8 *PlmInstr_MovePlmRight1Block(const uint8 *plmp, uint16 k) {  // 0x84ABD6
   plm_block_indices[k >> 1] += 2;
   return plmp;
 }
@@ -1450,7 +1450,7 @@ uint8 PlmSetup_QuicksandSurfaceB(uint16 j) {
   case 0:
   case 3:
     if ((samus_collision_direction & 0xF) == 3) {
-      if (samus_contact_damage_index == 1) {
+      if (samus_contact_damage_index == kSamusContactDamageIndex_1_SpeedBoost) {
         *cur_coll_amt32 = 0;
         return 1;
       } else {
@@ -1461,7 +1461,7 @@ uint8 PlmSetup_QuicksandSurfaceB(uint16 j) {
     }
     break;
   case 2:
-    if (samus_contact_damage_index == 1) {
+    if (samus_contact_damage_index == kSamusContactDamageIndex_1_SpeedBoost) {
       *cur_coll_amt32 = 0;
       return 1;
     } else {
@@ -1511,7 +1511,7 @@ uint8 PlmSetup_B767_ClearShitroidInvisibleWall(uint16 j) {  // 0x84B56F
 }
 
 uint8 PlmSetup_B76B_SaveStationTrigger(uint16 j) {  // 0x84B590
-  if (!power_bomb_explosion_status
+  if (power_bomb_explosion_status == kPowerBombExplosionStatus_Inactive
       && (samus_pose == kPose_01_FaceR_Normal || samus_pose == kPose_02_FaceL_Normal)
       && !save_station_lockout_flag
       && (samus_collision_direction & 0xF) == 3) {
@@ -1569,7 +1569,7 @@ uint8 PlmSetup_B7EB_EnableSoundsIn32Frames(uint16 j) {  // 0x84B7C3
 void PlmPreInstr_B7EB_DecTimerEnableSoundsDeletePlm(uint16 k) {  // 0x84B7DD
   int v2 = k >> 1;
   if (plm_timers[v2]-- == 1) {
-    debug_disable_sounds = 0;
+    disable_sounds = 0;
     plm_header_ptr[v2] = 0;
   }
 }
@@ -1636,9 +1636,8 @@ uint8 PlmSetup_SpeedBoosterEscape(uint16 j) {  // 0x84B89C
 }
 
 void PlmPreInstr_ShaktoolsRoom(uint16 k) {  // 0x84B8B0
-  if (power_bomb_explosion_status) {
-    *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
-    *(uint16 *)&scrolls[2] = (kScroll_Blue << 8) | kScroll_Blue;
+  if (power_bomb_explosion_status != kPowerBombExplosionStatus_Inactive) {
+    scrolls[3] = scrolls[2] = scrolls[1] = scrolls[0] = kScroll_Blue;
   }
   if (samus_x_pos > 0x348) {
     SetEventHappened(kEvent_13_ShaktoolPathCleared);
@@ -2800,7 +2799,7 @@ const uint8 *PlmInstr_ClearChargeBeamCounter(const uint8 *plmp, uint16 k) {  // 
   return plmp;
 }
 
-const uint8 *PlmInstr_E63B(const uint8 *plmp, uint16 k) {  // 0x84E63B
+const uint8 *PlmInstr_MoveFxYUp(const uint8 *plmp, uint16 k) {  // 0x84E63B
   fx_y_vel = -32;
   return plmp;
 }
@@ -3171,8 +3170,8 @@ const uint8 *CallPlmInstr(uint32 ea, const uint8 *j, uint16 k) {
   case fnPlmInstr_DrawItemFrame1: return PlmInstr_DrawItemFrame1(j, k);
   case fnPlmInstr_DrawItemFrame_Common: return PlmInstr_DrawItemFrame_Common(j, k);
   case fnPlmInstr_ClearChargeBeamCounter: return PlmInstr_ClearChargeBeamCounter(j, k);
-  case fnPlmInstr_ABD6: return PlmInstr_ABD6(j, k);
-  case fnPlmInstr_E63B: return PlmInstr_E63B(j, k);
+  case fnPlmInstr_MovePlmRight1Block: return PlmInstr_MovePlmRight1Block(j, k);
+  case fnPlmInstr_MoveFxYUp: return PlmInstr_MoveFxYUp(j, k);
   case fnPlmInstr_SetBtsTo1: return PlmInstr_SetBtsTo1(j, k);
   case fnPlmInstr_DisableSamusControls: return PlmInstr_DisableSamusControls(j, k);
   case fnPlmInstr_EnableSamusControls: return PlmInstr_EnableSamusControls(j, k);

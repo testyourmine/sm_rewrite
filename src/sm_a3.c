@@ -1161,7 +1161,7 @@ void Mochtroid_Touch(void) {  // 0xA3A953
   E->mochtr_var_F = 1;
   SetMochtroidInstruction(cur_enemy_index, addr_kMochtroid_Ilist_A759);
   ++E->mochtr_var_20;
-  if (samus_contact_damage_index)
+  if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal)
     goto LABEL_7;
   if ((random_enemy_counter & 7) == 7 && !sign16(samus_health - 30))
     QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);
@@ -2364,9 +2364,9 @@ void MaridiaSnail_Func_22(uint16 k) {  // 0xA3D49F
   E->msl_var_D = kMaridiaSnail_InstrListPtrs2[v2 + 1];
   E->base.instruction_timer = 1;
   E->base.timer = 0;
-  E->msl_var_02 = absolute_moved_last_frame_x_fract;
-  uint16 v3 = absolute_moved_last_frame_x;
-  E->msl_var_03 = absolute_moved_last_frame_x;
+  E->msl_var_02 = camera_x_subspeed;
+  uint16 v3 = camera_x_speed;
+  E->msl_var_03 = camera_x_speed;
   if (v3 >= 0x10)
     v3 = 15;
   int v4 = (uint16)(4 * v3) >> 1;
@@ -2952,7 +2952,7 @@ void Metroid_Func_4(uint16 varE32) {  // 0xA3EDAB
 void Metroid_Touch(void) {  // 0xA3EDEB
   Enemy_Metroid *E = Get_Metroid(cur_enemy_index);
   uint16 varE32 = samus_y_pos - 8;
-  if (samus_contact_damage_index) {
+  if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal) {
     if (E->metroid_var_F != 2) {
       E->metroid_var_A = 0;
       E->metroid_var_C = 0;

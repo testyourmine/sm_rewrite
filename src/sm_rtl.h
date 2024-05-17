@@ -246,10 +246,10 @@ typedef enum SnesRegs {
   OPVCT = 0x213D,
   STAT77 = 0x213E,
   STAT78 = 0x213F,
-  APUI00 = 0x2140,
-  APUI01 = 0x2141,
-  APUI02 = 0x2142,
-  APUI03 = 0x2143,
+  APUIO0 = 0x2140,
+  APUIO1 = 0x2141,
+  APUIO2 = 0x2142,
+  APUIO3 = 0x2143,
   WMDATA = 0x2180,
   WMADDL = 0x2181,
   WMADDM = 0x2182,
@@ -398,3 +398,7 @@ extern bool msu_enabled;
 void PlayMsuAudioTrack();
 void OpenMsuFile();
 void MixInMsuAudioData(int16* audio_buffer, int audio_samples);
+
+void CopyToVram(uint32 dstv, const void* src, int len, int inc);
+void CopyFromVram(uint32 srcv, void* dst, int len, int inc);
+void MemSetVram(uint32 dstv, int val, int len, int inc);

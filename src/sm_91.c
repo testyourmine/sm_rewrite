@@ -1383,8 +1383,11 @@ void Samus_HandlePalette(void) {
   HandleMiscSamusPalette();
 }
 
+/**
+* @brief Handles the timer, index, and palette for charging up a beam
+*/
 uint8 HandleBeamChargePalettes(void) {  // 0x91D743
-  if (charged_shot_glow_timer) {
+  if (charged_shot_glow_timer != 0) {
     if (hyper_beam_flag) {
       if ((charged_shot_glow_timer & 1) == 0) {
         if ((charged_shot_glow_timer & 0x1E) == 0) {
@@ -1396,28 +1399,28 @@ uint8 HandleBeamChargePalettes(void) {  // 0x91D743
       --charged_shot_glow_timer;
       return 0;
     }
-    if (--charged_shot_glow_timer) {
-      for (int i = 0x1C; i >= 0; i -= 2)
-        palette_buffer.sprite_pal_4[(i >> 1) + 1] = 1023;
+    if (--charged_shot_glow_timer != 0) {
+      memset7E(palette_buffer.sprite_pal_4 + 1, 1023, 0x1E);
       return 0;
-    } else {
+    }
+    else {
       return 1;
     }
-  } else if (grapple_beam_function == FUNC16(GrappleBeamFunc_Inactive)
-             && flare_counter
-             && !sign16(flare_counter - 60)) {
-    uint16 R36;
-    if (samus_contact_damage_index == 4)
-      R36 = kSamusPalette_PseudoScrew[samus_suit_palette_index >> 1];
+  }
+  else if (grapple_beam_function == FUNC16(GrappleBeamFunc_Inactive) && flare_counter != 0 && flare_counter >= 60) {
+    uint16 samus_palette_entry;
+    if (samus_contact_damage_index == kSamusContactDamageIndex_4_PsuedoScrewAttack)
+      samus_palette_entry = kSamusPalette_PseudoScrew[samus_suit_palette_index >> 1];
     else
-      R36 = kSamusPalette_NonPseudoScrew[samus_suit_palette_index >> 1];
-    CopyToSamusSuitPalette(*(uint16 *)RomPtr_91(R36 + samus_charge_palette_index));
-    uint16 v1 = samus_charge_palette_index + 2;
-    if (!sign16(samus_charge_palette_index - 10))
-      v1 = 0;
-    samus_charge_palette_index = v1;
+      samus_palette_entry = kSamusPalette_NonPseudoScrew[samus_suit_palette_index >> 1];
+    CopyToSamusSuitPalette(*(uint16 *)RomPtr_91(samus_palette_entry + samus_charge_palette_index));
+    uint16 next_charge_palette_index = samus_charge_palette_index + 2;
+    if (next_charge_palette_index >= 12)
+      next_charge_palette_index = 0;
+    samus_charge_palette_index = next_charge_palette_index;
     return 0;
-  } else {
+  }
+  else {
     samus_charge_palette_index = 0;
     return HandleVisorPalette();
   }
@@ -1850,10 +1853,10 @@ void Samus_Initialize(void) {  // 0x91E00D
   enable_horiz_slope_coll = 3;
   samus_hurt_flash_counter = 0;
   samus_special_super_palette_flags = 0;
-  absolute_moved_last_frame_x_fract = word_909EAF;
-  absolute_moved_last_frame_x = word_909EAD;
-  absolute_moved_last_frame_y_fract = word_909EB3;
-  absolute_moved_last_frame_y = word_909EB1;
+  camera_x_subspeed = word_909EAF;
+  camera_x_speed = word_909EAD;
+  camera_y_subspeed = word_909EB3;
+  camera_y_speed = word_909EB1;
   for (int i = 510; i >= 0; i -= 2)
     hdma_table_1[i >> 1] = 255;
   samus_y_subaccel = word_909EA1;
@@ -1893,9 +1896,9 @@ uint8 Xray_Initialize(void) {  // 0x91E16D
       && (sign16(samus_pose - kPose_A8_FaceR_Grappling)
           || !sign16(samus_pose - kPose_E0_FaceR_LandJump_AimU) && sign16(samus_pose - kPose_E8_FaceR_Drained_CrouchFalling))
       || game_state != kGameState_8_MainGameplay
-      || power_bomb_explosion_status
-      || samus_y_speed
-      || samus_y_subspeed
+      || power_bomb_explosion_status != kPowerBombExplosionStatus_Inactive
+      || samus_y_speed != 0
+      || samus_y_subspeed != 0
       || kXray_InitalizeIfMovementType[samus_prev_movement_type] == 0) {
     return 0;
   }
@@ -2649,7 +2652,7 @@ void Samus_HandleTransitionsB_1(void) {
   kSamus_HandleTransitionsB_1[samus_prev_movement_type2]();
   Samus_SetSpeedForKnockback_Y();
   bomb_jump_dir = 0;
-  samus_contact_damage_index = 0;
+  samus_contact_damage_index = kSamusContactDamageIndex_0_Normal;
   samus_hurt_flash_counter = 1;
 }
 

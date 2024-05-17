@@ -2023,7 +2023,7 @@ void SamusProjectileInteractionHandler(void) {  // 0xA09785
   } else if (!projectile_counter) {
     return;
   }
-  if (projectile_invincibility_timer || samus_contact_damage_index)
+  if (projectile_invincibility_timer != 0 || samus_contact_damage_index != kSamusContactDamageIndex_0_Normal)
     return;
   for (int pidx = 0; pidx != num_colls_to_check;pidx++) {
     collision_detection_index = pidx;
@@ -2053,7 +2053,7 @@ void SamusProjectileInteractionHandler(void) {  // 0xA09785
 
 void EprojSamusCollDetect(void) {  // 0xA09894
   enemy_processing_stage = 11;
-  if (samus_invincibility_timer || samus_contact_damage_index)
+  if (samus_invincibility_timer != 0 || samus_contact_damage_index != kSamusContactDamageIndex_0_Normal)
     return;
   for(int i = 17; i >= 0; i--) {
     if (eproj_id[i] && (eproj_properties[i] & 0x2000) == 0 && eproj_radius[i]) {
@@ -2191,9 +2191,10 @@ void EnemySamusCollHandler_Multibox(void) {  // 0xA09A5A
   if (touch_ai == FUNC16(nullsub_170) || touch_ai == FUNC16(nullsub_169))
     return;
 
-  if (samus_contact_damage_index) {
+  if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal) {
     samus_invincibility_timer = 0;
-  } else if (samus_invincibility_timer) {
+  }
+  else if (samus_invincibility_timer != 0) {
     return;
   }
   if (!sign16(E->spritemap_pointer))
@@ -2420,9 +2421,10 @@ void EnemySamusCollHandler(void) {  // 0xA0A07A
   enemy_processing_stage = 9;
   if (!E->spritemap_pointer)
     return;
-  if (samus_contact_damage_index) {
+  if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal) {
     samus_invincibility_timer = 0;
-  } else if (samus_invincibility_timer) {
+  }
+  else if (samus_invincibility_timer != 0) {
     if (E->enemy_ptr != addr_kEnemyDef_RespawnEnemyPlaceholder)
       return;
     uint16 some_flag = gEnemySpawnData(cur_enemy_index)->some_flag;
@@ -2552,7 +2554,7 @@ uint16 SuitDamageDivision(uint16 a) {  // 0xA0A45E
 
 void NormalEnemyTouchAi(void) {  // 0xA0A477
   NormalEnemyTouchAiSkipDeathAnim();
-  if (!gEnemyData(cur_enemy_index)->health) {
+  if (gEnemyData(cur_enemy_index)->health == 0) {
     gEnemySpawnData(cur_enemy_index)->cause_of_death = 6;
     EnemyDeathAnimation(cur_enemy_index, 1);
   }
@@ -2562,41 +2564,49 @@ void NormalEnemyTouchAiSkipDeathAnim_CurEnemy(void) {  // 0xA0A497
   NormalEnemyTouchAiSkipDeathAnim();
 }
 
+/**
+* @brief Either deal damage to Samus or to the enemy upon contact
+*/
 void NormalEnemyTouchAiSkipDeathAnim(void) {  // 0xA0A4A1
   EnemyData *E = gEnemyData(cur_enemy_index);
   EnemyDef *ED = get_EnemyDef_A2(E->enemy_ptr);
-  if (samus_contact_damage_index == 0) {
+
+  if (samus_contact_damage_index == kSamusContactDamageIndex_0_Normal) {
     Samus_DealDamage(SuitDamageDivision(ED->damage));
     samus_invincibility_timer = 96;
     samus_knockback_timer = 5;
-    knockback_x_dir = (int16)(samus_x_pos - E->x_pos) >= 0;
+    // @todo: enumerate knockback_x_dir, 0 = left, 1 = right
+    knockback_x_dir = (int16)(samus_x_pos - E->x_pos) >= 0 ? 1 : 0;
     return;
   }
-  uint16 r20 = samus_contact_damage_index + 15;
-  uint16 r22;
-  if (samus_contact_damage_index == 1) {
-    r22 = 500;
-  } else if (samus_contact_damage_index == 2) {
-    r22 = 300;
-  } else if (samus_contact_damage_index == 3) {
-    r22 = 2000;
+
+  uint16 vuln_index = samus_contact_damage_index + 15;
+  uint16 dmg_base;
+  if (samus_contact_damage_index == kSamusContactDamageIndex_1_SpeedBoost) {
+    dmg_base = 500;
+  } else if (samus_contact_damage_index == kSamusContactDamageIndex_2_Shinespark) {
+    dmg_base = 300;
+  } else if (samus_contact_damage_index == kSamusContactDamageIndex_3_ScrewAttack) {
+    dmg_base = 2000;
   } else {
-    ++r20;
-    if (samus_contact_damage_index == 4)
+    ++vuln_index;
+    if (samus_contact_damage_index == kSamusContactDamageIndex_4_PsuedoScrewAttack)
       RunSamusCode(kSamusCode_4_EndChargeBeam);
-    r22 = 200;
+    dmg_base = 200;
   }
-  uint16 vp = ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_kEnemyVulnerability;
-  last_enemy_power = *(uint16 *)&get_Vulnerability(r20 + vp)->power;
-  uint16 varE32 = last_enemy_power & 0x7F;
-  if ((last_enemy_power & 0x7F) != 0) {
-    uint16 dmg = (r22 >> 1) * varE32;
-    if (dmg) {
+
+  uint16 vuln_ptr = ED->vulnerability_ptr ? ED->vulnerability_ptr : addr_kEnemyVulnerability;
+  last_enemy_power = WORD(get_Vulnerability(vuln_index + vuln_ptr)->power);
+  uint16 dmg_multiplier = last_enemy_power & 0x7F;
+  if (dmg_multiplier != 0) {
+    uint16 dmg_dealt = (dmg_base / 2) * dmg_multiplier;
+    if (dmg_dealt != 0) {
       E->flash_timer = ED->hurt_ai_time ? ED->hurt_ai_time : 4;
       E->ai_handler_bits |= kEnemyAiBits_Hurt;
       samus_invincibility_timer = 0;
       samus_knockback_timer = 0;
-      E->health = (int16)(E->health - dmg) < 0 ? 0 : (int16)(E->health - dmg);
+      int16 health_remaining = E->health - dmg_dealt;
+      E->health = IntMax(0, health_remaining);
       QueueSfx2_Max1(kSfx2_EnemyKilledByContactDamage);
     }
   }

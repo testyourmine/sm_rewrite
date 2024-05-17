@@ -12,6 +12,12 @@
 
 #define EARTHQUAKE(dir, disp, lyr) (dir + 3*disp + 9*lyr)
 
+enum NmiEnable { // 0x7E0084
+  kNmi_EnableAutoJoypadRead = 0x1,
+  kNmi_Enable_V_H_Irq = 0x30,
+  kNmi_Enable = 0x80,
+};
+
 /* 95 */
 typedef enum Buttons {  // 0x7E008B
   kButton_R = 0x10,
@@ -53,21 +59,21 @@ typedef struct  VramWriteEntry {  // 0x7E00D0
 } VramWriteEntry;
 
 /* 73 */
-typedef struct  Mode7VramWriteQueue {  // 0x7E02D0
+typedef struct  Mode7CgramWriteQueue {  // 0x7E02D0
   uint8 control;
   uint16 src_addr;
   uint8 gap3[2];
   uint16 field_5;
-} Mode7VramWriteQueue;
+} Mode7CgramWriteQueue;
 
 /* 139 */
-typedef struct Mode7CgvmWriteQueue {  // 0x7E02D0
+typedef struct Mode7VramWriteQueue {  // 0x7E02D0
   uint8 tag;
   LongPtr src_addr;
   uint16 count;
   uint16 vram_addr;
   uint8 vmain;
-} Mode7CgvmWriteQueue;
+} Mode7VramWriteQueue;
 
 /* 106 */
 typedef struct  VramReadQueueEnt {  // 0x7E0340
@@ -91,9 +97,23 @@ typedef struct OamEnt {  // 0x7E0370
   uint8 flags;
 } OamEnt;
 
+enum PowerBombExplosionStatus {  // 0x7E0592
+  kPowerBombExplosionStatus_Inactive = 0x0,
+  kPowerBombExplosionStatus_Pending = 0x4000,
+  kPowerBombExplosionStatus_Active = 0x8000,
+};
+
+enum DebugOptions {  // 0x7E05CF
+  kDebugOption_Draw3DigitsSuperMissile = 0x1F40,
+  kDebugOption_PressedX_HeldSelectR = 0x2000,
+  kDebugOption_DisableInput = 0x4000,
+  kDebugOption_PressedB_HeldSelectR = 0x8000,
+};
+
 enum SaveConfirmationSelection {  // 0x7E05F9
   kConfirmSave_Yes = 0x0,
   kConfirmSave_No = 0x2,
+  kConfirmSave_Toggle = 0x2,
 };
 
 enum MusicEntry {  // 0x7E063D
@@ -297,7 +317,7 @@ enum TimerStatus {  // 0x7E0943
   kTimerStatus_1_CeresStart = 0x1,
   kTimerStatus_2_MotherBrainStart = 0x2,
   kTimerStatus_3_InitialDelay = 0x3,
-  kTimerStatus_4_Counting_DelayMovement = 0x4,
+  kTimerStatus_4_Counting_MovementDelayed = 0x4,
   kTimerStatus_5_Counting_MovingIntoPlace = 0x5,
   kTimerStatus_6_Counting_MovedIntoPlace = 0x6,
 };
@@ -688,6 +708,14 @@ enum SamusMovementType {  // 0x7E0A1F
   kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain = 0x1B,
 };
 
+enum SamusContactDamageIndex {  // 0x7E0A6E
+  kSamusContactDamageIndex_0_Normal = 0x0,
+  kSamusContactDamageIndex_1_SpeedBoost = 0x1,
+  kSamusContactDamageIndex_2_Shinespark = 0x2,
+  kSamusContactDamageIndex_3_ScrewAttack = 0x3,
+  kSamusContactDamageIndex_4_PsuedoScrewAttack = 0x4,
+};
+
 enum SamusSuitPaletteIndex {  // 0x7E0A74
   kSuitPaletteIndex_0_Power = 0x0,
   kSuitPaletteIndex_2_Varia = 0x2,
@@ -718,7 +746,9 @@ enum ProjectileDirection { // 0x7E0C04
 
 /* 52 */
 enum ProjectileType {  // 0x7E0C18
-  kProjectileType_Wave_NormalBombExplosion = 0x1,
+  kProjectileType_NormalBombExplosion = 0x1,
+  kProjectileType_Power = 0x0,
+  kProjectileType_Wave = 0x1,
   kProjectileType_Ice = 0x2,
   kProjectileType_Spazer = 0x4,
   kProjectileType_Plasma = 0x8,
@@ -956,8 +986,8 @@ typedef struct Ram3000_Menu {  // 0x7E3300
 
 /* 149 */
 typedef union Ram3000 {  // 0x7E3000
-  uint16 pause_menu_map_tilemap[1024];
-  uint16 cinematic_bg_tilemap[1024];
+  uint16 pause_menu_map_tilemap[0x800 >> 1];
+  uint16 cinematic_bg_tilemap[0x800 >> 1];
   Ram3000_MsgBox msgbox;
   uint8 msgbox_y_scroll_hdma[240];
   Ram3000_Misc misc;
@@ -966,27 +996,28 @@ typedef union Ram3000 {  // 0x7E3000
 
 /* 136 */
 typedef union Ram3800 {  // 0x7E3800
-  uint16 cinematic_bg_tilemap[1024];
-  uint16 equipment_screen_bg1_tilemap[1024];
-  uint16 debug_game_over_tilemap[1024];
-  uint16 cleared_message_box_bg3_tilemap[1024];
+  uint16 cinematic_bg_tilemap[0x800 >> 1];
+  uint16 equipment_screen_bg1_tilemap[0x800 >> 1];
+  uint16 debug_game_over_tilemap[0x800 >> 1];
+  uint16 cleared_message_box_bg3_tilemap[0x700 >> 1];
 } Ram3800;
 
 /* 137 */
 typedef struct Ram4000_Backups {  // 0x7E4100
   uint8 field_0[256];
-  uint16 backup_of_vram_0x5880_msgbox[896];
+  uint16 backup_of_vram_0x5880_msgbox[0x700 >> 1];
   uint8 field_800[2048];
   uint8 backup_of_0x3e00_in_kraid_pause[1024];
 } Ram4000_Backups;
 
 /* 138 */
 typedef union Ram4000 {  // 0x7E4000
-  uint16 xray_tilemaps[6144];
-  uint16 bg2_tilemap[2048];
-  uint16 decomp_buffer_kraid[1024];
-  uint16 bg2_room_select_map_tilemap[1024];
-  uint16 intro_japanese_text_tiles[768];
+  uint16 xray_tilemaps[0x3000 >> 1];
+  uint16 bg2_tilemap[0x1000 >> 1];
+  uint16 fx_cleared_tilemap[0xF00 >> 1];
+  uint16 decomp_buffer_kraid[0x800 >> 1];
+  uint16 bg2_room_select_map_tilemap[0x800 >> 1];
+  uint16 intro_japanese_text_tiles[0x600 >> 1];
   Ram4000_Backups backups;
 } Ram4000;
 
@@ -2108,19 +2139,32 @@ typedef struct ProjectileDataTable {  // 0x938431
   union { 
     uint16 instr_ptrs[10];
     struct {
-      uint16 up_face_right;
+      uint16 up_to_right;
       uint16 up_right;
       uint16 right;
       uint16 down_right;
-      uint16 down_face_right;
-      uint16 down_face_left;
+      uint16 down_to_right;
+      uint16 down_to_left;
       uint16 down_left;
       uint16 left;
       uint16 up_left;
-      uint16 up_face_left;
+      uint16 up_to_left;
     };
   };
 } ProjectileDataTable;
+
+typedef struct ProjectileInstr_1 {  // 0x9386DB
+  uint16 timer;
+  VoidP spritemap_ptr;
+  uint8 x_radius;
+  uint8 y_radius;
+  uint16 trail_frame;
+} ProjectileInstr_1;
+
+typedef struct ProjectileInstr_2 {  // 0x9386DB
+  VoidP func_ptr;
+  VoidP instr_list_ptr;
+} ProjectileInstr_2;
 
 ///* 45 */
 //typedef union ProjectileInstr {  // 0x9386DB
@@ -2341,7 +2385,7 @@ typedef struct Vulnerability {  // 0xB4EC1C
   uint8 screw_attack;
   uint8 charged_beam;
   uint8 pseudo_screw_attack;
-  uint8 field_15;
+  uint8 unused_field_15;
 } Vulnerability;
 
 /* 59 */
@@ -2653,11 +2697,15 @@ enum Consts_60 {
   addr_kVram_1stScreen = 0x5000,
   addr_kVram_2ndScreenOffset = 0x53E0,
   addr_kVram_2ndScreen = 0x5400,
+  addr_kVram_Bg3Tilemap = 0x5800,
+// BG3 Tilemaps {
   addr_kVram_HudTopRow = 0x5800,
   addr_kVram_Hud = 0x5820,
   addr_kVram_FxBackup = 0x5880,
-  addr_kVram_MessageBox = 0x59A0,
+  addr_kVram_LargeMessageBox = 0x59A0,
+  addr_kVram_SmallMessageBox = 0x59C0,
   addr_kVram_Fx = 0x5BE0,
+// }
   addr_kVram_UnclosedArmCannon = 0x61F0,
   addr_kVram_Beam = 0x6300,
 };
@@ -2666,7 +2714,7 @@ enum Consts_80 {
   //addr_kHudTilemaps_Missiles = 0x99A3,
   //addr_kDigitTilesetsHealth = 0x809DBF,
   //addr_kDigitTilesetsWeapon = 0x809DD3,
-  addr_kTimerSpritemap = 0xA060,
+  addr_kTimerSpritemap_TIME = 0xA060,
 };
 enum Consts_81 {
   addr_kMenuTilemap_GameOver = 0x92DC,
@@ -3264,6 +3312,120 @@ enum Consts_91 {
   addr_kDemoInputObject_BabyMetroidDiscovery = 0x877E,
   addr_kDemoInputObject_OldMotherBrainFight = 0x8784,
   addr_kDemoInstrs_Shinespark_UnseenSection = 0x9346,
+};
+enum Consts_93 {
+  addr_kProjectile_IList_Power_Up = 0x86DB,
+  addr_kProjectile_IList_Power_UpRight = 0x86E7,
+  addr_kProjectile_IList_Power_Right = 0x86F3,
+  addr_kProjectile_IList_Power_DownRight = 0x86FF,
+  addr_kProjectile_IList_Power_Down = 0x870B,
+  addr_kProjectile_IList_Power_DownLeft = 0x8717,
+  addr_kProjectile_IList_Power_Left = 0x8723,
+  addr_kProjectile_IList_Power_UpLeft = 0x872F,
+  addr_kProjectile_IList_Wave_IceWave_Up = 0x873B,
+  addr_kProjectile_IList_Wave_IceWave_Down = 0x8743,
+  addr_kProjectile_IList_Wave_IceWave_DownLeft_UpRight = 0x87C7,
+  addr_kProjectile_IList_Wave_IceWave_Left_Right = 0x884B,
+  addr_kProjectile_IList_Wave_IceWave_DownRight_UpLeft = 0x88CF,
+  addr_kProjectile_IList_Ice = 0x8953,
+  addr_kProjectile_IList_Spazer_SpazerIce_Up = 0x8977,
+  addr_kProjectile_IList_Spazer_SpazerIce_UpRight = 0x8993,
+  addr_kProjectile_IList_Spazer_SpazerIce_Right = 0x89AF,
+  addr_kProjectile_IList_Spazer_SpazerIce_DownRight = 0x89CB,
+  addr_kProjectile_IList_Spazer_SpazerIce_Down = 0x89E7,
+  addr_kProjectile_IList_Spazer_SpazerIce_DownLeft = 0x8A03,
+  addr_kProjectile_IList_Spazer_SpazerIce_Left = 0x8A1F,
+  addr_kProjectile_IList_Spazer_SpazerIce_UpLeft = 0x8A3B,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_Up = 0x8A57,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_UpRight = 0x8AAB,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_Right = 0x8AFF,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_DownRight = 0x8B53,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_Down = 0x8BA7,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_DownLeft = 0x8BFB,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_Left = 0x8C4F,
+  addr_kProjectile_IList_SpazerWave_SpazerIceWave_UpLeft = 0x8CA3,
+  addr_kProjectile_IList_Plasma_PlasmaIce_Down_Up = 0x8CF7,
+  addr_kProjectile_IList_Plasma_PlasmaIce_DownLeft_UpRight = 0x8D0B,
+  addr_kProjectile_IList_Plasma_PlasmaIce_Left_Right = 0x8D1F,
+  addr_kProjectile_IList_Plasma_PlasmaIce_DownRight_UpLeft = 0x8D33,
+  addr_kProjectile_IList_PlasmaIceWave_Down_Up = 0x8D47,
+  addr_kProjectile_IList_PlasmaWave_Down_Up = 0x8D4F,
+  addr_kProjectile_IList_PlasmaIceWave_DownLeft_UpRight = 0x8D93,
+  addr_kProjectile_IList_PlasmaWave_DownLeft_UpRight = 0x8D9B,
+  addr_kProjectile_IList_PlasmaWave_PlasmaIceWave_Left_Right = 0x8DDF,
+  addr_kProjectile_IList_PlasmaIceWave_DownRight_UpLeft = 0x8E2B,
+  addr_kProjectile_IList_PlasmaWave_DownRight_UpLeft = 0x8E33,
+
+  addr_kProjectile_IList_Charged_Power_Up = 0x8E77,
+  addr_kProjectile_IList_Charged_Power_UpRight = 0x8E8B,
+  addr_kProjectile_IList_Charged_Power_Right = 0x8E9F,
+  addr_kProjectile_IList_Charged_Power_DownRight = 0x8EB3,
+  addr_kProjectile_IList_Charged_Power_Down = 0x8EC7,
+  addr_kProjectile_IList_Charged_Power_DownLeft = 0x8EDB,
+  addr_kProjectile_IList_Charged_Power_Left = 0x8EEF,
+  addr_kProjectile_IList_Charged_Power_UpLeft = 0x8F03,
+  addr_kProjectile_IList_Charged_Wave_Up = 0x8F17,
+  addr_kProjectile_IList_Charged_Wave_Down = 0x8F1F,
+  addr_kProjectile_IList_Charged_Wave_DownLeft_UpRight = 0x8FA3,
+  addr_kProjectile_IList_Charged_Wave_Left_Right = 0x9027,
+  addr_kProjectile_IList_Charged_Wave_DownRight_UpLeft = 0x90AB,
+  addr_kProjectile_IList_Charged_Ice = 0x912F,
+  addr_kProjectile_IList_Charged_IceWave_Up = 0x9153,
+  addr_kProjectile_IList_Charged_IceWave_Down = 0x915B,
+  addr_kProjectile_IList_Charged_IceWave_DownLeft_UpRight = 0x91DF,
+  addr_kProjectile_IList_Charged_IceWave_Left_Right = 0x9263,
+  addr_kProjectile_IList_Charged_IceWave_DownRight_UpLeft = 0x92E7,
+  addr_kProjectile_IList_Charged_Spazer_SpazerIce_Down_Up = 0x936B,
+  addr_kProjectile_IList_Charged_Spazer_SpazerIce_DownLeft_UpRight = 0x93BF,
+  addr_kProjectile_IList_Charged_Spazer_SpazerIce_Left_Right = 0x9413,
+  addr_kProjectile_IList_Charged_Spazer_SpazerIce_DownRight_UpLeft = 0x9467,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_Up = 0x94BB,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_UpRight = 0x957F,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_Right = 0x9643,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_DownRight = 0x9707,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_Down = 0x97CB,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_DownLeft = 0x988F,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_Left = 0x9953,
+  addr_kProjectile_IList_Charged_SpazerWave_SpazerIceWave_UpLeft = 0x9A17,
+  addr_kProjectile_IList_Charged_Plasma_PlasmaIce_Down_Up = 0x9ADB,
+  addr_kProjectile_IList_Charged_Plasma_PlasmaIce_DownLeft_UpRight = 0x9B1F,
+  addr_kProjectile_IList_Charged_Plasma_PlasmaIce_Left_Right = 0x9B63,
+  addr_kProjectile_IList_Charged_Plasma_PlasmaIce_DownRight_UpLeft = 0x9BA7,
+  addr_kProjectile_IList_Charged_PlasmaWave_PlasmaIceWave_Down_Up = 0x9BEB,
+  addr_kProjectile_IList_Charged_PlasmaWave_PlasmaIceWave_DownLeft_UpRight = 0x9C9F,
+  addr_kProjectile_IList_Charged_PlasmaWave_PlasmaIceWave_Left_Right = 0x9D53,
+  addr_kProjectile_IList_Charged_PlasmaWave_PlasmaIceWave_DownRight_UpLeft = 0x9E07,
+
+  addr_kProjectile_IList_Missiles_Up = 0x9EBB,
+  addr_kProjectile_IList_Missiles_UpRight = 0x9EC7,
+  addr_kProjectile_IList_Missiles_Right = 0x9ED3,
+  addr_kProjectile_IList_Missiles_DownRight = 0x9EDF,
+  addr_kProjectile_IList_Missiles_Down = 0x9EEB,
+  addr_kProjectile_IList_Missiles_DownLeft = 0x9EF7,
+  addr_kProjectile_IList_Missiles_Left = 0x9F03,
+  addr_kProjectile_IList_Missiles_UpLeft = 0x9F0F,
+  addr_kProjectile_IList_SuperMissile_Up = 0x9F1B,
+  addr_kProjectile_IList_SuperMissile_UpRight = 0x9F27,
+  addr_kProjectile_IList_SuperMissile_Right = 0x9F33,
+  addr_kProjectile_IList_SuperMissile_DownRight = 0x9F3F,
+  addr_kProjectile_IList_SuperMissile_Down = 0x9F4B,
+  addr_kProjectile_IList_SuperMissile_DownLeft = 0x9F57,
+  addr_kProjectile_IList_SuperMissile_Left = 0x9F63,
+  addr_kProjectile_IList_SuperMissile_UpLeft = 0x9F6F,
+  addr_kProjectile_IList_SuperMissile_Link = 0x9F7B,
+  addr_kProjectile_IList_PowerBomb = 0x9F87,
+  addr_kProjectile_IList_Bomb = 0x9FBF,
+  addr_kProjectile_IList_BeamExplosion = 0xA007,
+  addr_kProjectile_IList_MissileExplosion = 0xA039,
+  addr_kProjectile_IList_BombExplosion = 0xA06B,
+  addr_kProjectile_IList_PlasmaSBA = 0xA095,
+  addr_kProjectile_IList_SuperMissileExplosion = 0xA0C1,
+  addr_kProjectile_IList_UnusedProjectile_25h = 0xA0F3,
+  addr_kProjectile_IList_ShinesparkEchoes = 0xA119,
+  addr_kProjectile_IList_Spazer_SBA_Trail = 0xA13D,
+  addr_kProjectile_IList_Wave_SBA = 0xA159,
+  addr_kProjectile_IList_UnusedShinesparkBeam_Projectile_27h = 0xA16D,
+
 };
 enum Consts_94 {
   addr_kGrappleSegmentAnimInstrs0 = 0xB18B,

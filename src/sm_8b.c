@@ -2155,7 +2155,7 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
 }
 
 void CinematicFunction_Intro_FadeIn(void) {  // 0x8BA5A7
-  if (!(HasQueuedMusic() & 1)) {
+  if (!HasQueuedMusic()) {
     cinematic_function = FUNC16(CinematicFunction_Intro_DrawInitJpn);
     screen_fade_delay = 2;
     screen_fade_counter = 2;
@@ -2199,7 +2199,7 @@ void CinematicFunc_Intro_QueueGalaxyIsAtPeace(void) {  // 0x8BA613
 }
 
 void CinematicFunc_Intro_WaitForQueueWait4secs(void) {  // 0x8BA639
-  if (!(HasQueuedMusic() & 1)) {
+  if (!HasQueuedMusic()) {
     cinematic_function = FUNC16(CinematicFunc_Intro_FadeOut);
     cinematic_func_timer = 240;
   }
@@ -2260,7 +2260,7 @@ void CinematicFunc_Intro_SetupTextPage2(void) {  // 0x8BA66F
 }
 
 void CinematicFunc_Intro_WaitFadeinShowText(void) {  // 0x8BA82B
-  if (!(HasQueuedMusic() & 1)) {
+  if (!HasQueuedMusic()) {
     cinematic_function = FUNC16(CinematicFunc_Intro_WaitForFadeinSleep);
     screen_fade_delay = 2;
     screen_fade_counter = 2;
@@ -3529,7 +3529,7 @@ void CinematicFunction_Intro_Func54(void) {  // 0x8BBCA0
 }
 
 void CinematicFunction_Intro_Func55(void) {  // 0x8BBDE4
-  if (!(HasQueuedMusic() & 1)) {
+  if (!HasQueuedMusic()) {
     reg_INIDISP = 15;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func56);
   }
@@ -3815,7 +3815,7 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
 }
 
 void CinematicFunction_Intro_Func74(void) {  // 0x8BC2E4
-  if (!(HasQueuedMusic() & 1))
+  if (!HasQueuedMusic())
     cinematic_function = FUNC16(CinematicFunction_Intro_Func75);
 }
 
@@ -4373,7 +4373,7 @@ void CinematicFunctionEscapeFromCebes(void) {  // 0x8BD480
 }
 
 void CinematicFunction_Intro_Func109(void) {  // 0x8BD6D7
-  if (!(HasQueuedMusic() & 1)) {
+  if (!HasQueuedMusic()) {
     SpawnPalfxObject(addr_kPalfx_ZebesExploding_Lava);
     SpawnPalfxObject(addr_kPalfx_ZebesExploding_FadeOutCrust);
     cinematic_function = FUNC16(CinematicFunction_Intro_Func110);
@@ -4653,7 +4653,7 @@ void CinematicFunction_Intro_Func119(void) {  // 0x8BDB9E
 }
 
 void CinematicFunction_Intro_Func120(void) {  // 0x8BDBC4
-  if (!(HasQueuedMusic() & 1)) {
+  if (!HasQueuedMusic()) {
     reg_BGMODE = 7;
     reg_M7SEL = 0x80;
     reg_TM = 17;
@@ -4931,7 +4931,7 @@ void CinematicFunction_Intro_Func132(void) {  // 0x8BE190
     reg_CGADSUB = 0;
     cinematic_func_timer = 180;
     cinematic_function = FUNC16(CinematicFunction_Intro_Func134);
-    g_word_7E0D9C = 0;
+    hdma_wavy_samus_enable_flag = 0;
   }
 }
 

@@ -2,21 +2,21 @@
 
 
 // Bank 80
-uint16 CheckEventHappened(uint16 a);
+bool CheckEventHappened(uint16 a);
 uint16 NextRandom(void);
 uint16 PrepareBitAccess(uint16 a);
 uint8 CalculateLayer2Xpos(void);
 uint8 CalculateLayer2Ypos(void);
-uint8 CheckBossBitForCurArea(uint16 a);
+bool CheckBossBitForCurArea(uint16 a);
 uint8 DoorTransition_Down(void);
 uint8 DoorTransition_Left(void);
 uint8 DoorTransition_Right(void);
 uint8 DoorTransition_Up(void);
-uint8 HasQueuedMusic(void);
+bool HasQueuedMusic(void);
 uint8 ProcessTimer(void);
 uint8 ProcessTimer_CeresStart(void);
 uint8 ProcessTimer_Decrement(void);
-uint8 ProcessTimer_Empty(void);
+uint8 ProcessTimer_Inactive(void);
 uint8 ProcessTimer_InitialDelay(void);
 uint8 ProcessTimer_MotherBrainStart(void);
 uint8 ProcessTimer_MovedIntoPlace(void);
@@ -38,7 +38,7 @@ void ClearEventHappened(uint16 a);
 void ClearFXTilemap(void);
 void ClearOamExt(void);
 void ClearTimerRam(void);
-void ConfigureMode7RotationMatrix(void);
+void UNUSED_ConfigureMode7RotationMatrix(void);
 void CopySuperMetroidString(void);
 void DebugScrollPosSaveLoad(void);
 void DecompressToMem(uint32 src, uint8 *decompress_dst);
@@ -1168,9 +1168,9 @@ void AccelerateMissileOrSuperMissile(uint16 k);
 void SpawnSuperMissileLink(void);
 void MoveSamusWithControlPad(void);
 void HandlePowerBomb(void);
-void ProjInstr_MoveLeftProjectileTrailDown(uint16 j);
-void ProjInstr_MoveLeftProjectileTrailUp(uint16 j);
-void ProjInstr_MoveRightProjectileTrailDown(uint16 j);
+void ProjTrailInstr_MoveLeftProjectileTrailDown(uint16 j);
+void ProjTrailInstr_MoveLeftProjectileTrailUp(uint16 j);
+void ProjTrailInstr_MoveRightProjectileTrailDown(uint16 j);
 void ProjPreInstr_BeamOrIceWave(uint16 k);
 void ProjPreInstr_Beam_NoWaveBeam(uint16 k);
 void ProjPreInstr_Bomb(uint16 k);
@@ -1659,8 +1659,8 @@ void SetSamusTilesDefsForCurAnim(void);
 void Unused_SamusTileViewer(void);
 
 // Bank 93
-uint16 Proj93Instr_Delete(uint16 k, uint16 j);
-uint16 Proj93Instr_Goto(uint16 k, uint16 j);
+uint16 ProjInstr_Delete(uint16 k, uint16 j);
+uint16 ProjInstr_Goto(uint16 k, uint16 j);
 void DrawBombAndProjectileExplosions(void);
 void DrawProjectiles(void);
 void InitializeBombExplosion(uint16 k);
@@ -4446,7 +4446,7 @@ void VerifySRAM(void);
 #define fnPlmSetup_CrumbleBotwoonWall 0x84AB28
 #define fnPlmInstr_Scroll_0_1_Blue 0x84AB51
 #define fnPlmInstr_MovePlmDownOneBlock_0 0x84AB59
-#define fnPlmInstr_ABD6 0x84ABD6
+#define fnPlmInstr_MovePlmRight1Block 0x84ABD6
 #define fnPlmPreInstr_PositionSamusAndInvincible 0x84AC89
 #define fnPlmInstr_DealDamage_2 0x84AC9D
 #define fnPlmInstr_GiveInvincibility 0x84ACB1
@@ -4643,7 +4643,7 @@ void VerifySRAM(void);
 #define fnPlmInstr_DrawItemFrame1 0x84E067
 #define fnPlmInstr_DrawItemFrame_Common 0x84E07F
 #define fnPlmInstr_ClearChargeBeamCounter 0x84E29D
-#define fnPlmInstr_E63B 0x84E63B
+#define fnPlmInstr_MoveFxYUp 0x84E63B
 #define fnPlmSetup_EnergyTank 0x84EE4D
 #define fnPlmSetup_MissileTank 0x84EE52
 #define fnPlmSetup_SuperMissileTank 0x84EE57
@@ -5699,9 +5699,9 @@ void VerifySRAM(void);
 #define fnProjPreInstr_BlockCollWaveBeamHoriz 0x90B151
 #define fnProjPreInstr_HyperBeam 0x90B159
 #define fnProjPreInstr_Empty 0x90B169
-#define fnProjInstr_MoveLeftProjectileTrailDown 0x90B525
-#define fnProjInstr_MoveRightProjectileTrailDown 0x90B587
-#define fnProjInstr_MoveLeftProjectileTrailUp 0x90B5B3
+#define fnProjTrailInstr_MoveLeftProjectileTrailDown 0x90B525
+#define fnProjTrailInstr_MoveRightProjectileTrailDown 0x90B587
+#define fnProjTrailInstr_MoveLeftProjectileTrailUp 0x90B5B3
 #define fnProjPreInstr_IceSbaMain 0x90CF09
 #define fnProjPreInstr_IceSbaEnd 0x90CF7A
 #define fnSamus_MovementHandler_ShinesparkWindup 0x90D068
@@ -5824,8 +5824,8 @@ void VerifySRAM(void);
 #define fnnullsub_24 0x91FC07
 #define fnnullsub_25 0x91FCAE
 #define fnSamus_Func20 0x91FCAF
-#define fnProj93Instr_Delete 0x93822F
-#define fnProj93Instr_Goto 0x938239
+#define fnProjInstr_Delete 0x93822F
+#define fnProjInstr_Goto 0x938239
 #define fnGrappleInstr_Goto 0x94B0F4
 #define fnnullsub_6 0x9BB8D4
 #define fnGrappleNext_SwingClockwise 0x9BB9D9

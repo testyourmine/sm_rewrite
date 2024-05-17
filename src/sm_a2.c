@@ -3717,7 +3717,7 @@ void RisingFallingPlatform_Main(void) {  // 0xA2EED1
       && E->rfpm_var_A != FUNC16(RisingFallingPlatform_Func_10)
       && (enemy_index_colliding_dirs[3] & (uint16)(enemy_index_colliding_dirs[2] & enemy_index_colliding_dirs[1] & enemy_index_colliding_dirs[0])) != 0xFFFF
       && (enemy_index_colliding_dirs[3] & (uint16)(enemy_index_colliding_dirs[2] & enemy_index_colliding_dirs[1] & enemy_index_colliding_dirs[0])) == cur_enemy_index) {
-    if (samus_contact_damage_index)
+    if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal)
       RisingFallingPlatform_Powerbomb();
   }
 }
@@ -3921,7 +3921,7 @@ void HorizontalShootableShutter_Main(void) {  // 0xA2F1DE
       && E->rfpm_var_A != FUNC16(HorizontalShootableShutter_Func_9)
       && (enemy_index_colliding_dirs[3] & (uint16)(enemy_index_colliding_dirs[2] & enemy_index_colliding_dirs[1] & enemy_index_colliding_dirs[0])) != 0xFFFF
       && (enemy_index_colliding_dirs[3] & (uint16)(enemy_index_colliding_dirs[2] & enemy_index_colliding_dirs[1] & enemy_index_colliding_dirs[0])) == cur_enemy_index
-      && samus_contact_damage_index) {
+      && samus_contact_damage_index != kSamusContactDamageIndex_0_Normal) {
     HorizontalShootableShutter_Powerbomb();
   }
   E->rfpm_var_15 = samus_x_pos;

@@ -931,7 +931,7 @@ void EprojPreInstr_8DCA(uint16 k) {  // 0x868DCA
   int v1;
 
   EprojPowerBombCollision(k);
-  if (samus_contact_damage_index
+  if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal
       || (v1 = k >> 1,
           eproj_x_pos[v1] = samus_x_pos,
           eproj_y_pos[v1] = samus_y_pos + 4 * eproj_F[v1] - 12,

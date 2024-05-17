@@ -12,6 +12,10 @@ void SoftReset(void) {
   game_state = 0xffff;
 }
 
+/**
+* @brief Saves the current game progress to SRAM
+* @param a The current save slot
+*/
 void SaveToSram(uint16 a) {  // 0x818000
   uint16 v7;
   uint16 v11;
@@ -50,6 +54,11 @@ void SaveToSram(uint16 a) {  // 0x818000
   RtlWriteSram();
 }
 
+/**
+* @brief Loads the saved game progress
+* @param a The current save slot
+* @return true if SRAM is corrupt, false if SRAM isn't corrupt
+*/
 uint8 LoadFromSram(uint16 a) {  // 0x818085
   uint16 r20 = 0;
   uint16 r18 = 2 * (a & 3);
@@ -575,7 +584,7 @@ void GameOverMenu_1_Init(void) {  // 0x8191A4
 }
 
 void GameOverMenu_2_PlayMusic(void) {  // 0x8193E8
-  if (!(HasQueuedMusic())) {
+  if (!HasQueuedMusic()) {
     ++menu_index;
     QueueMusic_Delayed8(kMusic_PreStatueHall_PreRidleyFight_GameOver);
   }

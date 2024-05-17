@@ -420,7 +420,7 @@ CoroutineRet GameState_42_PlayingDemo_Async(void) {  // 0x828548
 
 LABEL_10:
     ++game_state;
-    debug_disable_sounds = 0;
+    disable_sounds = 0;
     reg_INIDISP = 0x80;
     screen_fade_delay = 1;
     screen_fade_counter = 1;
@@ -465,7 +465,7 @@ CoroutineRet GameState_44_TransitionFromDemo(void) {  // 0x8285FB
     cinematic_function = FUNC16(CinematicFunctionNone);
   } else {
     QueueMusic_Delayed8(kMusic_Stop);
-    debug_disable_sounds = 0;
+    disable_sounds = 0;
     cinematic_function = FUNC16(CinematicFunctionOpening);
   }
   return kCoroutineNone;
@@ -686,17 +686,18 @@ static Func_Y_V *const kSfxHandlers[5] = {  // 0x8289EF
 };
 
 void HandleSoundEffects(void) {
-  if ((int8)(sound_handler_downtime - 1) >= 0) {
-    LOBYTE(sound_handler_downtime) = sound_handler_downtime - 1;
-    RtlApuWrite(APUI01, 0);
+  if (sound_handler_downtime > 0) {
+    --sound_handler_downtime;
+    RtlApuWrite(APUIO1, 0);
     sfx_cur[0] = 0;
-    RtlApuWrite(APUI02, 0);
+    RtlApuWrite(APUIO2, 0);
     sfx_cur[1] = 0;
-    RtlApuWrite(APUI03, 0);
+    RtlApuWrite(APUIO3, 0);
     sfx_cur[2] = 0;
-  } else {
-    for (int i = 0; i < 3; ++i)
-      kSfxHandlers[sfx_state[i]](i);
+  }
+  else {
+    for (int sfx_index = 0; sfx_index < 3; ++sfx_index)
+      kSfxHandlers[sfx_state[sfx_index]](sfx_index);
   }
 }
 
@@ -704,7 +705,7 @@ void SfxHandlers_0_SendToApu(uint16 j) {  // 0x828A2C
   if (sfx_readpos[j] != sfx_writepos[j]) {
     uint8 v2 = sfx_readpos[j] + j * 16;
     uint8 v3 = sfx1_queue[v2];
-    RtlApuWrite((SnesRegs)(j + APUI01), v3);
+    RtlApuWrite((SnesRegs)(j + APUIO1), v3);
     sfx_cur[j] = v3;
     sfx_readpos[j] = (v2 + 1) & 0xF;
     ++sfx_state[j];
@@ -2377,20 +2378,23 @@ void EquipmentScreenCategory_Tanks(void) {
 
 void EquipmentScreenHandleDpad(void) {  // 0x82AC8B
   uint16 r18 = pausemenu_equipment_category_item;
-  if ((joypad1_newkeys & kButton_Right) != 0) {
-    if ((joypad1_newkeys & kButton_Down) != 0 || EquipmentScreenMoveLowerOnSuitsMisc(0) == 0xFFFF)
+  if (joypad1_newkeys & kButton_Right) {
+    if ((joypad1_newkeys & kButton_Down) || EquipmentScreenMoveLowerOnSuitsMisc(0) == 0xFFFF)
       EquipmentScreenMoveToHighJumpOrLowerInBoots(0, r18);
-  } else if ((joypad1_newkeys & kButton_Up) != 0) {
+  }
+  else if (joypad1_newkeys & kButton_Up) {
     if ((pausemenu_equipment_category_item & 0xFF00) != (kEquipmentItem_Tanks_0_Mode << 8)) {
       QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
       pausemenu_equipment_category_item -= 256;
     }
-  } else if ((joypad1_newkeys & kButton_Down) != 0) {
+  }
+  else if (joypad1_newkeys & kButton_Down) {
     if ((pausemenu_equipment_category_item & 0xFF00) == (kEquipmentItem_Tanks_1_Reserve << 8)
         || reserve_health_mode == kReserveHealthMode_1_Auto
-        || (pausemenu_equipment_category_item += 256, samus_reserve_health != 0)) {
+        || (pausemenu_equipment_category_item += 256, samus_reserve_health == 0)) {
       EquipmentScreenMoveToBeams(0, r18);
-    } else {
+    }
+    else {
       QueueSfx1_Max6(kSfx1_MovedCursorToggleReserveMode);
     }
   }
@@ -3492,7 +3496,7 @@ CoroutineRet GameState_20_SamusNoHealth_BlackOut(void) {  // 0x82DCE0
     samus_death_anim_timer = 0;
     samus_death_anim_counter = 0;
     ++game_state;
-    power_bomb_explosion_status = 0;
+    power_bomb_explosion_status = kPowerBombExplosionStatus_Inactive;
     QueueSfx1_Max15(kSfx1_Silence);
     QueueSfx2_Max15(kSfx2_Silence);
     QueueSfx3_Max15(kSfx3_Silence);
@@ -3545,7 +3549,7 @@ CoroutineRet GameState_25_SamusNoHealth_BlackOut(void) {  // 0x82DDC7
     screen_fade_counter = 0;
     ++game_state;
     menu_index = 0;
-    debug_disable_sounds = 0;
+    disable_sounds = 0;
   }
   return kCoroutineNone;
 }
@@ -3625,14 +3629,14 @@ void PointlessFunctionStupidToo(void) {  // 0x82DF80
 }
 
 void SaveMapExploredifElevator(void) {  // 0x82DF99
-  if ((elevator_door_properties & kElevatorDoor_DebugElevatorBitmask) != 0)
+  if (elevator_door_properties & kElevatorDoor_DebugElevatorBitmask)
     SetDebugElevatorsAsUsed();
-  if ((get_DoorDef(door_def_ptr).door_bitflags & kElevatorDoor_NewMapArea) != 0)
+  if (get_DoorDef(door_def_ptr).door_bitflags & kElevatorDoor_NewMapArea)
     SaveExploredMapTilesToSaved();
 }
 
 void LoadMapExploredIfElevator(void) {  // 0x82DFB6
-  if ((get_DoorDef(door_def_ptr).door_bitflags & kElevatorDoor_NewMapArea) != 0)
+  if (get_DoorDef(door_def_ptr).door_bitflags & kElevatorDoor_NewMapArea)
     LoadMirrorOfExploredMapTiles();
 }
 
@@ -3811,7 +3815,7 @@ CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
   }
   ClearSoundsWhenGoingThroughDoor();
   QueueSfx2_Max15(kSfx2_Silence);
-  debug_disable_sounds = -1;
+  disable_sounds = -1;
   door_transition_function = FUNC16(DoorTransitionFunction_WaitForSoundsToFinish);
   ++game_state;
   return kCoroutineNone;
@@ -4126,7 +4130,7 @@ CoroutineRet DoorTransitionFunction_FadeInScreenAndFinish(void) {  // 0x82E737
   EnsureSamusDrawnEachFrame();
   QueueEnemyBG2TilemapTransfers();
   if (AdvancePaletteFadeForAllPalettes_0xc()) {
-    debug_disable_sounds = 0;
+    disable_sounds = 0;
     PlaySpinJumpSoundIfSpinJumping();
     door_transition_flag_elevator_zebetites = 0;
     door_transition_flag_enemies = 0;

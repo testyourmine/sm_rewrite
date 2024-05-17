@@ -490,6 +490,12 @@ void RtlSaveLoad(int cmd, int slot) {
   }
 }
 
+/**
+* @brief Copies size bytes from the source to the destination
+* @param *dst Pointer to destination
+* @param *src Pointer to source
+* @param size Amount of bytes to copy
+*/
 void MemCpy(void *dst, const void *src, int size) {
   memcpy(dst, src, size);
 }
@@ -569,7 +575,7 @@ static struct ApuWriteEnt g_apu_write_ents[kApuMaxQueueSize], g_apu_write;
 static uint8 g_apu_write_ent_pos, g_apu_queue_size, g_apu_time_since_empty;
 
 void RtlApuWrite(uint32 adr, uint8 val) {
-  assert(adr >= APUI00 && adr <= APUI03);
+  assert(APUIO0 <= adr && adr <= APUIO3);
 
   if (is_uploading_apu) {
     snes_catchupApu(g_snes); // catch up the apu before writing
@@ -577,6 +583,7 @@ void RtlApuWrite(uint32 adr, uint8 val) {
     return;
   }
 
+  // If running port code
   if (g_snes->runningWhichVersion != 2) {
     g_apu_write.ports[adr & 0x3] = val;
   }
@@ -775,23 +782,23 @@ static const uint8 kMsuTrackIndices[25][4] ={
 };
 
 void PlayMsuAudioTrack() {
-  if (!msu_enabled || ((music_entry & 0x7F) == 4)) {   //if msu is not enabled, disable msu and write to APU as normal
+  if (!msu_enabled || (music_track_index == 4)) {   //if msu is not enabled, disable msu and write to APU as normal
     msu_track = 0;
-    RtlApuWrite(APUI00, music_entry & 0x7F);
+    RtlApuWrite(APUIO0, music_track_index);
     return;
   }
 
   //RtlApuLock();
-  if ((music_entry & 0x7F) != 0) {  //if playing a song that isn't the pre-statue hall, set the msu track to the spc track, set msu to max volume, clear msu sample
-    if (cur_music_track == (music_entry & 0x7F)) {  //if the msu track hasn't changed, do nothing
+  if (music_track_index != 0) {  //if playing a song that isn't the pre-statue hall, set the msu track to the spc track, set msu to max volume, clear msu sample
+    if (cur_music_track == music_track_index) {  //if the msu track hasn't changed, do nothing
       return;
     }
-    else if ((music_entry & 0x7F) < 5) {  //if the music entry is track 1, 2, or 3, then set the msu track
+    else if (music_track_index < 5) {  //if the music entry is track 1, 2, or 3, then set the msu track
       msu_track = music_entry & 0x7F;
     }
     else  {
       uint8 msu_track_bank = (music_data_index & 0x7F) / 3;
-      uint8 msu_track_index = (music_entry & 0x7F) - 5;
+      uint8 msu_track_index = music_track_index - 5;
       msu_track = kMsuTrackIndices[msu_track_bank][msu_track_index];
     }
     msu_volume = 100;
@@ -800,11 +807,11 @@ void PlayMsuAudioTrack() {
   }
   if (msu_file == NULL || msu_track == 0) {  //if there is no msu file, disable msu and write to APU as normal
     msu_track = 0;
-    RtlApuWrite(APUI00, music_entry & 0x7F);
+    RtlApuWrite(APUIO0, music_track_index);
     return;
   }
 
-  RtlApuWrite(APUI00, 0x0); //don't play the spc
+  RtlApuWrite(APUIO0, 0x0); //don't play the spc
   //RtlApuUnlock();
 };
 
@@ -825,7 +832,7 @@ void OpenMsuFile() {
       fclose(msu_file);
       msu_file = NULL;
     }
-    RtlApuWrite(APUI00, msu_track); //write the msu track to audio and reset the msu track
+    RtlApuWrite(APUIO0, msu_track); //write the msu track to audio and reset the msu track
     msu_track = 0;
     return;
   }
@@ -881,7 +888,7 @@ void MixInMsuAudioData(int16* audio_buffer, int audio_samples) {
     }
 
     if (last_audio_samples == audio_samples) {  //handle an error
-      RtlApuWrite(APUI00, msu_track);
+      RtlApuWrite(APUIO0, msu_track);
       fclose(msu_file);
       msu_file = NULL;
       return;
@@ -898,6 +905,57 @@ void MixInMsuAudioData(int16* audio_buffer, int audio_samples) {
   }
 };
 
+/**
+* @brief Transfers the data in RAM to VRAM
+* @param dstv The address of VRAM to write to
+* @param src The source of the data
+* @param len The size of the data to transfer
+* @param inc The amount to increment the VRAM address by
+*/
+void CopyToVram(uint32 dstv, const void* src, int len, int inc) {
+  //MemCpy(&g_snes->ppu->vram[dstv], src, len);
+  const uint16 *p = src;
+  int offset = 0;
+  for (int i = 0; i < len/2; i++) {
+    g_snes->ppu->vram[dstv + offset] = *p;
+    p++;
+    offset += inc;
+  }
+}
 
+/**
+* @brief Transfers the data in VRAM to RAM
+* @param srcv The address of VRAM to read from
+* @param dst The destination to write to
+* @param len The size of the data to transfer
+* @param inc The amount to increment the VRAM address by
+*/
+void CopyFromVram(uint32 srcv, void* dst, int len, int inc) {
+  //MemCpy(src, &g_snes->ppu->vram[dstv], len);
+  uint16 *p = dst;
+  int offset = 0;
+  for (int i = 0; i < len/2; i++) {
+    *p = g_snes->ppu->vram[srcv + offset];
+    p++;
+    offset += inc;
+  }
+}
 
-
+/**
+* @brief Sets the memory in VRAM to val
+* @param dstv The address of VRAM to write to
+* @param val The value to write
+* @param len The size of the data to transfer
+* @param inc The amount to increment the VRAM address by, 8 sets high byte, 4 sets low byte
+*/
+void MemSetVram(uint32 dstv, int val, int len, int inc) {
+  //memset(dstv, val, len);
+  int offset = 0;
+  for (int i = 0; i < len/2; i++) {
+    if (inc & 8)
+      HIBYTE(g_snes->ppu->vram[dstv + offset]) = val;
+    if (inc & 4)
+      LOBYTE(g_snes->ppu->vram[dstv + offset]) = val;
+    offset += (inc & ~12);
+  }
+}

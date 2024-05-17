@@ -2227,7 +2227,7 @@ void Beetom_Touch(void) {  // 0xA8BE2E
     E->beetom_var_06 = samus_x_pos - E->base.x_pos;
     E->beetom_var_07 = samus_y_pos - E->base.y_pos;
   }
-  if (samus_contact_damage_index)
+  if (samus_contact_damage_index != kSamusContactDamageIndex_0_Normal)
     goto LABEL_11;
   if ((random_enemy_counter & 7) == 7 && !sign16(samus_health - 30))
     QueueSfx3_Max6(kSfx3_GainingLosingIncrementalHealth);

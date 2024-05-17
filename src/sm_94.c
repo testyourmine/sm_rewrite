@@ -1103,11 +1103,11 @@ static void nullsub_165(void) {  // 0x9497D7
 }
 
 static void BlockInsideReact_SpikeAir_BTS2(void) {  // 0x949866
-  if (!samus_contact_damage_index && !samus_invincibility_timer) {
+  if (samus_contact_damage_index == kSamusContactDamageIndex_0_Normal && samus_invincibility_timer == 0) {
     samus_invincibility_timer = 60;
     samus_knockback_timer = 10;
     samus_periodic_damage += 16;
-    knockback_x_dir = ((*(uint16 *)&samus_pose_x_dir ^ (kSamusXDir_FaceRight | kSamusXDir_FaceLeft)) & kSamusXDir_FaceRight) != 0;
+    knockback_x_dir = ((WORD(samus_pose_x_dir) ^ (kSamusXDir_FaceRight | kSamusXDir_FaceLeft)) & kSamusXDir_FaceRight) != 0;
   }
   samus_x_speed_table_pointer = addr_kSamusSpeedTable_Normal_X;
 }
@@ -1447,8 +1447,8 @@ static void BlockColl_BombExplosion(CollInfo *ci, uint16 k) {  // 0x949CF4
   int v1 = k >> 1;
   if (!projectile_variables[v1]) {
     v2 = projectile_type[v1];
-    if ((v2 & kProjectileType_Wave_NormalBombExplosion) == 0) {
-      projectile_type[v1] = v2 | kProjectileType_Wave_NormalBombExplosion;
+    if ((v2 & kProjectileType_NormalBombExplosion) == 0) {
+      projectile_type[v1] = v2 | kProjectileType_NormalBombExplosion;
       if (cur_block_index != 0xFFFF) {
         uint16 v3 = 2 * cur_block_index;
         BlockBombedReact(ci, 2 * cur_block_index);
@@ -2355,16 +2355,16 @@ uint8 HandleMovementAndCollForSamusGrapple(void) {  // 0x94ACFE
   int16 v7;
   uint16 v3, v6;
   uint16 grapple_beam_tmpD86, grapple_beam_tmpD88;
-  uint16 tmpD9C;
+  uint16 grapple_beam_grapple_swing_total_angular_velocity;
   uint16 v0 = 256;
   if ((grapple_beam_flags & 1) != 0)
     v0 = 160;
-  uint16 v1 = grapple_beam_unkD2E + grapple_beam_unkD26;
-  if ((int16)(grapple_beam_unkD2E + grapple_beam_unkD26) >= 0) {
+  uint16 v1 = grapple_beam_angular_velocity_extra + grapple_beam_angular_velocity;
+  if ((int16)(grapple_beam_angular_velocity_extra + grapple_beam_angular_velocity) >= 0) {
     prod16 = Multiply16x16(v1, v0) >> 8;
     if (!prod16)
       return 0;
-    tmpD9C = prod16;
+    grapple_beam_grapple_swing_total_angular_velocity = prod16;
     grapple_beam_tmpD88 = 2 * ((uint16)(grapple_beam_end_angle16 + prod16) >> 8);
     uint16 v2;
     v2 = 2 * grapple_beam_end_angle_hi;
@@ -2381,31 +2381,31 @@ uint8 HandleMovementAndCollForSamusGrapple(void) {  // 0x94ACFE
       LOBYTE(v4) = 0;
       HIBYTE(v4) = grapple_beam_tmpD86 >> 1;
       grapple_beam_end_angle16 = v4 | 0x80;
-      grapple_beam_end_angles_mirror = v4 | 0x80;
+      grapple_beam_end_angle_mirror = v4 | 0x80;
       if (grapple_beam_grapple_swing_coll_dist != 6 && grapple_beam_grapple_swing_coll_dist != 5 || grapple_beam_length != 8)
         goto LABEL_39;
 LABEL_23:
-      grapple_beam_unkD36 |= 0x8000;
-      grapple_beam_unkD26 = 0;
-      grapple_beam_unkD2E = 0;
+      grapple_beam_angle_handling_flag |= 0x8000;
+      grapple_beam_angular_velocity = 0;
+      grapple_beam_angular_velocity_extra = 0;
       return 1;
     }
 LABEL_12:
-    grapple_beam_end_angle16 += tmpD9C;
-    grapple_beam_end_angles_mirror = grapple_beam_end_angle16;
-    grapple_beam_unkD36 &= ~0x8000;
-    if ((--grapple_beam_unkD30 & 0x8000) != 0)
-      grapple_beam_unkD30 = 0;
-    if ((grapple_beam_unkD2E & 0x8000) == 0) {
-      v3 = grapple_beam_unkD2E - 6;
-      if ((int16)(grapple_beam_unkD2E - 6) >= 0) {
+    grapple_beam_end_angle16 += grapple_beam_grapple_swing_total_angular_velocity;
+    grapple_beam_end_angle_mirror = grapple_beam_end_angle16;
+    grapple_beam_angle_handling_flag &= ~0x8000;
+    if ((--grapple_beam_kick_cooldown_timer & 0x8000) != 0)
+      grapple_beam_kick_cooldown_timer = 0;
+    if ((grapple_beam_angular_velocity_extra & 0x8000) == 0) {
+      v3 = grapple_beam_angular_velocity_extra - 6;
+      if ((int16)(grapple_beam_angular_velocity_extra - 6) >= 0) {
 LABEL_19:
-        grapple_beam_unkD2E = v3;
+        grapple_beam_angular_velocity_extra = v3;
         return 0;
       }
     } else {
-      v3 = grapple_beam_unkD2E + 6;
-      if ((int16)(grapple_beam_unkD2E + 6) < 0)
+      v3 = grapple_beam_angular_velocity_extra + 6;
+      if ((int16)(grapple_beam_angular_velocity_extra + 6) < 0)
         goto LABEL_19;
     }
     v3 = 0;
@@ -2414,27 +2414,27 @@ LABEL_19:
   prod16 = Multiply16x16(-v1, v0) >> 8;
   if (!prod16)
     return 0;
-  tmpD9C = -prod16;
+  grapple_beam_grapple_swing_total_angular_velocity = -prod16;
   grapple_beam_tmpD88 = 2 * ((uint16)(grapple_beam_end_angle16 - prod16) >> 8);
   uint16 v5;
   v5 = 2 * grapple_beam_end_angle_hi;
   if (v5 == grapple_beam_tmpD88) {
 LABEL_28:
-    grapple_beam_end_angle16 += tmpD9C;
-    grapple_beam_end_angles_mirror = grapple_beam_end_angle16;
-    grapple_beam_unkD36 &= ~0x8000;
-    if ((--grapple_beam_unkD30 & 0x8000) != 0)
-      grapple_beam_unkD30 = 0;
-    if ((grapple_beam_unkD2E & 0x8000) == 0) {
-      v6 = grapple_beam_unkD2E - 6;
-      if ((int16)(grapple_beam_unkD2E - 6) >= 0) {
+    grapple_beam_end_angle16 += grapple_beam_grapple_swing_total_angular_velocity;
+    grapple_beam_end_angle_mirror = grapple_beam_end_angle16;
+    grapple_beam_angle_handling_flag &= ~0x8000;
+    if ((--grapple_beam_kick_cooldown_timer & 0x8000) != 0)
+      grapple_beam_kick_cooldown_timer = 0;
+    if ((grapple_beam_angular_velocity_extra & 0x8000) == 0) {
+      v6 = grapple_beam_angular_velocity_extra - 6;
+      if ((int16)(grapple_beam_angular_velocity_extra - 6) >= 0) {
 LABEL_35:
-        grapple_beam_unkD2E = v6;
+        grapple_beam_angular_velocity_extra = v6;
         return 0;
       }
     } else {
-      v6 = grapple_beam_unkD2E + 6;
-      if ((int16)(grapple_beam_unkD2E + 6) < 0)
+      v6 = grapple_beam_angular_velocity_extra + 6;
+      if ((int16)(grapple_beam_angular_velocity_extra + 6) < 0)
         goto LABEL_35;
     }
     v6 = 0;
@@ -2452,25 +2452,25 @@ LABEL_35:
   LOBYTE(v7) = 0;
   HIBYTE(v7) = grapple_beam_tmpD86 >> 1;
   grapple_beam_end_angle16 = v7 | 0x80;
-  grapple_beam_end_angles_mirror = v7 | 0x80;
+  grapple_beam_end_angle_mirror = v7 | 0x80;
   if ((grapple_beam_grapple_swing_coll_dist == 6 || grapple_beam_grapple_swing_coll_dist == 5) && grapple_beam_length == 8)
     goto LABEL_23;
 LABEL_39:
-  grapple_beam_unkD30 = 16;
-  grapple_beam_unkD26 = -((int16)grapple_beam_unkD26 >> 1);
-  grapple_beam_unkD2E = -((int16)grapple_beam_unkD2E >> 1);
+  grapple_beam_kick_cooldown_timer = 16;
+  grapple_beam_angular_velocity = -((int16)grapple_beam_angular_velocity >> 1);
+  grapple_beam_angular_velocity_extra = -((int16)grapple_beam_angular_velocity_extra >> 1);
   return 1;
 }
 
 uint8 BlockFunc_AEE3(void) {  // 0x94AEE3
-  if (((grapple_beam_unkD26 ^ grapple_beam_end_angle16) & 0x8000) != 0) {
+  if (((grapple_beam_angular_velocity ^ grapple_beam_end_angle16) & 0x8000) != 0) {
     grapple_beam_unkD38 = 0;
     return 1;
   } else {
     if (++grapple_beam_unkD38 == 32)
       grapple_beam_function = FUNC16(GrappleBeam_Func2);
-    grapple_beam_unkD26 = 0;
-    grapple_beam_unkD2E = 0;
+    grapple_beam_angular_velocity = 0;
+    grapple_beam_angular_velocity_extra = 0;
     return 1;
   }
 }
