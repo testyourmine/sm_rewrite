@@ -1,0 +1,42 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+      {
+        "name": "nintendo-switch",
+        "binaryDir": "${sourceDir}/build-switch",
+        "toolchainFile": "$env{DEVKITPRO}/cmake/Switch.cmake",
+        "condition": {
+          "type": "notEquals",
+          "lhs": "$env{DEVKITPRO}",
+          "rhs": ""
+        }
+      },
+      {
+        "name": "visual-studio",
+        "hidden": true,
+        "generator": "Ninja",
+        "binaryDir": "build-${presetName}",
+        "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "condition": {
+          "type": "equals",
+          "lhs": "${hostSystemName}",
+          "rhs": "Windows"
+        }
+      },
+      {
+        "name": "windows-relwithdebinfo",
+        "inherits": "visual-studio",
+        "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" }
+      },
+      {
+        "name": "windows-debug",
+        "inherits": "visual-studio",
+        "cacheVariables": {"CMAKE_BUILD_TYPE": "Debug"}
+      }
+    ]
+}
