@@ -315,8 +315,8 @@ void MotherBrain_SealWall(void) {  // 0xADE396
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
   eproj_spawn_pt = (Point16U){ 248, 152 };
   SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 9);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x04, .plm_id_ = addr_kPlmHeader_B673_MotherBrainsRoom_FillWall });
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x09, .plm_id_ = addr_kPlmHeader_B673_MotherBrainsRoom_FillWall });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 15, .y_pos = 4, .plm_id_ = addr_kPlmHeader_B673_MotherBrainsRoom_FillWall });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 15, .y_pos = 9, .plm_id_ = addr_kPlmHeader_B673_MotherBrainsRoom_FillWall });
   Get_MotherBrain(0)->mbn_var_A = FUNC16(MotherBrainBody_FakeDeath_Descent_0_Pause);
 }
 

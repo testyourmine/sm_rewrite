@@ -5,38 +5,58 @@
 #include "funcs.h"
 #include "sm_8f.h"
 
-void CallDoorDefSetupCode(uint32 ea);
-void CallRoomSetupCode(uint32 ea);
 void RoomCode_GenRandomExplodes(uint16 x_r18, uint16 y_r20);
 
+/**
+* @brief Clears the block passage and shakes the screen after saving the animals in the Bomb Torizo room during the escape
+* @brief Used in the Crateria mainstreet room
+*/
 void RoomSetup_AfterSavingAnimals(void) {  // 0x8F9194
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x3d, .y_pos = 0x0b, .plm_id_ = addr_kPlmHeader_BB30_Crateria_Mainstreet_ClearPassageIfCrittersEscaped });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 61, .y_pos = 11, .plm_id_ = addr_kPlmHeader_BB30_Crateria_Mainstreet_ClearPassageIfCrittersEscaped });
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1_Bg2_Enemies);
   earthquake_timer = -1;
 }
 
+/**
+* @brief Destroys the wall in the Old Tourian escape shaft during the escape
+*/
 void RoomSetup_AutoDestroyWallAfterEscape(void) {  // 0x8F91A9
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x10, .y_pos = 0x87, .plm_id_ = addr_kPlmHeader_B964_OldTourianEscapeShaft_ExplodeFakeWall });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 16, .y_pos = 135, .plm_id_ = addr_kPlmHeader_B964_OldTourianEscapeShaft_ExplodeFakeWall });
 }
 
+/**
+* @brief Turns the wall into shotblocks in the Bomb Torizo room during the escape
+*/
 void RoomSetup_TurnWallIntoShotblocks(void) {  // 0x8F91B2
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x0a, .plm_id_ = addr_kPlmHeader_B9ED_CrittersEscapeBlock });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 15, .y_pos = 10, .plm_id_ = addr_kPlmHeader_B9ED_CrittersEscapeBlock });
 }
 
+/**
+* @brief Shake the screen in the landing site during the escape
+*/
 void RoomSetup_ShakeDuringEscape(void) {  // 0x8F91BD
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1);
   earthquake_timer = -1;
   FxTypeFunc_20_ScrollingSkyLand();
 }
 
+/**
+* @brief Set up the scrolling sky for the landing site
+*/
 void RoomSetup_ScrollingSkyLand(void) {  // 0x8F91C9
   FxTypeFunc_20_ScrollingSkyLand();
 }
 
+/**
+* @brief Set up the scrolling sky for the large room leading to the Wrecked Ship
+*/
 void RoomSetup_ScrollingSkyOcean(void) {  // 0x8F91CE
   RoomSetupAsm_ScrollingSkyOcean();
 }
 
+/**
+* @brief Run the unlock animations for the statues in the Tourian entrance
+*/
 void RoomSetup_RunStatueUnlockAnims(void) {  // 0x8F91D7
   SpawnAnimtiles(addr_kAnimtiles_TourianStatue_Kraid);
   SpawnAnimtiles(addr_kAnimtiles_TourianStatue_Phantoon);
@@ -44,28 +64,54 @@ void RoomSetup_RunStatueUnlockAnims(void) {  // 0x8F91D7
   SpawnAnimtiles(addr_kAnimtiles_TourianStatue_Ridley);
 }
 
+/**
+* @brief Start the tiles and PLM for the treadmill in the Wrecked Ship west entrance
+*/
 void DoorCode_StartWreckedShipTreadmill_West(void) {  // 0x8FB971
   SpawnAnimtiles(addr_kAnimtiles_WreckedShipTreadmillRight);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x04, .y_pos = 0x09, .plm_id_ = addr_kPlmHeader_B64B_WreckedShip_EntranceTreadmill_West });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 4, .y_pos = 9, .plm_id_ = addr_kPlmHeader_B64B_WreckedShip_EntranceTreadmill_West });
 }
 
+/**
+* Used by:
+* kRoom_93D5_Crateria_save_station door 0
+* kRoom_96BA_Old_Tourian_escape_shaft door 0
+* kRoom_98E2_Pre_Crateria_map_station_hall door 0
+* kRoom_9A44_Crateria_bomb_block_hall door 1
+*/
 void DoorCode_Scroll6_Green(void) {  // 0x8FB981
   scrolls[6] = kScroll_Green;
 }
 
+/**
+* Used by:
+* kRoom_990D_Crateria_slope door 1
+*/
 void DoorCode_Scroll0_Blue(void) {  // 0x8FB98C
   scrolls[0] = kScroll_Blue;
 }
 
+/**
+* Used by:
+* kRoom_92B3_Gauntlet_east door 0
+*/
 void DoorCode_Scroll13_Blue(void) {  // 0x8FB997
   scrolls[19] = kScroll_Blue;
 }
 
+/**
+* Used by:
+* kRoom_9879_Pre_Bomb_Torizo_hall door 0
+*/
 void DoorCode_Scroll_4Blue_8Green(void) {  // 0x8FB9A2
   scrolls[4] = kScroll_Red;
   scrolls[8] = kScroll_Green;
 }
 
+/**
+* Used by:
+* kRoom_93FE_Wrecked_Ship_entrance door 4
+*/
 void DoorCode_Scroll_8toB_Red(void) {  // 0x8FB9B3
   scrolls[8] = kScroll_Red;
   scrolls[9] = kScroll_Red;
@@ -73,6 +119,10 @@ void DoorCode_Scroll_8toB_Red(void) {  // 0x8FB9B3
   scrolls[11] = kScroll_Red;
 }
 
+/**
+* Used by:
+* kRoom_968F_Orange_zoomer_hall door 1
+*/
 void DoorCode_Scroll_LotsRed(void) {  // 0x8FB9CA
   scrolls[2] = kScroll_Red;
   scrolls[3] = kScroll_Red;
@@ -84,31 +134,58 @@ void DoorCode_Scroll_LotsRed(void) {  // 0x8FB9CA
   scrolls[17] = kScroll_Red;
 }
 
+/**
+* Used by:
+* kRoom_962A_Crateria_to_Red_Brinstar_elevator door 0
+*/
 void DoorCode_Scroll_1_4_Green(void) {  // 0x8FB9F1
   scrolls[1] = kScroll_Green;
   scrolls[4] = kScroll_Green;
 }
 
+/**
+* Used by:
+* kRoom_99F9_Crateria_spike_floor_room door 0
+*/
 void DoorCode_Scroll_2_Blue(void) {  // 0x8FBA00
   scrolls[2] = kScroll_Blue;
 }
 
+/**
+* Used by:
+* kRoom_99F9_Crateria_spike_floor_room door 1
+*/
 void DoorCode_Scroll_17_Blue(void) {  // 0x8FBA0B
   scrolls[23] = kScroll_Blue;
 }
 
+/**
+* Used by:
+* kRoom_99BD_Crateria_space_pirate_shaft door 3
+*/
 void DoorCode_Scroll_4_Blue(void) {  // 0x8FBA16
   scrolls[4] = kScroll_Blue;
 }
 
+/**
+* Used by:
+* kRoom_962A_Crateria_to_Red_Brinstar_elevator door 1
+*/
 void DoorCode_Scroll_6_Green(void) {  // 0x8FBA21
   scrolls[6] = kScroll_Green;
 }
 
+/**
+* Used by:
+* kRoom_965B_Gauntlet_west door 1
+*/
 void DoorCode_Scroll_3_Green(void) {  // 0x8FBA2C
   scrolls[3] = kScroll_Green;
 }
 
+/**
+* @todo the rest of these
+*/
 void DoorCode_SetScroll_0(void) {  // 0x8FBD07
   scrolls[24] = kScroll_Green;
   scrolls[28] = kScroll_Green;
@@ -334,127 +411,190 @@ void RoomCode_ScrollingSkyOcean_(void) {  // 0x8FC11B
   RoomMainAsm_ScrollingSkyOcean();
 }
 
+/**
+* @brief Create random explosions on even frames on random non blank tiles
+*/
 void RoomCode_GenRandomExplodes_EvenFrames_NonblankTile(void) {  // 0x8FC131
   if (!time_is_frozen_flag && (nmi_frame_counter_word & 1) == 0) {
     uint16 Random = NextRandom();
-    uint16 x = layer1_x_pos + LOBYTE(Random);
-    uint16 y = layer1_y_pos + HIBYTE(Random);
-    uint16 block_index = Mult8x8(y >> 4, room_width_in_blocks) + (x >> 4);
-    if ((level_data[block_index] & 0x3FF) != 255)
-      RoomCode_GenRandomExplodes(x, y);
+    uint16 x_pos = layer1_x_pos + LOBYTE(Random);
+    uint16 y_pos = layer1_y_pos + HIBYTE(Random);
+    uint16 block_index = Mult8x8(y_pos / 0x10, room_width_in_blocks) + (x_pos / 0x10);
+    if ((level_data[block_index] & 0x3FF) != 0xFF)
+      RoomCode_GenRandomExplodes(x_pos, y_pos);
   }
 }
 
-void RoomCode_ScrollingSkyLand_Shakes(void) {  // 0x8FC120
-  RoomCode_ScrollingSkyLand();
-  RoomCode_GenRandomExplodes_EvenFrames_NonblankTile();
-  earthquake_timer |= 0x8000;
-}
-
+/**
+* @brief Create explosions and shake the screen in Brinstar during the escape
+*/
 void RoomCode_ExplodeShakes(void) {  // 0x8FC124
   RoomCode_GenRandomExplodes_EvenFrames_NonblankTile();
   earthquake_timer |= 0x8000;
 }
 
+/**
+* @brief Handle scrolling sky and random explosions for the landing site during the escape
+*/
+void RoomCode_ScrollingSkyLand_Shakes(void) {  // 0x8FC120
+  RoomCode_ScrollingSkyLand();
+  RoomCode_ExplodeShakes();
+}
+
+/**
+* @brief Create random explosions on every fourth frame
+*/
 void RoomCode_GenRandomExplodes_Every4Frames(void) {  // 0x8FC183
   if (!time_is_frozen_flag && (nmi_frame_counter_word & 3) == 0) {
     uint16 Random = NextRandom();
-    uint16 x = layer1_x_pos + LOBYTE(Random);
-    uint16 y = layer1_y_pos + HIBYTE(Random);
-    RoomCode_GenRandomExplodes(x, y);
+    uint16 x_pos = layer1_x_pos + LOBYTE(Random);
+    uint16 y_pos = layer1_y_pos + HIBYTE(Random);
+    RoomCode_GenRandomExplodes(x_pos, y_pos);
   }
 }
 
-void RoomCode_GenRandomExplodes(uint16 x_r18, uint16 y_r20) {  // 0x8FC1A9
+/**
+* @brief Generates random explosions at (x_pos, y_pos)
+* @param x_pos The x position of the explosion
+* @param y_pos The y position of the explosion
+*/
+void RoomCode_GenRandomExplodes(uint16 x_pos, uint16 y_pos) {  // 0x8FC1A9
   static const uint8 kRoomCode_GenRandomExplodes_Sprite[8] = { 3, 3, 9, 12, 12, 18, 18, 21 };
   static const uint8 kRoomCode_GenRandomExplodes_Sfx[8] = { kSfx2_SmallExplosion, 0, 0, kSfx2_BigExplosion, 0, 0, 0, 0 };
 
   // Bugfix, X is garbage
-  uint16 v1 = NextRandom() & 0xF;
-  if (v1 < 8) {
-    uint16 v2 = kRoomCode_GenRandomExplodes_Sfx[v1];
-    if (v2)
-      QueueSfx2_Max6(v2);
+  uint16 Random = NextRandom() & 0xF;
+  if (Random < 8) {
+    uint16 explosion_sfx = kRoomCode_GenRandomExplodes_Sfx[Random];
+    if (explosion_sfx != 0)
+      QueueSfx2_Max6(explosion_sfx);
   }
-  CreateSpriteAtPos(x_r18, y_r20, kRoomCode_GenRandomExplodes_Sprite[v1 & 7], 0);
+  uint16 explosion_sprite = kRoomCode_GenRandomExplodes_Sprite[Random & 7];
+  CreateSpriteAtPos(x_pos, y_pos, explosion_sprite, 0);
 }
 
+/**
+* @brief Scrolls the screen right in the Dachora room
+*/
 void RoomCode_ScrollRightDachora(void) {  // 0x8FC1E6
+  // This statement is never satisfied, so the scrolling never happens
   if (scrolls[11] == kScroll_Green && layer1_y_pos < 0x500 && layer1_x_pos < 0x380)
-    layer1_x_pos += (layer1_x_pos >= 0x380) + 3;
+    layer1_x_pos += (layer1_x_pos >= 0x380) + 3; // Wrong?
 }
 
+/**
+* @brief Spawns the "projectile" that scrolls BG2 in the pre-Phantoon room
+*/
 void RoomCode_SpawnPrePhantoonRoomEnemyProj(void) {  // 0x8FC8C8
   SpawnEprojWithRoomGfx(addr_kEproj_PrePhantomRoom, 0);
 }
 
+/**
+* @brief Spawn the PLMs in Shaktools room
+*/
 void RoomCode_SetupShaktoolRoomPlm(void) {  // 0x8FC8D3
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x00, .y_pos = 0x00, .plm_id_ = addr_kPlmHeader_B8EB_ShaktoolsRoom });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0, .y_pos = 0, .plm_id_ = addr_kPlmHeader_B8EB_ShaktoolsRoom });
 }
 
+/**
+* @brief Set the pausing function for Draygon's room
+*/
 void RoomCode_SetPauseCodeForDraygon(void) {  // 0x8FC8DD
-  mov24(&pause_hook, fnPauseHook_DraygonRoom);
-  mov24(&unpause_hook, fnUnpauseHook_DraygonRoom);
+  pause_hook = (LongPtr)LONGPTR(fnPauseHook_DraygonRoom);
+  unpause_hook = (LongPtr)LONGPTR(fnUnpauseHook_DraygonRoom);
 }
 
+/**
+* @brief Set the interrupt to main gameplay when pausing in Draygon's room
+*/
 void PauseHook_DraygonRoom(void) {  // 0x8FC8F6
   irqhandler_next_handler = kInterruptCommand_4_Main_BeginHudDraw;
 }
 
+/**
+* @brief Set the interrupt to Draygon's room
+*/
 CoroutineRet UnpauseHook_DraygonRoom(void) {  // 0x8FC8FC
   if (hdma_object_channels_bitmask[1] == 8)
     irqhandler_next_handler = kInterruptCommand_12_Draygon_BeginHud;
   return kCoroutineNone;
 }
 
+/**
+* @brief Reveal the Tourian map when first taking the elevator
+*/
 void RoomCode_SetCollectedMap(void) {  // 0x8FC90A
   has_area_map = WORD(map_station_byte_array[area_index]) |= 1;
 }
 
+/**
+* @brief Sets the Zebes escape event and lightly shake the screen in the first escape room after Mother Brain
+*/
 void RoomCode_SetZebesTimebombEvent(void) {  // 0x8FC91F
   SetEventHappened(kEvent_14_ZebesTimebombSet);
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
   earthquake_timer = -1;
 }
 
+/**
+* @brief Lightly shake the screen in the second escape room
+*/
 void RoomCode_SetLightHorizRoomShake(void) {  // 0x8FC933
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
-  WORD(room_main_asm_variables[2]) = 18;
-  WORD(room_main_asm_variables[0]) = 0;
+  room_shake_type = earthquake_type;
+  diagonal_shake_timer = 0;
   earthquake_timer = -1;
 }
 
+/**
+* @brief Mediumly shake the screen in the third escape room
+*/
 void RoomCode_SetMediumHorizRoomShake(void) {  // 0x8FC946
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2_Enemies);
   earthquake_timer = -1;
 }
 
+/**
+* @brief Set up the PLMs and mediumly shake the screen in the fourth escape room
+*/
 void RoomCode_Escape4_SetMediumHorizRoomShake(void) {  // 0x8FC953
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x10, .y_pos = 0x10, .plm_id_ = addr_kPlmHeader_B968_EscapeRoom4_RaiseAcid });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 16, .y_pos = 16, .plm_id_ = addr_kPlmHeader_B968_EscapeRoom4_RaiseAcid });
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2_Enemies);
-  WORD(room_main_asm_variables[2]) = 21;
-  WORD(room_main_asm_variables[0]) = 0;
+  room_shake_type = earthquake_type;
+  diagonal_shake_timer = 0;
   earthquake_timer = -1;
 }
 
+/**
+* @brief Turn the Ceres elevator door solid during the escape and spawn haze
+*/
 void RoomCode_SetCeresDoorSolid(void) {  // 0x8FC96E
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0f, .y_pos = 0x26, .plm_id_ = addr_kPlmHeader_BA48_Ceres_ElevatorShaft_TurnDoorSolidDuringEscape });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 15, .y_pos = 38, .plm_id_ = addr_kPlmHeader_BA48_Ceres_ElevatorShaft_TurnDoorSolidDuringEscape });
   FxTypeFunc_2C_Haze();
 }
 
+/**
+* @brief Spawn haze in Ceres rooms
+*/
 void RoomCode_SpawnHaze(void) {  // 0x8FC976
   FxTypeFunc_2C_Haze();
 }
 
+/**
+* @brief Set the BG address to 0x6000 and spawn haze in Ceres Ridley's room
+*/
 void RoomCode_SpawnHaze_BgBase(void) {  // 0x8FC97B
   reg_BG12NBA = 0x66;
   FxTypeFunc_2C_Haze();
   hdma_data_table_in_ceres = 9;
 }
 
+/**
+* @brief Start the tiles and PLM for the treadmill in the Wrecked Ship east entrance
+*/
 void DoorCode_StartWreckedSkipTreadmill_East(void) {  // 0x8FE1D8
   SpawnAnimtiles(addr_kAnimtiles_WreckedShipTreadmillLeft);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x04, .y_pos = 0x09, .plm_id_ = addr_kPlmHeader_B64F_WreckedShip_EntranceTreadmill_East });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 4, .y_pos = 9, .plm_id_ = addr_kPlmHeader_B64F_WreckedShip_EntranceTreadmill_East });
 }
 
 void DoorCode_SetScroll_44(void) {  // 0x8FE1E8
@@ -488,42 +628,56 @@ void DoorCode_SetScroll_49(void) {  // 0x8FE229
   scrolls[11] = kScroll_Red;
 }
 
+/**
+* @brief Lock Samus and set up the elevatube from the south entrance
+*/
 void DoorCode_SetupElevatubeFromSouth(void) {  // 0x8FE26C
-  WORD(room_main_asm_variables[4]) = -256;
-  WORD(room_main_asm_variables[2]) = 2496;
-  WORD(room_main_asm_variables[6]) = -32;
+  elevatube_velocity = -0x100;
+  elevatube_position = 0x40*39;
+  elevatube_acceleration = -0x20;
   RunSamusCode(kSamusCode_0_LockSamus);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x01, .y_pos = 0x00, .plm_id_ = addr_kPlmHeader_B8F9_Maridia_Elevatube });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 1, .y_pos = 0, .plm_id_ = addr_kPlmHeader_B8F9_Maridia_Elevatube });
 }
 
+/**
+* @brief Lock Samus and set up the elevatube from the north entrance
+*/
 void DoorCode_SetupElevatubeFromNorth(void) {  // 0x8FE291
-  WORD(room_main_asm_variables[4]) = 256;
-  WORD(room_main_asm_variables[2]) = 64;
-  WORD(room_main_asm_variables[6]) = 32;
+  elevatube_velocity = 0x100;
+  elevatube_position = 0x40;
+  elevatube_acceleration = 0x20;
   RunSamusCode(kSamusCode_0_LockSamus);
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x01, .y_pos = 0x00, .plm_id_ = addr_kPlmHeader_B8F9_Maridia_Elevatube });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 1, .y_pos = 0, .plm_id_ = addr_kPlmHeader_B8F9_Maridia_Elevatube });
 }
 
+/**
+* @brief Move the elevatube and move Samus through the elevatube
+*/
 void RoomCode_Elevatube(void) {  // 0x8FE2B6
-  uint16 v0;
-
   samus_x_pos = 128;
   samus_x_subpos = 0;
-  int32 amt = INT16_SHL8(WORD(room_main_asm_variables[4]));
-  v0 = (amt + DWORD(room_main_asm_variables[0])) >> 16;
-  WORD(room_main_asm_variables[0]) += amt;
-  WORD(room_main_asm_variables[2]) = v0;
-  Samus_MoveDown_NoSolidColl(amt);
-  if ((uint16)(WORD(room_main_asm_variables[6]) + WORD(room_main_asm_variables[4]) + 3616) < 0x1C41)
-    WORD(room_main_asm_variables[4]) += WORD(room_main_asm_variables[6]);
+  int32 vel = INT16_SHL8(elevatube_velocity);
+  uint16 pos = (vel + DWORD(elevatube_subposition)) >> 16;
+  elevatube_subposition += vel;
+  elevatube_position = pos;
+  Samus_MoveDown_NoSolidColl(vel);
+  if ((uint16)(elevatube_acceleration + elevatube_velocity + 0xE20) < 0x1C41)
+    elevatube_velocity += elevatube_acceleration;
 }
 
+/**
+* @brief Unlock Samus and reset the elevatube when exiting north
+*/
 void DoorCode_ResetElevatubeNorthExit(void) {  // 0x8FE301
   RunSamusCode(kSamusCode_1_UnlockSamus);
 }
 
+/**
+* @brief Unlock Samus and reset the elevatube when exiting south
+*/
 void DoorCode_ResetElevatubeSouthExit(void) {  // 0x8FE309
-  WORD(scrolls[0]) = (kScroll_Green << 8) | kScroll_Green;
+  scrolls[0] = kScroll_Green;
+  scrolls[1] = kScroll_Green;
   RunSamusCode(kSamusCode_1_UnlockSamus);
 }
 
@@ -603,6 +757,9 @@ void DoorCode_SetScroll_65(void) {  // 0x8FE4CF
   scrolls[25] = kScroll_Red;
 }
 
+/**
+* @brief Set up Mode 7 for the Ceres elevator shaft during the escape
+*/
 void DoorCode_ToCeresElevatorShaft(void) {  // 0x8FE4E0
   reg_BGMODE_fake = 7;
   WriteReg(BGMODE, 7);
@@ -615,70 +772,92 @@ void DoorCode_ToCeresElevatorShaft(void) {  // 0x8FE4E0
   reg_M7X = 128;
   reg_M7Y = 1008;
   irq_enable_mode7 = 1;
-  room_main_asm_variables[0] = 0x22;
-  room_main_asm_variables[2] = 60;
+  // Start the index at 34, which is the axis of symmetry for the matrix
+  uint16 starting_index = (arraysize(kCeresElevatorShaftMode7TransformationMatrix) - 1) / 2;
+  rotation_matrix_index = starting_index;
+  elevatube_position = 60;
 }
 
+/**
+* @brief Remove Mode 7 for the Ceres elevator shaft during the escape
+*/
 void DoorCode_FromCeresElevatorShaft(void) {  // 0x8FE513
   reg_BGMODE_fake = 9;
   irq_enable_mode7 = 0;
 }
 
+/**
+* @brief Handles Mode 7 operations and landing on the elevator for the Ceres elevator shaft during the escape
+*/
 void RoomCode_CeresElevatorShaft_(void) {  // 0x8FE51F
   RoomCode_CeresElevatorShaft();
 }
 
-static const uint16 kRoomCode_SpawnCeresFallingDebris_Tab[16] = {  // 0x8FE525
-   0x50, 0x60, 0x70,  0x80,  0x90,  0xa0,  0xb0,  0xc0,
-   0xd0, 0xe0, 0xf0, 0x110, 0x130, 0x150, 0x170, 0x190,
-};
+/**
+* @brief Spawn falling debris in hall before the Ceres elevator during the escape
+*/
+void RoomCode_SpawnCeresFallingDebris(void) {  // 0x8FE525
+  static const uint16 kRoomCode_SpawnCeresFallingDebris_XPos[16] = {
+     0x50,  0x60,  0x70,  0x80,  0x90, 0xa0, 0xb0, 0xc0, 0xd0, 0xe0, 0xf0,
+    0x110, 0x130, 0x150, 0x170, 0x190,
+  };
 
-void RoomCode_SpawnCeresFallingDebris(void) {
-  if (ceres_status != kCeresStatus_0_BeforeRidleyEscape 
-      && (--WORD(room_main_asm_variables[0]), *(int16*)room_main_asm_variables < 0)) {
-    room_main_asm_variables[0] = 8;
-    room_main_asm_variables[1] = 0;
-    uint16 eproj = (random_number & 0x8000) ? addr_kEproj_CeresFallingDebris_Dark : addr_kEproj_CeresFallingDebris_Light;
-    SpawnEprojWithRoomGfx(eproj, kRoomCode_SpawnCeresFallingDebris_Tab[random_number & 0xF]);
+  if (ceres_status != kCeresStatus_0_BeforeRidleyEscape && (int16)--debris_delay_timer < 0) {
+    debris_delay_timer = 8;
+    uint16 debris_eproj = sign16(random_number) ? addr_kEproj_CeresFallingDebris_Dark : addr_kEproj_CeresFallingDebris_Light;
+    uint16 x_pos = kRoomCode_SpawnCeresFallingDebris_XPos[random_number & 0xF];
+    SpawnEprojWithRoomGfx(debris_eproj, x_pos);
   }
 }
 
+/**
+* @brief Handles Ceres Ridley's escape cutscene
+*/
 void RoomCode_HandleCeresRidleyGetaway(void) {  // 0x8FE571
   if (ceres_status & kCeresStatus_1_DuringRidleyEscapeCutscene)
     HandleCeresRidleyGetawayCutscene();
 }
 
+/**
+* @brief Set the screen shake to be light horizontal, with a 1/128 chance of being medium diagonal for 42 frames
+* @brief Used in the second Tourian escape room
+*/
 void RoomCode_ShakeScreenHorizDiag(void) {  // 0x8FE57C
   uint16 earthquake;
-  if (WORD(room_main_asm_variables[0]) != 0) {
-    --WORD(room_main_asm_variables[0]);
-    if (WORD(room_main_asm_variables[0]) == 0) {
+
+  if (diagonal_shake_timer != 0) {
+    if (--diagonal_shake_timer == 0) {
       earthquake = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
       earthquake_type = earthquake;
     }
-  } else if (NextRandom() < 0x200) {
-    room_main_asm_variables[0] = 42;
+  }
+  else if (NextRandom() < 0x200) {
+    diagonal_shake_timer = 42;
     earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2_Enemies);
     earthquake_type = earthquake;
   }
   RoomCode_GenRandomExplodes_Every4Frames();
 }
 
+/**
+* @brief Set the screen shake to be medium horizontal, with a 3/512 chance of being strong diagonal for 42 frames
+* @brief Used in the first and third Tourian escape room
+*/
 void RoomCode_ShakeScreenHorizDiagStrong(void) {  // 0x8FE5A4
   uint16 earthquake;
 
-  if (WORD(room_main_asm_variables[0]) != 0) {
-    --WORD(room_main_asm_variables[0]);
-    if (WORD(room_main_asm_variables[0]) == 0) {
+  if (diagonal_shake_timer != 0) {
+    if (--diagonal_shake_timer == 0) {
       earthquake = EARTHQUAKE(kEarthquake_Direction_Horiz, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1_Bg2_Enemies);
-      WORD(room_main_asm_variables[2]) = earthquake;
+      room_shake_type = earthquake;
     }
-  } else if (NextRandom() < 0x180) {
-    room_main_asm_variables[0] = 42;
-    earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1_Bg2_Enemies);
-    WORD(room_main_asm_variables[2]) = earthquake;
   }
-  earthquake_type = WORD(room_main_asm_variables[2]);
+  else if (NextRandom() < 0x180) {
+    diagonal_shake_timer = 42;
+    earthquake = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_3, kEarthquake_Layers_Bg1_Bg2_Enemies);
+    room_shake_type = earthquake;
+  }
+  earthquake_type = room_shake_type;
   RoomCode_GenRandomExplodes_Every4Frames();
 }
 
@@ -694,58 +873,87 @@ uint16 CallRoomDefStateSelect(uint32 ea, uint16 k) {
   }
 }
 
-void HandleRoomDefStateSelect(uint16 k) {  // 0x8FE5D2
-  uint16 v1 = k + 11;
+/**
+* @brief Handle the room state select
+* @param room_ptr_ The pointer to the current room
+*/
+void HandleRoomDefStateSelect(uint16 room_ptr_) {  // 0x8FE5D2
+  uint16 room_state_ptr = room_ptr_ + 11;
   do {
-    uint16 event_pointer = get_RoomDefStateSelect(v1).func_ptr;
-    v1 = CallRoomDefStateSelect(event_pointer | 0x8F0000, v1 + 2);
-  } while (v1);
+    uint16 event_func = get_RoomDefStateSelect(room_state_ptr).func_ptr;
+    room_state_ptr = CallRoomDefStateSelect(event_func | 0x8F0000, room_state_ptr + 2);
+  } while (room_state_ptr != 0);
 }
 
-uint16 RoomDefStateSelect_Finish(uint16 k) {  // 0x8FE5E6
-  roomdefroomstate_ptr = k;
+/**
+* @brief Select the room state
+* @param room_state The state the room will be in
+* @return uint16 0 indicating the state has been selected
+*/
+uint16 RoomDefStateSelect_Finish(uint16 room_state) {  // 0x8FE5E6
+  roomdefroomstate_ptr = room_state;
   return 0;
 }
 
-uint16 RoomDefStateSelect_MainAreaBossDead(uint16 k) {  // 0x8FE5FF
-  if (!(CheckBossBitForCurArea(kBossBit_AreaBoss) & 1))
-    return k + 2;
-  //const uint16 *v1 = (const uint16 *)RomPtr_8F(k);
-  RoomDefStateSelect RDSS = get_RoomDefStateSelect(k - 2);
+/**
+* @brief Chooses either the next state select or the state based on if the main area boss is dead
+* @param state_select_ptr The pointer to the state select
+* @return uint16 0 if the main boss is dead, else return the next state select
+*/
+uint16 RoomDefStateSelect_MainAreaBossDead(uint16 state_select_ptr) {  // 0x8FE5FF
+  if (!CheckBossBitForCurArea(kBossBit_AreaBoss))
+    return state_select_ptr + 2;
+  RoomDefStateSelect RDSS = get_RoomDefStateSelect(state_select_ptr - 2);
   return RoomDefStateSelect_Finish(RDSS.state_ptr);
 }
 
-uint16 RoomDefStateSelect_IsEventSet(uint16 k) {  // 0x8FE612
-  //const uint8 *v1 = RomPtr_8F(k);
-  RoomDefStateSelect RDSS = get_RoomDefStateSelect(k - 2);
+/**
+* @brief Chooses either the next state select or the state based on if the event has happened
+* @param state_select_ptr The pointer to the state select
+* @return uint16 0 if the event has happened, else return the next state select
+*/
+uint16 RoomDefStateSelect_IsEventSet(uint16 state_select_ptr) {  // 0x8FE612
+  RoomDefStateSelect RDSS = get_RoomDefStateSelect(state_select_ptr - 2);
   if (CheckEventHappened(RDSS.event_))
     return RoomDefStateSelect_Finish(RDSS.state_ptr);
   else
-    return k + 3;
+    return state_select_ptr + 3;
 }
 
-uint16 RoomDefStateSelect_IsBossDead(uint16 k) {  // 0x8FE629
-  //const uint8 *v1 = RomPtr_8F(k);
-  RoomDefStateSelect RDSS = get_RoomDefStateSelect(k - 2);
-  if (CheckBossBitForCurArea(RDSS.area_boss) & 1)
+/**
+* @brief Chooses either the next state select or the state based on if the area boss is dead
+* @param state_select_ptr The pointer to the state select
+* @return uint16 0 if the boss is dead, else return the next state select
+*/
+uint16 RoomDefStateSelect_IsBossDead(uint16 state_select_ptr) {  // 0x8FE629
+  RoomDefStateSelect RDSS = get_RoomDefStateSelect(state_select_ptr - 2);
+  if (CheckBossBitForCurArea(RDSS.area_boss))
     return RoomDefStateSelect_Finish(RDSS.state_ptr);
   else
-    return k + 3;
+    return state_select_ptr + 3;
 }
 
-uint16 RoomDefStateSelect_CollectedMorphBallAndMissiles(uint16 k) {  // 0x8FE652
-  if ((collected_items & kItem_MorphBall) == 0 || samus_max_missiles == 0)
-    return k + 2;
-  //const uint16 *v1 = (const uint16 *)RomPtr_8F(k);
-  RoomDefStateSelect RDSS = get_RoomDefStateSelect(k - 2);
+/**
+* @brief Chooses either the next state select or the state based on if morph and missiles are collected
+* @param state_select_ptr The pointer to the state select
+* @return uint16 0 if both items are collected, else return the next state select
+*/
+uint16 RoomDefStateSelect_CollectedMorphBallAndMissiles(uint16 state_select_ptr) {  // 0x8FE652
+  if (!(collected_items & kItem_MorphBall) || samus_max_missiles == 0)
+    return state_select_ptr + 2;
+  RoomDefStateSelect RDSS = get_RoomDefStateSelect(state_select_ptr - 2);
   return RoomDefStateSelect_Finish(RDSS.state_ptr);
 }
 
-uint16 RoomDefStateSelect_CollectedPowerBombs(uint16 k) {  // 0x8FE669
+/**
+* @brief Chooses either the next state select or the state based on if power bombs are collected
+* @param state_select_ptr The pointer to the state select
+* @return uint16 0 if power bombs are collected, else return the next state select
+*/
+uint16 RoomDefStateSelect_CollectedPowerBombs(uint16 state_select_ptr) {  // 0x8FE669
   if (samus_max_power_bombs == 0)
-    return k + 2;
-  //const uint16 *v1 = (const uint16 *)RomPtr_8F(k);
-  RoomDefStateSelect RDSS = get_RoomDefStateSelect(k - 2);
+    return state_select_ptr + 2;
+  RoomDefStateSelect RDSS = get_RoomDefStateSelect(state_select_ptr - 2);
   return RoomDefStateSelect_Finish(RDSS.state_ptr);
 }
 
@@ -789,10 +997,11 @@ void CallRoomSetupCode(uint32 ea) {
   }
 }
 
+/**
+* @brief Runs the setup function for the current room
+*/
 void RunRoomSetupCode(void) {  // 0x8FE88F
-  RoomDefRoomstate RoomDefRoomstate;
-
-  RoomDefRoomstate = get_RoomDefRoomstate(roomdefroomstate_ptr);
+  RoomDefRoomstate RoomDefRoomstate = get_RoomDefRoomstate(roomdefroomstate_ptr);
   if (RoomDefRoomstate.room_setup_code != 0)
     CallRoomSetupCode(RoomDefRoomstate.room_setup_code | 0x8F0000);
 }
@@ -885,27 +1094,36 @@ void CallDoorDefSetupCode(uint32 ea) {
   }
 }
 
+/**
+* @brief Run the setup function for the current door
+*/
 void RunDoorSetupCode(void) {  // 0x8FE8A3
   DoorDef DD = get_DoorDef(door_def_ptr);
   if (DD.door_setup_code != 0)
     CallDoorDefSetupCode(DD.door_setup_code | 0x8F0000);
 }
 
+/**
+* @brief Handles the shaking for Crocomire's room
+*/
 void RoomCode_CrocomireRoomShaking(void) {  // 0x8FE8CD
-  uint16 ai_var_D;
+  uint16 crocomire_melt_timer;
 
   if (!(enemy_data[0].properties & kEnemyProps_Deleted)) {
     if (enemy_data[0].ai_var_A == 64) {
       reg_BG1VOFS = enemy_data[1].ai_var_D + bg1_y_offset + layer1_y_pos;
-    } else if ((enemy_data[0].ai_var_B & 0x400) != 0) {
+    }
+    else if ((enemy_data[0].ai_var_B & 0x400) != 0) {
       if (sign16(--enemy_data[1].ai_var_D + 7)) {
-        ai_var_D = enemy_data[1].ai_var_D - 2 * (enemy_data[1].ai_var_D + 7);
-      } else {
-        ai_var_D = enemy_data[1].ai_var_D;
+        crocomire_melt_timer = enemy_data[1].ai_var_D - 2 * (enemy_data[1].ai_var_D + 7);
       }
-      reg_BG1VOFS += ai_var_D;
-      reg_BG2VOFS = ai_var_D - 48;
-    } else if (enemy_data[0].ai_var_C == 34 && enemy_data[0].ai_var_D) {
+      else {
+        crocomire_melt_timer = enemy_data[1].ai_var_D;
+      }
+      reg_BG1VOFS += crocomire_melt_timer;
+      reg_BG2VOFS = crocomire_melt_timer - 48;
+    }
+    else if (enemy_data[0].ai_var_C == 34 && enemy_data[0].ai_var_D) {
       --enemy_data[0].ai_var_D;
       if ((enemy_data[0].ai_var_D & 1) != 0)
         layer1_x_pos -= 4;
@@ -915,17 +1133,22 @@ void RoomCode_CrocomireRoomShaking(void) {  // 0x8FE8CD
   }
 }
 
-static const int16 kRoomCode_RidleyRoomShaking_X[8] = { 0, 2, 2, 2, 0, -2, -2, -2 };
-static const int16 kRoomCode_RidleyRoomShaking_Y[8] = { -2, -2, 0, 2, 2, 2, 0, -2 };
-
+/**
+* @brief Handles the shaking for Ridley's room
+*/
 void RoomCode_RidleyRoomShaking(void) {  // 0x8FE950
+  static const int16 kRoomCode_RidleyRoomShaking_ScrollSpeed_X[8] = { 0, 2, 2, 2, 0, -2, -2, -2 };
+  static const int16 kRoomCode_RidleyRoomShaking_ScrollSpeed_Y[8] = { -2, -2, 0, 2, 2, 2, 0, -2 };
+
+  // Seems to scroll the background in a circle when Ridley's tail explosion happens
+  // However this variable is never set by Ridley, so this code never runs
   if (enemy_data[4].ai_var_A) {
     --enemy_data[4].ai_var_A;
-    int v1 = enemy_data[4].ai_var_A;
-    reg_BG1HOFS += kRoomCode_RidleyRoomShaking_X[v1];
-    reg_BG2HOFS += kRoomCode_RidleyRoomShaking_X[v1];
-    reg_BG1VOFS += kRoomCode_RidleyRoomShaking_Y[v1];
-    reg_BG2VOFS += kRoomCode_RidleyRoomShaking_Y[v1];
+    int index = enemy_data[4].ai_var_A;
+    reg_BG1HOFS += kRoomCode_RidleyRoomShaking_ScrollSpeed_X[index];
+    reg_BG2HOFS += kRoomCode_RidleyRoomShaking_ScrollSpeed_X[index];
+    reg_BG1VOFS += kRoomCode_RidleyRoomShaking_ScrollSpeed_Y[index];
+    reg_BG2VOFS += kRoomCode_RidleyRoomShaking_ScrollSpeed_Y[index];
   }
 }
 
@@ -950,6 +1173,9 @@ void CallRoomCode(uint32 ea) {
   }
 }
 
+/**
+* @brief Run the main function for the current room
+*/
 void RunRoomMainCode(void) {  // 0x8FE8BD
   if (room_main_code_ptr != 0)
     CallRoomCode(room_main_code_ptr | 0x8F0000);

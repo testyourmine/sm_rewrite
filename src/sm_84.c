@@ -94,7 +94,7 @@ void LoadXrayBlocks(void) {  // 0x84831A
   }
   RoomDefRoomstate RS = get_RoomDefRoomstate(roomdefroomstate_ptr);
   if (RS.xray_special_casing_ptr) {
-    const XraySpecialCasing *p = (const XraySpecialCasing *)RomPtr_8F(RS.xray_special_casing_ptr);
+    const XraySpecialCasing *p = get_XraySpecialCasing(RS.xray_special_casing_ptr);
     for (; p->x_block || p->y_block; p++)
       LoadBlockToXrayBg2(p->level_data_block, p->x_block, p->y_block);
   }
@@ -2332,7 +2332,7 @@ uint8 PlmSetup_D6DA_LowerNorfairChozoHandTrigger(uint16 j) {  // 0x84D18F
     int v2 = plm_block_indices[j >> 1] >> 1;
     level_data[v2] &= 0xFFF;
     RunSamusCode(kSamusCode_0_LockSamus);
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0c, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D113_LowerNorfair_ChozoRoom_CrumblePlug });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 12, .y_pos = 29, .plm_id_ = addr_kPlmHeader_D113_LowerNorfair_ChozoRoom_CrumblePlug });
   }
   plm_header_ptr[j >> 1] = 0;
   return 1;
@@ -2482,7 +2482,7 @@ uint8 PlmSetup_D6F2_WreckedShipChozoHandTrigger(uint16 j) {  // 0x84D620
     int v1 = plm_block_indices[j >> 1] >> 1;
     level_data[v1] &= 0xFFF;
     RunSamusCode(kSamusCode_0_LockSamus);
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x17, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6F8_WreckedShip_ClearChozoSlopeAccess });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 23, .y_pos = 29, .plm_id_ = addr_kPlmHeader_D6F8_WreckedShip_ClearChozoSlopeAccess });
   }
   plm_header_ptr[j >> 1] = 0;
   return 1;

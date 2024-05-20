@@ -6,6 +6,11 @@
 #include "sm_89.h"
 
 
+/**
+* @brief Loads the FX entry for the room
+* @brief This is called by Mother Brain's room
+* @param fx_def_index The index of the FX entry for the room
+*/
 void LoadFxEntry(uint16 fx_def_index) {  // 0x89AB02
   uint16 fx_def_offset = sizeof(FxDef) * (fx_def_index & 7);
   FxDef FD = get_FxDef(room_layer3_fx_ptr + fx_def_offset);
@@ -16,44 +21,23 @@ void LoadFxEntry(uint16 fx_def_index) {  // 0x89AB02
   fx_layer_blending_config_a = FD.default_layer_blend;
   fx_layer_blending_config_b = FD.layer3_layer_blend;
   fx_liquid_options = FD.fx_liquid_options_;
-  if (FD.palette_blend) {
-    int v2 = FD.palette_blend >> 1;
-    palette_buffer.bg3_pal_6[1] = kPaletteBlends[v2];
-    palette_buffer.bg3_pal_6[2] = kPaletteBlends[v2 + 1];
-    palette_buffer.bg3_pal_6[3] = kPaletteBlends[v2 + 2];
-  } else {
+  if (FD.palette_blend != 0) {
+    int blend = FD.palette_blend >> 1;
+    palette_buffer.bg3_pal_6[1] = kPaletteBlends[blend];
+    palette_buffer.bg3_pal_6[2] = kPaletteBlends[blend + 1];
+    palette_buffer.bg3_pal_6[3] = kPaletteBlends[blend + 2];
+  }
+  else {
     palette_buffer.bg3_pal_6[3] = 0;
   }
 }
 
-void nullsub_106(void) {}
+/**
+* @brief Loads the FX for the current room
+*/
+void LoadFXHeader(void) {  // 0x89AB82
+  uint16 list_size;
 
-static Func_V *const kFxTypeFuncPtrs[23] = {  // 0x89AB82
-  nullsub_106,
-  FxTypeFunc_2_Lava,
-  FxTypeFunc_4_Acid,
-  FxTypeFunc_6_Water,
-  FxTypeFunc_8_Spores,
-  FxTypeFunc_A_Rain,
-  FxTypeFunc_C_Fog,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  nullsub_106,
-  FxTypeFunc_20_ScrollingSkyLand,
-  FxTypeFunc_22_Unused,
-  FxTypeFunc_24_Fireflea,
-  FxTypeFunc_26_TourianEntranceStatue,
-  FxTypeFunc_28_CeresRidley,
-  FxTypeFunc_2A_CeresElevator,
-  FxTypeFunc_2C_Haze,
-};
-void LoadFXHeader(void) {
   uint16 fx_entry_ptr = room_layer3_fx_ptr;
   if (fx_entry_ptr == 0)
     return;
@@ -67,6 +51,7 @@ void LoadFXHeader(void) {
       break;
     fx_entry_ptr += sizeof(FxDef);
   }
+
   FxDef FD = get_FxDef(fx_entry_ptr);
   fx_base_y_pos = FD.base_y_pos;
   fx_target_y_pos = FD.target_y_pos;
@@ -75,40 +60,50 @@ void LoadFXHeader(void) {
   fx_layer_blending_config_a = FD.default_layer_blend;
   fx_layer_blending_config_b = FD.layer3_layer_blend;
   fx_liquid_options = FD.fx_liquid_options_;
-  if (FD.palette_blend) {
-    int v4 = FD.palette_blend >> 1;
-    target_palettes.bg3_pal_6[1] = kPaletteBlends[v4];
-    target_palettes.bg3_pal_6[2] = kPaletteBlends[v4 + 1];
-    target_palettes.bg3_pal_6[3] = kPaletteBlends[v4 + 2];
-  } else {
+  if (FD.palette_blend != 0) {
+    int blend = FD.palette_blend >> 1;
+    target_palettes.bg3_pal_6[1] = kPaletteBlends[blend];
+    target_palettes.bg3_pal_6[2] = kPaletteBlends[blend + 1];
+    target_palettes.bg3_pal_6[3] = kPaletteBlends[blend + 2];
+  }
+  else {
     target_palettes.bg3_pal_6[3] = 0;
   }
+
   fx_type = FD.type;
   if (FD.type != kFxType_0_None) {
     fx_tilemap_ptr = kFxTypeTilemapPtrs[FD.type >> 1];
     kFxTypeFuncPtrs[FD.type >> 1]();
   }
-  if (FD.palette_fx_bitset) {
+
+  if (FD.palette_fx_bitset != 0) {
     int bits = FD.palette_fx_bitset;
-    const uint8 *v11 = RomPtr_83(kAreaPalFxListPointers[area_index]);
-    for (int j = 0; j != 16; j += 2, bits >>= 1) {
+    const uint16 *area_pal_fx = kAreaPalFxLists[area_index];
+    list_size = 2 * arraysize(kAreaPalFxLists);
+    for (int pal_fx_index = 0; pal_fx_index < list_size; pal_fx_index += 2, bits >>= 1) {
       if (bits & 1)
-        SpawnPalfxObject(*(uint16 *)&v11[j]);
+        SpawnPalfxObject(area_pal_fx[pal_fx_index >> 1]);
     }
   }
-  if (FD.animtiles_bitset) {
+  if (FD.animtiles_bitset != 0) {
     int bits = FD.animtiles_bitset;
-    const uint16 *v14 = kAreaAnimtilesListPtrs[area_index];
-    for (int k = 0; k != 16; k += 2, bits >>= 1) {
+    const uint16 *area_anim_tiles = kAreaAnimtilesLists[area_index];
+    list_size = 2 * arraysize(kAreaAnimtilesLists);
+    for (int anim_tiles_index = 0; anim_tiles_index < list_size; anim_tiles_index += 2, bits >>= 1) {
       if (bits & 1)
-        SpawnAnimtiles(v14[k >> 1]);
+        SpawnAnimtiles(area_anim_tiles[anim_tiles_index >> 1]);
     }
   }
 }
-void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
-  int16 v1;
 
-  if ((ceres_status & kCeresStatus_8000_ElevatorRoomRotate) != 0) {
+/**
+* @brief Handles Mode 7 operations and landing on the elevator for the Ceres elevator shaft during the escape
+*/
+void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
+  uint16 new_index;
+
+  if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate) {
+    // If standing on the elevator
     if ((128 - 16) < samus_x_pos && samus_x_pos <= (128 + 16)
         && 128 > samus_y_pos && samus_y_pos >= 75
         && samus_y_speed == 0 && samus_y_subspeed == 0
@@ -118,24 +113,25 @@ void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
       screen_fade_counter = 0;
       game_state = kGameState_32_MadeItToCeresElevator;
     }
-    --(WORD(room_main_asm_variables[2]));
-    if (sign16(WORD(room_main_asm_variables[2]))) {
-      int v0 = (uint16)(6 * WORD(room_main_asm_variables[0])) >> 1;
-      WORD(room_main_asm_variables[2]) = kCereElevatorShaftMode7TransformationMatrix[v0];
-      reg_M7B = kCereElevatorShaftMode7TransformationMatrix[v0 + 1];
+    if ((int16)--rotation_matrix_timer < 0) {
+      int index = LOBYTE(rotation_matrix_index);
+      rotation_matrix_timer = kCeresElevatorShaftMode7TransformationMatrix[index].timer;
+      reg_M7B = kCeresElevatorShaftMode7TransformationMatrix[index].sin_t;
       reg_M7C = -reg_M7B;
-      reg_M7A = kCereElevatorShaftMode7TransformationMatrix[v0 + 2];
+      reg_M7A = kCeresElevatorShaftMode7TransformationMatrix[index].cos_t;
       reg_M7D = reg_M7A;
-      if (sign16(WORD(room_main_asm_variables[0]))) {
-        v1 = WORD(room_main_asm_variables[0]) - 1;
-        if (WORD(room_main_asm_variables[0]) == 0x8001)
-          v1 = 0;
-      } else {
-        v1 = WORD(room_main_asm_variables[0]) + 1;
-        if (WORD(room_main_asm_variables[0]) == 67)
-          v1 = -32700;
+      if (rotation_matrix_index & ROTATE_CCW) {
+        new_index = rotation_matrix_index - 1;
+        if (new_index == (ROTATE_CCW|0))
+          new_index = ROTATE_CW;
       }
-      WORD(room_main_asm_variables[0]) = v1;
+      else {
+        new_index = rotation_matrix_index + 1;
+        uint16 max_index = arraysize(kCeresElevatorShaftMode7TransformationMatrix) - 1;
+        if (new_index == max_index)
+          new_index |= ROTATE_CCW;
+      }
+      rotation_matrix_index = new_index;
     }
   }
 }

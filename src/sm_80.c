@@ -149,7 +149,7 @@ void VerifySRAM(void) {  // 0x808261
 /**
 * @brief Multiplies two unsigned 16 bit integers
 * @param a, j The two 16 bit integers to multiply
-* @return result The 32 bit result of the multiplication
+* @return uint32 The 32 bit result of the multiplication
 */
 uint32 Multiply16x16(uint16 a, uint16 j) {  // 0x8082D6
   uint32 result = (uint32)a * (uint32)j;
@@ -1449,7 +1449,7 @@ void IrqHandler_8_StartOfDoor_BeginHud(void) {  // 0x8096D3
 */
 void IrqHandler_10_StartOfDoor_EndHud(void) {  // 0x8096F1
   uint8 layer;
-  if (((previous_cre_bitset | cre_bitset) & 1) != 0)
+  if ((previous_cre_bitset | cre_bitset) & kCreBitset_1_DisableBg1)
     layer = 0x10;
   else
     layer = 0x11;
@@ -1496,7 +1496,7 @@ void IrqHandler_16_VerticalDoor_BeginHud(void) {  // 0x809758
 */
 void IrqHandler_18_VerticalDoor_EndHud(void) {  // 0x809771
   uint8 layer;
-  if (((previous_cre_bitset | cre_bitset) & 1) != 0)
+  if ((previous_cre_bitset | cre_bitset) & kCreBitset_1_DisableBg1)
     layer = 0x10;
   else
     layer = 0x11;
@@ -1533,7 +1533,7 @@ void IrqHandler_22_HorizDoor_BeginHud(void) {  // 0x8097C1
 void IrqHandler_24_HorizDoor_EndHud(void) {  // 0x8097DA
   uint8 layer;
 
-  if (((previous_cre_bitset | cre_bitset) & 1) != 0)
+  if ((previous_cre_bitset | cre_bitset) & kCreBitset_1_DisableBg1)
     layer = 0x10;
   else
     layer = 0x11;
@@ -2082,7 +2082,7 @@ CoroutineRet StartGameplay_Async(void) {  // 0x80A07B
   irqhandler_next_handler = (room_loading_irq_handler == 0) ? kInterruptCommand_4_Main_BeginHudDraw : room_loading_irq_handler;
   EnableIrqInterrupts();
   COROUTINE_AWAIT(3, Play20FramesOfMusic_Async());
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x08, .y_pos = 0x08, .plm_id_ = addr_kPlmHeader_B7EB_EnableSound_32FramesNormal_240FramesCeres });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 8, .y_pos = 8, .plm_id_ = addr_kPlmHeader_B7EB_EnableSound_32FramesNormal_240FramesCeres });
   door_transition_function = FUNC16(DoorTransitionFunction_FadeInScreenAndFinish);
   COROUTINE_END(0);
 }

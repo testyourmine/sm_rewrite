@@ -2312,7 +2312,7 @@ void FxTypeFunc_26_TourianEntranceStatue(void) {  // 0x88DB8A
   static const SpawnHdmaObject_Args kSpawnHdmaObject_Bg3YScroll = { 0x42, 0x10, 0xdcfa };
 
   if (CheckEventHappened(kEvent_10_TourianEntranceUnlocked) & 1) {
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x0c, .plm_id_ = addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 6, .y_pos = 12, .plm_id_ = addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator });
     *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
   }
   reg_BG2SC = 74;
@@ -2373,7 +2373,7 @@ void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending(uint16 k) {  // 
     int v1 = k >> 1;
     AddToHiLo(&hdma_object_B[v1], &hdma_object_A[v1], -0x4000);
     if (hdma_object_B[v1] == 0xFF10) {
-      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x06, .y_pos = 0x0c, .plm_id_ = addr_kPlmHeader_B773_TourianEntrance_CrumbleAccessToElevator });
+      SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 6, .y_pos = 12, .plm_id_ = addr_kPlmHeader_B773_TourianEntrance_CrumbleAccessToElevator });
       SetEventHappened(kEvent_10_TourianEntranceUnlocked);
       hdma_object_instruction_timers[v1] = 1;
       hdma_object_instruction_list_pointers[v1] += 2;

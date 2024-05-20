@@ -304,6 +304,7 @@ uint16 kMetroid_CrySoundsIndices[] = {
 
 uint16 kMetroid_SpeedIndices[] = {
      0x2,    0x0, 0xfffe,    0x0,
+     0x0, 0xfffe,    0x0,    0x2,
 };
 
 

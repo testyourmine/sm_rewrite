@@ -305,6 +305,12 @@ enum AreaIndex {  // 0x7E079F
   kArea_7_Debug = 0x7,
 };
 
+enum CreBitset {  // 0x7E07B3
+  kCreBitset_1_DisableBg1 = 0x1,
+  kCreBitset_2_ReloadCre = 0x2,
+  kCreBitset_4_LargeTileset = 0x4
+};
+
 enum CeresStatus {  // 0x7E093F
   kCeresStatus_0_BeforeRidleyEscape = 0x0,
   kCeresStatus_1_DuringRidleyEscapeCutscene = 0x1,
@@ -1248,8 +1254,11 @@ typedef union RamHudTilemap {  // 0x7EC608
 } RamHudTilemap;
 
 enum RoomScrolls {  // 0x7ECD20
+  // Red scrolls can't be scrolled to
   kScroll_Red = 0x0,
+  // Blue scrolls hides the bottom two rows
   kScroll_Blue = 0x1,
+  // Green scrolls are unrestricted
   kScroll_Green = 0x2,
 };
 
@@ -1566,6 +1575,12 @@ typedef struct HdmaScrollEntry {  // 0x88AEC1
   uint16 scroll_speed;
   VoidP hdma_data_table_entry;
 }HdmaScrollEntry;
+
+typedef struct RotationMatrix {  // 0x88AD5F
+  uint16 timer;
+  uint16 sin_t;
+  uint16 cos_t;
+} RotationMatrix;
 
 /* 17 */
 typedef struct CinematicSpriteObjectDef {  // 0x8B0000
@@ -3093,6 +3108,21 @@ enum Consts_89 {
   addr_kIndirectHdmaTable_PowerBombExplodeLeft = 0x9800,
   addr_kIndirectHdmaTable_PowerBombExplodeRight = 0xA101,
 };
+enum Consts_8A {
+  addr_kTilemap_Lava = 0x8000,
+  addr_kTilemap_Acid = 0x8840,
+  addr_kTilemap_Water = 0x9080,
+  addr_kTilemap_Spores = 0x98C0,
+  addr_kTilemap_Rain = 0xA100,
+  addr_kTilemap_Fog = 0xA940,
+  addr_kTilemap_ScrollingSky_1 = 0xB180,
+  addr_kTilemap_ScrollingSky_2 = 0xB980,
+  addr_kTilemap_ScrollingSky_3 = 0xC180,
+  addr_kTilemap_ScrollingSky_4 = 0xC980,
+  addr_kTilemap_ScrollingSky_5 = 0xD180,
+  addr_kTilemap_ScrollingSky_6 = 0xD980,
+  addr_kTilemap_ScrollingSky_7 = 0xE180,
+};
 enum Consts_8B {
   addr_kCinematicSpriteObjectDef_ScrollingText_1994 = 0xA0EF,
   addr_kCinematicSpriteObjectDef_ScrollingText_NINTENDO = 0xA0F5,
@@ -3245,11 +3275,11 @@ enum Consts_8D {
   addr_kPalfx_TitleScreen_BabyMetroidTubeLight = 0xE1A0,
   addr_kPalfx_TitleScreen_FlickeringDisplays = 0xE1A4,
   addr_kPalfx_Cutscene_GunshipEngineFlicker = 0xE1A8,
-  addr_kPalfx_Cutscene_SpriteCeresNavigationLights = 0xE1AC,
+  addr_kPalfx_Cutscene_CeresNavigationLights_Sprite = 0xE1AC,
   addr_kPalfx_PlanetZebesText_FadeIn = 0xE1B0,
   addr_kPalfx_PlanetZebesText_FadeOut = 0xE1B4,
-  addr_kPalfx_Cutscene_BgCeresNavigationLights = 0xE1B8,
-  addr_kPalfx_OldMotherBrainFightBgLights = 0xE1BC,
+  addr_kPalfx_Cutscene_CeresNavigationLights_Bg = 0xE1B8,
+  addr_kPalfx_OldMotherBrainFight_BgLights = 0xE1BC,
   addr_kPalfx_GunshipGlow = 0xE1C0,
   addr_kPalfx_ZebesExploding_FadeOutZoomedOut = 0xE1C4,
   addr_kPalfx_ZebesExplosion_WideForeground = 0xE1C8,
@@ -3261,6 +3291,7 @@ enum Consts_8D {
   addr_kPalfx_ZebesExploding_FadeOutGrayClouds = 0xE1E0,
   addr_kPalfx_ZebesExplosion_GunshipEmerging = 0xE1E4,
   addr_kPalfx_ZebesExplosion_WideBackground = 0xE1E8,
+  addr_kPalfx_Unused_E1EC = 0xE1EC,
   addr_kPalfx_HyperBeam = 0xE1F0,
   addr_kPalfx_SamusLoading_PowerSuit = 0xE1F4,
   addr_kPalfx_SamusLoading_VariaSuit = 0xE1F8,
@@ -3274,12 +3305,41 @@ enum Consts_8D {
   addr_kPalfxInstrList_HeatedSamus_GravitySuit = 0xE8B6,
   addr_kPalfxInstrList_Crateria1 = 0xEB43,
   addr_kPalfxInstrList_DarkLightning_Unused = 0xEC76,
+  addr_kPalfx_Nothing = 0xF745,
+  addr_kPalfx_TourianStatue_GrayOut_Draygon = 0xF749,
+  addr_kPalfx_TourianStatue_GrayOut_Kraid = 0xF74D,
+  addr_kPalfx_TourianStatue_GrayOut_Ridley = 0xF751,
+  addr_kPalfx_TourianStatue_GrayOut_Phantoon = 0xF755,
   addr_kPalfx_BombTorizoBelly = 0xF759,
   addr_kPalfx_GoldenTorizoBelly = 0xF75D,
-  addr_kPalfx_Tourian8_RedFlashing_Shutter = 0xFFC9,
-  addr_kPalfx_Tourian16_RedFlashing_Background = 0xFFCD,
-  addr_kPalfx_Tourian32_RedFlashing_GeneralLevel = 0xFFD1,
-  addr_kPalfx_Tourian64_RedFlashing_ArkanoidBlocksAndOrbs = 0xFFD5,
+  addr_kPalfx_Norfair_1_Tourian_1 = 0xF761,
+  addr_kPalfx_Crateria_1_Lightning = 0xF765,
+  addr_kPalfx_Unused_DarkLightning = 0xF769,
+  addr_kPalfx_WreckedShip_1_GreenLights = 0xF76D,
+  addr_kPalfx_WreckedShip_1_GreenLights_Copy = 0xF771,
+  addr_kPalfx_Brinstar_1_BlueBgSpores = 0xF775,
+  addr_kPalfx_Brinstar_8_SporeSpawn_BlueBgSpores = 0xF779,
+  addr_kPalfx_Brinstar_2_RedBgGlow = 0xF77D,
+  addr_kPalfx_Crateria_128_Brinstar_4_BeaconFlashing = 0xF781,
+  addr_kPalfx_Norfair_2 = 0xF785,
+  addr_kPalfx_Norfair_4 = 0xF789,
+  addr_kPalfx_Norfair_8 = 0xF78D,
+  addr_kPalfx_Norfair_16 = 0xF791,
+  addr_kPalfx_Maridia_1_SandPits = 0xF795,
+  addr_kPalfx_Maridia_2_SandFalls = 0xF799,
+  addr_kPalfx_Maridia_4_BgWaterfalls = 0xF79D,
+  addr_kPalfx_Tourian_2_Glowing_ArkanoidBlocksAndOrbs = 0xF7A1,
+  addr_kPalfx_Tourian_4_UnusedTourian2Clone = 0xF7A5,
+  addr_kPalfx_Tourian_8_RedFlashing_Shutter = 0xFFC9,
+  addr_kPalfx_Tourian_16_RedFlashing_Background = 0xFFCD,
+  addr_kPalfx_Tourian_32_RedFlashing_GeneralLevel = 0xFFD1,
+  addr_kPalfx_Tourian_64_RedFlashing_ArkanoidBlocksAndOrbs = 0xFFD5,
+  addr_kPalfx_Crateria_8_RedFlashing_OldTourian = 0xFFD9,
+  addr_kPalfx_Crateria_16_OrangeFlashing_OldTourian_BackgroundRails = 0xFFDD,
+  addr_kPalfx_Crateria_32_YellowFlashing_OldTourian_BackgroundPanels = 0xFFE1,
+  addr_kPalfx_Crateria_2_RedFlashing_UpperCrateria = 0xFFE5,
+  addr_kPalfx_Crateria_4_YellowLightning = 0xFFE9,
+  addr_kPalfx_Crateria_64_PixelChange = 0xFFED,
 };
 enum Consts_8F {
   addr_kRoom_OldTourianEscapeShaft = 0x96BA,
@@ -4138,6 +4198,8 @@ struct ExtendedSpriteMap; static inline ExtendedSpriteMap *get_ExtendedSpriteMap
 struct EnemyPopulation; static inline EnemyPopulation *get_EnemyPopulation(uint8 db, uint16 a) { return (EnemyPopulation *)RomPtr(db << 16 | a); }
 //struct FxDef; static inline FxDef *get_FxDef(uint16 a) { return (FxDef *)RomPtr(0x830000 | a); }
 extern FxDef get_FxDef(uint16 a);
+extern uint8* get_Scrolls(uint16 a);
+extern XraySpecialCasing* get_XraySpecialCasing(uint16 a);
 struct LoadBg_E; static inline LoadBg_E *get_LoadBg_E(uint16 a) { return (LoadBg_E *)RomPtr(0x8F0000 | a); }
 //struct Mode7VramWriteQueue; static inline Mode7VramWriteQueue *get_Mode7VramWriteQueue(uint16 a) { return (Mode7VramWriteQueue *)RomPtr(0xA60000 | a); }
 //struct ProjectileInstr; static inline ProjectileInstr *get_ProjectileInstr(uint16 a) { return (ProjectileInstr *)RomPtr(0x930000 | a); }

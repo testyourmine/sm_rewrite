@@ -634,15 +634,15 @@ uint16 Mult0x80Add(uint16 r18) {  // 0x8B8A2C
 }
 
 void Samus_CalcPos_Mode7(void) {  // 0x8B8A52
-  uint16 r34 = samus_x_pos - reg_M7X;
-  uint16 r36 = reg_M7Y - samus_y_pos;
-  uint16 r26 = Smult16x16(samus_x_pos - reg_M7X, reg_M7A) >> 8;
-  r26 += Smult16x16(reg_M7B, r36) >> 8;
-  samus_x_pos = r26 + reg_M7X;
+  uint16 x_pos = samus_x_pos - reg_M7X;
+  uint16 y_pos = reg_M7Y - samus_y_pos;
+  uint16 x_offset = Smult16x16(x_pos, reg_M7A) >> 8;
+  x_offset += Smult16x16(reg_M7B, y_pos) >> 8;
+  samus_x_pos = x_offset + reg_M7X;
  
-  r26 = Smult16x16(reg_M7C, r34) >> 8;
-  r26 += Smult16x16(reg_M7A, r36) >> 8;
-  samus_y_pos = reg_M7Y - r26;
+  uint16 y_offset = Smult16x16(reg_M7C, x_pos) >> 8;
+  y_offset += Smult16x16(reg_M7A, y_pos) >> 8;
+  samus_y_pos = reg_M7Y - y_offset;
 }
 
 Point16U CalcExplosion_Mode7(uint16 k) {  // 0x8B8AD9
@@ -2809,7 +2809,7 @@ void CinematicFunction_Intro_XfadeGameplayFade(void) {  // 0x8BB250
     ClearJapaneseTextTiles();
     cinematic_function = FUNC16(CinematicFunc_Nothing);
     if ((cinematic_samus_display_flag & 0x8000) != 0)
-      SpawnPalfxObject(addr_kPalfx_OldMotherBrainFightBgLights);
+      SpawnPalfxObject(addr_kPalfx_OldMotherBrainFight_BgLights);
   }
 }
 
@@ -3554,7 +3554,7 @@ void CinematicFunction_Intro_Func56(void) {  // 0x8BBDF9
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF0F, 1);
     cinematic_function = FUNC16(CinematicFunction_Intro_Func67);
     SpawnPalfxObject(addr_kPalfx_Cutscene_GunshipEngineFlicker);
-    SpawnPalfxObject(addr_kPalfx_Cutscene_SpriteCeresNavigationLights);
+    SpawnPalfxObject(addr_kPalfx_Cutscene_CeresNavigationLights_Sprite);
   } else {
     mode7_transform_zoom -= 16;
   }
@@ -3801,7 +3801,7 @@ void CinematicFunctionBlackoutFromCeres(void) {  // 0x8BC11B
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE8B, 2);
   SpawnCinematicSpriteObjectToR18(addr_kCinematicSpriteObjectDef_8BCE91, 0);
   SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF33, 0);
-  SpawnPalfxObject(addr_kPalfx_Cutscene_BgCeresNavigationLights);
+  SpawnPalfxObject(addr_kPalfx_Cutscene_CeresNavigationLights_Bg);
   EnableNMI();
   screen_fade_delay = 1;
   screen_fade_counter = 1;
@@ -5120,7 +5120,7 @@ void CinematicFunction_Intro_Func141(void) {  // 0x8BE48A
     reg_BG12NBA = 84;
     uint16 v0 = 0;
     do {
-      palette_buffer.sprite_pal_4[v0 >> 1] = kPalettes_PostCredits[v0 >> 1];
+      palette_buffer.sprite_pal_4[v0 >> 1] = kPalettes_PostCredits[(v0+384) >> 1];
       v0 += 2;
     } while ((int16)(v0 - 0x20) < 0);
     mode7_x_pos = 0;

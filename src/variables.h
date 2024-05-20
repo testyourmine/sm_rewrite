@@ -316,6 +316,17 @@ extern int32 *cur_coll_amt32;
 #define room_enemy_tilesets_ptr (*(uint16*)(g_ram+0x7D1))
 #define room_main_code_ptr (*(uint16*)(g_ram+0x7DF))
 #define room_main_asm_variables ((uint8*)(g_ram+0x7E1))
+// {
+#define elevatube_subposition (*(uint16*)(g_ram+0x7E1))
+#define rotation_matrix_index (*(uint16*)(g_ram+0x7E1))
+#define debris_delay_timer (*(uint16*)(g_ram+0x7E1))
+#define diagonal_shake_timer (*(uint16*)(g_ram+0x7E1))
+#define elevatube_position (*(uint16*)(g_ram+0x7E3))
+#define rotation_matrix_timer (*(uint16*)(g_ram+0x7E3))
+#define room_shake_type (*(uint16*)(g_ram+0x7E3))
+#define elevatube_velocity (*(uint16*)(g_ram+0x7E5))
+#define elevatube_acceleration (*(uint16*)(g_ram+0x7E7))
+// }
 #define scrolling_finished_hook (*(uint16*)(g_ram+0x7E9))
 #define hdma_data_table_in_ceres (*(uint16*)(g_ram+0x7EB))
 #define music_data_index (*(uint16*)(g_ram+0x7F3))

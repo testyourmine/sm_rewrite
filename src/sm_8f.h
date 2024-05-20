@@ -1,269 +1,271 @@
 #pragma once
 
+extern RotationMatrix kCeresElevatorShaftMode7TransformationMatrix[69];
+
 RoomDefHeader get_RoomDefHeader(uint16 room) {
   switch (room) {
-    case 0x91f8: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 23, .y_coordinate_on_map =  0, .width =  9, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x927b, };
-    case 0x92b3: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 18, .y_coordinate_on_map =  2, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x92f9, };
-    case 0x92fd: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 18, .y_coordinate_on_map =  4, .width =  5, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9362, };
-    case 0x93aa: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 32, .y_coordinate_on_map =  1, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x93d1, };
-    case 0x93d5: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 18, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x93fc, };
-    case 0x93fe: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 38, .y_coordinate_on_map =  0, .width =  8, .height =  6, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9425, };
-    case 0x9461: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 41, .y_coordinate_on_map =  2, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9488, };
-    case 0x948c: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 33, .y_coordinate_on_map =  4, .width =  3, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x94b3, };
-    case 0x94cc: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 52, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x94f3, };
-    case 0x94fd: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 49, .y_coordinate_on_map =  0, .width =  7, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9524, };
-    case 0x9552: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 56, .y_coordinate_on_map =  4, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9579, };
-    case 0x957d: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 53, .y_coordinate_on_map =  8, .width =  4, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x95a4, };
-    case 0x95a8: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 52, .y_coordinate_on_map =  9, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x95cf, };
-    case 0x95d4: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 32, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x95fb, };
-    case 0x95ff: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 36, .y_coordinate_on_map =  4, .width =  2, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9626, };
-    case 0x962a: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 34, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9651, };
-    case 0x965b: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 12, .y_coordinate_on_map =  2, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9682, };
-    case 0x968f: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 43, .y_coordinate_on_map =  2, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x96b6, };
-    case 0x96ba: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 18, .y_coordinate_on_map =  9, .width =  3, .height =  9, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x971f, };
-    case 0x975c: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 20, .y_coordinate_on_map = 17, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x97a1, };
-    case 0x97b5: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 23, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x97fa, };
-    case 0x9804: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 25, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9869, };
-    case 0x9879: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 22, .y_coordinate_on_map =  6, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x98de, };
-    case 0x98e2: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 20, .y_coordinate_on_map =  7, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9909, };
-    case 0x990d: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 12, .y_coordinate_on_map =  4, .width =  6, .height =  3, .up_scroller_ = 160, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9934, };
-    case 0x9938: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map =  6, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x995f, };
-    case 0x9969: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map =  7, .y_coordinate_on_map =  8, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9990, };
-    case 0x9994: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 23, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x99bb, };
-    case 0x99bd: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 11, .y_coordinate_on_map =  2, .width =  1, .height =  7, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x99e4, };
-    case 0x99f9: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 21, .y_coordinate_on_map =  9, .width =  4, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9a20, };
-    case 0x9a44: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 17, .y_coordinate_on_map =  7, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9a8a, };
-    case 0x9a90: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 16, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9ad6, };
-    case 0x9ad9: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  9, .y_coordinate_on_map =  0, .width =  4, .height = 12, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9b00, };
-    case 0x9b5b: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 23, .y_coordinate_on_map =  1, .width =  2, .height =  9, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9b82, };
-    case 0x9b9d: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  6, .y_coordinate_on_map =  4, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9bc4, };
-    case 0x9bc8: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 10, .y_coordinate_on_map =  3, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9bef, };
-    case 0x9c07: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 13, .y_coordinate_on_map =  4, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9c2e, };
-    case 0x9c35: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  5, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9c5c, };
-    case 0x9c5e: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  6, .y_coordinate_on_map =  6, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9c85, };
-    case 0x9c89: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  5, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9cb0, };
-    case 0x9cb3: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 10, .y_coordinate_on_map =  6, .width =  7, .height =  7, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9cda, };
-    case 0x9d19: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 15, .y_coordinate_on_map =  4, .width =  5, .height = 10, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9d40, };
-    case 0x9d9c: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 19, .y_coordinate_on_map =  4, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9dc3, };
-    case 0x9dc7: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 22, .y_coordinate_on_map =  1, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9e0d, };
-    case 0x9e11: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 15, .y_coordinate_on_map =  7, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9e38, };
-    case 0x9e52: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 19, .y_coordinate_on_map = 10, .width =  8, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9e79, };
-    case 0x9e9f: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 21, .y_coordinate_on_map =  8, .width =  8, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9ee5, };
-    case 0x9f11: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 29, .y_coordinate_on_map = 10, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9f57, };
-    case 0x9f64: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 30, .y_coordinate_on_map =  8, .width =  3, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9faa, };
-    case 0x9fba: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 27, .y_coordinate_on_map = 13, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0x9fe1, };
-    case 0x9fe5: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  8, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa00c, };
-    case 0xa011: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  6, .y_coordinate_on_map = 10, .width =  5, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa038, };
-    case 0xa051: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  5, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa078, };
-    case 0xa07b: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  9, .y_coordinate_on_map = 12, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa0a2, };
-    case 0xa0a4: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa0cb, };
-    case 0xa0d2: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  8, .y_coordinate_on_map = 13, .width =  7, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa0f9, };
-    case 0xa107: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 28, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa12e, };
-    case 0xa130: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 19, .y_coordinate_on_map =  7, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa157, };
-    case 0xa15b: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 21, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa182, };
-    case 0xa184: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 15, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa1ab, };
-    case 0xa1ad: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 30, .y_coordinate_on_map =  8, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa1d4, };
-    case 0xa1d8: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 29, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa1ff, };
-    case 0xa201: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  8, .y_coordinate_on_map =  5, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa228, };
-    case 0xa22a: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map =  5, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa251, };
-    case 0xa253: return (RoomDefHeader){ .semiunique_room_number = 32, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 33, .y_coordinate_on_map =  9, .width =  1, .height = 10, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa27a, };
-    case 0xa293: return (RoomDefHeader){ .semiunique_room_number = 33, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 25, .y_coordinate_on_map = 15, .width =  8, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa2ba, };
-    case 0xa2ce: return (RoomDefHeader){ .semiunique_room_number = 34, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 23, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa2f5, };
-    case 0xa2f7: return (RoomDefHeader){ .semiunique_room_number = 35, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 34, .y_coordinate_on_map =  9, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa31e, };
-    case 0xa322: return (RoomDefHeader){ .semiunique_room_number = 36, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 37, .y_coordinate_on_map =  4, .width =  3, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa349, };
-    case 0xa37c: return (RoomDefHeader){ .semiunique_room_number = 37, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 35, .y_coordinate_on_map =  7, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa3a3, };
-    case 0xa3ae: return (RoomDefHeader){ .semiunique_room_number = 38, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 34, .y_coordinate_on_map = 11, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa3d5, };
-    case 0xa3dd: return (RoomDefHeader){ .semiunique_room_number = 39, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 34, .y_coordinate_on_map = 18, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa404, };
-    case 0xa408: return (RoomDefHeader){ .semiunique_room_number = 40, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 36, .y_coordinate_on_map = 17, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa42f, };
-    case 0xa447: return (RoomDefHeader){ .semiunique_room_number = 41, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 38, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa46e, };
-    case 0xa471: return (RoomDefHeader){ .semiunique_room_number = 42, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 44, .y_coordinate_on_map = 18, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa498, };
-    case 0xa4b1: return (RoomDefHeader){ .semiunique_room_number = 43, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 43, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa4d8, };
-    case 0xa4da: return (RoomDefHeader){ .semiunique_room_number = 44, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 45, .y_coordinate_on_map = 18, .width =  4, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa501, };
-    case 0xa521: return (RoomDefHeader){ .semiunique_room_number = 45, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 47, .y_coordinate_on_map = 19, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa567, };
-    case 0xa56b: return (RoomDefHeader){ .semiunique_room_number = 46, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 53, .y_coordinate_on_map = 18, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  2, .ptr_to_doorout = 0xa592, };
-    case 0xa59f: return (RoomDefHeader){ .semiunique_room_number = 47, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 55, .y_coordinate_on_map = 18, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  5, .ptr_to_doorout = 0xa5e5, };
-    case 0xa5ed: return (RoomDefHeader){ .semiunique_room_number = 48, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 12, .y_coordinate_on_map =  8, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa614, };
-    case 0xa618: return (RoomDefHeader){ .semiunique_room_number = 49, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 32, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa63f, };
-    case 0xa641: return (RoomDefHeader){ .semiunique_room_number = 50, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 54, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa668, };
-    case 0xa66a: return (RoomDefHeader){ .semiunique_room_number = 51, .area_index_ = kArea_0_Crateria   , .x_coordinate_on_map = 17, .y_coordinate_on_map =  8, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa691, };
-    case 0xa6a1: return (RoomDefHeader){ .semiunique_room_number = 52, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 41, .y_coordinate_on_map = 18, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa6c8, };
-    case 0xa6e2: return (RoomDefHeader){ .semiunique_room_number = 53, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 57, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  2, .ptr_to_doorout = 0xa709, };
-    case 0xa70b: return (RoomDefHeader){ .semiunique_room_number = 54, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 49, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa732, };
-    case 0xa734: return (RoomDefHeader){ .semiunique_room_number = 55, .area_index_ = kArea_1_Brinstar   , .x_coordinate_on_map = 38, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa75b, };
-    case 0xa75d: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  4, .y_coordinate_on_map =  3, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa784, };
-    case 0xa788: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 14, .y_coordinate_on_map =  3, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa7af, };
-    case 0xa7b3: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 11, .y_coordinate_on_map =  3, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa7da, };
-    case 0xa7de: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 10, .y_coordinate_on_map =  0, .width =  1, .height =  7, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa805, };
-    case 0xa815: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  3, .y_coordinate_on_map =  1, .width =  7, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa83c, };
-    case 0xa865: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  4, .y_coordinate_on_map =  1, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa88c, };
-    case 0xa890: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  5, .y_coordinate_on_map =  2, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa8b7, };
-    case 0xa8b9: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  3, .y_coordinate_on_map =  1, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa8e0, };
-    case 0xa8f8: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  2, .y_coordinate_on_map =  4, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xa91f, };
-    case 0xa923: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  3, .y_coordinate_on_map =  7, .width = 13, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  2, .ptr_to_doorout = 0xa94a, };
-    case 0xa98d: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 10, .width =  8, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  1, .ptr_to_doorout = 0xa9d3, };
-    case 0xa9e5: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  7, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaa0c, };
-    case 0xaa0e: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 11, .y_coordinate_on_map =  6, .width =  4, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaa35, };
-    case 0xaa41: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  8, .y_coordinate_on_map =  5, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaa68, };
-    case 0xaa82: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 10, .y_coordinate_on_map = 10, .width =  2, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  2, .ptr_to_doorout = 0xaaa9, };
-    case 0xaab5: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaadc, };
-    case 0xaade: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  9, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xab05, };
-    case 0xab07: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 10, .y_coordinate_on_map = 12, .width =  1, .height =  5, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xab2e, };
-    case 0xab3b: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 11, .y_coordinate_on_map = 15, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xab62, };
-    case 0xab64: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  7, .y_coordinate_on_map = 12, .width =  3, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xab8b, };
-    case 0xab8f: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  4, .y_coordinate_on_map = 15, .width =  8, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xabb6, };
-    case 0xabd2: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  6, .y_coordinate_on_map = 12, .width =  1, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xabf9, };
-    case 0xac00: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  4, .y_coordinate_on_map = 14, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xac27, };
-    case 0xac2b: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  3, .y_coordinate_on_map = 14, .width =  1, .height =  4, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xac52, };
-    case 0xac5a: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  2, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xac81, };
-    case 0xac83: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  2, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xacaa, };
-    case 0xacb3: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 22, .y_coordinate_on_map =  2, .width =  2, .height =  4, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xacda, };
-    case 0xacf0: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 25, .y_coordinate_on_map =  1, .width = 12, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xad17, };
-    case 0xad1b: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 37, .y_coordinate_on_map =  2, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xad5c, };
-    case 0xad5e: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 24, .y_coordinate_on_map =  3, .width =  6, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xad85, };
-    case 0xadad: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 25, .y_coordinate_on_map =  4, .width =  4, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xadd4, };
-    case 0xadde: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 29, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xae05, };
-    case 0xae07: return (RoomDefHeader){ .semiunique_room_number = 32, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 25, .y_coordinate_on_map =  6, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xae2e, };
-    case 0xae32: return (RoomDefHeader){ .semiunique_room_number = 33, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 27, .y_coordinate_on_map =  6, .width =  3, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xae59, };
-    case 0xae74: return (RoomDefHeader){ .semiunique_room_number = 34, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 25, .y_coordinate_on_map =  8, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xae9b, };
-    case 0xaeb4: return (RoomDefHeader){ .semiunique_room_number = 35, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 23, .y_coordinate_on_map =  8, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaedb, };
-    case 0xaedf: return (RoomDefHeader){ .semiunique_room_number = 36, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 22, .y_coordinate_on_map =  6, .width =  1, .height =  3, .up_scroller_ = 160, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaf06, };
-    case 0xaf14: return (RoomDefHeader){ .semiunique_room_number = 37, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 22, .y_coordinate_on_map = 10, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaf3b, };
-    case 0xaf3f: return (RoomDefHeader){ .semiunique_room_number = 38, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 21, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaf66, };
-    case 0xaf72: return (RoomDefHeader){ .semiunique_room_number = 39, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  5, .width =  2, .height =  2, .up_scroller_ = 160, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaf99, };
-    case 0xafa3: return (RoomDefHeader){ .semiunique_room_number = 40, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 17, .y_coordinate_on_map =  4, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xafca, };
-    case 0xafce: return (RoomDefHeader){ .semiunique_room_number = 41, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 16, .y_coordinate_on_map =  9, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xaff5, };
-    case 0xaffb: return (RoomDefHeader){ .semiunique_room_number = 42, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 21, .y_coordinate_on_map =  9, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb022, };
-    case 0xb026: return (RoomDefHeader){ .semiunique_room_number = 43, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb04d, };
-    case 0xb051: return (RoomDefHeader){ .semiunique_room_number = 44, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 23, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb078, };
-    case 0xb07a: return (RoomDefHeader){ .semiunique_room_number = 45, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 24, .y_coordinate_on_map =  1, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb0a1, };
-    case 0xb0b4: return (RoomDefHeader){ .semiunique_room_number = 46, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map =  9, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb0db, };
-    case 0xb0dd: return (RoomDefHeader){ .semiunique_room_number = 47, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 21, .y_coordinate_on_map =  3, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb104, };
-    case 0xb106: return (RoomDefHeader){ .semiunique_room_number = 48, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  5, .width =  8, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb12d, };
-    case 0xb139: return (RoomDefHeader){ .semiunique_room_number = 49, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 19, .y_coordinate_on_map =  6, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb160, };
-    case 0xb167: return (RoomDefHeader){ .semiunique_room_number = 50, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 11, .y_coordinate_on_map =  5, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb18e, };
-    case 0xb192: return (RoomDefHeader){ .semiunique_room_number = 51, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 16, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb1b9, };
-    case 0xb1bb: return (RoomDefHeader){ .semiunique_room_number = 52, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 20, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb1e2, };
-    case 0xb1e5: return (RoomDefHeader){ .semiunique_room_number = 53, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 15, .y_coordinate_on_map = 13, .width =  3, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb20c, };
-    case 0xb236: return (RoomDefHeader){ .semiunique_room_number = 54, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 17, .y_coordinate_on_map = 11, .width =  8, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb25d, };
-    case 0xb283: return (RoomDefHeader){ .semiunique_room_number = 55, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 18, .y_coordinate_on_map = 15, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb2c9, };
-    case 0xb2da: return (RoomDefHeader){ .semiunique_room_number = 56, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 21, .y_coordinate_on_map = 14, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb301, };
-    case 0xb305: return (RoomDefHeader){ .semiunique_room_number = 57, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 21, .y_coordinate_on_map = 15, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb32c, };
-    case 0xb32e: return (RoomDefHeader){ .semiunique_room_number = 58, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 23, .y_coordinate_on_map = 16, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb374, };
-    case 0xb37a: return (RoomDefHeader){ .semiunique_room_number = 59, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 24, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb3a1, };
-    case 0xb3a5: return (RoomDefHeader){ .semiunique_room_number = 60, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 25, .y_coordinate_on_map = 12, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb3cc, };
-    case 0xb40a: return (RoomDefHeader){ .semiunique_room_number = 62, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 26, .y_coordinate_on_map =  9, .width =  4, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb431, };
-    case 0xb457: return (RoomDefHeader){ .semiunique_room_number = 63, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 26, .y_coordinate_on_map = 14, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb47e, };
-    case 0xb482: return (RoomDefHeader){ .semiunique_room_number = 64, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 27, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb4a9, };
-    case 0xb4ad: return (RoomDefHeader){ .semiunique_room_number = 65, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 30, .y_coordinate_on_map =  9, .width =  1, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb4d4, };
-    case 0xb4e5: return (RoomDefHeader){ .semiunique_room_number = 66, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 31, .y_coordinate_on_map =  9, .width =  4, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb50c, };
-    case 0xb510: return (RoomDefHeader){ .semiunique_room_number = 67, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 33, .y_coordinate_on_map =  5, .width =  5, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb537, };
-    case 0xb55a: return (RoomDefHeader){ .semiunique_room_number = 68, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 37, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb581, };
-    case 0xb585: return (RoomDefHeader){ .semiunique_room_number = 69, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 35, .y_coordinate_on_map =  9, .width =  3, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb5ac, };
-    case 0xb5d5: return (RoomDefHeader){ .semiunique_room_number = 70, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 32, .y_coordinate_on_map = 14, .width =  6, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb5fc, };
-    case 0xb62b: return (RoomDefHeader){ .semiunique_room_number = 71, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 30, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb652, };
-    case 0xb656: return (RoomDefHeader){ .semiunique_room_number = 72, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 29, .y_coordinate_on_map =  3, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb67d, };
-    case 0xb698: return (RoomDefHeader){ .semiunique_room_number = 73, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 22, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb6bf, };
-    case 0xb6c1: return (RoomDefHeader){ .semiunique_room_number = 74, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 20, .y_coordinate_on_map = 14, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb6e8, };
-    case 0xb6ee: return (RoomDefHeader){ .semiunique_room_number = 75, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 35, .y_coordinate_on_map =  6, .width =  3, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb715, };
-    case 0xb741: return (RoomDefHeader){ .semiunique_room_number = 76, .area_index_ = kArea_2_Norfair    , .x_coordinate_on_map = 36, .y_coordinate_on_map = 12, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xb768, };
-    case 0xc98e: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 10, .y_coordinate_on_map = 11, .width =  6, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xc9d4, };
-    case 0xca08: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 12, .y_coordinate_on_map = 14, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xca4e, };
-    case 0xca52: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 12, .y_coordinate_on_map = 10, .width =  7, .height =  1, .up_scroller_ =   0, .down_scroller_ =   0, .cre_bitset_ =  0, .ptr_to_doorout = 0xca98, };
-    case 0xcaae: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 19, .y_coordinate_on_map = 10, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcaf4, };
-    case 0xcaf6: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 12, .y_coordinate_on_map = 11, .width =  6, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcb3c, };
-    case 0xcb8b: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 19, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcbd1, };
-    case 0xcbd5: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 21, .y_coordinate_on_map = 13, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcc1b, };
-    case 0xcc27: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 18, .y_coordinate_on_map = 13, .width =  3, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcc6d, };
-    case 0xcc6f: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 14, .y_coordinate_on_map = 19, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xccb5, };
-    case 0xcccb: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 13, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcd11, };
-    case 0xcd13: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 19, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcd59, };
-    case 0xcd5c: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 17, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcda2, };
-    case 0xcda8: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 15, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcdee, };
-    case 0xcdf1: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 18, .y_coordinate_on_map = 17, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xce37, };
-    case 0xce40: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 10, .y_coordinate_on_map = 13, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xce86, };
-    case 0xce8a: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_3_WreckedShip, .x_coordinate_on_map = 17, .y_coordinate_on_map = 14, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xced0, };
-    case 0xced2: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcef9, };
-    case 0xcefb: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 11, .y_coordinate_on_map = 17, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcf41, };
-    case 0xcf54: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 10, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcf7b, };
-    case 0xcf80: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 17, .width =  4, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcfa7, };
-    case 0xcfc9: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 10, .y_coordinate_on_map =  9, .width =  3, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xcff0, };
-    case 0xd017: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 13, .y_coordinate_on_map = 13, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd03e, };
-    case 0xd055: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 17, .y_coordinate_on_map = 12, .width =  3, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd07c, };
-    case 0xd08a: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 16, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd0b1, };
-    case 0xd0b9: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  9, .width =  6, .height =  4, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd0e0, };
-    case 0xd104: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  7, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd12b, };
-    case 0xd13b: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  4, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd162, };
-    case 0xd16d: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 14, .y_coordinate_on_map =  4, .width =  4, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd194, };
-    case 0xd1a3: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  7, .width =  2, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd1ca, };
-    case 0xd1dd: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  4, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd204, };
-    case 0xd21c: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 16, .y_coordinate_on_map = 16, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd243, };
-    case 0xd252: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 17, .y_coordinate_on_map = 16, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd279, };
-    case 0xd27e: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map =  0, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd2a5, };
-    case 0xd2aa: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 27, .y_coordinate_on_map =  0, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd2d1, };
-    case 0xd2d9: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 27, .y_coordinate_on_map =  5, .width =  7, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd300, };
-    case 0xd30b: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 34, .y_coordinate_on_map =  0, .width =  1, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd332, };
-    case 0xd340: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 22, .y_coordinate_on_map =  2, .width =  4, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd367, };
-    case 0xd387: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 25, .y_coordinate_on_map =  0, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd3ae, };
-    case 0xd3b6: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 17, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd3dd, };
-    case 0xd3df: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 35, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd406, };
-    case 0xd408: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 22, .y_coordinate_on_map =  5, .width =  1, .height = 10, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd42f, };
-    case 0xd433: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map =  5, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd45a, };
-    case 0xd461: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 18, .y_coordinate_on_map = 16, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd488, };
-    case 0xd48e: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 22, .y_coordinate_on_map = 15, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd4b5, };
-    case 0xd4c2: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 23, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd4e9, };
-    case 0xd4ef: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 20, .y_coordinate_on_map = 14, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd516, };
-    case 0xd51e: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 23, .y_coordinate_on_map = 14, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd545, };
-    case 0xd54d: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 21, .y_coordinate_on_map = 12, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd574, };
-    case 0xd57a: return (RoomDefHeader){ .semiunique_room_number = 32, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 23, .y_coordinate_on_map = 12, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd5a1, };
-    case 0xd5a7: return (RoomDefHeader){ .semiunique_room_number = 33, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  6, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd5ce, };
-    case 0xd5ec: return (RoomDefHeader){ .semiunique_room_number = 34, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd613, };
-    case 0xd617: return (RoomDefHeader){ .semiunique_room_number = 35, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  8, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd63e, };
-    case 0xd646: return (RoomDefHeader){ .semiunique_room_number = 36, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map = 13, .width =  2, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd66d, };
-    case 0xd69a: return (RoomDefHeader){ .semiunique_room_number = 37, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 27, .y_coordinate_on_map = 14, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd6c1, };
-    case 0xd6d0: return (RoomDefHeader){ .semiunique_room_number = 38, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 32, .y_coordinate_on_map = 15, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd6f7, };
-    case 0xd6fd: return (RoomDefHeader){ .semiunique_room_number = 39, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map = 10, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd724, };
-    case 0xd72a: return (RoomDefHeader){ .semiunique_room_number = 40, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 34, .y_coordinate_on_map =  6, .width =  7, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd751, };
-    case 0xd765: return (RoomDefHeader){ .semiunique_room_number = 41, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 19, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd78c, };
-    case 0xd78f: return (RoomDefHeader){ .semiunique_room_number = 42, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 41, .y_coordinate_on_map =  7, .width =  2, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd7d5, };
-    case 0xd7e4: return (RoomDefHeader){ .semiunique_room_number = 43, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map =  8, .width =  7, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd80b, };
-    case 0xd81a: return (RoomDefHeader){ .semiunique_room_number = 44, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 41, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd841, };
-    case 0xd845: return (RoomDefHeader){ .semiunique_room_number = 45, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 38, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd86c, };
-    case 0xd86e: return (RoomDefHeader){ .semiunique_room_number = 46, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 26, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd895, };
-    case 0xd898: return (RoomDefHeader){ .semiunique_room_number = 47, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 28, .y_coordinate_on_map =  9, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd8bf, };
-    case 0xd8c5: return (RoomDefHeader){ .semiunique_room_number = 48, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 28, .y_coordinate_on_map = 15, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd90b, };
-    case 0xd913: return (RoomDefHeader){ .semiunique_room_number = 49, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 33, .y_coordinate_on_map =  6, .width =  5, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd93a, };
-    case 0xd95e: return (RoomDefHeader){ .semiunique_room_number = 50, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 24, .y_coordinate_on_map =  8, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd9a4, };
-    case 0xd9aa: return (RoomDefHeader){ .semiunique_room_number = 51, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 38, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd9d1, };
-    case 0xd9d4: return (RoomDefHeader){ .semiunique_room_number = 52, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 42, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xd9fb, };
-    case 0xd9fe: return (RoomDefHeader){ .semiunique_room_number = 53, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 27, .y_coordinate_on_map =  6, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xda25, };
-    case 0xda2b: return (RoomDefHeader){ .semiunique_room_number = 54, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 28, .y_coordinate_on_map =  6, .width =  5, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xda52, };
-    case 0xda60: return (RoomDefHeader){ .semiunique_room_number = 55, .area_index_ = kArea_4_Maridia    , .x_coordinate_on_map = 39, .y_coordinate_on_map =  9, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  1, .ptr_to_doorout = 0xdaa6, };
-    case 0xdaae: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdad5, };
-    case 0xdae1: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 14, .y_coordinate_on_map = 12, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdb27, };
-    case 0xdb31: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 13, .y_coordinate_on_map = 12, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdb77, };
-    case 0xdb7d: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 14, .y_coordinate_on_map = 13, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdbc3, };
-    case 0xdbcd: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 20, .y_coordinate_on_map = 13, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdc13, };
-    case 0xdc19: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 19, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdc5f, };
-    case 0xdc65: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 17, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdcab, };
-    case 0xdcb1: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 13, .y_coordinate_on_map = 15, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdcf7, };
-    case 0xdcff: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 15, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdd26, };
-    case 0xdd2e: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 11, .y_coordinate_on_map = 16, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdd55, };
-    case 0xdd58: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 13, .y_coordinate_on_map = 18, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xddbc, };
-    case 0xddc4: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 13, .y_coordinate_on_map = 16, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xddeb, };
-    case 0xddf3: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 17, .y_coordinate_on_map = 16, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xde1a, };
-    case 0xde23: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 16, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xde4a, };
-    case 0xde4d: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 11, .y_coordinate_on_map = 18, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xde74, };
-    case 0xde7a: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 11, .y_coordinate_on_map = 19, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdea1, };
-    case 0xdea7: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 12, .y_coordinate_on_map = 19, .width =  6, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdece, };
-    case 0xdede: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 18, .y_coordinate_on_map = 16, .width =  3, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdf05, };
-    case 0xdf1b: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_5_Tourian    , .x_coordinate_on_map = 21, .y_coordinate_on_map = 12, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdf42, };
-    case 0xdf45: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_6_Ceres      , .x_coordinate_on_map = 12, .y_coordinate_on_map = 13, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  5, .ptr_to_doorout = 0xdf8b, };
-    case 0xdf8d: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_6_Ceres      , .x_coordinate_on_map = 13, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xdfd3, };
-    case 0xdfd7: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_6_Ceres      , .x_coordinate_on_map = 15, .y_coordinate_on_map = 15, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xe01d, };
-    case 0xe021: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_6_Ceres      , .x_coordinate_on_map = 16, .y_coordinate_on_map = 16, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xe067, };
-    case 0xe06b: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_6_Ceres      , .x_coordinate_on_map = 18, .y_coordinate_on_map = 16, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xe0b1, };
-    case 0xe0b5: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_6_Ceres      , .x_coordinate_on_map = 20, .y_coordinate_on_map = 16, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  5, .ptr_to_doorout = 0xe0fb, };
-    case 0xe82c: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_7_Debug      , .x_coordinate_on_map =  0, .y_coordinate_on_map =  0, .width =  6, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ =  0, .ptr_to_doorout = 0xe853, };
+    case 0x91f8: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 23, .y_coordinate_on_map =  0, .width =  9, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x927b, };
+    case 0x92b3: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  2, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x92f9, };
+    case 0x92fd: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  4, .width =  5, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9362, };
+    case 0x93aa: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 32, .y_coordinate_on_map =  1, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x93d1, };
+    case 0x93d5: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x93fc, };
+    case 0x93fe: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 38, .y_coordinate_on_map =  0, .width =  8, .height =  6, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9425, };
+    case 0x9461: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 41, .y_coordinate_on_map =  2, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9488, };
+    case 0x948c: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 33, .y_coordinate_on_map =  4, .width =  3, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x94b3, };
+    case 0x94cc: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 52, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x94f3, };
+    case 0x94fd: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 49, .y_coordinate_on_map =  0, .width =  7, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9524, };
+    case 0x9552: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 56, .y_coordinate_on_map =  4, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9579, };
+    case 0x957d: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 53, .y_coordinate_on_map =  8, .width =  4, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x95a4, };
+    case 0x95a8: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 52, .y_coordinate_on_map =  9, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x95cf, };
+    case 0x95d4: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 32, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x95fb, };
+    case 0x95ff: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 36, .y_coordinate_on_map =  4, .width =  2, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9626, };
+    case 0x962a: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 34, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9651, };
+    case 0x965b: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  2, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9682, };
+    case 0x968f: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 43, .y_coordinate_on_map =  2, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x96b6, };
+    case 0x96ba: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 18, .y_coordinate_on_map =  9, .width =  3, .height =  9, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x971f, };
+    case 0x975c: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 20, .y_coordinate_on_map = 17, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x97a1, };
+    case 0x97b5: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 23, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x97fa, };
+    case 0x9804: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 25, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9869, };
+    case 0x9879: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 22, .y_coordinate_on_map =  6, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x98de, };
+    case 0x98e2: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  7, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9909, };
+    case 0x990d: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  4, .width =  6, .height =  3, .up_scroller_ = 160, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9934, };
+    case 0x9938: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map =  6, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x995f, };
+    case 0x9969: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map =  7, .y_coordinate_on_map =  8, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9990, };
+    case 0x9994: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 23, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x99bb, };
+    case 0x99bd: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 11, .y_coordinate_on_map =  2, .width =  1, .height =  7, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x99e4, };
+    case 0x99f9: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 21, .y_coordinate_on_map =  9, .width =  4, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9a20, };
+    case 0x9a44: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 17, .y_coordinate_on_map =  7, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9a8a, };
+    case 0x9a90: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 16, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9ad6, };
+    case 0x9ad9: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  9, .y_coordinate_on_map =  0, .width =  4, .height = 12, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9b00, };
+    case 0x9b5b: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 23, .y_coordinate_on_map =  1, .width =  2, .height =  9, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9b82, };
+    case 0x9b9d: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  6, .y_coordinate_on_map =  4, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9bc4, };
+    case 0x9bc8: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 10, .y_coordinate_on_map =  3, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9bef, };
+    case 0x9c07: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 13, .y_coordinate_on_map =  4, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9c2e, };
+    case 0x9c35: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  5, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9c5c, };
+    case 0x9c5e: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  6, .y_coordinate_on_map =  6, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9c85, };
+    case 0x9c89: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  5, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9cb0, };
+    case 0x9cb3: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 10, .y_coordinate_on_map =  6, .width =  7, .height =  7, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9cda, };
+    case 0x9d19: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 15, .y_coordinate_on_map =  4, .width =  5, .height = 10, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9d40, };
+    case 0x9d9c: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 19, .y_coordinate_on_map =  4, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9dc3, };
+    case 0x9dc7: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 22, .y_coordinate_on_map =  1, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9e0d, };
+    case 0x9e11: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 15, .y_coordinate_on_map =  7, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9e38, };
+    case 0x9e52: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 19, .y_coordinate_on_map = 10, .width =  8, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9e79, };
+    case 0x9e9f: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 21, .y_coordinate_on_map =  8, .width =  8, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9ee5, };
+    case 0x9f11: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 29, .y_coordinate_on_map = 10, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9f57, };
+    case 0x9f64: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 30, .y_coordinate_on_map =  8, .width =  3, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9faa, };
+    case 0x9fba: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 27, .y_coordinate_on_map = 13, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0x9fe1, };
+    case 0x9fe5: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  8, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa00c, };
+    case 0xa011: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  6, .y_coordinate_on_map = 10, .width =  5, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa038, };
+    case 0xa051: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  5, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa078, };
+    case 0xa07b: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  9, .y_coordinate_on_map = 12, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa0a2, };
+    case 0xa0a4: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa0cb, };
+    case 0xa0d2: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  8, .y_coordinate_on_map = 13, .width =  7, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa0f9, };
+    case 0xa107: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 28, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa12e, };
+    case 0xa130: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 19, .y_coordinate_on_map =  7, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa157, };
+    case 0xa15b: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 21, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa182, };
+    case 0xa184: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 15, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa1ab, };
+    case 0xa1ad: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 30, .y_coordinate_on_map =  8, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa1d4, };
+    case 0xa1d8: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 29, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa1ff, };
+    case 0xa201: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  8, .y_coordinate_on_map =  5, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa228, };
+    case 0xa22a: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map =  5, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa251, };
+    case 0xa253: return (RoomDefHeader){ .semiunique_room_number = 32, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 33, .y_coordinate_on_map =  9, .width =  1, .height = 10, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa27a, };
+    case 0xa293: return (RoomDefHeader){ .semiunique_room_number = 33, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 25, .y_coordinate_on_map = 15, .width =  8, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa2ba, };
+    case 0xa2ce: return (RoomDefHeader){ .semiunique_room_number = 34, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 23, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa2f5, };
+    case 0xa2f7: return (RoomDefHeader){ .semiunique_room_number = 35, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 34, .y_coordinate_on_map =  9, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa31e, };
+    case 0xa322: return (RoomDefHeader){ .semiunique_room_number = 36, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 37, .y_coordinate_on_map =  4, .width =  3, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa349, };
+    case 0xa37c: return (RoomDefHeader){ .semiunique_room_number = 37, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 35, .y_coordinate_on_map =  7, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa3a3, };
+    case 0xa3ae: return (RoomDefHeader){ .semiunique_room_number = 38, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 34, .y_coordinate_on_map = 11, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa3d5, };
+    case 0xa3dd: return (RoomDefHeader){ .semiunique_room_number = 39, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 34, .y_coordinate_on_map = 18, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa404, };
+    case 0xa408: return (RoomDefHeader){ .semiunique_room_number = 40, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 36, .y_coordinate_on_map = 17, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa42f, };
+    case 0xa447: return (RoomDefHeader){ .semiunique_room_number = 41, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 38, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa46e, };
+    case 0xa471: return (RoomDefHeader){ .semiunique_room_number = 42, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 44, .y_coordinate_on_map = 18, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa498, };
+    case 0xa4b1: return (RoomDefHeader){ .semiunique_room_number = 43, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 43, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa4d8, };
+    case 0xa4da: return (RoomDefHeader){ .semiunique_room_number = 44, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 45, .y_coordinate_on_map = 18, .width =  4, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa501, };
+    case 0xa521: return (RoomDefHeader){ .semiunique_room_number = 45, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 47, .y_coordinate_on_map = 19, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa567, };
+    case 0xa56b: return (RoomDefHeader){ .semiunique_room_number = 46, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 53, .y_coordinate_on_map = 18, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_2_ReloadCre                              , .ptr_to_doorout = 0xa592, };
+    case 0xa59f: return (RoomDefHeader){ .semiunique_room_number = 47, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 55, .y_coordinate_on_map = 18, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_1_DisableBg1 | kCreBitset_4_LargeTileset , .ptr_to_doorout = 0xa5e5, };
+    case 0xa5ed: return (RoomDefHeader){ .semiunique_room_number = 48, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 12, .y_coordinate_on_map =  8, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa614, };
+    case 0xa618: return (RoomDefHeader){ .semiunique_room_number = 49, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 32, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa63f, };
+    case 0xa641: return (RoomDefHeader){ .semiunique_room_number = 50, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 54, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa668, };
+    case 0xa66a: return (RoomDefHeader){ .semiunique_room_number = 51, .area_index_ = kArea_0_Crateria    , .x_coordinate_on_map = 17, .y_coordinate_on_map =  8, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa691, };
+    case 0xa6a1: return (RoomDefHeader){ .semiunique_room_number = 52, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 41, .y_coordinate_on_map = 18, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa6c8, };
+    case 0xa6e2: return (RoomDefHeader){ .semiunique_room_number = 53, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 57, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_2_ReloadCre                              , .ptr_to_doorout = 0xa709, };
+    case 0xa70b: return (RoomDefHeader){ .semiunique_room_number = 54, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 49, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa732, };
+    case 0xa734: return (RoomDefHeader){ .semiunique_room_number = 55, .area_index_ = kArea_1_Brinstar    , .x_coordinate_on_map = 38, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa75b, };
+    case 0xa75d: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  4, .y_coordinate_on_map =  3, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa784, };
+    case 0xa788: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 14, .y_coordinate_on_map =  3, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa7af, };
+    case 0xa7b3: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 11, .y_coordinate_on_map =  3, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa7da, };
+    case 0xa7de: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 10, .y_coordinate_on_map =  0, .width =  1, .height =  7, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa805, };
+    case 0xa815: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  3, .y_coordinate_on_map =  1, .width =  7, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa83c, };
+    case 0xa865: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  4, .y_coordinate_on_map =  1, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa88c, };
+    case 0xa890: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  5, .y_coordinate_on_map =  2, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa8b7, };
+    case 0xa8b9: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  3, .y_coordinate_on_map =  1, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa8e0, };
+    case 0xa8f8: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  2, .y_coordinate_on_map =  4, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xa91f, };
+    case 0xa923: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  3, .y_coordinate_on_map =  7, .width = 13, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_2_ReloadCre                              , .ptr_to_doorout = 0xa94a, };
+    case 0xa98d: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 10, .width =  8, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_1_DisableBg1                             , .ptr_to_doorout = 0xa9d3, };
+    case 0xa9e5: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  7, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaa0c, };
+    case 0xaa0e: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 11, .y_coordinate_on_map =  6, .width =  4, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaa35, };
+    case 0xaa41: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  8, .y_coordinate_on_map =  5, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaa68, };
+    case 0xaa82: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 10, .y_coordinate_on_map = 10, .width =  2, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_2_ReloadCre                              , .ptr_to_doorout = 0xaaa9, };
+    case 0xaab5: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaadc, };
+    case 0xaade: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  9, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xab05, };
+    case 0xab07: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 10, .y_coordinate_on_map = 12, .width =  1, .height =  5, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xab2e, };
+    case 0xab3b: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 11, .y_coordinate_on_map = 15, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xab62, };
+    case 0xab64: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  7, .y_coordinate_on_map = 12, .width =  3, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xab8b, };
+    case 0xab8f: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  4, .y_coordinate_on_map = 15, .width =  8, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xabb6, };
+    case 0xabd2: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  6, .y_coordinate_on_map = 12, .width =  1, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xabf9, };
+    case 0xac00: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  4, .y_coordinate_on_map = 14, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xac27, };
+    case 0xac2b: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  3, .y_coordinate_on_map = 14, .width =  1, .height =  4, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xac52, };
+    case 0xac5a: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 18, .y_coordinate_on_map =  2, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xac81, };
+    case 0xac83: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 20, .y_coordinate_on_map =  2, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xacaa, };
+    case 0xacb3: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 22, .y_coordinate_on_map =  2, .width =  2, .height =  4, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xacda, };
+    case 0xacf0: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 25, .y_coordinate_on_map =  1, .width = 12, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xad17, };
+    case 0xad1b: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 37, .y_coordinate_on_map =  2, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xad5c, };
+    case 0xad5e: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 24, .y_coordinate_on_map =  3, .width =  6, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xad85, };
+    case 0xadad: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 25, .y_coordinate_on_map =  4, .width =  4, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xadd4, };
+    case 0xadde: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 29, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xae05, };
+    case 0xae07: return (RoomDefHeader){ .semiunique_room_number = 32, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 25, .y_coordinate_on_map =  6, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xae2e, };
+    case 0xae32: return (RoomDefHeader){ .semiunique_room_number = 33, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 27, .y_coordinate_on_map =  6, .width =  3, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xae59, };
+    case 0xae74: return (RoomDefHeader){ .semiunique_room_number = 34, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 25, .y_coordinate_on_map =  8, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xae9b, };
+    case 0xaeb4: return (RoomDefHeader){ .semiunique_room_number = 35, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 23, .y_coordinate_on_map =  8, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaedb, };
+    case 0xaedf: return (RoomDefHeader){ .semiunique_room_number = 36, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 22, .y_coordinate_on_map =  6, .width =  1, .height =  3, .up_scroller_ = 160, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaf06, };
+    case 0xaf14: return (RoomDefHeader){ .semiunique_room_number = 37, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 22, .y_coordinate_on_map = 10, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaf3b, };
+    case 0xaf3f: return (RoomDefHeader){ .semiunique_room_number = 38, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 21, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaf66, };
+    case 0xaf72: return (RoomDefHeader){ .semiunique_room_number = 39, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 20, .y_coordinate_on_map =  5, .width =  2, .height =  2, .up_scroller_ = 160, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaf99, };
+    case 0xafa3: return (RoomDefHeader){ .semiunique_room_number = 40, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 17, .y_coordinate_on_map =  4, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xafca, };
+    case 0xafce: return (RoomDefHeader){ .semiunique_room_number = 41, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 16, .y_coordinate_on_map =  9, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xaff5, };
+    case 0xaffb: return (RoomDefHeader){ .semiunique_room_number = 42, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 21, .y_coordinate_on_map =  9, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb022, };
+    case 0xb026: return (RoomDefHeader){ .semiunique_room_number = 43, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb04d, };
+    case 0xb051: return (RoomDefHeader){ .semiunique_room_number = 44, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 23, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb078, };
+    case 0xb07a: return (RoomDefHeader){ .semiunique_room_number = 45, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 24, .y_coordinate_on_map =  1, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb0a1, };
+    case 0xb0b4: return (RoomDefHeader){ .semiunique_room_number = 46, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map =  9, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb0db, };
+    case 0xb0dd: return (RoomDefHeader){ .semiunique_room_number = 47, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 21, .y_coordinate_on_map =  3, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb104, };
+    case 0xb106: return (RoomDefHeader){ .semiunique_room_number = 48, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 12, .y_coordinate_on_map =  5, .width =  8, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb12d, };
+    case 0xb139: return (RoomDefHeader){ .semiunique_room_number = 49, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 19, .y_coordinate_on_map =  6, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb160, };
+    case 0xb167: return (RoomDefHeader){ .semiunique_room_number = 50, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 11, .y_coordinate_on_map =  5, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb18e, };
+    case 0xb192: return (RoomDefHeader){ .semiunique_room_number = 51, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 16, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb1b9, };
+    case 0xb1bb: return (RoomDefHeader){ .semiunique_room_number = 52, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 20, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb1e2, };
+    case 0xb1e5: return (RoomDefHeader){ .semiunique_room_number = 53, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 15, .y_coordinate_on_map = 13, .width =  3, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb20c, };
+    case 0xb236: return (RoomDefHeader){ .semiunique_room_number = 54, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 17, .y_coordinate_on_map = 11, .width =  8, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb25d, };
+    case 0xb283: return (RoomDefHeader){ .semiunique_room_number = 55, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 18, .y_coordinate_on_map = 15, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb2c9, };
+    case 0xb2da: return (RoomDefHeader){ .semiunique_room_number = 56, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 21, .y_coordinate_on_map = 14, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb301, };
+    case 0xb305: return (RoomDefHeader){ .semiunique_room_number = 57, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 21, .y_coordinate_on_map = 15, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb32c, };
+    case 0xb32e: return (RoomDefHeader){ .semiunique_room_number = 58, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 23, .y_coordinate_on_map = 16, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb374, };
+    case 0xb37a: return (RoomDefHeader){ .semiunique_room_number = 59, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 24, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb3a1, };
+    case 0xb3a5: return (RoomDefHeader){ .semiunique_room_number = 60, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 25, .y_coordinate_on_map = 12, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb3cc, };
+    case 0xb40a: return (RoomDefHeader){ .semiunique_room_number = 62, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 26, .y_coordinate_on_map =  9, .width =  4, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb431, };
+    case 0xb457: return (RoomDefHeader){ .semiunique_room_number = 63, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 26, .y_coordinate_on_map = 14, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb47e, };
+    case 0xb482: return (RoomDefHeader){ .semiunique_room_number = 64, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 27, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb4a9, };
+    case 0xb4ad: return (RoomDefHeader){ .semiunique_room_number = 65, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 30, .y_coordinate_on_map =  9, .width =  1, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb4d4, };
+    case 0xb4e5: return (RoomDefHeader){ .semiunique_room_number = 66, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 31, .y_coordinate_on_map =  9, .width =  4, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb50c, };
+    case 0xb510: return (RoomDefHeader){ .semiunique_room_number = 67, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 33, .y_coordinate_on_map =  5, .width =  5, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb537, };
+    case 0xb55a: return (RoomDefHeader){ .semiunique_room_number = 68, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 37, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb581, };
+    case 0xb585: return (RoomDefHeader){ .semiunique_room_number = 69, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 35, .y_coordinate_on_map =  9, .width =  3, .height =  5, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb5ac, };
+    case 0xb5d5: return (RoomDefHeader){ .semiunique_room_number = 70, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 32, .y_coordinate_on_map = 14, .width =  6, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb5fc, };
+    case 0xb62b: return (RoomDefHeader){ .semiunique_room_number = 71, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 30, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb652, };
+    case 0xb656: return (RoomDefHeader){ .semiunique_room_number = 72, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 29, .y_coordinate_on_map =  3, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb67d, };
+    case 0xb698: return (RoomDefHeader){ .semiunique_room_number = 73, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 22, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb6bf, };
+    case 0xb6c1: return (RoomDefHeader){ .semiunique_room_number = 74, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 20, .y_coordinate_on_map = 14, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb6e8, };
+    case 0xb6ee: return (RoomDefHeader){ .semiunique_room_number = 75, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 35, .y_coordinate_on_map =  6, .width =  3, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb715, };
+    case 0xb741: return (RoomDefHeader){ .semiunique_room_number = 76, .area_index_ = kArea_2_Norfair     , .x_coordinate_on_map = 36, .y_coordinate_on_map = 12, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xb768, };
+    case 0xc98e: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 10, .y_coordinate_on_map = 11, .width =  6, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xc9d4, };
+    case 0xca08: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 12, .y_coordinate_on_map = 14, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xca4e, };
+    case 0xca52: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 12, .y_coordinate_on_map = 10, .width =  7, .height =  1, .up_scroller_ =   0, .down_scroller_ =   0, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xca98, };
+    case 0xcaae: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 19, .y_coordinate_on_map = 10, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcaf4, };
+    case 0xcaf6: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 12, .y_coordinate_on_map = 11, .width =  6, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcb3c, };
+    case 0xcb8b: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 19, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcbd1, };
+    case 0xcbd5: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 21, .y_coordinate_on_map = 13, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcc1b, };
+    case 0xcc27: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 18, .y_coordinate_on_map = 13, .width =  3, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcc6d, };
+    case 0xcc6f: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 14, .y_coordinate_on_map = 19, .width =  5, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xccb5, };
+    case 0xcccb: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 13, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcd11, };
+    case 0xcd13: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 19, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcd59, };
+    case 0xcd5c: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 17, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcda2, };
+    case 0xcda8: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 15, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcdee, };
+    case 0xcdf1: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 18, .y_coordinate_on_map = 17, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xce37, };
+    case 0xce40: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 10, .y_coordinate_on_map = 13, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xce86, };
+    case 0xce8a: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_3_WreckedShip , .x_coordinate_on_map = 17, .y_coordinate_on_map = 14, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xced0, };
+    case 0xced2: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 19, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcef9, };
+    case 0xcefb: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 11, .y_coordinate_on_map = 17, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcf41, };
+    case 0xcf54: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 10, .y_coordinate_on_map = 18, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcf7b, };
+    case 0xcf80: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 17, .width =  4, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcfa7, };
+    case 0xcfc9: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 10, .y_coordinate_on_map =  9, .width =  3, .height =  8, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xcff0, };
+    case 0xd017: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 13, .y_coordinate_on_map = 13, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd03e, };
+    case 0xd055: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 17, .y_coordinate_on_map = 12, .width =  3, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd07c, };
+    case 0xd08a: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 16, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd0b1, };
+    case 0xd0b9: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 12, .y_coordinate_on_map =  9, .width =  6, .height =  4, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd0e0, };
+    case 0xd104: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 12, .y_coordinate_on_map =  7, .width =  3, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd12b, };
+    case 0xd13b: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 12, .y_coordinate_on_map =  4, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd162, };
+    case 0xd16d: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 14, .y_coordinate_on_map =  4, .width =  4, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd194, };
+    case 0xd1a3: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 18, .y_coordinate_on_map =  7, .width =  2, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd1ca, };
+    case 0xd1dd: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 18, .y_coordinate_on_map =  4, .width =  4, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd204, };
+    case 0xd21c: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 16, .y_coordinate_on_map = 16, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd243, };
+    case 0xd252: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 17, .y_coordinate_on_map = 16, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd279, };
+    case 0xd27e: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map =  0, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd2a5, };
+    case 0xd2aa: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 27, .y_coordinate_on_map =  0, .width =  2, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd2d1, };
+    case 0xd2d9: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 27, .y_coordinate_on_map =  5, .width =  7, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd300, };
+    case 0xd30b: return (RoomDefHeader){ .semiunique_room_number = 19, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 34, .y_coordinate_on_map =  0, .width =  1, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd332, };
+    case 0xd340: return (RoomDefHeader){ .semiunique_room_number = 20, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 22, .y_coordinate_on_map =  2, .width =  4, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd367, };
+    case 0xd387: return (RoomDefHeader){ .semiunique_room_number = 21, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 25, .y_coordinate_on_map =  0, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd3ae, };
+    case 0xd3b6: return (RoomDefHeader){ .semiunique_room_number = 22, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 17, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd3dd, };
+    case 0xd3df: return (RoomDefHeader){ .semiunique_room_number = 23, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 35, .y_coordinate_on_map =  4, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd406, };
+    case 0xd408: return (RoomDefHeader){ .semiunique_room_number = 24, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 22, .y_coordinate_on_map =  5, .width =  1, .height = 10, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd42f, };
+    case 0xd433: return (RoomDefHeader){ .semiunique_room_number = 25, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map =  5, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd45a, };
+    case 0xd461: return (RoomDefHeader){ .semiunique_room_number = 26, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 18, .y_coordinate_on_map = 16, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd488, };
+    case 0xd48e: return (RoomDefHeader){ .semiunique_room_number = 27, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 22, .y_coordinate_on_map = 15, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd4b5, };
+    case 0xd4c2: return (RoomDefHeader){ .semiunique_room_number = 28, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 23, .y_coordinate_on_map = 16, .width =  3, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd4e9, };
+    case 0xd4ef: return (RoomDefHeader){ .semiunique_room_number = 29, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 20, .y_coordinate_on_map = 14, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd516, };
+    case 0xd51e: return (RoomDefHeader){ .semiunique_room_number = 30, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 23, .y_coordinate_on_map = 14, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd545, };
+    case 0xd54d: return (RoomDefHeader){ .semiunique_room_number = 31, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 21, .y_coordinate_on_map = 12, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd574, };
+    case 0xd57a: return (RoomDefHeader){ .semiunique_room_number = 32, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 23, .y_coordinate_on_map = 12, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd5a1, };
+    case 0xd5a7: return (RoomDefHeader){ .semiunique_room_number = 33, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  6, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd5ce, };
+    case 0xd5ec: return (RoomDefHeader){ .semiunique_room_number = 34, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map =  7, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd613, };
+    case 0xd617: return (RoomDefHeader){ .semiunique_room_number = 35, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 20, .y_coordinate_on_map =  8, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd63e, };
+    case 0xd646: return (RoomDefHeader){ .semiunique_room_number = 36, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map = 13, .width =  2, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd66d, };
+    case 0xd69a: return (RoomDefHeader){ .semiunique_room_number = 37, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 27, .y_coordinate_on_map = 14, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd6c1, };
+    case 0xd6d0: return (RoomDefHeader){ .semiunique_room_number = 38, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 32, .y_coordinate_on_map = 15, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd6f7, };
+    case 0xd6fd: return (RoomDefHeader){ .semiunique_room_number = 39, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map = 10, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd724, };
+    case 0xd72a: return (RoomDefHeader){ .semiunique_room_number = 40, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 34, .y_coordinate_on_map =  6, .width =  7, .height =  2, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd751, };
+    case 0xd765: return (RoomDefHeader){ .semiunique_room_number = 41, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 19, .y_coordinate_on_map = 11, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd78c, };
+    case 0xd78f: return (RoomDefHeader){ .semiunique_room_number = 42, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 41, .y_coordinate_on_map =  7, .width =  2, .height =  3, .up_scroller_ = 144, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd7d5, };
+    case 0xd7e4: return (RoomDefHeader){ .semiunique_room_number = 43, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map =  8, .width =  7, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd80b, };
+    case 0xd81a: return (RoomDefHeader){ .semiunique_room_number = 44, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 41, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd841, };
+    case 0xd845: return (RoomDefHeader){ .semiunique_room_number = 45, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 38, .y_coordinate_on_map =  8, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd86c, };
+    case 0xd86e: return (RoomDefHeader){ .semiunique_room_number = 46, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 26, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd895, };
+    case 0xd898: return (RoomDefHeader){ .semiunique_room_number = 47, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 28, .y_coordinate_on_map =  9, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd8bf, };
+    case 0xd8c5: return (RoomDefHeader){ .semiunique_room_number = 48, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 28, .y_coordinate_on_map = 15, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd90b, };
+    case 0xd913: return (RoomDefHeader){ .semiunique_room_number = 49, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 33, .y_coordinate_on_map =  6, .width =  5, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd93a, };
+    case 0xd95e: return (RoomDefHeader){ .semiunique_room_number = 50, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 24, .y_coordinate_on_map =  8, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd9a4, };
+    case 0xd9aa: return (RoomDefHeader){ .semiunique_room_number = 51, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 38, .y_coordinate_on_map = 10, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd9d1, };
+    case 0xd9d4: return (RoomDefHeader){ .semiunique_room_number = 52, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 42, .y_coordinate_on_map =  6, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xd9fb, };
+    case 0xd9fe: return (RoomDefHeader){ .semiunique_room_number = 53, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 27, .y_coordinate_on_map =  6, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xda25, };
+    case 0xda2b: return (RoomDefHeader){ .semiunique_room_number = 54, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 28, .y_coordinate_on_map =  6, .width =  5, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xda52, };
+    case 0xda60: return (RoomDefHeader){ .semiunique_room_number = 55, .area_index_ = kArea_4_Maridia     , .x_coordinate_on_map = 39, .y_coordinate_on_map =  9, .width =  2, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_1_DisableBg1                             , .ptr_to_doorout = 0xdaa6, };
+    case 0xdaae: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 20, .y_coordinate_on_map =  9, .width =  1, .height =  4, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdad5, };
+    case 0xdae1: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 14, .y_coordinate_on_map = 12, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdb27, };
+    case 0xdb31: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 13, .y_coordinate_on_map = 12, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdb77, };
+    case 0xdb7d: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 14, .y_coordinate_on_map = 13, .width =  6, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdbc3, };
+    case 0xdbcd: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 20, .y_coordinate_on_map = 13, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdc13, };
+    case 0xdc19: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 19, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdc5f, };
+    case 0xdc65: return (RoomDefHeader){ .semiunique_room_number =  6, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 17, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdcab, };
+    case 0xdcb1: return (RoomDefHeader){ .semiunique_room_number =  7, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 13, .y_coordinate_on_map = 15, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdcf7, };
+    case 0xdcff: return (RoomDefHeader){ .semiunique_room_number =  8, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 15, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdd26, };
+    case 0xdd2e: return (RoomDefHeader){ .semiunique_room_number =  9, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 11, .y_coordinate_on_map = 16, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdd55, };
+    case 0xdd58: return (RoomDefHeader){ .semiunique_room_number = 10, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 13, .y_coordinate_on_map = 18, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xddbc, };
+    case 0xddc4: return (RoomDefHeader){ .semiunique_room_number = 11, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 13, .y_coordinate_on_map = 16, .width =  4, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xddeb, };
+    case 0xddf3: return (RoomDefHeader){ .semiunique_room_number = 12, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 17, .y_coordinate_on_map = 16, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xde1a, };
+    case 0xde23: return (RoomDefHeader){ .semiunique_room_number = 13, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 16, .y_coordinate_on_map = 17, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xde4a, };
+    case 0xde4d: return (RoomDefHeader){ .semiunique_room_number = 14, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 11, .y_coordinate_on_map = 18, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xde74, };
+    case 0xde7a: return (RoomDefHeader){ .semiunique_room_number = 15, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 11, .y_coordinate_on_map = 19, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdea1, };
+    case 0xdea7: return (RoomDefHeader){ .semiunique_room_number = 16, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 12, .y_coordinate_on_map = 19, .width =  6, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdece, };
+    case 0xdede: return (RoomDefHeader){ .semiunique_room_number = 17, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 18, .y_coordinate_on_map = 16, .width =  3, .height =  6, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdf05, };
+    case 0xdf1b: return (RoomDefHeader){ .semiunique_room_number = 18, .area_index_ = kArea_5_Tourian     , .x_coordinate_on_map = 21, .y_coordinate_on_map = 12, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdf42, };
+    case 0xdf45: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_6_Ceres       , .x_coordinate_on_map = 12, .y_coordinate_on_map = 13, .width =  1, .height =  3, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_1_DisableBg1 | kCreBitset_4_LargeTileset , .ptr_to_doorout = 0xdf8b, };
+    case 0xdf8d: return (RoomDefHeader){ .semiunique_room_number =  1, .area_index_ = kArea_6_Ceres       , .x_coordinate_on_map = 13, .y_coordinate_on_map = 15, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xdfd3, };
+    case 0xdfd7: return (RoomDefHeader){ .semiunique_room_number =  2, .area_index_ = kArea_6_Ceres       , .x_coordinate_on_map = 15, .y_coordinate_on_map = 15, .width =  1, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xe01d, };
+    case 0xe021: return (RoomDefHeader){ .semiunique_room_number =  3, .area_index_ = kArea_6_Ceres       , .x_coordinate_on_map = 16, .y_coordinate_on_map = 16, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xe067, };
+    case 0xe06b: return (RoomDefHeader){ .semiunique_room_number =  4, .area_index_ = kArea_6_Ceres       , .x_coordinate_on_map = 18, .y_coordinate_on_map = 16, .width =  2, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xe0b1, };
+    case 0xe0b5: return (RoomDefHeader){ .semiunique_room_number =  5, .area_index_ = kArea_6_Ceres       , .x_coordinate_on_map = 20, .y_coordinate_on_map = 16, .width =  1, .height =  1, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = kCreBitset_1_DisableBg1 | kCreBitset_4_LargeTileset , .ptr_to_doorout = 0xe0fb, };
+    case 0xe82c: return (RoomDefHeader){ .semiunique_room_number =  0, .area_index_ = kArea_7_Debug       , .x_coordinate_on_map =  0, .y_coordinate_on_map =  0, .width =  6, .height =  2, .up_scroller_ = 112, .down_scroller_ = 160, .cre_bitset_ = 0                                                   , .ptr_to_doorout = 0xe853, };
     default: Unreachable(); return (RoomDefHeader){ 0 };
   }
 }
@@ -923,5 +925,1457 @@ RoomDefRoomstate get_RoomDefRoomstate(uint16 room_state) {
     case 0xe0c7: return (RoomDefRoomstate){ .level_data_ptr = LONGPTR(0xcdc43f), .tileset_ = kTileSet_19_BlueCeresRidleysRoom      , .music_data_index_ = (uint8)kMusic_BossFight1    , .music_track_index_ = 0x80                                         , .room_layer3_fx_ptr_ = 0xa15e, .enemy_population_ptr_ = 0xe939, .enemy_tilesets_ptr = 0x925e, .layer2_scroll_ =    0x0, .rdf_scroll_ptr =    0x0, .xray_special_casing_ptr =    0x0, .main_code_ptr = FUNC16(RoomCode_HandleCeresRidleyGetaway)       , .room_plm_header_ptr = 0xc8c5, .bg_data_ptr =    0x0, .room_setup_code = FUNC16(RoomCode_SpawnHaze_BgBase)                , };
     case 0xe839: return (RoomDefRoomstate){ .level_data_ptr = LONGPTR(0xceae3e), .tileset_ = kTileSet_11_SandlessMaridia           , .music_data_index_ = (uint8)kMusic_SpcEngine     , .music_track_index_ = kMusic_Stop                                  , .room_layer3_fx_ptr_ = 0xa188, .enemy_population_ptr_ = 0xebce, .enemy_tilesets_ptr = 0x92c3, .layer2_scroll_ = 0xc1c1, .rdf_scroll_ptr =    0x1, .xray_special_casing_ptr =    0x0, .main_code_ptr = 0x0                                             , .room_plm_header_ptr = 0xe87f, .bg_data_ptr = 0xe117, .room_setup_code = 0x0                                              , };
     default: Unreachable(); return (RoomDefRoomstate){ 0 };
+  }
+}
+
+static uint8 kScroll_9283[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x13          ,   kScroll_Blue  ,   0x80          ,   kScroll_Blue  ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_9370[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x8           ,   kScroll_Green ,   0x80          ,   0x8           ,   kScroll_Red   , 
+  0x80          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   0x6           ,   kScroll_Green ,   0x80          ,   0x6           ,   kScroll_Red   , 
+  0x80          ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          ,   kScroll_Green ,   kScroll_Blue  ,   0x80          ,   0x4           ,   kScroll_Blue  ,   0x80          , 
+};
+
+static uint8 kScroll_93d3[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   0x4           ,   kScroll_Red   ,   0x12          ,   0x6           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xfc          ,   0x93          ,   0xe6          ,   0xe5          ,   0xcb          ,   0x92          ,   0xce          ,   0x19          ,   0x9           , 
+  0x5           ,   0x10          ,   0x81          ,   0xd8          ,   0x85          ,   0x29          ,   0x81          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xd4          ,   0x81          ,   kScroll_Red   ,   kScroll_Red   ,   0xd3          , 
+  0x91          ,   0xbe          ,   0x89          ,   0x5           ,   kScroll_Red   ,   0x26          ,   kScroll_Red   ,   0x8           ,   0x6           ,   0x90          , 
+};
+
+static uint8 kScroll_9431[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x6           ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_94b9[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  , 
+  kScroll_Green ,   0x4           ,   kScroll_Green ,   0x80          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x4           ,   kScroll_Red   ,   0x80          ,   0x8           , 
+  kScroll_Red   ,   0x34          ,   0xa           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xf3          ,   0x94          , 
+  0xe6          ,   0xe5          ,   0xfc          ,   0x9b          ,   0xc3          ,   kScroll_Green ,   0x9           ,   0x3           ,   0x42          ,   0x81          , 
+  0x74          ,   0x8b          ,   0x55          ,   0x82          ,   0xc1          ,   0xc1          ,   0xf9          ,   0x94          ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_94f9[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x9           ,   kScroll_Red   ,   0x31          ,   kScroll_Red   ,   0x7           ,   0x6           , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x24          ,   0x95          ,   0xe6          ,   0xe5          ,   0xb8          ,   0x9d          ,   0xc3          , 
+  kScroll_Red   ,   0xc           ,   0x5           ,   0x44          ,   0x81          ,   kScroll_Green ,   0x80          ,   0x9           ,   0x80          ,   0x81          , 
+  kScroll_Blue  ,   0x28          ,   0x95          ,   kScroll_Red   ,   kScroll_Red   ,   0x1b          ,   0xc1          ,   0x38          ,   0x82          ,   0xf2          , 
+  0xb7          ,   0xce          ,   0x91          ,   0x66          ,   0x8a          ,   0x72          ,   0x8a          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_9528[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0xa           ,   kScroll_Red   ,   0x38          ,   0x4           ,   kScroll_Blue  ,   0x4           ,   0x70          ,   0xa0          , 
+};
+
+static uint8 kScroll_95d3[] = {
+  kScroll_Green ,   0xd           ,   kScroll_Red   ,   0x20          ,   0x4           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xfb          ,   0x95          ,   0xe6          ,   0xe5          ,   0xd2          ,   0xbc          ,   0xc3          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x68          ,   0x81          ,   0x3b          ,   0x8b          ,   0x33          ,   0x82          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x46          ,   0x82          ,   kScroll_Red   ,   kScroll_Red   ,   0xd3          ,   0x91          , 
+  0xc6          ,   0x8a          ,   0xd2          ,   0x8a          ,   0xe           ,   kScroll_Red   ,   0x24          ,   0x4           ,   kScroll_Green ,   kScroll_Green , 
+};
+
+static uint8 kScroll_9657[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x10          ,   kScroll_Red   ,   0xc           ,   kScroll_Green ,   0x6           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x82          ,   0x96          ,   0xe6          ,   0xe5          ,   kScroll_Blue  ,   0xc3          ,   0xc3          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x7c          ,   0x81          ,   0xf2          ,   0x89          ,   0xfd          ,   0x81          ,   0xc1          , 
+  0xc1          ,   0x86          ,   0x96          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x5e          ,   0x82          ,   0x99          , 
+  0xb8          ,   0xd3          ,   0x91          ,   0xe           ,   0x8b          ,   0x1a          ,   0x8b          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_9686[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   0x4           ,   kScroll_Blue  ,   0x80          ,   0x11          , 
+  kScroll_Red   ,   0x2b          ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xb6          ,   0x96          , 
+  0xe6          ,   0xe5          ,   0xc           ,   0xc8          ,   0xc3          ,   kScroll_Red   ,   0xc           ,   0x5           ,   0x8c          ,   0x81          , 
+  0xb6          ,   0x88          ,   0xc1          ,   0x81          ,   0x81          ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x1b          ,   0xc1          ,   0x6c          ,   0x82          ,   0xa           ,   0xb8          ,   0xce          ,   0x91          ,   0x26          ,   0x8b          , 
+};
+
+static uint8 kScroll_9729[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   0x80          , 
+  kScroll_Green ,   kScroll_Red   ,   0x80          ,   0x17          ,   kScroll_Blue  ,   0x80          ,   0x17          ,   kScroll_Red   ,   0x80          ,   0x18          , 
+  kScroll_Blue  ,   0x80          ,   0x18          ,   kScroll_Red   ,   0x80          ,   0x19          ,   kScroll_Blue  ,   0x80          ,   0x19          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_97a5[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   0x3           ,   kScroll_Green , 
+  0x80          ,   kScroll_Red   ,   kScroll_Blue  ,   0x3           ,   kScroll_Red   ,   0x80          ,   0x14          ,   kScroll_Red   ,   0x17          ,   0x11          , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xfa          ,   0x97          ,   0x52          ,   0xe6          ,   0xe0          , 
+  0x97          ,   0xe6          ,   0xe5          ,   0x23          ,   0xdf          ,   0xc3          ,   kScroll_Green ,   0x6           ,   0x5           ,   0xae          , 
+  0x81          ,   0x61          ,   0x8b          ,   0x4b          ,   0x82          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x98          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_9800[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x15          ,   kScroll_Red   ,   0x19          ,   0x6           ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x69          ,   0x98          ,   0x12          ,   0xe6          ,   0xe           ,   0x4f          ,   0x98          , 
+  0x29          ,   0xe6          ,   0x4           ,   0x35          ,   0x98          ,   0xe6          ,   0xe5          ,   0xd0          ,   0xe0          ,   0xc3          , 
+  kScroll_Green ,   0x24          ,   0x3           ,   0xbe          ,   0x81          ,   0xed          ,   0x84          ,   0xb3          ,   0x80          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xfe          ,   0x83          ,   0x5           , 
+};
+
+static uint8 kScroll_9965[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x1a          ,   kScroll_Red   ,   0x7           ,   0x8           ,   0x4           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x90          ,   0x99          ,   0xe6          ,   0xe5          ,   0x35          ,   0xeb          ,   0xc3          , 
+  kScroll_Green ,   kScroll_Red   ,   0x5           ,   0xc2          ,   0x81          ,   0xca          ,   0x8b          ,   0x71          ,   0x82          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x42          ,   0x84          ,   0xcf          , 
+  0xb8          ,   0xd4          ,   0x91          ,   0x16          ,   0x8c          ,   0x22          ,   0x8c          ,   0x1b          ,   kScroll_Red   ,   0x17          , 
+};
+
+static uint8 kScroll_99ec[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   0x3           ,   kScroll_Green ,   0x80          , 
+  0x3           ,   kScroll_Red   ,   0x80          ,   0x1d          ,   kScroll_Red   ,   0x15          ,   0x9           ,   0x4           ,   0x8           ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x20          ,   0x9a          ,   0xe6          ,   0xe5          ,   0xd3          ,   0xf4          ,   0xc3          ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   0xc4          ,   0x81          ,   0x70          ,   0x88          ,   0xa5          ,   0x81          ,   0xc1          ,   0xc1          , 
+  0x24          ,   0x9a          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x78          ,   0x84          ,   0x5           ,   0xb9          , 
+};
+
+static uint8 kScroll_9a24[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0x1e          ,   kScroll_Red   ,   0x11          ,   0x7           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x8a          ,   0x9a          ,   0x12          ,   0xe6          ,   kScroll_Red   ,   0x70          ,   0x9a          ,   0xe6          ,   0xe5          , 
+};
+
+static uint8 kScroll_9a8e[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   0x1f          ,   kScroll_Red   ,   0x10          ,   0x7           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xd6          ,   0x9a          ,   0x12          ,   0xe6          ,   kScroll_Red   ,   0xbc          ,   0x9a          ,   0xe6          ,   0xe5          , 
+  0x32          ,   0x82          ,   0xc4          ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   0xe4          ,   0x81          ,   0x86          ,   0x85          , 
+  0xdd          ,   0x80          ,   0xc1          ,   0xc1          ,   0xd8          ,   0x9a          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x84          ,   0x84          ,   0x5           ,   0xb9          ,   0xd4          ,   0x91          ,   0x32          ,   0x82          ,   0xc4          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_9ad8[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   0x9           ,   kScroll_Red   ,   0x4           ,   0xc           ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x9b          ,   0xe6          ,   0xe5          ,   0xce          ,   0xf1          ,   0xc4          ,   0x6           ,   0xf           ,   0x5           , 
+  0x4           ,   0x82          ,   0x7a          ,   0x99          ,   0x41          ,   0x85          ,   kScroll_Red   ,   0xc0          ,   0x16          ,   0x9b          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x8e          ,   0x84          ,   0x37          ,   0xba          ,   0xd5          ,   0x91          , 
+  0xa6          ,   0x8c          ,   0xb2          ,   0x8c          ,   0xbe          ,   0x8c          ,   0xca          ,   0x8c          ,   0xd6          ,   0x8c          , 
+};
+
+static uint8 kScroll_9b16[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   0x1c          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_9b86[] = {
+  kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green , 
+  0x3           ,   kScroll_Green ,   0x80          ,   kScroll_Green ,   kScroll_Blue  ,   0x6           ,   0x4           ,   0x3           ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0xc4          ,   0x9b          ,   0xe6          ,   0xe5          ,   0x42          ,   0x96          ,   0xc5          ,   0x6           , 
+  kScroll_Red   ,   kScroll_Red   ,   0x24          ,   0x82          ,   0x7c          ,   0x8f          ,   0xd5          ,   0x82          ,   0xc1          ,   0xc1          , 
+};
+
+static uint8 kScroll_9bf3[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   0x80          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   0x80          , 
+  0x4           ,   kScroll_Blue  ,   0xd           ,   0x4           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x2e          , 
+  0x9c          ,   0xe6          ,   0xe5          ,   kScroll_Red   ,   0x9b          ,   0xc5          ,   0x6           ,   kScroll_Red   ,   0x3           ,   0x28          , 
+  0x82          ,   0x38          ,   0x9f          ,   0xfd          ,   0x85          ,   0xc1          ,   0xc1          ,   0x30          ,   0x9c          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_9c30[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          ,   0x5           ,   kScroll_Blue  ,   0x5           ,   0x4           ,   kScroll_Blue  , 
+  kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x5c          ,   0x9c          ,   0xe6          ,   0xe5          ,   0xc3          ,   0x83          , 
+  0xce          ,   0x15          ,   kScroll_Red   ,   kScroll_Red   ,   0x2a          ,   0x82          ,   0xbf          ,   0x8f          ,   0xe7          ,   0x82          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x40          ,   0x85          , 
+  kScroll_Red   ,   kScroll_Red   ,   0xd5          ,   0x91          ,   0x72          ,   0x8d          ,   0x6           ,   kScroll_Blue  ,   0x6           ,   0x6           , 
+};
+
+static uint8 kScroll_9cb2[] = {
+  kScroll_Blue  ,   0x8           ,   kScroll_Blue  ,   0xa           ,   0x6           ,   0x7           ,   0x7           ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xda          ,   0x9c          ,   0xe6          ,   0xe5          ,   0x5f          ,   0xa1          ,   0xc5          ,   0x6           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x3e          ,   0x82          ,   0x5c          ,   0x9d          ,   0xb9          ,   0x85          ,   0xc0          ,   kScroll_Red   ,   0xe0          ,   0x9c          , 
+  kScroll_Red   ,   kScroll_Red   ,   0xe6          ,   0xc1          ,   0x58          ,   0x85          ,   kScroll_Red   ,   kScroll_Red   ,   0xd5          ,   0x91          , 
+  0xa2          ,   0x8d          ,   0xae          ,   0x8d          ,   0xba          ,   0x8d          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_9ce0[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   0xb           , 
+};
+
+static uint8 kScroll_9d52[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_9e3c[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  , 
+  0x3           ,   kScroll_Blue  ,   0x80          ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   0x3           , 
+  kScroll_Red   ,   0x80          ,   0xd           ,   kScroll_Blue  ,   0x13          ,   0xa           ,   0x8           ,   0x4           ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x79          ,   0x9e          ,   0xe6          ,   0xe5          ,   0x59          ,   0xd5          ,   0xc5          ,   0x6           ,   0xf           , 
+  0x5           ,   0x8e          ,   0x82          ,   0xb9          ,   0x9c          ,   0xa7          ,   0x85          ,   0xc1          ,   0xc1          ,   0x7f          , 
+};
+
+static uint8 kScroll_9e7f[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0xe           ,   kScroll_Blue  ,   0x15          ,   0x8           ,   0x8           ,   0x3           ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xe5          ,   0x9e          ,   0x12          ,   0xe6          ,   kScroll_Red   ,   0xcb          ,   0x9e          ,   0xe6          ,   0xe5          , 
+};
+
+static uint8 kScroll_9eed[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x12          ,   kScroll_Blue  ,   0x80          ,   0x12          ,   kScroll_Red   ,   0x80          , 
+  0xd           ,   kScroll_Green ,   0x80          ,   0xd           ,   kScroll_Red   ,   0x80          ,   0xf           ,   kScroll_Blue  ,   0x1d          ,   0xa           , 
+  kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x57          ,   0x9f          ,   0x12          ,   0xe6          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_9f5d[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          ,   0x10          ,   kScroll_Blue  ,   0x1e          , 
+  0x8           ,   0x3           ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xaa          ,   0x9f          ,   0x12          ,   0xe6          , 
+  kScroll_Red   ,   0x90          ,   0x9f          ,   0xe6          ,   0xe5          ,   0x6f          ,   0xe8          ,   0xc5          ,   0x6           ,   kScroll_Red   , 
+  kScroll_Red   ,   0xb0          ,   0x82          ,   0x6f          ,   0x96          ,   0xb7          ,   0x84          ,   0xc1          ,   0xc1          ,   0xae          , 
+  0x9f          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x8c          ,   0x87          ,   0xf4          ,   0xba          ,   0xd5          , 
+};
+
+static uint8 kScroll_9fae[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x5           , 
+  kScroll_Green ,   0x80          ,   0x11          ,   kScroll_Blue  ,   0x1b          ,   0xd           ,   0x6           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xe1          ,   0x9f          ,   0xe6          ,   0xe5          ,   0xae          ,   0xec          ,   0xc5          ,   0x6           ,   0xf           , 
+  0x5           ,   0xc0          ,   0x82          ,   0xa3          ,   0x92          ,   0xa3          ,   0x83          ,   0xc1          ,   0xc1          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xa6          ,   0x87          ,   0x52          ,   0xba          ,   0xd5          , 
+};
+
+static uint8 kScroll_a010[] = {
+  kScroll_Blue  ,   0x13          ,   kScroll_Blue  ,   0x6           ,   0xa           ,   0x5           ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x38          ,   0xa0          ,   0xe6          ,   0xe5          ,   0x57          ,   0xf0          ,   0xc5          ,   0x6           ,   kScroll_Red   ,   kScroll_Red   , 
+  0xd2          ,   0x82          ,   0x78          ,   0x97          ,   0xe5          ,   0x84          ,   0xc1          ,   0xc1          ,   0x40          ,   0xa0          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xb0          ,   0x87          ,   0x52          ,   0xba          ,   0xd5          ,   0x91          , 
+  0x2e          ,   0x8f          ,   0x3a          ,   0x8f          ,   0x46          ,   0x8f          ,   0x52          ,   0x8f          ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_a040[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Green ,   0x5           ,   kScroll_Blue  ,   0x6           ,   kScroll_Blue  ,   0x80          ,   0x14          ,   kScroll_Blue  ,   0x5           , 
+  0xa           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x78          ,   0xa0          ,   0xe6          ,   0xe5          , 
+  0x3e          ,   0xf4          ,   0xc5          ,   0x6           ,   kScroll_Red   ,   kScroll_Red   ,   0xe2          ,   0x82          ,   0x28          ,   0x90          , 
+  0x9           ,   0x83          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x7a          ,   0xa0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_a07a[] = {
+  kScroll_Blue  ,   0x15          ,   kScroll_Blue  ,   0x9           ,   0xc           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xa2          ,   0xa0          ,   0xe6          ,   0xe5          ,   0xb6          ,   0x89          ,   0xce          ,   0x17          ,   kScroll_Red   ,   kScroll_Red   , 
+  0xf2          ,   0x82          ,   0x2b          ,   0x90          ,   0x13          ,   0x83          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xd8          ,   0x87          ,   kScroll_Red   ,   kScroll_Red   ,   0xd5          ,   0x91          , 
+  0x6a          ,   0x8f          ,   0x16          ,   kScroll_Blue  ,   0x14          ,   0x9           ,   0x3           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+};
+
+static uint8 kScroll_a0cf[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x17          ,   kScroll_Blue  ,   0x8           ,   0xd           ,   0x7           ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0xf9          ,   0xa0          ,   0xe6          ,   0xe5          ,   0x78          ,   0xf7          ,   0xc5          ,   0x6           , 
+  kScroll_Red   ,   kScroll_Red   ,   0x4           ,   0x83          ,   0x1a          ,   0x91          ,   0x61          ,   0x83          ,   0xc1          ,   kScroll_Blue  , 
+  0xfd          ,   0xa0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xe8          ,   0x87          ,   0xa3          ,   0xba          , 
+  0xd5          ,   0x91          ,   0x8e          ,   0x8f          ,   0x9a          ,   0x8f          ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_a0fd[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          , 
+  0x18          ,   kScroll_Blue  ,   0x1c          ,   0xb           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x2e          , 
+  0xa1          ,   0xe6          ,   0xe5          ,   0x50          ,   0xfd          ,   0xc5          ,   0x6           ,   kScroll_Red   ,   kScroll_Red   ,   0x14          , 
+  0x83          ,   0xb2          ,   0x9e          ,   0xe5          ,   0x85          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   0x88          ,   0xbe          ,   0xba          ,   0xd5          ,   0x91          ,   0xa6          , 
+};
+
+static uint8 kScroll_a284[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  0x6           ,   kScroll_Green ,   0x7           ,   kScroll_Green ,   0x80          ,   0x21          ,   kScroll_Blue  ,   0x19          ,   0xf           ,   0x8           , 
+  kScroll_Green ,   0x90          ,   0xa0          ,   kScroll_Red   ,   0xba          ,   0xa2          ,   0xe6          ,   0xe5          ,   0xe3          ,   0x91          , 
+  0xc6          ,   0x7           ,   kScroll_Red   ,   0x5           ,   0x5e          ,   0x83          ,   0x13          ,   0x9b          ,   0x7f          ,   0x85          , 
+  kScroll_Red   ,   kScroll_Red   ,   0xbe          ,   0xa2          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x6e          ,   0x88          , 
+};
+
+static uint8 kScroll_a2be[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   0x22          ,   kScroll_Blue  ,   0x17          ,   0xf           , 
+  kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xf5          ,   0xa2          ,   0xe6          ,   0xe5          ,   0xf9          , 
+  0x9b          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   0x3           ,   0x6e          ,   0x83          ,   0x3b          ,   0x9f          ,   0x7           , 
+  0x86          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x76          , 
+};
+
+static uint8 kScroll_a357[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   0xf           ,   kScroll_Green ,   0x12          ,   kScroll_Green ,   0x80          ,   0xa           , 
+  kScroll_Blue  ,   0x9           ,   kScroll_Green ,   0x80          ,   0xa           ,   kScroll_Red   ,   0x80          ,   0x25          ,   kScroll_Blue  ,   0x23          , 
+  0x7           ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xa3          ,   0xa3          ,   0xe6          ,   0xe5          , 
+};
+
+static uint8 kScroll_a3a5[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   0x80          ,   0x26          , 
+  kScroll_Blue  ,   0x22          ,   0xb           ,   0x3           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xd5          ,   0xa3          , 
+  0xe6          ,   0xe5          ,   0x8c          ,   0xb5          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   0x3           ,   0xa0          ,   0x83          , 
+  0x61          ,   0x9f          ,   0x1f          ,   0x86          ,   0xc1          ,   0xc1          ,   0xd7          ,   0xa3          ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   0xd8          ,   0x88          ,   0xec          ,   0xbc          ,   0xd6          ,   0x91          ,   0xea          ,   0x90          , 
+};
+
+static uint8 kScroll_a3d7[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          ,   0x27          ,   kScroll_Blue  ,   0x22          ,   0x12          , 
+  kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x4           ,   0xa4          ,   0xe6          ,   0xe5          ,   0x39          , 
+  0xb7          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   kScroll_Red   ,   0xb0          ,   0x83          ,   0x10          ,   0xa1          ,   0x71          , 
+  0x86          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x1c          , 
+  0x89          ,   0xe7          ,   0xbb          ,   0xd6          ,   0x91          ,   0xf6          ,   0x90          ,   kScroll_Green ,   0x91          ,   0x28          , 
+};
+
+static uint8 kScroll_a435[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   0x80          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   0x3           ,   kScroll_Blue  ,   0x80          ,   0x29          ,   kScroll_Blue  , 
+  0x26          ,   0x11          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x6e          ,   0xa4          ,   0xe6          , 
+  0xe5          ,   0xc7          ,   0xbc          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   0x3           ,   0xd0          ,   0x83          ,   0x1a          , 
+  0x96          ,   0x65          ,   0x84          ,   0xc1          ,   0xc1          ,   0x70          ,   0xa4          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_a470[] = {
+  kScroll_Blue  ,   0x2a          ,   kScroll_Blue  ,   0x2c          ,   0x12          ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x98          ,   0xa4          ,   0xe6          ,   0xe5          ,   0x83          ,   0xbd          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   0x5           , 
+  0xd2          ,   0x83          ,   0x1f          ,   0x94          ,   0xe3          ,   0x83          ,   0xc0          ,   kScroll_Red   ,   0x9e          ,   0xa4          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x76          ,   0x89          ,   kScroll_Red   ,   kScroll_Red   ,   0xd6          ,   0x91          , 
+  0x3e          ,   0x91          ,   0x4a          ,   0x91          ,   0x56          ,   0x91          ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_a49e[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   0x3           ,   kScroll_Red   , 
+  0x80          ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   0x80          ,   0x3           ,   kScroll_Blue  ,   0x80          ,   0x2b          , 
+  kScroll_Blue  ,   0x2b          ,   0x13          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xd8          ,   0xa4          , 
+  0xe6          ,   0xe5          ,   0x69          ,   0xc4          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          ,   0x83          , 
+  0x8e          ,   0x98          ,   0xd           ,   0x85          ,   0xc0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_a507[] = {
+  kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x5           ,   kScroll_Red   ,   0x80          ,   kScroll_Blue  ,   kScroll_Green ,   0x5           ,   kScroll_Blue  ,   0x80          ,   0x5           ,   kScroll_Red   , 
+  0x80          ,   0x3           ,   kScroll_Blue  ,   0x5           ,   kScroll_Red   ,   0x80          ,   0x2d          ,   kScroll_Blue  ,   0x2f          ,   0x13          , 
+  0x6           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x67          ,   0xa5          ,   0x29          ,   0xe6          ,   kScroll_Blue  , 
+  0x4d          ,   0xa5          ,   0xe6          ,   0xe5          ,   0xb9          ,   0xcd          ,   0xc6          ,   0x7           ,   0x27          ,   0x6           , 
+};
+
+static uint8 kScroll_a598[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x2f          ,   kScroll_Blue  ,   0x37          , 
+  0x12          ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   0x5           ,   0xe5          ,   0xa5          ,   0x29          ,   0xe6          , 
+  kScroll_Blue  ,   0xcb          ,   0xa5          ,   0xe6          ,   0xe5          ,   0x20          ,   0xd6          ,   0xc6          ,   0x1a          ,   0x27          , 
+  0x6           ,   0xf4          ,   0x83          ,   0xb5          ,   0x9e          ,   0xef          ,   0x85          ,   kScroll_Blue  ,   kScroll_Blue  ,   0xe9          , 
+  0xa5          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x2e          ,   0x8a          ,   0x15          ,   0xb8          ,   0xd6          , 
+};
+
+static uint8 kScroll_a5e9[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x30          ,   kScroll_Red   ,   0xc           ,   0x8           ,   0x5           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x14          ,   0xa6          ,   0xe6          ,   0xe5          ,   0x8d          ,   0xd8          ,   0xc6          , 
+  0x8           ,   kScroll_Red   ,   0x4           ,   0xf6          ,   0x83          ,   0x5e          ,   0x9f          ,   0x15          ,   0x86          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x3c          ,   0x8a          ,   0xa4          , 
+  0xbc          ,   0xd6          ,   0x91          ,   0xe6          ,   0x91          ,   0xf2          ,   0x91          ,   0x31          ,   kScroll_Blue  ,   0x20          , 
+};
+
+static uint8 kScroll_a697[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          ,   kScroll_Blue  ,   kScroll_Green ,   0x80          , 
+  0x34          ,   kScroll_Blue  ,   0x29          ,   0x12          ,   0x3           ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xc8          , 
+  0xa6          ,   0xe6          ,   0xe5          ,   0xe0          ,   0xde          ,   0xc6          ,   0x7           ,   0x12          ,   0x3           ,   0x1a          , 
+  0x84          ,   0xe4          ,   0x98          ,   0x29          ,   0x85          ,   0xc1          ,   0xc1          ,   0xd0          ,   0xa6          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x5c          ,   0x8a          ,   0x53          ,   0xbc          ,   0xf4          ,   0x91          ,   0x2e          , 
+};
+
+static uint8 kScroll_a6d0[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   kScroll_Blue  , 
+  kScroll_Green ,   0x80          ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          ,   kScroll_Red   ,   kScroll_Red   ,   0x80          ,   0x35          ,   kScroll_Blue  , 
+  0x39          ,   0x13          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Green ,   0x9           ,   0xa7          ,   0xe6          , 
+  0xe5          ,   0x55          ,   0xe3          ,   0xc6          ,   0x7           ,   kScroll_Red   ,   0x3           ,   0x2a          ,   0x84          ,   0x66          , 
+  0x96          ,   0x99          ,   0x84          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_a844[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x11          ,   kScroll_Green , 
+  0x18          ,   kScroll_Blue  ,   0x80          ,   0x5           ,   kScroll_Green ,   0x4           ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x8c          ,   0xa8          ,   0xe6          ,   0xe5          ,   0xed          ,   0x82          ,   0xc7          ,   0x9           , 
+};
+
+static uint8 kScroll_a8e6[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   0x3           ,   kScroll_Blue  ,   0x80          ,   0x3           , 
+  kScroll_Red   ,   0x80          ,   kScroll_Green ,   kScroll_Green ,   0x80          ,   kScroll_Green ,   kScroll_Red   ,   0x80          ,   0x8           ,   kScroll_Green , 
+  kScroll_Green ,   0x4           ,   kScroll_Blue  ,   0x4           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x1f          ,   0xa9          ,   0xe6          , 
+  0xe5          ,   0x47          ,   0x8a          ,   0xc7          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0xb0          ,   0x84          ,   0xf6          , 
+  0xb1          ,   0x7d          ,   0x89          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_a954[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   0x19          , 
+  kScroll_Green ,   0x26          ,   kScroll_Green ,   0x80          ,   0x19          ,   kScroll_Green ,   0x25          ,   kScroll_Green ,   0x26          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_a9d7[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x80          ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          ,   0xb           ,   kScroll_Green ,   0x7           ,   0x6           ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xc           ,   0xaa          ,   0xe6          ,   0xe5          ,   0x36          ,   0xa0          ,   0xc7          , 
+  0xa           ,   kScroll_Red   ,   0x3           ,   0xe0          ,   0x84          ,   0x3f          ,   0xa6          ,   0xa7          ,   0x87          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xac          ,   0x8b          ,   0x3f          , 
+};
+
+static uint8 kScroll_aa39[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0xd           ,   kScroll_Green , 
+  0x8           ,   0x5           ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x68          ,   0xaa          ,   0xe6          , 
+  0xe5          ,   0x70          ,   0xaa          ,   0xc7          ,   0xa           ,   kScroll_Red   ,   0x5           ,   kScroll_Red   ,   0x85          ,   0xc5          , 
+  0xb3          ,   0xcb          ,   0x89          ,   0xc0          ,   kScroll_Red   ,   0x6c          ,   0xaa          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   0xc8          ,   0x8b          ,   kScroll_Red   ,   kScroll_Red   ,   0xf6          ,   0x91          ,   0x1a          ,   0x94          ,   0x26          , 
+};
+
+static uint8 kScroll_aa6c[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x80          ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x3           ,   kScroll_Green ,   0x80          ,   0x3           ,   kScroll_Red   ,   0x80          ,   0x3           , 
+  kScroll_Green ,   0x80          ,   0xe           ,   kScroll_Green ,   0xa           ,   0xa           ,   kScroll_Green ,   kScroll_Green ,   0x90          ,   0xa0          , 
+  kScroll_Green ,   0xa9          ,   0xaa          ,   0xe6          ,   0xe5          ,   0xb3          ,   0xae          ,   0xc7          ,   0x9           ,   0x15          , 
+  0x5           ,   0x10          ,   0x85          ,   0xbb          ,   0xa7          ,   0xdf          ,   0x87          ,   kScroll_Red   ,   kScroll_Red   ,   0xb1          , 
+};
+
+static uint8 kScroll_aab1[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0xf           ,   kScroll_Green ,   0xc           ,   0xb           ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xdc          ,   0xaa          ,   0xe6          ,   0xe5          ,   0xc2          ,   0x95          ,   0xce          , 
+  0x19          ,   0x15          ,   0x5           ,   0x20          ,   0x85          ,   0x42          ,   0xa6          ,   0xb1          ,   0x87          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xfc          ,   0x8b          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xf6          ,   0x91          ,   0x62          ,   0x94          ,   0x10          ,   kScroll_Green ,   0x9           ,   0xa           ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_ab36[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x12          ,   kScroll_Green ,   0xb           ,   0xf           ,   0x4           , 
+  kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x62          ,   0xab          ,   0xe6          ,   0xe5          ,   0x80          ,   0xb7          , 
+  0xc7          ,   0xa           ,   kScroll_Red   ,   kScroll_Red   ,   0x50          ,   0x85          ,   0xd1          ,   0xb4          ,   0x13          ,   0x8a          , 
+  0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x14          ,   0x8c          , 
+  0xc6          ,   0xbe          ,   0xf6          ,   0x91          ,   0xaa          ,   0x94          ,   0x13          ,   kScroll_Green ,   0x7           ,   0xc           , 
+};
+
+static uint8 kScroll_abba[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x15          ,   kScroll_Green ,   0x6           ,   0xc           ,   kScroll_Blue  ,   0x3           , 
+  0x90          ,   0xa0          ,   kScroll_Red   ,   0xf9          ,   0xab          ,   0xe6          ,   0xe5          ,   0x91          ,   0xcd          ,   0xc7          , 
+  0xa           ,   kScroll_Red   ,   kScroll_Red   ,   0x80          ,   0x85          ,   0x7a          ,   0xb6          ,   0x49          ,   0x8a          ,   0xc1          , 
+};
+
+static uint8 kScroll_abfd[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   0x16          ,   kScroll_Green ,   0x4           ,   0xe           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x27          ,   0xac          ,   0xe6          ,   0xe5          ,   0xcd          ,   0xcf          ,   0xc7          ,   0xa           , 
+  kScroll_Red   ,   0x5           ,   0x90          ,   0x85          ,   0xbf          ,   0xb3          ,   0xb7          ,   0x89          ,   0xc1          ,   0xc1          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x34          ,   0x8c          ,   0xc6          ,   0xbe          , 
+  0xf6          ,   0x91          ,   0xfe          ,   0x94          ,   0xa           ,   0x95          ,   0x17          ,   kScroll_Green ,   0x3           ,   0xe           , 
+};
+
+static uint8 kScroll_ac56[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   ,   0x18          ,   kScroll_Green ,   0x12          ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x81          ,   0xac          ,   0xe6          ,   0xe5          ,   0xfe          ,   0xd4          ,   0xc7          , 
+  0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0xb0          ,   0x85          ,   0xe7          ,   0xb5          ,   0x37          ,   0x8a          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x3e          ,   0x8c          ,   0x68          , 
+  0xbf          ,   0xf6          ,   0x91          ,   0x2e          ,   0x95          ,   0x19          ,   kScroll_Green ,   0x14          ,   kScroll_Green ,   kScroll_Green , 
+};
+
+static uint8 kScroll_acae[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          ,   0x1a          ,   kScroll_Green ,   0x16          ,   kScroll_Green ,   kScroll_Green , 
+  0x4           ,   0x90          ,   0xa0          ,   kScroll_Red   ,   0xda          ,   0xac          ,   0xe6          ,   0xe5          ,   0x95          ,   0xd8          , 
+  0xc7          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0xd0          ,   0x85          ,   0xd8          ,   0xb3          ,   0xd9          ,   0x89          , 
+  0xc1          ,   0xc1          ,   0xe8          ,   0xac          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x5a          ,   0x8c          , 
+  0x83          ,   0xbf          ,   0xf6          ,   0x91          ,   0x52          ,   0x95          ,   0x5e          ,   0x95          ,   0x6a          ,   0x95          , 
+};
+
+static uint8 kScroll_ace8[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x1b          ,   kScroll_Green , 
+  0x19          ,   kScroll_Blue  ,   0xc           ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x17          ,   0xad          ,   0xe6          , 
+  0xe5          ,   0x8c          ,   0xe0          ,   0xc7          ,   0x9           ,   kScroll_Red   ,   0x5           ,   0xe0          ,   0x85          ,   0x8f          , 
+  0xb8          ,   0xbb          ,   0x8a          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   0x6e          ,   0x8c          ,   0x5a          ,   0xbe          ,   0xf6          ,   0x91          ,   0xa6          ,   0x95          ,   0xb2          , 
+};
+
+static uint8 kScroll_ad8f[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   0x80          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          , 
+  0x1e          ,   kScroll_Green ,   0x19          ,   0x4           ,   0x4           ,   kScroll_Green ,   0x90          ,   0xa0          ,   kScroll_Red   ,   0xd4          , 
+  0xad          ,   0xe6          ,   0xe5          ,   kScroll_Green ,   0xff          ,   0xc7          ,   0x9           ,   kScroll_Red   ,   0x5           ,   0x20          , 
+};
+
+static uint8 kScroll_adda[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x1f          ,   kScroll_Green ,   0x1d          ,   0x4           ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x5           ,   0xae          ,   0xe6          ,   0xe5          ,   0x32          ,   0x85          ,   0xc8          , 
+  0x9           ,   kScroll_Red   ,   0x3           ,   0x30          ,   0x86          ,   0xee          ,   0xa4          ,   0x1d          ,   0x87          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xca          ,   0x8c          ,   0xc6          , 
+  0xbe          ,   0xf6          ,   0x91          ,   0x2a          ,   0x96          ,   0x20          ,   kScroll_Green ,   0x19          ,   0x6           ,   0x4           , 
+};
+
+static uint8 kScroll_ae5d[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   0x6           , 
+  kScroll_Blue  ,   0x7           ,   kScroll_Blue  ,   0x80          ,   0x8           ,   kScroll_Blue  ,   0x80          ,   0x8           ,   kScroll_Red   ,   0x80          , 
+  0x7           ,   kScroll_Red   ,   0x80          ,   0x22          ,   kScroll_Green ,   0x19          ,   0x8           ,   kScroll_Green ,   0x3           ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x9b          ,   0xae          ,   0xe6          ,   0xe5          ,   0x3a          ,   0x94          ,   0xc8          ,   0x9           , 
+  kScroll_Red   ,   kScroll_Red   ,   0x70          ,   0x86          ,   0x95          ,   0xb9          ,   0xdf          ,   0x8a          ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_aea3[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Blue  ,   0x80          ,   kScroll_Green , 
+  kScroll_Red   ,   0x3           ,   kScroll_Green ,   0x80          ,   0x3           ,   kScroll_Red   ,   0x80          ,   0x23          ,   kScroll_Green ,   0x17          , 
+  0x8           ,   0x3           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xdb          ,   0xae          ,   0xe6          ,   0xe5          , 
+  0x5d          ,   0x9d          ,   0xc8          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0x80          ,   0x86          ,   0x53          ,   0xac          , 
+  0x87          ,   0x88          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_af0c[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   0x80          ,   0x25          ,   kScroll_Green , 
+  0x16          ,   0xa           ,   0x4           ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x3b          ,   0xaf          ,   0xe6          , 
+  0xe5          ,   0xcf          ,   0xa2          ,   0xc8          ,   0x9           ,   kScroll_Red   ,   0x5           ,   0xa0          ,   0x86          ,   0x9           , 
+  0xad          ,   0xa3          ,   0x88          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   0x7e          ,   0x8d          ,   0x5a          ,   0xbe          ,   0xf6          ,   0x91          ,   0xd2          ,   0x96          ,   0xde          , 
+};
+
+static uint8 kScroll_af6e[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x27          ,   kScroll_Green ,   0x14          ,   0x5           ,   kScroll_Green ,   kScroll_Green , 
+  0xa0          ,   0xa0          ,   kScroll_Red   ,   0x99          ,   0xaf          ,   0xe6          ,   0xe5          ,   0xed          ,   0xab          ,   0xc8          , 
+  0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0xc0          ,   0x86          ,   0xd7          ,   0xbb          ,   0x3b          ,   0x8b          ,   0xc0          , 
+  kScroll_Red   ,   0x9f          ,   0xaf          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x88          ,   0x8d          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xf6          ,   0x91          ,   0xe           ,   0x97          ,   0x1a          ,   0x97          ,   0x26          ,   0x97          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_af9f[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x28          ,   kScroll_Green ,   0x11          ,   0x4           ,   0x5           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xca          ,   0xaf          ,   0xe6          ,   0xe5          ,   0x5b          ,   0xb1          ,   0xc8          , 
+  0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0xd0          ,   0x86          ,   0xa8          ,   0xa6          ,   0xc9          ,   0x87          ,   0xc1          , 
+  0xc1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x96          ,   0x8d          ,   0xc6          , 
+  0xbe          ,   0xf6          ,   0x91          ,   0x32          ,   0x97          ,   0x3e          ,   0x97          ,   0x29          ,   kScroll_Green ,   0x10          , 
+};
+
+static uint8 kScroll_b0a5[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   0x80          ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  , 
+  kScroll_Blue  ,   0x80          ,   kScroll_Red   ,   kScroll_Red   ,   0x80          ,   0x2e          ,   kScroll_Green ,   0x9           ,   0x4           ,   kScroll_Blue  , 
+  kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xdb          ,   0xb0          ,   0xe6          ,   0xe5          ,   0xc3          ,   0x83          , 
+  0xce          ,   0x15          ,   kScroll_Red   ,   kScroll_Red   ,   0x40          ,   0x87          ,   0x5d          ,   0xa5          ,   0x5b          ,   0x87          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xd8          ,   0x8d          , 
+};
+
+static uint8 kScroll_b131[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x31          ,   kScroll_Green , 
+  0x13          ,   0x6           ,   kScroll_Blue  ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x60          ,   0xb1          ,   0xe6          , 
+  0xe5          ,   0x65          ,   0xc1          ,   0xc8          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0x62          ,   0x87          ,   0x67          , 
+  0xa9          ,   0x33          ,   0x88          ,   kScroll_Blue  ,   0xc1          ,   0x64          ,   0xb1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   0xea          ,   0x8d          ,   0xe1          ,   0xbe          ,   0xf6          ,   0x91          ,   0xf2          ,   0x97          ,   0xfe          , 
+};
+
+static uint8 kScroll_b164[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x32          ,   kScroll_Green ,   0xb           ,   0x5           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x8e          ,   0xb1          ,   0xe6          ,   0xe5          ,   0xf6          ,   0x9e          ,   0xce          ,   0x19          , 
+  0x15          ,   0x5           ,   0x64          ,   0x87          ,   0xf0          ,   0xb1          ,   0x69          ,   0x89          ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xec          ,   0x8d          ,   kScroll_Red   ,   kScroll_Red   , 
+  0xf6          ,   0x91          ,   0xa           ,   0x98          ,   0x16          ,   0x98          ,   0x33          ,   kScroll_Green ,   0x10          ,   0x8           , 
+};
+
+static uint8 kScroll_b1e4[] = {
+  kScroll_Blue  ,   0x35          ,   kScroll_Green ,   0xf           ,   0xd           ,   0x3           ,   0x3           ,   0x90          ,   0xa0          ,   kScroll_Red   , 
+  0xc           ,   0xb2          ,   0xe6          ,   0xe5          ,   0xd3          ,   0xc4          ,   0xc8          ,   0x9           ,   0x18          ,   0x5           , 
+  0x6a          ,   0x87          ,   0x3c          ,   0xa2          ,   0xb1          ,   0x86          ,   0xc1          ,   0xc1          ,   0x10          ,   0xb2          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x4           ,   0x8e          ,   0x32          ,   0xbf          ,   0xf7          ,   0x91          , 
+  0x3a          ,   0x98          ,   0x46          ,   0x98          ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_b210[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x3           , 
+  kScroll_Blue  ,   0x4           ,   kScroll_Blue  ,   0x6           ,   kScroll_Red   ,   0x7           ,   kScroll_Red   ,   0x8           ,   kScroll_Red   ,   0x80          , 
+  0x3           ,   kScroll_Green ,   0x4           ,   kScroll_Green ,   0x6           ,   kScroll_Green ,   0x7           ,   kScroll_Green ,   0x80          ,   0x4           , 
+  kScroll_Red   ,   0x6           ,   kScroll_Blue  ,   0x7           ,   kScroll_Blue  ,   0x8           ,   kScroll_Blue  ,   0x80          ,   0x36          ,   kScroll_Green , 
+  0x11          ,   0xb           ,   0x8           ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x5d          ,   0xb2          ,   0xe6          , 
+};
+
+static uint8 kScroll_b265[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0xc           ,   kScroll_Green ,   0x80          ,   0xc           ,   kScroll_Red   ,   0x80          , 
+  0x37          ,   kScroll_Green ,   0x12          ,   0xf           ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xc9          , 
+  0xb2          ,   0x29          ,   0xe6          ,   0x4           ,   0xaf          ,   0xb2          ,   0xe6          ,   0xe5          ,   0x9d          ,   0xe0          , 
+};
+
+static uint8 kScroll_b2cd[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  , 
+  0x3           ,   kScroll_Blue  ,   0x80          ,   0x38          ,   kScroll_Green ,   0x15          ,   0xe           ,   0x4           ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   kScroll_Blue  ,   0xb3          ,   0xe6          ,   0xe5          ,   kScroll_Red   ,   0xe9          ,   0xc8          ,   0x9           , 
+  0x18          ,   0x5           ,   0xaa          ,   0x87          ,   0x8b          ,   0xa4          ,   0xf           ,   0x87          ,   0xc1          ,   0xc1          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x82          ,   0x8e          ,   0x17          ,   0xbf          , 
+};
+
+static uint8 kScroll_b378[] = {
+  kScroll_Green ,   kScroll_Green ,   0x3b          ,   kScroll_Green ,   0x18          ,   0x10          ,   0x3           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xa1          ,   0xb3          ,   0xe6          ,   0xe5          ,   0xce          ,   0xed          ,   0xc8          ,   0x9           ,   0x18          , 
+  0x5           ,   0xcc          ,   0x87          ,   0x69          ,   0xb7          ,   0x97          ,   0x8a          ,   0xc1          ,   0xc1          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xa6          ,   0x8e          ,   0x4d          ,   0xbf          ,   0xf7          , 
+  0x91          ,   0xca          ,   0x98          ,   0xd6          ,   0x98          ,   0x3c          ,   kScroll_Green ,   0x19          ,   0xc           ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_b3d6[] = {
+  kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Green ,   0x80          ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  , 
+  0x80          ,   0x3d          ,   kScroll_Green ,   0x1a          ,   0xb           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x8           ,   0xb4          ,   0xe6          ,   0xe5          ,   0xb           ,   0xf4          ,   0xc8          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   , 
+  0xec          ,   0x87          ,   0x6           ,   0xad          ,   0x99          ,   0x88          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xd4          ,   0x8e          ,   0x90          ,   0xbe          ,   0xf7          ,   0x91          , 
+};
+
+static uint8 kScroll_b435[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x6           ,   kScroll_Blue  ,   0x80          ,   0x6           , 
+  kScroll_Red   ,   0x80          ,   0x7           ,   kScroll_Blue  ,   0x80          ,   0x7           ,   kScroll_Red   ,   0x80          ,   0xe           ,   kScroll_Blue  , 
+  0x80          ,   0xe           ,   kScroll_Red   ,   0x80          ,   0x3f          ,   kScroll_Green ,   0x1a          ,   0xe           ,   0x4           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x7e          ,   0xb4          ,   0xe6          ,   0xe5          ,   0xc5          ,   0xfc          ,   0xc8          , 
+};
+
+static uint8 kScroll_b4da[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green , 
+  0x80          ,   0x42          ,   kScroll_Green ,   0x1f          ,   0x9           ,   0x4           ,   0x5           ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xc           ,   0xb5          ,   0xe6          ,   0xe5          ,   0x9f          ,   0x89          ,   0xc9          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x3c          ,   0x88          ,   0xf4          ,   0xae          ,   0x1d          ,   0x89          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x7a          ,   0x8f          ,   0x5a          ,   0xbe          ,   0xf7          ,   0x91          , 
+};
+
+static uint8 kScroll_b53d[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Blue  ,   0x6           ,   kScroll_Red   ,   0x80          ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   0x6           ,   kScroll_Blue  ,   0x80          ,   0x3           ,   kScroll_Blue  ,   0x4           ,   kScroll_Green ,   0x80          ,   0x44          , 
+  kScroll_Green ,   0x25          ,   0x6           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x81          ,   0xb5          , 
+  0xe6          ,   0xe5          ,   0xe2          ,   0x9c          ,   0xc9          ,   0x9           ,   kScroll_Red   ,   kScroll_Red   ,   0x6c          ,   0x88          , 
+};
+
+static uint8 kScroll_b5b4[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   0xa           ,   kScroll_Green ,   0xd           ,   kScroll_Green ,   0x80          , 
+  0xa           ,   kScroll_Red   ,   0xd           ,   kScroll_Red   ,   0x80          ,   kScroll_Red   ,   kScroll_Green ,   0x3           ,   kScroll_Green ,   0x80          , 
+  kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x46          ,   kScroll_Green ,   0x20          ,   0xe           ,   0x6           ,   0x3           ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0xfc          ,   0xb5          ,   0xe6          ,   0xe5          ,   0x8c          ,   0xa8          ,   0xc9          ,   0x9           , 
+};
+
+static uint8 kScroll_b600[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x7           ,   kScroll_Green , 
+  0x80          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x7           ,   kScroll_Red   ,   0x80          ,   0x4           ,   kScroll_Blue  ,   0x80          ,   kScroll_Red   , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          ,   0x4           ,   kScroll_Red   ,   0x80          ,   kScroll_Red   ,   kScroll_Red   ,   0x80          , 
+  kScroll_Blue  ,   kScroll_Red   ,   0x80          ,   0x47          ,   kScroll_Green ,   0x1e          ,   0x10          ,   0x3           ,   kScroll_Blue  ,   0x70          , 
+};
+
+static uint8 kScroll_b681[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0x9           ,   kScroll_Red   ,   0x80          ,   0x8           ,   kScroll_Blue  ,   0x9           ,   kScroll_Blue  ,   0x80          , 
+  0x8           ,   kScroll_Red   ,   0x80          ,   0x49          ,   kScroll_Green ,   0x16          ,   0x11          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0xbf          ,   0xb6          ,   0xe6          ,   0xe5          ,   0xd           ,   0xc3          ,   0xc9          ,   0x9           , 
+  kScroll_Red   ,   kScroll_Red   ,   0xbc          ,   0x88          ,   0xab          ,   0xae          ,   0xf3          ,   0x88          ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_b71b[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   0xb           ,   kScroll_Blue  , 
+  0x80          ,   0xb           ,   kScroll_Green ,   0xd           ,   kScroll_Green ,   0xe           ,   kScroll_Green ,   0x80          ,   kScroll_Red   ,   kScroll_Blue  , 
+  0x4           ,   kScroll_Red   ,   0x80          ,   kScroll_Blue  ,   kScroll_Green ,   0x4           ,   kScroll_Green ,   0x80          ,   0x4c          ,   kScroll_Green , 
+  0x24          ,   0xc           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x68          ,   0xb7          ,   0xe6          , 
+};
+
+static uint8 kScroll_c9da[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   0xe           ,   kScroll_Blue  , 
+  0xf           ,   kScroll_Blue  ,   0x80          ,   0x4           ,   kScroll_Red   ,   0x5           ,   kScroll_Green ,   0xb           ,   kScroll_Green ,   0x10          , 
+  kScroll_Blue  ,   0x11          ,   kScroll_Blue  ,   0x80          ,   0x5           ,   kScroll_Blue  ,   0x80          ,   0x4           ,   kScroll_Blue  ,   0x80          , 
+  0x5           ,   kScroll_Red   ,   0x80          ,   0x4           ,   kScroll_Red   ,   0x80          ,   kScroll_Blue  ,   0x3           ,   0xc           ,   0xe           , 
+};
+
+static uint8 kScroll_ca9e[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   0x80          , 
+  0x3           ,   kScroll_Blue  ,   0x80          ,   0x3           ,   kScroll_Green ,   0x80          ,   0x3           ,   0x3           ,   0x13          ,   0xa           , 
+  0x3           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xf4          ,   0xca          ,   0x29          ,   0xe6          ,   kScroll_Blue  , 
+  0xda          ,   0xca          ,   0xe6          ,   0xe5          ,   0x20          ,   0xa7          ,   0xc4          ,   0x5           ,   kScroll_Red   ,   kScroll_Red   , 
+  0xd4          ,   0x9b          ,   0xe1          ,   0xc1          ,   0x13          ,   0x8c          ,   0xc1          ,   0xc1          ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_cb4a[] = {
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x21          ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_cc21[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   0x7           ,   0x3           ,   0x12          ,   0xd           , 
+  0x3           ,   kScroll_Green ,   0x90          ,   0xa0          ,   kScroll_Red   ,   0x6d          ,   0xcc          ,   0x29          ,   0xe6          ,   kScroll_Blue  , 
+  0x53          ,   0xcc          ,   0xe6          ,   0xe5          ,   0x83          ,   0xd8          ,   0xc4          ,   0x5           ,   kScroll_Red   ,   0x3           , 
+  0x14          ,   0x9c          ,   0xe7          ,   0xc1          ,   0x27          ,   0x8c          ,   0xc0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x8f          ,   0xc2          ,   kScroll_Red   ,   kScroll_Red   ,   0xc7          ,   0xc8          , 
+};
+
+static uint8 kScroll_ccbb[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   0x3           ,   kScroll_Blue  ,   0x4           ,   kScroll_Blue  ,   0x80          , 
+  0x3           ,   kScroll_Red   ,   0x80          ,   0x4           ,   kScroll_Red   ,   0x80          ,   0x9           ,   0x3           ,   0xd           ,   0x13          , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x11          ,   0xcd          ,   0x29          ,   0xe6          ,   kScroll_Blue  , 
+  0xf7          ,   0xcc          ,   0xe6          ,   0xe5          ,   0xc3          ,   0x83          ,   0xce          ,   0x16          ,   kScroll_Red   ,   kScroll_Red   , 
+  0x34          ,   0x9c          ,   0xed          ,   0xc1          ,   0x3b          ,   0x8c          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_cd5b[] = {
+  kScroll_Blue  ,   0xb           ,   0x3           ,   0x11          ,   0xf           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xa2          ,   0xcd          ,   0x29          ,   0xe6          ,   kScroll_Blue  ,   0x88          ,   0xcd          ,   0xe6          ,   0xe5          ,   0xa5          , 
+  0xe6          ,   0xc4          ,   0x5           ,   kScroll_Red   ,   kScroll_Red   ,   0x54          ,   0x9c          ,   0xa5          ,   0xc1          ,   0xe3          , 
+  0x8b          ,   0xc1          ,   0xc1          ,   0xa6          ,   0xcd          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xbb          , 
+  0xc2          ,   0x83          ,   0xe1          ,   0xd0          ,   0xc8          ,   0xa5          ,   0xe6          ,   0xc4          ,   0x4           ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_cda6[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   0xc           ,   0x3           ,   0xf           ,   0x11          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xee          ,   0xcd          ,   0x29          ,   0xe6          ,   kScroll_Blue  ,   0xd4          ,   0xcd          ,   0xe6          ,   0xe5          , 
+  0x4e          ,   0xe9          ,   0xc4          ,   0x5           ,   kScroll_Red   ,   kScroll_Red   ,   0x64          ,   0x9c          ,   0x9f          ,   0xc1          , 
+  0xcf          ,   0x8b          ,   0xc1          ,   0xc1          ,   0xf0          ,   0xcd          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0xbd          ,   0xc2          ,   0x83          ,   0xe1          ,   0xd0          ,   0xc8          ,   0x4e          ,   0xe9          ,   0xc4          ,   0x4           , 
+};
+
+static uint8 kScroll_cdf0[] = {
+  kScroll_Blue  ,   0xd           ,   0x3           ,   0x12          ,   0x11          ,   0x4           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x37          ,   0xce          ,   0x29          ,   0xe6          ,   kScroll_Blue  ,   0x1d          ,   0xce          ,   0xe6          ,   0xe5          ,   0x8f          , 
+  0xea          ,   0xc4          ,   0x5           ,   kScroll_Red   ,   kScroll_Red   ,   0x74          ,   0x9c          ,   0xc5          ,   0xc8          ,   0xbf          , 
+  0x8c          ,   0xc1          ,   0xc1          ,   0x39          ,   0xce          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xbf          , 
+  0xc2          ,   0x9e          ,   0xe1          ,   0xd0          ,   0xc8          ,   0x98          ,   0xed          ,   0xc4          ,   0x4           ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_ce39[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   0x3           ,   kScroll_Blue  ,   0x80          ,   0xe           ,   0x3           ,   0xa           , 
+  0xd           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x86          ,   0xce          ,   0x29          ,   0xe6          , 
+  kScroll_Blue  ,   0x6c          ,   0xce          ,   0xe6          ,   0xe5          ,   0xa1          ,   0xf0          ,   0xc4          ,   0x5           ,   kScroll_Red   , 
+  kScroll_Red   ,   0x74          ,   0x9c          ,   0xea          ,   0xc1          ,   0x31          ,   0x8c          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xc7          ,   0xc2          ,   0x83          ,   0xe1          ,   0xd0          , 
+};
+
+static uint8 kScroll_cf49[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   0x80          ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  0x80          ,   kScroll_Green ,   0x4           ,   0xa           ,   0x12          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x7b          ,   0xcf          ,   0xe6          ,   0xe5          ,   0xae          ,   0xe6          ,   0xc9          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   , 
+  0xa4          ,   0x9c          ,   0x3c          ,   0xd5          ,   0x8c          ,   0x8e          ,   kScroll_Red   ,   kScroll_Red   ,   0x7f          ,   0xcf          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xdf          ,   0xc3          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          , 
+};
+
+static uint8 kScroll_cf7f[] = {
+  kScroll_Blue  ,   0x3           ,   0x4           ,   0xc           ,   0x11          ,   0x4           ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xa7          ,   0xcf          ,   0xe6          ,   0xe5          ,   0x9           ,   0xe8          ,   0xc9          ,   0xb           ,   0x12          ,   0x5           , 
+  0xb4          ,   0x9c          ,   0x3f          ,   0xd5          ,   0x96          ,   0x8e          ,   kScroll_Red   ,   kScroll_Red   ,   0xad          ,   0xcf          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xe1          ,   0xc3          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          , 
+  0x78          ,   0xa3          ,   0x84          ,   0xa3          ,   0x90          ,   0xa3          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_cfad[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Red   ,   0x4           ,   kScroll_Red   ,   0x80          ,   kScroll_Red   ,   kScroll_Green ,   0x4           ,   kScroll_Blue  ,   0x80          , 
+  kScroll_Red   ,   kScroll_Red   ,   0x4           ,   kScroll_Blue  ,   0x80          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          ,   0x4           ,   0x4           , 
+  0xa           ,   0x9           ,   0x3           ,   0x8           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xf0          ,   0xcf          ,   0xe6          , 
+  0xe5          ,   0x25          ,   0xf2          ,   0xc9          ,   0xb           ,   0x1b          ,   0x6           ,   0xc4          ,   0x9c          ,   0x6d          , 
+};
+
+static uint8 kScroll_cffa[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   0x7           ,   kScroll_Blue  ,   0xa           ,   kScroll_Red   ,   0x80          ,   0x5           , 
+  0x4           ,   0xd           ,   0xd           ,   0x4           ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x3e          ,   0xd0          , 
+  0xe6          ,   0xe5          ,   0xff          ,   0x8e          ,   0xca          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   ,   0xd4          ,   0x9c          , 
+};
+
+static uint8 kScroll_d046[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Green ,   0xa           ,   kScroll_Green ,   0x80          ,   0x6           ,   0x4           ,   0x11          ,   0xc           ,   0x3           , 
+  0x4           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x7c          ,   0xd0          ,   0xe6          ,   0xe5          ,   0x13          ,   0xa1          , 
+  0xca          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   ,   0xe4          ,   0x9c          ,   0xe2          ,   0xd5          ,   0xa8          ,   0x8e          , 
+  kScroll_Red   ,   0xc0          ,   0x7e          ,   0xd0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x7d          ,   0xc4          , 
+};
+
+static uint8 kScroll_d07e[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   0x7           ,   0x4           ,   0xc           ,   0x10          ,   0x4           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xb1          ,   0xd0          ,   0xe6          ,   0xe5          ,   0x99          ,   0xaf          ,   0xca          ,   0xb           ,   0x1b          , 
+  0x6           ,   0xf4          ,   0x9c          ,   0x35          ,   0xd6          ,   0xb6          ,   0x8e          ,   0xc1          ,   0xc1          ,   0xb5          , 
+  0xd0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x8b          ,   0xc4          ,   0x48          ,   0xe2          ,   0xd1          , 
+};
+
+static uint8 kScroll_d0b5[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x8           ,   0x4           ,   0xc           ,   0x9           ,   0x6           ,   0x4           , 
+  0x90          ,   0xa0          ,   kScroll_Red   ,   0xe0          ,   0xd0          ,   0xe6          ,   0xe5          ,   0x4f          ,   0xb2          ,   0xca          , 
+  0xb           ,   kScroll_Red   ,   kScroll_Red   ,   0x4           ,   0x9d          ,   0x6a          ,   0xce          ,   0x41          ,   0x8d          ,   0xc0          , 
+  0xc0          ,   0xec          ,   0xd0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x99          ,   0xc4          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd1          ,   0xc8          ,   0x2c          ,   0xa4          ,   0x38          ,   0xa4          ,   0x44          ,   0xa4          ,   0x50          , 
+};
+
+static uint8 kScroll_d0ec[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   0x9           ,   0x4           ,   0xc           ,   0x7           ,   0x3           ,   kScroll_Green , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x2b          ,   0xd1          ,   0xe6          ,   0xe5          ,   0x42          ,   0xce          ,   0xca          , 
+  0xb           ,   0x1b          ,   0x6           ,   0x14          ,   0x9d          ,   0xaa          ,   0xd3          ,   0x2c          ,   0x8e          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d12f[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x80          ,   kScroll_Blue  , 
+  kScroll_Blue  ,   0x80          ,   0xa           ,   0x4           ,   0xc           ,   0x4           ,   kScroll_Green ,   0x3           ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x62          ,   0xd1          ,   0xe6          ,   0xe5          ,   0x74          ,   0xd4          ,   0xca          ,   0xb           ,   kScroll_Red   , 
+  kScroll_Red   ,   0x24          ,   0x9d          ,   0x90          ,   0xcf          ,   0x65          ,   0x8d          ,   0xc0          ,   kScroll_Red   ,   0x64          , 
+  0xd1          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xa9          ,   0xc4          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          , 
+};
+
+static uint8 kScroll_d164[] = {
+  kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x4           ,   kScroll_Blue  ,   0x80          ,   0xb           , 
+  0x4           ,   0xe           ,   0x4           ,   0x4           ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x94          ,   0xd1          , 
+  0xe6          ,   0xe5          ,   0xc8          ,   0xdb          ,   0xca          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   ,   0x34          ,   0x9d          , 
+  0x98          ,   0xd6          ,   0xc4          ,   0x8e          ,   0xc0          ,   kScroll_Red   ,   0x98          ,   0xd1          ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   0xbd          ,   0xc4          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          ,   0x98          ,   0xa4          , 
+};
+
+static uint8 kScroll_d198[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   0x5           ,   kScroll_Blue  , 
+  0x80          ,   0xc           ,   0x4           ,   0x12          ,   0x7           ,   kScroll_Green ,   0x4           ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xca          ,   0xd1          ,   0xe6          ,   0xe5          ,   0x58          ,   0xe4          ,   0xca          ,   0xb           ,   0x1b          ,   0x6           , 
+  0x44          ,   0x9d          ,   0xc3          ,   0xcf          ,   0x77          ,   0x8d          ,   kScroll_Red   ,   0xc0          ,   0xd0          ,   0xd1          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xef          ,   0xc4          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          , 
+};
+
+static uint8 kScroll_d1d0[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   0x4           ,   kScroll_Green , 
+  0x6           ,   kScroll_Blue  ,   0x80          ,   0xd           ,   0x4           ,   0x12          ,   0x4           ,   0x4           ,   0x3           ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x4           ,   0xd2          ,   0xe6          ,   0xe5          ,   0x9c          ,   0xf5          ,   0xca          ,   0xb           , 
+  kScroll_Red   ,   kScroll_Red   ,   0x54          ,   0x9d          ,   0x5b          ,   0xd7          ,   0xd6          ,   0x8e          ,   0xc0          ,   kScroll_Red   , 
+  0xa           ,   0xd2          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x3           ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d20a[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Red   ,   0xa           ,   kScroll_Green ,   0x80          ,   0xa           ,   kScroll_Red   ,   0x80          ,   0xe           ,   0x4           , 
+  0x10          ,   0x10          ,   kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x43          ,   0xd2          ,   0xe6          , 
+  0xe5          ,   0xdb          ,   0x83          ,   0xcb          ,   0xb           ,   0x1b          ,   0x5           ,   0x64          ,   0x9d          ,   0x17          , 
+  0xde          ,   0x1a          ,   0x90          ,   kScroll_Red   ,   kScroll_Red   ,   0x4b          ,   0xd2          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d24b[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x80          ,   0xf           ,   0x4           ,   0x11          , 
+  0x10          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x79          ,   0xd2          ,   0xe6          ,   0xe5          , 
+  0x3a          ,   0x88          ,   0xcb          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   ,   0x74          ,   0x9d          ,   0xee          ,   0xd7          , 
+  0xec          ,   0x8e          ,   0xc0          ,   kScroll_Red   ,   0x7d          ,   0xd2          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x4f          ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          ,   0x28          ,   0xa5          ,   0x34          ,   0xa5          , 
+};
+
+static uint8 kScroll_d27d[] = {
+  kScroll_Blue  ,   0x10          ,   0x4           ,   0x1a          ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xa5          ,   0xd2          ,   0xe6          ,   0xe5          ,   0xe0          ,   0x89          ,   0xcb          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x84          ,   0x9d          ,   kScroll_Blue  ,   0xd8          ,   0xfa          ,   0x8e          ,   kScroll_Red   ,   kScroll_Red   ,   0xa9          ,   0xd2          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x51          ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          , 
+  0x40          ,   0xa5          ,   0x4c          ,   0xa5          ,   kScroll_Blue  ,   0x11          ,   0x4           ,   0x1b          ,   kScroll_Red   ,   kScroll_Green , 
+};
+
+static uint8 kScroll_d2a9[] = {
+  kScroll_Blue  ,   0x11          ,   0x4           ,   0x1b          ,   kScroll_Red   ,   kScroll_Green ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xd1          ,   0xd2          ,   0xe6          ,   0xe5          ,   0xd4          ,   0x8b          ,   0xcb          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x94          ,   0x9d          ,   0xed          ,   0xd3          ,   0x42          ,   0x8e          ,   0xc0          ,   kScroll_Red   ,   0xd3          ,   0xd2          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x53          ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          , 
+  0x58          ,   0xa5          ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x12          ,   0x4           , 
+};
+
+static uint8 kScroll_d2d3[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x12          ,   0x4           ,   0x1b          ,   0x5           , 
+  0x7           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   kScroll_Red   ,   0xd3          ,   0xe6          ,   0xe5          ,   0x92          , 
+  0x97          ,   0xcb          ,   0xb           ,   kScroll_Red   ,   kScroll_Red   ,   0xa4          ,   0x9d          ,   0x64          ,   0xd8          ,   0xc           , 
+  0x8f          ,   0xc0          ,   kScroll_Red   ,   0x4           ,   0xd3          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x61          , 
+  0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          ,   0x64          ,   0xa5          ,   0x70          ,   0xa5          ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_d304[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x13          ,   0x4           ,   0x22          , 
+  kScroll_Red   ,   kScroll_Blue  ,   0x6           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x32          ,   0xd3          ,   0xe6          ,   0xe5          , 
+  0xd0          ,   0xa0          ,   0xcb          ,   0xb           ,   0x1b          ,   0x5           ,   0xb4          ,   0x9d          ,   0x6           ,   0xd0          , 
+  0x85          ,   0x8d          ,   kScroll_Red   ,   0xc0          ,   0x3a          ,   0xd3          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x63          ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          ,   0x7c          ,   0xa5          ,   0x88          ,   0xa5          , 
+};
+
+static uint8 kScroll_d33a[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   0x14          ,   0x4           ,   0x16          ,   kScroll_Green , 
+  0x4           ,   0x6           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x67          ,   0xd3          ,   0xe6          ,   0xe5          ,   0x78          , 
+  0xa8          ,   0xcb          ,   0xb           ,   kScroll_Red   ,   0x5           ,   0xc4          ,   0x9d          ,   0x57          ,   0xd9          ,   0x22          , 
+  0x8f          ,   0xe0          ,   kScroll_Red   ,   0x6f          ,   0xd3          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x71          , 
+  0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd1          ,   0xc8          ,   0xa0          ,   0xa5          ,   0xac          ,   0xa5          ,   0xb8          , 
+};
+
+static uint8 kScroll_d36f[] = {
+  kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x15          ,   0x4           ,   0x19          ,   kScroll_Red   ,   kScroll_Blue  ,   0x4           , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xae          ,   0xd3          ,   0xe6          ,   0xe5          ,   0x4f          ,   0xc6          ,   0xcb          , 
+  0xb           ,   kScroll_Red   ,   0x5           ,   0xd4          ,   0x9d          ,   0x9b          ,   0xdd          ,   0xe6          ,   0x8f          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d3b2[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x16          ,   0x4           ,   0x11          ,   0x11          ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xdd          ,   0xd3          ,   0xe6          ,   0xe5          ,   0xbd          ,   0x86          ,   0xce          , 
+  0x15          ,   kScroll_Red   ,   kScroll_Red   ,   0xe4          ,   0x9d          ,   0x14          ,   0xde          ,   0x10          ,   0x90          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x81          ,   0xc5          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd1          ,   0xc8          ,   0xe8          ,   0xa5          ,   0x17          ,   0x4           ,   0x23          ,   0x4           ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_d460[] = {
+  kScroll_Green ,   0x1a          ,   0x4           ,   0x12          ,   0x10          ,   0x4           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x88          ,   0xd4          ,   0xe6          ,   0xe5          ,   0x8f          ,   0xde          ,   0xcb          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x44          ,   0x9e          ,   0x3d          ,   0xda          ,   0x52          ,   0x8f          ,   0xc1          ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x95          ,   0xc5          ,   0x5a          ,   0xe2          ,   0xd2          ,   0xc8          , 
+  0x3c          ,   0xa6          ,   0x48          ,   0xa6          ,   0x54          ,   0xa6          ,   0x1b          ,   0x4           ,   0x16          ,   0xf           , 
+};
+
+static uint8 kScroll_d4bb[] = {
+  kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Green ,   0x80          ,   0x1c          ,   0x4           ,   0x17          , 
+  0x10          ,   0x3           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xe9          ,   0xd4          ,   0xe6          ,   0xe5          , 
+  0x99          ,   0xe8          ,   0xcb          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x64          ,   0x9e          ,   0xd3          ,   0xda          , 
+  0x6a          ,   0x8f          ,   0xc1          ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0xdb          ,   0xc5          ,   0x5a          ,   0xe2          ,   0xd2          ,   0xc8          ,   0x84          ,   0xa6          ,   0x90          ,   0xa6          , 
+};
+
+static uint8 kScroll_d51a[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x1e          ,   0x4           ,   0x17          ,   0xe           ,   kScroll_Green ,   kScroll_Green , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x45          ,   0xd5          ,   0xe6          ,   0xe5          ,   0x80          ,   0xf5          ,   0xcb          , 
+  0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x84          ,   0x9e          ,   0x63          ,   0xdf          ,   0x5e          ,   0x90          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x49          ,   0xd5          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xeb          ,   0xc5          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd2          ,   0xc8          ,   0xc0          ,   0xa6          ,   0xcc          ,   0xa6          ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+};
+
+static uint8 kScroll_d549[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x1f          ,   0x4           ,   0x15          ,   0xc           ,   kScroll_Blue  ,   kScroll_Green , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x74          ,   0xd5          ,   0xe6          ,   0xe5          ,   0xc8          ,   0xfe          ,   0xcb          , 
+  0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x94          ,   0x9e          ,   0x66          ,   0xdb          ,   0x78          ,   0x8f          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x78          ,   0xd5          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xf9          ,   0xc5          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd2          ,   0xc8          ,   0xd8          ,   0xa6          ,   0xe4          ,   0xa6          ,   kScroll_Green ,   kScroll_Green ,   0x20          , 
+};
+
+static uint8 kScroll_d578[] = {
+  kScroll_Green ,   kScroll_Green ,   0x20          ,   0x4           ,   0x17          ,   0xc           ,   kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xa1          ,   0xd5          ,   0xe6          ,   0xe5          ,   0xb8          ,   0x80          ,   0xcc          ,   0xc           ,   kScroll_Red   , 
+  kScroll_Red   ,   0x94          ,   0x9e          ,   0xd9          ,   0xdb          ,   0x86          ,   0x8f          ,   kScroll_Red   ,   kScroll_Red   ,   0xa5          , 
+  0xd5          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xfb          ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          , 
+  0xc8          ,   0xf0          ,   0xa6          ,   0xfc          ,   0xa6          ,   kScroll_Green ,   kScroll_Green ,   0x21          ,   0x4           ,   0x14          , 
+};
+
+static uint8 kScroll_d5a5[] = {
+  kScroll_Green ,   kScroll_Green ,   0x21          ,   0x4           ,   0x14          ,   0x9           ,   0x6           ,   0x3           ,   0x90          ,   0xa0          , 
+  kScroll_Red   ,   0xce          ,   0xd5          ,   0xe6          ,   0xe5          ,   0xa8          ,   0x82          ,   0xcc          ,   0xc           ,   0x1b          , 
+  0x5           ,   0xa4          ,   0x9e          ,   0x57          ,   0xd3          ,   0x1e          ,   0x8e          ,   0xc0          ,   kScroll_Red   ,   0xda          , 
+  0xd5          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xfd          ,   0xc5          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          , 
+  0xc8          ,   0x8           ,   0xa7          ,   0x14          ,   0xa7          ,   0x20          ,   0xa7          ,   0x2c          ,   0xa7          ,   0x38          , 
+};
+
+static uint8 kScroll_d5da[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x22          ,   0x4           , 
+  0x1a          ,   0x7           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x13          ,   0xd6          ,   0xe6          , 
+  0xe5          ,   0x3b          ,   0xa1          ,   0xcc          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0xb4          ,   0x9e          ,   0x3c          , 
+  0xdc          ,   0x94          ,   0x8f          ,   0xc0          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d642[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x24          ,   0x4           ,   0x1a          ,   0xd           ,   kScroll_Green ,   0x4           , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x6d          ,   0xd6          ,   0xe6          ,   0xe5          ,   0x48          ,   0xac          ,   0xcc          , 
+  0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0xd4          ,   0x9e          ,   0x53          ,   0xd4          ,   0x5e          ,   0x8e          ,   kScroll_Red   , 
+  0xc0          ,   0x75          ,   0xd6          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x1b          ,   0xc6          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd2          ,   0xc8          ,   0x80          ,   0xa7          ,   0x8c          ,   0xa7          ,   0x98          ,   0xa7          ,   0xa4          , 
+};
+
+static uint8 kScroll_d675[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green , 
+  0x3           ,   kScroll_Red   ,   0x4           ,   kScroll_Green ,   0x5           ,   kScroll_Red   ,   0x6           ,   kScroll_Blue  ,   0x7           ,   kScroll_Red   , 
+  0x80          ,   kScroll_Green ,   kScroll_Red   ,   0x3           ,   kScroll_Green ,   0x4           ,   kScroll_Red   ,   0x5           ,   kScroll_Blue  ,   0x6           , 
+  kScroll_Red   ,   0x80          ,   0x5           ,   kScroll_Green ,   0x7           ,   kScroll_Blue  ,   0x80          ,   0x25          ,   0x4           ,   0x1b          , 
+  0xe           ,   kScroll_Blue  ,   0x3           ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xc1          ,   0xd6          ,   0xe6          ,   0xe5          , 
+};
+
+static uint8 kScroll_d6c5[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   0x80          ,   kScroll_Blue  ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  , 
+  0x80          ,   0x26          ,   0x4           ,   0x20          ,   0xf           ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xf7          ,   0xd6          ,   0xe6          ,   0xe5          ,   0x31          ,   0xbd          ,   0xcc          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   , 
+  0xf4          ,   0x9e          ,   0x35          ,   0xdd          ,   0xca          ,   0x8f          ,   0xc0          ,   kScroll_Red   ,   0xf9          ,   0xd6          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xe5          ,   0xc6          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          ,   0xc8          , 
+};
+
+static uint8 kScroll_d6f9[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   0x27          ,   0x4           ,   0x1a          ,   0xa           ,   0x4           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x24          ,   0xd7          ,   0xe6          ,   0xe5          ,   0x2f          ,   0xc2          ,   0xcc          , 
+  0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x4           ,   0x9f          ,   0x38          ,   0xdd          ,   0xd4          ,   0x8f          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x26          ,   0xd7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xed          ,   0xc6          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd2          ,   0xc8          ,   0xd4          ,   0xa7          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x28          , 
+};
+
+static uint8 kScroll_d726[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x28          ,   0x4           ,   0x22          ,   0x6           ,   0x7           ,   kScroll_Green , 
+  0x90          ,   0xa0          ,   kScroll_Red   ,   0x51          ,   0xd7          ,   0xe6          ,   0xe5          ,   0xf1          ,   0xc9          ,   0xcc          , 
+  0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x14          ,   0x9f          ,   0x89          ,   0xd0          ,   0x97          ,   0x8d          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x57          ,   0xd7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xef          ,   0xc6          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xd2          ,   0xc8          ,   0xe0          ,   0xa7          ,   0xec          ,   0xa7          ,   0xf8          ,   0xa7          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_d757[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x29          ,   0x4           ,   0x13          ,   0xb           ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x8c          ,   0xd7          ,   0xe6          ,   0xe5          ,   0xcb          ,   0x92          ,   0xce          , 
+  0x19          ,   0x1b          ,   0x5           ,   0x24          ,   0x9f          ,   0xc           ,   0xd1          ,   0xa5          ,   0x8d          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x8e          ,   0xd7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x3           ,   0xc7          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d78e[] = {
+  kScroll_Blue  ,   0x2a          ,   0x4           ,   0x29          ,   0x7           ,   kScroll_Green ,   0x3           ,   0x90          ,   0xa0          ,   kScroll_Red   , 
+  0xd5          ,   0xd7          ,   0x29          ,   0xe6          ,   kScroll_Blue  ,   0xbb          ,   0xd7          ,   0xe6          ,   0xe5          ,   0xb1          , 
+  0xe5          ,   0xcc          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x34          ,   0x9f          ,   0xf           ,   0xd1          ,   0xaf          , 
+  0x8d          ,   kScroll_Red   ,   0xc0          ,   0xd9          ,   0xd7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xb           , 
+  0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          ,   0xc8          ,   0xb1          ,   0xe5          ,   0xcc          ,   0xc           ,   0x1b          , 
+};
+
+static uint8 kScroll_d7d9[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  0x80          ,   0x2b          ,   0x4           ,   0x1a          ,   0x8           ,   0x7           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xb           ,   0xd8          ,   0xe6          ,   0xe5          ,   0xc           ,   0xee          ,   0xcc          ,   0xc           ,   0x1b          ,   0x5           , 
+  0x44          ,   0x9f          ,   0x12          ,   0xd1          ,   0xb9          ,   0x8d          ,   0xc0          ,   kScroll_Red   ,   0x13          ,   0xd8          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x55          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          ,   0xc8          , 
+};
+
+static uint8 kScroll_d813[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0x2c          ,   0x4           ,   0x29          , 
+  0x6           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x41          ,   0xd8          ,   0xe6          ,   0xe5          , 
+  0xf6          ,   0x9e          ,   0xce          ,   0x19          ,   0x1b          ,   0x5           ,   0x54          ,   0x9f          ,   0xb5          ,   0xd1          , 
+  0xcf          ,   0x8d          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x5d          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          ,   0xc8          ,   0x7c          ,   0xa8          ,   0x88          ,   0xa8          , 
+};
+
+static uint8 kScroll_d897[] = {
+  kScroll_Green ,   0x2f          ,   0x4           ,   0x1c          ,   0x9           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xbf          ,   0xd8          ,   0xe6          ,   0xe5          ,   0x88          ,   0xfb          ,   0xcc          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x74          ,   0x9f          ,   0xee          ,   0xd1          ,   0xf1          ,   0x8d          ,   kScroll_Red   ,   kScroll_Red   ,   0xc3          ,   0xd8          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x6f          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   0xd2          ,   0xc8          , 
+  0xac          ,   0xa8          ,   0xb8          ,   0xa8          ,   kScroll_Green ,   kScroll_Green ,   0x30          ,   0x4           ,   0x1c          ,   0xf           , 
+};
+
+static uint8 kScroll_d8c3[] = {
+  kScroll_Green ,   kScroll_Green ,   0x30          ,   0x4           ,   0x1c          ,   0xf           ,   0x4           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xb           ,   0xd9          ,   0x12          ,   0xe6          ,   0xd           ,   0xf1          ,   0xd8          ,   0xe6          ,   0xe5          , 
+  0x75          ,   0xfd          ,   0xcc          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x84          ,   0x9f          ,   0x81          ,   0xd2          , 
+  0xff          ,   0x8d          ,   0xc0          ,   kScroll_Red   ,   0xf           ,   0xd9          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x71          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   0xd3          ,   0xc8          ,   0x4           ,   0x84          ,   0xcd          ,   0xc           , 
+};
+
+static uint8 kScroll_d90f[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x31          ,   0x4           ,   0x21          ,   0x6           ,   0x5           ,   0x3           , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x3a          ,   0xd9          ,   0xe6          ,   0xe5          ,   0x37          ,   0x8a          ,   0xcd          , 
+  0xc           ,   kScroll_Red   ,   kScroll_Red   ,   0x94          ,   0x9f          ,   0x2d          ,   0xcf          ,   0x53          ,   0x8d          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x42          ,   0xd9          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x73          ,   0xc7          ,   kScroll_Red   , 
+  kScroll_Red   ,   0xdc          ,   0xc8          ,   0xdc          ,   0xa8          ,   0xe8          ,   0xa8          ,   0xf4          ,   0xa8          ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_d942[] = {
+  kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Green ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Blue  ,   kScroll_Red   ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x5           ,   kScroll_Red   ,   0xb           ,   kScroll_Blue  ,   0x80          , 
+  0x5           ,   kScroll_Blue  ,   0xb           ,   kScroll_Red   ,   0x80          ,   0xa           ,   kScroll_Blue  ,   0x80          ,   0x32          ,   0x4           , 
+  0x18          ,   0x8           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0xa4          ,   0xd9          ,   0x29          , 
+  0xe6          ,   kScroll_Green ,   0x8a          ,   0xd9          ,   0xe6          ,   0xe5          ,   0xe           ,   0x95          ,   0xcd          ,   0xc           , 
+};
+
+static uint8 kScroll_d9a8[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   0x33          ,   0x4           ,   0x26          ,   0xa           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xd1          ,   0xd9          ,   0xe6          ,   0xe5          ,   0x1e          ,   0x99          ,   0xcd          ,   0xc           ,   kScroll_Red   , 
+  0x3           ,   0xb4          ,   0x9f          ,   0x50          ,   0xd4          ,   0x54          ,   0x8e          ,   kScroll_Red   ,   kScroll_Red   ,   0xd3          , 
+  0xd9          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xa7          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   0xdc          , 
+  0xc8          ,   0x24          ,   0xa9          ,   kScroll_Blue  ,   0x34          ,   0x4           ,   0x2a          ,   0x6           ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_d9d3[] = {
+  kScroll_Blue  ,   0x34          ,   0x4           ,   0x2a          ,   0x6           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xfb          ,   0xd9          ,   0xe6          ,   0xe5          ,   0xdc          ,   0x98          ,   0xce          ,   0x17          ,   kScroll_Red   ,   kScroll_Red   , 
+  0xc4          ,   0x9f          ,   0x11          ,   0xde          ,   0x6           ,   0x90          ,   kScroll_Red   ,   kScroll_Red   ,   0xfd          ,   0xd9          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xaf          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x30          ,   0xa9          ,   kScroll_Blue  ,   0x35          ,   0x4           ,   0x1b          ,   0x6           ,   kScroll_Blue  ,   kScroll_Green ,   0x70          , 
+};
+
+static uint8 kScroll_d9fd[] = {
+  kScroll_Blue  ,   0x35          ,   0x4           ,   0x1b          ,   0x6           ,   kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x25          ,   0xda          ,   0xe6          ,   0xe5          ,   0x28          ,   0x9b          ,   0xcd          ,   0xc           ,   kScroll_Red   ,   kScroll_Red   , 
+  0xd4          ,   0x9f          ,   0xd9          ,   0xdf          ,   0x7a          ,   0x90          ,   kScroll_Red   ,   0xc0          ,   0x29          ,   0xda          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xb7          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x3c          ,   0xa9          ,   0x48          ,   0xa9          ,   kScroll_Green ,   kScroll_Blue  ,   0x36          ,   0x4           ,   0x1c          ,   0x6           , 
+};
+
+static uint8 kScroll_da29[] = {
+  kScroll_Green ,   kScroll_Blue  ,   0x36          ,   0x4           ,   0x1c          ,   0x6           ,   0x5           ,   kScroll_Green ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x52          ,   0xda          ,   0xe6          ,   0xe5          ,   0xd           ,   0xa0          ,   0xcd          ,   0xc           ,   kScroll_Red   , 
+  kScroll_Red   ,   0xe4          ,   0x9f          ,   0x1c          ,   0xe0          ,   0x8c          ,   0x90          ,   kScroll_Red   ,   kScroll_Red   ,   0x56          , 
+  0xda          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xb9          ,   0xc7          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   0x54          ,   0xa9          ,   0x60          ,   0xa9          ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+};
+
+static uint8 kScroll_da56[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  0x37          ,   0x4           ,   0x27          ,   0x9           ,   kScroll_Green ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Blue  ,   0xa6          , 
+  0xda          ,   0x29          ,   0xe6          ,   kScroll_Blue  ,   0x8c          ,   0xda          ,   0xe6          ,   0xe5          ,   0x9d          ,   0xb1          , 
+  0xcd          ,   0x1c          ,   0x24          ,   0x5           ,   0xf4          ,   0x9f          ,   0x14          ,   0xd3          ,   0x10          ,   0x8e          , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0xaa          ,   0xda          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xbb          ,   0xc7          , 
+};
+
+static uint8 kScroll_daaa[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Red   ,   0x5           ,   0x14          ,   0x9           ,   kScroll_Blue  ,   0x4           , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xd5          ,   0xda          ,   0xe6          ,   0xe5          ,   0xfe          ,   0xc4          ,   0xcd          , 
+  0xd           ,   0x1e          ,   0x5           ,   0x4           ,   0xa0          ,   0x2d          ,   0xe4          ,   0x3e          ,   0x91          ,   kScroll_Blue  , 
+  0xc1          ,   0xdd          ,   0xda          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xe1          ,   0xc7          ,   0xe8          , 
+  0xe3          ,   0xa           ,   0xc9          ,   0x84          ,   0xa9          ,   0x90          ,   0xa9          ,   0x8a          ,   0xa1          ,   0x9c          , 
+};
+
+static uint8 kScroll_dadd[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   0x5           ,   0xe           ,   0xc           ,   0x6           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x27          ,   0xdb          ,   0x12          ,   0xe6          ,   0x10          ,   0xd           ,   0xdb          , 
+  0xe6          ,   0xe5          ,   0xdc          ,   0xc8          ,   0xcd          ,   0xd           ,   kScroll_Red   ,   kScroll_Red   ,   0x14          ,   0xa0          , 
+  0xd8          ,   0xe1          ,   0xcc          ,   0x90          ,   0xc1          ,   0xc1          ,   0x2b          ,   0xdb          ,   kScroll_Red   ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   0xe9          ,   0xc7          ,   0x3           ,   0xe4          ,   0x1e          ,   0xc9          ,   0xdc          ,   0xc8          , 
+};
+
+static uint8 kScroll_db2b[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Green ,   0x5           ,   0xd           ,   0xc           , 
+  kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x77          ,   0xdb          ,   0x12          ,   0xe6          ,   0x11          , 
+  0x5d          ,   0xdb          ,   0xe6          ,   0xe5          ,   0xa0          ,   0xcd          ,   0xcd          ,   0xd           ,   kScroll_Red   ,   kScroll_Red   , 
+  0x24          ,   0xa0          ,   0x40          ,   0xe4          ,   0x48          ,   0x91          ,   0xc1          ,   0xc1          ,   0x7b          ,   0xdb          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0xf7          ,   0xc7          ,   0xe8          ,   0xe3          ,   0x1e          ,   0xc9          , 
+};
+
+static uint8 kScroll_db7b[] = {
+  kScroll_Green ,   kScroll_Green ,   0x3           ,   0x5           ,   0xe           ,   0xd           ,   0x6           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xc3          ,   0xdb          ,   0x12          ,   0xe6          ,   0x12          ,   0xa9          ,   0xdb          ,   0xe6          ,   0xe5          , 
+  0x2d          ,   0xd0          ,   0xcd          ,   0xd           ,   kScroll_Red   ,   kScroll_Red   ,   0x34          ,   0xa0          ,   0x94          ,   0xe7          , 
+  0xf8          ,   0x91          ,   0xc1          ,   0xc1          ,   0xc7          ,   0xdb          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x5           ,   0xc8          ,   0x3           ,   0xe4          ,   0x1e          ,   0xc9          ,   0x2d          ,   0xd0          ,   0xcd          ,   0xd           , 
+};
+
+static uint8 kScroll_dbc7[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x4           ,   0x5           ,   0x14          ,   0xd           , 
+  kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x13          ,   0xdc          ,   0x12          ,   0xe6          ,   0x13          , 
+  0xf9          ,   0xdb          ,   0xe6          ,   0xe5          ,   0xe5          ,   0xd3          ,   0xcd          ,   0xd           ,   0x1e          ,   0x5           , 
+  0x44          ,   0xa0          ,   0xa3          ,   0xe4          ,   0x5a          ,   0x91          ,   0xc1          ,   0xc1          ,   0x17          ,   0xdc          , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x13          ,   0xc8          ,   0xe8          ,   0xe3          ,   0x1e          ,   0xc9          , 
+};
+
+static uint8 kScroll_dc17[] = {
+  kScroll_Green ,   kScroll_Green ,   0x5           ,   0x5           ,   0x13          ,   0xf           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x5f          ,   0xdc          ,   0x12          ,   0xe6          ,   0x14          ,   0x45          ,   0xdc          ,   0xe6          ,   0xe5          , 
+  0xeb          ,   0xd5          ,   0xcd          ,   0xd           ,   0x45          ,   0x6           ,   0x54          ,   0xa0          ,   0x87          ,   0xe3          , 
+  0x22          ,   0x91          ,   0xc1          ,   0xc1          ,   0x63          ,   0xdc          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x21          ,   0xc8          ,   0x1e          ,   0xe4          ,   0x1e          ,   0xc9          ,   0xeb          ,   0xd5          ,   0xcd          ,   0xd           , 
+};
+
+static uint8 kScroll_dc63[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   0x6           ,   0x5           ,   0x11          ,   0xf           ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xab          ,   0xdc          ,   0x12          ,   0xe6          ,   0x14          ,   0x91          ,   0xdc          ,   0xe6          ,   0xe5          , 
+  0xc4          ,   0xd7          ,   0xcd          ,   0xd           ,   0x45          ,   0x6           ,   0x64          ,   0xa0          ,   0x5b          ,   0xe2          , 
+  0xde          ,   0x90          ,   0xc1          ,   0xc1          ,   0xaf          ,   0xdc          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x23          ,   0xc8          ,   0x1e          ,   0xe4          ,   0x1e          ,   0xc9          ,   0xc4          ,   0xd7          ,   0xcd          ,   0xd           , 
+};
+
+static uint8 kScroll_dcaf[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   0x7           ,   0x5           ,   0xd           ,   0xf           ,   0x4           ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xf7          ,   0xdc          ,   0x12          ,   0xe6          ,   0x14          ,   0xdd          ,   0xdc          ,   0xe6          ,   0xe5          , 
+  0x30          ,   0xd9          ,   0xcd          ,   0xd           ,   kScroll_Red   ,   kScroll_Red   ,   0x74          ,   0xa0          ,   0x6e          ,   0xe2          , 
+  0xec          ,   0x90          ,   0xc1          ,   0xc1          ,   0xfb          ,   0xdc          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+  0x31          ,   0xc8          ,   0x1e          ,   0xe4          ,   0x1e          ,   0xc9          ,   0x30          ,   0xd9          ,   0xcd          ,   0xd           , 
+};
+
+static uint8 kScroll_dcfb[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x8           ,   0x5           ,   0xc           ,   0xf           ,   kScroll_Blue  ,   kScroll_Green , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x26          ,   0xdd          ,   0xe6          ,   0xe5          ,   0xf8          ,   0xdb          ,   0xcd          , 
+  0xd           ,   0x1e          ,   0x5           ,   0x84          ,   0xa0          ,   0x8           ,   0xe7          ,   0xc4          ,   0x91          ,   0xc1          , 
+  0xc1          ,   0x2c          ,   0xdd          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x39          ,   0xc8          ,   0x1e          , 
+  0xe4          ,   0x1e          ,   0xc9          ,   0x50          ,   0xaa          ,   0x5c          ,   0xaa          ,   0x68          ,   0xaa          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_dd2c[] = {
+  kScroll_Green ,   kScroll_Green ,   0x9           ,   0x5           ,   0xb           ,   0x10          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x55          ,   0xdd          ,   0xe6          ,   0xe5          ,   0x23          ,   0xa8          ,   0xce          ,   0x18          ,   kScroll_Red   , 
+  kScroll_Red   ,   0x94          ,   0xa0          ,   0xb           ,   0xe7          ,   0xce          ,   0x91          ,   kScroll_Red   ,   kScroll_Red   ,   0x57          , 
+  0xdd          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x41          ,   0xc8          ,   kScroll_Red   ,   kScroll_Red   ,   0x1e          , 
+  0xc9          ,   0x74          ,   0xaa          ,   kScroll_Blue  ,   0xa           ,   0x5           ,   0xd           ,   0x12          ,   0x4           ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_dd57[] = {
+  kScroll_Blue  ,   0xa           ,   0x5           ,   0xd           ,   0x12          ,   0x4           ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0xbc          ,   0xdd          ,   0xff          ,   0xe5          ,   0xa2          ,   0xdd          ,   0x12          ,   0xe6          ,   kScroll_Green ,   0x88          , 
+  0xdd          ,   0xe6          ,   0xe5          ,   0xde          ,   0xde          ,   0xcd          ,   0xe           ,   kScroll_Red   ,   kScroll_Red   ,   0xa4          , 
+  0xa0          ,   0x21          ,   0xe3          ,   kScroll_Green ,   0x91          ,   0xc1          ,   0xc1          ,   0xc0          ,   0xdd          ,   kScroll_Red   , 
+  kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x4f          ,   0xc8          ,   0x8a          ,   0xe4          ,   0x1e          ,   0xc9          ,   0xde          , 
+};
+
+static uint8 kScroll_ddc0[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0xb           ,   0x5           ,   0xd           ,   0x10          ,   0x4           ,   kScroll_Blue  , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0xeb          ,   0xdd          ,   0xe6          ,   0xe5          ,   0xf           ,   0xe2          ,   0xcd          , 
+  0xd           ,   kScroll_Red   ,   kScroll_Red   ,   0xd4          ,   0xa0          ,   0x84          ,   0xe3          ,   0x18          ,   0x91          ,   0xc1          , 
+  0xc1          ,   0xef          ,   0xdd          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x57          ,   0xc8          ,   0x1e          , 
+  0xe4          ,   0x1e          ,   0xc9          ,   0x98          ,   0xaa          ,   0xa4          ,   0xaa          ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+};
+
+static uint8 kScroll_ddef[] = {
+  kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0xc           ,   0x5           ,   0x11          ,   0x10          ,   kScroll_Blue  ,   0x3           , 
+  0x70          ,   0xa0          ,   kScroll_Red   ,   0x1a          ,   0xde          ,   0xe6          ,   0xe5          ,   0x18          ,   0xe5          ,   0xcd          , 
+  0xd           ,   0x1e          ,   0x5           ,   0xe4          ,   0xa0          ,   0x57          ,   0xe8          ,   0xa           ,   0x92          ,   0xc1          , 
+  0xc1          ,   0x20          ,   0xde          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x6b          ,   0xc8          ,   0x54          , 
+  0xe4          ,   0x1e          ,   0xc9          ,   0xb0          ,   0xaa          ,   0xbc          ,   0xaa          ,   0xc8          ,   0xaa          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_de20[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   0xd           ,   0x5           ,   0x10          ,   0x11          ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          , 
+  0xa0          ,   kScroll_Red   ,   0x4a          ,   0xde          ,   0xe6          ,   0xe5          ,   0xcb          ,   0x92          ,   0xce          ,   0x19          , 
+  0x1e          ,   0x5           ,   0xf4          ,   0xa0          ,   0xd5          ,   0xe1          ,   0xc2          ,   0x90          ,   kScroll_Red   ,   kScroll_Red   , 
+  0x4c          ,   0xde          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x73          ,   0xc8          ,   kScroll_Red   ,   kScroll_Red   , 
+  0x1e          ,   0xc9          ,   0xd4          ,   0xaa          ,   kScroll_Blue  ,   0xe           ,   0x5           ,   0xb           ,   0x12          ,   kScroll_Green , 
+};
+
+static uint8 kScroll_de4c[] = {
+  kScroll_Blue  ,   0xe           ,   0x5           ,   0xb           ,   0x12          ,   kScroll_Green ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   , 
+  0x74          ,   0xde          ,   0xe6          ,   0xe5          ,   0x14          ,   0xe9          ,   0xcd          ,   0xd           ,   0x24          ,   0x7           , 
+  0x4           ,   0xa1          ,   0xaa          ,   0xe3          ,   0x30          ,   0x91          ,   0xc1          ,   0xc1          ,   0x78          ,   0xde          , 
+  kScroll_Red   ,   kScroll_Red   ,   0xa0          ,   0xe5          ,   0x7b          ,   0xc8          ,   0x39          ,   0xe4          ,   0x1f          ,   0xc9          , 
+  0xe0          ,   0xaa          ,   0xec          ,   0xaa          ,   kScroll_Green ,   kScroll_Green ,   0xf           ,   0x5           ,   0xb           ,   0x13          , 
+};
+
+static uint8 kScroll_de78[] = {
+  kScroll_Green ,   kScroll_Green ,   0xf           ,   0x5           ,   0xb           ,   0x13          ,   kScroll_Blue  ,   kScroll_Green ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xa1          ,   0xde          ,   0xe6          ,   0xe5          ,   0x5b          ,   0xeb          ,   0xcd          ,   0xd           ,   kScroll_Red   , 
+  kScroll_Red   ,   0x14          ,   0xa1          ,   0x9c          ,   0xe5          ,   0x88          ,   0x91          ,   0xc1          ,   0xc1          ,   0xa5          , 
+  0xde          ,   kScroll_Red   ,   kScroll_Red   ,   0x7c          ,   0xe5          ,   0x89          ,   0xc8          ,   0x54          ,   0xe4          ,   0x33          , 
+  0xc9          ,   0xf8          ,   0xaa          ,   0x4           ,   0xab          ,   kScroll_Green ,   kScroll_Blue  ,   0x10          ,   0x5           ,   0xc           , 
+};
+
+static uint8 kScroll_dea5[] = {
+  kScroll_Green ,   kScroll_Blue  ,   0x10          ,   0x5           ,   0xc           ,   0x13          ,   0x6           ,   kScroll_Green ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0xce          ,   0xde          ,   0xe6          ,   0xe5          ,   0x7a          ,   0xed          ,   0xcd          ,   0xd           ,   kScroll_Red   , 
+  kScroll_Red   ,   0x24          ,   0xa1          ,   0x95          ,   0xe6          ,   0xb2          ,   0x91          ,   0xc1          ,   0xc1          ,   0xd2          , 
+  0xde          ,   kScroll_Red   ,   kScroll_Red   ,   0xa0          ,   0xe5          ,   0x97          ,   0xc8          ,   0x6f          ,   0xe4          ,   0x46          , 
+  0xc9          ,   0x10          ,   0xab          ,   0x1c          ,   0xab          ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+};
+
+static uint8 kScroll_ded2[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  , 
+  kScroll_Blue  ,   kScroll_Blue  ,   0x11          ,   0x5           ,   0x12          ,   0x10          ,   0x3           ,   0x6           ,   0x70          ,   0xa0          , 
+  kScroll_Red   ,   0x5           ,   0xdf          ,   0xe6          ,   0xe5          ,   0x34          ,   0xf5          ,   0xcd          ,   0xd           ,   kScroll_Red   , 
+  kScroll_Red   ,   0x34          ,   0xa1          ,   kScroll_Green ,   0xe1          ,   0xb0          ,   0x90          ,   0xc1          ,   0xc1          ,   0x9           , 
+  0xdf          ,   kScroll_Red   ,   kScroll_Red   ,   0xa4          ,   0xe5          ,   0xa5          ,   0xc8          ,   0x6f          ,   0xe4          ,   0x53          , 
+};
+
+static uint8 kScroll_df09[] = {
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green , 
+  kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Green ,   kScroll_Blue  ,   kScroll_Blue  ,   kScroll_Blue  ,   0x12          ,   0x5           , 
+  0x15          ,   0xc           ,   kScroll_Blue  ,   kScroll_Blue  ,   0x70          ,   0xa0          ,   kScroll_Red   ,   0x42          ,   0xdf          ,   0xe6          , 
+  0xe5          ,   0xc2          ,   0x95          ,   0xce          ,   0x19          ,   0x1e          ,   0x5           ,   0x44          ,   0xa1          ,   0x91          , 
+  0xe7          ,   0xee          ,   0x91          ,   kScroll_Red   ,   kScroll_Red   ,   0x44          ,   0xdf          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   , 
+};
+
+static uint8 kScroll_df44[] = {
+  kScroll_Blue  ,   kScroll_Red   ,   0x6           ,   0xc           ,   0xd           ,   kScroll_Blue  ,   0x3           ,   0x70          ,   0xa0          ,   0x5           , 
+  0x8b          ,   0xdf          ,   0x29          ,   0xe6          ,   kScroll_Blue  ,   0x71          ,   0xdf          ,   0xe6          ,   0xe5          ,   0x46          , 
+  0xb8          ,   0xcd          ,   0x11          ,   0x2d          ,   0x6           ,   0x46          ,   0xa1          ,   0x8a          ,   0xe8          ,   0x18          , 
+  0x92          ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   kScroll_Red   ,   0x1f          ,   0xe5          ,   0xbb          , 
+  0xc8          ,   0xd4          ,   0xe1          ,   0x76          ,   0xc9          ,   0x46          ,   0xb8          ,   0xcd          ,   0x12          ,   kScroll_Red   , 
+};
+
+uint8* get_Scrolls(uint16 scroll_ptr) {
+  switch (scroll_ptr) {
+    case 0x9283: return kScroll_9283;
+    case 0x9370: return kScroll_9370;
+    case 0x93d3: return kScroll_93d3;
+    case 0x9431: return kScroll_9431;
+    case 0x94b9: return kScroll_94b9;
+    case 0x94f9: return kScroll_94f9;
+    case 0x9528: return kScroll_9528;
+    case 0x95d3: return kScroll_95d3;
+    case 0x9657: return kScroll_9657;
+    case 0x9686: return kScroll_9686;
+    case 0x9729: return kScroll_9729;
+    case 0x97a5: return kScroll_97a5;
+    case 0x9800: return kScroll_9800;
+    case 0x9965: return kScroll_9965;
+    case 0x99ec: return kScroll_99ec;
+    case 0x9a24: return kScroll_9a24;
+    case 0x9a8e: return kScroll_9a8e;
+    case 0x9ad8: return kScroll_9ad8;
+    case 0x9b16: return kScroll_9b16;
+    case 0x9b86: return kScroll_9b86;
+    case 0x9bf3: return kScroll_9bf3;
+    case 0x9c30: return kScroll_9c30;
+    case 0x9cb2: return kScroll_9cb2;
+    case 0x9ce0: return kScroll_9ce0;
+    case 0x9d52: return kScroll_9d52;
+    case 0x9e3c: return kScroll_9e3c;
+    case 0x9e7f: return kScroll_9e7f;
+    case 0x9eed: return kScroll_9eed;
+    case 0x9f5d: return kScroll_9f5d;
+    case 0x9fae: return kScroll_9fae;
+    case 0xa010: return kScroll_a010;
+    case 0xa040: return kScroll_a040;
+    case 0xa07a: return kScroll_a07a;
+    case 0xa0cf: return kScroll_a0cf;
+    case 0xa0fd: return kScroll_a0fd;
+    case 0xa284: return kScroll_a284;
+    case 0xa2be: return kScroll_a2be;
+    case 0xa357: return kScroll_a357;
+    case 0xa3a5: return kScroll_a3a5;
+    case 0xa3d7: return kScroll_a3d7;
+    case 0xa435: return kScroll_a435;
+    case 0xa470: return kScroll_a470;
+    case 0xa49e: return kScroll_a49e;
+    case 0xa507: return kScroll_a507;
+    case 0xa598: return kScroll_a598;
+    case 0xa5e9: return kScroll_a5e9;
+    case 0xa697: return kScroll_a697;
+    case 0xa6d0: return kScroll_a6d0;
+    case 0xa844: return kScroll_a844;
+    case 0xa8e6: return kScroll_a8e6;
+    case 0xa954: return kScroll_a954;
+    case 0xa9d7: return kScroll_a9d7;
+    case 0xaa39: return kScroll_aa39;
+    case 0xaa6c: return kScroll_aa6c;
+    case 0xaab1: return kScroll_aab1;
+    case 0xab36: return kScroll_ab36;
+    case 0xabba: return kScroll_abba;
+    case 0xabfd: return kScroll_abfd;
+    case 0xac56: return kScroll_ac56;
+    case 0xacae: return kScroll_acae;
+    case 0xace8: return kScroll_ace8;
+    case 0xad8f: return kScroll_ad8f;
+    case 0xadda: return kScroll_adda;
+    case 0xae5d: return kScroll_ae5d;
+    case 0xaea3: return kScroll_aea3;
+    case 0xaf0c: return kScroll_af0c;
+    case 0xaf6e: return kScroll_af6e;
+    case 0xaf9f: return kScroll_af9f;
+    case 0xb0a5: return kScroll_b0a5;
+    case 0xb131: return kScroll_b131;
+    case 0xb164: return kScroll_b164;
+    case 0xb1e4: return kScroll_b1e4;
+    case 0xb210: return kScroll_b210;
+    case 0xb265: return kScroll_b265;
+    case 0xb2cd: return kScroll_b2cd;
+    case 0xb378: return kScroll_b378;
+    case 0xb3d6: return kScroll_b3d6;
+    case 0xb435: return kScroll_b435;
+    case 0xb4da: return kScroll_b4da;
+    case 0xb53d: return kScroll_b53d;
+    case 0xb5b4: return kScroll_b5b4;
+    case 0xb600: return kScroll_b600;
+    case 0xb681: return kScroll_b681;
+    case 0xb71b: return kScroll_b71b;
+    case 0xc9da: return kScroll_c9da;
+    case 0xca9e: return kScroll_ca9e;
+    case 0xcb4a: return kScroll_cb4a;
+    case 0xcc21: return kScroll_cc21;
+    case 0xccbb: return kScroll_ccbb;
+    case 0xcd5b: return kScroll_cd5b;
+    case 0xcda6: return kScroll_cda6;
+    case 0xcdf0: return kScroll_cdf0;
+    case 0xce39: return kScroll_ce39;
+    case 0xcf49: return kScroll_cf49;
+    case 0xcf7f: return kScroll_cf7f;
+    case 0xcfad: return kScroll_cfad;
+    case 0xcffa: return kScroll_cffa;
+    case 0xd046: return kScroll_d046;
+    case 0xd07e: return kScroll_d07e;
+    case 0xd0b5: return kScroll_d0b5;
+    case 0xd0ec: return kScroll_d0ec;
+    case 0xd12f: return kScroll_d12f;
+    case 0xd164: return kScroll_d164;
+    case 0xd198: return kScroll_d198;
+    case 0xd1d0: return kScroll_d1d0;
+    case 0xd20a: return kScroll_d20a;
+    case 0xd24b: return kScroll_d24b;
+    case 0xd27d: return kScroll_d27d;
+    case 0xd2a9: return kScroll_d2a9;
+    case 0xd2d3: return kScroll_d2d3;
+    case 0xd304: return kScroll_d304;
+    case 0xd33a: return kScroll_d33a;
+    case 0xd36f: return kScroll_d36f;
+    case 0xd3b2: return kScroll_d3b2;
+    case 0xd460: return kScroll_d460;
+    case 0xd4bb: return kScroll_d4bb;
+    case 0xd51a: return kScroll_d51a;
+    case 0xd549: return kScroll_d549;
+    case 0xd578: return kScroll_d578;
+    case 0xd5a5: return kScroll_d5a5;
+    case 0xd5da: return kScroll_d5da;
+    case 0xd642: return kScroll_d642;
+    case 0xd675: return kScroll_d675;
+    case 0xd6c5: return kScroll_d6c5;
+    case 0xd6f9: return kScroll_d6f9;
+    case 0xd726: return kScroll_d726;
+    case 0xd757: return kScroll_d757;
+    case 0xd78e: return kScroll_d78e;
+    case 0xd7d9: return kScroll_d7d9;
+    case 0xd813: return kScroll_d813;
+    case 0xd897: return kScroll_d897;
+    case 0xd8c3: return kScroll_d8c3;
+    case 0xd90f: return kScroll_d90f;
+    case 0xd942: return kScroll_d942;
+    case 0xd9a8: return kScroll_d9a8;
+    case 0xd9d3: return kScroll_d9d3;
+    case 0xd9fd: return kScroll_d9fd;
+    case 0xda29: return kScroll_da29;
+    case 0xda56: return kScroll_da56;
+    case 0xdaaa: return kScroll_daaa;
+    case 0xdadd: return kScroll_dadd;
+    case 0xdb2b: return kScroll_db2b;
+    case 0xdb7b: return kScroll_db7b;
+    case 0xdbc7: return kScroll_dbc7;
+    case 0xdc17: return kScroll_dc17;
+    case 0xdc63: return kScroll_dc63;
+    case 0xdcaf: return kScroll_dcaf;
+    case 0xdcfb: return kScroll_dcfb;
+    case 0xdd2c: return kScroll_dd2c;
+    case 0xdd57: return kScroll_dd57;
+    case 0xddc0: return kScroll_ddc0;
+    case 0xddef: return kScroll_ddef;
+    case 0xde20: return kScroll_de20;
+    case 0xde4c: return kScroll_de4c;
+    case 0xde78: return kScroll_de78;
+    case 0xdea5: return kScroll_dea5;
+    case 0xded2: return kScroll_ded2;
+    case 0xdf09: return kScroll_df09;
+    case 0xdf44: return kScroll_df44;
+    default: Unreachable(); return (uint8*){ 0 };
+  }
+}
+
+
+static XraySpecialCasing kXraySpecialCasing_986b[] = {
+  [0] = { .x_block = 15, .y_block = 10, .level_data_block = 0x52  , },
+  [1] = { .x_block = 15, .y_block = 11, .level_data_block = 0x52  , },
+  [2] = { .x_block = 15, .y_block = 12, .level_data_block = 0x52  , },
+  [3] = { .x_block =  0, .y_block =  0, },
+};
+
+XraySpecialCasing* get_XraySpecialCasing(uint16 xray_special_casing_ptr) {
+  switch (xray_special_casing_ptr) {
+    case 0x986b: return kXraySpecialCasing_986b;
+    default: Unreachable(); return (XraySpecialCasing*){ 0 };
   }
 }

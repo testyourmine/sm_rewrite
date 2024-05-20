@@ -1462,7 +1462,7 @@ const uint16 *Shaktool_Instr_14(uint16 k, const uint16 *jp) {  // 0xAAE6F0
   *(uint16 *)&scrolls[8] = kScroll_Red;
   *(uint16 *)&scrolls[9] = kScroll_Red;
   *(uint16 *)&scrolls[13] = kScroll_Blue;
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x17, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 23, .y_pos = 29, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
   return jp;
 }
 
@@ -1491,8 +1491,8 @@ void ChozoStatue_Init(void) {  // 0xAAE725
       target_palettes.sprite_pal_2[v3] = kChozoStatue_Palettes[v3];
       target_palettes.sprite_pal_1[v3] = kChozoStatue_Palette[v3];
     }
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x4a, .y_pos = 0x17, .plm_id_ = addr_kPlmHeader_D6EE_WreckedShip_ChozoHand });
-    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x17, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 74, .y_pos = 23, .plm_id_ = addr_kPlmHeader_D6EE_WreckedShip_ChozoHand });
+    SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 23, .y_pos = 29, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
   }
 }
 
@@ -1502,7 +1502,7 @@ void sub_AAE784(void) {  // 0xAAE784
     target_palettes.sprite_pal_2[v1] = kChozoStatue_Palettes3[v1];
     target_palettes.sprite_pal_1[v1] = kChozoStatue_Palettes2[v1];
   }
-  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0x0c, .y_pos = 0x1d, .plm_id_ = addr_kPlmHeader_D6D6_LowerNorfair_ChozoHand });
+  SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 12, .y_pos = 29, .plm_id_ = addr_kPlmHeader_D6D6_LowerNorfair_ChozoHand });
 }
 
 void ChozoStatue_Main(void) {  // 0xAAE7A7

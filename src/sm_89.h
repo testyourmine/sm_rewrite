@@ -1,8 +1,19 @@
 #pragma once
 
-//#define kPaletteBlends ((uint16*)RomFixedPtr(0x89aa02))
+// Clockwise
+#define ROTATE_CW 0
+// Counterclockwise
+#define ROTATE_CCW 0x8000
 
-uint16 kPaletteBlends[] = {
+extern uint16 kFxTypeTilemapPtrs[23];  // 0x83ABF0
+
+extern Func_V* const kFxTypeFuncPtrs[23];  // 0x83AC18
+
+extern uint16 kAreaPalFxLists[8][8];  // 0x83AC46
+
+extern uint16 kAreaAnimtilesLists[8][8];  // 0x83AC56
+
+static uint16 kPaletteBlends[] = {  // 0x89AA02
 	   0x0,  0xe3f,  0xd7f,    0x0, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0, 
 	0x3800, 0x314a, 0x20c6,  0x820, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0, 
 	0x3800,  0x400, 0x1c63,    0x0, 0x28e3, 0x1c60,    0x0, 0x2485, 0x3d88,    0x0,  0x880,  0x420,    0x0, 0x28e3, 0x1c60,    0x0, 
@@ -13,110 +24,74 @@ uint16 kPaletteBlends[] = {
 	0x3800,  0x400, 0x18a2,    0x0,   0x20,  0xc62,    0x0,  0x400, 0x1c45,    0x0, 0x6318, 0x6318,    0x0, 0x6318, 0x6318,    0x0,
 };
 
-//#define kFxTypeTilemapPtrs ((uint16*)RomFixedPtr(0x83abf0))
-uint16 kFxTypeTilemapPtrs[] = {
-     0x0, 0x8000, 0x8840, 0x9080, 0x98c0, 0xa100, 0xa940,    0x0,    0x0,    0x0,
-     0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0,    0x0, 0x9080,
-  0xb278, 0xb279, 0xb2a1,
+static RotationMatrix kCeresElevatorShaftMode7TransformationMatrix[69] = {  // 0x89AD5F
+  [0]  = { .timer = 60, .sin_t = -34, .cos_t = 254 },
+  [1]  = { .timer = 26, .sin_t = -33, .cos_t = 254 },
+  [2]  = { .timer = 24, .sin_t = -32, .cos_t = 254 },
+  [3]  = { .timer = 22, .sin_t = -31, .cos_t = 254 },
+  [4]  = { .timer = 20, .sin_t = -30, .cos_t = 254 },
+  [5]  = { .timer = 18, .sin_t = -29, .cos_t = 254 },
+  [6]  = { .timer = 16, .sin_t = -28, .cos_t = 254 },
+  [7]  = { .timer = 14, .sin_t = -27, .cos_t = 255 },
+  [8]  = { .timer = 12, .sin_t = -26, .cos_t = 255 },
+  [9]  = { .timer = 11, .sin_t = -25, .cos_t = 255 },
+  [10] = { .timer = 10, .sin_t = -24, .cos_t = 255 },
+  [11] = { .timer =  9, .sin_t = -23, .cos_t = 255 },
+  [12] = { .timer =  8, .sin_t = -22, .cos_t = 255 },
+  [13] = { .timer =  7, .sin_t = -21, .cos_t = 255 },
+  [14] = { .timer =  7, .sin_t = -20, .cos_t = 255 },
+  [15] = { .timer =  6, .sin_t = -19, .cos_t = 255 },
+  [16] = { .timer =  6, .sin_t = -18, .cos_t = 255 },
+  [17] = { .timer =  5, .sin_t = -17, .cos_t = 255 },
+  [18] = { .timer =  5, .sin_t = -16, .cos_t = 256 },
+  [19] = { .timer =  4, .sin_t = -15, .cos_t = 256 },
+  [20] = { .timer =  4, .sin_t = -14, .cos_t = 256 },
+  [21] = { .timer =  4, .sin_t = -13, .cos_t = 256 },
+  [22] = { .timer =  3, .sin_t = -12, .cos_t = 256 },
+  [23] = { .timer =  3, .sin_t = -11, .cos_t = 256 },
+  [24] = { .timer =  3, .sin_t = -10, .cos_t = 256 },
+  [25] = { .timer =  3, .sin_t =  -9, .cos_t = 256 },
+  [26] = { .timer =  2, .sin_t =  -8, .cos_t = 256 },
+  [27] = { .timer =  2, .sin_t =  -7, .cos_t = 256 },
+  [28] = { .timer =  2, .sin_t =  -6, .cos_t = 256 },
+  [29] = { .timer =  2, .sin_t =  -5, .cos_t = 256 },
+  [30] = { .timer =  1, .sin_t =  -4, .cos_t = 256 },
+  [31] = { .timer =  1, .sin_t =  -3, .cos_t = 256 },
+  [32] = { .timer =  1, .sin_t =  -2, .cos_t = 256 },
+  [33] = { .timer =  1, .sin_t =  -1, .cos_t = 256 },
+  [34] = { .timer =  1, .sin_t =   0, .cos_t = 256 },
+  [35] = { .timer =  1, .sin_t =   1, .cos_t = 256 },
+  [36] = { .timer =  1, .sin_t =   2, .cos_t = 256 },
+  [37] = { .timer =  1, .sin_t =   3, .cos_t = 256 },
+  [38] = { .timer =  1, .sin_t =   4, .cos_t = 256 },
+  [39] = { .timer =  2, .sin_t =   5, .cos_t = 256 },
+  [40] = { .timer =  2, .sin_t =   6, .cos_t = 256 },
+  [41] = { .timer =  2, .sin_t =   7, .cos_t = 256 },
+  [42] = { .timer =  2, .sin_t =   8, .cos_t = 256 },
+  [43] = { .timer =  3, .sin_t =   9, .cos_t = 256 },
+  [44] = { .timer =  3, .sin_t =  10, .cos_t = 256 },
+  [45] = { .timer =  3, .sin_t =  11, .cos_t = 256 },
+  [46] = { .timer =  3, .sin_t =  12, .cos_t = 256 },
+  [47] = { .timer =  4, .sin_t =  13, .cos_t = 256 },
+  [48] = { .timer =  4, .sin_t =  14, .cos_t = 256 },
+  [49] = { .timer =  4, .sin_t =  15, .cos_t = 256 },
+  [50] = { .timer =  5, .sin_t =  16, .cos_t = 256 },
+  [51] = { .timer =  5, .sin_t =  17, .cos_t = 255 },
+  [52] = { .timer =  6, .sin_t =  18, .cos_t = 255 },
+  [53] = { .timer =  6, .sin_t =  19, .cos_t = 255 },
+  [54] = { .timer =  7, .sin_t =  20, .cos_t = 255 },
+  [55] = { .timer =  7, .sin_t =  21, .cos_t = 255 },
+  [56] = { .timer =  8, .sin_t =  22, .cos_t = 255 },
+  [57] = { .timer =  9, .sin_t =  23, .cos_t = 255 },
+  [58] = { .timer = 10, .sin_t =  24, .cos_t = 255 },
+  [59] = { .timer = 11, .sin_t =  25, .cos_t = 255 },
+  [60] = { .timer = 12, .sin_t =  26, .cos_t = 255 },
+  [61] = { .timer = 14, .sin_t =  27, .cos_t = 255 },
+  [62] = { .timer = 16, .sin_t =  28, .cos_t = 254 },
+  [63] = { .timer = 18, .sin_t =  29, .cos_t = 254 },
+  [64] = { .timer = 20, .sin_t =  30, .cos_t = 254 },
+  [65] = { .timer = 22, .sin_t =  31, .cos_t = 254 },
+  [66] = { .timer = 24, .sin_t =  32, .cos_t = 254 },
+  [67] = { .timer = 26, .sin_t =  33, .cos_t = 254 },
+  [68] = { .timer = 60, .sin_t =  34, .cos_t = 254 },
 };
-
-//#define kAreaPalFxListPointers ((uint16*)RomFixedPtr(0x83ac46))
-
-uint16 kAreaPalFxListPointers[] = {
-  [kArea_0_Crateria] = 0xac66,
-  [kArea_1_Brinstar] = 0xac86,
-  [kArea_2_Norfair] = 0xaca6,
-  [kArea_3_WreckedShip] = 0xacc6,
-  [kArea_4_Maridia] = 0xace6,
-  [kArea_5_Tourian] = 0xad06,
-  [kArea_6_Ceres] = 0xad26,
-  [kArea_7_Debug] = 0xad46,
-};
-
-//#define kAreaAnimtilesListPtrs ((uint16*)RomFixedPtr(0x83ac56))
-
-uint16 kAreaAnimtilesListPtrs[8][8] ={
-  [kArea_0_Crateria] =    { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_CrateriaLake, addr_kAnimTiles_CrateriaLava_Unused1, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_1_Brinstar] =    { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_BrinstarMouth, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_2_Norfair] =     { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_3_WreckedShip] = { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimtiles_WreckedShipTreadmillRight, addr_kAnimtiles_WreckedShipTreadmillLeft, addr_kAnimTiles_WreckedShipScreen, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_4_Maridia] =     { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_MaridiaSandCeiling, addr_kAnimTiles_MaridiaSandFalling, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_5_Tourian] =     { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_6_Ceres] =       { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-  [kArea_7_Debug] =       { addr_kAnimTiles_HorizontalSpikes, addr_kAnimTiles_VerticalSpikes, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, addr_kAnimTiles_Nothing, },
-};
-
-//#define kCereElevatorShaftMode7TransformationMatrix ((uint16*)RomFixedPtr(0x89ad5f))
-
-uint16 kCereElevatorShaftMode7TransformationMatrix[] = {
-	  0x3c,0xffde,  0xfe,
-	  0x1a,0xffdf,  0xfe,
-	  0x18,0xffe0,  0xfe,
-	  0x16,0xffe1,  0xfe,
-	  0x14,0xffe2,  0xfe,
-	  0x12,0xffe3,  0xfe,
-	  0x10,0xffe4,  0xfe,
-	   0xe,0xffe5,  0xff,
-	   0xc,0xffe6,  0xff,
-	   0xb,0xffe7,  0xff,
-	   0xa,0xffe8,  0xff,
-	   0x9,0xffe9,  0xff,
-	   0x8,0xffea,  0xff,
-	   0x7,0xffeb,  0xff,
-	   0x7,0xffec,  0xff,
-	   0x6,0xffed,  0xff,
-	   0x6,0xffee,  0xff,
-	   0x5,0xffef,  0xff,
-	   0x5,0xfff0, 0x100,
-	   0x4,0xfff1, 0x100,
-	   0x4,0xfff2, 0x100,
-	   0x4,0xfff3, 0x100,
-	   0x3,0xfff4, 0x100,
-	   0x3,0xfff5, 0x100,
-	   0x3,0xfff6, 0x100,
-	   0x3,0xfff7, 0x100,
-	   0x2,0xfff8, 0x100,
-	   0x2,0xfff9, 0x100,
-	   0x2,0xfffa, 0x100,
-	   0x2,0xfffb, 0x100,
-	   0x1,0xfffc, 0x100,
-	   0x1,0xfffd, 0x100,
-	   0x1,0xfffe, 0x100,
-	   0x1,0xffff, 0x100,
-	   0x1,   0x0, 0x100,
-	   0x1,   0x1, 0x100,
-	   0x1,   0x2, 0x100,
-	   0x1,   0x3, 0x100,
-	   0x1,   0x4, 0x100,
-	   0x2,   0x5, 0x100,
-	   0x2,   0x6, 0x100,
-	   0x2,   0x7, 0x100,
-	   0x2,   0x8, 0x100,
-	   0x3,   0x9, 0x100,
-	   0x3,   0xa, 0x100,
-	   0x3,   0xb, 0x100,
-	   0x3,   0xc, 0x100,
-	   0x4,   0xd, 0x100,
-	   0x4,   0xe, 0x100,
-	   0x4,   0xf, 0x100,
-	   0x5,  0x10, 0x100,
-	   0x5,  0x11,  0xff,
-	   0x6,  0x12,  0xff,
-	   0x6,  0x13,  0xff,
-	   0x7,  0x14,  0xff,
-	   0x7,  0x15,  0xff,
-	   0x8,  0x16,  0xff,
-	   0x9,  0x17,  0xff,
-	   0xa,  0x18,  0xff,
-	   0xb,  0x19,  0xff,
-	   0xc,  0x1a,  0xff,
-	   0xe,  0x1b,  0xff,
-	  0x10,  0x1c,  0xfe,
-	  0x12,  0x1d,  0xfe,
-	  0x14,  0x1e,  0xfe,
-	  0x16,  0x1f,  0xfe,
-	  0x18,  0x20,  0xfe,
-	  0x1a,  0x21,  0xfe,
-	  0x3c,  0x22,  0xfe,
-};
-

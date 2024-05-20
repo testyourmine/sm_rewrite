@@ -3799,7 +3799,7 @@ CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
   target_palettes.bg3_pal_4[2] = palette_buffer.bg3_pal_4[2];
   target_palettes.bg3_pal_4[3] = palette_buffer.bg3_pal_4[3];
   target_palettes.bg3_pal_7[1] = palette_buffer.bg3_pal_7[1];
-  if (((previous_cre_bitset | cre_bitset) & 1) == 0) {
+  if (!((previous_cre_bitset | cre_bitset) & kCreBitset_1_DisableBg1)) {
     target_palettes.bg3_pal_5[0] = palette_buffer.bg3_pal_5[0];
     target_palettes.bg3_pal_5[1] = palette_buffer.bg3_pal_5[1];
     target_palettes.bg3_pal_5[2] = palette_buffer.bg3_pal_5[2];
@@ -3857,7 +3857,7 @@ CoroutineRet DoorTransitionFunction_LoadDoorHeaderEtc(void) {  // 0x82E2F7
   LoadDoorHeader();
   DeleteHdmaObjects();
   hdma_objects_enable_flag &= ~0x8000;
-  irqhandler_next_handler = 8;
+  irqhandler_next_handler = kInterruptCommand_8_StartOfDoor_BeginHud;
   door_transition_function = FUNC16(DoorTransitionFunction_ScrollScreenToAlignment);
   return kCoroutineNone;
 }
@@ -3917,7 +3917,7 @@ CoroutineRet DoorTransitionFunction_SetupScrolling(void) {  // 0x82E38E
 }
 
 CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
-  uint16 v0;
+  uint16 next_irq_handler;
 
   samus_x_pos = layer1_x_pos + (uint8)samus_x_pos;
   samus_prev_x_pos = samus_x_pos;
@@ -3925,26 +3925,24 @@ CoroutineRet DoorTransitionFunction_PlaceSamusLoadTiles(void) {  // 0x82E3C0
   samus_prev_y_pos = samus_y_pos;
   door_transition_flag = 0;
   if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Down)
-    v0 = 16;
+    next_irq_handler = kInterruptCommand_16_VerticalDoor_BeginHud;
   else
-    v0 = 22;
-  irqhandler_next_handler = v0;
+    next_irq_handler = kInterruptCommand_22_HorizDoor_BeginHud;
+  irqhandler_next_handler = next_irq_handler;
   WaitUntilEndOfVblankAndEnableIrq();
-  if ((cre_bitset & 2) != 0 && door_def_ptr != addr_kDoorDef_PostCrocoShaft_DoorListIndex0) {
+  if ((cre_bitset & kCreBitset_2_ReloadCre) && door_def_ptr != addr_kDoorDef_PostCrocoShaft_DoorListIndex0) {
     DecompressToMem(0xb98000, g_ram + 0x7000);
   }
-  DecompressToMem(Load24(&tileset_tiles_pointer), g_ram + 0x2000);
+  DecompressToMem(Load24(&tileset_tiles_pointer), (uint8*)tilemap_stuff);
   DecompressToMem(Load24(&tileset_compr_palette_ptr), (uint8*)&target_palettes);
-  CopyToVramNow(0x0000, 0x7e2000, 0x2000);
-  CopyToVramNow(0x1000, 0x7e4000, 0x2000);
-  CopyToVramNow(0x2000, 0x7e6000, 0x1000);
-  if ((cre_bitset & 6) != 0 && door_def_ptr != addr_kDoorDef_PostCrocoShaft_DoorListIndex0) {
-    CopyToVramNow(0x2800, 0x7e7000, 0x1000);
-    CopyToVramNow(0x3000, 0x7e8000, 0x2000);
+  CopyToVram(0x0000, tilemap_stuff, 0x5000, 1);
+  if ((cre_bitset & (kCreBitset_2_ReloadCre|kCreBitset_4_LargeTileset))
+      && door_def_ptr != addr_kDoorDef_PostCrocoShaft_DoorListIndex0) {
+    CopyToVram(0x2800, g_ram+0x7000, 0x3000, 1);
     CopyToVramNow(0x4000, 0x9ab200, 0x1000);
   }
   if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Up)
-    irqhandler_next_handler = 16;
+    irqhandler_next_handler = kInterruptCommand_16_VerticalDoor_BeginHud;
   door_transition_function = FUNC16(DoorTransitionFunction_LoadMoreThings_Async);
   return kCoroutineNone;
 }
@@ -3960,7 +3958,7 @@ static Func_Y_Y *const kUpdateBackgroundCommands[8] = {
   UpdateBackgroundCommand_E_DoorDependentTransferToVRAM,
 };
 
-CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
+CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {  // 0x82E4A9
   uint16 bg_data_ptr;
 
   COROUTINE_BEGIN(coroutine_state_1, 0);
@@ -3991,7 +3989,7 @@ CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
     } while (bg_data_ptr);
   }
   // Wait until the screen has finished scrolling as a result of the door opening
-  while ((door_transition_flag & 0x8000) == 0) {
+  while (!(door_transition_flag & 0x8000)) {
     COROUTINE_AWAIT(1, WaitForNMI_Async());
   }
   palette_buffer.sprite_pal_4[4] = 15328;
@@ -3999,9 +3997,9 @@ CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
   hdma_objects_enable_flag |= 0x8000;
   COROUTINE_AWAIT(2, PlmHandler_Async());
 
-  if ((door_direction & kDoorDirection_VerticalMask) == 0) {
-    if ((door_direction & kDoorDirection_Up) != 0)
-      samus_x_pos &= 0xFFF8;
+  if (!(door_direction & kDoorDirection_VerticalMask)) {
+    if ((door_direction & kDoorDirection_DirectionMask) == kDoorDirection_Left)
+      samus_x_pos &= ~7;
     else
       samus_x_pos |= 7;
   }
@@ -4010,28 +4008,19 @@ CoroutineRet DoorTransitionFunction_LoadMoreThings_Async(void) {
 }
 
 void ClearFxTilemap(void) {  // 0x82E566
-  for (int i = 959; i >= 0; --i) {
-    ram4000.xray_tilemaps[i] = 6222;
-    ram4000.xray_tilemaps[i + 960] = 6222;
-  }
-  CopyToVramNow(0x5880, 0x7e4000, 0xf00);
+  memset7E(ram4000.fx_cleared_tilemap, 0x184E, sizeof(ram4000.fx_cleared_tilemap));
+  CopyToVram(addr_kVram_FxBackup, g_ram+0x4000, sizeof(ram4000.fx_cleared_tilemap), 1);
 }
 
 void ClearBg2Tilemap(void) {  // 0x82E583
-  for (int i = 1023; i >= 0; --i) {
-    ram4000.xray_tilemaps[i] = 824;
-    ram4000.xray_tilemaps[i + 1024] = 824;
-  }
-  CopyToVramNow(0x4800, 0x7e4000, 0x1000);
+  memset7E(ram4000.bg2_tilemap, 0x338, sizeof(ram4000.bg2_tilemap));
+  CopyToVram(0x4800, g_ram+0x4000, sizeof(ram4000.bg2_tilemap), 1);
 }
 
 void ClearKraidBg2Tilemap(void) {  // 0x82E5A0
-  for (int i = 1023; i >= 0; --i) {
-    ram4000.xray_tilemaps[i] = 824;
-    ram4000.xray_tilemaps[i + 1024] = 824;
-  }
-  CopyToVramNow(0x4000, 0x7e4000, 0x1000);
-  CopyToVramNow(0x4800, 0x7e4000, 0x1000);
+  memset7E(ram4000.bg2_tilemap, 0x338, sizeof(ram4000.bg2_tilemap));
+  CopyToVram(0x4000, g_ram+0x4000, 0x1000, 1);
+  CopyToVram(0x4800, g_ram+0x4000, 0x1000, 1);
 }
 
 uint16 UpdateBackgroundCommand_0_Finish(uint16 y) {  // 0x82E5D7
@@ -4104,10 +4093,10 @@ CoroutineRet DoorTransitionFunction_HandleTransition(void) {  // 0x82E6A2
     *(uint16 *)&mother_brain_indirect_hdma[i] = 0;
     *(uint16 *)(&hdma_window_1_left_pos[0].height + i) = 0;
   }
-  uint16 v1 = room_loading_irq_handler;
+  uint16 next_irq_handler = room_loading_irq_handler;
   if (!room_loading_irq_handler)
-    v1 = 4;
-  irqhandler_next_handler = v1;
+    next_irq_handler = kInterruptCommand_4_Main_BeginHudDraw;
+  irqhandler_next_handler = next_irq_handler;
   PointlessFunctionStupidToo();
   if (elevator_properties) {
     if ((elevator_direction & kElevatorDirection_Up) == 0)
@@ -4159,7 +4148,6 @@ void LoadCRETilesTilesetTilesAndPalette(void) {  // 0x82E783
 
 void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
   int16 rdf_scroll_ptr;
-  uint16 m;
   int8 v10;
   int8 v11;
   uint16 n;
@@ -4196,11 +4184,11 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
       } while (v11 != (uint8)room_width_in_scrolls);
       v10++;
     } while (v10 != (uint8)room_height_in_scrolls);
-  } else {
-    for (m = 0; m != 50; m += 2) {
-      *(uint16 *)&scrolls[m] = *(uint16 *)RomPtr_8F(rdf_scroll_ptr);
-      rdf_scroll_ptr += 2;
-    }
+  }
+  else {
+    // 50 scrolls are always read, regardless of room size
+    uint8* room_scrolls = get_Scrolls(rdf_scroll_ptr);
+    MemCpy(scrolls, room_scrolls, 50);
   }
   if (RD.room_plm_header_ptr) {
     for (n = RD.room_plm_header_ptr; get_RoomPlmEntry(n)->plm_header_ptr_ != 0; n += 6)
@@ -4337,7 +4325,6 @@ uint16 LoadLibraryBackgroundFunc_8_TransferToVramAndSetBg3(uint16 j) {  // 0x82E
 
 void LoadLevelScrollAndCre(void) {  // 0x82EA73
   int16 rdf_scroll_ptr;
-  uint16 m;
   int8 v10;
   int8 v11;
   int8 v12;
@@ -4348,19 +4335,20 @@ void LoadLevelScrollAndCre(void) {  // 0x82EA73
     level_data[(i >> 1) + 3200 * 2] = 0x8000;
     level_data[(i >> 1) + 3200 * 3] = 0x8000;
   }
-  DecompressToMem(Load24(&room_level_data_ptr), (uint8 *)&ram7F_start);
+  DecompressToMem(Load24(&room_level_data_ptr), (uint8*)&ram7F_start);
 
   uint16 size = ram7F_start;
   memcpy(custom_background, (uint8*)level_data + size + (size >> 1), size);
   memcpy(BTS, (uint8 *)level_data + size, size >> 1);
 
   if (area_index == kArea_6_Ceres) {
-    DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa000);
-  } else {
-    if ((cre_bitset & 2) != 0) {
-      DecompressToMem(0xb9a09d, g_ram + 0xa000);
+    DecompressToMem(Load24(&tileset_tile_table_pointer), (uint8*)&tile_table);
+  }
+  else {
+    if (cre_bitset & kCreBitset_2_ReloadCre) {
+      DecompressToMem(0xb9a09d, (uint8*)&tile_table);
     }
-    DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa800);
+    DecompressToMem(Load24(&tileset_tile_table_pointer), (uint8*)&tile_table + 0x800);
   }
   RoomDefRoomstate RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
   rdf_scroll_ptr = RD.rdf_scroll_ptr;
@@ -4381,11 +4369,11 @@ void LoadLevelScrollAndCre(void) {  // 0x82EA73
       } while (v11 != (uint8)room_width_in_scrolls);
       v10 = v12 + 1;
     } while (v12 + 1 != (uint8)room_height_in_scrolls);
-  } else {
-    for (m = 0; m != 50; m += 2) {
-      *(uint16 *)&scrolls[m] = *(uint16 *)RomPtr_8F(rdf_scroll_ptr);
-      rdf_scroll_ptr += 2;
-    }
+  }
+  else {
+    // 50 scrolls are always read, regardless of room size
+    uint8* room_scrolls = get_Scrolls(rdf_scroll_ptr);
+    MemCpy(scrolls, room_scrolls, 50);
   }
 }
 
