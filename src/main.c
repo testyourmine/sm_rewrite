@@ -21,6 +21,7 @@
 #include "config.h"
 #include "util.h"
 #include "spc_player.h"
+#include "rtk2/rtk2_sav_test.h"
 
 #ifdef __SWITCH__
 #include "switch_impl.h"
@@ -451,6 +452,8 @@ int main(int argc, char** argv) {
   bool has_bug_in_title = false;
 
   while (running) {
+    Rtk2_Rtl_Rtk2SaveTestRunner_StateMachine_Run();
+
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
@@ -645,6 +648,7 @@ static void HandleCommand(uint32 j, bool pressed) {
     RtlSaveLoad(kSaveLoad_Replay, 256 + j - kKeys_ReplayRef);
   } else {
     switch (j) {
+    case kKeys_SavTests: Rtk2SavTestRunner_Start(&g_sav_test_runner); break;
     case kKeys_CheatLife: RtlCheat('w'); break;
     case kKeys_CheatJump: RtlCheat('q'); break;
     case kKeys_ToggleWhichFrame:

@@ -6,6 +6,7 @@
 #include "funcs.h"
 #include "spc_player.h"
 #include "util.h"
+#include "rtk2/rtk2_sav_test.h"
 
 struct StateRecorder;
 
@@ -489,6 +490,52 @@ void RtlSaveLoad(int cmd, int slot) {
     RtlSaveSnapshot(name, false);
   }
 }
+
+void Rtk2_Rtl_Rtk2SaveTestRunner_StateMachine_Run()
+{
+    // added bcuz state_recorder is private
+    Rtk2SavTestRunner_StateMachine_Run(&g_sav_test_runner, state_recorder.replay_mode);
+}
+
+void Rtk2_RtlSaveLoad_ByName(int cmd, const char* filename) {
+    //carbon copy of RtlSaveLoad... I'm just to scared to refactor them at this point :D
+    char name[128];
+    sprintf(name, "saves/%s.sav", filename);
+
+    printf("*** %s filename %s\n", cmd == kSaveLoad_Save ? "Saving" : cmd == kSaveLoad_Load ? "Loading" : "Replaying", filename);
+    if (cmd != kSaveLoad_Save) {
+
+        FILE* f = fopen(name, "rb");
+        if (f == NULL) {
+            printf("Failed fopen: %s\n", name);
+            return;
+        }
+        RtlApuLock();
+        StateRecorder_Load(&state_recorder, f, cmd == kSaveLoad_Replay);
+        ppu_copy(g_snes->my_ppu, g_snes->ppu);
+        RtlApuUnlock();
+        RtlSynchronizeWholeState();
+        fclose(f);
+
+        if (coroutine_state_0 | coroutine_state_1 | coroutine_state_2 | coroutine_state_3 | coroutine_state_4) {
+            printf("Coroutine state: %d, %d, %d, %d, %d\n",
+                coroutine_state_0, coroutine_state_1, coroutine_state_2, coroutine_state_3, coroutine_state_4);
+        }
+
+        // Earlier versions used coroutine_state_0 differently
+        if (coroutine_state_0 == 4)
+            coroutine_state_0 = 10 + game_state;
+
+        // bug_fix_counter_BAD didn't actually belong to free ram...
+        if (bug_fix_counter == 0)
+            bug_fix_counter = bug_fix_counter_BAD;
+
+    }
+    else {
+        RtlSaveSnapshot(name, false);
+    }
+}
+
 
 /**
 * @brief Copies size bytes from the source to the destination
