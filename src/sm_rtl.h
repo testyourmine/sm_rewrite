@@ -108,6 +108,9 @@ enum {
 };
 
 void RtlSaveLoad(int cmd, int slot);
+
+void Rtk2_Rtl_Rtk2SaveTestRunner_StateMachine_Run();
+void Rtk2_RtlSaveLoad_ByName(int cmd, const char* filename);
 void RtlCheat(char c);
 void RtlApuLock();
 void RtlApuUnlock();

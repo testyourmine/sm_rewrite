@@ -152,6 +152,8 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="opengl.c" />
     <ClCompile Include="platform\win32\volume_control.c" />
+    <ClCompile Include="rtk2\rtk2_globals.c" />
+    <ClCompile Include="rtk2\rtk2_sav_test.c" />
     <ClCompile Include="sm_80.c" />
     <ClCompile Include="sm_81.c" />
     <ClCompile Include="sm_82.c" />
@@ -239,6 +241,8 @@
     <ClInclude Include="glsl_shader.h" />
     <ClInclude Include="ida_types.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="rtk2\rtk2_globals.h" />
+    <ClInclude Include="rtk2\rtk2_sav_test.h" />
     <ClInclude Include="sm_80.h" />
     <ClInclude Include="sm_81.h" />
     <ClInclude Include="sm_82.h" />

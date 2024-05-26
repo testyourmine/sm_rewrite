@@ -2,7 +2,9 @@
 *.dSYM
 /.vs/
 /packages/
-/saves/
+/saves/*
+!/saves/SAV_TESTS/
+!/saves/testyourmine's/
 *.o
 /sm
 /build/
