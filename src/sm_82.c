@@ -5029,28 +5029,26 @@ void OptionsMenuFunc6_DrawControllerBindings(void) {
   }
 }
 
+
 void OptionsMenuControllerFunc_SetBinding(void) {  // 0x82F6B9
-  uint16 v0 = 12;
-  while ((kControllerInputMasks[v0 >> 1] & joypad1_newkeys) == 0) {
-    v0 -= 2;
-    if ((v0 & 0x8000) != 0)
-      return;
-  }
-  uint16 r18 = v0 >> 1;
-  uint16 v1 = 2 * menu_option_index + 2;
-  if (!sign16(2 * menu_option_index - 12))
-    v1 = 0;
-  uint16 v2 = v1;
-  for (int i = 5; i >= 0; --i) {
-    if (eproj_F[(v2 >> 1) + 13] == r18)
-      break;
-    v2 += 2;
-    if ((int16)(v2 - 14) >= 0)
-      v2 = 0;
-  }
-  int v4 = menu_option_index;
-  uint16 r20 = eproj_F[v4 + 13];
-  eproj_F[v4 + 13] = r18;
-  eproj_F[(v2 >> 1) + 13] = r20;
-  OptionsMenuFunc6_DrawControllerBindings();
+    // Get the new button pressed, excluding the left and right dpad
+
+    const int16 MAX_INPUT_MASK_INDEX = 6;
+    int16 mask_index = MAX_INPUT_MASK_INDEX;
+    while ((kControllerInputMasks[mask_index] & joypad1_newkeys) == 0) {
+        --mask_index;
+        if (mask_index < 0) return;
+    }
+
+    uint16 new_binding = mask_index;
+    uint16 next_option_down = (menu_option_index + 1) % 7;
+
+    for (int i = 5; i >= 0; --i) {
+        if (optionsmenu_input_bindings[next_option_down] == new_binding) break;
+        next_option_down = (next_option_down + 1) % 7;
+    }
+
+    optionsmenu_input_bindings[next_option_down] = optionsmenu_input_bindings[menu_option_index];
+    optionsmenu_input_bindings[menu_option_index] = new_binding;
+    OptionsMenuFunc6_DrawControllerBindings();
 }
