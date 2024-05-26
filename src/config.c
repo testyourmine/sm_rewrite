@@ -61,6 +61,7 @@ static const KeyNameId kKeyNameId[] = {
   S(CheatLife), S(CheatJump), S(ToggleWhichFrame),
   S(ClearKeyLog), S(StopReplay), S(Fullscreen), S(Reset),
   S(Pause), S(PauseDimmed), S(Turbo), S(ReplayTurbo), S(WindowBigger), S(WindowSmaller), S(VolumeUp), S(VolumeDown), S(DisplayPerf), S(ToggleRenderer),
+  S(SavTests)
 };
 #undef S
 #undef M

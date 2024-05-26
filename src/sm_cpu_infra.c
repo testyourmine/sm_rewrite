@@ -11,6 +11,8 @@
 #include "enemy_types.h"
 #include <time.h>
 
+#include "rtk2/rtk2_sav_test.h"
+
 void RtlRunFrameCompare(uint16 input, int run_what);
 
 enum RunMode { RM_BOTH, RM_MINE, RM_THEIRS };
@@ -990,6 +992,8 @@ again_theirs:
 
   // Compare both snapshots
   VerifySnapshotsEq(&g_snapshot_mine, &g_snapshot_theirs, &g_snapshot_before);
+
+  Rtk2SavTestRunner_ResolveSnapshotFail(&g_sav_test_runner, g_fail);
 
   if (g_fail) {
     g_fail = false;
