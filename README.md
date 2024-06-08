@@ -1,6 +1,6 @@
 # sm
 
-The building instructions are the same as the original port. For more information about the original port, see: https://github.com/snesrev/sm.
+For build instructions see [BUILDING](./BUILDING.md). For more information about the original port, see: https://github.com/snesrev/sm.
 
 This is a fork of the Super Metroid PC Port meant to continue the work and add more features. There are various goals intended for this project, including:
 1. Giving all functions and variables proper names. (work has been made on functions, but not on variables as of yet)
@@ -12,6 +12,6 @@ The fork is still very early in development and there is much to be done. Outsid
 Any contributions, even as simple as giving a function or a variable a proper name, is welcome. The bank logs are a great resource for this: https://patrickjohnston.org/bank/.
 
 Note about Port_Extraction folder:
-Port_Extraction is currently a scratchpad to manually extract assets from the rom and insert them into the port. 
+Port_Extraction is currently a scratchpad to manually extract assets from the rom and insert them into the port.
 In the long run, this will be used to automatically extract all necessary assets from the game.
 
