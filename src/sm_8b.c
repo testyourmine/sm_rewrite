@@ -1,4 +1,6 @@
 // Non gameplay routines
+#include <string.h>
+
 #include "sm_rtl.h"
 #include "ida_types.h"
 #include "funcs.h"

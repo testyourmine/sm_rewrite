@@ -1,5 +1,10 @@
 #pragma once
 
+#include "funcs.h"
+#include "ida_types.h"
+#include "types.h"
+#include "variables.h"
+
 //#define kXrayBlockData ((XrayBlockData*)RomFixedPtr(0x91d2d6))
 //#define kSamusPalette_Normal ((uint16*)RomFixedPtr(0x91d727))
 //#define kSamusPalette_HyperBeam ((uint16*)RomFixedPtr(0x91d829))

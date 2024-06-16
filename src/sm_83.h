@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 FxDef get_FxDef(uint16 fx) {
   switch (fx) {
     case 0x8000: return (FxDef){ .door_ptr =    0x0, .base_y_pos = 0xffff, .target_y_pos = 0xffff, .y_vel =    0x0, .timer =   0, .type = kFxType_0_None                   , .default_layer_blend =  0x2, .layer3_layer_blend =  0x2, .fx_liquid_options_ = 0x0                                                                                                    , .palette_fx_bitset =  0x6, .animtiles_bitset = 0x0, .palette_blend =  0x0, };

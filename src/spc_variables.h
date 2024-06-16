@@ -1,4 +1,9 @@
+#pragma once
+
 #include <stddef.h>
+
+#include "types.h"
+
 typedef struct Channel {
   uint16 pattern_order_ptr_for_chan;
   uint8 note_ticks_left;
@@ -98,7 +103,8 @@ typedef struct SfxChan {
   uint8 subnote_delta;
   uint8 update_adsr;
 } SfxChan;
-struct SpcPlayer {
+
+typedef struct SpcPlayer {
   uint8 new_value_from_snes[4];
   uint8 port_to_snes[4];
   uint8 last_value_from_snes[4];
@@ -154,14 +160,15 @@ struct SpcPlayer {
   uint8 ram[65536]; // rest of ram
   uint8 last_written_edl;
   uint8 input_ports[4];
-};
+} SpcPlayer;
+
 struct MemMap {
 uint16 off, org_off;
 };
 struct MemMap2 {
 uint16 off, org_off, size;
 };
-const MemMap kChannel_Maps[] = {
+const struct MemMap kChannel_Maps[] = {
 {offsetof(Channel, pattern_order_ptr_for_chan), 0x8030},
 {offsetof(Channel, note_ticks_left), 0x70},
 {offsetof(Channel, note_keyoff_ticks_left), 0x71},
@@ -210,7 +217,7 @@ const MemMap kChannel_Maps[] = {
 {offsetof(Channel, fine_tune), 0x381},
 {offsetof(Channel, cutk), 0x400},
 };
-const MemMap2 kSpcPlayer_Maps[] = {
+const struct MemMap2 kSpcPlayer_Maps[] = {
 {offsetof(SpcPlayer, new_value_from_snes), 0x0, 4},
 {offsetof(SpcPlayer, port_to_snes), 0x4, 4},
 {offsetof(SpcPlayer, last_value_from_snes), 0x8, 4},

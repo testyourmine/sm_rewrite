@@ -1,3 +1,4 @@
+#pragma once
 
 // Cinematic stuff
 #define mode7_transform_angle (*(uint16*)(g_ram+0x198D))

@@ -1,5 +1,6 @@
-#include "types.h"
+#pragma once
 
+#include "types.h"
 
 // Bank 80
 bool CheckEventHappened(uint16 a);

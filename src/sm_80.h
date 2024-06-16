@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 #define BLK_HORIZ_FLIP 0x400
 #define BLK_VERT_FLIP 0x800
 #define BLK_HAS_FLIP (BLK_HORIZ_FLIP | BLK_VERT_FLIP)

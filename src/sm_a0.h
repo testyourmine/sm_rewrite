@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kEnemyLayerToQueuePtr ((uint16*)RomFixedPtr(0xa0b133))
 //#define kStandardSpriteTiles ((uint16*)RomFixedPtr(0x9ad200))
 //#define kSine8bit ((uint8*)RomFixedPtr(0xa0b143))

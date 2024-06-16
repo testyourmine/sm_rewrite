@@ -1,4 +1,8 @@
 // Aran
+
+#include <stddef.h>
+#include <string.h>
+
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

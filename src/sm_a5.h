@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kDraygon_Palette1 ((uint16*)RomFixedPtr(0xa5a217))
 //#define kDraygon_Bg1AndBg2Palette5 ((uint16*)RomFixedPtr(0xa5a277))
 //#define kDraygon_FlashPalette ((uint16*)RomFixedPtr(0xa5a297))

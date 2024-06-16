@@ -1,3 +1,8 @@
+#pragma once
+
+#include "ida_types.h"
+#include "types.h"
+
 typedef struct Enemy_Bang {
 EnemyBase base;
 uint16 bang_var_A;

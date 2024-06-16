@@ -1,4 +1,7 @@
 // Block properties, grapple drawing, some cutscene graphics
+
+#include <stddef.h>
+
 #include "sm_rtl.h"
 #include "ida_types.h"
 #include "variables.h"

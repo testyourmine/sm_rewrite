@@ -3,7 +3,7 @@
    It contains local type definitions from
    the type library 'data.x86.bin_20221113031206'
 */
-
+#pragma once
 
 #include "types.h"
 #include "sm_rtl.h"

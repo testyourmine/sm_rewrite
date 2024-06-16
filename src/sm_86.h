@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kScreenShakeOffsets ((uint16*)RomFixedPtr(0x86846b))
 //#define kAlignYPos_Tab0 ((uint8*)RomFixedPtr(0x948b2b))
 //#define kAlignXPos_Tab1 ((uint8*)RomFixedPtr(0x94892b))

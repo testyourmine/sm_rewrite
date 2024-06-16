@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define kOffsetToSaveSlot ((uint16*)RomFixedPtr(0x81812b))
 
 uint16 kOffsetToSaveSlot[] ={ 0x10, 0x66c, 0xcc8, };

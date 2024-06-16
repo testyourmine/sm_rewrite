@@ -1,4 +1,7 @@
 // Extra Mother Brain code
+
+#include <stdio.h>
+
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

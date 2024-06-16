@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define fnkPlmHeaderDefPtrs 0x949139
 //#define kSpecialAirPtrs ((uint16*)RomFixedPtr(0x9492d9))
 //#define kSpecialBlockPtrs ((uint16*)RomFixedPtr(0x9492e9))

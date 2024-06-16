@@ -1,4 +1,7 @@
 // PLMs
+
+#include <stdio.h>
+
 #include "ida_types.h"
 #include "variables.h"
 #include "sm_rtl.h"

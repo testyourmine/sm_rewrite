@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define kKraid_BgTargetPalette6 ((uint16*)RomFixedPtr(0xa786c7))
 //#define kKraid_BgTargetPalette3 ((uint16*)RomFixedPtr(0xa7aaa6))
 //#define kEproj_RocksFallingKraidCeilingXPositions ((uint16*)RomFixedPtr(0xa7acb3))

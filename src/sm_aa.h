@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kEnemyInit_Torizo_InstrListPtrs ((uint16*)RomFixedPtr(0xaac967))
 //#define kEnemyInit_TourianEntranceStatue_InstrListPtrs ((uint16*)RomFixedPtr(0xaad810))
 //#define kEnemyInit_TourianEntranceStatue_PaletteTab0 ((uint16*)RomFixedPtr(0xaad765))

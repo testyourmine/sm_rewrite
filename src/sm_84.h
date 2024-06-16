@@ -1,5 +1,6 @@
 #pragma once
 
+#include "types.h"
 //#define kGoldenTorizoPalette1 ((uint16*)RomFixedPtr(0x848032))
 //#define kGoldenTorizoPalette2 ((uint16*)RomFixedPtr(0x848132))
 

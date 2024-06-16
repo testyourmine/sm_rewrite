@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define kDemoRoomData ((uint16*)RomFixedPtr(0x82876c))
 
 //uint16 kDemoRoomData[] = { 0x8774, 0x87e2, 0x8850, 0x88be, };

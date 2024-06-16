@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kSamus_AnimationDefinitionPtrs ((uint16*)RomFixedPtr(0x92d94e))
 //#define kSamus_TileDefs_TopHalf ((uint16*)RomFixedPtr(0x92d91e))
 //#define kSamus_TileDefs_BottomHalf ((uint16*)RomFixedPtr(0x92d938))

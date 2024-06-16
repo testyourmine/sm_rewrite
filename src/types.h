@@ -2,7 +2,6 @@
 #define SM_TYPES_H_
 
 #include <stdint.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 #if defined(_WIN32) && !COMPILER_TCC

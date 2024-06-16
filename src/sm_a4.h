@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kCrocomire_Bg1AndBg2Palette7 ((uint16*)RomFixedPtr(0xa4b89d))
 //#define kEnemyInit_Crocomire_Palette2 ((uint16*)RomFixedPtr(0xa4b8bd))
 //#define kEnemyInit_Crocomire_Palette5 ((uint16*)RomFixedPtr(0xa4b8dd))

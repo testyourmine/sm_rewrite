@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "funcs.h"
+
 extern RotationMatrix kCeresElevatorShaftMode7TransformationMatrix[69];
 
 RoomDefHeader get_RoomDefHeader(uint16 room) {

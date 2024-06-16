@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kMotherBrain_HealthBasedPalettes_Brain ((uint16*)RomFixedPtr(0xade6a2))
 //#define kMotherBrain_HealthBasedPalettes_BackLeg ((uint16*)RomFixedPtr(0xade742))
 //#define kMotherBrain_FadePalToBlack ((uint16*)RomFixedPtr(0xade9e8))
