@@ -182,9 +182,9 @@ void Samus_Input_1B_ShinesparkEtc(void) {  // 0x9181A1
 }
 
 void Samus_LookupTransitionTable(void) {  // 0x9181A9
-  if (joypad1_lastkeys) {
+  if (joypad1_lastkeys != 0) {
     Pair_R18_R20 pair = TranslateCustomControllerBindingsToDefault();
-    PoseEntry *pe = (PoseEntry*)kPoseTransitionTable();
+    const PoseEntry *pe = get_PoseEntry(samus_pose);
     if (pe->new_input == 0xFFFF)
       return;
     do {
@@ -203,39 +203,46 @@ void Samus_LookupTransitionTable(void) {  // 0x9181A9
 }
 
 Pair_R18_R20 TranslateCustomControllerBindingsToDefault(void) {  // 0x9181F4
-  uint16 r18 = joypad1_newkeys & (kButton_Up | kButton_Down | kButton_Left | kButton_Right);
-  uint16 r20 = joypad1_lastkeys & (kButton_Up | kButton_Down | kButton_Left | kButton_Right);
-  uint16 v0 = joypad1_newkeys;
-  if ((button_config_shoot_x & joypad1_newkeys) != 0)
-    r18 |= kButton_X;
-  if ((button_config_jump_a & v0) != 0)
-    r18 |= kButton_A;
-  if ((button_config_run_b & v0) != 0)
-    r18 |= kButton_B;
-  if ((button_config_itemcancel_y & v0) != 0)
-    r18 |= kButton_Y;
-  if ((button_config_aim_up_R & v0) != 0) {
-    if ((button_config_aim_up_R & (kButton_L | kButton_R)) != 0)
-      r18 |= kButton_R;
+  uint16 default_newkeys = joypad1_newkeys & (kButton_Up | kButton_Down | kButton_Left | kButton_Right);
+  uint16 default_lastkeys = joypad1_lastkeys & (kButton_Up | kButton_Down | kButton_Left | kButton_Right);
+  uint16 custom_newkeys = joypad1_newkeys;
+  uint16 custom_lastkeys = joypad1_lastkeys;
+
+  if (custom_newkeys & button_config_shoot_x)
+    default_newkeys |= kButton_X;
+  if (custom_newkeys & button_config_jump_a)
+    default_newkeys |= kButton_A;
+  if (custom_newkeys & button_config_run_b)
+    default_newkeys |= kButton_B;
+  if (custom_newkeys & button_config_itemcancel_y)
+    default_newkeys |= kButton_Y;
+  if (custom_newkeys & button_config_aim_up_R) {
+    if (button_config_aim_up_R & (kButton_L | kButton_R))
+      default_newkeys |= kButton_R;
   }
-  if ((button_config_aim_down_L & v0) != 0 && (button_config_aim_down_L & (kButton_L | kButton_R)) != 0)
-    r18 |= kButton_L;
-  uint16 v1 = joypad1_lastkeys;
-  if ((button_config_shoot_x & joypad1_lastkeys) != 0)
-    r20 |= kButton_X;
-  if ((button_config_jump_a & v1) != 0)
-    r20 |= kButton_A;
-  if ((button_config_run_b & v1) != 0)
-    r20 |= kButton_B;
-  if ((button_config_itemcancel_y & v1) != 0)
-    r20 |= kButton_Y;
-  if ((button_config_aim_up_R & v1) != 0) {
-    if ((button_config_aim_up_R & (kButton_L | kButton_R)) != 0)
-      r20 |= kButton_R;
+  if (custom_newkeys & button_config_aim_down_L) {
+    if (button_config_aim_down_L & (kButton_L | kButton_R))
+      default_newkeys |= kButton_L;
   }
-  if ((button_config_aim_down_L & v1) != 0 && (button_config_aim_down_L & (kButton_L | kButton_R)) != 0)
-    r20 |= kButton_L;
-  return (Pair_R18_R20) { ~r18, ~r20 };
+
+  if (custom_lastkeys & button_config_shoot_x)
+    default_lastkeys |= kButton_X;
+  if (custom_lastkeys & button_config_jump_a)
+    default_lastkeys |= kButton_A;
+  if (custom_lastkeys & button_config_run_b)
+    default_lastkeys |= kButton_B;
+  if (custom_lastkeys & button_config_itemcancel_y)
+    default_lastkeys |= kButton_Y;
+  if (custom_lastkeys & button_config_aim_up_R) {
+    if (button_config_aim_up_R & (kButton_L | kButton_R))
+      default_lastkeys |= kButton_R;
+  }
+  if (custom_lastkeys & button_config_aim_down_L) {
+    if (button_config_aim_down_L & (kButton_L | kButton_R))
+      default_lastkeys |= kButton_L;
+  }
+
+  return (Pair_R18_R20) { ~default_newkeys, ~default_lastkeys };
 }
 
 void Samus_LookupTransitionTableFailureHandler(void) {  // 0x9182D9
@@ -342,26 +349,20 @@ uint16 CallDemoInstr(uint32 ea, uint16 k, uint16 j) {
 void ProcessDemoInputObject(void) {  // 0x9183F2
   CallDemoPreInstr(demo_input_pre_instr | 0x910000);
   if (!--demo_input_instr_timer) {
-    uint16 v0 = demo_input_instr_ptr;
-    DemoInputEntry v1;
+    uint16 instr_ptr = demo_input_instr_ptr;
+    DemoInputEntry DIE;
     while (1) {
-      //v1 = (uint16 *)RomPtr_91(v0);
-      v1 = get_DemoInputEntry(v0);
-      //uint16 v2 = *v1;
-      if ((v1.timer & 0x8000) == 0)
+      DIE = get_DemoInputEntry(instr_ptr);
+      if ((DIE.func_ptr & 0x8000) == 0)
         break;
-      v0 = CallDemoInstr(v1.func_ptr | 0x910000, 0, v1.instr_list_ptr);
-      if (!v0)
+      instr_ptr = CallDemoInstr(DIE.func_ptr | 0x910000, 0, DIE.instr_list_ptr);
+      if (instr_ptr == 0)
         return;
     }
-    demo_input_instr_timer = v1.timer;
-    //const uint8 *v3 = RomPtr_91(v0);
-    //demo_input = GET_WORD(v3 + 2);
-    //demo_input_new = GET_WORD(v3 + 4);
-    //demo_input_instr_ptr = v0 + 6;
-    demo_input = v1.cur_input;
-    demo_input_new = v1.new_input;
-    demo_input_instr_ptr = v0 + sizeof(DemoInputEntry);
+    demo_input_instr_timer = DIE.timer;
+    demo_input = DIE.cur_input;
+    demo_input_new = DIE.new_input;
+    demo_input_instr_ptr = instr_ptr + sizeof(DemoInputEntry);
   }
 }
 
@@ -497,8 +498,8 @@ static Func_V *const *const kDemoSetFuncPtrs[4] = {
 void LoadDemoData(void) {
   DemoSetDef DemoSetDef;
 
-  //uint16 v0 = 16 * demo_scene + kDemoSetDefPtrs[demo_set];
-  //DemoSetDef = get_DemoSetDef(v0);
+  //uint16 instr_ptr = 16 * demo_scene + kDemoSetDefPtrs[demo_set];
+  //DemoSetDef = get_DemoSetDef(instr_ptr);
   DemoSetDef = kDemoSetDefPtrs[demo_set][demo_scene];
   collected_items = DemoSetDef.items;
   equipped_items = collected_items;
@@ -515,7 +516,7 @@ void LoadDemoData(void) {
   samus_reserve_health = 0;
   ResetDemoData();
   EnableDemoInput();
-  //uint16 demo_obj = get_DemoSetDef(v0)->demo_obj;
+  //uint16 demo_obj = get_DemoSetDef(instr_ptr)->demo_obj;
   uint16 demo_obj = DemoSetDef.demo_obj;
   LoadDemoInputObject(demo_obj, demo_obj);
   kDemoSetFuncPtrs[demo_set][demo_scene]();
@@ -1821,10 +1822,9 @@ void Samus_Initialize(void) {  // 0x91E00D
   static const uint16 word_909EA1 = 0x1c00;
   static const uint16 word_909EA7 = 0;
   uint16 r18 = debug_invincibility;
-  uint16 v0 = 0xE0B;
-  do
-    *RomPtr_RAM(v0--) = 0;
-  while ((int16)(v0 - 0xA02) >= 0);
+  uint16 start_samus_ram = 0xA02;
+  uint16 samus_ram_size = 0xE0B - start_samus_ram;
+  memset(g_ram + start_samus_ram, 0, samus_ram_size);
   if (game_state != kGameState_40_TransitionToDemo) {
     frame_handler_alfa = FUNC16(Samus_FrameHandlerBeta_DoNothing);
     if (loading_game_state == kLoadingGameState_22_EscapingCeres) {

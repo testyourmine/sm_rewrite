@@ -126,950 +126,950 @@ uint8 kSamusTurnPose_Moonwalk[] = {
   0xc1, 0xc1, 0xbf, 0xc3, 0x8d, 0x8e, 0xc4, 0xc0, 0xc2, 0xc2,
 };
 
-uint16* kPoseTransitionTable(void) {
-  static uint16 Trans_00[] = {  //  0x91a0de
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_01[] = {  //  0x91a0ec
-    kButton_A                          , kButton_Up                         , kPose_55_FaceR_Jumptrans_AimU      , 
-    kButton_A                          , kButton_R                          , kPose_57_FaceR_Jumptrans_AimUR     , 
-    kButton_A                          , kButton_L                          , kPose_59_FaceR_Jumptrans_AimDR     , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    kButton_Down                       , kButton_R+kButton_L                , kPose_F1_FaceR_CrouchTrans_AimU    , 
-    kButton_Down                       , kButton_R                          , kPose_F3_FaceR_CrouchTrans_AimUR   , 
-    kButton_Down                       , kButton_L                          , kPose_F5_FaceR_CrouchTrans_AimDR   , 
-    kButton_Down                       , 0                                  , kPose_35_FaceR_CrouchTrans         , 
-    0                                  , kButton_L+kButton_X+kButton_Left   , kPose_78_FaceR_Moonwalk_AimDR      , 
-    0                                  , kButton_R+kButton_X+kButton_Left   , kPose_76_FaceR_Moonwalk_AimUR      , 
-    0                                  , kButton_R+kButton_L+kButton_Left   , kPose_25_FaceR_Turn_Stand          , 
-    0                                  , kButton_R+kButton_L                , kPose_03_FaceR_AimU                , 
-    0                                  , kButton_R+kButton_Right            , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_L+kButton_Right            , kPose_11_MoveR_AimDR               , 
-    0                                  , kButton_Right+kButton_Up           , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_Right+kButton_Down         , kPose_11_MoveR_AimDR               , 
-    0                                  , kButton_X+kButton_Left             , kPose_4A_FaceR_Moonwalk            , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0                                  , kButton_Up                         , kPose_03_FaceR_AimU                , 
-    0                                  , kButton_R                          , kPose_05_FaceR_AimUR               , 
-    0                                  , kButton_L                          , kPose_07_FaceR_AimDR               , 
-    0                                  , kButton_Right                      , kPose_09_MoveR_NoAim               , 
-    0xffff
-  };
-
-  static uint16 Trans_02[] = {  //  0x91a172
-    kButton_A                          , kButton_Up                         , kPose_56_FaceL_Jumptrans_AimU      , 
-    kButton_A                          , kButton_R                          , kPose_58_FaceL_Jumptrans_AimUL     , 
-    kButton_A                          , kButton_L                          , kPose_5A_FaceL_Jumptrans_AimDL     , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    kButton_Down                       , kButton_R+kButton_L                , kPose_F2_FaceL_CrouchTrans_AimU    , 
-    kButton_Down                       , kButton_R                          , kPose_F4_FaceL_CrouchTrans_AimUL   , 
-    kButton_Down                       , kButton_L                          , kPose_F6_FaceL_CrouchTrans_AimDL   , 
-    kButton_Down                       , 0                                  , kPose_36_FaceL_CrouchTrans         , 
-    0                                  , kButton_L+kButton_X+kButton_Right  , kPose_77_FaceL_Moonwalk_AimDL      , 
-    0                                  , kButton_R+kButton_X+kButton_Right  , kPose_75_FaceL_Moonwalk_AimUL      , 
-    0                                  , kButton_R+kButton_L+kButton_Right  , kPose_26_FaceL_Turn_Stand          , 
-    0                                  , kButton_R+kButton_L                , kPose_04_FaceL_AimU                , 
-    0                                  , kButton_R+kButton_Left             , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_L+kButton_Left             , kPose_12_MoveL_AimDL               , 
-    0                                  , kButton_Left+kButton_Up            , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_Left+kButton_Down          , kPose_12_MoveL_AimDL               , 
-    0                                  , kButton_X+kButton_Right            , kPose_49_FaceL_Moonwalk            , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0                                  , kButton_Up                         , kPose_04_FaceL_AimU                , 
-    0                                  , kButton_R                          , kPose_06_FaceL_AimUL               , 
-    0                                  , kButton_L                          , kPose_08_FaceL_AimDL               , 
-    0                                  , kButton_Left                       , kPose_0A_MoveL_NoAim               , 
-    0xffff
-  };
-
-  static uint16 Trans_09[] = {  //  0x91a1f8
-    kButton_Down                       , 0                                  , kPose_35_FaceR_CrouchTrans         , 
-    kButton_A                          , 0                                  , kPose_19_FaceR_SpinJump            , 
-    0                                  , kButton_R+kButton_Right            , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_L+kButton_Right            , kPose_11_MoveR_AimDR               , 
-    0                                  , kButton_Right+kButton_Up           , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_Right+kButton_Down         , kPose_11_MoveR_AimDR               , 
-    0                                  , kButton_X+kButton_Right            , kPose_0B_MoveR_Gun                 , 
-    0                                  , kButton_Right                      , kPose_09_MoveR_NoAim               , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0                                  , kButton_Up                         , kPose_03_FaceR_AimU                , 
-    0                                  , kButton_R                          , kPose_05_FaceR_AimUR               , 
-    0                                  , kButton_L                          , kPose_07_FaceR_AimDR               , 
-    0xffff
-  };
-
-  static uint16 Trans_0a[] = {  //  0x91a242
-    kButton_Down                       , 0                                  , kPose_36_FaceL_CrouchTrans         , 
-    kButton_A                          , 0                                  , kPose_1A_FaceL_SpinJump            , 
-    0                                  , kButton_R+kButton_Left             , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_L+kButton_Left             , kPose_12_MoveL_AimDL               , 
-    0                                  , kButton_Left+kButton_Up            , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_Left+kButton_Down          , kPose_12_MoveL_AimDL               , 
-    0                                  , kButton_X+kButton_Left             , kPose_0C_MoveL_Gun                 , 
-    0                                  , kButton_Left                       , kPose_0A_MoveL_NoAim               , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0                                  , kButton_Up                         , kPose_04_FaceL_AimU                , 
-    0                                  , kButton_R                          , kPose_06_FaceL_AimUL               , 
-    0                                  , kButton_L                          , kPose_08_FaceL_AimDL               , 
-    0xffff
-  };
-
-  static uint16 Trans_0b[] = {  //  0x91ae94
-    kButton_Down                       , 0                                  , kPose_35_FaceR_CrouchTrans         , 
-    kButton_A                          , 0                                  , kPose_19_FaceR_SpinJump            , 
-    0                                  , kButton_R+kButton_Right            , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_L+kButton_Right            , kPose_11_MoveR_AimDR               , 
-    0                                  , kButton_Right+kButton_Up           , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_Right+kButton_Down         , kPose_11_MoveR_AimDR               , 
-    0                                  , kButton_X+kButton_Right            , kPose_0B_MoveR_Gun                 , 
-    0                                  , kButton_Right                      , kPose_0B_MoveR_Gun                 , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0                                  , kButton_Up                         , kPose_03_FaceR_AimU                , 
-    0                                  , kButton_R                          , kPose_05_FaceR_AimUR               , 
-    0                                  , kButton_L                          , kPose_07_FaceR_AimDR               , 
-    0xffff
-  };
-
-  static uint16 Trans_0c[] = {  //  0x91aede
-    kButton_Down                       , 0                                  , kPose_36_FaceL_CrouchTrans         , 
-    kButton_A                          , 0                                  , kPose_1A_FaceL_SpinJump            , 
-    0                                  , kButton_R+kButton_Left             , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_L+kButton_Left             , kPose_12_MoveL_AimDL               , 
-    0                                  , kButton_Left+kButton_Up            , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_Left+kButton_Down          , kPose_12_MoveL_AimDL               , 
-    0                                  , kButton_X+kButton_Left             , kPose_0C_MoveL_Gun                 , 
-    0                                  , kButton_Left                       , kPose_0C_MoveL_Gun                 , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0                                  , kButton_Up                         , kPose_04_FaceL_AimU                , 
-    0                                  , kButton_R                          , kPose_06_FaceL_AimUL               , 
-    0                                  , kButton_L                          , kPose_08_FaceL_AimDL               , 
-    0xffff
-  };
-
-  static uint16 Trans_13[] = {  //  0x91aac0
-    0                                  , kButton_A+kButton_Right+kButton_Up , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_A+kButton_Right+kButton_Down, kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_R+kButton_A+kButton_Right  , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A+kButton_Right  , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Right+kButton_Up           , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_Right+kButton_Down         , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Left             , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Left                       , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_Up                         , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_Down                       , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Right                      , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X                          , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_14[] = {  //  0x91ab3a
-    0                                  , kButton_A+kButton_Left+kButton_Up  , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_A+kButton_Left+kButton_Down, kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_R+kButton_A+kButton_Left   , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A+kButton_Left   , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Left+kButton_Up            , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_Left+kButton_Down          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Right            , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Right                      , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_Up                         , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_Down                       , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Left                       , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X                          , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_15[] = {  //  0x91a2f6
-    0                                  , kButton_A+kButton_Right+kButton_Up , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_A+kButton_Right+kButton_Down, kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_R+kButton_A+kButton_Right  , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A+kButton_Right  , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Right+kButton_Up           , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_Right+kButton_Down         , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Left             , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Left                       , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_Up                         , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_Down                       , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Right                      , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_A                          , kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun, 
-    0                                  , kButton_X                          , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_16[] = {  //  0x91a376
-    0                                  , kButton_A+kButton_Left+kButton_Up  , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_A+kButton_Left+kButton_Down, kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_R+kButton_A+kButton_Left   , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A+kButton_Left   , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Left+kButton_Up            , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_Left+kButton_Down          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Right            , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Right                      , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_Up                         , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_Down                       , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Left                       , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_A                          , kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun, 
-    0                                  , kButton_X                          , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_17[] = {  //  0x91abb4
-    kButton_Down                       , 0                                  , kPose_37_FaceR_MorphTrans          , 
-    0                                  , kButton_A+kButton_Right+kButton_Up , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_A+kButton_Right+kButton_Down, kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_R+kButton_A+kButton_Right  , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A+kButton_Right  , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_X+kButton_A+kButton_Right  , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Right+kButton_Up           , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_Right+kButton_Down         , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Left             , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Left                       , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_Up                         , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_Down                       , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Right                      , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_A                          , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_X                          , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_18[] = {  //  0x91ac40
-    kButton_Down                       , 0                                  , kPose_38_FaceL_MorphTrans          , 
-    0                                  , kButton_A+kButton_Left+kButton_Up  , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_A+kButton_Left+kButton_Down, kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_R+kButton_A+kButton_Left   , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A+kButton_Left   , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_L+kButton_A+kButton_Left   , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Left+kButton_Up            , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_Left+kButton_Down          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Right            , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Right                      , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_Up                         , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_Down                       , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Left                       , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_A                          , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_X                          , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_19[] = {  //  0x91a41e
-    kButton_X                          , 0                                  , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    kButton_X                          , kButton_Right                      , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_X                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_X                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_19_FaceR_SpinJump            , 
-    0                                  , kButton_Up                         , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Down                       , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    0                                  , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    0xffff
-  };
-
-  static uint16 Trans_1a[] = {  //  0x91a46e
-    kButton_X                          , 0                                  , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    kButton_X                          , kButton_Left                       , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_X                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_X                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_1A_FaceL_SpinJump            , 
-    0                                  , kButton_Up                         , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Down                       , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    0                                  , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    0xffff
-  };
-
-  static uint16 Trans_1b[] = {  //  0x91a4be
-    kButton_X                          , 0                                  , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    kButton_X                          , kButton_Right                      , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_X                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_X                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_1B_FaceR_SpaceJump           , 
-    0                                  , kButton_Up                         , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Down                       , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_Right                      , kPose_1B_FaceR_SpaceJump           , 
-    0                                  , kButton_Left                       , kPose_1C_FaceL_SpaceJump           , 
-    0xffff
-  };
-
-  static uint16 Trans_1c[] = {  //  0x91a50e
-    kButton_X                          , 0                                  , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    kButton_X                          , kButton_Left                       , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_X                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_X                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_1C_FaceL_SpaceJump           , 
-    0                                  , kButton_Up                         , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Down                       , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_Left                       , kPose_1C_FaceL_SpaceJump           , 
-    0                                  , kButton_Right                      , kPose_1B_FaceR_SpaceJump           , 
-    0xffff
-  };
-
-  static uint16 Trans_1d[] = {  //  0x91a5fe
-    kButton_Up                         , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_1E_MoveR_Morphball_Ground    , 
-    0                                  , kButton_Left                       , kPose_1F_MoveL_Morphball_Ground    , 
-    0xffff
-  };
-
-  static uint16 Trans_1e[] = {  //  0x91a618
-    kButton_Up                         , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_1E_MoveR_Morphball_Ground    , 
-    0                                  , kButton_Left                       , kPose_1F_MoveL_Morphball_Ground    , 
-    0xffff
-  };
-
-  static uint16 Trans_1f[] = {  //  0x91a632
-    kButton_Up                         , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_1E_MoveR_Morphball_Ground    , 
-    0                                  , kButton_Left                       , kPose_1F_MoveL_Morphball_Ground    , 
-    0xffff
-  };
-
-  static uint16 Trans_20[] = {  //  0x91a666
-    0xffff
-  };
-
-  static uint16 Trans_23[] = {  //  0x91a668
-    0xffff
-  };
-
-  static uint16 Trans_25[] = {  //  0x91acf4
-    0                                  , kButton_A+kButton_Left             , kPose_1A_FaceL_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_26[] = {  //  0x91ad08
-    0                                  , kButton_A+kButton_Right            , kPose_19_FaceR_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_27[] = {  //  0x91a66c
-    kButton_Up                         , kButton_R+kButton_L                , kPose_F7_FaceR_StandTrans_AimU     , 
-    kButton_Up                         , kButton_R                          , kPose_F9_FaceR_StandTrans_AimUR    , 
-    kButton_Up                         , kButton_L                          , kPose_FB_FaceR_StandTrans_AimDR    , 
-    kButton_Up                         , 0                                  , kPose_3B_FaceR_StandTrans          , 
-    kButton_Left                       , 0                                  , kPose_43_FaceR_Turn_Crouch         , 
-    kButton_Down                       , 0                                  , kPose_37_FaceR_MorphTrans          , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_R+kButton_L                , kPose_85_FaceR_Crouch_AimU         , 
-    0                                  , kButton_R+kButton_Right            , kPose_01_FaceR_Normal              , 
-    0                                  , kButton_L+kButton_Right            , kPose_01_FaceR_Normal              , 
-    0                                  , kButton_R                          , kPose_71_FaceR_Crouch_AimUR        , 
-    0                                  , kButton_L                          , kPose_73_FaceR_Crouch_AimDR        , 
-    0                                  , kButton_Right                      , kPose_01_FaceR_Normal              , 
-    0xffff
-  };
-
-  static uint16 Trans_28[] = {  //  0x91a6bc
-    kButton_Up                         , kButton_R+kButton_L                , kPose_F8_FaceL_StandTrans_AimU     , 
-    kButton_Up                         , kButton_R                          , kPose_FA_FaceL_StandTrans_AimUL    , 
-    kButton_Up                         , kButton_L                          , kPose_FC_FaceL_StandTrans_AimDL    , 
-    kButton_Up                         , 0                                  , kPose_3C_FaceL_StandTrans          , 
-    kButton_Right                      , 0                                  , kPose_44_FaceL_Turn_Crouch         , 
-    kButton_Down                       , 0                                  , kPose_38_FaceL_MorphTrans          , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_R+kButton_L                , kPose_86_FaceL_Crouch_AimU         , 
-    0                                  , kButton_L+kButton_Left             , kPose_02_FaceL_Normal              , 
-    0                                  , kButton_R+kButton_Left             , kPose_02_FaceL_Normal              , 
-    0                                  , kButton_R                          , kPose_72_FaceL_Crouch_AimUL        , 
-    0                                  , kButton_L                          , kPose_74_FaceL_Crouch_AimDL        , 
-    0                                  , kButton_Left                       , kPose_02_FaceL_Normal              , 
-    0xffff
-  };
-
-  static uint16 Trans_29[] = {  //  0x91a70c
-    0                                  , kButton_Right+kButton_Up           , kPose_6D_FaceR_Fall_AimUR          , 
-    0                                  , kButton_Right+kButton_Down         , kPose_6F_FaceR_Fall_AimDR          , 
-    0                                  , kButton_Left+kButton_Up            , kPose_87_FaceR_Turn_Fall           , 
-    0                                  , kButton_Left+kButton_Down          , kPose_87_FaceR_Turn_Fall           , 
-    0                                  , kButton_Left                       , kPose_87_FaceR_Turn_Fall           , 
-    0                                  , kButton_Up                         , kPose_2B_FaceR_Fall_AimU           , 
-    0                                  , kButton_Down                       , kPose_2D_FaceR_Fall_AimD           , 
-    0                                  , kButton_R                          , kPose_6D_FaceR_Fall_AimUR          , 
-    0                                  , kButton_L                          , kPose_6F_FaceR_Fall_AimDR          , 
-    0                                  , kButton_X                          , kPose_67_FaceR_Fall_Gun            , 
-    0                                  , kButton_Right                      , kPose_29_FaceR_Fall                , 
-    0xffff
-  };
-
-  static uint16 Trans_2a[] = {  //  0x91a750
-    0                                  , kButton_Left+kButton_Up            , kPose_6E_FaceL_Fall_AimUL          , 
-    0                                  , kButton_Left+kButton_Down          , kPose_70_FaceL_Fall_AimDL          , 
-    0                                  , kButton_Right+kButton_Up           , kPose_88_FaceL_Turn_Fall           , 
-    0                                  , kButton_Right+kButton_Down         , kPose_88_FaceL_Turn_Fall           , 
-    0                                  , kButton_Right                      , kPose_88_FaceL_Turn_Fall           , 
-    0                                  , kButton_Up                         , kPose_2C_FaceL_Fall_AimU           , 
-    0                                  , kButton_Down                       , kPose_2E_FaceL_Fall_AimD           , 
-    0                                  , kButton_R                          , kPose_6E_FaceL_Fall_AimUL          , 
-    0                                  , kButton_L                          , kPose_70_FaceL_Fall_AimDL          , 
-    0                                  , kButton_X                          , kPose_68_FaceL_Fall_Gun            , 
-    0                                  , kButton_Left                       , kPose_2A_FaceL_Fall                , 
-    0xffff
-  };
-
-  static uint16 Trans_2d[] = {  //  0x91ad94
-    kButton_Down                       , 0                                  , kPose_37_FaceR_MorphTrans          , 
-    0                                  , kButton_Right+kButton_Up           , kPose_6D_FaceR_Fall_AimUR          , 
-    0                                  , kButton_Right+kButton_Down         , kPose_6F_FaceR_Fall_AimDR          , 
-    0                                  , kButton_Up                         , kPose_2B_FaceR_Fall_AimU           , 
-    0                                  , kButton_Down                       , kPose_2D_FaceR_Fall_AimD           , 
-    0                                  , kButton_Left                       , kPose_87_FaceR_Turn_Fall           , 
-    0                                  , kButton_R                          , kPose_6D_FaceR_Fall_AimUR          , 
-    0                                  , kButton_L                          , kPose_6F_FaceR_Fall_AimDR          , 
-    0                                  , kButton_X                          , kPose_67_FaceR_Fall_Gun            , 
-    0                                  , kButton_Right                      , kPose_29_FaceR_Fall                , 
-    0xffff
-  };
-
-  static uint16 Trans_2e[] = {  //  0x91add2
-    kButton_Down                       , 0                                  , kPose_38_FaceL_MorphTrans          , 
-    0                                  , kButton_Left+kButton_Up            , kPose_6E_FaceL_Fall_AimUL          , 
-    0                                  , kButton_Left+kButton_Down          , kPose_70_FaceL_Fall_AimDL          , 
-    0                                  , kButton_Up                         , kPose_2C_FaceL_Fall_AimU           , 
-    0                                  , kButton_Down                       , kPose_2E_FaceL_Fall_AimD           , 
-    0                                  , kButton_Right                      , kPose_88_FaceL_Turn_Fall           , 
-    0                                  , kButton_R                          , kPose_6E_FaceL_Fall_AimUL          , 
-    0                                  , kButton_L                          , kPose_70_FaceL_Fall_AimDL          , 
-    0                                  , kButton_X                          , kPose_68_FaceL_Fall_Gun            , 
-    0                                  , kButton_Left                       , kPose_2A_FaceL_Fall                , 
-    0xffff
-  };
-
-  static uint16 Trans_2f[] = {  //  0x91a0dc
-    0xffff
-  };
-
-  static uint16 Trans_31[] = {  //  0x91a794
-    kButton_Up                         , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_31_FaceR_Morphball_Air       , 
-    0                                  , kButton_Left                       , kPose_32_FaceL_Morphball_Air       , 
-    0xffff
-  };
-
-  static uint16 Trans_32[] = {  //  0x91a7ae
-    kButton_Up                         , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    0                                  , kButton_Left                       , kPose_32_FaceL_Morphball_Air       , 
-    0                                  , kButton_Right                      , kPose_31_FaceR_Morphball_Air       , 
-    0xffff
-  };
-
-  static uint16 Trans_33[] = {  //  0x91a7c8
-    0xffff
-  };
-
-  static uint16 Trans_34[] = {  //  0x91a7ca
-    0xffff
-  };
-
-  static uint16 Trans_3d[] = {  //  0x91accc
-    0                                  , kButton_X+kButton_Right            , kPose_67_FaceR_Fall_Gun            , 
-    0                                  , kButton_X+kButton_Up               , kPose_2B_FaceR_Fall_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_2D_FaceR_Fall_AimD           , 
-    0xffff
-  };
-
-  static uint16 Trans_3e[] = {  //  0x91ace0
-    0                                  , kButton_X+kButton_Left             , kPose_68_FaceL_Fall_Gun            , 
-    0                                  , kButton_X+kButton_Up               , kPose_2C_FaceL_Fall_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_2E_FaceL_Fall_AimD           , 
-    0xffff
-  };
-
-  static uint16 Trans_41[] = {  //  0x91a64c
-    kButton_Up                         , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_1E_MoveR_Morphball_Ground    , 
-    0                                  , kButton_Left                       , kPose_1F_MoveL_Morphball_Ground    , 
-    0xffff
-  };
-
-  static uint16 Trans_42[] = {  //  0x91a66a
-    0xffff
-  };
-
-  static uint16 Trans_45[] = {  //  0x91a7cc
-    0                                  , kButton_X+kButton_Left             , kPose_45                           , 
-    0                                  , kButton_Right                      , kPose_09_MoveR_NoAim               , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_46[] = {  //  0x91a7e0
-    0                                  , kButton_X+kButton_Right            , kPose_46                           , 
-    0                                  , kButton_Left                       , kPose_0A_MoveL_NoAim               , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_47[] = {  //  0x91a7f4
-    0xffff
-  };
-
-  static uint16 Trans_48[] = {  //  0x91a834
-    0xffff
-  };
-
-  static uint16 Trans_49[] = {  //  0x91a874
-    kButton_Down                       , 0                                  , kPose_36_FaceL_CrouchTrans         , 
-    kButton_A                          , 0                                  , kPose_C0_FaceL_Moonwalk_TurnjumpR  , 
-    kButton_A                          , kButton_R                          , kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL, 
-    kButton_A                          , kButton_L                          , kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL, 
-    0                                  , kButton_L+kButton_X+kButton_Right  , kPose_77_FaceL_Moonwalk_AimDL      , 
-    0                                  , kButton_R+kButton_X+kButton_Right  , kPose_75_FaceL_Moonwalk_AimUL      , 
-    0                                  , kButton_X+kButton_Right            , kPose_49_FaceL_Moonwalk            , 
-    0                                  , kButton_Left                       , kPose_0A_MoveL_NoAim               , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_4a[] = {  //  0x91a8ac
-    kButton_Down                       , 0                                  , kPose_35_FaceR_CrouchTrans         , 
-    kButton_A                          , 0                                  , kPose_BF_FaceR_Moonwalk_TurnjumpL  , 
-    kButton_A                          , kButton_R                          , kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR, 
-    kButton_A                          , kButton_L                          , kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR, 
-    0                                  , kButton_R+kButton_X+kButton_Left   , kPose_76_FaceR_Moonwalk_AimUR      , 
-    0                                  , kButton_L+kButton_X+kButton_Left   , kPose_78_FaceR_Moonwalk_AimDR      , 
-    0                                  , kButton_X+kButton_Left             , kPose_4A_FaceR_Moonwalk            , 
-    0                                  , kButton_Right                      , kPose_09_MoveR_NoAim               , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0xffff
-  };
-
-  static uint16 Trans_4b[] = {  //  0x91a28c
-    0                                  , kButton_A+kButton_Left             , kPose_2F_FaceR_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_A                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X                          , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_4c[] = {  //  0x91a2be
-    0                                  , kButton_A+kButton_Right            , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_A+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_A+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_A                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_A                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_X+kButton_A                , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_Right                      , kPose_30_FaceL_Turn_Jump           , 
-    0                                  , kButton_X                          , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0xffff
-  };
-
-  static uint16 Trans_4f[] = {  //  0x91a3f6
-    0                                  , kButton_A+kButton_Left             , kPose_52_FaceL_Jump_NoAim_MoveF    , 
-    0                                  , kButton_A+kButton_Right            , kPose_4F_FaceL_Dmgboost            , 
-    0                                  , kButton_A                          , kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun, 
-    0xffff
-  };
-
-  static uint16 Trans_50[] = {  //  0x91a40a
-    0                                  , kButton_A+kButton_Left             , kPose_50_FaceR_Dmgboost            , 
-    0                                  , kButton_A+kButton_Right            , kPose_51_FaceR_Jump_NoAim_MoveF    , 
-    0                                  , kButton_A                          , kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun, 
-    0xffff
-  };
-
-  static uint16 Trans_53[] = {  //  0x91a8e4
-    0                                  , kButton_A+kButton_Left             , kPose_50_FaceR_Dmgboost            , 
-    0xffff
-  };
-
-  static uint16 Trans_54[] = {  //  0x91a8ec
-    0                                  , kButton_A+kButton_Right            , kPose_4F_FaceL_Dmgboost            , 
-    0xffff
-  };
-
-  static uint16 Trans_5b[] = {  //  0x91a8fc
-    0                                  , kButton_A+kButton_Left             , kPose_66                           , 
-    0xffff
-  };
-
-  static uint16 Trans_5c[] = {  //  0x91a904
-    0                                  , kButton_A+kButton_Right            , kPose_65                           , 
-    0xffff
-  };
-
-  static uint16 Trans_63[] = {  //  0x91a990
-    0                                  , kButton_A+kButton_Left             , kPose_66                           , 
-    0xffff
-  };
-
-  static uint16 Trans_64[] = {  //  0x91a998
-    0                                  , kButton_A+kButton_Right            , kPose_65                           , 
-    0xffff
-  };
-
-  static uint16 Trans_65[] = {  //  0x91a9a0
-    0                                  , kButton_A+kButton_Right            , kPose_65                           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_X                          , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_A                          , kPose_65                           , 
-    0                                  , kButton_Right                      , kPose_65                           , 
-    0xffff
-  };
-
-  static uint16 Trans_66[] = {  //  0x91a9c6
-    0                                  , kButton_A+kButton_Left             , kPose_66                           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_X                          , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_A                          , kPose_66                           , 
-    0                                  , kButton_Left                       , kPose_66                           , 
-    0xffff
-  };
-
-  static uint16 Trans_67[] = {  //  0x91af28
-    0                                  , kButton_Right+kButton_Up           , kPose_6D_FaceR_Fall_AimUR          , 
-    0                                  , kButton_Right+kButton_Down         , kPose_6F_FaceR_Fall_AimDR          , 
-    0                                  , kButton_Up                         , kPose_2B_FaceR_Fall_AimU           , 
-    0                                  , kButton_Down                       , kPose_2D_FaceR_Fall_AimD           , 
-    0                                  , kButton_Left                       , kPose_87_FaceR_Turn_Fall           , 
-    0                                  , kButton_R                          , kPose_6D_FaceR_Fall_AimUR          , 
-    0                                  , kButton_L                          , kPose_6F_FaceR_Fall_AimDR          , 
-    0                                  , kButton_X                          , kPose_67_FaceR_Fall_Gun            , 
-    0                                  , kButton_Right                      , kPose_67_FaceR_Fall_Gun            , 
-    0xffff
-  };
-
-  static uint16 Trans_68[] = {  //  0x91af60
-    0                                  , kButton_Left+kButton_Up            , kPose_6E_FaceL_Fall_AimUL          , 
-    0                                  , kButton_Left+kButton_Down          , kPose_70_FaceL_Fall_AimDL          , 
-    0                                  , kButton_Up                         , kPose_2C_FaceL_Fall_AimU           , 
-    0                                  , kButton_Down                       , kPose_2E_FaceL_Fall_AimD           , 
-    0                                  , kButton_Right                      , kPose_88_FaceL_Turn_Fall           , 
-    0                                  , kButton_R                          , kPose_6E_FaceL_Fall_AimUL          , 
-    0                                  , kButton_L                          , kPose_70_FaceL_Fall_AimDL          , 
-    0                                  , kButton_X                          , kPose_68_FaceL_Fall_Gun            , 
-    0                                  , kButton_Left                       , kPose_68_FaceL_Fall_Gun            , 
-    0xffff
-  };
-
-  static uint16 Trans_79[] = {  //  0x91a90c
-    kButton_Up                         , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_7F_FaceR_Springball_Air      , 
-    0                                  , kButton_Right                      , kPose_7B_MoveR_Springball_Ground   , 
-    0                                  , kButton_Left                       , kPose_7C_MoveL_Springball_Ground   , 
-    0xffff
-  };
-
-  static uint16 Trans_7a[] = {  //  0x91a926
-    kButton_Up                         , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    kButton_A                          , 0                                  , kPose_80_FaceL_Springball_Air      , 
-    0                                  , kButton_Right                      , kPose_7B_MoveR_Springball_Ground   , 
-    0                                  , kButton_Left                       , kPose_7C_MoveL_Springball_Ground   , 
-    0xffff
-  };
-
-  static uint16 Trans_7d[] = {  //  0x91a940
-    kButton_Up                         , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    0                                  , kButton_Left                       , kPose_7E_FaceL_Springball_Fall     , 
-    0                                  , kButton_Right                      , kPose_7D_FaceR_Springball_Fall     , 
-    0xffff
-  };
-
-  static uint16 Trans_7e[] = {  //  0x91a954
-    kButton_Up                         , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_7D_FaceR_Springball_Fall     , 
-    0                                  , kButton_Left                       , kPose_7E_FaceL_Springball_Fall     , 
-    0xffff
-  };
-
-  static uint16 Trans_7f[] = {  //  0x91a968
-    kButton_Up                         , 0                                  , kPose_3D_FaceR_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_7F_FaceR_Springball_Air      , 
-    0                                  , kButton_Left                       , kPose_80_FaceL_Springball_Air      , 
-    0xffff
-  };
-
-  static uint16 Trans_80[] = {  //  0x91a97c
-    kButton_Up                         , 0                                  , kPose_3E_FaceL_UnmorphTrans        , 
-    0                                  , kButton_Right                      , kPose_7F_FaceR_Springball_Air      , 
-    0                                  , kButton_Left                       , kPose_80_FaceL_Springball_Air      , 
-    0xffff
-  };
-
-  static uint16 Trans_81[] = {  //  0x91a55e
-    kButton_X                          , 0                                  , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    kButton_X                          , kButton_Right                      , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X+kButton_Up               , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_R+kButton_X                , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L+kButton_X                , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_A+kButton_Right            , kPose_81_FaceR_Screwattack         , 
-    0                                  , kButton_Up                         , kPose_15_FaceR_Jump_AimU           , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_Down                       , kPose_17_FaceR_Jump_AimD           , 
-    0                                  , kButton_Right                      , kPose_81_FaceR_Screwattack         , 
-    0                                  , kButton_Left                       , kPose_82_FaceL_Screwattack         , 
-    0xffff
-  };
-
-  static uint16 Trans_82[] = {  //  0x91a5ae
-    kButton_X                          , 0                                  , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    kButton_X                          , kButton_Left                       , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_X+kButton_Up               , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_X+kButton_Down             , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_R+kButton_X                , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L+kButton_X                , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_A+kButton_Left             , kPose_82_FaceL_Screwattack         , 
-    0                                  , kButton_Up                         , kPose_16_FaceL_Jump_AimU           , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_Down                       , kPose_18_FaceL_Jump_AimD           , 
-    0                                  , kButton_Left                       , kPose_82_FaceL_Screwattack         , 
-    0                                  , kButton_Right                      , kPose_81_FaceR_Screwattack         , 
-    0xffff
-  };
-
-  static uint16 Trans_83[] = {  //  0x91a9ec
-    kButton_Down                       , 0                                  , kPose_37_FaceR_MorphTrans          , 
-    0                                  , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    0                                  , kButton_R                          , kPose_69_FaceR_Jump_AimUR          , 
-    0                                  , kButton_L                          , kPose_6B_FaceR_Jump_AimDR          , 
-    0                                  , kButton_X                          , kPose_13_FaceR_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_A                          , kPose_83_FaceR_Walljump            , 
-    0xffff
-  };
-
-  static uint16 Trans_84[] = {  //  0x91aa12
-    kButton_Down                       , 0                                  , kPose_38_FaceL_MorphTrans          , 
-    0                                  , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    0                                  , kButton_R                          , kPose_6A_FaceL_Jump_AimUL          , 
-    0                                  , kButton_L                          , kPose_6C_FaceL_Jump_AimDL          , 
-    0                                  , kButton_X                          , kPose_14_FaceL_Jump_NoAim_NoMove_Gun, 
-    0                                  , kButton_A                          , kPose_84_FaceL_Walljump            , 
-    0xffff
-  };
-
-  static uint16 Trans_89[] = {  //  0x91aa38
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right+kButton_Up           , kPose_0F_MoveR_AimUR               , 
-    0                                  , kButton_Right+kButton_Down         , kPose_11_MoveR_AimDR               , 
-    kButton_Down                       , 0                                  , kPose_35_FaceR_CrouchTrans         , 
-    0                                  , kButton_L+kButton_Left             , kPose_78_FaceR_Moonwalk_AimDR      , 
-    0                                  , kButton_R+kButton_Left             , kPose_76_FaceR_Moonwalk_AimUR      , 
-    0                                  , kButton_Up                         , kPose_03_FaceR_AimU                , 
-    0                                  , kButton_R                          , kPose_05_FaceR_AimUR               , 
-    0                                  , kButton_L                          , kPose_07_FaceR_AimDR               , 
-    0                                  , kButton_Left                       , kPose_25_FaceR_Turn_Stand          , 
-    0                                  , kButton_Right                      , kPose_09_MoveR_NoAim               , 
-    0xffff
-  };
-
-  static uint16 Trans_8a[] = {  //  0x91aa7c
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left+kButton_Up            , kPose_10_MoveL_AimUL               , 
-    0                                  , kButton_Left+kButton_Down          , kPose_12_MoveL_AimDL               , 
-    kButton_Down                       , 0                                  , kPose_36_FaceL_CrouchTrans         , 
-    0                                  , kButton_L+kButton_Right            , kPose_77_FaceL_Moonwalk_AimDL      , 
-    0                                  , kButton_R+kButton_Right            , kPose_75_FaceL_Moonwalk_AimUL      , 
-    0                                  , kButton_Up                         , kPose_04_FaceL_AimU                , 
-    0                                  , kButton_R                          , kPose_06_FaceL_AimUL               , 
-    0                                  , kButton_L                          , kPose_08_FaceL_AimDL               , 
-    0                                  , kButton_Right                      , kPose_26_FaceL_Turn_Stand          , 
-    0                                  , kButton_Left                       , kPose_0A_MoveL_NoAim               , 
-    0xffff
-  };
-
-  static uint16 Trans_8b[] = {  //  0x91ad1c
-    kButton_A                          , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left                       , kPose_8B_FaceR_Turn_Stand_AimU     , 
-    0xffff
-  };
-
-  static uint16 Trans_8c[] = {  //  0x91ad30
-    kButton_A                          , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right                      , kPose_8C_FaceL_Turn_Stand_AimU     , 
-    0xffff
-  };
-
-  static uint16 Trans_8d[] = {  //  0x91ad44
-    kButton_A                          , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left                       , kPose_8D_FaceR_Turn_Stand_AimDR    , 
-    0xffff
-  };
-
-  static uint16 Trans_8e[] = {  //  0x91ad58
-    kButton_A                          , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right                      , kPose_8E_FaceL_Turn_Stand_AimDL    , 
-    0xffff
-  };
-
-  static uint16 Trans_ba[] = {  //  0x91ae18
-    0                                  , kButton_X+kButton_Left+kButton_Up  , kPose_BB_FaceL_Draygon_NoMove_AimUL, 
-    0                                  , kButton_X+kButton_Left+kButton_Down, kPose_BD_FaceL_Draygon_NoMove_AimDL, 
-    0                                  , kButton_X+kButton_Left             , kPose_BC_FaceL_Draygon_Fire        , 
-    0                                  , kButton_R                          , kPose_BB_FaceL_Draygon_NoMove_AimUL, 
-    0                                  , kButton_L                          , kPose_BD_FaceL_Draygon_NoMove_AimDL, 
-    0                                  , kButton_X                          , kPose_BC_FaceL_Draygon_Fire        , 
-    0                                  , kButton_Left                       , kPose_BE_FaceL_Draygon_Move        , 
-    0                                  , kButton_Right                      , kPose_BE_FaceL_Draygon_Move        , 
-    0                                  , kButton_Up                         , kPose_BE_FaceL_Draygon_Move        , 
-    0                                  , kButton_Down                       , kPose_BE_FaceL_Draygon_Move        , 
-    0xffff
-  };
-
-  static uint16 Trans_bf[] = {  //  0x91af98
-    0                                  , kButton_A+kButton_Left             , kPose_1A_FaceL_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left                       , kPose_BF_FaceR_Moonwalk_TurnjumpL  , 
-    0xffff
-  };
-
-  static uint16 Trans_c0[] = {  //  0x91afac
-    0                                  , kButton_A+kButton_Right            , kPose_19_FaceR_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right                      , kPose_C0_FaceL_Moonwalk_TurnjumpR  , 
-    0xffff
-  };
-
-  static uint16 Trans_c1[] = {  //  0x91afc0
-    kButton_A                          , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left                       , kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR, 
-    0xffff
-  };
-
-  static uint16 Trans_c2[] = {  //  0x91afd4
-    kButton_A                          , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right                      , kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL, 
-    0xffff
-  };
-
-  static uint16 Trans_c3[] = {  //  0x91afe8
-    kButton_A                          , kButton_Left                       , kPose_1A_FaceL_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4C_FaceL_Jumptrans           , 
-    0                                  , kButton_Left                       , kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR, 
-    0xffff
-  };
-
-  static uint16 Trans_c4[] = {  //  0x91affc
-    kButton_A                          , kButton_Right                      , kPose_19_FaceR_SpinJump            , 
-    kButton_A                          , 0                                  , kPose_4B_FaceR_Jumptrans           , 
-    0                                  , kButton_Right                      , kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL, 
-    0xffff
-  };
-
-  static uint16 Trans_c7[] = {  //  0x91ad6c
-    0                                  , kButton_A+kButton_Up               , kPose_CB_FaceR_Shinespark_Vert     , 
-    0                                  , kButton_R+kButton_A                , kPose_CD_FaceR_Shinespark_Diag     , 
-    0                                  , kButton_A+kButton_Right            , kPose_C9_FaceR_Shinespark_Horiz    , 
-    0xffff
-  };
-
-  static uint16 Trans_c8[] = {  //  0x91ad80
-    0                                  , kButton_A+kButton_Up               , kPose_CC_FaceL_Shinespark_Vert     , 
-    0                                  , kButton_R+kButton_A                , kPose_CE_FaceL_Shinespark_Diag     , 
-    0                                  , kButton_A+kButton_Left             , kPose_CA_FaceL_Shinespark_Horiz    , 
-    0xffff
-  };
-
-  static uint16 Trans_df[] = {  //  0x91ae10
-    kButton_Up                         , 0                                  , kPose_DE                           , 
-    0xffff
-  };
-
-  static uint16 Trans_ec[] = {  //  0x91ae56
-    0                                  , kButton_X+kButton_Right+kButton_Up , kPose_ED_FaceR_Draygon_NoMove_AimUR, 
-    0                                  , kButton_X+kButton_Right+kButton_Down, kPose_EF_FaceR_Draygon_NoMove_AimDR, 
-    0                                  , kButton_X+kButton_Right            , kPose_EE_FaceR_Draygon_Fire        , 
-    0                                  , kButton_R                          , kPose_ED_FaceR_Draygon_NoMove_AimUR, 
-    0                                  , kButton_L                          , kPose_EF_FaceR_Draygon_NoMove_AimDR, 
-    0                                  , kButton_X                          , kPose_EE_FaceR_Draygon_Fire        , 
-    0                                  , kButton_Left                       , kPose_F0_FaceR_Draygon_Move        , 
-    0                                  , kButton_Right                      , kPose_F0_FaceR_Draygon_Move        , 
-    0                                  , kButton_Up                         , kPose_F0_FaceR_Draygon_Move        , 
-    0                                  , kButton_Down                       , kPose_F0_FaceR_Draygon_Move        , 
-    0xffff
-  };
-
-  switch (samus_pose) {
+static const PoseEntry Trans_00[] = {  // 0x91a0de
+  [0]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [2]  = { 0xffff },
+};
+
+static const PoseEntry Trans_01[] = {  // 0x91a0ec
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Up                           , .new_pose = kPose_55_FaceR_Jumptrans_AimU           , },
+  [1]  = { .new_input = kButton_A     , .cur_input = kButton_R                            , .new_pose = kPose_57_FaceR_Jumptrans_AimUR          , },
+  [2]  = { .new_input = kButton_A     , .cur_input = kButton_L                            , .new_pose = kPose_59_FaceR_Jumptrans_AimDR          , },
+  [3]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [4]  = { .new_input = kButton_Down  , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_F1_FaceR_CrouchTrans_AimU         , },
+  [5]  = { .new_input = kButton_Down  , .cur_input = kButton_R                            , .new_pose = kPose_F3_FaceR_CrouchTrans_AimUR        , },
+  [6]  = { .new_input = kButton_Down  , .cur_input = kButton_L                            , .new_pose = kPose_F5_FaceR_CrouchTrans_AimDR        , },
+  [7]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_35_FaceR_CrouchTrans              , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X+kButton_Left     , .new_pose = kPose_78_FaceR_Moonwalk_AimDR           , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X+kButton_Left     , .new_pose = kPose_76_FaceR_Moonwalk_AimUR           , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R+kButton_L+kButton_Left     , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [11] = { .new_input = 0             , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_03_FaceR_AimU                     , },
+  [12] = { .new_input = 0             , .cur_input = kButton_R+kButton_Right              , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [13] = { .new_input = 0             , .cur_input = kButton_L+kButton_Right              , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [14] = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [16] = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_4A_FaceR_Moonwalk                 , },
+  [17] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [18] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_03_FaceR_AimU                     , },
+  [19] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_05_FaceR_AimUR                    , },
+  [20] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_07_FaceR_AimDR                    , },
+  [21] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_09_MoveR_NoAim                    , },
+  [22] = { 0xffff },
+};
+
+static const PoseEntry Trans_02[] = {  // 0x91a172
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Up                           , .new_pose = kPose_56_FaceL_Jumptrans_AimU           , },
+  [1]  = { .new_input = kButton_A     , .cur_input = kButton_R                            , .new_pose = kPose_58_FaceL_Jumptrans_AimUL          , },
+  [2]  = { .new_input = kButton_A     , .cur_input = kButton_L                            , .new_pose = kPose_5A_FaceL_Jumptrans_AimDL          , },
+  [3]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [4]  = { .new_input = kButton_Down  , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_F2_FaceL_CrouchTrans_AimU         , },
+  [5]  = { .new_input = kButton_Down  , .cur_input = kButton_R                            , .new_pose = kPose_F4_FaceL_CrouchTrans_AimUL        , },
+  [6]  = { .new_input = kButton_Down  , .cur_input = kButton_L                            , .new_pose = kPose_F6_FaceL_CrouchTrans_AimDL        , },
+  [7]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_36_FaceL_CrouchTrans              , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X+kButton_Right    , .new_pose = kPose_77_FaceL_Moonwalk_AimDL           , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X+kButton_Right    , .new_pose = kPose_75_FaceL_Moonwalk_AimUL           , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R+kButton_L+kButton_Right    , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [11] = { .new_input = 0             , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_04_FaceL_AimU                     , },
+  [12] = { .new_input = 0             , .cur_input = kButton_R+kButton_Left               , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [13] = { .new_input = 0             , .cur_input = kButton_L+kButton_Left               , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [14] = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [16] = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_49_FaceL_Moonwalk                 , },
+  [17] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [18] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_04_FaceL_AimU                     , },
+  [19] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_06_FaceL_AimUL                    , },
+  [20] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_08_FaceL_AimDL                    , },
+  [21] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_0A_MoveL_NoAim                    , },
+  [22] = { 0xffff },
+};
+
+static const PoseEntry Trans_09[] = {  // 0x91a1f8
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_35_FaceR_CrouchTrans              , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Right              , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Right              , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_0B_MoveR_Gun                      , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_09_MoveR_NoAim                    , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_03_FaceR_AimU                     , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_05_FaceR_AimUR                    , },
+  [11] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_07_FaceR_AimDR                    , },
+  [12] = { 0xffff },
+};
+
+static const PoseEntry Trans_0a[] = {  // 0x91a242
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_36_FaceL_CrouchTrans              , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Left               , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Left               , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_0C_MoveL_Gun                      , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_0A_MoveL_NoAim                    , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_04_FaceL_AimU                     , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_06_FaceL_AimUL                    , },
+  [11] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_08_FaceL_AimDL                    , },
+  [12] = { 0xffff },
+};
+
+static const PoseEntry Trans_0b[] = {  // 0x91ae94
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_35_FaceR_CrouchTrans              , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Right              , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Right              , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_0B_MoveR_Gun                      , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_0B_MoveR_Gun                      , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_03_FaceR_AimU                     , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_05_FaceR_AimUR                    , },
+  [11] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_07_FaceR_AimDR                    , },
+  [12] = { 0xffff },
+};
+
+static const PoseEntry Trans_0c[] = {  // 0x91aede
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_36_FaceL_CrouchTrans              , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Left               , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Left               , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_0C_MoveL_Gun                      , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_0C_MoveL_Gun                      , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_04_FaceL_AimU                     , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_06_FaceL_AimUL                    , },
+  [11] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_08_FaceL_AimDL                    , },
+  [12] = { 0xffff },
+};
+
+static const PoseEntry Trans_13[] = {  // 0x91aac0
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right+kButton_Up   , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right+kButton_Down , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A+kButton_Right    , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Right    , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [11] = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [12] = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [13] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [14] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [16] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [17] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [18] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [19] = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [20] = { 0xffff },
+};
+
+static const PoseEntry Trans_14[] = {  // 0x91ab3a
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left+kButton_Up    , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left+kButton_Down  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A+kButton_Left     , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Left     , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [11] = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [12] = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [13] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [14] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [16] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [17] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [18] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [19] = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [20] = { 0xffff },
+};
+
+static const PoseEntry Trans_15[] = {  // 0x91a2f6
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right+kButton_Up   , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right+kButton_Down , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A+kButton_Right    , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Right    , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [11] = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [12] = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [13] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [14] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [16] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [17] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [18] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [19] = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun  , },
+  [20] = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [21] = { 0xffff },
+};
+
+static const PoseEntry Trans_16[] = {  // 0x91a376
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left+kButton_Up    , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left+kButton_Down  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A+kButton_Left     , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Left     , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [11] = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [12] = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [13] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [14] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [16] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [17] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [18] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [19] = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun  , },
+  [20] = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [21] = { 0xffff },
+};
+
+static const PoseEntry Trans_17[] = {  // 0x91abb4
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_37_FaceR_MorphTrans               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right+kButton_Up   , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right+kButton_Down , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A+kButton_Right    , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Right    , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_X+kButton_A+kButton_Right    , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [10] = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [12] = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [13] = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [14] = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [16] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [17] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [18] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [19] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [20] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [21] = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [22] = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [23] = { 0xffff },
+};
+
+static const PoseEntry Trans_18[] = {  // 0x91ac40
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_38_FaceL_MorphTrans               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left+kButton_Up    , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left+kButton_Down  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A+kButton_Left     , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Left     , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A+kButton_Left     , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [10] = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [12] = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [13] = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [14] = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [15] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [16] = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [17] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [18] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [19] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [20] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [21] = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [22] = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [23] = { 0xffff },
+};
+
+static const PoseEntry Trans_19[] = {  // 0x91a41e
+  [0]  = { .new_input = kButton_X     , .cur_input = 0                                    , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [1]  = { .new_input = kButton_X     , .cur_input = kButton_Right                        , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_1a[] = {  // 0x91a46e
+  [0]  = { .new_input = kButton_X     , .cur_input = 0                                    , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [1]  = { .new_input = kButton_X     , .cur_input = kButton_Left                         , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_1b[] = {  // 0x91a4be
+  [0]  = { .new_input = kButton_X     , .cur_input = 0                                    , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [1]  = { .new_input = kButton_X     , .cur_input = kButton_Right                        , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_1B_FaceR_SpaceJump                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_1B_FaceR_SpaceJump                , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1C_FaceL_SpaceJump                , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_1c[] = {  // 0x91a50e
+  [0]  = { .new_input = kButton_X     , .cur_input = 0                                    , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [1]  = { .new_input = kButton_X     , .cur_input = kButton_Left                         , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_1C_FaceL_SpaceJump                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1C_FaceL_SpaceJump                , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_1B_FaceR_SpaceJump                , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_1d[] = {  // 0x91a5fe
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_1E_MoveR_Morphball_Ground         , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1F_MoveL_Morphball_Ground         , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_1e[] = {  // 0x91a618
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_1E_MoveR_Morphball_Ground         , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1F_MoveL_Morphball_Ground         , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_1f[] = {  // 0x91a632
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_1E_MoveR_Morphball_Ground         , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1F_MoveL_Morphball_Ground         , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_20[] = {  // 0x91a666
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_23[] = {  // 0x91a668
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_25[] = {  // 0x91acf4
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_26[] = {  // 0x91ad08
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_27[] = {  // 0x91a66c
+  [0]  = { .new_input = kButton_Up    , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_F7_FaceR_StandTrans_AimU          , },
+  [1]  = { .new_input = kButton_Up    , .cur_input = kButton_R                            , .new_pose = kPose_F9_FaceR_StandTrans_AimUR         , },
+  [2]  = { .new_input = kButton_Up    , .cur_input = kButton_L                            , .new_pose = kPose_FB_FaceR_StandTrans_AimDR         , },
+  [3]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3B_FaceR_StandTrans               , },
+  [4]  = { .new_input = kButton_Left  , .cur_input = 0                                    , .new_pose = kPose_43_FaceR_Turn_Crouch              , },
+  [5]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_37_FaceR_MorphTrans               , },
+  [6]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_85_FaceR_Crouch_AimU              , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Right              , .new_pose = kPose_01_FaceR_Normal                   , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Right              , .new_pose = kPose_01_FaceR_Normal                   , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_71_FaceR_Crouch_AimUR             , },
+  [11] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_73_FaceR_Crouch_AimDR             , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_01_FaceR_Normal                   , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_28[] = {  // 0x91a6bc
+  [0]  = { .new_input = kButton_Up    , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_F8_FaceL_StandTrans_AimU          , },
+  [1]  = { .new_input = kButton_Up    , .cur_input = kButton_R                            , .new_pose = kPose_FA_FaceL_StandTrans_AimUL         , },
+  [2]  = { .new_input = kButton_Up    , .cur_input = kButton_L                            , .new_pose = kPose_FC_FaceL_StandTrans_AimDL         , },
+  [3]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3C_FaceL_StandTrans               , },
+  [4]  = { .new_input = kButton_Right , .cur_input = 0                                    , .new_pose = kPose_44_FaceL_Turn_Crouch              , },
+  [5]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_38_FaceL_MorphTrans               , },
+  [6]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_R+kButton_L                  , .new_pose = kPose_86_FaceL_Crouch_AimU              , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Left               , .new_pose = kPose_02_FaceL_Normal                   , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Left               , .new_pose = kPose_02_FaceL_Normal                   , },
+  [10] = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_72_FaceL_Crouch_AimUL             , },
+  [11] = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_74_FaceL_Crouch_AimDL             , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_02_FaceL_Normal                   , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_29[] = {  // 0x91a70c
+  [0]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_6D_FaceR_Fall_AimUR               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_6F_FaceR_Fall_AimDR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_87_FaceR_Turn_Fall                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_87_FaceR_Turn_Fall                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_87_FaceR_Turn_Fall                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_2B_FaceR_Fall_AimU                , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_2D_FaceR_Fall_AimD                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6D_FaceR_Fall_AimUR               , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6F_FaceR_Fall_AimDR               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_67_FaceR_Fall_Gun                 , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_29_FaceR_Fall                     , },
+  [11] = { 0xffff },
+};
+
+static const PoseEntry Trans_2a[] = {  // 0x91a750
+  [0]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_6E_FaceL_Fall_AimUL               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_70_FaceL_Fall_AimDL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_88_FaceL_Turn_Fall                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_88_FaceL_Turn_Fall                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_88_FaceL_Turn_Fall                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_2C_FaceL_Fall_AimU                , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_2E_FaceL_Fall_AimD                , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6E_FaceL_Fall_AimUL               , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_70_FaceL_Fall_AimDL               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_68_FaceL_Fall_Gun                 , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_2A_FaceL_Fall                     , },
+  [11] = { 0xffff },
+};
+
+static const PoseEntry Trans_2d[] = {  // 0x91ad94
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_37_FaceR_MorphTrans               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_6D_FaceR_Fall_AimUR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_6F_FaceR_Fall_AimDR               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_2B_FaceR_Fall_AimU                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_2D_FaceR_Fall_AimD                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_87_FaceR_Turn_Fall                , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6D_FaceR_Fall_AimUR               , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6F_FaceR_Fall_AimDR               , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_67_FaceR_Fall_Gun                 , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_29_FaceR_Fall                     , },
+  [10] = { 0xffff },
+};
+
+static const PoseEntry Trans_2e[] = {  // 0x91add2
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_38_FaceL_MorphTrans               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_6E_FaceL_Fall_AimUL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_70_FaceL_Fall_AimDL               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_2C_FaceL_Fall_AimU                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_2E_FaceL_Fall_AimD                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_88_FaceL_Turn_Fall                , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6E_FaceL_Fall_AimUL               , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_70_FaceL_Fall_AimDL               , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_68_FaceL_Fall_Gun                 , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_2A_FaceL_Fall                     , },
+  [10] = { 0xffff },
+};
+
+static const PoseEntry Trans_2f[] = {  // 0x91a0dc
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_31[] = {  // 0x91a794
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_31_FaceR_Morphball_Air            , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_32_FaceL_Morphball_Air            , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_32[] = {  // 0x91a7ae
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_32_FaceL_Morphball_Air            , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_31_FaceR_Morphball_Air            , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_33[] = {  // 0x91a7c8
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_34[] = {  // 0x91a7ca
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_3d[] = {  // 0x91accc
+  [0]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_67_FaceR_Fall_Gun                 , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_2B_FaceR_Fall_AimU                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_2D_FaceR_Fall_AimD                , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_3e[] = {  // 0x91ace0
+  [0]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_68_FaceL_Fall_Gun                 , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_2C_FaceL_Fall_AimU                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_2E_FaceL_Fall_AimD                , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_41[] = {  // 0x91a64c
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_1E_MoveR_Morphball_Ground         , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1F_MoveL_Morphball_Ground         , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_42[] = {  // 0x91a66a
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_45[] = {  // 0x91a7cc
+  [0]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_45                                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_09_MoveR_NoAim                    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_46[] = {  // 0x91a7e0
+  [0]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_46                                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_0A_MoveL_NoAim                    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_47[] = {  // 0x91a7f4
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_48[] = {  // 0x91a834
+  [0]  = { 0xffff },
+};
+
+static const PoseEntry Trans_49[] = {  // 0x91a874
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_36_FaceL_CrouchTrans              , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_C0_FaceL_Moonwalk_TurnjumpR       , },
+  [2]  = { .new_input = kButton_A     , .cur_input = kButton_R                            , .new_pose = kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL , },
+  [3]  = { .new_input = kButton_A     , .cur_input = kButton_L                            , .new_pose = kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X+kButton_Right    , .new_pose = kPose_77_FaceL_Moonwalk_AimDL           , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X+kButton_Right    , .new_pose = kPose_75_FaceL_Moonwalk_AimUL           , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_49_FaceL_Moonwalk                 , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_0A_MoveL_NoAim                    , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [9]  = { 0xffff },
+};
+
+static const PoseEntry Trans_4a[] = {  // 0x91a8ac
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_35_FaceR_CrouchTrans              , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_BF_FaceR_Moonwalk_TurnjumpL       , },
+  [2]  = { .new_input = kButton_A     , .cur_input = kButton_R                            , .new_pose = kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR , },
+  [3]  = { .new_input = kButton_A     , .cur_input = kButton_L                            , .new_pose = kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X+kButton_Left     , .new_pose = kPose_76_FaceR_Moonwalk_AimUR           , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X+kButton_Left     , .new_pose = kPose_78_FaceR_Moonwalk_AimDR           , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_4A_FaceR_Moonwalk                 , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_09_MoveR_NoAim                    , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [9]  = { 0xffff },
+};
+
+static const PoseEntry Trans_4b[] = {  // 0x91a28c
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_2F_FaceR_Turn_Jump                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [8]  = { 0xffff },
+};
+
+static const PoseEntry Trans_4c[] = {  // 0x91a2be
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_A                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_X+kButton_A                  , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_30_FaceL_Turn_Jump                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [9]  = { 0xffff },
+};
+
+static const PoseEntry Trans_4f[] = {  // 0x91a3f6
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_52_FaceL_Jump_NoAim_MoveF         , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_4F_FaceL_Dmgboost                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun  , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_50[] = {  // 0x91a40a
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_50_FaceR_Dmgboost                 , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_51_FaceR_Jump_NoAim_MoveF         , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun  , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_53[] = {  // 0x91a8e4
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_50_FaceR_Dmgboost                 , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_54[] = {  // 0x91a8ec
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_4F_FaceL_Dmgboost                 , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_5b[] = {  // 0x91a8fc
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_66                                , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_5c[] = {  // 0x91a904
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_65                                , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_63[] = {  // 0x91a990
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_66                                , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_64[] = {  // 0x91a998
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_65                                , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_65[] = {  // 0x91a9a0
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_65                                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_65                                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_65                                , },
+  [6]  = { 0xffff },
+};
+
+static const PoseEntry Trans_66[] = {  // 0x91a9c6
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_66                                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_66                                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_66                                , },
+  [6]  = { 0xffff },
+};
+
+static const PoseEntry Trans_67[] = {  // 0x91af28
+  [0]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_6D_FaceR_Fall_AimUR               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_6F_FaceR_Fall_AimDR               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_2B_FaceR_Fall_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_2D_FaceR_Fall_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_87_FaceR_Turn_Fall                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6D_FaceR_Fall_AimUR               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6F_FaceR_Fall_AimDR               , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_67_FaceR_Fall_Gun                 , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_67_FaceR_Fall_Gun                 , },
+  [9]  = { 0xffff },
+};
+
+static const PoseEntry Trans_68[] = {  // 0x91af60
+  [0]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_6E_FaceL_Fall_AimUL               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_70_FaceL_Fall_AimDL               , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_2C_FaceL_Fall_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_2E_FaceL_Fall_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_88_FaceL_Turn_Fall                , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6E_FaceL_Fall_AimUL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_70_FaceL_Fall_AimDL               , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_68_FaceL_Fall_Gun                 , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_68_FaceL_Fall_Gun                 , },
+  [9]  = { 0xffff },
+};
+
+static const PoseEntry Trans_79[] = {  // 0x91a90c
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_7F_FaceR_Springball_Air           , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_7B_MoveR_Springball_Ground        , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_7C_MoveL_Springball_Ground        , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_7a[] = {  // 0x91a926
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_80_FaceL_Springball_Air           , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_7B_MoveR_Springball_Ground        , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_7C_MoveL_Springball_Ground        , },
+  [4]  = { 0xffff },
+};
+
+static const PoseEntry Trans_7d[] = {  // 0x91a940
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_7E_FaceL_Springball_Fall          , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_7D_FaceR_Springball_Fall          , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_7e[] = {  // 0x91a954
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_7D_FaceR_Springball_Fall          , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_7E_FaceL_Springball_Fall          , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_7f[] = {  // 0x91a968
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3D_FaceR_UnmorphTrans             , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_7F_FaceR_Springball_Air           , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_80_FaceL_Springball_Air           , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_80[] = {  // 0x91a97c
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_3E_FaceL_UnmorphTrans             , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_7F_FaceR_Springball_Air           , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_80_FaceL_Springball_Air           , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_81[] = {  // 0x91a55e
+  [0]  = { .new_input = kButton_X     , .cur_input = 0                                    , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [1]  = { .new_input = kButton_X     , .cur_input = kButton_Right                        , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X                  , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X                  , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_81_FaceR_Screwattack              , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_15_FaceR_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_17_FaceR_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_81_FaceR_Screwattack              , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_82_FaceL_Screwattack              , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_82[] = {  // 0x91a5ae
+  [0]  = { .new_input = kButton_X     , .cur_input = 0                                    , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [1]  = { .new_input = kButton_X     , .cur_input = kButton_Left                         , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Up                 , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Down               , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_R+kButton_X                  , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_L+kButton_X                  , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_82_FaceL_Screwattack              , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_16_FaceL_Jump_AimU                , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_18_FaceL_Jump_AimD                , },
+  [11] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_82_FaceL_Screwattack              , },
+  [12] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_81_FaceR_Screwattack              , },
+  [13] = { 0xffff },
+};
+
+static const PoseEntry Trans_83[] = {  // 0x91a9ec
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_37_FaceR_MorphTrans               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_69_FaceR_Jump_AimUR               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6B_FaceR_Jump_AimDR               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_13_FaceR_Jump_NoAim_NoMove_Gun    , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_83_FaceR_Walljump                 , },
+  [6]  = { 0xffff },
+};
+
+static const PoseEntry Trans_84[] = {  // 0x91aa12
+  [0]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_38_FaceL_MorphTrans               , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_6A_FaceL_Jump_AimUL               , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_6C_FaceL_Jump_AimDL               , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_14_FaceL_Jump_NoAim_NoMove_Gun    , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_A                            , .new_pose = kPose_84_FaceL_Walljump                 , },
+  [6]  = { 0xffff },
+};
+
+static const PoseEntry Trans_89[] = {  // 0x91aa38
+  [0]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Up             , .new_pose = kPose_0F_MoveR_AimUR                    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right+kButton_Down           , .new_pose = kPose_11_MoveR_AimDR                    , },
+  [3]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_35_FaceR_CrouchTrans              , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Left               , .new_pose = kPose_78_FaceR_Moonwalk_AimDR           , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Left               , .new_pose = kPose_76_FaceR_Moonwalk_AimUR           , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_03_FaceR_AimU                     , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_05_FaceR_AimUR                    , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_07_FaceR_AimDR                    , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_25_FaceR_Turn_Stand               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_09_MoveR_NoAim                    , },
+  [11] = { 0xffff },
+};
+
+static const PoseEntry Trans_8a[] = {  // 0x91aa7c
+  [0]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Up              , .new_pose = kPose_10_MoveL_AimUL                    , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left+kButton_Down            , .new_pose = kPose_12_MoveL_AimDL                    , },
+  [3]  = { .new_input = kButton_Down  , .cur_input = 0                                    , .new_pose = kPose_36_FaceL_CrouchTrans              , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L+kButton_Right              , .new_pose = kPose_77_FaceL_Moonwalk_AimDL           , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_R+kButton_Right              , .new_pose = kPose_75_FaceL_Moonwalk_AimUL           , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_04_FaceL_AimU                     , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_06_FaceL_AimUL                    , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_08_FaceL_AimDL                    , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_26_FaceL_Turn_Stand               , },
+  [10] = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_0A_MoveL_NoAim                    , },
+  [11] = { 0xffff },
+};
+
+static const PoseEntry Trans_8b[] = {  // 0x91ad1c
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_8B_FaceR_Turn_Stand_AimU          , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_8c[] = {  // 0x91ad30
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_8C_FaceL_Turn_Stand_AimU          , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_8d[] = {  // 0x91ad44
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_8D_FaceR_Turn_Stand_AimDR         , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_8e[] = {  // 0x91ad58
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_8E_FaceL_Turn_Stand_AimDL         , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_ba[] = {  // 0x91ae18
+  [0]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left+kButton_Up    , .new_pose = kPose_BB_FaceL_Draygon_NoMove_AimUL     , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left+kButton_Down  , .new_pose = kPose_BD_FaceL_Draygon_NoMove_AimDL     , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Left               , .new_pose = kPose_BC_FaceL_Draygon_Fire             , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_BB_FaceL_Draygon_NoMove_AimUL     , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_BD_FaceL_Draygon_NoMove_AimDL     , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_BC_FaceL_Draygon_Fire             , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_BE_FaceL_Draygon_Move             , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_BE_FaceL_Draygon_Move             , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_BE_FaceL_Draygon_Move             , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_BE_FaceL_Draygon_Move             , },
+  [10] = { 0xffff },
+};
+
+static const PoseEntry Trans_bf[] = {  // 0x91af98
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_BF_FaceR_Moonwalk_TurnjumpL       , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c0[] = {  // 0x91afac
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_C0_FaceL_Moonwalk_TurnjumpR       , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c1[] = {  // 0x91afc0
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c2[] = {  // 0x91afd4
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c3[] = {  // 0x91afe8
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Left                         , .new_pose = kPose_1A_FaceL_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4C_FaceL_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c4[] = {  // 0x91affc
+  [0]  = { .new_input = kButton_A     , .cur_input = kButton_Right                        , .new_pose = kPose_19_FaceR_SpinJump                 , },
+  [1]  = { .new_input = kButton_A     , .cur_input = 0                                    , .new_pose = kPose_4B_FaceR_Jumptrans                , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c7[] = {  // 0x91ad6c
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_CB_FaceR_Shinespark_Vert          , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_CD_FaceR_Shinespark_Diag          , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Right              , .new_pose = kPose_C9_FaceR_Shinespark_Horiz         , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_c8[] = {  // 0x91ad80
+  [0]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Up                 , .new_pose = kPose_CC_FaceL_Shinespark_Vert          , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_R+kButton_A                  , .new_pose = kPose_CE_FaceL_Shinespark_Diag          , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_A+kButton_Left               , .new_pose = kPose_CA_FaceL_Shinespark_Horiz         , },
+  [3]  = { 0xffff },
+};
+
+static const PoseEntry Trans_df[] = {  // 0x91ae10
+  [0]  = { .new_input = kButton_Up    , .cur_input = 0                                    , .new_pose = kPose_DE                                , },
+  [1]  = { 0xffff },
+};
+
+static const PoseEntry Trans_ec[] = {  // 0x91ae56
+  [0]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right+kButton_Up   , .new_pose = kPose_ED_FaceR_Draygon_NoMove_AimUR     , },
+  [1]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right+kButton_Down , .new_pose = kPose_EF_FaceR_Draygon_NoMove_AimDR     , },
+  [2]  = { .new_input = 0             , .cur_input = kButton_X+kButton_Right              , .new_pose = kPose_EE_FaceR_Draygon_Fire             , },
+  [3]  = { .new_input = 0             , .cur_input = kButton_R                            , .new_pose = kPose_ED_FaceR_Draygon_NoMove_AimUR     , },
+  [4]  = { .new_input = 0             , .cur_input = kButton_L                            , .new_pose = kPose_EF_FaceR_Draygon_NoMove_AimDR     , },
+  [5]  = { .new_input = 0             , .cur_input = kButton_X                            , .new_pose = kPose_EE_FaceR_Draygon_Fire             , },
+  [6]  = { .new_input = 0             , .cur_input = kButton_Left                         , .new_pose = kPose_F0_FaceR_Draygon_Move             , },
+  [7]  = { .new_input = 0             , .cur_input = kButton_Right                        , .new_pose = kPose_F0_FaceR_Draygon_Move             , },
+  [8]  = { .new_input = 0             , .cur_input = kButton_Up                           , .new_pose = kPose_F0_FaceR_Draygon_Move             , },
+  [9]  = { .new_input = 0             , .cur_input = kButton_Down                         , .new_pose = kPose_F0_FaceR_Draygon_Move             , },
+  [10] = { 0xffff },
+};
+
+static const PoseEntry* get_PoseEntry(uint16 pose) {
+  switch (pose) {
     case kPose_00_FaceF_Powersuit:
     case kPose_9B_FaceF_VariaGravitySuit:  return Trans_00;
     case kPose_01_FaceR_Normal:
@@ -1323,7 +1323,7 @@ uint16* kPoseTransitionTable(void) {
     case kPose_EE_FaceR_Draygon_Fire: 
     case kPose_EF_FaceR_Draygon_NoMove_AimDR: 
     case kPose_F0_FaceR_Draygon_Move:  return Trans_ec;
-    default: return (uint16*)Unreachable();
+    default: Unreachable(); return (PoseEntry*){0};
   }
 }
 

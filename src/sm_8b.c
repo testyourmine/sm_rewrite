@@ -3018,7 +3018,7 @@ uint16 CinematicFunction_Intro_Func21(uint16 k, uint16 j) {  // 0x8BB554
 void CinematicFunction_Intro_Func22(uint16 k) {  // 0x8BB585
   if (joypad1_newkeys) {
     int v1 = k >> 1;
-    mode7_obj_instr_ptr[v1] = -11355;
+    mode7_obj_instr_ptr[v1] = 0xD3A5;
     mode7_obj_instr_timer[v1] = 1;
     mode7_obj_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
     DisableCinematicBgTilemapUpdates();
@@ -3050,7 +3050,7 @@ uint16 CinematicFunction_Intro_Func23(uint16 k, uint16 j) {  // 0x8BB5C3
 void CinematicFunction_Intro_Func24(uint16 k) {  // 0x8BB5EE
   if (joypad1_newkeys) {
     int v1 = k >> 1;
-    mode7_obj_instr_ptr[v1] = -11333;
+    mode7_obj_instr_ptr[v1] = 0xD3BB;
     mode7_obj_instr_timer[v1] = 1;
     mode7_obj_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
     DisableCinematicBgTilemapUpdates();
@@ -3082,7 +3082,7 @@ uint16 CinematicFunction_Intro_Func26(uint16 k, uint16 j) {  // 0x8BB626
 void CinematicFunction_Intro_Func27(uint16 k) {  // 0x8BB657
   if (joypad1_newkeys) {
     int v1 = k >> 1;
-    mode7_obj_instr_ptr[v1] = -11311;
+    mode7_obj_instr_ptr[v1] = 0xD3D1;
     mode7_obj_instr_timer[v1] = 1;
     mode7_obj_preinstr_func[v1] = FUNC16(CinematicFunction_nullsub_116);
     DisableCinematicBgTilemapUpdates();
@@ -3543,7 +3543,7 @@ void CinematicFunction_Intro_Func56(void) {  // 0x8BBDF9
     reg_COLDATA[1] = 95;
     reg_COLDATA[2] = -97;
     ClearCinematicSprites();
-    QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_BackOfGunship);
+    QueueMode7Transfers(0x8b, addr_kMode7TransferData_Intro_BackOfGunship);
     mode7_x_pos = -32;
     mode7_y_pos = -128;
     mode7_transform_angle = 32;
@@ -3848,10 +3848,10 @@ void CinematicFunction_Intro_Func76(void) {  // 0x8BC345
     mode7_transform_zoom = 768;
     SpawnCinematicSpriteObject(addr_kCinematicSpriteObjectDef_8BCF2D, 0);
     if (game_state == kGameState_37_CeresGoesBoomWithSamus)
-      QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_ClearCeresUpperHalf);
+      QueueMode7Transfers(0x8b, addr_kMode7TransferData_Intro_ClearCeresUpperHalf);
     else
-      QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_FrontOfGunship);
-    QueueMode7Transfers(0x8b, addr_kCinematicFunction_Intro_ClearCeresLowerHalf);
+      QueueMode7Transfers(0x8b, addr_kMode7TransferData_Intro_FrontOfGunship);
+    QueueMode7Transfers(0x8b, addr_kMode7TransferData_Intro_ClearCeresLowerHalf);
     cinematic_function = FUNC16(CinematicFunction_Intro_Func77);
   }
 }

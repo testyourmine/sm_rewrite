@@ -91,7 +91,7 @@ static const uint16 kTimerDigitsSpritemapPtr[10] = {  // 0x809FD4
   0x9fe8, 0x9ff4, 0xa000, 0xa00c, 0xa018, 0xa024, 0xa030, 0xa03c, 0xa048, 0xa054,
 };
 
-const LoadStationList kLoadStationLists[9][23] = {
+static const LoadStationList kLoadStationLists[9][23] = {
   [kArea_0_Crateria] = {
     [0]  = { .room_ptr_ = kRoom_91F8_Landing_site                                             , .door_ptr = 0x896a , .door_bts = 0x0   , .screen_x_pos = 0x400 , .screen_y_pos = 0x400 , .samus_y_offset = 0x40  , .samus_x_offset = 0x0    , },
     [1]  = { .room_ptr_ = kRoom_93D5_Crateria_save_station                                    , .door_ptr = 0x899a , .door_bts = 0x0   , .screen_x_pos = 0x0   , .screen_y_pos = 0x0   , .samus_y_offset = 0x98  , .samus_x_offset = 0xffe0 , },
