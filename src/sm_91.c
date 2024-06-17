@@ -831,8 +831,12 @@ void CalculateXrayHdmaTableInner(uint16 k, uint16 j, uint16 r18, uint16 r20, boo
 void XrayRunHandler(void) {  // 0x91CAD6
   if (!time_is_frozen_flag && (button_config_run_b & joypad1_lastkeys) != 0) {
     if (Xray_Initialize() & 1) {
-        static const SpawnHdmaObject_Args kXrayHdmaWindow2Object = { 0x41, 0x28, 0xd223 };
-        SpawnHdmaObject(0x91, &kXrayHdmaWindow2Object);
+        static const SpawnHdmaObject_Args kSpawnHdmaObject_91CAF2 = {
+          .hdma_control = HDMA_CONTROL(0, 1, 1),
+          .hdma_target = REG(WH2),
+          .hdma_instr_list_ptr = addr_kHdmaObject_IList_Xray
+        };
+        SpawnHdmaObject(0x91, &kSpawnHdmaObject_91CAF2);
     }
   }
 }
@@ -1186,7 +1190,7 @@ void Xray_SetupStage5_ReadBg2_2ndScreen(void) {  // 0x91D0D3
 bool CanXrayShowBlocks(void) {  // 0x91D143
   if (room_ptr == addr_kRoom_TourianEntrance || room_ptr == addr_kRoom_n00bTube)
     return false;
-  if (fx_type == 0x24)
+  if (fx_type == kFxType_24_Fireflea)
     return false;
   if (boss_id == kBossId_3_Kraid || boss_id == kBossId_6_Crocomire || boss_id == kBossId_7_Phantoon
       || boss_id == kBossId_8_Draygon || boss_id == kBossId_10_MotherBrain)
@@ -1236,24 +1240,24 @@ void Xray_SetupStage7_InitXrayBeam_TransferBg_2ndScreen(void) {  // 0x91D1A0
 }
 
 void HdmaobjPreInstr_XraySetup(uint16 k) {  // 0x91D27F
-  uint16 v1;
+  uint16 win_2_config;
 
-  v1 = 4096;
-  if (fx_type == 36) {
-    if (!sign16((reg_COLDATA[0] & 0x1F) - 7))
+  win_2_config = kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx;
+  if (fx_type == kFxType_24_Fireflea) {
+    if ((reg_COLDATA[0] & 0x1F) >= 7)
       goto LABEL_5;
     goto LABEL_4;
   }
-  v1 = 0x2000;
+  win_2_config = kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn;
   if (CanXrayShowBlocks()) {
-    v1 = 0x4000;
+    win_2_config = kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn;
 LABEL_4:
-    *(uint16 *)&reg_COLDATA[0] = 0x27;
-    *(uint16 *)&reg_COLDATA[1] = 0x47;
-    *(uint16 *)&reg_COLDATA[2] = 0x87;
+    reg_COLDATA[0] = 0x27;
+    reg_COLDATA[1] = 0x47;
+    reg_COLDATA[2] = 0x87;
   }
 LABEL_5:
-  fx_layer_blending_config_c |= v1;
+  fx_layer_blending_window_2_config |= win_2_config;
 }
 
 void Xray_SetupStage8_SetBackdropColor(void) {  // 0x91D2BC
@@ -1286,7 +1290,7 @@ void VariaSuitPickup(void) {  // 0x91D4E4
     hdma_table_1[i >> 1] = 255;
   if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)
     QueueSfx1_Max9(kSfx1_SpinJumpEnd_Silence);
-  if ((equipped_items & kItem_GravitySuit) != 0)
+  if (equipped_items & kItem_GravitySuit)
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   else
     samus_pose = kPose_00_FaceF_Powersuit;
@@ -1294,12 +1298,16 @@ void VariaSuitPickup(void) {  // 0x91D4E4
   Samus_SetAnimationFrameIfPoseChanged();
   RunSamusCode(kSamusCode_21_LockToSuitAcquisition);
   samus_x_pos = layer1_x_pos + 120;
-  samus_prev_x_pos = layer1_x_pos + 120;
+  samus_prev_x_pos = samus_x_pos;
   samus_y_pos = layer1_y_pos + 136;
-  samus_prev_y_pos = layer1_y_pos + 136;
+  samus_prev_y_pos = samus_y_pos;
   QueueSfx2_Max6(kSfx2_AcquiredSuit);
-  static const SpawnHdmaObject_Args unk_91D59B = { 0x41, 0x26, 0xd5a2 };
-  SpawnHdmaObject(0x91, &unk_91D59B);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_91D59B = {
+    .hdma_control = HDMA_CONTROL(0, 1, 1),
+    .hdma_target = REG(WH0),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_VariaSuitPickup_Window1_Pos
+  };
+  SpawnHdmaObject(0x91, &kSpawnHdmaObject_91D59B);
 }
 
 void GravitySuitPickup(void) {  // 0x91D5BA
@@ -1336,8 +1344,12 @@ void GravitySuitPickup(void) {  // 0x91D5BA
   samus_y_pos = layer1_y_pos + 136;
   samus_prev_y_pos = layer1_y_pos + 136;
   QueueSfx2_Max6(kSfx2_AcquiredSuit);
-  static const SpawnHdmaObject_Args unk_91D673 = { 0x41, 0x26, 0xd67a };
-  SpawnHdmaObject(0x91, &unk_91D673);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_91D673 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 1),
+    .hdma_target = REG(WH0),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_GravitySuitPickup_Window1_Pos
+  };
+  SpawnHdmaObject(0x91, &kSpawnHdmaObject_91D673);
 }
 
 void InitializeSuitPickupHdma(void) {  // 0x91D692
@@ -1517,7 +1529,7 @@ uint8 Samus_HandleScrewAttackSpeedBoostingPals(void) {  // 0x91D9B2
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r20))
         return 1;
-    } else if (sign16(fx_y_pos - r20) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r20) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       return 1;
     }
   }
@@ -2768,7 +2780,7 @@ LABEL_11:
     flare_animation_timer = 0;
     flare_slow_sparks_anim_timer = 0;
     flare_fast_sparks_anim_timer = 0;
-    QueueSfx1_Max6(kSfx1_XRay);
+    QueueSfx1_Max6(kSfx1_Xray);
     break;
   }
 }
@@ -2962,7 +2974,7 @@ LABEL_13:
     HandleLandingGraphics_Ceres();
     return;
   }
-  if (fx_type != 10)
+  if (fx_type != kFxType_A_Rain)
     goto LABEL_13;
 LABEL_14:
   HandleLandingGraphics_Maridia_FootstepSplashes();
@@ -2971,7 +2983,7 @@ LABEL_14:
 void HandleLandingGraphics_Maridia_FootstepSplashes(void) {  // 0x91F116
   uint16 bottom = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
-    if (sign16(fx_y_pos - bottom) && (fx_liquid_options & 4) == 0)
+    if (sign16(fx_y_pos - bottom) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled))
       return;
 LABEL_7:
     atmospheric_gfx_frame_and_type[2] = 256;
@@ -2991,7 +3003,7 @@ LABEL_7:
 void HandleLandingGraphics_Norfair_WreckedShip_Dust(void) {  // 0x91F166
   uint16 bottom = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
-    if (sign16(fx_y_pos - bottom) && (fx_liquid_options & 4) == 0)
+    if (sign16(fx_y_pos - bottom) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled))
       return;
 LABEL_7:
     atmospheric_gfx_frame_and_type[2] = 1536;
@@ -3373,7 +3385,7 @@ LABEL_9:
       if ((fx_y_pos & 0x8000) != 0) {
         if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r20))
           return 0;
-      } else if (sign16(fx_y_pos - r20) && (fx_liquid_options & 4) == 0) {
+      } else if (sign16(fx_y_pos - r20) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
         return 0;
       }
     }
@@ -3398,7 +3410,7 @@ LABEL_22:
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r20))
         return 0;
-    } else if (sign16(fx_y_pos - r20) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r20) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       return 0;
     }
   }
@@ -3620,7 +3632,7 @@ uint8 SamusFunc_F468_WallJumping(void) {  // 0x91FA76
   if ((fx_y_pos & 0x8000) != 0) {
     if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - bottom))
       return 0;
-  } else if (sign16(fx_y_pos - bottom) && (fx_liquid_options & 4) == 0) {
+  } else if (sign16(fx_y_pos - bottom) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
     return 0;
   }
   atmospheric_gfx_frame_and_type[3] = 1536;
@@ -3665,7 +3677,8 @@ void Samus_SetAnimationFrameIfPoseChanged(void) {  // 0x91FB08
   } else {
     uint16 r = samus_y_pos + kPoseParams[samus_pose].y_radius - 1;
     if ((fx_y_pos & 0x8000) == 0) {
-      t = (sign16(fx_y_pos - r) && (fx_liquid_options & 4) == 0) ? kSamusPhys_AnimDelayInWater : samus_x_speed_divisor;
+      t = (sign16(fx_y_pos - r) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) ? kSamusPhys_AnimDelayInWater 
+                                                                                                   : samus_x_speed_divisor;
     } else if ((lava_acid_y_pos & 0x8000) != 0 || !sign16(lava_acid_y_pos - r)) {
       t = samus_x_speed_divisor;
     } else {

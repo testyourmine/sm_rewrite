@@ -13,9 +13,9 @@
 #define kCrocomire_MeltingTilesTab1 (*(uint16*)RomFixedPtr(0xa49bc7))
 #define kCrocomire_MeltingTilesTab2 (*(uint16*)RomFixedPtr(0xa49bc9))
 #define kCrocomire_MeltingTilesTab3 (*(uint16*)RomFixedPtr(0xa49bcb))
-//#define kCrocoVlineRandomPos ((uint8*)RomFixedPtr(0xa49697))
+//#define kCrocomire_MeltingXOffsetTab0 ((uint8*)RomFixedPtr(0xa49697))
 ////#define g_word_A49BBD ((uint16*)RomFixedPtr(0xa49bbd))
-//#define kCrocomire_Tab0 ((uint16*)RomFixedPtr(0xa498ca))
+//#define kCrocomire_RumbleTab0 ((uint16*)RomFixedPtr(0xa498ca))
 //#define kCrocomire_TilesDestinationAddresses ((uint16*)RomFixedPtr(0xa499cb))
 //#define kCrocomire_TilesSourceAddresses ((uint16*)RomFixedPtr(0xa499d9))
 
@@ -89,14 +89,14 @@ uint16 kCrocomire_Bg2TilemapIndices1[] = {
   0xffff,
 };
 
-uint8 kCrocoVlineRandomPos[] = {
+uint8 kCrocomire_MeltingXOffsetTab0[] = {
    43,  40,  33,  31,  44,  16,  22,  23,  15,   0,   6,   7,  11,   8,   1,  42, 
    12,  36,  46,  45,  26,  20,  29,  35,  30,  41,  37,  34,  19,  25,  21,  18, 
    48,   3,   9,   2,  27,   5,  24,  28,  17,  10,   4,  13,  47,  14,  32,  38, 
    39,
 };
 
-uint16 kCrocomire_Tab0[] = {
+uint16 kCrocomire_RumbleTab0[] = {
      0x4,    0x1,    0x0, 0xffff, 
      0x8,    0x1,    0x1, 0xffff, 
      0xc,    0x1,    0x1, 0xfffe, 

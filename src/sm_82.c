@@ -1050,8 +1050,8 @@ void BackupBG2TilemapForPauseMenu(void) {  // 0x828D51
   WriteRegWord(VMADDL, (reg_BG2SC & 0xFC) << 8 | 1);
   // fixed: this was missing
   WriteReg(VMAIN, 0x80);
-  WriteReg(DMAP1, 0x81);
-  WriteReg(BBAD1, 0x39);
+  WriteReg(DMAP1, DMA_CONTROL(1, 0, 0, 0, 1));
+  WriteReg(BBAD1, REG(RDVRAML));
   WriteRegWord(A1T1L, 0xDF5C);
   WriteReg(A1B1, 0x7E);
   WriteRegWord(DAS1L, 0x1000);
@@ -1499,8 +1499,8 @@ void LoadPauseMenuMapTilemapAndAreaLabel(void) {  // 0x8293C3
   WriteReg(VMADDL, 0xAA);
   WriteReg(VMADDH, 0x38);
   WriteReg(VMAIN, 0x80);
-  WriteReg(DMAP1, 1);
-  WriteReg(BBAD1, 0x18);
+  WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+  WriteReg(BBAD1, REG(VMDATAL));
   WriteReg(DAS1L, 0x18);
   WriteReg(DAS1H, 0);
   uint16 v0 = area_index;
@@ -3459,7 +3459,7 @@ CoroutineRet GameState_19_SamusNoHealth(void) {  // 0x82DC80
   for (int m = 0x1E; (m & 0x8000) == 0; m -= 2)
     target_palettes.sprite_pal_4[(m >> 1)] = palette_buffer.sprite_pal_4[(m >> 1)];
   game_options_screen_index = 3;
-  samus_death_anim_timer = 0;
+  samus_death_anim_index = 0;
   samus_death_anim_counter = 0;
   samus_death_anim_pre_flash_timer = 0;
   hud_item_index = 0;
@@ -3493,7 +3493,7 @@ CoroutineRet GameState_20_SamusNoHealth_BlackOut(void) {  // 0x82DCE0
       eproj_y_subpos[(i >> 1) + 15] = 0;
     samus_death_anim_pre_flash_timer = 16;
     game_options_screen_index = 3;
-    samus_death_anim_timer = 0;
+    samus_death_anim_index = 0;
     samus_death_anim_counter = 0;
     ++game_state;
     power_bomb_explosion_status = kPowerBombExplosionStatus_Inactive;
@@ -4258,7 +4258,8 @@ void LoadLibraryBackground(void) {
   if (fx_tilemap_ptr) {
     WriteRegWord(A1T1L, fx_tilemap_ptr);
     WriteRegWord(VMADDL, addr_kVram_Fx);
-    WriteRegWord(DMAP1, 0x1801);
+    WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+    WriteReg(BBAD1, REG(VMDATAL));
     WriteRegWord(A1B1, 0x8A);
     WriteRegWord(DAS1L, 0x840);
     WriteReg(VMAIN, 0x80);
@@ -4287,7 +4288,8 @@ uint16 LoadLibraryBackgroundFunc_E_DoorDependentTransferToVram(uint16 j) {  // 0
 uint16 LoadLibraryBackgroundFunc_2_TransferToVram(uint16 j) {  // 0x82E9F9
   uint16 *LoadBg_28 = (uint16 *)RomPtr_8F(j);
   WriteRegWord(VMADDL, *(uint16 *)((uint8 *)LoadBg_28 + 3));
-  WriteRegWord(DMAP1, 0x1801);
+  WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+  WriteReg(BBAD1, REG(VMDATAL));
   WriteRegWord(A1T1L, *LoadBg_28);
   WriteRegWord(A1B1, LoadBg_28[1]);
   WriteRegWord(DAS1L, *(uint16 *)((uint8 *)LoadBg_28 + 5));

@@ -735,6 +735,12 @@ enum LiquidPhysicsType {  // 0x7E0AD2
   kLiquidPhysicsType_LavaAcid = 0x2,
 };
 
+enum SamusYDirection {
+  kSamusYDir_None = 0x0,
+  kSamusYDir_Up = 0x1,
+  kSamusYDir_Down = 0x2,
+};
+
 enum ProjectileDirection { // 0x7E0C04
   kProjectileDir_UpFaceRight = 0x0,
   kProjectileDir_UpRight = 0x1,
@@ -951,6 +957,14 @@ enum FxLiquidOptions {  // 0x7E197E
   kFxLiquidOption_8_NoEffect = 0x8,
   kFxLiquidOption_40_BigTide = 0x40,
   kFxLiquidOption_80_SmallTide = 0x80,
+};
+
+enum LayerBlendingWindow2Configuration {  // 0x7E1987
+  kLayerBlendWindow2Configuration_0_None = 0x0,
+  kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx = 0x10,
+  kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn = 0x20,
+  kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn = 0x40,
+  kLayerBlendWindow2Configuration_80_PowerBombExplosionActive = 0x80
 };
 
 enum TourianEntranceStatueAnimationState {  // 0x7E1E6F
@@ -2001,7 +2015,7 @@ typedef struct SpawnHdmaObject_Args {  // 0x
   uint8 hdma_control;
   uint8 hdma_target;
   VoidP hdma_instr_list_ptr;
-}SpawnHdmaObject_Args;
+} SpawnHdmaObject_Args;
 
 ///* 25 */
 //typedef struct LoadBg_4 {
@@ -2465,8 +2479,8 @@ enum SoundLibrary1 {  // 0x
   kSfx1_Grappling = 0x6,
   kSfx1_GrappleEnd = 0x7,
   kSfx1_ChargingBeam = 0x8,
-  kSfx1_XRay = 0x9,
-  kSfx1_XRayEnd_Silence = 0xA,
+  kSfx1_Xray = 0x9,
+  kSfx1_XrayEnd_Silence = 0xA,
   kSfx1_UnchargedPowerBeam = 0xB,
   kSfx1_UnchargedIceBeam = 0xC,
   kSfx1_UnchargedWaveBeam = 0xD,
@@ -2732,6 +2746,8 @@ enum Consts_80 {
   addr_kTimerSpritemap_TIME = 0xA060,
 };
 enum Consts_81 {
+  addr_kHdmaObject_IList_GameOverGradient_ColorMathSubBackdropColor = 0x927D,
+  addr_kHdmaObject_IList_GameOverGradient_ColorMathControlReg0 = 0x928D,
   addr_kMenuTilemap_GameOver = 0x92DC,
   addr_kMenuTilemap_FindMetroidLarva = 0x9304,
   addr_kMenuTilemap_TryAgain = 0x9334,
@@ -3093,16 +3109,54 @@ enum Consts_87 {
 };
 enum Consts_88 {
   addr_kClearPreInstr = 0x858A,
+  addr_kHdmaObject_IList_PowerBombExplosion_Window2_LeftPos = 0x8ACE,
+  addr_kHdmaObject_IList_PowerBombExplosion_Window2_RightPos = 0x8B80,
   addr_loc_889180 = 0x9180,
   addr_kPowerBombExplosionShapeDef0 = 0x9246,
   addr_kPowerBombPreExplosionShapeDef0 = 0x9F06,
+  addr_kPowerBombPreExplosionShapeDef0_End = 0xA206,
+  addr_kHdmaObject_IList_CrystalFlash_Window2_LeftPos = 0xA2BD,
+  addr_kHdmaObject_IList_CrystalFlash_Window2_RightPos = 0xA32A,
   addr_kFxType34RepeatingBg3Strips = 0xA8E8,
+  addr_kHdmaObject_IList_FxType_22_Bg1_XScroll = 0xAD39,
+  addr_kHdmaObject_IList_FxType_22_Bg3_XScroll = 0xAD4E,
+  addr_kHdmaObject_IList_FxType_22_Bg3_YScroll = 0xAD63,
+  addr_kHdmaObject_IList_ScrollingSkyLand_Bg2_XScroll = 0xAD76,
+  addr_kHdmaObject_IList_ScrollingSkyOcean_Bg2_XScroll = 0xAD89,
   addr_kScrollingSkyLandChunkPtrs = 0xAD9C,
   addr_kScrollingSkyOceanChunkPtrs = 0xADA6,
-  addr_kDraygonMainScreenLayersInstrList_MiddleScreen = 0xDF5F,
-  addr_kDraygonMainScreenLayersInstrList_BottomScreen = 0xDF65,
-  addr_kDraygonMainScreenLayersInstrList_TopScreen = 0xDF6B,
-  addr_kDraygonMainScreenLayersInstrList_OffScreen = 0xDF71,
+  addr_kHdmaObject_IList_Fireflea_Bg3_XScroll = 0xB0AC,
+  addr_kIndirectHdmaTable_LavaAcid_Bg3_YScroll = 0xB62A,
+  addr_kHdmaObject_IList_LavaAcid_Bg3_YScroll = 0xC3E1,
+  addr_kHdmaObject_IList_LavaAcid_Bg2_YScroll = 0xC3F0,
+  addr_kHdmaObject_IList_Water_Bg2_XScroll = 0xD847,
+  addr_kHdmaObject_IList_Water_Bg3_XScroll = 0xD856,
+  addr_kHdmaObject_IList_Bg3_Scroll = 0xD8D0,
+  addr_kHdmaObject_IList_CeresRidley_Mode_BgTileSize = 0xD906,
+  addr_kHdmaObject_IList_CeresRidley_MainScreenLayers = 0xD91D,
+  addr_kHdmaObject_IList_CeresElevator_Mode_BgTileSize = 0xD939,
+  addr_kHdmaObject_IList_Rain_Bg3_Scroll = 0xD96C,
+  addr_kHdmaObject_IList_Spores_Bg3_XScroll = 0xDA2D,
+  addr_kHdmaObject_IList_Fog_Bg3_Scroll = 0xDB19,
+  addr_kHdmaObject_IList_TourianStatue_Bg2_YScroll = 0xDCFA,
+  addr_kHdmaObject_IList_BombTorizo_Haze_ColorMath_SubscreenBackdropColor_GreenAndRedComponents = 0xDD4A,
+  addr_kHdmaObject_IList_BombTorizo_Haze_ColorMath_SubscreenBackdropColor_BlueComponents = 0xDD62,
+  addr_kHdmaObject_IList_CeresRidley_Haze_ColorMath_SubscreenBackdropColor_Dead = 0xDED3,
+  addr_kHdmaObject_IList_CeresRidley_Haze_ColorMath_SubscreenBackdropColor_Alive = 0xDEEB,
+  addr_kHdmaObject_IList_Draygon_MainScreenLayers_Initial = 0xDF4F,
+  addr_kHdmaObject_IList_Draygon_MainScreenLayers_MiddleScreen = 0xDF5F,
+  addr_kHdmaObject_IList_Draygon_MainScreenLayers_BottomScreen = 0xDF65,
+  addr_kHdmaObject_IList_Draygon_MainScreenLayers_TopScreen = 0xDF6B,
+  addr_kHdmaObject_IList_Draygon_MainScreenLayers_OffScreen = 0xDF71,
+  addr_kHdmaObject_IList_Bg3_YScroll_Unused = 0xDF77,
+  addr_kHdmaObject_IList_WavyPhantoon_Bg2_XScroll = 0xE4A8,
+  addr_kHdmaObject_IList_MotherBrain_Rising_MainScreenLayers = 0xE727,
+  addr_kHdmaObject_IList_MotherBrain_RainbowBeam_Window1_Pos = 0xE751,
+  addr_kHdmaObject_IList_MorphBallEyeBeam_Window1_Pos = 0xE8EC,
+  addr_kHdmaObject_IList_TitleSequenceGradient_ColorMath_SubscreenBackdropColor = 0xEB73,
+  addr_kHdmaObject_IList_TitleSequenceGradient_ColorMath_ControlRegisterB = 0xEB85,
+  addr_kHdmaObject_IList_IntroCutscene_Crossfade = 0xEC03,
+  addr_kHdmaObject_IList_WavySamus = 0xEC8A,
 };
 enum Consts_89 {
   addr_kIndirectHdmaTable_PowerBombExplodeLeft = 0x9800,
@@ -3372,6 +3426,9 @@ enum Consts_91 {
   addr_kDemoInputObject_BabyMetroidDiscovery = 0x877E,
   addr_kDemoInputObject_OldMotherBrainFight = 0x8784,
   addr_kDemoInstrs_Shinespark_UnseenSection = 0x9346,
+  addr_kHdmaObject_IList_Xray = 0xD223,
+  addr_kHdmaObject_IList_VariaSuitPickup_Window1_Pos = 0xD5A2,
+  addr_kHdmaObject_IList_GravitySuitPickup_Window1_Pos = 0xD67A,
 };
 enum Consts_93 {
   addr_kProjectile_IList_Power_Up = 0x86DB,
@@ -3660,6 +3717,7 @@ enum Consts_A3 {
 enum Consts_A4 {
   addr_kSpritemap_Nothing_A4 = 0x804D,
   addr_kExtendedSpritemap_Nothing_A4 = 0x804F,
+  addr_kHdmaObject_IList_Crocomire_Melting = 0x9563,
   addr_kCrocomire_Ilist_BADE = 0xBADE,
   addr_kCrocomire_Ilist_BAEA = 0xBAEA,
   addr_kCrocomire_Ilist_BB36 = 0xBB36,
@@ -3856,6 +3914,7 @@ enum Consts_A7 {
   addr_kKraid_Ilist_CC91 = 0xCC91,
   addr_kKraid_Ilist_CC9D = 0xCC9D,
   addr_kPhantoon_MouthSpawnFlame_InstrLists = 0xCCEB,
+  addr_kHdmaObject_IList_Phantoon_Semitransparency = 0xCE96,
   addr_kPhantoonMoveData = 0xE3D2,
   addr_kEtecoon_Ilist_E81E = 0xE81E,
   addr_stru_A7E828 = 0xE828,

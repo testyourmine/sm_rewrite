@@ -8,16 +8,16 @@
 
 
 
-static const uint16 g_word_A48692 = 8;
-static const uint16 g_word_A48694 = 8;
-static const uint16 g_word_A48696 = 0;
-static const uint16 g_word_A48698 = 2;
-static const uint16 g_word_A4869A = 1;
-static const uint16 g_word_A4869C = 3;
-static const uint16 g_word_A4869E = 3;
-static const uint16 g_word_A486A0 = 8;
-static const uint16 g_word_A486A2 = 0x300;
-static const uint16 g_word_A486A4 = 0x640;
+static const uint16 kCrocomire_Damaged_MouthCloseDelay_NonProjAttack = 8;
+static const uint16 kCrocomire_Damaged_MouthCloseDelay_ProjAttack = 8;
+static const uint16 kCrocomire_EnemyIndex_ShotMouth_Uncharged = 0;
+static const uint16 kCrocomire_StepsFromDamage_Charge = 2;
+static const uint16 kCrocomire_StepsFromDamage_Missile = 1;
+static const uint16 kCrocomire_StepsFromDamage_SuperMissile = 3;
+static const uint16 kCrocomire_PowerBombReactionEnableFlag = 3;
+static const uint16 kCrocomire_MouthOpenInstrTimer_ShotByCharge = 8;
+static const uint16 kCrocomire_MaxXPos_NearSpikeWall = 0x300;
+static const uint16 kCrocomire_MaxXPos_BridgeCollapse = 0x640;
 
 void Enemy_GrappleReact_SamusLatchesOn_A4(void) {  // 0xA48005
   SamusLatchesOnWithGrapple();
@@ -82,7 +82,7 @@ const uint16 *Crocomire_Func_5(uint16 k, const uint16 *jp) {  // 0xA48717
   if ((E->crocom_var_B & 0x800) != 0 && (E->crocom_var_B &= ~0x800, E->crocom_var_D)) {
     jp = INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BC30);
     E->crocom_var_C = 12;
-  } else if ((int16)(E->base.x_pos - g_word_A486A2) < 0) {
+  } else if ((int16)(E->base.x_pos - kCrocomire_MaxXPos_NearSpikeWall) < 0) {
     jp = INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BE7E);
     E->crocom_var_C = 10;
   } else if ((int16)(INSTR_ADDR_TO_PTR(0, jp) - addr_kCrocomire_Ilist_BC34) >= 0) {
@@ -149,7 +149,7 @@ const uint16 *Crocomire_Func_9(uint16 k, const uint16 *jp) {  // 0xA487CA
 
 const uint16 *Crocomire_Func_10(uint16 k, const uint16 *jp) {  // 0xA487E9
   Enemy_Crocomire *E = Get_Crocomire(0);
-  if ((int16)(E->base.x_pos - g_word_A486A2) >= 0) {
+  if ((int16)(E->base.x_pos - kCrocomire_MaxXPos_NearSpikeWall) >= 0) {
     E->crocom_var_C = 6;
     return INSTR_RETURN_ADDR(addr_kCrocomire_Ilist_BBCE);
   }
@@ -593,7 +593,7 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
         eproj_spawn_pt = (Point16U){ 1584, 176 };
         SpawnEprojWithRoomGfx(addr_kEproj_DustCloudExplosion, 0x15);
       }
-    } else if ((int16)(x_pos - g_word_A486A4) >= 0) {
+    } else if ((int16)(x_pos - kCrocomire_MaxXPos_BridgeCollapse) >= 0) {
       Crocomire_8EE5();
       E0->crocom_var_20 = 1;
       g_word_7E9018 = 1;
@@ -1072,7 +1072,6 @@ void Crocomire_9506(void) {  // 0xA49506
 }
 
 void Crocomire_950F(void) {  // 0xA4950F
-  static const SpawnHdmaObject_Args unk_A49559 = { 0x42, 0x10, 0x9563 };
   Enemy_Crocomire *v4; // r10
 
   uint16 v1 = 2 * (Get_Crocomire(0x40)->base.y_pos - 72);
@@ -1091,7 +1090,12 @@ void Crocomire_950F(void) {  // 0xA4950F
   *(uint16 *)&crocomire_bg2_scroll_hdma_indirect[3] = 225;
   *(uint16 *)&crocomire_bg2_scroll_hdma_indirect[4] = -13330;
   *(uint16 *)&crocomire_bg2_scroll_hdma_indirect[6] = 0;
-  v4->crocom_var_1F = SpawnHdmaObject(0xa4, &unk_A49559);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_A49559 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Crocomire_Melting
+  };
+  v4->crocom_var_1F = SpawnHdmaObject(0xa4, &kSpawnHdmaObject_A49559);
 }
 
 void Crocomire_Func_63(void) {  // 0xA49576
@@ -1186,7 +1190,7 @@ uint16 Crocomire_Func_67(void) {  // 0xA496C8
   while (1) {
     if (croco_cur_vline_idx > 48) // bugfix
       return 1;
-    int rr = kCrocoVlineRandomPos[croco_cur_vline_idx];
+    int rr = kCrocomire_MeltingXOffsetTab0[croco_cur_vline_idx];
     if ((int8)(croco_vline_height[rr] - croco_target_0688) < 0)
       break;
     if (++croco_cur_vline_idx >= 128) {
@@ -1195,7 +1199,7 @@ uint16 Crocomire_Func_67(void) {  // 0xA496C8
     }
   }
   assert(croco_cur_vline_idx <= 48);
-  int vline_idx = kCrocoVlineRandomPos[croco_cur_vline_idx];
+  int vline_idx = kCrocomire_MeltingXOffsetTab0[croco_cur_vline_idx];
   uint8 mask = kCrocoEraseLineMasks[vline_idx & 7];
   do {
     int q = croco_vline_height[vline_idx];
@@ -1266,7 +1270,7 @@ void Crocomire_Func_70(void) {  // 0xA49859
   Enemy_Crocomire *E1 = Get_Crocomire(0x40);
   Enemy_Crocomire *E2 = Get_Crocomire(0x80);
   Enemy_Crocomire *E3 = Get_Crocomire(0xc0);
-  if (kCrocomire_Tab0[E0->crocom_var_D >> 1] == 0x8080) {
+  if (kCrocomire_RumbleTab0[E0->crocom_var_D >> 1] == 0x8080) {
     E1->crocom_var_D = -32640;
     E0->crocom_var_D = 128;
     for (int i = 0x1E; i >= 0; i -= 2)
@@ -1276,8 +1280,8 @@ void Crocomire_Func_70(void) {  // 0xA49859
     uint16 crocom_var_D = E0->crocom_var_D;
     uint16 v3 = E1->crocom_var_D;
     int v4 = crocom_var_D >> 1;
-    if (v3 == kCrocomire_Tab0[v4]) {
-      if ((kCrocomire_Tab0[crocom_var_D >> 1] & 0x8000) != 0) {
+    if (v3 == kCrocomire_RumbleTab0[v4]) {
+      if ((kCrocomire_RumbleTab0[crocom_var_D >> 1] & 0x8000) != 0) {
         uint16 v7 = E2->crocom_var_D;
         if (v7) {
           E2->crocom_var_D = v7 - 1;
@@ -1286,14 +1290,14 @@ void Crocomire_Func_70(void) {  // 0xA49859
           return;
         }
         uint16 v8 = crocom_var_D + 2;
-        E2->crocom_var_D = kCrocomire_Tab0[v8 >> 1];
+        E2->crocom_var_D = kCrocomire_RumbleTab0[v8 >> 1];
         crocom_var_D = v8 + 2;
-        E3->crocom_var_D = kCrocomire_Tab0[crocom_var_D >> 1];
+        E3->crocom_var_D = kCrocomire_RumbleTab0[crocom_var_D >> 1];
       }
       E0->crocom_var_D = crocom_var_D + 2;
     } else {
       uint16 v5;
-      if ((int16)(v3 - kCrocomire_Tab0[v4]) >= 0)
+      if ((int16)(v3 - kCrocomire_RumbleTab0[v4]) >= 0)
         v5 = v3 - E3->crocom_var_D;
       else
         v5 = E3->crocom_var_D + v3;
@@ -1526,8 +1530,8 @@ void Crocomire_Powerbomb(void) {  // 0xA4B992
 
   Enemy_Crocomire *E = Get_Crocomire(0);
   if (!E->crocom_var_A) {
-    if (g_word_A4869E) {
-      E->crocom_var_D = g_word_A4869E;
+    if (kCrocomire_PowerBombReactionEnableFlag) {
+      E->crocom_var_D = kCrocomire_PowerBombReactionEnableFlag;
       if (E->crocom_var_C != 24) {
         E->crocom_var_B = E->crocom_var_B & 0x3FF0 | 0x8000;
         E->crocom_var_E = 10;
@@ -1568,18 +1572,18 @@ void Crocomire_Func_95(void) {  // 0xA4BA05
     goto LABEL_10;
   uint16 v1, v2;
   v1 = projectile_type[collision_detection_index];
-  if ((v1 & kProjectileType_ProjMask) != 0) {
+  if (v1 & kProjectileType_ProjMask) {
     v3 = v1 & kProjectileType_ProjMask;
-    v2 = g_word_A4869A;
+    v2 = kCrocomire_StepsFromDamage_Missile;
     if (v3 != kProjectileType_Missile) {
-      v2 = g_word_A4869C;
+      v2 = kCrocomire_StepsFromDamage_SuperMissile;
       if (v3 != kProjectileType_SuperMissile)
         v2 = 0;
     }
   } else {
-    v2 = g_word_A48698;
-    if ((v1 & kProjectileType_Charged) == 0) {
-      E->base.instruction_timer = g_word_A486A0;
+    v2 = kCrocomire_StepsFromDamage_Charge;
+    if (!(v1 & kProjectileType_Charged)) {
+      E->base.instruction_timer = kCrocomire_MouthOpenInstrTimer_ShotByCharge;
       Crocomire_Func_1();
       return;
     }
@@ -1591,9 +1595,9 @@ LABEL_10:;
     if (sign16(v4 - 15))
       ++v4;
     if ((E->crocom_var_B & 0x800) == 0) {
-      uint16 v5 = g_word_A48692;
+      uint16 v5 = kCrocomire_Damaged_MouthCloseDelay_NonProjAttack;
       if (E->crocom_var_C == 8)
-        v5 = g_word_A48694;
+        v5 = kCrocomire_Damaged_MouthCloseDelay_ProjAttack;
       E->base.instruction_timer += v5;
     }
     E->crocom_var_B = v4 | E->crocom_var_B & 0xB7F0 | 0x800;

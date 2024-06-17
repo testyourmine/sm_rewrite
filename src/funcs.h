@@ -1656,7 +1656,7 @@ DemoInputEntry get_DemoInputEntry(uint16 demo_input_);
 uint8 PlaySamusFanfare(void);
 void DrawSamusSuitExploding(void);
 void SetSamusTilesDefsForCurAnim(void);
-void Unused_SamusTileViewer(void);
+void Unused_DebugSamusTileViewer(void);
 
 // Bank 93
 uint16 ProjInstr_Delete(uint16 k, uint16 j);
@@ -5093,7 +5093,7 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_CrystalFlash_Stage2_AfterGlow 0x88A35D
 #define fnHdmaobjPreInstr_CrystalFlash_Stage1_Explosion 0x88A552
 #define fnHdmaobjPreInstr_FxType22_BG3Yscroll 0x88A643
-#define fnHdmaobjInstr_SetFlagB 0x88A66C
+#define fnHdmaobjInstr_SetPhaseIncreaseTimer_1 0x88A66C
 #define fnHdmaobjPreInstr_BG3Xscroll 0x88A673
 #define fnHdmaobjPreInstr_SkyLandBG2Xscroll 0x88ADB2
 #define fnHdmaobjPreInstr_SkyLandBG2Xscroll2 0x88ADBA
@@ -5105,14 +5105,14 @@ void VerifySRAM(void);
 #define fnFxRisingFunction_LavaAcid_Raising 0x88B382
 #define fnHdmaobjInstr_LavaSoundTimer_112 0x88B3A9
 #define fnHdmaobjPreInstr_LavaAcidBG3YScroll 0x88B3B0
-#define fnHdmaobjInstr_SetFlagB_Copy 0x88B4CE
+#define fnHdmaobjInstr_SetPhaseDecreaseTimer_1 0x88B4CE
 #define fnHdmaobjPreInstr_LavaAcidBG2YScroll 0x88B4D5
 #define fnFxRisingFunction_C428_WaterNormal 0x88C428
 #define fnFxRisingFunction_WaterWaitToRise 0x88C44C
 #define fnFxRisingFunction_WaterRising 0x88C458
-#define fnHdmaobjInstr_SetFlagB_Copy2 0x88C467
+#define fnHdmaobjInstr_SetPhaseIncreaseTimer_Copy1 0x88C467
 #define fnHdmaobjPreInstr_WaterBG3XScroll 0x88C48E
-#define fnHdmaobjInstr_SetFlagB_Copy3 0x88C582
+#define fnHdmaobjInstr_SetPhaseIncreaseTimer_Copy2 0x88C582
 #define fnHdmaobjPreInstr_WaterBG2XScroll 0x88C589
 #define fnHdmaobjPreInstr_WaterBG2XScroll_Func2 0x88C5E4
 #define fnHdmaobjPreInstr_WaterBG2XScroll_Func1 0x88C636
@@ -5149,7 +5149,7 @@ void VerifySRAM(void);
 #define fnHdmaobjPreInstr_MorphBallEyeBeam_BeamWidening 0x88E9E6
 #define fnHdmaobjPreInstr_MorphBallEyeBeam_FullBeam 0x88EA3C
 #define fnHdmaobjPreInstr_MorphBallEyeBeam_DeactivateBeam 0x88EACB
-#define fnHdmaobjInsr_ConfigTitleSequenceGradientHDMA 0x88EB9F
+#define fnHdmaobjInstr_ConfigTitleSequenceGradientHDMA 0x88EB9F
 #define fnHdmaobjPreInstr_Backdrop_TitleSequenceGradient 0x88EBB0
 #define fnHdmaobjPreInstr_ColorMathControlB_TitleGradient 0x88EBD2
 #define fnHdmaobjPreInstr_IntroCutsceneCrossfade 0x88EC1D

@@ -2081,8 +2081,12 @@ void Phantoon_Init(void) {  // 0xA7CDF3
   E1->phant_parameter_2 = 0;
   Enemy_Phantoon *E0 = Get_Phantoon(0);
   E0->base.properties |= kEnemyProps_Tangible;
-  static const SpawnHdmaObject_Args unk_A7CE51 = { 0x01, 0x14, 0xce96 };
-  SpawnHdmaObject(0xa7, &unk_A7CE51);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_A7CE51 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 1),
+    .hdma_target = REG(BG4VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Phantoon_Semitransparency
+  };
+  SpawnHdmaObject(0xa7, &kSpawnHdmaObject_A7CE51);
   Phantoon2_Init();
 }
 

@@ -180,6 +180,34 @@ const uint16 *CallEnemyInstr(uint32 ea, uint16 k, const uint16 *jp);
 
 void CalculateBlockContainingPixelPos(uint16 xpos, uint16 ypos);
 
+#define REG(x) ((x) & 0xFF)
+/**
+* direction: 0 = CPU -> PPU, 1 = PPU -> CPU
+* address mode: 0 = holds data, 1 = holds pointer to data (HDMA only)
+* increment: 0 = increment address, 1 = decrement address (DMA only)
+* fixed transfer: 0 = normal, 1 = address adjusted by inc (DMA only)
+* transfer mode: 
+*   0 = 1 reg, write once
+*   1 = 2 regs, write once
+*   2, 6 = 1 reg, write twice
+*   3, 7 = 2 regs, write twice each
+*   4 = 4 regs, write once
+*   5 = 2 regs, write twice alternate
+*/
+#define DMA_CONTROL(dir, addr_mode, inc, fixed, trans_mode) (((dir) << 7) | ((addr_mode) << 6) | ((inc) << 4) | ((fixed) << 3) | trans_mode)
+/**
+* direction: 0 = CPU -> PPU, 1 = PPU -> CPU
+* address mode: 0 = holds data, 1 = holds pointer to data
+* transfer mode:
+*   0 = 1 reg, write once
+*   1 = 2 regs, write once
+*   2, 6 = 1 reg, write twice
+*   3, 7 = 2 regs, write twice each
+*   4 = 4 regs, write once
+*   5 = 2 regs, write twice alternate
+*/
+#define HDMA_CONTROL(dir, addr_mode, trans_mode) DMA_CONTROL(dir, addr_mode, 0, 0, trans_mode)
+
 /* 148 */
 typedef enum SnesRegs {
   INIDISP = 0x2100,

@@ -119,7 +119,7 @@ uint16 LayerBlendFunc_26(uint16 j) {  // 0x88810D
 uint16 LayerBlendFunc_28(uint16 j) {  // 0x888112
   next_gameplay_CGWSEL = 0;
   next_gameplay_CGADSUB = -77;
-  if ((fx_layer_blending_config_c & 0x8000) == 0) {
+  if (!(fx_layer_blending_window_2_config & kLayerBlendWindow2Configuration_80_PowerBombExplosionActive)) {
     reg_COLDATA[0] = 37;
     reg_COLDATA[1] = 64;
     reg_COLDATA[2] = 0x80;
@@ -130,7 +130,7 @@ uint16 LayerBlendFunc_28(uint16 j) {  // 0x888112
 uint16 LayerBlendFunc_2A(uint16 j) {  // 0x88812A
   next_gameplay_CGWSEL = 0;
   next_gameplay_CGADSUB = -77;
-  if ((fx_layer_blending_config_c & 0x8000) == 0) {
+  if (!(fx_layer_blending_window_2_config & kLayerBlendWindow2Configuration_80_PowerBombExplosionActive)) {
     reg_COLDATA[0] = 38;
     reg_COLDATA[1] = 66;
     reg_COLDATA[2] = 0x80;
@@ -277,22 +277,25 @@ static Func_Y_Y *const kLayerBlendFuncTable[27] = {
 };
 
 void LayerBlendingHandler(void) {  // 0x888000
-  uint16 v0 = 0;
-  uint8 v1 = fx_layer_blending_config_c;
-  if ((uint8)fx_layer_blending_config_c) {
+  uint16 power_bomb_config_index = 0;
+  uint8 blend_config = fx_layer_blending_config_c;
+  if (blend_config != 0) {
     InitializeLayerBlending();
-    v0 = kLayerBlendFuncTable[v1 >> 1](v0);
+    power_bomb_config_index = kLayerBlendFuncTable[blend_config >> 1](power_bomb_config_index);
   }
-  if ((fx_layer_blending_config_c & 0x8000) == 0) {
-    if ((fx_layer_blending_config_c & 0x4000) != 0) {
+  if (!(fx_layer_blending_window_2_config & kLayerBlendWindow2Configuration_80_PowerBombExplosionActive)) {
+    if (fx_layer_blending_window_2_config & kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn) {
       HandleLayerBlendingXrayCanShowBlocks();
-    } else if ((fx_layer_blending_config_c & 0x2000) != 0) {
+    }
+    else if (fx_layer_blending_window_2_config & kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn) {
       HandleLayerBlendingXrayCantShowBlocks();
-    } else if ((fx_layer_blending_config_c & 0x1000) != 0) {
+    }
+    else if (fx_layer_blending_window_2_config & kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx) {
       HandleLayerBlendingXrayFirefleaRoom();
     }
-  } else {
-    HandleLayerBlendingPowerBomb(v0);
+  }
+  else {
+    HandleLayerBlendingPowerBomb(power_bomb_config_index);
   }
 }
 
@@ -327,8 +330,8 @@ void WaitUntilEndOfVblankAndClearHdma(void) {  // 0x88829E
 
 void DeleteHdmaObjects(void) {  // 0x8882AC
   reg_HDMAEN = 0;
-  for (int i = 10; i >= 0; i -= 2)
-    hdma_object_channels_bitmask[i >> 1] = 0;
+  uint16 num_channels = ADDR16_OF_RAM(*hdma_object_bank_slot) - ADDR16_OF_RAM(*hdma_object_channels_bitmask);
+  memset7E(hdma_object_channels_bitmask, 0, num_channels);
 }
 
 void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
@@ -344,8 +347,8 @@ void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
   }
   debug_disable_minimap = 0;
   for (int i = 0x20; i != 0x80; i += 0x10) {
-    WriteReg((SnesRegs)(i + DMAP0), 0);
-    WriteReg((SnesRegs)(i + BBAD0), 0x13);
+    WriteReg((SnesRegs)(i + DMAP0), DMA_CONTROL(0, 0, 0, 0, 0));
+    WriteReg((SnesRegs)(i + BBAD0), REG(BG4HOFS));
     WriteReg((SnesRegs)(i + A1T0L), 0);
     WriteReg((SnesRegs)(i + A1T0H), 0);
     WriteReg((SnesRegs)(i + A1B0), 0);
@@ -372,7 +375,7 @@ void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
   power_bomb_flag = 0;
   power_bomb_explosion_radius = 0;
   fx_tilemap_ptr = 0;
-  fx_type = 0;
+  fx_type = kFxType_0_None;
   fx_base_y_subpos = 0x8000;
   fx_base_y_pos = 0;
   fx_target_y_pos = 0;
@@ -451,10 +454,18 @@ void HdmaObjectHandler(void) {  // 0x8884B9
   HandleMusicQueue();
   if (!time_is_frozen_flag && (power_bomb_explosion_status & kPowerBombExplosionStatus_Pending)) {
     power_bomb_explosion_status = kPowerBombExplosionStatus_Active;
-    static const SpawnHdmaObject_Args unk_8884D5 = { 0x40, 0x28, 0x8ace };
-    static const SpawnHdmaObject_Args unk_8884DD = { 0x40, 0x29, 0x8b80 };
-    SpawnHdmaObject(0x88, &unk_8884D5);
-    SpawnHdmaObject(0x88, &unk_8884DD);
+    static const SpawnHdmaObject_Args kSpawnHdmaObject_8884D5 = {
+      .hdma_control = HDMA_CONTROL(0, 1, 0),
+      .hdma_target = REG(WH2),
+      .hdma_instr_list_ptr = addr_kHdmaObject_IList_PowerBombExplosion_Window2_LeftPos
+    };
+    static const SpawnHdmaObject_Args kSpawnHdmaObject_8884DD = {
+      .hdma_control = HDMA_CONTROL(0, 1, 0),
+      .hdma_target = REG(WH3),
+      .hdma_instr_list_ptr = addr_kHdmaObject_IList_PowerBombExplosion_Window2_RightPos
+    };
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_8884D5);
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_8884DD);
   }
   fx_layer_blending_config_c = fx_layer_blending_config_a;
   if ((hdma_objects_enable_flag & 0x8000) != 0) {
@@ -746,7 +757,7 @@ off_screen:
 }
 
 void HdmaobjPreInstr_XrayFunc3_DeactivateBeam_RestoreBg2_Part1(uint16 k) {  // 0x888934
-  int16 v1;
+  int16 win_2_config;
   VramWriteEntry *v4;
 
   mov24(&hdma_ptr_1, 0x980001);
@@ -755,13 +766,15 @@ void HdmaobjPreInstr_XrayFunc3_DeactivateBeam_RestoreBg2_Part1(uint16 k) {  // 0
   demo_input_prev_new = 0;
   demo_backup_prev_controller_input = 0;
   hdma_table_1[0] = 255;
-  v1 = 4096;
-  if (fx_type != 36) {
-    v1 = 0x2000;
+
+  win_2_config = kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx;
+  if (fx_type != kFxType_24_Fireflea) {
+    win_2_config = kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn;
     if (CanXrayShowBlocks())
-      v1 = 0x4000;
+      win_2_config = kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn;
   }
-  fx_layer_blending_config_c |= v1;
+  fx_layer_blending_window_2_config |= win_2_config;
+
   palette_buffer.bg1_bg2_pal_0[0] = 0;
   int v2 = hdma_object_index >> 1;
   reg_BG2HOFS = hdma_object_A[v2];
@@ -780,16 +793,17 @@ void HdmaobjPreInstr_XrayFunc3_DeactivateBeam_RestoreBg2_Part1(uint16 k) {  // 0
 }
 
 void HdmaobjPreInstr_XrayFunc4_DeactivateBeam_RestoreBg2_Part2(uint16 k) {  // 0x8889BA
-  int16 v1;
+  int16 win_2_config;
   VramWriteEntry *v3;
 
-  v1 = 4096;
-  if (fx_type != 36) {
-    v1 = 0x2000;
+  win_2_config = kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx;
+  if (fx_type != kFxType_24_Fireflea) {
+    win_2_config = kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn;
     if (CanXrayShowBlocks())
-      v1 = 0x4000;
+      win_2_config = kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn;
   }
-  fx_layer_blending_config_c |= v1;
+  fx_layer_blending_window_2_config |= win_2_config;
+
   uint16 v2 = vram_write_queue_tail;
   if ((int16)(vram_write_queue_tail - 240) < 0) {
     v3 = gVramWriteEntry(vram_write_queue_tail);
@@ -803,14 +817,15 @@ void HdmaobjPreInstr_XrayFunc4_DeactivateBeam_RestoreBg2_Part2(uint16 k) {  // 0
 }
 
 void HdmaobjPreInstr_XrayFunc5_DeactivateBeam(uint16 k) {  // 0x888A08
-  int16 v1;
-  v1 = 4096;
-  if (fx_type != 36) {
-    v1 = 0x2000;
+  int16 win_2_config;
+  win_2_config = kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx;
+  if (fx_type != kFxType_24_Fireflea) {
+    win_2_config = kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn;
     if (CanXrayShowBlocks())
-      v1 = 0x4000;
+      win_2_config = kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn;
   }
-  fx_layer_blending_config_c |= v1;
+  fx_layer_blending_window_2_config |= win_2_config;
+
   if (time_is_frozen_flag) {
     time_is_frozen_flag = 0;
     demo_input_pre_instr = 0;
@@ -826,11 +841,11 @@ void HdmaobjPreInstr_XrayFunc5_DeactivateBeam(uint16 k) {  // 0x888A08
     demo_backup_prev_controller_input = 0;
     SetNonXraySamusPose();
     hdma_object_channels_bitmask[hdma_object_index >> 1] = 0;
-    QueueSfx1_Max6(kSfx1_XRayEnd_Silence);
-    if ((uint8)fx_type != 36) {
+    QueueSfx1_Max6(kSfx1_XrayEnd_Silence);
+    if ((uint8)fx_type != kFxType_24_Fireflea) {
       reg_COLDATA[2] = 0x80;
-      reg_COLDATA[1] = 64;
-      reg_COLDATA[0] = 32;
+      reg_COLDATA[1] = 0x40;
+      reg_COLDATA[0] = 0x20;
     }
     for (int i = 510/2; i >= 0; i--)
       hdma_table_1[i] = 0xff;
@@ -851,19 +866,19 @@ static Func_Y_V *const kHdmaobjPreInstr_XrayFuncs[6] = {  // 0x8886EF
 };
 
 void HdmaobjPreInstr_Xray(uint16 k) {
-  int16 v1;
+  int16 win_2_config;
 
-  v1 = 4096;
-  if (fx_type != 36) {
-    v1 = 0x2000;
+  win_2_config = kLayerBlendWindow2Configuration_10_XrayActive_FirefleaFx;
+  if (fx_type != kFxType_24_Fireflea) {
+    win_2_config = kLayerBlendWindow2Configuration_20_XrayActive_BlocksNotDrawn;
     if (CanXrayShowBlocks()) {
-      v1 = 0x4000;
-      *(uint16 *)&reg_COLDATA[0] = 0x27;
-      *(uint16 *)&reg_COLDATA[1] = 0x47;
-      *(uint16 *)&reg_COLDATA[2] = 0x87;
+      win_2_config = kLayerBlendWindow2Configuration_40_XrayActive_BlocksDrawn;
+      reg_COLDATA[0] = 0x27;
+      reg_COLDATA[1] = 0x47;
+      reg_COLDATA[2] = 0x87;
     }
   }
-  fx_layer_blending_config_c |= v1;
+  fx_layer_blending_window_2_config |= win_2_config;
   kHdmaobjPreInstr_XrayFuncs[demo_input_pre_instr](2 * demo_input_pre_instr);
 }
 
@@ -875,10 +890,18 @@ void SpawnPowerBombExplosion(void) {  // 0x888AA4
     QueueSfx1_Max15(kSfx1_PowerBombExplosion);
     power_bomb_explosion_status = kPowerBombExplosionStatus_Active;
 
-    static const SpawnHdmaObject_Args unk_888ABA = { 0x40, 0x28, 0x8ace };
-    static const SpawnHdmaObject_Args unk_888AC2 = { 0x40, 0x29, 0x8b80 };
-    SpawnHdmaObject(0x88, &unk_888ABA);
-    SpawnHdmaObject(0x88, &unk_888AC2);
+    static const SpawnHdmaObject_Args kSpawnHdmaObject_888ABA = {
+      .hdma_control = HDMA_CONTROL(0, 1, 0),
+      .hdma_target = REG(WH2),
+      .hdma_instr_list_ptr = addr_kHdmaObject_IList_PowerBombExplosion_Window2_LeftPos
+    };
+    static const SpawnHdmaObject_Args kSpawnHdmaObject_888AC2 = {
+      .hdma_control = HDMA_CONTROL(0, 1, 0),
+      .hdma_target = REG(WH3),
+      .hdma_instr_list_ptr = addr_kHdmaObject_IList_PowerBombExplosion_Window2_RightPos
+    };
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_888ABA);
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_888AC2);
   }
 }
 
@@ -924,7 +947,7 @@ void Hdmaobj_CleanUpTryCrystalFlash(uint16 v0) {  // 0x888B4E
 }
 
 void HdmaobjPreInstr_PowerBombExplode_SetWindowConf(uint16 k) {  // 0x888B8F
-  fx_layer_blending_config_c |= 0x8000;
+  fx_layer_blending_window_2_config |= kLayerBlendWindow2Configuration_80_PowerBombExplosionActive;
 }
 
 void HdmaobjPreInstr_PowerBombExplode_Stage5_Afterglow(uint16 k) {  // 0x888B98
@@ -1241,20 +1264,21 @@ void HdmaobjPreInstr_PowerBombExplode_PreExplosionYellow(uint16 k) {  // 0x8891A
     return;
   CalculatePowerBombHdmaTablePointers(k);
   const uint8 *v1 = RomPtr_88(pre_scaled_power_bomb_explosion_shape_def_ptr);
-  if (GET_HIBYTE(power_bomb_explosion_x_pos_plus_0x100)) {
-    if (GET_HIBYTE(power_bomb_explosion_x_pos_plus_0x100) == 1)
+  if (HIBYTE(power_bomb_explosion_x_pos_plus_0x100)) {
+    if (HIBYTE(power_bomb_explosion_x_pos_plus_0x100) == 1)
       CalculatePowerBombHdma_OnScreen(0, v1);
     else
       CalculatePowerBombHdma_RightOfScreen(0, v1);
-  } else {
+  }
+  else {
     CalculatePowerBombHdma_LeftOfScreen(0, v1);
   }
-  int t = (GET_HIBYTE(power_bomb_pre_explosion_flash_radius) >> 3) & 0xF;
+  int t = (HIBYTE(power_bomb_pre_explosion_flash_radius) >> 3) & 0xF;
   reg_COLDATA[0] = kPowerBombPreExplosionColors[3 * t] | 0x20;
   reg_COLDATA[1] = kPowerBombPreExplosionColors[3 * t + 1] | 0x40;
   reg_COLDATA[2] = kPowerBombPreExplosionColors[3 * t + 2] | 0x80;
   pre_scaled_power_bomb_explosion_shape_def_ptr += 192;
-  if (pre_scaled_power_bomb_explosion_shape_def_ptr == 0xA206) {
+  if (pre_scaled_power_bomb_explosion_shape_def_ptr == addr_kPowerBombPreExplosionShapeDef0_End) {
     hdma_object_instruction_timers[k >> 1] = 1;
     hdma_object_instruction_list_pointers[k >> 1] += 2;
     hdma_object_timers[k >> 1] = 0;
@@ -1267,10 +1291,18 @@ void HdmaobjPreInstr_PowerBombExplode_PreExplosionYellow(uint16 k) {  // 0x8891A
 
 void SpawnCrystalFlashHdmaObjs(void) {  // 0x88A2A6
   power_bomb_explosion_status = kPowerBombExplosionStatus_Active;
-  static const SpawnHdmaObject_Args unk_88A2B0 = { 0x40, 0x28, 0xa2bd };
-  static const SpawnHdmaObject_Args unk_88A2B8 = { 0x40, 0x29, 0xa32a };
-  SpawnHdmaObject(0x88, &unk_88A2B0);
-  SpawnHdmaObject(0x88, &unk_88A2B8);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A2B0 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 0),
+    .hdma_target = REG(WH2),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CrystalFlash_Window2_LeftPos
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A2B8 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 0),
+    .hdma_target = REG(WH3),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CrystalFlash_Window2_RightPos
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A2B0);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A2B8);
 }
 
 void CrystalFlashSetupPart1(void) {  // 0x88A2E4
@@ -1448,18 +1480,30 @@ void HdmaobjPreInstr_CrystalFlash_Stage1_Explosion(uint16 k) {  // 0x88A552
 
 void FxTypeFunc_22_Unused(void) {  // 0x88A61B
   fx_y_pos = 1248;
-  fx_type = 6;
+  fx_type = kFxType_6_Water;
 
-  static const SpawnHdmaObject_Args unk_88A62E = { 0x02, 0x12, 0xad63 };
-  static const SpawnHdmaObject_Args unk_88A636 = { 0x42, 0x11, 0xad4e };
-  static const SpawnHdmaObject_Args unk_88A63E = { 0x42, 0x0d, 0xad39 };
-  SpawnHdmaObject(0x88, &unk_88A62E);
-  SpawnHdmaObject(0x88, &unk_88A636);
-  SpawnHdmaObject(0x88, &unk_88A63E);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A62E = {
+    .hdma_control = HDMA_CONTROL(0, 0, 2),
+    .hdma_target = REG(BG3VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_FxType_22_Bg3_YScroll
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A636 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_FxType_22_Bg3_XScroll
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A63E = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG1HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_FxType_22_Bg1_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A62E);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A636);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A63E);
   HdmaobjPreInstr_FxType22_BG3Yscroll(0);
 }
 
-static uint16 SetupSomeHdmaTablesBG3(uint16 r24, uint16 r0, uint16 r3, uint16 r6, uint16 r9) {  // 0x88A81C
+static uint16 CalculateFxType34Bg3YScrollHdmaTable(uint16 r24, uint16 r0, uint16 r3, uint16 r6, uint16 r9) {  // 0x88A81C
   int16 v1;
 
   fx_type_34_bg3_y_pos = 32;
@@ -1504,11 +1548,11 @@ static uint16 SetupSomeHdmaTablesBG3(uint16 r24, uint16 r0, uint16 r3, uint16 r6
 
 void HdmaobjPreInstr_FxType22_BG3Yscroll(uint16 k) {  // 0x88A643
   DamageSamusInTopRow();
-  k = SetupSomeHdmaTablesBG3(78, addr_kFxType34RepeatingBg3Strips, addr_kFxType34RepeatingBg3Strips + 2, addr_kFxType34RepeatingBg3Strips + 4, addr_kFxType34RepeatingBg3Strips + 6);
+  k = CalculateFxType34Bg3YScrollHdmaTable(78, addr_kFxType34RepeatingBg3Strips, addr_kFxType34RepeatingBg3Strips + 2, addr_kFxType34RepeatingBg3Strips + 4, addr_kFxType34RepeatingBg3Strips + 6);
   *(uint16 *)&mother_brain_indirect_hdma[k] = 0;
 }
 
-const uint8 *HdmaobjInstr_SetFlagB(uint16 k, const uint8 *hdp) {  // 0x88A66C
+const uint8 *HdmaobjInstr_SetPhaseIncreaseTimer_1(uint16 k, const uint8 *hdp) {  // 0x88A66C
   hdma_object_B[k >> 1] = 1;
   return hdp;
 }
@@ -1526,7 +1570,7 @@ void HdmaobjPreInstr_BG3Xscroll(uint16 k) {
     uint16 v1 = bg3_x_scroll_hdma_data_table_size_for_fx_type_34;
     uint16 v2 = 0;
     do {
-      g_word_7E9E80[v2 >> 1] = kBG3XscrollWave[v1 >> 1];
+      g_word_7E9E80[v2 >> 1] = kFxType22Bg3XScrollHdmaTab0[v1 >> 1];
       v2 += 2;
       v1 += 2;
     } while ((int16)(v1 - 32) < 0);
@@ -1608,20 +1652,27 @@ uint16 CalculateFxType34IndirectHdmaTable(uint16 k, uint16 r18, uint16 r20, uint
   return r18;
 }
 
-static const SpawnHdmaObject_Args unk_88A7EF = { 0x42, 0x0f, 0xad76 };
-static const SpawnHdmaObject_Args unk_88A80B = { 0x42, 0x0f, 0xad89 };
-
 void FxTypeFunc_20_ScrollingSkyLand(void) {  // 0x88A7D8
   layer2_scroll_x |= 1;
   layer2_scroll_y |= 1;
-  SpawnHdmaObject(0x88, &unk_88A7EF);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A7EF = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_ScrollingSkyLand_Bg2_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A7EF);
   set_to_e0_by_scrolling_sky = 224;
   set_to_0_by_scrolling_sky = 0;
 }
 
 void RoomSetupAsm_ScrollingSkyOcean(void) {  // 0x88A800
   reg_BG2SC = 74;
-  SpawnHdmaObject(0x88, &unk_88A80B);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88A80B = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_ScrollingSkyOcean_Bg2_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88A80B);
   set_to_e0_by_scrolling_sky = 224;
   set_to_0_by_scrolling_sky = 0;
 }
@@ -1637,8 +1688,8 @@ void HdmaobjPreInstr_SkyLandBG2XscrollInner(uint16 k) {  // 0x88ADC2
   reg_BG2SC = 74;
   uint16 v1 = 0;
   do {
-    uint16 *v3 = (uint16 *)&g_ram[kHdmaScrollEntrys[v1].hdma_data_table_entry];
-    AddToHiLo(&v3[1], &v3[0], __PAIR32__(kHdmaScrollEntrys[v1].scroll_speed, kHdmaScrollEntrys[v1].scroll_subspeed));
+    uint16 *v3 = (uint16 *)&g_ram[kScrollingSkyScrollTable[v1].hdma_data_table_entry];
+    AddToHiLo(&v3[1], &v3[0], __PAIR32__(kScrollingSkyScrollTable[v1].scroll_speed, kScrollingSkyScrollTable[v1].scroll_subspeed));
     v1++;
   } while (sign16(v1 * 8 - 184));
   scrolling_sky_bg2_hdma_data[44] = 0;
@@ -1650,17 +1701,17 @@ void HdmaobjPreInstr_SkyLandBG2XscrollInner(uint16 k) {  // 0x88ADC2
   uint16 v5 = 0;
   uint16 v6 = 3;
   do {
-    while ((int16)(r18 - kHdmaScrollEntrys[v5].top_pos) >= 0 && (int16)(r18 - kHdmaScrollEntrys[v5 + 1].top_pos) < 0) {
-      uint16 v8 = kHdmaScrollEntrys[v5 + 1].top_pos - r18;
+    while ((int16)(r18 - kScrollingSkyScrollTable[v5].top_pos) >= 0 && (int16)(r18 - kScrollingSkyScrollTable[v5 + 1].top_pos) < 0) {
+      uint16 v8 = kScrollingSkyScrollTable[v5 + 1].top_pos - r18;
       r24 = v8;
       if (!sign16(v8 - 128)) {
         *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v6] = 127;
-        *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v6 + 1] = kHdmaScrollEntrys[v5].hdma_data_table_entry + 2;
+        *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v6 + 1] = kScrollingSkyScrollTable[v5].hdma_data_table_entry + 2;
         v6 += 3;
         v8 = r24 - 127;
       }
       *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v6] = v8;
-      *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v6 + 1] = kHdmaScrollEntrys[v5].hdma_data_table_entry + 2;
+      *(uint16 *)&scrolling_sky_bg2_indirect_hdma[v6 + 1] = kScrollingSkyScrollTable[v5].hdma_data_table_entry + 2;
       r18 += r24;
       v6 += 3;
       if (!sign16(r18 - r20)) {
@@ -1734,14 +1785,12 @@ void RoomMainAsm_ScrollingSky(const uint16 *src) {  // 0x88AFA3
 }
 
 void RoomCode_ScrollingSkyLand(void) {  // 0x88AF8D
-  RoomMainAsm_ScrollingSky((const uint16 *)RomPtr_88(addr_kScrollingSkyLandChunkPtrs));
+  RoomMainAsm_ScrollingSky(kScrollingSkyLandTilemapPtrs);
 }
 
 void RoomMainAsm_ScrollingSkyOcean(void) {  // 0x88AF99
-  RoomMainAsm_ScrollingSky((const uint16 *)RomPtr_88(addr_kScrollingSkyOceanChunkPtrs));
+  RoomMainAsm_ScrollingSky(kScrollingSkyOceanTilemapPtrs);
 }
-
-static const SpawnHdmaObject_Args unk_88B08C = { 0x42, 0x11, 0xb0ac };
 
 static const uint16 kFirefleaFlashingShades[12] = { 0, 0x100, 0x200, 0x300, 0x400, 0x500, 0x600, 0x500, 0x400, 0x300, 0x200, 0x100 };
 static const uint16 kFirefleaDarknessShades[6] = { 0, 0x600, 0xc00, 0x1200, 0x1800, 0x1900 };
@@ -1749,7 +1798,12 @@ static const uint16 kFirefleaDarknessShades[6] = { 0, 0x600, 0xc00, 0x1200, 0x18
 void FxTypeFunc_24_Fireflea(void) {  // 0x88B07C
   fireflea_flashing_timer = 6;
   fireflea_flashing_index = 0;
-  SpawnHdmaObject(0x88, &unk_88B08C);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88B08C = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Fireflea_Bg3_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88B08C);
   *(uint16 *)&hdma_window_1_left_pos[0].height = 0;
   UNUSED_word_7E177C = 0;
   fireflea_darkness_level = 0;
@@ -1842,15 +1896,21 @@ void HandleEarthquakeSoundEffect(void) {  // 0x88B21D
   }
 }
 
-static const SpawnHdmaObject_Args unk_88B289 = { 0x42, 0x12, 0xc3e1 };
-static const SpawnHdmaObject_Args unk_88B291 = { 0x42, 0x10, 0xc3f0 };
-static const SpawnHdmaObject_Args unk_88B2B1 = { 0x42, 0x12, 0xc3e1 };
-static const SpawnHdmaObject_Args unk_88B2B9 = { 0x42, 0x10, 0xc3f0 };
 void FxTypeFunc_2_Lava(void) {  // 0x88B279
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_LavaAcid);
   lava_acid_y_pos = fx_base_y_pos;
-  SpawnHdmaObject(0x88, &unk_88B289);
-  SpawnHdmaObject(0x88, &unk_88B291);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88B289 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_LavaAcid_Bg3_YScroll
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88B291 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_LavaAcid_Bg2_YScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88B289);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88B291);
   SpawnBG3ScrollHdmaObject();
   SpawnAnimtiles(addr_kAnimtiles_Lava);
 }
@@ -1858,8 +1918,18 @@ void FxTypeFunc_2_Lava(void) {  // 0x88B279
 void FxTypeFunc_4_Acid(void) {  // 0x88B2A1
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_LavaAcid);
   lava_acid_y_pos = fx_base_y_pos;
-  SpawnHdmaObject(0x88, &unk_88B2B1);
-  SpawnHdmaObject(0x88, &unk_88B2B9);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88B2B1 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_LavaAcid_Bg3_YScroll
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88B2B9 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_LavaAcid_Bg2_YScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88B2B1);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88B2B9);
   SpawnBG3ScrollHdmaObject();
   SpawnAnimtiles(addr_kAnimtiles_Acid);
 }
@@ -1972,26 +2042,24 @@ void HdmaobjPreInstr_LavaAcidBG3YScroll(uint16 k) {  // 0x88B3B0
         v4 = (v3 ^ 0x1F) & 0x1F | 0x100;
 LABEL_8:
         *(uint16 *)&mother_brain_indirect_hdma[2] = v4;
-        if (fx_type == 2 && (lava_acid_y_pos & 0x8000) == 0) {
-          int v5 = (uint8)hdma_object_index >> 1;
-          if (hdma_object_C[v5]-- == 1) {
-            hdma_object_C[v5] = 112;
-            QueueSfx2_Max6(kLavaSoundEffects[random_number & 7]);
-          }
+        uint16 idx = (uint8)hdma_object_index;
+        if (fx_type == kFxType_2_Lava && (int16)lava_acid_y_pos >= 0 && --hdma_object_C[idx >> 1] == 0) {
+          hdma_object_C[idx >> 1] = 112;
+          QueueSfx2_Max6(kLavaSoundEffects[random_number & 7]);
         }
         random_number = swap16(random_number);
-        if ((lava_acid_y_pos & 0x8000) == 0) {
+        if ((int16)lava_acid_y_pos >= 0) {
           v8 = lava_acid_y_pos - layer1_y_pos + 256;
           if (v8 < 0) {
             v8 = 255;
 LABEL_17:
-            hdma_object_table_pointers[(uint8)hdma_object_index >> 1] = 3 * (((v8 ^ 0x1FF) + 1) & 0x3FF) + 0xB62A;
+            hdma_object_table_pointers[(uint8)hdma_object_index >> 1] = 3 * (((v8 ^ 0x1FF) + 1) & 0x3FF) + addr_kIndirectHdmaTable_LavaAcid_Bg3_YScroll;
             return;
           }
           if ((uint16)v8 < 0x200)
             goto LABEL_17;
         }
-        v8 = 511;
+        v8 = 0x1FF;
         goto LABEL_17;
       }
       if ((uint16)v3 < 0x100) {
@@ -2004,15 +2072,15 @@ LABEL_17:
   }
 }
 
-const uint8 *HdmaobjInstr_SetFlagB_Copy(uint16 k, const uint8 *hdp) {  // 0x88B4CE
+const uint8 *HdmaobjInstr_SetPhaseDecreaseTimer_1(uint16 k, const uint8 *hdp) {  // 0x88B4CE
   hdma_object_B[k >> 1] = 1;
   return hdp;
 }
 
 void HdmaobjPreInstr_LavaAcidBG2YScroll(uint16 k) {  // 0x88B4D5
   UNUSED_bg2_lava_acid_y_scroll = reg_BG2VOFS;
-  if (!time_is_frozen_flag && (fx_liquid_options & 6) != 0) {
-    if ((fx_liquid_options & 2) != 0)
+  if (!time_is_frozen_flag && (fx_liquid_options & (4 | kFxLiquidOption_2_WavyLayer2))) {
+    if (fx_liquid_options & kFxLiquidOption_2_WavyLayer2)
       Handle_LavaAcidBG2YScroll_Func3(k);
     else
       Handle_LavaAcidBG2YScroll_Func2(k);
@@ -2064,14 +2132,23 @@ void Handle_LavaAcidBG2YScroll_Func3(uint16 v0) {  // 0x88B5A9
   } while (--n >= 0);
 }
 
-static const SpawnHdmaObject_Args unk_88C40F = { 0x42, 0x11, 0xd856 };
-static const SpawnHdmaObject_Args unk_88C41F = { 0x42, 0x0f, 0xd847 };
 void FxTypeFunc_6_Water(void) {  // 0x88C3FF
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_C428_WaterNormal);
   fx_y_pos = fx_base_y_pos;
-  SpawnHdmaObject(0x88, &unk_88C40F);
-  if ((fx_liquid_options & 2) != 0)
-    SpawnHdmaObject(0x88, &unk_88C41F);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88C40F = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Water_Bg3_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88C40F);
+  if (fx_liquid_options & kFxLiquidOption_2_WavyLayer2) {
+    static const SpawnHdmaObject_Args kSpawnHdmaObject_88C41F = {
+      .hdma_control = HDMA_CONTROL(0, 1, 2),
+      .hdma_target = REG(BG2HOFS),
+      .hdma_instr_list_ptr = addr_kHdmaObject_IList_Water_Bg2_XScroll
+    };
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_88C41F);
+  }
   SpawnBG3ScrollHdmaObject();
 }
 
@@ -2101,7 +2178,7 @@ void FxRisingFunction_WaterRising(void) {  // 0x88C458
   }
 }
 
-const uint8 *HdmaobjInstr_SetFlagB_Copy2(uint16 k, const uint8 *hdp) {  // 0x88C467
+const uint8 *HdmaobjInstr_SetPhaseIncreaseTimer_Copy1(uint16 k, const uint8 *hdp) {  // 0x88C467
   hdma_object_B[k >> 1] = 1;
   return hdp;
 }
@@ -2146,21 +2223,23 @@ void HdmaobjPreInstr_WaterBG3XScroll(uint16 k) {  // 0x88C48E
     *(uint16 *)&mother_brain_indirect_hdma[v7 + 4] = kWaveDisplacement_Water_Tab0[i >> 1] + r20;
     v7 = (v7 - 2) & 0x1E;
   }
-  if ((fx_liquid_options & 1) != 0)
+  if (fx_liquid_options & kFxLiquidOption_1_LiquidFlows)
     hdma_object_C[k >> 1] += 64;
   int16 v9 = fx_y_pos - layer1_y_pos + 256;
   if ((int16)fx_y_pos < 0) {
     v9 = 511;
-  } else if (v9 >= 0) {
+  }
+  else if (v9 >= 0) {
     if ((uint16)v9 >= 0x200)
       v9 = 511;
-  } else {
+  }
+  else {
     v9 = v9 & 0xF | 0x100;
   }
   hdma_object_table_pointers[k >> 1] = 3 * (((v9 ^ 0x1FF) + 1) & 0x3FF) + 0xC645;
 }
 
-const uint8 *HdmaobjInstr_SetFlagB_Copy3(uint16 k, const uint8 *hdp) {  // 0x88C582
+const uint8 *HdmaobjInstr_SetPhaseIncreaseTimer_Copy2(uint16 k, const uint8 *hdp) {  // 0x88C582
   hdma_object_B[k >> 1] = 1;
   return hdp;
 }
@@ -2169,19 +2248,23 @@ void HdmaobjPreInstr_WaterBG2XScroll(uint16 k) {  // 0x88C589
   UNUSED_bg2_lava_acid_y_scroll = reg_BG2HOFS;
   if (time_is_frozen_flag) {
     HdmaobjPreInstr_WaterBG2XScroll_Func1(k);
-  } else if ((fx_liquid_options & 2) == 0) {
+  }
+  else if (!(fx_liquid_options & kFxLiquidOption_2_WavyLayer2)) {
     hdma_object_channels_bitmask[(uint8)k >> 1] = 0;
     HdmaobjPreInstr_WaterBG2XScroll_Func1(k);
-  } else {
+  }
+  else {
     HdmaobjPreInstr_WaterBG2XScroll_Func2(k);
   }
   int16 v1 = fx_y_pos - layer1_y_pos + 256;
   if ((int16)fx_y_pos < 0) {
     v1 = 511;
-  } else if (v1 >= 0) {
+  }
+  else if (v1 >= 0) {
     if ((uint16)v1 >= 0x200)
       v1 = 511;
-  } else {
+  }
+  else {
     v1 = (fx_y_pos - layer1_y_pos) & 0xF | 0x100;
   }
   hdma_object_table_pointers[(uint8)k >> 1] = 3 * ((v1 ^ 0x1FF) & 0x3FF) + 0xCF46;
@@ -2213,15 +2296,27 @@ void HdmaobjPreInstr_WaterBG2XScroll_Func1(uint16 k) {  // 0x88C636
 }
 
 void SpawnBG3ScrollHdmaObject(void) {  // 0x88D865
-  static const SpawnHdmaObject_Args unk_88D869 = { 0x43, 0x11, 0xd8d0 };
-  SpawnHdmaObjectToSlot0xA(0x88, &unk_88D869);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88D869 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 3),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Bg3_Scroll
+  };
+  SpawnHdmaObjectToSlot0xA(0x88, &kSpawnHdmaObject_88D869);
 }
 
 void FxTypeFunc_28_CeresRidley(void) {  // 0x88D8DE
-  static const SpawnHdmaObject_Args unk_88D8E2 = { 0x40, 0x05, 0xd906 };
-  static const SpawnHdmaObject_Args unk_88D8EA = { 0x00, 0x2c, 0xd91d };
-  SpawnHdmaObject(0x88, &unk_88D8E2);
-  SpawnHdmaObject(0x88, &unk_88D8EA);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88D8E2 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 0),
+    .hdma_target = REG(BGMODE),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CeresRidley_Mode_BgTileSize
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88D8EA = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(TM),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CeresRidley_MainScreenLayers
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88D8E2);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88D8EA);
 }
 
 void HdmaobjInstr_SetVideoMode1_FloorAndHud(void) {  // 0x88D916
@@ -2229,8 +2324,12 @@ void HdmaobjInstr_SetVideoMode1_FloorAndHud(void) {  // 0x88D916
 }
 
 void FxTypeFunc_2A_CeresElevator(void) {  // 0x88D928
-  static const SpawnHdmaObject_Args unk_88D92C = { 0x40, 0x05, 0xd939 };
-  SpawnHdmaObject(0x88, &unk_88D92C);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88D92C = {
+    .hdma_control = HDMA_CONTROL(0, 1, 0),
+    .hdma_target = REG(BGMODE),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CeresElevator_Mode_BgTileSize
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88D92C);
 }
 
 const uint8 *HdmaobjInstr_SetVideoMode1_Hud(uint16 k, const uint8 *hdp) {  // 0x88D949
@@ -2239,16 +2338,21 @@ const uint8 *HdmaobjInstr_SetVideoMode1_Hud(uint16 k, const uint8 *hdp) {  // 0x
 }
 
 void FxTypeFunc_A_Rain(void) {  // 0x88D950
-  static const SpawnHdmaObject_Args unk_88D95C = { 0x43, 0x11, 0xd96c };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88D95C = {
+    .hdma_control = HDMA_CONTROL(0, 1, 3),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Rain_Bg3_Scroll
+  };
   gameplay_BG3SC = 92;
-  SpawnHdmaObject(0x88, &unk_88D95C);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88D95C);
   SpawnBG3ScrollHdmaObject();
   SpawnAnimtiles(addr_kAnimtiles_Rain);
 }
 
 
 const uint8 *HdmaobjInstr_RandomBg3XVel(uint16 k, const uint8 *hdp) {  // 0x88D981
-  hdma_object_D[k >> 1] = kBG3RainXvels[(uint16)((random_number >> 1) & 6) >> 1];
+  uint16 Random = (random_number >> 1) & 6;
+  hdma_object_D[k >> 1] = kBg3RainXvels[Random >> 1];
   return hdp;
 }
 
@@ -2268,8 +2372,12 @@ void HdmaobjPreInstr_RainBg3Scroll(uint16 k) {  // 0x88D9A1
 
 void FxTypeFunc_8_Spores(void) {  // 0x88DA11
   gameplay_BG3SC = 92;
-  static const SpawnHdmaObject_Args unk_88DA1D = { 0x42, 0x11, 0xda2d };
-  SpawnHdmaObject(0x88, &unk_88DA1D);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DA1D = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Spores_Bg3_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DA1D);
   SpawnBG3ScrollHdmaObject();
   SpawnAnimtiles(addr_kAnimtiles_Spores);
 }
@@ -2291,8 +2399,12 @@ void HdmaobjPreInstr_SporesBG3Xscroll(uint16 k) {  // 0x88DA47
 
 void FxTypeFunc_C_Fog(void) {  // 0x88DB08
   gameplay_BG3SC = 92;
-  static const SpawnHdmaObject_Args unk_88DB14 = { 0x43, 0x11, 0xdb19 };
-  SpawnHdmaObject(0x88, &unk_88DB14);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DB14 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 3),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Fog_Bg3_Scroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DB14);
 }
 
 void HdmaobjPreInstr_FogBG3Scroll(uint16 k) {  // 0x88DB36
@@ -2308,30 +2420,38 @@ void HdmaobjPreInstr_FogBG3Scroll(uint16 k) {  // 0x88DB36
 }
 
 void FxTypeFunc_26_TourianEntranceStatue(void) {  // 0x88DB8A
-  static const SpawnHdmaObject_Args kSpawnHdmaObject_Bg3XScroll = { 0x42, 0x11, 0xd856 };
-  static const SpawnHdmaObject_Args kSpawnHdmaObject_Bg3YScroll = { 0x42, 0x10, 0xdcfa };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DBBA = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Water_Bg3_XScroll
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DBC2 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_TourianStatue_Bg2_YScroll
+  };
 
-  if (CheckEventHappened(kEvent_10_TourianEntranceUnlocked) & 1) {
+  if (CheckEventHappened(kEvent_10_TourianEntranceUnlocked)) {
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 6, .y_pos = 12, .plm_id_ = addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator });
     *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
   }
   reg_BG2SC = 74;
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_C428_WaterNormal);
   fx_y_pos = fx_base_y_pos;
-  SpawnHdmaObject(0x88, &kSpawnHdmaObject_Bg3XScroll);
-  SpawnHdmaObject(0x88, &kSpawnHdmaObject_Bg3YScroll);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DBBA);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DBC2);
   SpawnBG3ScrollHdmaObject();
 }
 
 void SetupTourianEntranceStatueBg2YScroll(uint16 k) {  // 0x88DBCB
-  *(uint16 *)&hdma_window_1_left_pos[0].height = layer1_y_pos + hdma_object_B[k >> 1];
+  tourian_entrance_statue_bg2_y_scroll = layer1_y_pos + hdma_object_B[k >> 1];
 }
 
 void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_WaitForUnlock(uint16 v0) {  // 0x88DBD7
-  if (CheckEventHappened(kEvent_6_PhantoonStatueGray) & 1) {
-    if (CheckEventHappened(kEvent_7_RidleyStatueGray) & 1) {
-      if (CheckEventHappened(kEvent_8_DraygonStatueGray) & 1) {
-        if (CheckEventHappened(kEvent_9_KraidStatueGray) & 1) {
+  if (CheckEventHappened(kEvent_6_PhantoonStatueGray)) {
+    if (CheckEventHappened(kEvent_7_RidleyStatueGray)) {
+      if (CheckEventHappened(kEvent_8_DraygonStatueGray)) {
+        if (CheckEventHappened(kEvent_9_KraidStatueGray)) {
           tourian_entrance_statue_animstate |= 0x10;
           if ((tourian_entrance_statue_animstate & kStatueState_ReleasingBossLock) == 0) {
             hdma_object_C[v0 >> 1] = 300;
@@ -2405,10 +2525,18 @@ const uint8 *HdmaobjInstr_GotoIfEventHappened(uint16 k, const uint8 *hdp) {  // 
 }
 
 void SpawnBombTorizoHaze(void) {  // 0x88DD32
-  static const SpawnHdmaObject_Args unk_88DD36 = { 0x02, 0x32, 0xdd4a };
-  static const SpawnHdmaObject_Args unk_88DD3E = { 0x00, 0x32, 0xdd62 };
-  SpawnHdmaObject(0x88, &unk_88DD36);
-  SpawnHdmaObject(0x88, &unk_88DD3E);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DD36 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 2),
+    .hdma_target = REG(COLDATA),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_BombTorizo_Haze_ColorMath_SubscreenBackdropColor_GreenAndRedComponents
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DD3E = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(COLDATA),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_BombTorizo_Haze_ColorMath_SubscreenBackdropColor_BlueComponents
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DD36);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DD3E);
 }
 
 void HdmaobjPreInstr_BombTorizoHazeColorMathBgColor(uint16 k) {  // 0x88DD43
@@ -2416,12 +2544,20 @@ void HdmaobjPreInstr_BombTorizoHazeColorMathBgColor(uint16 k) {  // 0x88DD43
 }
 
 void FxTypeFunc_2C_Haze(void) {  // 0x88DDC7
-  static const SpawnHdmaObject_Args unk_88DDD4 = { 0x40, 0x32, 0xded3 };
-  static const SpawnHdmaObject_Args unk_88DDDD = { 0x40, 0x32, 0xdeeb };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DDD4 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 0),
+    .hdma_target = REG(COLDATA),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CeresRidley_Haze_ColorMath_SubscreenBackdropColor_Dead
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DDDD = {
+    .hdma_control = HDMA_CONTROL(0, 1, 0),
+    .hdma_target = REG(COLDATA),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_CeresRidley_Haze_ColorMath_SubscreenBackdropColor_Alive
+  };
   if (CheckBossBitForCurArea(kBossBit_AreaBoss) & 1)
-    SpawnHdmaObject(0x88, &unk_88DDDD);
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DDDD);
   else
-    SpawnHdmaObject(0x88, &unk_88DDD4);
+    SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DDD4);
 }
 
 void HdmaobjPreInstr_HazeColorMathSubscreen_CeresRidleyAlive(uint16 k) {  // 0x88DE10
@@ -2478,8 +2614,8 @@ void HdmaobjPreInstr_HazeColorMathSubscreen_FadedIn(uint16 k) {  // 0x88DE74
 void HdmaobjPreInstr_HazeColorMathSubscreen_FadingOut(uint16 k) {  // 0x88DE96
   int8 v1;
 
-  reg_COLDATA[0] = 32;
-  reg_COLDATA[1] = 64;
+  reg_COLDATA[0] = 0x20;
+  reg_COLDATA[1] = 0x40;
   reg_COLDATA[2] = 0x80;
   fx_layer_blending_config_c = 44;
   if (hdma_object_A[(uint8)k >> 1]) {
@@ -2497,20 +2633,31 @@ void HdmaobjPreInstr_HazeColorMathSubscreen_FadingOut(uint16 k) {  // 0x88DE96
   }
 }
 
-static const SpawnHdmaObject_Args unk_88DF38 = { 0x00, 0x2c, 0xdf4f };
-static const SpawnHdmaObject_Args unk_88DF41 = { 0x00, 0x2c, 0xdf6b };
-
-static const SpawnHdmaObject_Args unk_88DF4A = { 0x02, 0x12, 0xdf77 };
 void SpawnDraygonMainScreenLayerHdmaObject(void) {  // 0x88DF34
-  SpawnHdmaObject(0x88, &unk_88DF38);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DF38 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(TM),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Draygon_MainScreenLayers_Initial
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DF38);
 }
 
 void UNUSED_sub_88DF3D(void) {  // 0x88DF3D
-  SpawnHdmaObject(0x88, &unk_88DF41);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DF41 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(TM),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Draygon_MainScreenLayers_TopScreen
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DF41);
 }
 
 void UNUSED_sub_88DF46(void) {  // 0x88DF46
-  SpawnHdmaObject(0x88, &unk_88DF4A);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88DF4A = {
+    .hdma_control = HDMA_CONTROL(0, 0, 2),
+    .hdma_target = REG(BG3VOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_Bg3_YScroll_Unused
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88DF4A);
 }
 
 void HdmaobjPreInstr_DraygonMainScreenLayers(uint16 v0) {  // 0x88DF94
@@ -2524,23 +2671,23 @@ void HdmaobjPreInstr_DraygonMainScreenLayers(uint16 v0) {  // 0x88DF94
     if (sign16(v1 - 40)) {
       int v2 = v0 >> 1;
       hdma_object_instruction_timers[v2] = 1;
-      hdma_object_instruction_list_pointers[v2] = addr_kDraygonMainScreenLayersInstrList_TopScreen;
+      hdma_object_instruction_list_pointers[v2] = addr_kHdmaObject_IList_Draygon_MainScreenLayers_TopScreen;
     } else {
       int v4 = v0 >> 1;
       hdma_object_instruction_timers[v4] = 1;
       if (sign16(v1 - 192))
-        hdma_object_instruction_list_pointers[v4] = addr_kDraygonMainScreenLayersInstrList_MiddleScreen;
+        hdma_object_instruction_list_pointers[v4] = addr_kHdmaObject_IList_Draygon_MainScreenLayers_MiddleScreen;
       else
-        hdma_object_instruction_list_pointers[v4] = addr_kDraygonMainScreenLayersInstrList_BottomScreen;
+        hdma_object_instruction_list_pointers[v4] = addr_kHdmaObject_IList_Draygon_MainScreenLayers_BottomScreen;
     }
   } else {
     int v3 = v0 >> 1;
     hdma_object_instruction_timers[v3] = 1;
-    hdma_object_instruction_list_pointers[v3] = addr_kDraygonMainScreenLayersInstrList_OffScreen;
+    hdma_object_instruction_list_pointers[v3] = addr_kHdmaObject_IList_Draygon_MainScreenLayers_OffScreen;
   }
 }
 
-static Func_U8 *const off_88E04E[7] = {  // 0x88E026
+static Func_U8 *const kVariaSuitPickupFuncs[7] = {  // 0x88E026
   VariaSuitPickup_0_LightBeamAppears,
   VariaSuitPickup_1_LightBeamWidens_Linear,
   VariaSuitPickup_2_LightBeamWidens_Curved,
@@ -2551,7 +2698,7 @@ static Func_U8 *const off_88E04E[7] = {  // 0x88E026
 };
 
 void HdmaobjPreInstr_VariaSuitPickup(uint16 k) {
-  if (off_88E04E[substate]() & 1) {
+  if (kVariaSuitPickupFuncs[substate]() & 1) {
     reg_COLDATA[0] = suit_pickup_color_math_R;
     reg_COLDATA[1] = suit_pickup_color_math_G;
     reg_COLDATA[2] = suit_pickup_color_math_B;
@@ -2559,7 +2706,7 @@ void HdmaobjPreInstr_VariaSuitPickup(uint16 k) {
   }
 }
 
-static Func_U8 *const off_88E084[7] = {  // 0x88E05C
+static Func_U8 *const kGravitySuitPickupFuncs[7] = {  // 0x88E05C
   VariaSuitPickup_0_LightBeamAppears,
   VariaSuitPickup_1_LightBeamWidens_Linear,
   VariaSuitPickup_2_LightBeamWidens_Curved,
@@ -2570,14 +2717,14 @@ static Func_U8 *const off_88E084[7] = {  // 0x88E05C
 };
 
 void HdmaobjPreInstr_GravitySuitPickup(uint16 k) {
-  if (off_88E084[substate]() & 1) {
+  if (kGravitySuitPickupFuncs[substate]() & 1) {
     reg_COLDATA[0] = suit_pickup_color_math_R;
     reg_COLDATA[1] = suit_pickup_color_math_G;
     reg_COLDATA[2] = suit_pickup_color_math_B;
     fx_layer_blending_config_c = 18;
   }
 }
-static const uint16 g_word_88E0D5 = 0x7878;
+static const uint16 kSuitPickupLeftRightPos = 0x7878;
 uint8 VariaSuitPickup_0_LightBeamAppears(void) {  // 0x88E092
   int16 v0;
   int16 v3;
@@ -2586,14 +2733,14 @@ uint8 VariaSuitPickup_0_LightBeamAppears(void) {  // 0x88E092
   v0 = suit_pickup_light_beam_pos;
   uint16 v1 = 0;
   do {
-    hdma_table_1[v1 >> 1] = g_word_88E0D5;
+    hdma_table_1[v1 >> 1] = kSuitPickupLeftRightPos;
     v1 += 2;
     --v0;
   } while (v0 > 0);
   uint16 v2 = 510;
   v3 = suit_pickup_light_beam_pos;
   do {
-    hdma_table_1[v2 >> 1] = g_word_88E0D5;
+    hdma_table_1[v2 >> 1] = kSuitPickupLeftRightPos;
     v2 -= 2;
     --v3;
   } while (v3 > 0);
@@ -2730,11 +2877,13 @@ uint8 GravitySuitPickup_6(void) {  // 0x88E25F
   hdma_table_1[0] = 255;
   substate = 0;
   suit_pickup_light_beam_pos = 0;
-  *(uint16 *)&suit_pickup_color_math_R = 0;
-  *(uint16 *)&suit_pickup_color_math_B = 0;
-  int v0 = hdma_object_index >> 1;
-  hdma_object_instruction_list_pointers[v0] += 2;
-  hdma_object_instruction_timers[v0] = 1;
+  suit_pickup_color_math_R = 0;
+  suit_pickup_color_math_G = 0;
+  suit_pickup_color_math_B = 0;
+  suit_pickup_palette_transition_color = 0;
+  int idx = hdma_object_index >> 1;
+  hdma_object_instruction_list_pointers[idx] += 2;
+  hdma_object_instruction_timers[idx] = 1;
   RunSamusCode(kSamusCode_11_DrawHandlerDefault);
   return 0;
 }
@@ -2822,13 +2971,18 @@ void HdmaobjPreInstr_PhantoonSemiTransparency(uint16 k) {  // 0x88E449
     fx_layer_blending_config_c = 4;
   }
 }
-static const SpawnHdmaObject_Args unk_88E4A0 = { 0x42, 0x0f, 0xe4a8 };
+
 void SpawnWavyPhantoonHdmaObject(uint16 v0, uint16 r22) {  // 0x88E487
   enemy_data[2].parameter_1 = v0;
   enemy_data[3].ai_var_D = 0;
   enemy_data[3].ai_var_E = 0;
   enemy_data[3].ai_preinstr = r22;
-  SpawnHdmaObject(0x88, &unk_88E4A0);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88E4A0 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG2HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_WavyPhantoon_Bg2_XScroll
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88E4A0);
 }
 
 const uint8 *HdmaobjInstr_SetUpWavyPhantoon(uint16 k, const uint8 *hdp) {  // 0x88E4BD
@@ -2838,7 +2992,7 @@ const uint8 *HdmaobjInstr_SetUpWavyPhantoon(uint16 k, const uint8 *hdp) {  // 0x
   unsigned int v5; // kr0C_4
 
   enemy_data[1].parameter_1 = enemy_data[2].parameter_1;
-  if ((enemy_data[2].parameter_1 & 1) != 0) {
+  if (enemy_data[2].parameter_1 & 1) {
     kraid_unk9000 = 192;
     g_word_7E9006 = 192;
     v4 = 12620032;
@@ -2944,14 +3098,23 @@ void HdmaobjPreInstr_WavyPhantoon(uint16 v0) {  // 0x88E567
     hdma_object_instruction_timers[v1] = 1;
   }
 }
-static const SpawnHdmaObject_Args unk_88E722 = { 0x00, 0x2c, 0xe727 };
-static const SpawnHdmaObject_Args unk_88E74C = { 0x41, 0x26, 0xe751 };
+
 uint16 MotherBrainRisingHdmaObject(void) {  // 0x88E71E
-  return SpawnHdmaObject(0x88, &unk_88E722);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88E722 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(TM),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_MotherBrain_Rising_MainScreenLayers
+  };
+  return SpawnHdmaObject(0x88, &kSpawnHdmaObject_88E722);
 }
 
 uint16 SpawnMotherBrainRainbowBeamHdma(void) {  // 0x88E748
-  return SpawnHdmaObject(0x88, &unk_88E74C);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88E74C = {
+    .hdma_control = HDMA_CONTROL(0, 1, 1),
+    .hdma_target = REG(WH0),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_MotherBrain_RainbowBeam_Window1_Pos
+  };
+  return SpawnHdmaObject(0x88, &kSpawnHdmaObject_88E74C);
 }
 
 void InitializeRainbowBeam(void) {  // 0x88E767
@@ -2982,7 +3145,7 @@ void HdmaobjPreInstr_MotherBrainRainbowBeam(uint16 k) {  // 0x88E7BC
 
 
 void SetRainbowBeamColorMathSubscreenBackdropColor(void) {  // 0x88E7ED
-  uint16 v0 = kRainbowBeamHdmaValues[hdma_object_A[0] >> 1];
+  uint16 v0 = kRainbowBeamColorTab0[hdma_object_A[0] >> 1];
   if ((v0 & 0x8000) == 0) {
     ++hdma_object_A[0];
     ++hdma_object_A[0];
@@ -2990,7 +3153,7 @@ void SetRainbowBeamColorMathSubscreenBackdropColor(void) {  // 0x88E7ED
     ++hdma_object_A[0];
   } else {
     hdma_object_A[0] = 0;
-    v0 = kRainbowBeamHdmaValues[0];
+    v0 = kRainbowBeamColorTab0[0];
   }
   reg_COLDATA[0] = v0 & 0x1F | 0x20;
   reg_COLDATA[1] = (v0 >> 5) & 0x1F | 0x40;
@@ -2998,8 +3161,12 @@ void SetRainbowBeamColorMathSubscreenBackdropColor(void) {  // 0x88E7ED
 }
 
 void SpawnMorphBallEyeBeamHdma(void) {  // 0x88E8D9
-  static const SpawnHdmaObject_Args unk_88E8E4 = { 0x41, 0x26, 0xe8ec };
-  SpawnHdmaObject(0x88, &unk_88E8E4);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88E8E4 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 1),
+    .hdma_target = REG(WH0),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_MorphBallEyeBeam_Window1_Pos
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88E8E4);
 }
 
 const uint8 *HdmaobjInstr_InitMorphBallEyeBeamHdma(uint16 k, const uint8 *hdp) {  // 0x88E917
@@ -3069,9 +3236,9 @@ void HdmaobjPreInstr_MorphBallEyeBeam_FullBeam(uint16 k) {  // 0x88EA3C
   if (enemy_data[1].ai_var_C) {
     UpdateMorphBallEyeBeamHdmaDataTableAndColorMathSubscreenBackdropColor(k);
     uint16 v2 = 4 * g_word_7E9090;
-    *((uint8 *)hdma_object_A + k) = kMorphBallEyeBeamHdmaValues[(uint16)(4 * g_word_7E9090)];
-    *((uint8 *)hdma_object_A + k + 1) = kMorphBallEyeBeamHdmaValues[v2 + 1];
-    *((uint8 *)hdma_object_B + k) = kMorphBallEyeBeamHdmaValues[v2 + 2];
+    *((uint8 *)hdma_object_A + k) = kMorphBallEyeBeamColorComponents[(uint16)(4 * g_word_7E9090)];
+    *((uint8 *)hdma_object_A + k + 1) = kMorphBallEyeBeamColorComponents[v2 + 1];
+    *((uint8 *)hdma_object_B + k) = kMorphBallEyeBeamColorComponents[v2 + 2];
     g_word_7E9090 = (g_word_7E9090 + 1) & 0xF;
   } else {
     int v1 = hdma_object_index >> 1;
@@ -3112,13 +3279,21 @@ void HdmaobjPreInstr_MorphBallEyeBeam_DeactivateBeam(uint16 k) {  // 0x88EACB
 }
 
 void SpawnTitleScreenGradientObjs(void) {  // 0x88EB58
-  static const SpawnHdmaObject_Args unk_88EB6B = { 0x00, 0x31, 0xeb85 };
-  static const SpawnHdmaObject_Args unk_88EB63 = { 0x00, 0x32, 0xeb73 };
-  SpawnHdmaObject(0x88, &unk_88EB63);
-  SpawnHdmaObject(0x88, &unk_88EB6B);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88EB6B = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(CGADSUB),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_TitleSequenceGradient_ColorMath_ControlRegisterB
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88EB63 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(COLDATA),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_TitleSequenceGradient_ColorMath_SubscreenBackdropColor
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88EB63);
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88EB6B);
 }
 
-const uint8 *HdmaobjInsr_ConfigTitleSequenceGradientHDMA(uint16 k, const uint8 *hdp) {  // 0x88EB9F
+const uint8 *HdmaobjInstr_ConfigTitleSequenceGradientHDMA(uint16 k, const uint8 *hdp) {  // 0x88EB9F
   reg_CGWSEL = 0;
   ConfigureTitleSequenceGradientHDMA();
   return hdp;
@@ -3142,8 +3317,12 @@ void HdmaobjPreInstr_ColorMathControlB_TitleGradient(uint16 k) {  // 0x88EBD2
 }
 
 void SpawnIntroCutsceneCrossfadeHdma(void) {  // 0x88EBF0
-  static const SpawnHdmaObject_Args unk_88EBFB = { 0x00, 0x31, 0xec03 };
-  SpawnHdmaObject(0x88, &unk_88EBFB);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88EBFB = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(CGADSUB),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_IntroCutscene_Crossfade
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88EBFB);
 }
 
 void HdmaobjPreInstr_IntroCutsceneCrossfade(uint16 k) {  // 0x88EC1D
@@ -3172,8 +3351,12 @@ void SpawnWavySamusHdmaObject(void) {  // 0x88EC3B
   *(uint16 *)((uint8 *)&button_config_itemcancel_y_saved + 1) = v1;
   button_config_aim_down_L_saved = -26496;
   button_config_aim_up_R_saved = 0;
-  static const SpawnHdmaObject_Args unk_88EC82 = { 0x42, 0x11, 0xec8a };
-  SpawnHdmaObject(0x88, &unk_88EC82);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_88EC82 = {
+    .hdma_control = HDMA_CONTROL(0, 1, 2),
+    .hdma_target = REG(BG3HOFS),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_WavySamus
+  };
+  SpawnHdmaObject(0x88, &kSpawnHdmaObject_88EC82);
 }
 
 const uint8 *HdmaobjInstr_SetUpWavySamus(uint16 k, const uint8 *hdp) {  // 0x88EC9F
@@ -3318,10 +3501,10 @@ const uint8 *CallHdmaobjInstr(uint32 ea, uint16 k, const uint8 *j) {
   case fnHdmaobjInstr_SetHdmaTableBank: return HdmaobjInstr_SetHdmaTableBank(k, j);
   case fnHdmaobjInstr_SetIndirectHdmaDataBank: return HdmaobjInstr_SetIndirectHdmaDataBank(k, j);
   case fnHdmaobjInstr_Sleep: return HdmaobjInstr_Sleep(k, j);
-  case fnHdmaobjInstr_SetFlagB: return HdmaobjInstr_SetFlagB(k, j);
-  case fnHdmaobjInstr_SetFlagB_Copy: return HdmaobjInstr_SetFlagB_Copy(k, j);
-  case fnHdmaobjInstr_SetFlagB_Copy2: return HdmaobjInstr_SetFlagB_Copy2(k, j);
-  case fnHdmaobjInstr_SetFlagB_Copy3: return HdmaobjInstr_SetFlagB_Copy3(k, j);
+  case fnHdmaobjInstr_SetPhaseIncreaseTimer_1: return HdmaobjInstr_SetPhaseIncreaseTimer_1(k, j);
+  case fnHdmaobjInstr_SetPhaseDecreaseTimer_1: return HdmaobjInstr_SetPhaseDecreaseTimer_1(k, j);
+  case fnHdmaobjInstr_SetPhaseIncreaseTimer_Copy1: return HdmaobjInstr_SetPhaseIncreaseTimer_Copy1(k, j);
+  case fnHdmaobjInstr_SetPhaseIncreaseTimer_Copy2: return HdmaobjInstr_SetPhaseIncreaseTimer_Copy2(k, j);
   case fnHdmaobjInstr_SetVideoMode1_FloorAndHud: HdmaobjInstr_SetVideoMode1_FloorAndHud(); return j;
   case fnHdmaobjInstr_SetVideoMode1_Hud: return HdmaobjInstr_SetVideoMode1_Hud(k, j);
   case fnHdmaobjInstr_RandomBg3XVel: return HdmaobjInstr_RandomBg3XVel(k, j);
@@ -3330,7 +3513,7 @@ const uint8 *CallHdmaobjInstr(uint32 ea, uint16 k, const uint8 *j) {
   case fnHdmaobjInstr_InitMorphBallEyeBeamHdma: return HdmaobjInstr_InitMorphBallEyeBeamHdma(k, j);
   case fnHdmaobjInstr_SetUpWavySamus: return HdmaobjInstr_SetUpWavySamus(k, j);
   case fnHdmaobjInstr_LavaSoundTimer_112: return HdmaobjInstr_LavaSoundTimer_112(k, j);
-  case fnHdmaobjInsr_ConfigTitleSequenceGradientHDMA: return HdmaobjInsr_ConfigTitleSequenceGradientHDMA(k, j);
+  case fnHdmaobjInstr_ConfigTitleSequenceGradientHDMA: return HdmaobjInstr_ConfigTitleSequenceGradientHDMA(k, j);
   default: Unreachable(); return NULL;
   }
 }

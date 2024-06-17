@@ -38,16 +38,19 @@ static Func_V *const kSamusFxHandlers[8] = {
 void Samus_Animate(void) {  // 0x908000
   kSamusFxHandlers[(fx_type & 0xF) >> 1]();
   if (samus_pose == kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun || samus_pose == kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun) {
-    if (samus_y_dir != 2 && samus_anim_frame == 1 && samus_anim_frame_timer == 1)
+    if (samus_y_dir != kSamusYDir_Down && samus_anim_frame == 1 && samus_anim_frame_timer == 1) {
       samus_anim_frame_timer = 4;
-    bool v1 = (--samus_anim_frame_timer & 0x8000) != 0;
-    if (!samus_anim_frame_timer || v1) {
+    }
+    --samus_anim_frame_timer;
+    if ((int16)samus_anim_frame_timer <= 0) {
       ++samus_anim_frame;
       Samus_HandleAnimDelay();
     }
-  } else {
-    bool v0 = (--samus_anim_frame_timer & 0x8000) != 0;
-    if (!samus_anim_frame_timer || v0) {
+  }
+  // @todo possibly remove the else clause since it's the same as the above
+  else {
+    --samus_anim_frame_timer;
+    if ((int16)samus_anim_frame_timer <= 0) {
       ++samus_anim_frame;
       Samus_HandleAnimDelay();
     }
@@ -55,16 +58,19 @@ void Samus_Animate(void) {  // 0x908000
 }
 
 void Samus_Animate_NoFx(void) {  // 0x908078
-  uint16 r18 = Samus_GetBottom_R18();
+  uint16 samus_bottom_bound = Samus_GetBottom_R18();
   samus_anim_frame_buffer = samus_x_speed_divisor;
   if (liquid_physics_type != kLiquidPhysicsType_Air) {
-    if ((liquid_physics_type & kLiquidPhysicsType_Water) != 0) {
+    if (liquid_physics_type & kLiquidPhysicsType_Water) {
       liquid_physics_type = kLiquidPhysicsType_Air;
       QueueSfx2_Max6(kSfx2_SplashedOutOfWater);
-      if ((samus_suit_palette_index & kSuitPaletteIndex_4_Gravity) == 0 && (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping))
+      if (!(samus_suit_palette_index & kSuitPaletteIndex_4_Gravity)
+          && (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)) {
         QueueSfx1_Max6(kSfx1_ResumedSpinJump);
-      Samus_SpawnWaterSplash(r18);
-    } else {
+      }
+      Samus_SpawnWaterSplash(samus_bottom_bound);
+    }
+    else {
       liquid_physics_type = kLiquidPhysicsType_Air;
     }
   }
@@ -72,36 +78,41 @@ void Samus_Animate_NoFx(void) {  // 0x908078
 
 void Samus_Animate_WaterFx(void) {  // 0x9080B8
   static const uint16 kSamusPhys_AnimDelayInWater = 3;
-  uint16 r18 = Samus_GetBottom_R18();
-  if ((fx_y_pos & 0x8000) == 0 && sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+  int16 samus_bottom_bound = Samus_GetBottom_R18();
+  if (0 <= (int16)fx_y_pos && (int16)fx_y_pos < samus_bottom_bound
+      && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
     samus_anim_frame_buffer = kSamusPhys_AnimDelayInWater;
     if (liquid_physics_type == kLiquidPhysicsType_Water) {
       Samus_SpawnAirBubbles();
-    } else {
+    }
+    else {
       liquid_physics_type = kLiquidPhysicsType_Water;
       QueueSfx2_Max6(kSfx2_SplashedIntoWater);
-      Samus_SpawnWaterSplash(r18);
+      Samus_SpawnWaterSplash(samus_bottom_bound);
     }
-  } else {
+  }
+  else {
     Samus_Animate_NoFx();
   }
 }
 
-void Samus_SpawnWaterSplash(uint16 r18) {  // 0x9080E6
+void Samus_SpawnWaterSplash(uint16 samus_bottom_bound) {  // 0x9080E6
   static const uint8 kWaterSplashTypeTable[28] = {
     1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
     1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
   };
-  if (kWaterSplashTypeTable[samus_movement_type]) {
+  // 0 is not in water, 1 is in water
+  if (kWaterSplashTypeTable[samus_movement_type] != 0) {
     atmospheric_gfx_frame_and_type[0] = 256;
     atmospheric_gfx_frame_and_type[1] = 256;
     atmospheric_gfx_anim_timer[0] = 3;
     atmospheric_gfx_anim_timer[1] = 3;
     atmospheric_gfx_x_pos[0] = samus_x_pos + 4;
     atmospheric_gfx_x_pos[1] = samus_x_pos - 3;
-    atmospheric_gfx_y_pos[0] = r18 - 4;
-    atmospheric_gfx_y_pos[1] = r18 - 4;
-  } else {
+    atmospheric_gfx_y_pos[0] = samus_bottom_bound - 4;
+    atmospheric_gfx_y_pos[1] = samus_bottom_bound - 4;
+  }
+  else {
     atmospheric_gfx_frame_and_type[0] = 768;
     atmospheric_gfx_anim_timer[0] = 2;
     atmospheric_gfx_x_pos[0] = samus_x_pos;
@@ -265,7 +276,7 @@ static bool Samus_AnimDelayFunc_11_SelectDelaySequenceWalljump(const uint8 *jp) 
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r20))
         goto LABEL_10;
-    } else if (sign16(fx_y_pos - r20) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r20) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       goto LABEL_10;
     }
   }
@@ -868,25 +879,32 @@ PairU16 Samus_CalcSpritemapPos_Special(uint16 j) {  // 0x908D98
   return MakePairU16(samus_x_pos - layer1_x_pos, v2 + samus_y_pos - layer1_y_pos);
 }
 
-void SetLiquidPhysicsType(void) {
-  uint16 r18 = Samus_GetBottom_R18();
+void SetLiquidPhysicsType(void) {  // 0x908E0F
+  int16 samus_bottom_bound = Samus_GetBottom_R18();
   switch ((fx_type & 0xF) >> 1) {
-  case 1:
-  case 2:
-    if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r18))
-      liquid_physics_type = kLiquidPhysicsType_LavaAcid;
-    else
+    case (kFxType_2_Lava >> 1) | ((kFxType_22_Unused & 0xF) >> 1) :
+    case (kFxType_4_Acid >> 1) | ((kFxType_24_Fireflea & 0xF) >> 1) :
+      if (0 <= (int16)lava_acid_y_pos && (int16)lava_acid_y_pos < samus_bottom_bound) {
+        liquid_physics_type = kLiquidPhysicsType_LavaAcid;
+      }
+      else {
+        liquid_physics_type = kLiquidPhysicsType_Air;
+      }
+      break;
+    
+    case (kFxType_6_Water >> 1) | ((kFxType_26_TourianEntranceStatue & 0xF) >> 1) :
+      if (0 <= (int16)fx_y_pos && (int16)fx_y_pos < samus_bottom_bound
+          && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
+        liquid_physics_type = kLiquidPhysicsType_Water;
+      }
+      else {
+        liquid_physics_type = kLiquidPhysicsType_Air;
+      }
+      break;
+    
+    default:
       liquid_physics_type = kLiquidPhysicsType_Air;
-    break;
-  case 3:
-    if ((fx_y_pos & 0x8000) == 0 && sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0)
-      liquid_physics_type = kLiquidPhysicsType_Water;
-    else
-      liquid_physics_type = kLiquidPhysicsType_Air;
-    break;
-  default:
-    liquid_physics_type = kLiquidPhysicsType_Air;
-  }
+    }
 }
 
 void Samus_HandleMovement_X(void) {  // 0x908E64
@@ -1393,7 +1411,7 @@ LABEL_24:
         }
         goto LABEL_26;
       }
-    } else if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       goto LABEL_24;
     }
   }
@@ -1462,7 +1480,7 @@ void Samus_InitJump(void) {  // 0x9098BC
     goto LABEL_7;
   uint16 r18 = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
-    if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       v0 = 2;
       goto LABEL_11;
     }
@@ -1502,7 +1520,7 @@ void Samus_InitWallJump(void) {  // 0x909949
     goto LABEL_7;
   uint16 r18 = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
-    if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       v0 = 2;
       goto LABEL_11;
     }
@@ -1545,7 +1563,7 @@ void Samus_SetSpeedForKnockback_Y(void) {  // 0x9099D6
         v0 = 4;
         goto LABEL_11;
       }
-    } else if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       v0 = 2;
       goto LABEL_11;
     }
@@ -1572,7 +1590,7 @@ void Samus_InitBombJump(void) {  // 0x909A2C
         v0 = 4;
         goto LABEL_11;
       }
-    } else if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       v0 = 2;
       goto LABEL_11;
     }
@@ -1647,7 +1665,7 @@ uint16 Samus_DetermineSpeedTableEntryPtr_X(void) {  // 0x909BD1
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r18))
         samus_x_speed_table_pointer = addr_kSamusSpeedTable_LavaAcid_X;
-    } else if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       samus_x_speed_table_pointer = addr_kSamusSpeedTable_Water_X;
     }
   }
@@ -1659,7 +1677,7 @@ uint16 Samus_DetermineGrappleSwingSpeed_X(void) {  // 0x909C21
     return addr_kSamusSpeedTable_GrappleDisconnect_Air;
   uint16 r18 = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
-    if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0)
+    if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled))
       return addr_kSamusSpeedTable_GrappleDisconnect_Water;
     return addr_kSamusSpeedTable_GrappleDisconnect_Air;
   }
@@ -1680,7 +1698,7 @@ void Samus_DetermineAccel_Y(void) {  // 0x909C5B
     goto LABEL_7;
   uint16 r18 = Samus_GetBottom_R18();
   if ((fx_y_pos & 0x8000) == 0) {
-    if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       samus_y_subaccel = kSamusPhys_YSubaccWater;
       samus_y_accel = kSamusPhys_YAccWater;
       return;
@@ -1900,7 +1918,7 @@ void Samus_Movement_03_SpinJumping(void) {  // 0x90A436
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r20))
         r18 = 1;
-    } else if (sign16(fx_y_pos - r20) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r20) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       r18 = 1;
     }
   }
@@ -6500,7 +6518,7 @@ LABEL_11:
     Samus_FootstepGraphics_Common();
     return;
   }
-  if (fx_type != 10)
+  if (fx_type != kFxType_A_Rain)
     goto LABEL_11;
 LABEL_12:
   Samus_FootstepGraphics_Maridia();
@@ -6511,7 +6529,7 @@ void Samus_FootstepGraphics_Maridia(void) {  // 0x90EDEC
   if ((fx_y_pos & 0x8000) != 0) {
     if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r18))
       return;
-  } else if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+  } else if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
     return;
   }
   if (samus_pose_x_dir == kSamusXDir_FaceLeft) {
@@ -6535,7 +6553,7 @@ void Samus_FootstepGraphics_Common(void) {  // 0x90EE64
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r18))
         return;
-    } else if (sign16(fx_y_pos - r18) && (fx_liquid_options & 4) == 0) {
+    } else if (sign16(fx_y_pos - r18) && !(fx_liquid_options & kFxLiquidOption_4_LiquidPhysicsDisabled)) {
       return;
     }
     if (samus_pose_x_dir == kSamusXDir_FaceLeft) {

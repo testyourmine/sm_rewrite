@@ -59,7 +59,7 @@ void ReleaseButtonsFilter(uint16 time) {  // 0x808146
 
 /**
 * @brief Changes the bit index to a byte index and bitmasks
-* @param bit_index The amount to shift by
+* @param bit_index The position of the bit
 * @return uint16 The index of the byte
 */
 uint16 PrepareBitAccess(uint16 bit_index) {  // 0x80818E
@@ -497,7 +497,8 @@ void HandleFadeOut(void) {  // 0x808924
       else
         reg_INIDISP = brightness - 1;
     }
-  } else {
+  }
+  else {
     --screen_fade_counter;
   }
 }
@@ -512,7 +513,8 @@ void HandleFadeIn(void) {  // 0x80894D
     uint16 brightness = (reg_INIDISP + 1) & 0xF;
     if (brightness != 0)
       reg_INIDISP = brightness;
-  } else {
+  }
+  else {
     --screen_fade_counter;
   }
 }
@@ -592,9 +594,9 @@ void NMI_ProcessMode7QueueInner(const uint8 *p) {  // 0x808BD3
       WriteReg(A1B1, vram_entry->src_addr.bank);
       WriteRegWord(DAS1L, vram_entry->count);
       if (transfer_mode & VRAM_WRITE_TILES)
-        WriteReg(BBAD1, 0x19);
+        WriteReg(BBAD1, REG(VMDATAH));
       else /* (transfer_mode & VRAM_WRITE_TILEMAP) */
-        WriteReg(BBAD1, 0x18);
+        WriteReg(BBAD1, REG(VMDATAL));
       WriteRegWord(VMADDL, vram_entry->vram_addr);
       WriteReg(VMAIN, vram_entry->vmain);
       WriteReg(MDMAEN, 2);
@@ -609,7 +611,7 @@ void NMI_ProcessMode7QueueInner(const uint8 *p) {  // 0x808BD3
     WriteRegWord(A1T1L, cgram_entry->src_addr);
     WriteReg(A1B1, cgram_entry->gap3[0]);
     WriteRegWord(DAS1L, WORD(cgram_entry->gap3[1]));
-    WriteReg(BBAD1, 0x22);
+    WriteReg(BBAD1, REG(CGDATA));
     WriteReg(CGADD, HIBYTE(cgram_entry->field_5));
     WriteReg(MDMAEN, 2);
     p += sizeof(Mode7CgramWriteQueue);
@@ -622,7 +624,9 @@ void NMI_ProcessMode7QueueInner(const uint8 *p) {  // 0x808BD3
 void NMI_ProcessVramWriteQueue(void) {  // 0x808C83
   if (vram_write_queue_tail != 0) {
     gVramWriteEntry(vram_write_queue_tail)->size = 0;
-    WriteRegWord(DMAP1, 0x1801);
+    WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+    WriteReg(BBAD1, REG(VMDATAL));
+    //WriteRegWord(DMAP1, 0x1801);
     for (int i = 0; ; i += sizeof(VramWriteEntry)) {
       VramWriteEntry *vram_entry = gVramWriteEntry(i);
       if (vram_entry->size == 0)
@@ -630,7 +634,7 @@ void NMI_ProcessVramWriteQueue(void) {  // 0x808C83
       WriteRegWord(DAS1L, vram_entry->size);
       WriteRegWord(A1T1L, vram_entry->src.addr);
       WriteReg(A1B1, vram_entry->src.bank);
-      WriteRegWord(VMAIN, sign16(vram_entry->vram_dst) ? 0x81 : 0x80);
+      WriteReg(VMAIN, sign16(vram_entry->vram_dst) ? 0x81 : 0x80);
       WriteRegWord(VMADDL, vram_entry->vram_dst);
       WriteReg(MDMAEN, 2);
     }
@@ -814,7 +818,8 @@ void HandleMusicQueue(void) {  // 0x808F0C
   if ((int16)--music_timer >= 0) {
     if (music_timer != 0)
       return;
-    if (sign16(music_entry)) {
+    // If the high bit is set, then it's an SPC track
+    if (music_entry & 0x8000) {
       music_data_index = (uint8)music_entry;
       cur_music_track = -1;
       uint32 music_track = DWORD(kMusicPointers[(uint8)music_data_index/sizeof(LongPtr)]);
@@ -1166,16 +1171,20 @@ void NmiUpdateIoRegisters(void) {  // 0x8091EE
 */
 void NmiUpdatePalettesAndOam(void) {  // 0x80933A
   // Set up transfer for OAM entries in RAM to OAM
-  WriteRegWord(DMAP0, 0x400);
+  WriteReg(DMAP0, DMA_CONTROL(0, 0, 0, 0, 0));
+  WriteReg(BBAD0, REG(OAMDATA));
   WriteRegWord(A1T0L, ADDR16_OF_RAM(*oam_ent));
   WriteReg(A1B0, 0);
-  WriteRegWord(DAS0L, 0x220);
+  uint16 oam_size = ADDR16_OF_RAM(oam_next_ptr) - ADDR16_OF_RAM(*oam_ent);
+  WriteRegWord(DAS0L, oam_size);
   WriteRegWord(OAMADDL, 0);
   // Set up transfer for palettes in RAM to CGRAM
-  WriteRegWord(DMAP1, 0x2200);
+  WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 0));
+  WriteReg(BBAD1, REG(CGDATA));
   WriteRegWord(A1T1L, ADDR16_OF_RAM(palette_buffer.pal[0]));
   WriteReg(A1B1, 0x7E);
-  WriteRegWord(DAS1L, 0x200);
+  uint16 cgram_size = ADDR16_OF_RAM(target_palettes.pal[0]) - ADDR16_OF_RAM(palette_buffer.pal[0]);
+  WriteRegWord(DAS1L, cgram_size);
   WriteReg(CGADD, 0);
   // Execute transfers
   WriteReg(MDMAEN, 3);
@@ -1186,10 +1195,11 @@ void NmiUpdatePalettesAndOam(void) {  // 0x80933A
 */
 void NmiTransferSamusToVram(void) {  // 0x809376
   WriteReg(VMAIN, 0x80);
-  if (LOBYTE(nmi_copy_samus_halves)) {
+  if (nmi_copy_samus_top_half_ready_flag) {
     SamusTileAnimationTileDefs *td = (SamusTileAnimationTileDefs *)RomPtr_92(nmi_copy_samus_top_half_src);
     WriteRegWord(VMADDL, 0x6000);
-    WriteRegWord(DMAP1, 0x1801);
+    WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+    WriteReg(BBAD1, REG(VMDATAL));
     WriteRegWord(A1T1L, td->src.addr);
     WriteReg(A1B1, td->src.bank);
     WriteRegWord(DAS1L, td->part1_size);
@@ -1201,10 +1211,11 @@ void NmiTransferSamusToVram(void) {  // 0x809376
       WriteReg(MDMAEN, 2);
     }
   }
-  if (HIBYTE(nmi_copy_samus_halves)) {
+  if (nmi_copy_samus_bottom_half_ready_flag) {
     SamusTileAnimationTileDefs *td = (SamusTileAnimationTileDefs *)RomPtr_92(nmi_copy_samus_bottom_half_src);
     WriteRegWord(VMADDL, 0x6080);
-    WriteRegWord(DMAP1, 0x1801);
+    WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+    WriteReg(BBAD1, REG(VMDATAL));
     WriteRegWord(A1T1L, td->src.addr);
     WriteReg(A1B1, td->src.bank);
     WriteRegWord(DAS1L, td->part1_size);
@@ -1229,7 +1240,8 @@ void NmiProcessAnimtilesVramTransfers(void) {  // 0x809416
         if (animtiles_src_ptr[obj_idx] != 0) {
           WriteRegWord(A1T0L, animtiles_src_ptr[obj_idx]);
           WriteReg(A1B0, 0x87);
-          WriteRegWord(DMAP0, 0x1801);
+          WriteReg(DMAP0, DMA_CONTROL(0, 0, 0, 0, 1));
+          WriteReg(BBAD0, REG(VMDATAL));
           WriteRegWord(DAS0L, animtiles_sizes[obj_idx]);
           WriteRegWord(VMADDL, animtiles_vram_ptr[obj_idx]);
           WriteReg(VMAIN, 0x80);
@@ -1369,7 +1381,8 @@ void CopyToVramNow(uint16 vram_dst, uint32 src, uint16 size) {  // 0x809632
   // src can point either to ram or rom
   WriteReg(INIDISP, 0x80);
   WriteRegWord(VMADDL, vram_dst);
-  WriteRegWord(DMAP1, 0x1801);
+  WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
+  WriteReg(BBAD1, REG(VMDATAL));
   WriteRegWord(A1T1L, (uint16)src);
   WriteReg(A1B1, src >> 16);
   WriteRegWord(DAS1L, size);
@@ -1619,7 +1632,7 @@ void AddMissilesToHudTilemap(void) {  // 0x8099CF
 * @brief Writes the HUD super missile icon to RAM
 */
 void AddSuperMissilesToHudTilemap(void) {  // 0x809A0E
-  uint16 super_missile_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.super_missiles) - ADDR16_OF_RAM(hud_tilemap.row1);
+  uint16 super_missile_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.super_missiles) - ADDR16_OF_RAM(hud_tilemap);
   AddToTilemapInner(super_missile_tilemap_offset, kHudTilemaps_SuperMissiles);
 }
 
@@ -1627,7 +1640,7 @@ void AddSuperMissilesToHudTilemap(void) {  // 0x809A0E
 * @brief Writes the HUD power bomb icon to RAM
 */
 void AddPowerBombsToHudTilemap(void) {  // 0x809A1E
-  uint16 power_bomb_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.power_bombs) - ADDR16_OF_RAM(hud_tilemap.row1);
+  uint16 power_bomb_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.power_bombs) - ADDR16_OF_RAM(hud_tilemap);
   AddToTilemapInner(power_bomb_tilemap_offset, kHudTilemaps_PowerBombs);
 }
 
@@ -1635,7 +1648,7 @@ void AddPowerBombsToHudTilemap(void) {  // 0x809A1E
 * @brief Writes the HUD grapple icon to RAM
 */
 void AddGrappleToHudTilemap(void) {  // 0x809A2E
-  uint16 grapple_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.grapple) - ADDR16_OF_RAM(hud_tilemap.row1);
+  uint16 grapple_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.grapple) - ADDR16_OF_RAM(hud_tilemap);
   AddToTilemapInner(grapple_tilemap_offset, kHudTilemaps_Grapple);
 }
 
@@ -1643,7 +1656,7 @@ void AddGrappleToHudTilemap(void) {  // 0x809A2E
 * @brief Writes the HUD x-ray icon to RAM
 */
 void AddXrayToHudTilemap(void) {  // 0x809A3E
-  uint16 xray_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap.row1);
+  uint16 xray_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap);
   AddToTilemapInner(xray_tilemap_offset, kHudTilemaps_Xray);
 }
 
@@ -1667,7 +1680,7 @@ void InitializeHud(void) {  // 0x809A79
   uint16 ammo_digits_offset;
 
   CopyToVram(addr_kVram_HudTopRow, kHudTilemaps_TopRow, sizeof(kHudTilemaps_TopRow), 1);
-  MemCpy(hud_tilemap.arr, kHudTilemaps_Row1to3, sizeof(kHudTilemaps_Row1to3));
+  MemCpy(&hud_tilemap, kHudTilemaps_Row1to3, sizeof(kHudTilemaps_Row1to3));
   if (equipped_items & kItem_Xray)
     AddXrayToHudTilemap();
   if (equipped_items & kItem_Grapple)
@@ -1686,11 +1699,11 @@ void InitializeHud(void) {  // 0x809A79
   samus_prev_hud_item_index = 0;
   InitializeMiniMapBroken();
 
-  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap.row1);
+  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap);
   if (samus_max_missiles != 0) {
     DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, ammo_digits_offset);
   }
-  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap.row1);
+  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap);
   if (samus_max_super_missiles != 0) {
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_super_missiles, ammo_digits_offset);
   }
@@ -1731,6 +1744,7 @@ void HandleHudTilemap(void) {  // 0x809B44
     for (uint16 tank_index = 0; tank_index < 14*2; tank_index += 2) {
       if (--collected_tank_count == 0)
         break;
+      // 0x3430 is the tile for the empty energy tank, 0x2831 is the tile for the full energy tank
       uint16 tank_tile = 0x3430;
       if (whole_tank_count != 0) {
         --whole_tank_count;
@@ -1739,19 +1753,19 @@ void HandleHudTilemap(void) {  // 0x809B44
       uint16 tank_icon_offset = kEnergyTankIconTilemapOffsets[tank_index >> 1];
       hud_tilemap.arr[tank_icon_offset >> 1] = tank_tile;
     }
-    uint16 health_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.subtank_health) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    uint16 health_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.subtank_health) - ADDR16_OF_RAM(hud_tilemap);
     DrawTwoHudDigits(kDigitTilesetsHealth, sub_tank_energy, health_digits_offset);
   }
 
   if (samus_max_missiles != 0 && samus_missiles != samus_prev_missiles) {
     samus_prev_missiles = samus_missiles;
-    uint16 missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    uint16 missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap);
     DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, missile_digits_offset);
   }
 
   if (samus_max_super_missiles != 0 && samus_super_missiles != samus_prev_super_missiles) {
     samus_prev_super_missiles = samus_super_missiles;
-    uint16 super_missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    uint16 super_missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap);
     if (joypad_dbg_flags & kDebugOption_Draw3DigitsSuperMissile)
       DrawThreeHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, super_missile_digits_offset);
     else
@@ -1760,12 +1774,14 @@ void HandleHudTilemap(void) {  // 0x809B44
 
   if (samus_max_power_bombs != 0 && samus_power_bombs != samus_prev_power_bombs) {
     samus_prev_power_bombs = samus_power_bombs;
-    uint16 power_bomb_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.power_bomb_count) - ADDR16_OF_RAM(hud_tilemap.arr[0]);
+    uint16 power_bomb_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.power_bomb_count) - ADDR16_OF_RAM(hud_tilemap);
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, power_bomb_digits_offset);
   }
 
-  uint16 highlighted_palette = 4 * 0x400;
-  uint16 unhighlighted_palette = 5 * 0x400;
+  // In the tilemap format, bits 10-12 are the palette bits
+  // Palette 4 is the highlighted palette, palette 5 is the unhighlighted palette
+  uint16 highlighted_palette = 4 * (1 << 10);
+  uint16 unhighlighted_palette = 5 * (1 << 10);
   if (hud_item_index != samus_prev_hud_item_index) {
     ToggleHudItemHighlight(hud_item_index, highlighted_palette);
     ToggleHudItemHighlight(samus_prev_hud_item_index, unhighlighted_palette);
@@ -1779,10 +1795,10 @@ void HandleHudTilemap(void) {  // 0x809B44
   }
 
   uint16 hud_palette = unhighlighted_palette;
-  if (nmi_frame_counter_byte & 0x10)
+  if (nmi_frame_counter_byte & 16)
     hud_palette = highlighted_palette;
   ToggleHudItemHighlight(samus_auto_cancel_hud_item_index, hud_palette);
-  // Transfer the HUD tilemap in RAM to VRAM 0x5820
+  // Queue a transfer of the HUD tilemap in RAM to VRAM 0x5820
   VramWriteEntry* vram_entry = gVramWriteEntry(vram_write_queue_tail);
   vram_entry->size = sizeof(RamHudTilemap);
   vram_entry->src.addr = ADDR16_OF_RAM(hud_tilemap.arr[0]);
@@ -1803,6 +1819,7 @@ void ToggleHudItemHighlight(uint16 hud_item_index_, uint16 tilemap_palette_bits)
     item_index *= 2;
     int offset = kHudItemTilemapOffsets[item_index >> 1] >> 1;
     uint16 blank_tile = 0x2C0F;
+    // Tilemap & 0xE3FF zeroes the palette bits, and the | sets the palette bits
     if (hud_tilemap.row1.arr[offset] != blank_tile)
       hud_tilemap.row1.arr[offset] = hud_item_tilemap_palette_bits | hud_tilemap.row1.arr[offset] & 0xE3FF;
     if (hud_tilemap.row1.arr[offset + 1] != blank_tile)
@@ -3269,8 +3286,8 @@ void LoadFromLoadStation(void) {  // 0x80C437
   samus_prev_x_pos = samus_x_pos = layer1_x_pos + L.samus_x_offset + 0x80;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
-  LOBYTE(area_index) = get_RoomDefHeader(room_ptr).area_index_;
-  LOBYTE(debug_disable_minimap) = 0;
+  BYTE(area_index) = get_RoomDefHeader(room_ptr).area_index_;
+  BYTE(debug_disable_minimap) = 0;
 }
 
 /**

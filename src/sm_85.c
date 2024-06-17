@@ -130,8 +130,8 @@ static void SetupMessageBoxBg3YscrollHdma(void) {  // 0x858363
   WORD(ram3000.msgbox.indirect_hdma[4]) = 0x30FE;
   ram3000.msgbox.indirect_hdma[6] = 0;
   // Set up indirect HDMA to BG3 Y scroll on HDMA channel 6
-  WriteReg(DMAP6, 0x42);
-  WriteReg(BBAD6, 0x12);
+  WriteReg(DMAP6, HDMA_CONTROL(0, 1, 2));
+  WriteReg(BBAD6, REG(BG3VOFS));
   WriteReg(A1T6L, 0x80);
   WriteReg(DAS6L, 0x80);
   WriteReg(A1T6H, 0x33);
@@ -277,10 +277,10 @@ static void RestorePpuForMessageBox(void) {  // 0x85861A
   gameplay_CGADSUB = next_gameplay_CGADSUB;
   // Restore BG3 palette 6 color 1 to CGRAM
   WriteReg(CGADD, 0x19);
-  WriteReg(CGDATA, palette_buffer.bg3_pal_6[1]);
+  WriteReg(CGDATA, LOBYTE(palette_buffer.bg3_pal_6[1]));
   WriteReg(CGDATA, HIBYTE(palette_buffer.bg3_pal_6[1]));
   // Restore BG3 palette 6 color 2 to CGRAM
-  WriteReg(CGDATA, palette_buffer.bg3_pal_6[2]);
+  WriteReg(CGDATA, LOBYTE(palette_buffer.bg3_pal_6[2]));
   WriteReg(CGDATA, HIBYTE(palette_buffer.bg3_pal_6[2]));
 }
 

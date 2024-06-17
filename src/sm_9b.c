@@ -98,14 +98,14 @@ uint16 HandleSamusDeathSequence(void) {  // 0x9BB441
   if (sign16(++samus_death_anim_counter - 60)) {
     bool v0 = (--game_options_screen_index & 0x8000) != 0;
     if (!game_options_screen_index || v0) {
-      if (samus_death_anim_timer) {
-        samus_death_anim_timer = 0;
+      if (samus_death_anim_index) {
+        samus_death_anim_index = 0;
         game_options_screen_index = 3;
       } else {
-        samus_death_anim_timer = 1;
+        samus_death_anim_index = 1;
         game_options_screen_index = 1;
       }
-      CopyPalettesForSamusDeath(samus_death_anim_timer * 2);
+      CopyPalettesForSamusDeath(samus_death_anim_index * 2);
     }
     return 0;
   } else {
@@ -121,7 +121,7 @@ void HandleSamusDeathSequence_Helper2(void) {  // 0x9BB4B6
   memcpy(&palette_buffer.sprite_pal_7[0], RomPtr_9B(addr_kSamusPalette_DeathSequence_SuitlessSamus), 32);
   QueueTransferOfSamusDeathSequence(8);
   game_options_screen_index = kDeathSequencePalette_ExplosionTabs[0];
-  samus_death_anim_timer = 0;
+  samus_death_anim_index = 0;
   samus_death_anim_counter = 0;
   GameState_24_SamusNoHealth_Explosion_2();
 }
@@ -151,7 +151,7 @@ uint16 GameState_24_SamusNoHealth_Explosion_Helper(void) {  // 0x9BB701
 }
 
 void GameState_24_SamusNoHealth_Explosion_1(void) {  // 0x9BB710
-  if (!substate && samus_death_anim_timer) {
+  if (!substate && samus_death_anim_index) {
     int v0 = samus_death_anim_counter;
     uint16 *dst = (uint16*)(g_ram + 0xc000);
     for(int i = 0; i < 384/2; i++)
@@ -166,17 +166,17 @@ void GameState_24_SamusNoHealth_Explosion_1(void) {  // 0x9BB710
 uint16 GameState_24_SamusNoHealth_Explosion_2(void) {  // 0x9BB758
   bool v0 = (--game_options_screen_index & 0x8000) != 0;
   if (!game_options_screen_index || v0) {
-    if (!sign16(++samus_death_anim_timer - 9)) {
+    if (!sign16(++samus_death_anim_index - 9)) {
       samus_death_anim_counter = 21;
       GameState_24_SamusNoHealth_Explosion_1();
       substate = 0;
       return 1;
     }
-    if (!substate || sign16(samus_death_anim_timer - 2)) {
-      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_timer)];
-      CopyPalettesForSamusDeath(2 * kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_timer) + 1]);
+    if (!substate || sign16(samus_death_anim_index - 2)) {
+      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_index)];
+      CopyPalettesForSamusDeath(2 * kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_index) + 1]);
     } else {
-      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_timer)];
+      game_options_screen_index = kDeathSequencePalette_ExplosionTabs[(2 * samus_death_anim_index)];
     }
   }
   DrawSamusSuitExploding();
@@ -632,20 +632,20 @@ void HandleGrappleBeamFlare(void) {  // 0x9BC036
 }
 
 void GrappleBeamHandler(void) {  // 0x9BC490
-  uint16 r18;
+  int16 samus_bottom_bound = Samus_GetBottom_R18();
   if (grapple_beam_auto_cancel_timer != 0)
     --grapple_beam_auto_cancel_timer;
   samus_grapple_flags &= ~1;
   CancelGrappleBeamIfIncompatiblePose();
   CallGrappleBeamFunc(grapple_beam_function | 0x9B0000);
   if (grapple_beam_function != FUNC16(GrappleBeamFunc_Inactive)
-      && sign16(grapple_beam_function - FUNC16(GrappleBeamFunc_Cancel))
-      && (samus_suit_palette_index & kSuitPaletteIndex_4_Gravity) == 0
-      && fx_type
-      && (r18 = Samus_GetBottom_R18(), (fx_y_pos & 0x8000) == 0)
-      && sign16(fx_y_pos - r18)) {
+      && grapple_beam_function < FUNC16(GrappleBeamFunc_Cancel)
+      && !(samus_suit_palette_index & kSuitPaletteIndex_4_Gravity)
+      && fx_type != kFxType_0_None
+      && 0 <= (int16)fx_y_pos && (int16)fx_y_pos < samus_bottom_bound) {
     grapple_beam_flags |= 1;
-  } else {
+  }
+  else {
     grapple_beam_flags &= ~1;
   }
 }

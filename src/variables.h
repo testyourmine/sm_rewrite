@@ -217,6 +217,10 @@ extern int32 *cur_coll_amt32;
 #define croco_vline_height ((uint8*)(g_ram+0x69C))
 #define UNUSED_byte_7E071C (*(uint8*)(g_ram+0x71C))
 #define nmi_copy_samus_halves (*(uint16*)(g_ram+0x71D))
+// {
+#define nmi_copy_samus_top_half_ready_flag (*(uint8*)(g_ram+0x71D))
+#define nmi_copy_samus_bottom_half_ready_flag (*(uint8*)(g_ram+0x71E))
+// }
 #define nmi_copy_samus_top_half_src (*(uint16*)(g_ram+0x71F))
 #define nmi_copy_samus_bottom_half_src (*(uint16*)(g_ram+0x721))
 #define screen_fade_delay (*(uint16*)(g_ram+0x723))
@@ -329,6 +333,10 @@ extern int32 *cur_coll_amt32;
 // }
 #define scrolling_finished_hook (*(uint16*)(g_ram+0x7E9))
 #define hdma_data_table_in_ceres (*(uint16*)(g_ram+0x7EB))
+// {
+#define hud_floor_video_mode1 (*(uint8*)(g_ram+0x7EB))
+#define video_mode7 (*(uint8*)(g_ram+0x7EC))
+// }
 #define music_data_index (*(uint16*)(g_ram+0x7F3))
 #define music_track_index (*(uint16*)(g_ram+0x7F5))
 #define map_tiles_explored ((uint8*)(g_ram+0x7F7))
@@ -736,11 +744,14 @@ extern int32 *cur_coll_amt32;
 #define projectile_index (*(uint16*)(g_ram+0xDDE))
 #define debug_invincibility (*(uint16*)(g_ram+0xDE0))
 #define game_options_screen_index (*(uint16*)(g_ram+0xDE2))
-#define samus_death_anim_timer (*(uint16*)(g_ram+0xDE4))
+#define samus_death_anim_index (*(uint16*)(g_ram+0xDE4))
 #define samus_death_anim_counter (*(uint16*)(g_ram+0xDE6))
 #define samus_death_anim_pre_flash_timer (*(uint16*)(g_ram+0xDE8))
 #define crystal_flash_ammo_decrement_index (*(uint16*)(g_ram+0xDEA))
+// {
 #define substate (*(uint16*)(g_ram+0xDEC))
+#define samus_fanfare_timer (*(uint16*)(g_ram+0xDEC))
+// }
 #define suit_pickup_light_beam_pos (*(uint16*)(g_ram+0xDEE))
 #define suit_pickup_color_math_R (*(uint8*)(g_ram+0xDF0))
 #define suit_pickup_color_math_G (*(uint8*)(g_ram+0xDF1))
@@ -914,6 +925,7 @@ extern int32 *cur_coll_amt32;
 #define fx_layer_blending_config_a (*(uint16*)(g_ram+0x1982))
 #define fx_layer_blending_config_b (*(uint16*)(g_ram+0x1984))
 #define fx_layer_blending_config_c (*(uint16*)(g_ram+0x1986))
+#define fx_layer_blending_window_2_config (*(uint8*)(g_ram+0x1987))
 #define phantom_related_layer_flag (*(uint16*)(g_ram+0x1988))
 // Enemy projectile data {
 #define eproj_enable_flag (*(uint16*)(g_ram+0x198D))
@@ -1085,7 +1097,11 @@ extern int32 *cur_coll_amt32;
 #define UNUSED_bg2_lava_acid_y_scroll (*(uint16*)(g_ram+0x9C44))
 #define lava_acid_bg2_y_scroll_hdma_data_table_entry ((uint16*)(g_ram+0x9C46))
 #define hdma_table_2 ((uint16*)(g_ram+0x9D00))
+// {
 #define hdma_window_1_left_pos ((ExpandingSquareTransitionHdma*)(g_ram+0x9E00))
+#define hdma_bg2_y_scroll_expand_contract_effect ((ExpandingSquareTransitionHdma*)(g_ram+0x9E00))
+#define tourian_entrance_statue_bg2_y_scroll (*(uint16*)(g_ram+0x9E00))
+// }
 #define hdma_window_1_right_pos ((ExpandingSquareTransitionHdma*)(g_ram+0x9E10))
 #define expand_sq_topbottom_margin_right_pos (*(uint16*)(g_ram+0x9E20))
 #define expand_sq_topbottom_margin_left_pos (*(uint16*)(g_ram+0x9E22))

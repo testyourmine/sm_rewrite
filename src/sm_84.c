@@ -2407,7 +2407,7 @@ void PlmPreInstr_WakeOnKeyPress(uint16 k) {  // 0x84D4BF
 }
 
 const uint8 *PlmInstr_EnableWaterPhysics(const uint8 *plmp, uint16 k) {  // 0x84D525
-  fx_liquid_options &= ~4;
+  fx_liquid_options &= ~kFxLiquidOption_4_LiquidPhysicsDisabled;
   return plmp;
 }
 

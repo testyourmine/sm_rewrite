@@ -137,6 +137,7 @@ typedef union AnimtilesEntry {
     };
   };
 } AnimtilesEntry;
+
 /* 18 */
 typedef struct Mode7ObjectDef {
     VoidP object_def_ptr;

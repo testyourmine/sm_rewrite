@@ -570,10 +570,18 @@ void GameOverMenu_1_Init(void) {  // 0x8191A4
   DisableHdmaObjects();
   WaitUntilEndOfVblankAndClearHdma();
   EnableHdmaObjects();
-  static const SpawnHdmaObject_Args unk_819254 = { 0x00, 0x32, 0x927d };
-  static const SpawnHdmaObject_Args unk_81925C = { 0x00, 0x31, 0x928d };
-  SpawnHdmaObject(0x81, &unk_819254);
-  SpawnHdmaObject(0x81, &unk_81925C);
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_819254 = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(COLDATA),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_GameOverGradient_ColorMathSubBackdropColor
+  };
+  static const SpawnHdmaObject_Args kSpawnHdmaObject_81925C = {
+    .hdma_control = HDMA_CONTROL(0, 0, 0),
+    .hdma_target = REG(CGADSUB),
+    .hdma_instr_list_ptr = addr_kHdmaObject_IList_GameOverGradient_ColorMathControlReg0
+  };
+  SpawnHdmaObject(0x81, &kSpawnHdmaObject_819254);
+  SpawnHdmaObject(0x81, &kSpawnHdmaObject_81925C);
   ScreenOn();
   ++menu_index;
   screen_fade_delay = 0;
@@ -1792,8 +1800,8 @@ void SetupInitialExpandingSquareHDMA(void) {  // 0x81A61C
   hdma_window_1_left_pos[3].height = 111;
   hdma_window_1_left_pos[3].addr_lo = 32;
   hdma_window_1_left_pos[3].addr_hi = -98;
-  WriteReg(DMAP2, 0x40);
-  WriteReg(BBAD2, 0x26);
+  WriteReg(DMAP2, HDMA_CONTROL(0, 1, 0));
+  WriteReg(BBAD2, REG(WH0));
   WriteReg(A1T2L, 0);
   WriteReg(A1T2H, 0x9E);
   WriteReg(A1B2, 0x7E);
@@ -1815,8 +1823,8 @@ void SetupInitialExpandingSquareHDMA(void) {  // 0x81A61C
   hdma_window_1_right_pos[3].height = 111;
   hdma_window_1_right_pos[3].addr_lo = 32;
   hdma_window_1_right_pos[3].addr_hi = -98;
-  WriteReg(DMAP3, 0x40);
-  WriteReg(BBAD3, 0x27);
+  WriteReg(DMAP2, HDMA_CONTROL(0, 1, 0));
+  WriteReg(BBAD2, REG(WH1));
   WriteReg(A1T3L, 0x10);
   WriteReg(A1T3H, 0x9E);
   WriteReg(A1B3, 0x7E);

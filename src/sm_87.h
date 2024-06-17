@@ -121,7 +121,7 @@ AnimtilesEntry get_AnimtilesEntry(uint16 instr_ptr) {
     case 0x83ec: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 0 };
     case 0x83f0: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x97e4 };
     case 0x83f4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 0 };
-    case 0x83f8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf755 };
+    case 0x83f8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Phantoon };
     case 0x83fc: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x97e4 };
     case 0x8400: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_6_PhantoonStatueGray };
     case 0x8404: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_PhantoonProcessing };
@@ -147,7 +147,7 @@ AnimtilesEntry get_AnimtilesEntry(uint16 instr_ptr) {
     case 0x8454: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 2 };
     case 0x8458: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x9864 };
     case 0x845c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 2 };
-    case 0x8460: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf751 };
+    case 0x8460: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Ridley };
     case 0x8464: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x9864 };
     case 0x8468: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_7_RidleyStatueGray };
     case 0x846c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_RidleyProcessing };
@@ -173,7 +173,7 @@ AnimtilesEntry get_AnimtilesEntry(uint16 instr_ptr) {
     case 0x84bc: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 6 };
     case 0x84c0: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x98a4 };
     case 0x84c4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 6 };
-    case 0x84c8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf74d };
+    case 0x84c8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Kraid };
     case 0x84cc: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x98a4 };
     case 0x84d0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_9_KraidStatueGray };
     case 0x84d4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_KraidProcessing };
@@ -199,7 +199,7 @@ AnimtilesEntry get_AnimtilesEntry(uint16 instr_ptr) {
     case 0x8524: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 4 };
     case 0x8528: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x98e4 };
     case 0x852c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 4 };
-    case 0x8530: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf749 };
+    case 0x8530: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Draygon };
     case 0x8534: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x98e4 };
     case 0x8538: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_8_DraygonStatueGray };
     case 0x853c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_DraygonProcessing };
