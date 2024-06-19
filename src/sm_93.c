@@ -10,10 +10,11 @@
 * @param proj_index The index of the projectile
 */
 void InitializeProjectile(uint16 proj_index) {  // 0x938000
-  int index = proj_index >> 1;
-  int proj_dir = (projectile_dir[index] & kProjectileDir_DirMask);
-  uint16 proj_type = projectile_type[index];
+  int idx = proj_index >> 1;
+  int proj_dir = (projectile_dir[idx] & kProjectileDir_DirMask);
+  uint16 proj_type = projectile_type[idx];
   ProjectileDataTable PD;
+
   if (proj_type & kProjectileType_ProjMask) {
     PD = kProjectileData_NonBeams[GET_HIBYTE(proj_type & kProjectileType_ProjMask)];
   } 
@@ -23,15 +24,16 @@ void InitializeProjectile(uint16 proj_index) {  // 0x938000
   else {
     PD = kProjectileData_UnchargedBeams[proj_type & kProjectileType_BeamMask];
   }
+
   if (sign16(PD.damage))
     InvalidInterrupt_Crash();
-  projectile_damage[index] = PD.damage;
+  projectile_damage[idx] = PD.damage;
   uint16 proj_instr_ptr = PD.instr_ptrs[proj_dir];
-  projectile_instruction_ptr[index] = proj_instr_ptr;
+  projectile_instruction_ptr[idx] = proj_instr_ptr;
   ProjectileInstr proj_instr = get_ProjectileInstr(proj_instr_ptr);
-  projectile_x_radius[index] = proj_instr.x_radius;
-  projectile_y_radius[index] = proj_instr.y_radius;
-  projectile_instruction_timers[index] = 1;
+  projectile_x_radius[idx] = proj_instr.x_radius;
+  projectile_y_radius[idx] = proj_instr.y_radius;
+  projectile_instruction_timers[idx] = 1;
 }
 
 /**
@@ -39,13 +41,13 @@ void InitializeProjectile(uint16 proj_index) {  // 0x938000
 * @param proj_index The index of the super missile
 */
 void InitializeInstrForSuperMissile(uint16 proj_index) {  // 0x938071
-  int index = proj_index >> 1;
-  ProjectileDataTable super_missile_data = kRunInstrForSuperMissile[GET_HIBYTE(projectile_type[index] & kProjectileType_ProjMask)];
-  projectile_damage[index] = super_missile_data.damage;
-  if ((int16)projectile_damage[index] < 0)
+  int idx = proj_index >> 1;
+  ProjectileDataTable super_missile_data = kRunInstrForSuperMissile[GET_HIBYTE(projectile_type[idx] & kProjectileType_ProjMask)];
+  projectile_damage[idx] = super_missile_data.damage;
+  if ((int16)projectile_damage[idx] < 0)
     InvalidInterrupt_Crash();
-  projectile_instruction_ptr[index] = super_missile_data.instr_ptrs[0];
-  projectile_instruction_timers[index] = 1;
+  projectile_instruction_ptr[idx] = super_missile_data.instr_ptrs[0];
+  projectile_instruction_timers[idx] = 1;
 }
 
 /**
@@ -53,13 +55,13 @@ void InitializeInstrForSuperMissile(uint16 proj_index) {  // 0x938071
 * @param proj_idnex The index of the bomb or power bomb
 */
 void InitializeInstrForBombOrPowerBomb(uint16 proj_index) {  // 0x9380A0
-  int index = proj_index >> 1;
-  ProjectileDataTable bomb_data = kProjectileData_NonBeams[GET_HIBYTE(projectile_type[index] & kProjectileType_ProjMask)];
-  projectile_damage[index] = bomb_data.damage;
-  if ((int16)projectile_damage[index] < 0)
+  int idx = proj_index >> 1;
+  ProjectileDataTable bomb_data = kProjectileData_NonBeams[GET_HIBYTE(projectile_type[idx] & kProjectileType_ProjMask)];
+  projectile_damage[idx] = bomb_data.damage;
+  if ((int16)projectile_damage[idx] < 0)
     InvalidInterrupt_Crash();
-  projectile_instruction_ptr[index] = bomb_data.instr_ptrs[0];
-  projectile_instruction_timers[index] = 1;
+  projectile_instruction_ptr[idx] = bomb_data.instr_ptrs[0];
+  projectile_instruction_timers[idx] = 1;
 }
 
 /**
@@ -67,32 +69,32 @@ void InitializeInstrForBombOrPowerBomb(uint16 proj_index) {  // 0x9380A0
 * @param proj_index The index of the projectile
 */
 void KillProjectileInner(uint16 proj_index) {  // 0x9380CF
-  int index = proj_index >> 1;
-  uint16 proj_type = projectile_type[index];
+  int idx = proj_index >> 1;
+  uint16 proj_type = projectile_type[idx];
   if (proj_type & kProjectileType_ProjMask) {
-    if (!cinematic_function) {
+    if (cinematic_function == 0) {
       QueueSfx2_Max6(kSfx2_SuperOrMissileHitWall);
     }
-    projectile_type[index] = proj_type & 0xF0FF | kProjectileType_MissileExplosion;
+    projectile_type[idx] = proj_type & 0xF0FF | kProjectileType_MissileExplosion;
 
     if (proj_type & kProjectileType_SuperMissile) {
-      projectile_instruction_ptr[index] = kProjInstrList_SuperMissileExplosion.instr_ptr;
+      projectile_instruction_ptr[idx] = kProjInstrList_SuperMissileExplosion.instr_ptr;
       earthquake_type = EARTHQUAKE(kEarthquake_Direction_Diag, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1_Bg2_Enemies);
       earthquake_timer = 30;
     }
-    else { /* proj_type & kProjectileType_BeamMask */
-      projectile_instruction_ptr[index] = kProjInstrList_MissileExplosion.instr_ptr;
+    else {
+      projectile_instruction_ptr[idx] = kProjInstrList_MissileExplosion.instr_ptr;
     }
 
     cooldown_timer = IntMin(20, cooldown_timer);
   }
   else {
-    projectile_type[index] = proj_type & 0xF0FF | kProjectileType_BeamExplosion;
-    projectile_instruction_ptr[index] = kProjInstrList_BeamExplosion.instr_ptr;
+    projectile_type[idx] = proj_type & 0xF0FF | kProjectileType_BeamExplosion;
+    projectile_instruction_ptr[idx] = kProjInstrList_BeamExplosion.instr_ptr;
     QueueSfx2_Max6(kSfx2_BeamHitWall_TorizoStatueCrumbles);
   }
-  projectile_instruction_timers[index] = 1;
-  projectile_damage[index] = 8;
+  projectile_instruction_timers[idx] = 1;
+  projectile_damage[idx] = 8;
 }
 
 /**
@@ -100,9 +102,9 @@ void KillProjectileInner(uint16 proj_index) {  // 0x9380CF
 * @param proj_index The index of the projectile
 */
 void InitializeBombExplosion(uint16 proj_index) {  // 0x93814E
-  int index = proj_index >> 1;
-  projectile_instruction_ptr[index] = kProjInstrList_BombExplosion.instr_ptr;
-  projectile_instruction_timers[index] = 1;
+  int idx = proj_index >> 1;
+  projectile_instruction_ptr[idx] = kProjInstrList_BombExplosion.instr_ptr;
+  projectile_instruction_timers[idx] = 1;
 }
 
 /**
@@ -110,14 +112,14 @@ void InitializeBombExplosion(uint16 proj_index) {  // 0x93814E
 * @param proj_index The index of the projectile
 */
 void InitializeShinesparkEchoOrSpazerSba(uint16 proj_index) {  // 0x938163
-  int index = proj_index >> 1;
-  int proj_dir = projectile_dir[index] & kProjectileDir_DirMask;
-  ProjectileDataTable PD = kProjectileData_ShinesparkEchoSpazerSba[LOBYTE(projectile_type[index]) - 34];
-  projectile_damage[index] = PD.damage;
-  if ((int16)projectile_damage[index] < 0)
+  int idx = proj_index >> 1;
+  int proj_dir = projectile_dir[idx] & kProjectileDir_DirMask;
+  ProjectileDataTable PD = kProjectileData_ShinesparkEchoSpazerSba[LOBYTE(projectile_type[idx]) - 34];
+  projectile_damage[idx] = PD.damage;
+  if ((int16)projectile_damage[idx] < 0)
     InvalidInterrupt_Crash();
-  projectile_instruction_ptr[index] = PD.instr_ptrs[proj_dir];
-  projectile_instruction_timers[index] = 1;
+  projectile_instruction_ptr[idx] = PD.instr_ptrs[proj_dir];
+  projectile_instruction_timers[idx] = 1;
 }
 
 /**
@@ -125,13 +127,13 @@ void InitializeShinesparkEchoOrSpazerSba(uint16 proj_index) {  // 0x938163
 * @param proj_index The index of the projectile
 */
 void InitializeSbaProjectile(uint16 proj_index) {  // 0x9381A4
-  int index = proj_index >> 1;
-  ProjectileDataTable sba_proj = kProjectileData_SBA[projectile_type[index] & kProjectileType_BeamMask];
-  projectile_damage[index] = sba_proj.damage;
-  if ((int16)projectile_damage[index] < 0)
+  int idx = proj_index >> 1;
+  ProjectileDataTable sba_proj = kProjectileData_SBA[projectile_type[idx] & kProjectileType_BeamMask];
+  projectile_damage[idx] = sba_proj.damage;
+  if ((int16)projectile_damage[idx] < 0)
     InvalidInterrupt_Crash();
-  projectile_instruction_ptr[index] = sba_proj.instr_ptrs[0];
-  projectile_instruction_timers[index] = 1;
+  projectile_instruction_ptr[idx] = sba_proj.instr_ptrs[0];
+  projectile_instruction_timers[idx] = 1;
 }
 
 /**
@@ -140,9 +142,16 @@ void InitializeSbaProjectile(uint16 proj_index) {  // 0x9381A4
 * @return uint16 The frame for the projectile trail
 */
 uint16 GetProjectileTrailFrame(uint16 proj_index) {  // 0x9381D1
-  int ip = projectile_instruction_ptr[proj_index >> 1];
-  int delta = (projectile_instruction_timers[proj_index >> 1] == 1 && !sign16(get_ProjectileInstr(ip).timer)) ? 0 : -8;
-  return get_ProjectileInstr(ip + delta).trail_frame;
+  int instr_ptr = projectile_instruction_ptr[proj_index >> 1];
+  int instr_offset;
+  // If the instruction is a function, or if the timer is not 1, then we want to get the trail frame 
+  // from the previous instruction since the previous instruction has the trail frame
+  // Otherwise, we want to get the trail frame from the current instruction
+  if (projectile_instruction_timers[proj_index >> 1] == 1 && !IS_FUNC(get_ProjectileInstr(instr_ptr).func_ptr))
+      instr_offset = 0;
+  else /* (projectile_instruction_timers[proj_index >> 1] != 1 || IS_FUNC(get_ProjectileInstr(instr_ptr).func_ptr)) */
+      instr_offset = -sizeof(ProjectileInstr);
+  return get_ProjectileInstr(instr_ptr + instr_offset).trail_frame;
 }
 
 uint16 CallProjInstr(uint32 ea, uint16 j, uint16 k) {
@@ -159,22 +168,22 @@ uint16 CallProjInstr(uint32 ea, uint16 j, uint16 k) {
 void RunProjectileInstructions(void) {  // 0x9381E9
   ProjectileInstr PI;
 
-  int index = projectile_index >> 1;
-  if (--projectile_instruction_timers[index] == 0) {
-    uint16 proj_instr = projectile_instruction_ptr[index];
+  int idx = projectile_index >> 1;
+  if (--projectile_instruction_timers[idx] == 0) {
+    uint16 proj_instr = projectile_instruction_ptr[idx];
     while (1) {
       PI = get_ProjectileInstr(proj_instr);
-      if (!sign16(PI.func_ptr))
+      if (!IS_FUNC(PI.func_ptr))
         break;
       proj_instr = CallProjInstr(PI.func_ptr | 0x930000, projectile_index, PI.instr_list_ptr);
       if (proj_instr == 0)
         return;
     }
-    projectile_instruction_timers[index] = PI.timer;
-    projectile_spritemap_pointers[index] = PI.spritemap_ptr;
-    projectile_x_radius[index] = PI.x_radius;
-    projectile_y_radius[index] = PI.y_radius;
-    projectile_instruction_ptr[index] = proj_instr + sizeof(ProjectileInstr);
+    projectile_instruction_timers[idx] = PI.timer;
+    projectile_spritemap_pointers[idx] = PI.spritemap_ptr;
+    projectile_x_radius[idx] = PI.x_radius;
+    projectile_y_radius[idx] = PI.y_radius;
+    projectile_instruction_ptr[idx] = proj_instr + sizeof(ProjectileInstr);
   }
 }
 

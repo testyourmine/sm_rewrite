@@ -36,35 +36,44 @@ static const uint8 kIsGrappleBannedForMovementType[28] = {
   1, 0, 0, 1, 1, 1, 0, 1,
 };
 
-void SetProjectileTrailPosition(uint16 k, uint16 j) {  // 0x9BA3CC
-  uint16 R22 = GetProjectileTrailFrame(k);
-  uint16 r18, r20;
+/**
+* @brief Sets the position for the projectile trail
+* @param proj_index The index of the projectile
+* @param trail_index The index of the trail
+*/
+void SetProjectileTrailPosition(uint16 proj_index, uint16 trail_index) {  // 0x9BA3CC
+  uint16 trail_frame = GetProjectileTrailFrame(proj_index);
+  uint16 proj_x_pos, proj_y_pos;
+  int idx = proj_index >> 1;
 
   if (ceres_status & kCeresStatus_8000_ElevatorRoomRotate) {
-    Point16U pt = CalcExplosion_Mode7(k);
-    r18 = layer1_x_pos + pt.x;
-    r20 = layer1_y_pos + pt.y;
-  } else {
-    int v2 = k >> 1;
-    r18 = projectile_x_pos[v2];
-    r20 = projectile_y_pos[v2];
+    Point16U pt = CalcExplosion_Mode7(proj_index);
+    proj_x_pos = layer1_x_pos + pt.x;
+    proj_y_pos = layer1_y_pos + pt.y;
   }
-  int v3 = k >> 1;
-  uint16 v4 = projectile_type[v3], v5;
-  if ((v4 & 0x20) != 0) {
-    v5 = kSpazerSbaTrailOffsets[projectile_type[v3] & kProjectileType_BeamMask] + 2 * (projectile_dir[v3] & kProjectileDir_DirMask);
-  } else if ((v4 & 0x10) != 0) {
-    v5 = kChargedBeamTrailOffsets[projectile_type[v3] & kProjectileType_BeamMask] + 2 * (projectile_dir[v3] & kProjectileDir_DirMask);
-  } else {
-    v5 = kUnchargedBeamTrailOffsets[projectile_type[v3] & kProjectileType_BeamMask] + 2 * (projectile_dir[v3] & kProjectileDir_DirMask);
+  else {
+    proj_x_pos = projectile_x_pos[idx];
+    proj_y_pos = projectile_y_pos[idx];
   }
-  uint16 v6 = *(uint16 *)RomPtr_9B(v5) + 4 * R22;
-  const uint8 *p = RomPtr_9B(v6);
-  int v7 = j >> 1;
-  projectiletrail_left_y_pos[v7] = r20 + (int8)p[1] - 4;
-  projectiletrail_left_x_pos[v7] = r18 + (int8)p[0] - 4;
-  projectiletrail_right_y_pos[v7] = r20 + (int8)p[3] - 4;
-  projectiletrail_right_x_pos[v7] = r18 + (int8)p[2] - 4;
+
+  uint16 proj_type = projectile_type[idx], trail_offset_ptr;
+  if (proj_type & kProjectileType_SpazerSbaMask) {
+    trail_offset_ptr = kSpazerSbaTrailOffsets[projectile_type[idx] & kProjectileType_BeamMask] + 2 * (projectile_dir[idx] & kProjectileDir_DirMask);
+  }
+  else if (proj_type & kProjectileType_Charged) {
+    trail_offset_ptr = kChargedBeamTrailOffsets[projectile_type[idx] & kProjectileType_BeamMask] + 2 * (projectile_dir[idx] & kProjectileDir_DirMask);
+  }
+  else {
+    trail_offset_ptr = kUnchargedBeamTrailOffsets[projectile_type[idx] & kProjectileType_BeamMask] + 2 * (projectile_dir[idx] & kProjectileDir_DirMask);
+  }
+
+  uint16 trail_dir_offset_ptr = *(uint16 *)RomPtr_9B(trail_offset_ptr) + 4 * trail_frame;
+  const uint8 *trail_offset = RomPtr_9B(trail_dir_offset_ptr);
+  idx = trail_index >> 1;
+  projectiletrail_left_y_pos[idx] = proj_y_pos + (int8)trail_offset[1] - 4;
+  projectiletrail_left_x_pos[idx] = proj_x_pos + (int8)trail_offset[0] - 4;
+  projectiletrail_right_y_pos[idx] = proj_y_pos + (int8)trail_offset[3] - 4;
+  projectiletrail_right_x_pos[idx] = proj_x_pos + (int8)trail_offset[2] - 4;
 }
 
 void StartSamusDeathAnimation(void) {  // 0x9BB3A7

@@ -7798,3 +7798,4 @@ void VerifySRAM(void);
 #define fnlocret_828C81 0x828C81
 #define fnlocret_8B9585 0x8B9585
 #define FUNC16(x) ((fn##x) & 0xffff)
+#define IS_FUNC(x) ((x) & 0x8000)

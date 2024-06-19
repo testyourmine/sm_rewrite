@@ -1,212 +1,244 @@
 #pragma once
 
+
+#define ANIMTILE_INSTR(INSTR) (addr_kAnimtiles_IList_##INSTR)
+#define ANIMTILE_INSTR_DRAW(INSTR, ENTRY, OFFSET) (addr_kAnimtiles_IList_##INSTR + ENTRY*4 + OFFSET*2)
+#define ANIMTILE_INSTR_FUNC(INSTR, ENTRY, OFFSET) (addr_kAnimtiles_IList_##INSTR + ENTRY*4 + OFFSET*2)
+
 AnimtilesObject get_AnimtilesObject(uint16 anim_tile_ptr) {
   switch(anim_tile_ptr) {
-    case addr_kAnimTiles_Nothing: return (AnimtilesObject){ .instruction_list = 0x8249, .size =    0x0, .vram_addr =    0x0 };
-    case addr_kAnimTiles_VerticalSpikes: return (AnimtilesObject){ .instruction_list = 0x816a, .size =   0x80, .vram_addr = 0x3880 };
-    case addr_kAnimTiles_HorizontalSpikes: return (AnimtilesObject){ .instruction_list = 0x817e, .size =   0x80, .vram_addr = 0x3d60 };
-    case addr_kAnimTiles_CrateriaLake: return (AnimtilesObject){ .instruction_list = 0x8192, .size =  0x200, .vram_addr = 0x1b00 };
-    case addr_kAnimTiles_CrateriaLava_Unused1: return (AnimtilesObject){ .instruction_list = 0x81a6, .size =   0xc0, .vram_addr =  0xa00 };
-    case addr_kAnimTiles_WreckedShipScreen: return (AnimtilesObject){ .instruction_list = 0x81cb, .size =   0x80, .vram_addr = 0x19c0 };
-    case addr_kAnimtiles_WreckedShipTreadmillRight: return (AnimtilesObject){ .instruction_list = 0x81e1, .size =   0x20, .vram_addr =   0xe0 };
-    case addr_kAnimtiles_WreckedShipTreadmillLeft: return (AnimtilesObject){ .instruction_list = 0x81f7, .size =   0x20, .vram_addr =   0xe0 };
-    case addr_kAnimTiles_BrinstarMouth: return (AnimtilesObject){ .instruction_list = 0x820d, .size =   0xe0, .vram_addr =  0x410 };
-    case addr_kAnimTiles_MaridiaSandCeiling: return (AnimtilesObject){ .instruction_list = 0x8221, .size =   0x40, .vram_addr = 0x1000 };
-    case addr_kAnimTiles_MaridiaSandFalling: return (AnimtilesObject){ .instruction_list = 0x8235, .size =   0x20, .vram_addr = 0x1020 };
-    case addr_kAnimtiles_Lava: return (AnimtilesObject){ .instruction_list = 0x8293, .size =   0x40, .vram_addr = 0x4280 };
-    case addr_kAnimtiles_Acid: return (AnimtilesObject){ .instruction_list = 0x82b1, .size =   0x40, .vram_addr = 0x4280 };
-    case addr_kAnimtiles_Rain: return (AnimtilesObject){ .instruction_list = 0x82cf, .size =   0x50, .vram_addr = 0x4280 };
-    case addr_kAnimtiles_Spores: return (AnimtilesObject){ .instruction_list = 0x82ed, .size =   0x30, .vram_addr = 0x4280 };
-    case addr_kAnimtiles_TourianStatue_Phantoon: return (AnimtilesObject){ .instruction_list = 0x83ac, .size =   0x80, .vram_addr = 0x7800 };
-    case addr_kAnimtiles_TourianStatue_Ridley: return (AnimtilesObject){ .instruction_list = 0x8414, .size =   0x40, .vram_addr = 0x7220 };
-    case addr_kAnimtiles_TourianStatue_Kraid: return (AnimtilesObject){ .instruction_list = 0x847c, .size =   0x40, .vram_addr =  0xb40 };
-    case addr_kAnimtiles_TourianStatue_Draygon: return (AnimtilesObject){ .instruction_list = 0x84e4, .size =   0x80, .vram_addr =  0xca0 };
+    case addr_kAnimtiles_Nothing                   : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(Nothing)                   , .size = 0x0   , .vram_addr = 0x0    };
+    case addr_kAnimtiles_VerticalSpikes            : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(VerticalSpikes)            , .size = 0x80  , .vram_addr = 0x3880 };
+    case addr_kAnimtiles_HorizontalSpikes          : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(HorizontalSpikes)          , .size = 0x80  , .vram_addr = 0x3d60 };
+    case addr_kAnimtiles_CrateriaLake              : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(CrateriaLake)              , .size = 0x200 , .vram_addr = 0x1b00 };
+    case addr_kAnimtiles_CrateriaLava_Unused1      : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(CrateriaLava_Unused)       , .size = 0xc0  , .vram_addr = 0xa00  };
+    case addr_kAnimtiles_WreckedShipScreen         : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(WreckedShipScreen)         , .size = 0x80  , .vram_addr = 0x19c0 };
+    case addr_kAnimtiles_WreckedShipTreadmillRight : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(WreckedShipTreadmillRight) , .size = 0x20  , .vram_addr = 0xe0   };
+    case addr_kAnimtiles_WreckedShipTreadmillLeft  : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(WreckedShipTreadmillLeft)  , .size = 0x20  , .vram_addr = 0xe0   };
+    case addr_kAnimtiles_BrinstarMouth             : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(BrinstarMouth)             , .size = 0xe0  , .vram_addr = 0x410  };
+    case addr_kAnimtiles_MaridiaSandCeiling        : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(MaridiaSandCeiling)        , .size = 0x40  , .vram_addr = 0x1000 };
+    case addr_kAnimtiles_MaridiaSandFalling        : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(MaridiaSandFalling)        , .size = 0x20  , .vram_addr = 0x1020 };
+    case addr_kAnimtiles_Lava                      : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(Lava)                      , .size = 0x40  , .vram_addr = 0x4280 };
+    case addr_kAnimtiles_Acid                      : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(Acid)                      , .size = 0x40  , .vram_addr = 0x4280 };
+    case addr_kAnimtiles_Rain                      : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(Rain)                      , .size = 0x50  , .vram_addr = 0x4280 };
+    case addr_kAnimtiles_Spores                    : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(Spores)                    , .size = 0x30  , .vram_addr = 0x4280 };
+    case addr_kAnimtiles_TourianStatue_Phantoon    : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(TourianStatue_Phantoon)    , .size = 0x80  , .vram_addr = 0x7800 };
+    case addr_kAnimtiles_TourianStatue_Ridley      : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(TourianStatue_Ridley)      , .size = 0x40  , .vram_addr = 0x7220 };
+    case addr_kAnimtiles_TourianStatue_Kraid       : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(TourianStatue_Kraid)       , .size = 0x40  , .vram_addr = 0xb40  };
+    case addr_kAnimtiles_TourianStatue_Draygon     : return (AnimtilesObject){ .instruction_list = ANIMTILE_INSTR(TourianStatue_Draygon)     , .size = 0x80  , .vram_addr = 0xca0  };
     default: Unreachable(); return (AnimtilesObject){0};
   }
 }
 
 AnimtilesEntry get_AnimtilesEntry(uint16 instr_ptr) {
   switch(instr_ptr) {
-    case 0x816a: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9c04 };
-    case 0x816e: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9c84 };
-    case 0x8172: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9d04 };
-    case 0x8176: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9c84 };
-    case 0x817a: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x816a };
-    case 0x817e: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9d84 };
-    case 0x8182: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9e04 };
-    case 0x8186: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9e84 };
-    case 0x818a: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9e04 };
-    case 0x818e: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x817e };
-    case 0x8192: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8564 };
-    case 0x8196: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8764 };
-    case 0x819a: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8964 };
-    case 0x819e: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8764 };
-    case 0x81a2: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x8192 };
-    case 0x81a6: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8b64 };
-    case 0x81aa: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8c24 };
-    case 0x81ae: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8ce4 };
-    case 0x81b2: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8da4 };
-    case 0x81b6: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x81a6 };
-    case 0x81cb: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet), .instr_list_ptr1 = 0 };
-    case 0x81cd: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8ee4 };
-    case 0x81d1: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8f64 };
-    case 0x81d5: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8fe4 };
-    case 0x81d9: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8f64 };
-    case 0x81dd: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x81cd };
-    case 0x81e1: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet), .instr_list_ptr1 = 0 };
-    case 0x81e3: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e64 };
-    case 0x81e7: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e84 };
-    case 0x81eb: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ea4 };
-    case 0x81ef: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ec4 };
-    case 0x81f3: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x81e3 };
-    case 0x81f7: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet), .instr_list_ptr1 = 0 };
-    case 0x81f9: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ec4 };
-    case 0x81fd: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ea4 };
-    case 0x8201: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e84 };
-    case 0x8205: return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e64 };
-    case 0x8209: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x81f9 };
-    case 0x820d: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9964 };
-    case 0x8211: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9a44 };
-    case 0x8215: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9b24 };
-    case 0x8219: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9a44 };
-    case 0x821d: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x820d };
-    case 0x8221: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x91e4 };
-    case 0x8225: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9224 };
-    case 0x8229: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9264 };
-    case 0x822d: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x92a4 };
-    case 0x8231: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x8221 };
-    case 0x8235: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9164 };
-    case 0x8239: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9184 };
-    case 0x823d: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x91a4 };
-    case 0x8241: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x91c4 };
-    case 0x8245: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x8235 };
-    case 0x8249: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x8293: return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa564 };
-    case 0x8297: return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa5a4 };
-    case 0x829b: return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa5e4 };
-    case 0x829f: return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa624 };
-    case 0x82a3: return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa664 };
-    case 0x82a7: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x8293 };
-    case 0x82b1: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa6a4 };
-    case 0x82b5: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa6e4 };
-    case 0x82b9: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa724 };
-    case 0x82bd: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa764 };
-    case 0x82c1: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa7a4 };
-    case 0x82c5: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x82b1 };
-    case 0x82cf: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa874 };
-    case 0x82d3: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa8c4 };
-    case 0x82d7: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa914 };
-    case 0x82db: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa964 };
-    case 0x82df: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa9b4 };
-    case 0x82e3: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x82cf };
-    case 0x82ed: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa7e4 };
-    case 0x82f1: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa814 };
-    case 0x82f5: return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa844 };
-    case 0x82f9: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x82ed };
-    case 0x83ac: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_PhantoonProcessing };
-    case 0x83b0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_6_PhantoonStatueGray, .instr_list_ptr2 = 0x840a };
-    case 0x83b6: return (AnimtilesEntry){ .timer = 6, .tile_src = 0x9364 };
-    case 0x83ba: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x93e4 };
-    case 0x83be: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9464 };
-    case 0x83c2: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x93e4 };
-    case 0x83c6: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9364 };
-    case 0x83ca: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_3_WreckedShip, .instr_list_ptr2 = 0x83d8 };
-    case 0x83d0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_PhantoonProcessing };
-    case 0x83d4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x83ba };
-    case 0x83d8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = 0x83ba };
-    case 0x83dc: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
-    case 0x83e0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =  0x158 };
-    case 0x83e4: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x93e4 };
-    case 0x83e8: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9464 };
-    case 0x83ec: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 0 };
-    case 0x83f0: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x97e4 };
-    case 0x83f4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 0 };
-    case 0x83f8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Phantoon };
-    case 0x83fc: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x97e4 };
-    case 0x8400: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_6_PhantoonStatueGray };
-    case 0x8404: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_PhantoonProcessing };
-    case 0x8408: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x840a: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_PhantoonProcessing };
-    case 0x840e: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =  0x140 };
-    case 0x8412: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x8414: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_RidleyProcessing };
-    case 0x8418: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_7_RidleyStatueGray, .instr_list_ptr2 = 0x8472 };
-    case 0x841e: return (AnimtilesEntry){ .timer = 10, .tile_src = 0x94e4 };
-    case 0x8422: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9524 };
-    case 0x8426: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9564 };
-    case 0x842a: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9524 };
-    case 0x842e: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x94e4 };
-    case 0x8432: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_2_Norfair, .instr_list_ptr2 = 0x8440 };
-    case 0x8438: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_RidleyProcessing };
-    case 0x843c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x8422 };
-    case 0x8440: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = 0x8422 };
-    case 0x8444: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
-    case 0x8448: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =  0x132 };
-    case 0x844c: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9524 };
-    case 0x8450: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9564 };
-    case 0x8454: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 2 };
-    case 0x8458: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x9864 };
-    case 0x845c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 2 };
-    case 0x8460: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Ridley };
-    case 0x8464: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x9864 };
-    case 0x8468: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_7_RidleyStatueGray };
-    case 0x846c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_RidleyProcessing };
-    case 0x8470: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x8472: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_RidleyProcessing };
-    case 0x8476: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =  0x120 };
-    case 0x847a: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x847c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_KraidProcessing };
-    case 0x8480: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_9_KraidStatueGray, .instr_list_ptr2 = 0x84da };
-    case 0x8486: return (AnimtilesEntry){ .timer = 4, .tile_src = 0x9724 };
-    case 0x848a: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9764 };
-    case 0x848e: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x97a4 };
-    case 0x8492: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9764 };
-    case 0x8496: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9724 };
-    case 0x849a: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_1_Brinstar, .instr_list_ptr2 = 0x84a8 };
-    case 0x84a0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_KraidProcessing };
-    case 0x84a4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x848a };
-    case 0x84a8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = 0x848a };
-    case 0x84ac: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
-    case 0x84b0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =   0xf8 };
-    case 0x84b4: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9764 };
-    case 0x84b8: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x97a4 };
-    case 0x84bc: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 6 };
-    case 0x84c0: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x98a4 };
-    case 0x84c4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 6 };
-    case 0x84c8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Kraid };
-    case 0x84cc: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x98a4 };
-    case 0x84d0: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_9_KraidStatueGray };
-    case 0x84d4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_KraidProcessing };
-    case 0x84d8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x84da: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_KraidProcessing };
-    case 0x84de: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =   0xe0 };
-    case 0x84e2: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x84e4: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_DraygonProcessing };
-    case 0x84e8: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_8_DraygonStatueGray, .instr_list_ptr2 = 0x8542 };
-    case 0x84ee: return (AnimtilesEntry){ .timer = 8, .tile_src = 0x95a4 };
-    case 0x84f2: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9624 };
-    case 0x84f6: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x96a4 };
-    case 0x84fa: return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9624 };
-    case 0x84fe: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x95a4 };
-    case 0x8502: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_4_Maridia, .instr_list_ptr2 = 0x8510 };
-    case 0x8508: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_DraygonProcessing };
-    case 0x850c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = 0x84f2 };
-    case 0x8510: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = 0x84f2 };
-    case 0x8514: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
-    case 0x8518: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =   0xd2 };
-    case 0x851c: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9624 };
-    case 0x8520: return (AnimtilesEntry){ .timer = 16, .tile_src = 0x96a4 };
-    case 0x8524: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 4 };
-    case 0x8528: return (AnimtilesEntry){ .timer = 192, .tile_src = 0x98e4 };
-    case 0x852c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 4 };
-    case 0x8530: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = addr_kPalfx_TourianStatue_GrayOut_Draygon };
-    case 0x8534: return (AnimtilesEntry){ .timer = 128, .tile_src = 0x98e4 };
-    case 0x8538: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_8_DraygonStatueGray };
-    case 0x853c: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_DraygonProcessing };
-    case 0x8540: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
-    case 0x8542: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_DraygonProcessing };
-    case 0x8546: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =   0xc0 };
-    case 0x854a: return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete), .instr_list_ptr1 = 0 };
+    case ANIMTILE_INSTR_DRAW(VerticalSpikes, 0, 0)             : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9c04 };
+    case ANIMTILE_INSTR_DRAW(VerticalSpikes, 1, 0)             : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9c84 };
+    case ANIMTILE_INSTR_DRAW(VerticalSpikes, 2, 0)             : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9d04 };
+    case ANIMTILE_INSTR_DRAW(VerticalSpikes, 3, 0)             : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9c84 };
+    case ANIMTILE_INSTR_FUNC(VerticalSpikes, 4, 0)             : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(VerticalSpikes, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(HorizontalSpikes, 0, 0)           : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9d84 };
+    case ANIMTILE_INSTR_DRAW(HorizontalSpikes, 1, 0)           : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9e04 };
+    case ANIMTILE_INSTR_DRAW(HorizontalSpikes, 2, 0)           : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9e84 };
+    case ANIMTILE_INSTR_DRAW(HorizontalSpikes, 3, 0)           : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x9e04 };
+    case ANIMTILE_INSTR_FUNC(HorizontalSpikes, 4, 0)           : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(HorizontalSpikes, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(CrateriaLake, 0, 0)               : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8564 };
+    case ANIMTILE_INSTR_DRAW(CrateriaLake, 1, 0)               : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8764 };
+    case ANIMTILE_INSTR_DRAW(CrateriaLake, 2, 0)               : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8964 };
+    case ANIMTILE_INSTR_DRAW(CrateriaLake, 3, 0)               : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8764 };
+    case ANIMTILE_INSTR_FUNC(CrateriaLake, 4, 0)               : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(CrateriaLake, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(CrateriaLava_Unused, 0, 0)        : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8b64 };
+    case ANIMTILE_INSTR_DRAW(CrateriaLava_Unused, 1, 0)        : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8c24 };
+    case ANIMTILE_INSTR_DRAW(CrateriaLava_Unused, 2, 0)        : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8ce4 };
+    case ANIMTILE_INSTR_DRAW(CrateriaLava_Unused, 3, 0)        : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8da4 };
+    case ANIMTILE_INSTR_FUNC(CrateriaLava_Unused, 4, 0)        : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(CrateriaLava_Unused, 0, 0) };
+
+    case ANIMTILE_INSTR_FUNC(WreckedShipScreen, 0, 0)          : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet) };
+    case ANIMTILE_INSTR_DRAW(WreckedShipScreen, 1, -1)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8ee4 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipScreen, 2, -1)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8f64 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipScreen, 3, -1)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8fe4 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipScreen, 4, -1)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x8f64 };
+    case ANIMTILE_INSTR_FUNC(WreckedShipScreen, 5, -1)         : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(WreckedShipScreen, 1, -1) };
+
+    case ANIMTILE_INSTR_FUNC(WreckedShipTreadmillRight, 0, 0)  : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet) };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillRight, 1, -1) : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e64 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillRight, 2, -1) : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e84 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillRight, 3, -1) : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ea4 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillRight, 4, -1) : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ec4 };
+    case ANIMTILE_INSTR_FUNC(WreckedShipTreadmillRight, 5, -1) : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(WreckedShipTreadmillRight, 1, -1) };
+
+    case ANIMTILE_INSTR_FUNC(WreckedShipTreadmillLeft, 0, 0)   : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_WaitUntilAreaBossDead_DoubleRet) };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillLeft, 1, -1)  : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ec4 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillLeft, 2, -1)  : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8ea4 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillLeft, 3, -1)  : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e84 };
+    case ANIMTILE_INSTR_DRAW(WreckedShipTreadmillLeft, 4, -1)  : return (AnimtilesEntry){ .timer = 1, .tile_src = 0x8e64 };
+    case ANIMTILE_INSTR_FUNC(WreckedShipTreadmillLeft, 5, -1)  : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(WreckedShipTreadmillLeft, 1, -1) };
+
+    case ANIMTILE_INSTR_DRAW(BrinstarMouth, 0, 0)              : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9964 };
+    case ANIMTILE_INSTR_DRAW(BrinstarMouth, 1, 0)              : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9a44 };
+    case ANIMTILE_INSTR_DRAW(BrinstarMouth, 2, 0)              : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9b24 };
+    case ANIMTILE_INSTR_DRAW(BrinstarMouth, 3, 0)              : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9a44 };
+    case ANIMTILE_INSTR_FUNC(BrinstarMouth, 4, 0)              : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(BrinstarMouth, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(MaridiaSandCeiling, 0, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x91e4 };
+    case ANIMTILE_INSTR_DRAW(MaridiaSandCeiling, 1, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9224 };
+    case ANIMTILE_INSTR_DRAW(MaridiaSandCeiling, 2, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9264 };
+    case ANIMTILE_INSTR_DRAW(MaridiaSandCeiling, 3, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x92a4 };
+    case ANIMTILE_INSTR_FUNC(MaridiaSandCeiling, 4, 0)         : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(MaridiaSandCeiling, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(MaridiaSandFalling, 0, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9164 };
+    case ANIMTILE_INSTR_DRAW(MaridiaSandFalling, 1, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x9184 };
+    case ANIMTILE_INSTR_DRAW(MaridiaSandFalling, 2, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x91a4 };
+    case ANIMTILE_INSTR_DRAW(MaridiaSandFalling, 3, 0)         : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x91c4 };
+    case ANIMTILE_INSTR_FUNC(MaridiaSandFalling, 4, 0)         : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(MaridiaSandFalling, 0, 0) };
+
+    case ANIMTILE_INSTR_FUNC(Nothing, 0, 0)                    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_DRAW(Lava, 0, 0)                       : return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa564 };
+    case ANIMTILE_INSTR_DRAW(Lava, 1, 0)                       : return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa5a4 };
+    case ANIMTILE_INSTR_DRAW(Lava, 2, 0)                       : return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa5e4 };
+    case ANIMTILE_INSTR_DRAW(Lava, 3, 0)                       : return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa624 };
+    case ANIMTILE_INSTR_DRAW(Lava, 4, 0)                       : return (AnimtilesEntry){ .timer = 13, .tile_src = 0xa664 };
+    case ANIMTILE_INSTR_FUNC(Lava, 5, 0)                       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(Lava, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(Acid, 0, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa6a4 };
+    case ANIMTILE_INSTR_DRAW(Acid, 1, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa6e4 };
+    case ANIMTILE_INSTR_DRAW(Acid, 2, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa724 };
+    case ANIMTILE_INSTR_DRAW(Acid, 3, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa764 };
+    case ANIMTILE_INSTR_DRAW(Acid, 4, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa7a4 };
+    case ANIMTILE_INSTR_FUNC(Acid, 5, 0)                       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(Acid, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(Rain, 0, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa874 };
+    case ANIMTILE_INSTR_DRAW(Rain, 1, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa8c4 };
+    case ANIMTILE_INSTR_DRAW(Rain, 2, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa914 };
+    case ANIMTILE_INSTR_DRAW(Rain, 3, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa964 };
+    case ANIMTILE_INSTR_DRAW(Rain, 4, 0)                       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa9b4 };
+    case ANIMTILE_INSTR_FUNC(Rain, 5, 0)                       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(Rain, 0, 0) };
+
+    case ANIMTILE_INSTR_DRAW(Spores, 0, 0)                     : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa7e4 };
+    case ANIMTILE_INSTR_DRAW(Spores, 1, 0)                     : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa814 };
+    case ANIMTILE_INSTR_DRAW(Spores, 2, 0)                     : return (AnimtilesEntry){ .timer = 10, .tile_src = 0xa844 };
+    case ANIMTILE_INSTR_FUNC(Spores, 3, 0)                     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(Spores, 0, 0) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 0, 0)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_PhantoonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 1, 0)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_6_PhantoonStatueGray, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 23, 1) };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 2, 1)     : return (AnimtilesEntry){ .timer = 6, .tile_src = 0x9364 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 3, 1)     : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x93e4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 4, 1)     : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9464 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 5, 1)     : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x93e4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 6, 1)     : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9364 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 7, 1)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_3_WreckedShip, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 10, 2) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 8, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_PhantoonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 9, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 3, 1) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 10, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 3, 1) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 11, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 12, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =  0x158 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 13, 2)    : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x93e4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 14, 2)    : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9464 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 15, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 0 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 16, 2)    : return (AnimtilesEntry){ .timer = 192, .tile_src = 0x97e4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 17, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 0 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 18, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf755 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Phantoon, 19, 2)    : return (AnimtilesEntry){ .timer = 128, .tile_src = 0x97e4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 20, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_6_PhantoonStatueGray };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 21, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_PhantoonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 22, 2)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 23, 1)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_PhantoonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 24, 1)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =  0x140 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Phantoon, 25, 1)    : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 0, 0)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_RidleyProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 1, 0)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_7_RidleyStatueGray, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 23, 1) };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 2, 1)       : return (AnimtilesEntry){ .timer = 10, .tile_src = 0x94e4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 3, 1)       : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9524 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 4, 1)       : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9564 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 5, 1)       : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9524 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 6, 1)       : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x94e4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 7, 1)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_2_Norfair, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 10, 2) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 8, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_RidleyProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 9, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 3, 1) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 10, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 3, 1) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 11, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 12, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =  0x132 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 13, 2)      : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9524 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 14, 2)      : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9564 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 15, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 2 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 16, 2)      : return (AnimtilesEntry){ .timer = 192, .tile_src = 0x9864 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 17, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 2 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 18, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf751 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Ridley, 19, 2)      : return (AnimtilesEntry){ .timer = 128, .tile_src = 0x9864 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 20, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_7_RidleyStatueGray };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 21, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_RidleyProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 22, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 23, 1)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_RidleyProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 24, 1)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =  0x120 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Ridley, 25, 1)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 0, 0)        : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_KraidProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 1, 0)        : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_9_KraidStatueGray, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 23, 1) };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 2, 1)        : return (AnimtilesEntry){ .timer = 4, .tile_src = 0x9724 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 3, 1)        : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9764 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 4, 1)        : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x97a4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 5, 1)        : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9764 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 6, 1)        : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9724 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 7, 1)        : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_1_Brinstar, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 10, 2) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 8, 2)        : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_KraidProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 9, 2)        : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 3, 1) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 10, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 3, 1) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 11, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 12, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =   0xf8 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 13, 2)       : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9764 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 14, 2)       : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x97a4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 15, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 6 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 16, 2)       : return (AnimtilesEntry){ .timer = 192, .tile_src = 0x98a4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 17, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 6 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 18, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf74d };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Kraid, 19, 2)       : return (AnimtilesEntry){ .timer = 128, .tile_src = 0x98a4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 20, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_9_KraidStatueGray };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 21, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_KraidProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 22, 2)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 23, 1)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_KraidProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 24, 1)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =   0xe0 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Kraid, 25, 1)       : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 0, 0)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_DraygonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 1, 0)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfEventHappened), .game_event = kEvent_8_DraygonStatueGray, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 23, 1) };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 2, 1)      : return (AnimtilesEntry){ .timer = 8, .tile_src = 0x95a4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 3, 1)      : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9624 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 4, 1)      : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x96a4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 5, 1)      : return (AnimtilesEntry){ .timer = 12, .tile_src = 0x9624 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 6, 1)      : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x95a4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 7, 1)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfBossBitSetInArea), .boss_bit = kBossBit_AreaBoss, .area = kArea_4_Maridia, .instr_list_ptr2 = ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 10, 2) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 8, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_DraygonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 9, 2)      : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Goto), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 3, 1) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 10, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_GotoIfTourianStatueBusy), .instr_list_ptr1 = ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 3, 1) };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 11, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueSetState), .tourian_statue_state = kStatueState_ReleasingBossLock };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 12, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Clear3PaletteColors), .palette_offset =   0xd2 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 13, 2)     : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x9624 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 14, 2)     : return (AnimtilesEntry){ .timer = 16, .tile_src = 0x96a4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 15, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueEyeGlow), .eproj_param = 4 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 16, 2)     : return (AnimtilesEntry){ .timer = 192, .tile_src = 0x98e4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 17, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnTourianStatueSoul), .eproj_param = 4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 18, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SpawnPalfxObj), .palfx_id = 0xf749 };
+    case ANIMTILE_INSTR_DRAW(TourianStatue_Draygon, 19, 2)     : return (AnimtilesEntry){ .timer = 128, .tile_src = 0x98e4 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 20, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_SetEventHappened), .game_event = kEvent_8_DraygonStatueGray };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 21, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_DraygonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 22, 2)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 23, 1)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_TourianStatueClearState), .tourian_statue_state = kStatueState_ReleasingBossLock | kStatueState_DraygonProcessing };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 24, 1)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Write8PaletteColors), .palette_offset =   0xc0 };
+    case ANIMTILE_INSTR_FUNC(TourianStatue_Draygon, 25, 1)     : return (AnimtilesEntry){ .func_ptr = FUNC16(AnimtilesInstr_Delete) };
+
     default: Unreachable(); return (AnimtilesEntry){0};
   }
 }

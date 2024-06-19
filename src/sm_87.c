@@ -109,7 +109,7 @@ void ProcessAnimtilesObject(void) {  // 0x878085
     while (1) {
       AtE = get_AnimtilesEntry(instrlist_ptr);
       // If the instruction is not a function, break
-      if ((AtE.func_ptr & 0x8000) == 0)
+      if (!IS_FUNC(AtE.func_ptr))
         break;
       animtiles_instruction = AtE.func_ptr;
       instrlist_ptr = CallAnimtilesInstr(AtE.func_ptr | 0x870000, animetile_idx, instrlist_ptr);
@@ -266,6 +266,7 @@ uint16 AnimtilesInstr_GotoIfBossBitSetInArea(uint16 animtile_idx, uint16 instrli
 * @return uint16 The pointer to the next instruction
 */
 uint16 AnimtilesInstr_SpawnTourianStatueEyeGlow(uint16 animtile_idx, uint16 instrlist_ptr) {  // 0x878320
+  // eproj_param is the boss index, with phantoon = 0, ridley = 2, draygon = 4, kraid = 6
   SpawnEprojWithRoomGfx(addr_kEproj_TourianStatueEyeGlow, get_AnimtilesEntry(instrlist_ptr).eproj_param);
   return instrlist_ptr + 4;
 }
@@ -277,6 +278,7 @@ uint16 AnimtilesInstr_SpawnTourianStatueEyeGlow(uint16 animtile_idx, uint16 inst
 * @return uint16 The pointer to the next instruction
 */
 uint16 AnimtilesInstr_SpawnTourianStatueSoul(uint16 animtile_idx, uint16 instrlist_ptr) {  // 0x87832F
+  // eproj_param is the boss index, with phantoon = 0, ridley = 2, draygon = 4, kraid = 6
   SpawnEprojWithRoomGfx(addr_kEproj_TourianStatueSoul, get_AnimtilesEntry(instrlist_ptr).eproj_param);
   return instrlist_ptr + 4;
 }
