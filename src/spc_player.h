@@ -1,5 +1,6 @@
+#pragma once
+
 #include <stdint.h>
-#include <stddef.h>
 #include "types.h"
 #include "snes/dsp.h"
 

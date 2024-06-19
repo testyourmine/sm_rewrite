@@ -1,4 +1,7 @@
 // Enemy AI - Mother Brain, Shitroid & dead monsters
+
+#include <stdio.h>
+
 #include "ida_types.h"
 #include "variables.h"
 #include "funcs.h"

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define kWaver_InstrListPtrs ((uint16*)RomFixedPtr(0xa386db))
 //#define kMetalee_InstrListPtrs ((uint16*)RomFixedPtr(0xa3894e))
 //#define kFireFlea_Tab0 ((uint16*)RomFixedPtr(0xa38d1d))

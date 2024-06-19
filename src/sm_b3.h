@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kBrinstarRedPipeBug_InstrListPtrs ((uint16*)RomFixedPtr(0xb3882b))
 //#define kBrinstarGreenPipeBug_InstrListPtrs ((uint16*)RomFixedPtr(0xb38833))
 //#define kBotwoon_HoleHitboxes ((uint16*)RomFixedPtr(0xb3949b))

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kSpriteObject_InstrListPtrs ((uint16*)RomFixedPtr(0xb4bda8))
 
 uint16 kSpriteObject_InstrListPtrs[] = {

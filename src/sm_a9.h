@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kMotherBrain_FakeDeathExplosionsXYPositions ((uint16*)RomFixedPtr(0xa98929))
 //#define kMotherBrainTubesFallingFuncPtrs ((uint16*)RomFixedPtr(0xa98b7b))
 //#define kMotherBrain_ExplosionsXYOffsets ((uint16*)RomFixedPtr(0xa9b099))

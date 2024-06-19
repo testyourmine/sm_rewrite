@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kEnemyInit_MorphBallEye_InstrListPtrs ((uint16*)RomFixedPtr(0xa890da))
 //#define kYappingMaw_Constant0 (*(uint16*)RomFixedPtr(0xa8a0a7))
 //#define kYappingMaw_Constant1 (*(uint16*)RomFixedPtr(0xa8a0a9))

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+#include "funcs.h"
 
 //#define kPalettes_Intro ((uint16*)RomFixedPtr(0x8ce3e9))
 //#define kPalettes_SpaceGunshipCeres ((uint16*)RomFixedPtr(0x8ce5e9))

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define kPowerBombExplosionFreeSpace ((uint8*)RomFixedPtr(0x88a206))
 
 uint8 kPowerBombExplosionFreeSpace[] = {

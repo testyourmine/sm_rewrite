@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kCeresRidley_Tab0 ((uint8*)RomFixedPtr(0xa6e269))
 //#define kCeresRidley_PaletteTab0 ((uint16*)RomFixedPtr(0xa6e2aa))
 //#define kCeresRidley_PaletteTab1 ((uint16*)RomFixedPtr(0xa6e30a))

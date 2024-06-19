@@ -2,7 +2,6 @@
 #define SM_CPU_INFRA_H_
 
 #include "types.h"
-#include "snes/cpu.h"
 #include "snes/snes.h"
 
 typedef struct Snes Snes;

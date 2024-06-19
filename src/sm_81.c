@@ -1,5 +1,7 @@
 // SRAM, spritemap processing & menus
 
+#include <string.h>
+
 #include "sm_rtl.h"
 #include "ida_types.h"
 #include "variables.h"

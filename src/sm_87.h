@@ -1,5 +1,8 @@
 #pragma once
 
+#include "funcs.h"
+#include "ida_types.h"
+#include "types.h"
 
 #define ANIMTILE_INSTR(INSTR) (addr_kAnimtiles_IList_##INSTR)
 #define ANIMTILE_INSTR_DRAW(INSTR, ENTRY, OFFSET) (addr_kAnimtiles_IList_##INSTR + ENTRY*4 + OFFSET*2)

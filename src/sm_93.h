@@ -1,5 +1,7 @@
 #pragma once
 
+#include "funcs.h"
+#include "ida_types.h"
 
 #define PROJ_INSTR(INSTR) (addr_kProjectile_IList_##INSTR)
 #define PROJ_INSTR_DRAW(INSTR, ENTRY, ANIM) (addr_kProjectile_IList_##INSTR + ENTRY*sizeof(ProjectileInstr_1) + ANIM*sizeof(ProjectileInstr_2))

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "funcs.h"
+#include "ida_types.h"
+#include "types.h"
+
 #define PR(x) (0x2800 | x)  //Purple letters
 #define GN(x) (0x3800 | x)  //Green letters
 #define YL(x) (0x3C00 | x)  //Yellow letters

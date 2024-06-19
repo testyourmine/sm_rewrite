@@ -1,6 +1,8 @@
 #ifndef ZELDA3_UTIL_H_
 #define ZELDA3_UTIL_H_
 
+#include <stddef.h>
+
 #include "types.h"
 
 typedef struct SDL_Window SDL_Window;

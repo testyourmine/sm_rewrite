@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types.h"
+
 //#define kEnemyInit_BouncingGoofball_Tab0 ((uint16*)RomFixedPtr(0xa286df))
 //#define kEnemyInit_BouncingGoofball_Tab1 ((uint16*)RomFixedPtr(0xa286ef))
 //#define kBouncingGoofball_Tab0 ((uint8*)RomFixedPtr(0xa28701))

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ida_types.h"
+
 // Clockwise
 #define ROTATE_CW 0
 // Counterclockwise

@@ -1,13 +1,14 @@
+
+
 #include "spc_player.h"
 
+#include <stddef.h>
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "types.h"
-#include "snes/spc.h"
 #include "snes/dsp_regs.h"
-#include "tracing.h"
 
 void Sfx1_HandleCmdFromSnes(SpcPlayer *p);
 void Sfx2_HandleCmdFromSnes(SpcPlayer *p);

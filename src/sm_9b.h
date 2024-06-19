@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ida_types.h"
+#include "types.h"
+
 //#define kUnchargedBeamTrailOffsets ((uint16*)RomFixedPtr(0x9ba4b3))
 //#define kChargedBeamTrailOffsets ((uint16*)RomFixedPtr(0x9ba4cb))
 //#define kSpazerSbaTrailOffsets ((uint16*)RomFixedPtr(0x9ba4e3))
