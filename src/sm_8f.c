@@ -113,10 +113,7 @@ void DoorCode_Scroll_4Blue_8Green(void) {  // 0x8FB9A2
 * kRoom_93FE_Wrecked_Ship_entrance door 4
 */
 void DoorCode_Scroll_8toB_Red(void) {  // 0x8FB9B3
-  scrolls[8] = kScroll_Red;
-  scrolls[9] = kScroll_Red;
-  scrolls[10] = kScroll_Red;
-  scrolls[11] = kScroll_Red;
+  scrolls[11] = scrolls[10] = scrolls[9] = scrolls[8] = kScroll_Red;
 }
 
 /**
@@ -124,14 +121,8 @@ void DoorCode_Scroll_8toB_Red(void) {  // 0x8FB9B3
 * kRoom_968F_Orange_zoomer_hall door 1
 */
 void DoorCode_Scroll_LotsRed(void) {  // 0x8FB9CA
-  scrolls[2] = kScroll_Red;
-  scrolls[3] = kScroll_Red;
-  scrolls[4] = kScroll_Red;
-  scrolls[5] = kScroll_Red;
-  scrolls[11] = kScroll_Red;
-  scrolls[12] = kScroll_Red;
-  scrolls[13] = kScroll_Red;
-  scrolls[17] = kScroll_Red;
+  scrolls[5] = scrolls[4] = scrolls[3] = scrolls[2] = kScroll_Red;
+  scrolls[17] = scrolls[13] = scrolls[12] = scrolls[11] = kScroll_Red;
 }
 
 /**
@@ -139,8 +130,7 @@ void DoorCode_Scroll_LotsRed(void) {  // 0x8FB9CA
 * kRoom_962A_Crateria_to_Red_Brinstar_elevator door 0
 */
 void DoorCode_Scroll_1_4_Green(void) {  // 0x8FB9F1
-  scrolls[1] = kScroll_Green;
-  scrolls[4] = kScroll_Green;
+  scrolls[4] = scrolls[1] = kScroll_Green;
 }
 
 /**
@@ -187,13 +177,11 @@ void DoorCode_Scroll_3_Green(void) {  // 0x8FBA2C
 * @todo the rest of these
 */
 void DoorCode_SetScroll_0(void) {  // 0x8FBD07
-  scrolls[24] = kScroll_Green;
-  scrolls[28] = kScroll_Green;
+  scrolls[28] = scrolls[24] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_1(void) {  // 0x8FBD16
-  scrolls[5] = kScroll_Blue;
-  scrolls[6] = kScroll_Blue;
+  scrolls[6] = scrolls[5] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_2(void) {  // 0x8FBD25
@@ -201,8 +189,7 @@ void DoorCode_SetScroll_2(void) {  // 0x8FBD25
 }
 
 void DoorCode_SetScroll_3(void) {  // 0x8FBD30
-  scrolls[2] = kScroll_Green;
-  scrolls[3] = kScroll_Green;
+  scrolls[3] = scrolls[2] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_4(void) {  // 0x8FBD3F
@@ -224,9 +211,7 @@ void DoorCode_SetScroll_7(void) {  // 0x8FBD6C
 }
 
 void DoorCode_SetScroll_8(void) {  // 0x8FBD77
-  scrolls[32] = kScroll_Green;
-  scrolls[36] = kScroll_Green;
-  scrolls[37] = kScroll_Green;
+  scrolls[37] = scrolls[36] = scrolls[32] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_9(void) {  // 0x8FBD8A
@@ -238,8 +223,7 @@ void DoorCode_SetScroll_10(void) {  // 0x8FBD95
 }
 
 void DoorCode_SetScroll_11(void) {  // 0x8FBDA0
-  scrolls[6] = kScroll_Green;
-  scrolls[7] = kScroll_Green;
+  scrolls[7] = scrolls[6] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_12(void) {  // 0x8FBDAF
@@ -258,13 +242,11 @@ void DoorCode_SetScroll_14(void) {  // 0x8FBDD1
 }
 
 void DoorCode_SetScroll_15(void) {  // 0x8FBDE2
-  scrolls[2] = kScroll_Blue;
-  scrolls[3] = kScroll_Blue;
+  scrolls[3] = scrolls[2] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_16(void) {  // 0x8FBDF1
-  scrolls[0] = kScroll_Green;
-  scrolls[1] = kScroll_Green;
+  scrolls[1] = scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_17(void) {  // 0x8FBE00
@@ -272,8 +254,7 @@ void DoorCode_SetScroll_17(void) {  // 0x8FBE00
 }
 
 void DoorCode_SetScroll_18(void) {  // 0x8FBE0B
-  scrolls[15] = kScroll_Green;
-  scrolls[18] = kScroll_Green;
+  scrolls[18] = scrolls[15] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_19(void) {  // 0x8FBE1A
@@ -290,24 +271,18 @@ void DoorCode_SetScroll_21(void) {  // 0x8FBE36
 }
 
 void DoorCode_SetScroll_22(void) {  // 0x8FBF9E
-  scrolls[3] = kScroll_Red;
-  scrolls[4] = kScroll_Red;
-  scrolls[6] = kScroll_Blue;
-  scrolls[7] = kScroll_Blue;
-  scrolls[8] = kScroll_Blue;
+  scrolls[4] = scrolls[3] = kScroll_Red;
+  scrolls[8] = scrolls[7] = scrolls[6] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_23(void) {  // 0x8FBFBB
-  scrolls[1] = kScroll_Blue;
-  scrolls[2] = kScroll_Blue;
-  scrolls[3] = kScroll_Blue;
+  scrolls[3] = scrolls[2] = scrolls[1] = kScroll_Blue;
   scrolls[4] = kScroll_Green;
   scrolls[6] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_24(void) {  // 0x8FBFDA
-  scrolls[0] = kScroll_Blue;
-  scrolls[1] = kScroll_Blue;
+  scrolls[1] = scrolls[0] = kScroll_Blue;
 }
 
 void DoorCode_SetScroll_25(void) {  // 0x8FBFE9
@@ -325,13 +300,11 @@ void DoorCode_SetScroll_27(void) {  // 0x8FC005
 }
 
 void DoorCode_SetScroll_28(void) {  // 0x8FC016
-  scrolls[0] = kScroll_Green;
-  scrolls[2] = kScroll_Green;
+  scrolls[2] = scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_29(void) {  // 0x8FC025
-  scrolls[6] = kScroll_Blue;
-  scrolls[7] = kScroll_Blue;
+  scrolls[7] = scrolls[6] = kScroll_Blue;
   scrolls[8] = kScroll_Red;
 }
 
@@ -361,9 +334,7 @@ void DoorCode_SetScroll_34(void) {  // 0x8FC078
 
 void DoorCode_SetScroll_35(void) {  // 0x8FC089
   scrolls[0] = kScroll_Blue;
-  scrolls[1] = kScroll_Red;
-  scrolls[2] = kScroll_Red;
-  scrolls[3] = kScroll_Red;
+  scrolls[3] = scrolls[2] = scrolls[1] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_36(void) {  // 0x8FC0A2
@@ -371,8 +342,7 @@ void DoorCode_SetScroll_36(void) {  // 0x8FC0A2
 }
 
 void DoorCode_SetScroll_37(void) {  // 0x8FC0AD
-  scrolls[0] = kScroll_Blue;
-  scrolls[1] = kScroll_Blue;
+  scrolls[1] = scrolls[0] = kScroll_Blue;
   scrolls[4] = kScroll_Red;
 }
 
@@ -615,17 +585,11 @@ void DoorCode_SetScroll_47(void) {  // 0x8FE20F
 }
 
 void DoorCode_SetScroll_48(void) {  // 0x8FE21A
-  scrolls[40] = kScroll_Green;
-  scrolls[46] = kScroll_Green;
+  scrolls[46] = scrolls[40] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_49(void) {  // 0x8FE229
-  scrolls[6] = kScroll_Red;
-  scrolls[7] = kScroll_Red;
-  scrolls[8] = kScroll_Red;
-  scrolls[9] = kScroll_Red;
-  scrolls[10] = kScroll_Red;
-  scrolls[11] = kScroll_Red;
+  scrolls[11] = scrolls[10] = scrolls[9] = scrolls[8] = scrolls[7] = scrolls[6] = kScroll_Red;
 }
 
 /**
@@ -676,8 +640,7 @@ void DoorCode_ResetElevatubeNorthExit(void) {  // 0x8FE301
 * @brief Unlock Samus and reset the elevatube when exiting south
 */
 void DoorCode_ResetElevatubeSouthExit(void) {  // 0x8FE309
-  scrolls[0] = kScroll_Green;
-  scrolls[1] = kScroll_Green;
+  scrolls[1] = scrolls[0] = kScroll_Green;
   RunSamusCode(kSamusCode_1_UnlockSamus);
 }
 
@@ -711,8 +674,7 @@ void DoorCode_SetScroll_55(void) {  // 0x8FE367
 }
 
 void DoorCode_SetScroll_56(void) {  // 0x8FE378
-  scrolls[0] = kScroll_Red;
-  scrolls[2] = kScroll_Red;
+  scrolls[2] = scrolls[0] = kScroll_Red;
   scrolls[1] = kScroll_Blue;
 }
 
@@ -733,8 +695,7 @@ void DoorCode_SetScroll_60(void) {  // 0x8FE3AE
 }
 
 void DoorCode_SetScroll_61(void) {  // 0x8FE3B9
-  scrolls[4] = kScroll_Red;
-  scrolls[7] = kScroll_Red;
+  scrolls[7] = scrolls[4] = kScroll_Red;
 }
 
 void DoorCode_SetScroll_62(void) {  // 0x8FE3C8
@@ -743,13 +704,11 @@ void DoorCode_SetScroll_62(void) {  // 0x8FE3C8
 }
 
 void DoorCode_SetScroll_63(void) {  // 0x8FE3D9
-  scrolls[0] = kScroll_Green;
-  scrolls[2] = kScroll_Green;
+  scrolls[2] = scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_64(void) {  // 0x8FE4C0
-  scrolls[0] = kScroll_Green;
-  scrolls[1] = kScroll_Green;
+  scrolls[1] = scrolls[0] = kScroll_Green;
 }
 
 void DoorCode_SetScroll_65(void) {  // 0x8FE4CF
@@ -768,12 +727,12 @@ void DoorCode_ToCeresElevatorShaft(void) {  // 0x8FE4E0
   reg_M7D = 256;
   reg_M7B = 0;
   reg_M7C = 0;
-  // Set Mode 7 transformation origin to (128, 1008)
-  reg_M7X = 128;
-  reg_M7Y = 1008;
+  // Set Mode 7 transformation origin to (128, 1008), which is the bottom of the room in the center
+  reg_M7X = 8*16;
+  reg_M7Y = 63*16;
   irq_enable_mode7 = 1;
   // Start the index at 34, which is the axis of symmetry for the matrix
-  uint16 starting_index = (arraysize(kCeresElevatorShaftMode7TransformationMatrix) - 1) / 2;
+  uint16 starting_index = arraysize(kCeresElevatorShaftMode7TransformationMatrix) / 2;
   rotation_matrix_index = starting_index;
   elevatube_position = 60;
 }

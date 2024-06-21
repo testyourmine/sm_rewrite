@@ -1567,7 +1567,7 @@ LABEL_21:
     return 1;
   }
 LABEL_10:
-  if ((speed_boost_counter & 0xFF00) != 1024)
+  if ((speed_boost_counter & 0xFF00) != 0x400)
     return 1;
   bool v3 = (--special_samus_palette_timer & 0x8000) != 0;
   if (!special_samus_palette_timer || v3) {
@@ -3478,7 +3478,7 @@ LABEL_4:
 }
 
 uint8 Samus_CrouchTrans(void) {  // 0x91F7B0
-  if (!sign16((speed_boost_counter & 0xFF00) - 1024)) {
+  if (!sign16((speed_boost_counter & 0xFF00) - 0x400)) {
     samus_shine_timer = 180;
     timer_for_shine_timer = 1;
     special_samus_palette_frame = 0;

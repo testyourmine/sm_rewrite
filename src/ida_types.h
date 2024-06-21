@@ -1438,14 +1438,6 @@ typedef struct PlmHeader_Size4 {  // 0x840000
   VoidP instr_list_ptr;
 } PlmHeader_Size4;
 
-/* 8 */
-typedef struct RoomPlmEntry {  // 0x840000
-  VoidP plm_header_ptr_;
-  uint8 x_block;
-  uint8 y_block;
-  uint16 plm_room_argument;
-} RoomPlmEntry;
-
 /* 9 */
 typedef struct PlmHeader_Size6 {  // 0x840000
   VoidP func_ptr;
@@ -1626,23 +1618,21 @@ typedef struct CinematicSpriteObjectDef {  // 0x8B0000
 typedef struct PalFxDef {  // 0x8D0000
   VoidP func;
   VoidP instrs;
-}PalFxDef;
+} PalFxDef;
 
-/* 22 */
-typedef struct RoomDefStateSelect { // 0x8F0000
-  VoidP func_ptr;
-  union {
-    uint8 event_;
-    uint8 area_boss;
-  };
-  VoidP state_ptr;
-}RoomDefStateSelect;
+/* 8 */
+typedef struct RoomPlmEntry {  // 0x8F0000
+  VoidP plm_header_ptr_;
+  uint8 x_block;
+  uint8 y_block;
+  uint16 plm_room_argument;
+} RoomPlmEntry;
 
 /* 23 */
 typedef struct LoadBg_E {  // 0x8F0000
   uint16 bg_ptr;
   uint16 field_2;
-}LoadBg_E;
+} LoadBg_E;
 
 /* 26 */
 enum UpdateBackgroundCommands {  // 0x8F0000
@@ -1942,6 +1932,17 @@ typedef struct RoomDefHeader {  // 0x8F0000
   VoidP ptr_to_doorout;
 } RoomDefHeader;
 
+/* 22 */
+typedef struct RoomDefStateSelect { // 0x8F0000
+  VoidP func_ptr;
+  union {
+    uint8 event_;
+    uint8 area_boss;
+  };
+  VoidP state_ptr;
+} RoomDefStateSelect;
+
+
 /* 97 */
 typedef struct RoomDefRoomstate {  // 0x8F0000
   LongPtr level_data_ptr;
@@ -1960,6 +1961,11 @@ typedef struct RoomDefRoomstate {  // 0x8F0000
   VoidP room_setup_code;
 } RoomDefRoomstate;
 
+typedef struct PlmScrollData {  // 0x8F0000
+  uint8 dst_scroll;
+  uint8 scroll_type;
+} PlmScrollData;
+
 /* 96 */
 typedef struct TileSet {  // 0x8FE6A2
   LongPtr tile_table_ptr;
@@ -1967,7 +1973,7 @@ typedef struct TileSet {  // 0x8FE6A2
   LongPtr palette_ptr;
 } TileSet;
 
-enum TileSets {
+enum TileSets {  // 0x8FE6A2
   kTileSet_0_UpperCrateria = 0x0,
   kTileSet_1_RedCrateria = 0x1,
   kTileSet_2_LowerCrateria = 0x2,
@@ -2814,8 +2820,23 @@ enum Consts_84 {
   addr_locret_848AE0 = 0x8AE0,
   addr_kDefaultPlmDrawInstruction = 0x8DA0,
   addr_kPlmInstrList_MapStation = 0xAD76,
+  addr_kPlmHeader_B62F_Nothing = 0xB62F,
+  addr_kPlmHeader_B633_CollReact_Special_128 = 0xB633,
+  addr_kPlmHeader_B637_Unused = 0xB637,
+  addr_kPlmHeader_B63B_ExtendRight = 0xB63B,
+  addr_kPlmHeader_B63F_ExtendLeft = 0xB63F,
+  addr_kPlmHeader_B643_ExtendDown = 0xB643,
+  addr_kPlmHeader_B647_ExtendUp = 0xB647,
   addr_kPlmHeader_B64B_WreckedShip_EntranceTreadmill_West = 0xB64B,
   addr_kPlmHeader_B64F_WreckedShip_EntranceTreadmill_East = 0xB64F,
+  addr_kPlmHeader_B653_InReact_SpecialAir_128 = 0xB653,
+  addr_kPlmHeader_B657_InReact_SpecialAir_129 = 0xB657,
+  addr_kPlmHeader_B65B_InReact_SpecialAir_130 = 0xB65B,
+  addr_kPlmHeader_B65F_Unused = 0xB65F,
+  addr_kPlmHeader_B663_Unused = 0xB663,
+  addr_kPlmHeader_B667_Unused = 0xB667,
+  addr_kPlmHeader_B66B_Unused = 0xB66B,
+  addr_kPlmHeader_B66F_Unused = 0xB66F,
   addr_kPlmHeader_B673_MotherBrainsRoom_FillWall = 0xB673,
   addr_kPlmHeader_B677_MotherBrainsRoom_EscapeDoor = 0xB677,
   addr_kPlmHeader_B67B_MotherBrainsRoom_BgRow2 = 0xB67B,
@@ -2830,20 +2851,56 @@ enum Consts_84 {
   addr_kPlmHeader_B69F_MotherBrainsRoom_BgRow11 = 0xB69F,
   addr_kPlmHeader_B6A3_MotherBrainsRoom_BgRow12 = 0xB6A3,
   addr_kPlmHeader_B6A7_MotherBrainsRoom_BgRow13 = 0xB6A7,
+  addr_kPlmHeader_B6AB_Unused = 0xB6AB,
+  addr_kPlmHeader_B6AF_Unused = 0xB6AF,
   addr_kPlmHeader_B6B3_MotherBrainsRoom_ClearCeilingBlock = 0xB6B3,
   addr_kPlmHeader_B6B7_MotherBrainsRoom_ClearCeilingTube = 0xB6B7,
   addr_kPlmHeader_B6BB_MotherBrain_ClearBottomMiddleSideTube = 0xB6BB,
   addr_kPlmHeader_B6BF_MotherBrain_ClearBottomMiddleTubes = 0xB6BF,
   addr_kPlmHeader_B6C3_MotherBrain_ClearBottomLeftTube = 0xB6C3,
   addr_kPlmHeader_B6C7_MotherBrain_ClearBottomRightTube = 0xB6C7,
+  addr_kPlmHeader_B6CB_InReact_SpecialAir_128 = 0xB6CB,
+  addr_kPlmHeader_B6CF_InReact_SpecialAir_129 = 0xB6CF,
+  addr_kPlmHeader_B6D3_MapStation = 0xB6D3,
+  addr_kPlmHeader_B6D7_CollReact_Special_71 = 0xB6D7,
+  addr_kPlmHeader_B6DB_CollReact_Special_72 = 0xB6DB,
+  addr_kPlmHeader_B6DF_EnergyStation = 0xB6DF,
+  addr_kPlmHeader_B6E3_CollReact_Special_73 = 0xB6E3,
+  addr_kPlmHeader_B6E7_CollReact_Special_74 = 0xB6E7,
+  addr_kPlmHeader_B6EB_MissileStation = 0xB6EB,
+  addr_kPlmHeader_B6EF_CollReact_Special_75 = 0xB6EF,
+  addr_kPlmHeader_B6F3_CollReact_Special_76 = 0xB6F3,
+  addr_kPlmHeader_B6F7_Nothing = 0xB6F7,
+  addr_kPlmHeader_B6FB_Nothing = 0xB6FB,
   addr_kPlmHeader_B6FF_CollReact_SpecialAir_70 = 0xB6FF,
+  addr_kPlmHeader_B703_Scroll = 0xB703,
+  addr_kPlmHeader_B707_SolidScroll_Unused = 0xB707,
+  addr_kPlmHeader_B70B_ElevatorPlatofmr = 0xB70B,
+  addr_kPlmHeader_B70F_InReact_SpecialAir_128 = 0xB70F,
+  addr_kPlmHeader_B713_InReact_SpecialAir_128_129_130 = 0xB713,
+  addr_kPlmHeader_B717_Copy1OfB713 = 0xB717,
+  addr_kPlmHeader_B71B_Copy2OfB713 = 0xB71B,
+  addr_kPlmHeader_B71F_InReact_SpecialAir_131 = 0xB71F,
+  addr_kPlmHeader_B723_InReact_SpecialAir_132 = 0xB723,
+  addr_kPlmHeader_B727_InReact_SpecialAir_133 = 0xB727,
+  addr_kPlmHeader_B72B_CollReact_Special_128_129_130 = 0xB72B,
+  addr_kPlmHeader_B72F_Unused = 0xB72F,
+  addr_kPlmHeader_B733_Unused = 0xB733,
+  addr_kPlmHeader_B737_CollReact_Special_131 = 0xB737,
+  addr_kPlmHeader_B73B_CollReact_Special_132 = 0xB73B,
+  addr_kPlmHeader_B73F_CollReact_Special_133 = 0xB73F,
+  addr_kPlmHeader_B743_Unused = 0xB743,
   addr_kPlmHeader_B747_Crocomire_ClearBridge = 0xB747,
   addr_kPlmHeader_B74B_Crocomire_CrumbleBlockInBridge = 0xB74B,
   addr_kPlmHeader_B74F_Crocomire_ClearBlockInBridge = 0xB74F,
   addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall = 0xB753,
   addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall = 0xB757,
+  addr_kPlmHeader_B75B_Draw13BlankAirTiles_Unused = 0xB75B,
+  addr_kPlmHeader_B65F_Draw13BlankSolidTiles_Unused = 0xB65F,
   addr_kPlmHeader_B763_Shitroid_ClearInvisibleWall = 0xB763,
   addr_kPlmHeader_B767_Shitroid_CreateInvisibleWall = 0xB767,
+  addr_kPlmHeader_B76B_CollReact_Special_77 = 0xB76B,
+  addr_kPlmHeader_B76F_SaveStation = 0xB76F,
   addr_kPlmHeader_B773_TourianEntrance_CrumbleAccessToElevator = 0xB773,
   addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator = 0xB777,
   addr_kPlmHeader_B781_Phantoon_DrawDoorDuringFight = 0xB781,
@@ -2852,6 +2909,7 @@ enum Consts_84 {
   addr_kPlmHeader_B793_SporeSpawn_ClearCeiling = 0xB793,
   addr_kPlmHeader_B797_Botwoon_ClearWall = 0xB797,
   addr_kPlmHeader_B79B_Botwoon_CrumbleWall = 0xB79B,
+  addr_kPlmHeader_B79F_Kraid_SetCeilingBlockToBg1 = 0xB79F,
   addr_kPlmHeader_B7A3_Kraid_CrumbleCeilingBlockIntoBg1 = 0xB7A3,
   addr_kPlmHeader_B7A7_Kraid_SetCeilingBlockToBg2 = 0xB7A7,
   addr_kPlmHeader_B7AB_Kraid_CrumbleCeilingBlockIntoBg2 = 0xB7AB,
@@ -2861,24 +2919,229 @@ enum Consts_84 {
   addr_kPlmHeader_B7BB_Kraid_ClearSpikeBlocks = 0xB7BB,
   addr_kPlmHeader_B7BF_Kraid_CrumbleSpikeBlocks = 0xB7BF,
   addr_kPlmHeader_B7EB_EnableSound_32FramesNormal_240FramesCeres = 0xB7EB,
+  addr_kPlmHeader_B8AC_SpeedBoosterEscape = 0xB8AC,
   addr_kPlmHeader_B8EB_ShaktoolsRoom = 0xB8EB,
   addr_kPlmHeader_B8F9_Maridia_Elevatube = 0xB8F9,
   addr_kPlmHeader_B964_OldTourianEscapeShaft_ExplodeFakeWall = 0xB964,
   addr_kPlmHeader_B968_EscapeRoom4_RaiseAcid = 0xB968,
+  addr_kPlmHeader_B974_GateBlock = 0xB974,
+  addr_kPlmHeader_B9C1_ShotReact_Shootable_79 = 0xB9C1,
   addr_kPlmHeader_B9ED_CrittersEscapeBlock = 0xB9ED,
   addr_kPlmHeader_BA48_Ceres_ElevatorShaft_TurnDoorSolidDuringEscape = 0xBA48,
+  addr_kPlmHeader_BAF4_BombTorizoGrayDoor = 0xBAF4,
+  addr_kPlmHeader_BB05_WreckedShip_Attic = 0xBB05,
   addr_kPlmHeader_BB30_Crateria_Mainstreet_ClearPassageIfCrittersEscaped = 0xBB30,
   addr_locret_84BB6A = 0xBB6A,
   addr_locret_84BBDC = 0xBBDC,
+  addr_kPlmHeader_C806_GreenGateTrigger_Left = 0xC806,
+  addr_kPlmHeader_C80A_GreenGateTrigger_Right = 0xC80A,
+  addr_kPlmHeader_C80E_RedGateTrigger_Left = 0xC80E,
+  addr_kPlmHeader_C812_RedGateTrigger_Right = 0xC812,
+  addr_kPlmHeader_C816_BlueGateTrigger_Left = 0xC816,
+  addr_kPlmHeader_C81A_BlueGateTrigger_Right = 0xC81A,
+  addr_kPlmHeader_C81E_YellowGateTrigger_Left = 0xC81E,
+  addr_kPlmHeader_C822_YellowGateTrigger_Right = 0xC822,
+  addr_kPlmHeader_C826_OpenGate_Down = 0xC826,
+  addr_kPlmHeader_C82A_ClosedGate_Down = 0xC82A,
+  addr_kPlmHeader_C82E_OpenGate_Up = 0xC82E,
+  addr_kPlmHeader_C832_ClosedGate_Up = 0xC832,
+  addr_kPlmHeader_C836_GateShotblock_Down = 0xC836,
+  addr_kPlmHeader_C83A_GateShotblock_Up = 0xC83A,
+  addr_kPlmHeader_C83E_GenericShotTrigger = 0xC83E,
+  addr_kPlmHeader_C842_GrayDoor_FaceL = 0xC842,
+  addr_kPlmHeader_C848_GrayDoor_FaceR = 0xC848,
+  addr_kPlmHeader_C84E_GrayDoor_FaceU = 0xC84E,
+  addr_kPlmHeader_C854_GrayDoor_FaceD = 0xC854,
+  addr_kPlmHeader_C85A_YellowDoor_FaceL = 0xC85A,
+  addr_kPlmHeader_C860_YellowDoor_FaceR = 0xC860,
+  addr_kPlmHeader_C866_YellowDoor_FaceU = 0xC866,
+  addr_kPlmHeader_C86C_YellowDoor_FaceD = 0xC86C,
+  addr_kPlmHeader_C872_GreenDoor_FaceL = 0xC872,
+  addr_kPlmHeader_C878_GreenDoor_FaceR = 0xC878,
+  addr_kPlmHeader_C87E_GreenDoor_FaceU = 0xC87E,
+  addr_kPlmHeader_C884_GreenDoor_FaceD = 0xC884,
+  addr_kPlmHeader_C88A_RedDoor_FaceL = 0xC88A,
+  addr_kPlmHeader_C890_RedDoor_FaceR = 0xC890,
+  addr_kPlmHeader_C896_RedDoor_FaceU = 0xC896,
+  addr_kPlmHeader_C89C_RedDoor_FaceD = 0xC89C,
+  addr_kPlmHeader_C8A2_BlueDoor_FaceL = 0xC8A2,
+  addr_kPlmHeader_C8A8_BlueDoor_FaceR = 0xC8A8,
+  addr_kPlmHeader_C8AE_BlueDoor_FaceU = 0xC8AE,
+  addr_kPlmHeader_C8B4_BlueDoor_FaceD = 0xC8B4,
+  addr_kPlmHeader_C8BA_BlueDoorClosing_FaceL = 0xC8BA,
+  addr_kPlmHeader_C8BE_BlueDoorClosing_FaceR = 0xC8BE,
+  addr_kPlmHeader_C8C2_BlueDoorClosing_FaceU = 0xC8C2,
+  addr_kPlmHeader_C8C6_BlueDoorClosing_FaceD = 0xC8C6,
+  addr_kPlmHeader_C8CA_EscapeRoom1_ClosingGate = 0xC8CA,
+  addr_kPlmHeader_C8D0_CopyOfC8CA = 0xC8D0,
   addr_kPlmInstrList_C91C_PowerBombBlockBombed_Unused = 0xC91C,
   addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused = 0xC922,
+  addr_kPlmHeader_CFEC_Draw1x1ShotBlock_Unused = 0xCFEC,
+  addr_kPlmHeader_CFF0_Draw1x2ShotBlock_Unused = 0xCFF0,
+  addr_kPlmHeader_CFF4_Draw2x1ShotBlock_Unused = 0xCFF4,
+  addr_kPlmHeader_CFF8_Draw2x2ShotBlock_Unused = 0xCFF8,
+  addr_kPlmHeader_CFFC_CrumbleBlock_1x1 = 0xCFFC,
+  addr_kPlmHeader_D000_CrumbleBlock_2x1 = 0xD000,
+  addr_kPlmHeader_D004_CrumbleBlock_1x2 = 0xD004,
+  addr_kPlmHeader_D008_CrumbleBlock_2x2 = 0xD008,
+  addr_kPlmHeader_D00C_Unused = 0xD00C,
+  addr_kPlmHeader_D010_Unused = 0xD010,
+  addr_kPlmHeader_D014_Unused = 0xD014,
+  addr_kPlmHeader_D018_Unused = 0xD018,
+  addr_kPlmHeader_D01C_Unused = 0xD01C,
+  addr_kPlmHeader_D020_Unused = 0xD020,
+  addr_kPlmHeader_D024_SpeedBoostBlock = 0xD024,
+  addr_kPlmHeader_D028_Unused = 0xD028,
+  addr_kPlmHeader_D02C_Unused = 0xD02C,
+  addr_kPlmHeader_D030_ = 0xD030,
+  addr_kPlmHeader_D034_ = 0xD034,
+  addr_kPlmHeader_D038_ = 0xD038,
+  addr_kPlmHeader_D03C_ = 0xD03C,
+  addr_kPlmHeader_D040_ = 0xD040,
+  addr_kPlmHeader_D044_ = 0xD044,
+  addr_kPlmHeader_D048_ = 0xD048,
+  addr_kPlmHeader_D04C_ = 0xD04C,
+  addr_kPlmHeader_D050_ = 0xD050,
+  addr_kPlmHeader_D054_ = 0xD054,
+  addr_kPlmHeader_D058_ = 0xD058,
+  addr_kPlmHeader_D05C_ = 0xD05C,
+  addr_kPlmHeader_D060_ = 0xD060,
+  addr_kPlmHeader_D064_ = 0xD064,
+  addr_kPlmHeader_D068_ = 0xD068,
+  addr_kPlmHeader_D06C_ = 0xD06C,
+  addr_kPlmHeader_D070_ = 0xD070,
+  addr_kPlmHeader_D074_ = 0xD074,
+  addr_kPlmHeader_D078_ = 0xD078,
+  addr_kPlmHeader_D07C_ = 0xD07C,
+  addr_kPlmHeader_D080_ = 0xD080,
+  addr_kPlmHeader_D084_ = 0xD084,
+  addr_kPlmHeader_D088_ = 0xD088,
+  addr_kPlmHeader_D08C_ = 0xD08C,
+  addr_kPlmHeader_D090_ = 0xD090,
+  addr_kPlmHeader_D094_ = 0xD094,
+  addr_kPlmHeader_D098_ = 0xD098,
+  addr_kPlmHeader_D09C_ = 0xD09C,
+  addr_kPlmHeader_D0A0_ = 0xD0A0,
+  addr_kPlmHeader_D0A4_ = 0xD0A4,
+  addr_kPlmHeader_D0A8_ = 0xD0A8,
+  addr_kPlmHeader_D0AC_ = 0xD0AC,
+  addr_kPlmHeader_D0B0_ = 0xD0B0,
+  addr_kPlmHeader_D0B4_ = 0xD0B4,
+  addr_kPlmHeader_D0B8_ = 0xD0B8,
+  addr_kPlmHeader_D0BC_ = 0xD0BC,
+  addr_kPlmHeader_D0C0_ = 0xD0C0,
+  addr_kPlmHeader_D0C4_ = 0xD0C4,
+  addr_kPlmHeader_D0C8_ = 0xD0C8,
+  addr_kPlmHeader_D0CC_ = 0xD0CC,
+  addr_kPlmHeader_D0D0_ = 0xD0D0,
+  addr_kPlmHeader_D0D4_ = 0xD0D4,
+  addr_kPlmHeader_D0D8_ = 0xD0D8,
+  addr_kPlmHeader_D0DC_ = 0xD0DC,
+  addr_kPlmHeader_D0E0_ = 0xD0E0,
+  addr_kPlmHeader_D0E4_ = 0xD0E4,
+  addr_kPlmHeader_D0E8_ = 0xD0E8,
+  addr_kPlmHeader_D0F2_BlueBrinstar_FaceBlock_Unused = 0xD0F2,
   addr_kPlmHeader_D113_LowerNorfair_ChozoRoom_CrumblePlug = 0xD113,
+  addr_kPlmHeader_D127_ShotBlock_Unused = 0xD127,
+  addr_kPlmHeader_D13B_GrappleBlock_Unused = 0xD13B,
   addr_kPlmHeader_D6D6_LowerNorfair_ChozoHand = 0xD6D6,
+  addr_kPlmHeader_D6DA_CollReact_Special_131_LowerNorfair_ChozoHandCheck = 0xD6DA,
+  addr_kPlmHeader_D6DE_MotherBrain_Glass = 0xD6DE,
+  addr_kPlmHeader_D6E2_MotherBrain_Glass_AreaBossDead = 0xD6E2,
+  addr_kPlmHeader_D6E6_MotherBrain_Glass_NoGlassState = 0xD6E6,
   addr_kPlmHeader_D6EA_BombTorizo_CrumbleChozo = 0xD6EA,
   addr_kPlmHeader_D6EE_WreckedShip_ChozoHand = 0xD6EE,
+  addr_kPlmHeader_D6F2_CollReact_Special_128_WreckedShip_ChozoHandCheck = 0xD6F2,
   addr_kPlmHeader_D6F8_WreckedShip_ClearChozoSlopeAccess = 0xD6F8,
   addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess = 0xD6FC,
+  addr_kPlmHeader_D700_WreckedShip_3x4ChozoBombBlock = 0xD700,
+  addr_kPlmHeader_D704_LowerNorfair_ChozoHandAlt = 0xD704,
+  addr_kPlmHeader_D708_LowerNorfair_2x2ChozoShotBlock = 0xD708,
+  addr_kPlmHeader_D70C_N00bTube = 0xD70C,
+  addr_kPlmHeader_DB44_MetroidRoomClearedState = 0xDB44,
+  addr_kPlmHeader_DB48_EyeDoorEye_FaceR = 0xDB48,
+  addr_kPlmHeader_DB4C_EyeDoor_FaceR = 0xDB4C,
+  addr_kPlmHeader_DB52_EyeDoorBottom_FaceR = 0xDB52,
+  addr_kPlmHeader_DB56_EyeDoorEye_FaceL = 0xDB56,
+  addr_kPlmHeader_DB5A_EyeDoor_FaceL = 0xDB5A,
+  addr_kPlmHeader_DB60_EyeDoorBottom_FaceL = 0xDB60,
+  addr_kPlmHeader_DF59_DraygonCannon_Shield_FaceR = 0xDF59,
+  addr_kPlmHeader_DF5D_DraygonCannon_Shield_FaceDownR_Unused = 0xDF5D,
+  addr_kPlmHeader_DF61_DraygonCannon_Shield_FaceUpR_Unused = 0xDF61,
+  addr_kPlmHeader_DF65_DraygonCannon_FaceR = 0xDF65,
+  addr_kPlmHeader_DF69_DraygonCannon_FaceDownR_Unused = 0xDF69,
+  addr_kPlmHeader_DF6D_DraygonCannon_FaceUpR_Unused = 0xDF6D,
+  addr_kPlmHeader_DF71_DraygonCannon_Shield_FaceL = 0xDF71,
+  addr_kPlmHeader_DF75_DraygonCannon_Shield_FaceDownL_Unused = 0xDF75,
+  addr_kPlmHeader_DF79_DraygonCannon_Shield_FaceUpL_Unused = 0xDF79,
+  addr_kPlmHeader_DF7D_DraygonCannon_FaceL = 0xDF7D,
+  addr_kPlmHeader_DF81_DraygonCannon_FaceDownL_Unused = 0xDF81,
+  addr_kPlmHeader_DF85_DraygonCannon_FaceUpL_Unused = 0xDF85,
   addr_locret_84D779 = 0xD779,
+  addr_kPlmHeader_EED3_ItemColl_Detect = 0xEED3,
+  addr_kPlmHeader_EED7_EnergyTank = 0xEED7,
+  addr_kPlmHeader_EEDB_MissileTank = 0xEEDB,
+  addr_kPlmHeader_EEDF_SuperMissileTank = 0xEEDF,
+  addr_kPlmHeader_EEE3_PowerBombTank = 0xEEE3,
+  addr_kPlmHeader_EEE7_Bombs = 0xEEE7,
+  addr_kPlmHeader_EEEB_ChargeBeam = 0xEEEB,
+  addr_kPlmHeader_EEEF_IceBeam = 0xEEEF,
+  addr_kPlmHeader_EEF3_HiJump = 0xEEF3,
+  addr_kPlmHeader_EEF7_SpeedBooster = 0xEEF7,
+  addr_kPlmHeader_EEFB_WaveBeam = 0xEEFB,
+  addr_kPlmHeader_EEFF_SpazerBeam = 0xEEFF,
+  addr_kPlmHeader_EF03_SpringBall = 0xEF03,
+  addr_kPlmHeader_EF07_VariaSuit = 0xEF07,
+  addr_kPlmHeader_EF0B_GravitySuit = 0xEF0B,
+  addr_kPlmHeader_EF0F_XrayScope = 0xEF0F,
+  addr_kPlmHeader_EF13_PlasmaBeam = 0xEF13,
+  addr_kPlmHeader_EF17_GrappleBeam = 0xEF17,
+  addr_kPlmHeader_EF1B_SpaceJump = 0xEF1B,
+  addr_kPlmHeader_EF1F_ScrewAttack = 0xEF1F,
+  addr_kPlmHeader_EF23_MorphBall = 0xEF23,
+  addr_kPlmHeader_EF27_ReserveTank = 0xEF27,
+  addr_kPlmHeader_EF2B_EnergyTank_ChozoOrb = 0xEF2B,
+  addr_kPlmHeader_EF2F_MissileTank_ChozoOrb = 0xEF2F,
+  addr_kPlmHeader_EF33_SuperMissileTank_ChozoOrb = 0xEF33,
+  addr_kPlmHeader_EF37_PowerBombTank_ChozoOrb = 0xEF37,
+  addr_kPlmHeader_EF3B_Bombs_ChozoOrb = 0xEF3B,
+  addr_kPlmHeader_EF3F_ChargeBeam_ChozoOrb = 0xEF3F,
+  addr_kPlmHeader_EF43_IceBeam_ChozoOrb = 0xEF43,
+  addr_kPlmHeader_EF47_HiJump_ChozoOrb = 0xEF47,
+  addr_kPlmHeader_EF4B_SpeedBooster_ChozoOrb = 0xEF4B,
+  addr_kPlmHeader_EF4F_WaveBeam_ChozoOrb = 0xEF4F,
+  addr_kPlmHeader_EF53_SpazerBeam_ChozoOrb = 0xEF53,
+  addr_kPlmHeader_EF57_SpringBall_ChozoOrb = 0xEF57,
+  addr_kPlmHeader_EF5B_VariaSuit_ChozoOrb = 0xEF5B,
+  addr_kPlmHeader_EF5F_GravitySuit_ChozoOrb = 0xEF5F,
+  addr_kPlmHeader_EF63_XrayScope_ChozoOrb = 0xEF63,
+  addr_kPlmHeader_EF67_PlasmaBeam_ChozoOrb = 0xEF67,
+  addr_kPlmHeader_EF6B_GrappleBeam_ChozoOrb = 0xEF6B,
+  addr_kPlmHeader_EF6F_SpaceJump_ChozoOrb = 0xEF6F,
+  addr_kPlmHeader_EF73_ScrewAttack_ChozoOrb = 0xEF73,
+  addr_kPlmHeader_EF77_MorphBall_ChozoOrb = 0xEF77,
+  addr_kPlmHeader_EF7B_ReserveTank_ChozoOrb = 0xEF7B,
+  addr_kPlmHeader_EF7F_EnergyTank_ShotBlock = 0xEF7F,
+  addr_kPlmHeader_EF83_MissileTank_ShotBlock = 0xEF83,
+  addr_kPlmHeader_EF87_SuperMissileTank_ShotBlock = 0xEF87,
+  addr_kPlmHeader_EF8B_PowerBombTank_ShotBlock = 0xEF8B,
+  addr_kPlmHeader_EF8F_Bombs_ShotBlock = 0xEF8F,
+  addr_kPlmHeader_EF93_ChargeBeam_ShotBlock = 0xEF93,
+  addr_kPlmHeader_EF97_IceBeam_ShotBlock = 0xEF97,
+  addr_kPlmHeader_EF9B_HiJump_ShotBlock = 0xEF9B,
+  addr_kPlmHeader_EF9F_SpeedBooster_ShotBlock = 0xEF9F,
+  addr_kPlmHeader_EFA3_WaveBeam_ShotBlock = 0xEFA3,
+  addr_kPlmHeader_EFA7_SpazerBeam_ShotBlock = 0xEFA7,
+  addr_kPlmHeader_EFAB_SpringBall_ShotBlock = 0xEFAB,
+  addr_kPlmHeader_EFAF_VariaSuit_ShotBlock = 0xEFAF,
+  addr_kPlmHeader_EFB3_GravitySuit_ShotBlock = 0xEFB3,
+  addr_kPlmHeader_EFB7_XrayScope_ShotBlock = 0xEFB7,
+  addr_kPlmHeader_EFBB_PlasmaBeam_ShotBlock = 0xEFBB,
+  addr_kPlmHeader_EFBF_GrappleBeam_ShotBlock = 0xEFBF,
+  addr_kPlmHeader_EFC3_SpaceJump_ShotBlock = 0xEFC3,
+  addr_kPlmHeader_EFC7_ScrewAttack_ShotBlock = 0xEFC7,
+  addr_kPlmHeader_EFCB_MorphBall_ShotBlock = 0xEFCB,
+  addr_kPlmHeader_EFCF_ReserveTank_ShotBlock = 0xEFCF,
 };
 enum Consts_85 {
   addr_kEnergyTankMsgBoxTilemap = 0x877f,
@@ -4263,7 +4526,9 @@ extern RoomDefRoomstate get_RoomDefRoomstate(uint16 a);
 //struct TileSet; static inline TileSet *get_TileSet(uint16 a) { return (TileSet *)RomPtr(0x8F0000 | a); }
 struct EnemyDef; static inline EnemyDef *get_EnemyDef_A2(uint16 a) { return (EnemyDef *)RomPtr(0xA00000 | a); }
 struct EnemyTileset; static inline EnemyTileset *get_EnemyTileset(uint16 a) { return (EnemyTileset *)RomPtr(0xB40000 | a); }
-struct RoomPlmEntry; static inline RoomPlmEntry *get_RoomPlmEntry(uint16 a) { return (RoomPlmEntry *)RomPtr(0x8F0000 | a); }
+//struct RoomPlmEntry; static inline RoomPlmEntry *get_RoomPlmEntry(uint16 a) { return (RoomPlmEntry *)RomPtr(0x8F0000 | a); }
+extern RoomPlmEntry get_RoomPlmEntry(uint16 a);
+extern PlmScrollData* get_PlmScrollData(uint16 a);
 struct EprojDef; static inline EprojDef *get_EprojDef(uint16 a) { return (EprojDef *)RomPtr(0x860000 | a); }
 struct Vulnerability; static inline Vulnerability *get_Vulnerability(uint16 a) { return (Vulnerability *)RomPtr(0xB40000 | a); }
 struct ExtendedSpriteMap; static inline ExtendedSpriteMap *get_ExtendedSpriteMap(uint8 db, uint16 a) { return (ExtendedSpriteMap *)RomPtr(db << 16 | a); }

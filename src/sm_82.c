@@ -3608,7 +3608,6 @@ void LoadRoomHeader(void) {  // 0x82DE6F
 
 void LoadStateHeader(void) {  // 0x82DEF2
   RoomDefRoomstate RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
-  //TileSet *TS = get_TileSet(kStateHeaderTileSets[RD->graphics_set]);
   TileSet TS = kTileSetTable[RD.tileset_];
   tileset_tile_table_pointer = TS.tile_table_ptr;
   tileset_tiles_pointer = TS.tiles_ptr;
@@ -4164,10 +4163,11 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
   memcpy(BTS, (uint8 *)level_data + size, size >> 1);
 
   if (area_index == kArea_6_Ceres) {
-    DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa000);
-  } else {
-    DecompressToMem(0xb9a09d, g_ram + 0xa000);
-    DecompressToMem(Load24(&tileset_tile_table_pointer), g_ram + 0xa800);
+    DecompressToMem(Load24(&tileset_tile_table_pointer), (uint8*)&tile_table);
+  }
+  else {
+    DecompressToMem(0xb9a09d, (uint8*)&tile_table);
+    DecompressToMem(Load24(&tileset_tile_table_pointer), (uint8*)&tile_table + 0x800);
   }
   RoomDefRoomstate RD = get_RoomDefRoomstate(roomdefroomstate_ptr);
   rdf_scroll_ptr = RD.rdf_scroll_ptr;
@@ -4194,7 +4194,7 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
     MemCpy(scrolls, room_scrolls, 50);
   }
   if (RD.room_plm_header_ptr) {
-    for (n = RD.room_plm_header_ptr; get_RoomPlmEntry(n)->plm_header_ptr_ != 0; n += 6)
+    for (n = RD.room_plm_header_ptr; get_RoomPlmEntry(n).plm_header_ptr_ != 0; n += 6)
       SpawnRoomPLM(n);
   }
   RunDoorSetupCode();
@@ -4386,7 +4386,7 @@ void CreatePlmsExecuteDoorAsmRoomSetup(void) {  // 0x82EB6C
   RoomDefRoomstate RoomDefRoomstate;
   RoomDefRoomstate = get_RoomDefRoomstate(roomdefroomstate_ptr);
   if (RoomDefRoomstate.room_plm_header_ptr) {
-    for (int i = RoomDefRoomstate.room_plm_header_ptr; get_RoomPlmEntry(i)->plm_header_ptr_ != 0; i += 6)
+    for (int i = RoomDefRoomstate.room_plm_header_ptr; get_RoomPlmEntry(i).plm_header_ptr_ != 0; i += 6)
       SpawnRoomPLM(i);
   }
   RunDoorSetupCode();

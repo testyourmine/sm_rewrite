@@ -373,7 +373,7 @@ void MotherBrainBody_FakeDeath_Descent_1(void) {  // 0xA98829
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0);
   if ((--E->mbby_var_F & 0x8000) != 0) {
     RunSamusCode(kSamusCode_0_LockSamus);
-    *(uint16 *)scrolls = scrolls[0];
+    scrolls[1] = kScroll_Red;
     E->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Descent_2);
     E->mbby_var_F = 32;
     MotherBrainBody_FakeDeath_Descent_2();
@@ -5887,8 +5887,8 @@ void Shitroid_Func_3(uint16 k) {  // 0xA9EFDF
 void Shitroid_Func_4(void) {  // 0xA9EFE6
   if (sign16(layer1_x_pos - 513)) {
     layer1_x_pos = 512;
-    *(uint16 *)scrolls = scrolls[0];
-    *(uint16 *)&scrolls[2] = scrolls[2];
+    scrolls[1] = kScroll_Red;
+    scrolls[3] = kScroll_Red;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 48, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B767_Shitroid_CreateInvisibleWall });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 31, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B767_Shitroid_CreateInvisibleWall });
     Enemy_Shitroid *E = Get_Shitroid(cur_enemy_index);
@@ -5974,8 +5974,8 @@ void Shitroid_Func_12(uint16 k) {  // 0xA9F138
   if ((--E->shitr_var_F & 0x8000) != 0) {
     E->shitr_var_A = FUNC16(Shitroid_Func_13);
     E->shitr_parameter_2 = 1;
-    *(uint16 *)scrolls |= (kScroll_Blue << 8);
-    *(uint16 *)&scrolls[2] |= (kScroll_Blue << 8);
+    scrolls[1] |= kScroll_Blue;
+    scrolls[3] |= kScroll_Blue;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 48, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B763_Shitroid_ClearInvisibleWall });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 31, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B763_Shitroid_ClearInvisibleWall });
   }

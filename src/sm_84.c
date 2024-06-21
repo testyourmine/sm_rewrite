@@ -46,7 +46,7 @@ void ClearSoundsWhenGoingThroughDoor(void) {  // 0x848250
 }
 
 void UNUSED_sub_848258(void) {  // 0x848258
-  if (samus_movement_type << 8 == (kMovementType_03_SpinJumping << 8) || samus_movement_type << 8 == (kMovementType_14_WallJumping << 8))
+  if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)
     QueueSfx1_Max15(kSfx1_SpinJumpEnd_Silence);
 }
 
@@ -55,14 +55,14 @@ void PlaySpinJumpSoundIfSpinJumping(void) {  // 0x848270
 }
 
 void UNUSED_sub_848278(void) {  // 0x848278
-  if (samus_movement_type << 8 == (kMovementType_03_SpinJumping << 8) || samus_movement_type << 8 == (kMovementType_14_WallJumping << 8))
+  if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)
     QueueSfx1_Max15(kSfx1_ResumedSpinJump);
 }
 
 void CalculatePlmBlockCoords(uint16 k) {  // 0x848290
-  uint16 t = plm_block_indices[k >> 1] >> 1;
-  plm_y_block = SnesDivide(t, room_width_in_blocks);
-  plm_x_block = SnesModulus(t, room_width_in_blocks);
+  uint16 plm_block_idx = plm_block_indices[k >> 1] / 2;
+  plm_y_block = SnesDivide(plm_block_idx, room_width_in_blocks);
+  plm_x_block = SnesModulus(plm_block_idx, room_width_in_blocks);
 }
 
 void WriteLevelDataBlockTypeAndBts(uint16 k, uint16 a) {  // 0x8482B4
@@ -145,33 +145,33 @@ void SpawnHardcodedPlm(SpawnHardcodedPlmArgs p) {  // 0x8483D7
 }
 
 void SpawnRoomPLM(uint16 k) {  // 0x84846A
-  RoomPlmEntry *rpe;
+  RoomPlmEntry rpe;
   int16 x_block;
 
-  uint16 v1 = 78;
-  while (plm_header_ptr[v1 >> 1]) {
-    v1 -= 2;
-    if ((v1 & 0x8000) != 0)
+  int16 plm_idx = 78;
+  while (plm_header_ptr[plm_idx >> 1] != 0) {
+    plm_idx -= 2;
+    if (plm_idx <= 0)
       return;
   }
-  rpe = (k == 0x12) ? (RoomPlmEntry *)(g_ram + 0x12) : get_RoomPlmEntry(k);
-  uint16 prod = Mult8x8(rpe->y_block, room_width_in_blocks);
-  x_block = rpe->x_block;
-  int v4 = v1 >> 1;
-  plm_block_indices[v4] = 2 * (prod + x_block);
-  plm_room_arguments[v4] = rpe->plm_room_argument;
-  uint16 pp = rpe->plm_header_ptr_;
-  plm_header_ptr[v4] = rpe->plm_header_ptr_;
-  plm_variables[v4] = 0;
-  plm_pre_instrs[v4] = FUNC16(PlmPreInstr_Empty2);
-  PlmHeader_Size4 *PH = get_PlmHeader_Size4(pp);
-  plm_instr_list_ptrs[v4] = PH->instr_list_ptr;
-  plm_instruction_timer[v4] = 1;
-  plm_instruction_draw_ptr[v4] = addr_kDefaultPlmDrawInstruction;
-  plm_timers[v4] = 0;
-  plm_id = v1;
+  rpe = (k == 0x12) ? *(RoomPlmEntry*)(g_ram + 0x12) : get_RoomPlmEntry(k);
+  uint16 prod = Mult8x8(rpe.y_block, room_width_in_blocks);
+  x_block = rpe.x_block;
+  int idx = plm_idx >> 1;
+  plm_block_indices[idx] = 2 * (prod + x_block);
+  plm_room_arguments[idx] = rpe.plm_room_argument;
+  uint16 plm_ptr = rpe.plm_header_ptr_;
+  plm_header_ptr[idx] = plm_ptr;
+  plm_variables[idx] = 0;
+  plm_pre_instrs[idx] = FUNC16(PlmPreInstr_Empty2);
+  PlmHeader_Size4 *PH = get_PlmHeader_Size4(plm_ptr);
+  plm_instr_list_ptrs[idx] = PH->instr_list_ptr;
+  plm_instruction_timer[idx] = 1;
+  plm_instruction_draw_ptr[idx] = addr_kDefaultPlmDrawInstruction;
+  plm_timers[idx] = 0;
+  plm_id = plm_idx;
   
-  CallPlmHeaderFunc(PH->func_ptr | 0x840000, v1);
+  CallPlmHeaderFunc(PH->func_ptr | 0x840000, plm_idx);
 }
 
 void PlmPreInstr_Empty2(void) {  // 0x8484E6
@@ -582,29 +582,21 @@ const uint8 *PlmInstr_DrawPlmBlock(const uint8 *plmp, uint16 k) {  // 0x848B17
 
 const uint8 *PlmInstr_ProcessAirScrollUpdate(const uint8 *plmp, uint16 k) {  // 0x848B55
   plm_variable[k >> 1] = 0;
-  const uint8 *v5 = RomPtr_8F(plm_room_arguments[k >> 1]);
-  while (1) {
-    if (v5[0] & 0x80)
-      break;
-    scrolls[v5[0]] = v5[1];
-    v5 += 2;
-  }
-  int v7 = plm_block_indices[k >> 1] >> 1;
-  level_data[v7] = level_data[v7] & 0xFFF | 0x3000;
+  const PlmScrollData *PSD = get_PlmScrollData(plm_room_arguments[k >> 1]);
+  for (PSD; (PSD->dst_scroll & 0x80) == 0; PSD++)
+	scrolls[PSD->dst_scroll] = PSD->scroll_type;
+  int idx = plm_block_indices[k >> 1] >> 1;
+  level_data[idx] = level_data[idx] & 0xFFF | 0x3000;
   return plmp;
 }
 
 const uint8 *PlmInstr_ProcessSolidScrollUpdate(const uint8 *plmp, uint16 k) {  // 0x848B93
   plm_variable[k >> 1] = 0;
-  const uint8 *v5 = RomPtr_8F(plm_room_arguments[k >> 1]);
-  while (1) {
-    if (v5[0] & 0x80)
-      break;
-    scrolls[v5[0]] = v5[1];
-    v5 += 2;
-  }
-  int v7 = plm_block_indices[k >> 1] >> 1;
-  level_data[v7] = level_data[v7] & 0xFFF | 0xB000;
+  const PlmScrollData *PSD = get_PlmScrollData(plm_room_arguments[k >> 1]);
+  for (PSD; (PSD->dst_scroll & 0x80) == 0; PSD++)
+	scrolls[PSD->dst_scroll] = PSD->scroll_type;
+  int idx = plm_block_indices[k >> 1] >> 1;
+  level_data[idx] = level_data[idx] & 0xFFF | 0xB000;
   return plmp;
 }
 
@@ -1041,7 +1033,7 @@ uint8 PlmSetup_CrumbleBotwoonWall(uint16 j) {  // 0x84AB28
 }
 
 const uint8 *PlmInstr_Scroll_0_1_Blue(const uint8 *plmp, uint16 k) {  // 0x84AB51
-  *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
+  scrolls[1] = scrolls[0] = kScroll_Blue;
   return plmp;
 }
 
@@ -1649,8 +1641,8 @@ void PlmPreInstr_ShaktoolsRoom(uint16 k) {  // 0x84B8B0
 }
 
 uint8 PlmSetup_ShaktoolsRoom(uint16 j) {  // 0x84B8DC
-  *(uint16 *)scrolls = kScroll_Blue;
-  *(uint16 *)&scrolls[2] = kScroll_Red;
+  scrolls[0] = kScroll_Blue;
+  scrolls[3] = scrolls[2] = scrolls[1] = kScroll_Red;
   return 0;
 }
 
@@ -2144,7 +2136,7 @@ uint8 PlmSetup_D028_D02C_Unused(uint16 j) {  // 0x84CDC2
 }
 
 uint8 PlmSetup_RespawningSpeedBoostBlock(uint16 j) {  // 0x84CDEA
-  if ((speed_boost_counter & 0xF00) == 1024
+  if ((speed_boost_counter & 0xF00) == 0x400
       || samus_pose == kPose_C9_FaceR_Shinespark_Horiz
       || samus_pose == kPose_CA_FaceL_Shinespark_Horiz
       || samus_pose == kPose_CB_FaceR_Shinespark_Vert
@@ -2187,7 +2179,7 @@ uint8 PlmSetup_RespawningShotBlock(uint16 j) {  // 0x84CE6B
 }
 
 uint8 PlmSetup_RespawningBombBlock(uint16 j) {  // 0x84CE83
-  if ((speed_boost_counter & 0xF00) == 1024
+  if ((speed_boost_counter & 0xF00) == 0x400
       || samus_pose == kPose_81_FaceR_Screwattack
       || samus_pose == kPose_82_FaceL_Screwattack
       || samus_pose == kPose_C9_FaceR_Shinespark_Horiz
@@ -2480,8 +2472,8 @@ uint8 PlmSetup_D6F2_WreckedShipChozoHandTrigger(uint16 j) {  // 0x84D620
           || samus_pose == kPose_79_FaceR_Springball_Ground
           || samus_pose == kPose_7A_FaceL_Springball_Ground)) {
     enemy_data[0].parameter_1 = 1;
-    *(uint16 *)&scrolls[7] = (kScroll_Green << 8) | kScroll_Green;
-    *(uint16 *)&scrolls[13] = (kScroll_Blue << 8) | kScroll_Blue;
+    scrolls[8] = scrolls[7] = kScroll_Green;
+    scrolls[14] = scrolls[13] = kScroll_Blue;
     int v1 = plm_block_indices[j >> 1] >> 1;
     level_data[v1] &= 0xFFF;
     RunSamusCode(kSamusCode_0_LockSamus);

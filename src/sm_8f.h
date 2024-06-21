@@ -2382,3 +2382,2391 @@ XraySpecialCasing* get_XraySpecialCasing(uint16 xray_special_casing_ptr) {
     default: Unreachable(); return (XraySpecialCasing*){ 0 };
   }
 }
+
+
+RoomPlmEntry get_RoomPlmEntry(uint16 room_plm_header_ptr) {
+  switch (room_plm_header_ptr) {
+    case 0x8000: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  30, .y_block =  40, .plm_room_argument = 0x92b0,  };
+    case 0x8006: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  30, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x800c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  30, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8012: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  30, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x8018: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block = 142, .y_block =  70, .plm_room_argument =    0x0,  };
+    case 0x801e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc85a, .x_block = 142, .y_block =  22, .plm_room_argument =    0x1,  };
+    case 0x8024: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8026: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  30, .y_block =  40, .plm_room_argument = 0x92b0,  };
+    case 0x802c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  30, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x8032: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  30, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8038: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  30, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x803e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0x8,  };
+    case 0x8044: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  38, .plm_room_argument = 0x9002,  };
+    case 0x804a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block = 142, .y_block =  70, .plm_room_argument = 0x9003,  };
+    case 0x8050: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block = 142, .y_block =  22, .plm_room_argument = 0x9004,  };
+    case 0x8056: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8058: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x805a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  63, .y_block =  11, .plm_room_argument = 0x9389,  };
+    case 0x8060: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  67, .y_block =  11, .plm_room_argument = 0x938c,  };
+    case 0x8066: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  22, .y_block =  13, .plm_room_argument = 0x938f,  };
+    case 0x806c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8072: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8078: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x807e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  22, .y_block =  11, .plm_room_argument = 0x9396,  };
+    case 0x8084: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x808a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8090: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8096: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  14, .y_block =   9, .plm_room_argument = 0x9399,  };
+    case 0x809c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  14, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x80a2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  14, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x80a8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  28, .y_block =  10, .plm_room_argument = 0x939c,  };
+    case 0x80ae: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x80b4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x80ba: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x80c0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x80c6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x80cc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  50, .y_block =  11, .plm_room_argument = 0x939f,  };
+    case 0x80d2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  60, .y_block =  11, .plm_room_argument = 0x939f,  };
+    case 0x80d8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  58, .y_block =  17, .plm_room_argument = 0x93a2,  };
+    case 0x80de: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  59, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x80e4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  60, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x80ea: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  61, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x80f0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  62, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x80f6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  52, .y_block =  14, .plm_room_argument = 0x93a5,  };
+    case 0x80fc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  30, .y_block =  54, .plm_room_argument =    0x5,  };
+    case 0x8102: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8104: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  63, .y_block =  11, .plm_room_argument = 0x9389,  };
+    case 0x810a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  67, .y_block =  11, .plm_room_argument = 0x938c,  };
+    case 0x8110: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  22, .y_block =  13, .plm_room_argument = 0x938f,  };
+    case 0x8116: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x811c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8122: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8128: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  22, .y_block =  11, .plm_room_argument = 0x9396,  };
+    case 0x812e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8134: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x813a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8140: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  14, .y_block =   9, .plm_room_argument = 0x9399,  };
+    case 0x8146: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  14, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x814c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  14, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x8152: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  28, .y_block =  10, .plm_room_argument = 0x939c,  };
+    case 0x8158: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x815e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8164: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x816a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x8170: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  28, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x8176: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  50, .y_block =  11, .plm_room_argument = 0x939f,  };
+    case 0x817c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  60, .y_block =  11, .plm_room_argument = 0x939f,  };
+    case 0x8182: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  58, .y_block =  17, .plm_room_argument = 0x93a2,  };
+    case 0x8188: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  59, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x818e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  60, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x8194: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  61, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x819a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  62, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x81a0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  52, .y_block =  14, .plm_room_argument = 0x93a5,  };
+    case 0x81a6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0xa,  };
+    case 0x81ac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument = 0x9006,  };
+    case 0x81b2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =  17, .y_block =  38, .plm_room_argument = 0x9007,  };
+    case 0x81b8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =  17, .y_block =  54, .plm_room_argument = 0x9008,  };
+    case 0x81be: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =  54, .plm_room_argument = 0x9009,  };
+    case 0x81c4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc84e, .x_block =  22, .y_block =  77, .plm_room_argument = 0x900a,  };
+    case 0x81ca: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x81cc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =  29, .y_block =   7, .plm_room_argument =    0x0,  };
+    case 0x81d2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x81d4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x1,  };
+    case 0x81da: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x81dc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  94, .y_block =  54, .plm_room_argument = 0x900b,  };
+    case 0x81e2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block = 126, .y_block =  70, .plm_room_argument =    0xc,  };
+    case 0x81e8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   2, .y_block =  91, .plm_room_argument =    0x1,  };
+    case 0x81ee: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =  28, .y_block =   3, .plm_room_argument =    0x2,  };
+    case 0x81f4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   1, .y_block =  47, .plm_room_argument =    0x3,  };
+    case 0x81fa: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x81fc: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x81fe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  23, .y_block =  15, .plm_room_argument = 0x94c2,  };
+    case 0x8204: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  15, .plm_room_argument = 0x8000,  };
+    case 0x820a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  22, .y_block =  12, .plm_room_argument = 0x94c7,  };
+    case 0x8210: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8216: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x821c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8222: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc85a, .x_block =  46, .y_block =   6, .plm_room_argument =    0xd,  };
+    case 0x8228: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc866, .x_block =  22, .y_block =  45, .plm_room_argument =    0xe,  };
+    case 0x822e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8230: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  13, .plm_room_argument = 0x94fa,  };
+    case 0x8236: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8238: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x823a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x823c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x823e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc866, .x_block =   6, .y_block =  13, .plm_room_argument =    0xf,  };
+    case 0x8244: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8246: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8248: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  14, .y_block =   9, .plm_room_argument =    0x4,  };
+    case 0x824e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8250: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  13, .plm_room_argument = 0x9658,  };
+    case 0x8256: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc86c, .x_block =   6, .y_block =   2, .plm_room_argument =   0x10,  };
+    case 0x825c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x825e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  84, .y_block =  12, .plm_room_argument = 0x968c,  };
+    case 0x8264: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =  83, .y_block =   8, .plm_room_argument =    0x5,  };
+    case 0x826a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x826c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x826e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  29, .y_block =   5, .plm_room_argument = 0x9747,  };
+    case 0x8274: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block =   5, .plm_room_argument = 0x9744,  };
+    case 0x827a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  29, .y_block = 118, .plm_room_argument = 0x974d,  };
+    case 0x8280: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block = 118, .plm_room_argument = 0x974a,  };
+    case 0x8286: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  18, .y_block = 133, .plm_room_argument = 0x8000,  };
+    case 0x828c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  19, .y_block = 133, .plm_room_argument = 0x8000,  };
+    case 0x8292: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 133, .plm_room_argument = 0x8000,  };
+    case 0x8298: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x829e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x82a4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x82aa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  20, .y_block = 137, .plm_room_argument = 0x9753,  };
+    case 0x82b0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x82b6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x82bc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x82c2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block = 137, .plm_room_argument = 0x9750,  };
+    case 0x82c8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x82ce: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x82d4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x82da: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block = 137, .plm_room_argument = 0x9756,  };
+    case 0x82e0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x82e6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x82ec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x82f2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block = 137, .plm_room_argument = 0x9759,  };
+    case 0x82f8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  46, .y_block =   6, .plm_room_argument = 0x9011,  };
+    case 0x82fe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block = 134, .plm_room_argument = 0x9012,  };
+    case 0x8304: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc85a, .x_block =  46, .y_block = 118, .plm_room_argument =   0x13,  };
+    case 0x830a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x830c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  29, .y_block =   5, .plm_room_argument = 0x9747,  };
+    case 0x8312: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block =   5, .plm_room_argument = 0x9744,  };
+    case 0x8318: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  29, .y_block = 118, .plm_room_argument = 0x974d,  };
+    case 0x831e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block = 118, .plm_room_argument = 0x974a,  };
+    case 0x8324: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  18, .y_block = 133, .plm_room_argument = 0x8000,  };
+    case 0x832a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  19, .y_block = 133, .plm_room_argument = 0x8000,  };
+    case 0x8330: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 133, .plm_room_argument = 0x8000,  };
+    case 0x8336: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x833c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x8342: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x8348: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  20, .y_block = 137, .plm_room_argument = 0x9753,  };
+    case 0x834e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x8354: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x835a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x8360: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block = 137, .plm_room_argument = 0x9750,  };
+    case 0x8366: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x836c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x8372: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x8378: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block = 137, .plm_room_argument = 0x9756,  };
+    case 0x837e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block = 134, .plm_room_argument = 0x8000,  };
+    case 0x8384: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block = 135, .plm_room_argument = 0x8000,  };
+    case 0x838a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block = 136, .plm_room_argument = 0x8000,  };
+    case 0x8390: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block = 137, .plm_room_argument = 0x9759,  };
+    case 0x8396: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0xc,  };
+    case 0x839c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  46, .y_block =   6, .plm_room_argument = 0x9014,  };
+    case 0x83a2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  46, .y_block = 118, .plm_room_argument = 0x9015,  };
+    case 0x83a8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block = 134, .plm_room_argument = 0x9016,  };
+    case 0x83ae: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block = 134, .plm_room_argument = 0x9017,  };
+    case 0x83b4: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x83b6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  15, .plm_room_argument = 0x97ab,  };
+    case 0x83bc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   6, .y_block =  15, .plm_room_argument = 0x97ab,  };
+    case 0x83c2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =   9, .plm_room_argument = 0x97b0,  };
+    case 0x83c8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument = 0x9018,  };
+    case 0x83ce: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x83d0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  15, .plm_room_argument = 0x97ab,  };
+    case 0x83d6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   6, .y_block =  15, .plm_room_argument = 0x97ab,  };
+    case 0x83dc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =   9, .plm_room_argument = 0x97b0,  };
+    case 0x83e2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  46, .y_block =   6, .plm_room_argument =  0xc19,  };
+    case 0x83e8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xc1a,  };
+    case 0x83ee: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   5, .y_block =  26, .plm_room_argument =    0x6,  };
+    case 0x83f4: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x83f6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  13, .plm_room_argument = 0x9801,  };
+    case 0x83fc: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x83fe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xbaf4, .x_block =   1, .y_block =   6, .plm_room_argument =  0x81b,  };
+    case 0x8404: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef3b, .x_block =  12, .y_block =  10, .plm_room_argument =    0x7,  };
+    case 0x840a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xd6ea, .x_block =  13, .y_block =  11, .plm_room_argument =    0x0,  };
+    case 0x8410: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8412: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0xe,  };
+    case 0x8418: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument = 0x181c,  };
+    case 0x841e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8420: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  46, .y_block =   6, .plm_room_argument =   0x1d,  };
+    case 0x8426: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8428: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =   0x10,  };
+    case 0x842e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8430: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8432: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =   7, .y_block =  42, .plm_room_argument =    0x8,  };
+    case 0x8438: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x843a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  13, .plm_room_argument = 0x9966,  };
+    case 0x8440: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8442: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8444: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6d3, .x_block =  11, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x844a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x844c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  67, .plm_room_argument = 0x99f3,  };
+    case 0x8452: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  67, .plm_room_argument = 0x8000,  };
+    case 0x8458: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   9, .y_block =  70, .plm_room_argument = 0x99f6,  };
+    case 0x845e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  70, .plm_room_argument = 0x8000,  };
+    case 0x8464: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  13, .y_block =  27, .plm_room_argument =    0x9,  };
+    case 0x846a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   2, .y_block =  27, .plm_room_argument =    0xa,  };
+    case 0x8470: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block = 102, .plm_room_argument =   0x1e,  };
+    case 0x8476: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8478: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =  59, .y_block =   9, .plm_room_argument =    0xb,  };
+    case 0x847e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8480: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8482: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8484: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8486: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   4, .y_block =   7, .plm_room_argument =    0xc,  };
+    case 0x848c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x848e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block = 113, .plm_room_argument = 0x9b46,  };
+    case 0x8494: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block = 168, .plm_room_argument = 0x9b4b,  };
+    case 0x849a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  33, .y_block = 168, .plm_room_argument = 0x9b4b,  };
+    case 0x84a0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block = 172, .plm_room_argument = 0x9b52,  };
+    case 0x84a6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb70b, .x_block =   6, .y_block =  44, .plm_room_argument = 0x8000,  };
+    case 0x84ac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef37, .x_block =  60, .y_block = 122, .plm_room_argument =    0xd,  };
+    case 0x84b2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =  86, .plm_room_argument =   0x1f,  };
+    case 0x84b8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =  70, .plm_room_argument =   0x20,  };
+    case 0x84be: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  70, .plm_room_argument =   0x21,  };
+    case 0x84c4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block = 102, .plm_room_argument =   0x22,  };
+    case 0x84ca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block = 102, .plm_room_argument =   0x23,  };
+    case 0x84d0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  14, .y_block = 118, .plm_room_argument = 0x9024,  };
+    case 0x84d6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x84d8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  23, .y_block =  11, .plm_room_argument = 0x9b98,  };
+    case 0x84de: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x84e4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef33, .x_block =  26, .y_block = 135, .plm_room_argument =    0xe,  };
+    case 0x84ea: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x84ec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  46, .y_block =   6, .plm_room_argument =  0xc25,  };
+    case 0x84f2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x84f4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  41, .y_block =  14, .plm_room_argument = 0x9bf9,  };
+    case 0x84fa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  42, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x8500: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  43, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x8506: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  19, .plm_room_argument = 0x9c00,  };
+    case 0x850c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  15, .plm_room_argument = 0x9bf9,  };
+    case 0x8512: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  46, .y_block =  22, .plm_room_argument =   0x26,  };
+    case 0x8518: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  19, .y_block =  27, .plm_room_argument =    0xf,  };
+    case 0x851e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =   4, .y_block =   6, .plm_room_argument =   0x10,  };
+    case 0x8524: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8526: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  14, .y_block =  11, .plm_room_argument = 0x9c32,  };
+    case 0x852c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7b, .x_block =  11, .y_block =   7, .plm_room_argument =   0x11,  };
+    case 0x8532: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =  30, .y_block =   7, .plm_room_argument =   0x12,  };
+    case 0x8538: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  25, .y_block =   7, .plm_room_argument =   0x13,  };
+    case 0x853e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8540: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6d3, .x_block =   5, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8546: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8548: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block =  38, .plm_room_argument =   0x27,  };
+    case 0x854e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8550: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6eb, .x_block =   4, .y_block =  10, .plm_room_argument =   0x14,  };
+    case 0x8556: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8558: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb643, .x_block =  69, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x855e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  69, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8564: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  70, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x856a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  71, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8570: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  72, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x8576: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63f, .x_block =  73, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x857c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  74, .y_block =  13, .plm_room_argument = 0x9d11,  };
+    case 0x8582: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  64, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8588: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  64, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x858e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  64, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8594: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  64, .y_block =  11, .plm_room_argument = 0x9d14,  };
+    case 0x859a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb643, .x_block =  75, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x85a0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb643, .x_block =  75, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x85a6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  75, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85ac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  74, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85b2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  73, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85b8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  72, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85be: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  71, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85c4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  70, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85ca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  69, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85d0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  68, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x85d6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  68, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x85dc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  68, .y_block =  11, .plm_room_argument = 0x9d14,  };
+    case 0x85e2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x85e4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  46, .y_block = 107, .plm_room_argument = 0x9d84,  };
+    case 0x85ea: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block = 122, .plm_room_argument = 0x9d8b,  };
+    case 0x85f0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  61, .y_block =  87, .plm_room_argument = 0x9d8e,  };
+    case 0x85f6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  64, .y_block =  87, .plm_room_argument = 0x9d91,  };
+    case 0x85fc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =   8, .plm_room_argument = 0x9d96,  };
+    case 0x8602: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  33, .y_block =   8, .plm_room_argument = 0x9d99,  };
+    case 0x8608: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  36, .y_block =  50, .plm_room_argument =   0x15,  };
+    case 0x860e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  34, .y_block = 103, .plm_room_argument =   0x16,  };
+    case 0x8614: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef3f, .x_block =  37, .y_block = 118, .plm_room_argument =   0x17,  };
+    case 0x861a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc85a, .x_block =  62, .y_block =  70, .plm_room_argument =   0x28,  };
+    case 0x8620: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  62, .y_block = 102, .plm_room_argument =   0x29,  };
+    case 0x8626: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  62, .y_block =   6, .plm_room_argument =   0x2a,  };
+    case 0x862c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block = 150, .plm_room_argument =   0x2b,  };
+    case 0x8632: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8634: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xc2c,  };
+    case 0x863a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc854, .x_block =  54, .y_block =   3, .plm_room_argument =  0xc2d,  };
+    case 0x8640: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8642: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc87e, .x_block =   6, .y_block =  46, .plm_room_argument =   0x2e,  };
+    case 0x8648: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x864a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  14, .plm_room_argument = 0x9e40,  };
+    case 0x8650: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  11, .plm_room_argument = 0x9e49,  };
+    case 0x8656: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =   6, .plm_room_argument =  0xc2f,  };
+    case 0x865c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =   6, .y_block =  23, .plm_room_argument =   0x18,  };
+    case 0x8662: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8664: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block = 100, .y_block =  55, .plm_room_argument = 0x8000,  };
+    case 0x866a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block = 100, .y_block =  55, .plm_room_argument =    0x0,  };
+    case 0x8670: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc85a, .x_block =  30, .y_block =   6, .plm_room_argument =   0x30,  };
+    case 0x8676: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  61, .y_block =  24, .plm_room_argument =   0x19,  };
+    case 0x867c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x867e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  43, .plm_room_argument = 0x9f05,  };
+    case 0x8684: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  35, .plm_room_argument = 0x8000,  };
+    case 0x868a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  36, .plm_room_argument = 0x8000,  };
+    case 0x8690: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x8696: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x869c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x86a2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x86a8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  41, .plm_room_argument = 0x8000,  };
+    case 0x86ae: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  42, .plm_room_argument = 0x8000,  };
+    case 0x86b4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  43, .plm_room_argument = 0x9f08,  };
+    case 0x86ba: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  88, .y_block =  33, .plm_room_argument = 0x8000,  };
+    case 0x86c0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  87, .y_block =  33, .plm_room_argument = 0x9f0b,  };
+    case 0x86c6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  88, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x86cc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  87, .y_block =  10, .plm_room_argument = 0x9f0b,  };
+    case 0x86d2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  88, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x86d8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  87, .y_block =  38, .plm_room_argument = 0x9f0e,  };
+    case 0x86de: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef23, .x_block =  69, .y_block =  41, .plm_room_argument =   0x1a,  };
+    case 0x86e4: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x86e6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  43, .plm_room_argument = 0x9f05,  };
+    case 0x86ec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  35, .plm_room_argument = 0x8000,  };
+    case 0x86f2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  36, .plm_room_argument = 0x8000,  };
+    case 0x86f8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x86fe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8704: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x870a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x8710: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  41, .plm_room_argument = 0x8000,  };
+    case 0x8716: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  42, .plm_room_argument = 0x8000,  };
+    case 0x871c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  43, .plm_room_argument = 0x9f08,  };
+    case 0x8722: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  88, .y_block =  33, .plm_room_argument = 0x8000,  };
+    case 0x8728: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  87, .y_block =  33, .plm_room_argument = 0x9f0b,  };
+    case 0x872e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  88, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8734: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  87, .y_block =  10, .plm_room_argument = 0x9f0b,  };
+    case 0x873a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  88, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8740: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  87, .y_block =  38, .plm_room_argument = 0x9f0e,  };
+    case 0x8746: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  38, .plm_room_argument =  0xc31,  };
+    case 0x874c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =  40, .y_block =  42, .plm_room_argument =   0x1b,  };
+    case 0x8752: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8754: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  11, .plm_room_argument = 0x9f5f,  };
+    case 0x875a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8760: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8766: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x876c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8772: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8778: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x877e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  11, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8784: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =   6, .plm_room_argument =   0x32,  };
+    case 0x878a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x878c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  39, .y_block =  11, .plm_room_argument = 0x9fb7,  };
+    case 0x8792: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  39, .y_block =  38, .plm_room_argument = 0x9fb7,  };
+    case 0x8798: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  46, .y_block =  41, .plm_room_argument =   0x1c,  };
+    case 0x879e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7f, .x_block =  28, .y_block =  34, .plm_room_argument =   0x1d,  };
+    case 0x87a4: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87a6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  94, .y_block =   6, .plm_room_argument =   0x33,  };
+    case 0x87ac: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87ae: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87b0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  11, .plm_room_argument = 0xa04a,  };
+    case 0x87b6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x87bc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x87c2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =   5, .y_block =   9, .plm_room_argument =   0x1e,  };
+    case 0x87c8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block =   6, .plm_room_argument =   0x34,  };
+    case 0x87ce: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87d0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =   7, .y_block =   9, .plm_room_argument =   0x1f,  };
+    case 0x87d6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87d8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   4, .y_block =  10, .plm_room_argument =   0x20,  };
+    case 0x87de: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87e0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block =   6, .plm_room_argument =   0x35,  };
+    case 0x87e6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x87e8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x87ee: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x87f4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  11, .plm_room_argument = 0xa104,  };
+    case 0x87fa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =   4, .y_block =   9, .plm_room_argument =   0x21,  };
+    case 0x8800: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8802: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef2f, .x_block =   4, .y_block =   7, .plm_room_argument =   0x22,  };
+    case 0x8808: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x880a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  17, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0x8810: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  17, .y_block =   4, .plm_room_argument =    0x2,  };
+    case 0x8816: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument =  0xc36,  };
+    case 0x881c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =  22, .plm_room_argument =  0xc37,  };
+    case 0x8822: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8824: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =  11, .y_block =   9, .plm_room_argument =   0x23,  };
+    case 0x882a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x882c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x0,  };
+    case 0x8832: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8834: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8836: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   7, .y_block =   9, .plm_room_argument =   0x24,  };
+    case 0x883c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =   5, .y_block =  12, .plm_room_argument =   0x25,  };
+    case 0x8842: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8844: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x1,  };
+    case 0x884a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x884c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x2,  };
+    case 0x8852: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8854: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   9, .y_block = 106, .plm_room_argument = 0xa28e,  };
+    case 0x885a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block = 106, .plm_room_argument = 0x8000,  };
+    case 0x8860: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block = 150, .plm_room_argument =   0x38,  };
+    case 0x8866: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc860, .x_block =   1, .y_block = 102, .plm_room_argument =   0x39,  };
+    case 0x886c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x886e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =   6, .plm_room_argument =   0x3a,  };
+    case 0x8874: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8876: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef63, .x_block =   5, .y_block =   7, .plm_room_argument =   0x26,  };
+    case 0x887c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x887e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8880: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =  94, .plm_room_argument = 0xa36f,  };
+    case 0x8886: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  94, .plm_room_argument = 0x8000,  };
+    case 0x888c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =  55, .plm_room_argument = 0xa374,  };
+    case 0x8892: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block =  55, .plm_room_argument = 0xa379,  };
+    case 0x8898: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb70b, .x_block =   6, .y_block =  44, .plm_room_argument = 0x8000,  };
+    case 0x889e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  38, .y_block =  53, .plm_room_argument = 0x8000,  };
+    case 0x88a4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  38, .y_block =  53, .plm_room_argument =    0xa,  };
+    case 0x88aa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block =  54, .plm_room_argument =   0x3b,  };
+    case 0x88b0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc860, .x_block =   1, .y_block =  86, .plm_room_argument =   0x3c,  };
+    case 0x88b6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block = 118, .plm_room_argument =   0x3d,  };
+    case 0x88bc: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x88be: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  14, .plm_room_argument = 0xa3a9,  };
+    case 0x88c4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x88ca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =   4, .y_block =  19, .plm_room_argument =   0x27,  };
+    case 0x88d0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =   6, .plm_room_argument =  0xc3e,  };
+    case 0x88d6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x88d8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0x88de: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x88e4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x88ea: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x88f0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x88f6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x88fc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8902: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8908: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  12, .plm_room_argument = 0xa3da,  };
+    case 0x890e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef37, .x_block =  20, .y_block =   9, .plm_room_argument =   0x28,  };
+    case 0x8914: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   2, .y_block =   8, .plm_room_argument =   0x29,  };
+    case 0x891a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x891c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x891e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =  17, .plm_room_argument = 0xa439,  };
+    case 0x8924: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  17, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x892a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  18, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x8930: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  19, .y_block =  17, .plm_room_argument = 0x8000,  };
+    case 0x8936: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =  20, .plm_room_argument = 0xa43e,  };
+    case 0x893c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  17, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0x8942: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  18, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0x8948: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  19, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0x894e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  17, .plm_room_argument = 0xa439,  };
+    case 0x8954: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  20, .plm_room_argument = 0xa43e,  };
+    case 0x895a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   2, .y_block =  17, .plm_room_argument = 0xa439,  };
+    case 0x8960: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   2, .y_block =  20, .plm_room_argument = 0xa43e,  };
+    case 0x8966: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  30, .y_block =   6, .plm_room_argument =   0x3f,  };
+    case 0x896c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x896e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef53, .x_block =  11, .y_block =   9, .plm_room_argument =   0x2a,  };
+    case 0x8974: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8976: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   2, .y_block =  11, .plm_room_argument = 0xa4a2,  };
+    case 0x897c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   2, .y_block =  25, .plm_room_argument = 0xa4a9,  };
+    case 0x8982: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  25, .plm_room_argument = 0xa4ae,  };
+    case 0x8988: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  21, .y_block =  25, .plm_room_argument = 0xa4a9,  };
+    case 0x898e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument =   0x40,  };
+    case 0x8994: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8996: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  14, .y_block =   6, .plm_room_argument =  0xc41,  };
+    case 0x899c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7f, .x_block =   5, .y_block =   4, .plm_room_argument =   0x2b,  };
+    case 0x89a2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x89a4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  23, .y_block =  11, .plm_room_argument = 0xa50f,  };
+    case 0x89aa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  23, .y_block =  14, .plm_room_argument = 0xa514,  };
+    case 0x89b0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0x89b6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x89bc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x89c2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x89c8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x89ce: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x89d4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x89da: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  11, .y_block =  11, .plm_room_argument = 0xa519,  };
+    case 0x89e0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  39, .y_block =  12, .plm_room_argument = 0xa51c,  };
+    case 0x89e6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  46, .y_block =  12, .plm_room_argument = 0xa51c,  };
+    case 0x89ec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =  46, .y_block =   8, .plm_room_argument =   0x2c,  };
+    case 0x89f2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x89f4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  94, .y_block =   6, .plm_room_argument =  0xc42,  };
+    case 0x89fa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xc43,  };
+    case 0x8a00: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a02: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   3, .y_block =  18, .plm_room_argument = 0xa59c,  };
+    case 0x8a08: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   4, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8a0e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8a14: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  14, .y_block =   6, .plm_room_argument =   0x44,  };
+    case 0x8a1a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb5a, .x_block =  30, .y_block =  22, .plm_room_argument =   0x45,  };
+    case 0x8a20: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb60, .x_block =  30, .y_block =  25, .plm_room_argument =   0x45,  };
+    case 0x8a26: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb56, .x_block =  30, .y_block =  23, .plm_room_argument =   0x45,  };
+    case 0x8a2c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a2e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =  22, .plm_room_argument =   0x46,  };
+    case 0x8a34: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument =   0x47,  };
+    case 0x8a3a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a3c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a3e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   4, .y_block =  10, .plm_room_argument =   0x2d,  };
+    case 0x8a44: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a46: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6eb, .x_block =   9, .y_block =  10, .plm_room_argument =   0x2e,  };
+    case 0x8a4c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   7, .y_block =  10, .plm_room_argument =   0x2f,  };
+    case 0x8a52: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a54: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument = 0x9448,  };
+    case 0x8a5a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8a5c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  12, .plm_room_argument = 0xa6d6,  };
+    case 0x8a62: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8a68: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =   9, .plm_room_argument = 0xa6d9,  };
+    case 0x8a6e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  16, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8a74: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  16, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x8a7a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  18, .y_block =   9, .plm_room_argument = 0xa6dc,  };
+    case 0x8a80: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8a86: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x8a8c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x8a92: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  19, .y_block =  11, .plm_room_argument = 0xa6df,  };
+    case 0x8a98: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  20, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8a9e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8aa4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0x8aaa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8ab0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x8ab6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x8abc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x8ac2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0x8ac8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8aca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef5b, .x_block =   7, .y_block =   9, .plm_room_argument =   0x30,  };
+    case 0x8ad0: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8ad2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x3,  };
+    case 0x8ad8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8ada: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x4,  };
+    case 0x8ae0: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8ae2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8ae4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =  34, .y_block =  28, .plm_room_argument =   0x31,  };
+    case 0x8aea: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  46, .y_block =  22, .plm_room_argument =   0x49,  };
+    case 0x8af0: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8af2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  46, .y_block =   6, .plm_room_argument =   0x4a,  };
+    case 0x8af8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8afa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb70b, .x_block =   6, .y_block =  44, .plm_room_argument = 0x8000,  };
+    case 0x8b00: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block =  54, .plm_room_argument =   0x4b,  };
+    case 0x8b06: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc860, .x_block =   1, .y_block =  70, .plm_room_argument =   0x4c,  };
+    case 0x8b0c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =  86, .plm_room_argument =   0x4d,  };
+    case 0x8b12: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b14: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  55, .y_block =  45, .plm_room_argument = 0xa860,  };
+    case 0x8b1a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  56, .y_block =  45, .plm_room_argument = 0x8000,  };
+    case 0x8b20: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b22: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b24: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef43, .x_block =  12, .y_block =   7, .plm_room_argument =   0x32,  };
+    case 0x8b2a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b2c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  23, .plm_room_argument = 0xa8ec,  };
+    case 0x8b32: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block =  23, .plm_room_argument = 0xa8ef,  };
+    case 0x8b38: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  17, .y_block =  23, .plm_room_argument = 0xa8f2,  };
+    case 0x8b3e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  19, .y_block =  23, .plm_room_argument = 0xa8f5,  };
+    case 0x8b44: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b46: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =   1, .y_block =   8, .plm_room_argument =   0x33,  };
+    case 0x8b4c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b4e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block = 158, .y_block =  40, .plm_room_argument = 0xa980,  };
+    case 0x8b54: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 158, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x8b5a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 158, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8b60: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 158, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x8b66: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 158, .y_block =  36, .plm_room_argument = 0x8000,  };
+    case 0x8b6c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block = 190, .y_block =  41, .plm_room_argument = 0xa987,  };
+    case 0x8b72: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 190, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x8b78: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 190, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x8b7e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block = 194, .y_block =  41, .plm_room_argument = 0xa98a,  };
+    case 0x8b84: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 194, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x8b8a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 194, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x8b90: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block = 194, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8b96: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc87e, .x_block = 198, .y_block =  45, .plm_room_argument =   0x4e,  };
+    case 0x8b9c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8b9e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc854, .x_block =  54, .y_block =   2, .plm_room_argument =  0x44f,  };
+    case 0x8ba4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block = 125, .y_block =   6, .plm_room_argument =   0x34,  };
+    case 0x8baa: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8bac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef47, .x_block =   3, .y_block =  10, .plm_room_argument =   0x35,  };
+    case 0x8bb2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8bb4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =   6, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x8bba: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =   6, .y_block =   5, .plm_room_argument =    0xa,  };
+    case 0x8bc0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  13, .y_block =   9, .plm_room_argument =   0x36,  };
+    case 0x8bc6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8bc8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =  12, .plm_room_argument = 0xaa75,  };
+    case 0x8bce: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =   5, .plm_room_argument = 0xaa70,  };
+    case 0x8bd4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  28, .plm_room_argument = 0xaa7c,  };
+    case 0x8bda: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  11, .y_block =  18, .plm_room_argument = 0xaa7f,  };
+    case 0x8be0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =   6, .plm_room_argument =  0xc50,  };
+    case 0x8be6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   9, .y_block =   6, .plm_room_argument =   0x37,  };
+    case 0x8bec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =  23, .y_block =   8, .plm_room_argument =   0x38,  };
+    case 0x8bf2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8bf4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =   6, .plm_room_argument =   0x51,  };
+    case 0x8bfa: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8bfc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x0,  };
+    case 0x8c02: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c04: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =   7, .y_block =   8, .plm_room_argument =   0x39,  };
+    case 0x8c0a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c0c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  54, .plm_room_argument =   0x52,  };
+    case 0x8c12: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c14: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  60, .y_block =   9, .plm_room_argument =   0x3a,  };
+    case 0x8c1a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c1c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  42, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x8c22: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  42, .y_block =   5, .plm_room_argument =    0x8,  };
+    case 0x8c28: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c2a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  67, .y_block =   9, .plm_room_argument =   0x3b,  };
+    case 0x8c30: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c32: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c34: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c36: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef6b, .x_block =   4, .y_block =  39, .plm_room_argument =   0x3c,  };
+    case 0x8c3c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c3e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7b, .x_block =   2, .y_block =   7, .plm_room_argument =   0x3d,  };
+    case 0x8c44: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =   7, .y_block =  11, .plm_room_argument =   0x3e,  };
+    case 0x8c4a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c4c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =   5, .plm_room_argument = 0xacb0,  };
+    case 0x8c52: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  20, .y_block =  10, .plm_room_argument =   0x3f,  };
+    case 0x8c58: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c5a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =   1, .y_block =   6, .plm_room_argument =   0x53,  };
+    case 0x8c60: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  30, .y_block =   6, .plm_room_argument =   0x54,  };
+    case 0x8c66: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  20, .y_block =  60, .plm_room_argument =   0x40,  };
+    case 0x8c6c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c6e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb8ac, .x_block =   0, .y_block =   0, .plm_room_argument = 0x8000,  };
+    case 0x8c74: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block = 188, .y_block =  19, .plm_room_argument =   0x41,  };
+    case 0x8c7a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block = 190, .y_block =  22, .plm_room_argument =   0x55,  };
+    case 0x8c80: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c82: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef4b, .x_block =  11, .y_block =   6, .plm_room_argument =   0x42,  };
+    case 0x8c88: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8c8a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block =   8, .plm_room_argument = 0xada7,  };
+    case 0x8c90: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =   8, .plm_room_argument = 0xadaa,  };
+    case 0x8c96: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  77, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8c9c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  77, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8ca2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  77, .y_block =  12, .plm_room_argument = 0xadaa,  };
+    case 0x8ca8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  22, .plm_room_argument =   0x56,  };
+    case 0x8cae: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8cb0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  26, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x8cb6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  26, .y_block =   5, .plm_room_argument =    0x0,  };
+    case 0x8cbc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  31, .y_block =   9, .plm_room_argument =   0x43,  };
+    case 0x8cc2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  62, .y_block =   6, .plm_room_argument =   0x57,  };
+    case 0x8cc8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8cca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef4f, .x_block =  11, .y_block =   6, .plm_room_argument =   0x44,  };
+    case 0x8cd0: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8cd2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8cd4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block =  41, .plm_room_argument = 0xae66,  };
+    case 0x8cda: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  41, .plm_room_argument = 0xae6b,  };
+    case 0x8ce0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  25, .y_block =  36, .plm_room_argument = 0x8000,  };
+    case 0x8ce6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  25, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x8cec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  25, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8cf2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  25, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x8cf8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  25, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x8cfe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  25, .y_block =  41, .plm_room_argument = 0xae6e,  };
+    case 0x8d04: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  38, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x8d0a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  38, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x8d10: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  38, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x8d16: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  38, .y_block =  41, .plm_room_argument = 0xae71,  };
+    case 0x8d1c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d1e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  23, .plm_room_argument = 0xaea9,  };
+    case 0x8d24: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  17, .y_block =  23, .plm_room_argument = 0xaeac,  };
+    case 0x8d2a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  21, .plm_room_argument = 0x8000,  };
+    case 0x8d30: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  22, .plm_room_argument = 0x8000,  };
+    case 0x8d36: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  23, .plm_room_argument = 0x8000,  };
+    case 0x8d3c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  24, .plm_room_argument = 0xaeb1,  };
+    case 0x8d42: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =   7, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0x8d48: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =   7, .y_block =  20, .plm_room_argument =    0x0,  };
+    case 0x8d4e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc860, .x_block =  17, .y_block =  38, .plm_room_argument =   0x58,  };
+    case 0x8d54: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d56: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d58: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   2, .y_block =  11, .plm_room_argument = 0xaf0f,  };
+    case 0x8d5e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   3, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8d64: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   4, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8d6a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  11, .y_block =  11, .plm_room_argument = 0xaf0f,  };
+    case 0x8d70: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  12, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8d76: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  13, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x8d7c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d7e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d80: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  11, .plm_room_argument = 0xaf6f,  };
+    case 0x8d86: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d88: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =   6, .y_block =  21, .plm_room_argument = 0x8000,  };
+    case 0x8d8e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =   6, .y_block =  21, .plm_room_argument =    0x0,  };
+    case 0x8d94: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d96: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d98: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d9a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8d9c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   7, .y_block =  10, .plm_room_argument =   0x45,  };
+    case 0x8da2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8da4: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8da6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   9, .y_block =  12, .plm_room_argument = 0xb0a7,  };
+    case 0x8dac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8db2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   9, .y_block =  16, .plm_room_argument = 0xb0ac,  };
+    case 0x8db8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8dbe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   6, .y_block =  19, .plm_room_argument = 0xb0b1,  };
+    case 0x8dc4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  19, .plm_room_argument = 0x8000,  };
+    case 0x8dca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  19, .plm_room_argument = 0x8000,  };
+    case 0x8dd0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  19, .plm_room_argument = 0x8000,  };
+    case 0x8dd6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8dd8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6d3, .x_block =   5, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0x8dde: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8de0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x1,  };
+    case 0x8de6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8de8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8dea: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8dec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x2,  };
+    case 0x8df2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8df4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x3,  };
+    case 0x8dfa: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8dfc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x4,  };
+    case 0x8e02: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8e04: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  12, .y_block =  30, .plm_room_argument = 0xb224,  };
+    case 0x8e0a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  12, .y_block =  35, .plm_room_argument = 0xb22d,  };
+    case 0x8e10: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8e12: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  71, .y_block =   8, .plm_room_argument = 0xb27d,  };
+    case 0x8e18: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  72, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8e1e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  71, .y_block =  35, .plm_room_argument = 0xb27d,  };
+    case 0x8e24: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  72, .y_block =  35, .plm_room_argument = 0x8000,  };
+    case 0x8e2a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  71, .y_block =  41, .plm_room_argument = 0xb280,  };
+    case 0x8e30: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  72, .y_block =  41, .plm_room_argument = 0x8000,  };
+    case 0x8e36: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb70b, .x_block =  70, .y_block =  42, .plm_room_argument = 0x8000,  };
+    case 0x8e3c: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8e3e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  12, .plm_room_argument = 0xb2d1,  };
+    case 0x8e44: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e4a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e50: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e56: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e5c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e62: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e68: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  11, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0x8e6e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  13, .y_block =   8, .plm_room_argument =   0x46,  };
+    case 0x8e74: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef87, .x_block =  21, .y_block =   8, .plm_room_argument =   0x47,  };
+    case 0x8e7a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =  22, .plm_room_argument =  0x859,  };
+    case 0x8e80: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8e82: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  52, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x8e88: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  52, .y_block =   5, .plm_room_argument =    0x8,  };
+    case 0x8e8e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8e90: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   8, .y_block =  10, .plm_room_argument =   0x48,  };
+    case 0x8e96: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8e98: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  14, .y_block =   6, .plm_room_argument =   0x5a,  };
+    case 0x8e9e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument =   0x5b,  };
+    case 0x8ea4: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8ea6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb4c, .x_block =   1, .y_block =   6, .plm_room_argument =   0x5c,  };
+    case 0x8eac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb52, .x_block =   1, .y_block =   9, .plm_room_argument =   0x5c,  };
+    case 0x8eb2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb48, .x_block =   1, .y_block =   7, .plm_room_argument =   0x5c,  };
+    case 0x8eb8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8eba: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  33, .plm_room_argument = 0xb3d9,  };
+    case 0x8ec0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  33, .plm_room_argument = 0x8000,  };
+    case 0x8ec6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  27, .plm_room_argument = 0xb3dc,  };
+    case 0x8ecc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  27, .plm_room_argument = 0x8000,  };
+    case 0x8ed2: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8ed6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  48, .y_block =  22, .plm_room_argument = 0xb445,  };
+    case 0x8edc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  50, .y_block =  22, .plm_room_argument = 0xb448,  };
+    case 0x8ee2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  45, .y_block =  22, .plm_room_argument = 0xb44b,  };
+    case 0x8ee8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  43, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0x8eee: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  43, .y_block =  21, .plm_room_argument = 0x8000,  };
+    case 0x8ef4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  43, .y_block =  22, .plm_room_argument = 0x8000,  };
+    case 0x8efa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  43, .y_block =  23, .plm_room_argument = 0xb44e,  };
+    case 0x8f00: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  56, .y_block =  54, .plm_room_argument = 0x8000,  };
+    case 0x8f06: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  56, .y_block =  55, .plm_room_argument = 0x8000,  };
+    case 0x8f0c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  56, .y_block =  56, .plm_room_argument = 0x8000,  };
+    case 0x8f12: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  56, .y_block =  57, .plm_room_argument = 0xb451,  };
+    case 0x8f18: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  61, .y_block =  52, .plm_room_argument = 0x8000,  };
+    case 0x8f1e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  60, .y_block =  52, .plm_room_argument = 0x8000,  };
+    case 0x8f24: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  59, .y_block =  52, .plm_room_argument = 0xb454,  };
+    case 0x8f2a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  54, .plm_room_argument =  0xc5d,  };
+    case 0x8f30: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  39, .y_block =  27, .plm_room_argument =   0x49,  };
+    case 0x8f36: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8f38: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8f3a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8f3c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   3, .y_block =  16, .plm_room_argument = 0xb4e0,  };
+    case 0x8f42: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   4, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f48: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f4e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f54: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f5a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f60: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f66: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f6c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  11, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f72: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  12, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0x8f78: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8f7a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8f7c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  12, .y_block =   9, .plm_room_argument = 0xb547,  };
+    case 0x8f82: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  12, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x8f88: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  12, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x8f8e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  12, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x8f94: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   3, .y_block =  18, .plm_room_argument = 0xb54e,  };
+    case 0x8f9a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   4, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fa0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fa6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fac: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fb2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fb8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fbe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0x8fc4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  47, .y_block =   3, .plm_room_argument = 0xb555,  };
+    case 0x8fca: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  43, .y_block =   7, .plm_room_argument =   0x4a,  };
+    case 0x8fd0: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8fd2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =  12, .y_block =   8, .plm_room_argument =   0x4b,  };
+    case 0x8fd8: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x8fda: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  17, .y_block =  72, .plm_room_argument = 0xb5c3,  };
+    case 0x8fe0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  70, .plm_room_argument = 0x8000,  };
+    case 0x8fe6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   8, .y_block =  70, .plm_room_argument = 0x8000,  };
+    case 0x8fec: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  71, .plm_room_argument = 0xb5c8,  };
+    case 0x8ff2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  72, .plm_room_argument = 0xb5c3,  };
+    case 0x8ff8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  36, .y_block =  72, .plm_room_argument = 0xb5c8,  };
+    case 0x8ffe: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   6, .y_block =  14, .plm_room_argument = 0xb5cd,  };
+    case 0x9004: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x900a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x9010: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0x9016: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   6, .y_block =  11, .plm_room_argument = 0xb5d2,  };
+    case 0x901c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x9022: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x9028: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x902e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc866, .x_block =  38, .y_block =  77, .plm_room_argument =   0x5e,  };
+    case 0x9034: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x9036: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  23, .y_block =  13, .plm_room_argument = 0xb612,  };
+    case 0x903c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0x9042: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  21, .y_block =   8, .plm_room_argument = 0xb615,  };
+    case 0x9048: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  22, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x904e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x9054: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x905a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x9060: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  26, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x9066: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  79, .y_block =   9, .plm_room_argument = 0xb61a,  };
+    case 0x906c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  81, .y_block =   9, .plm_room_argument = 0xb622,  };
+    case 0x9072: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  11, .plm_room_argument = 0xb61d,  };
+    case 0x9078: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  60, .y_block =   9, .plm_room_argument = 0xb622,  };
+    case 0x907e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  63, .y_block =   9, .plm_room_argument = 0xb61a,  };
+    case 0x9084: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  20, .y_block =   7, .plm_room_argument = 0xb625,  };
+    case 0x908a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x9090: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x9096: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  20, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0x909c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   9, .y_block =   9, .plm_room_argument = 0xb628,  };
+    case 0x90a2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   9, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x90a8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   9, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x90ae: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   9, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x90b4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =   9, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0x90ba: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc878, .x_block =  17, .y_block =  38, .plm_room_argument =   0x5f,  };
+    case 0x90c0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =   7, .y_block =   8, .plm_room_argument =   0x4c,  };
+    case 0x90c6: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x90c8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xc60,  };
+    case 0x90ce: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x90d0: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  11, .y_block =  42, .plm_room_argument = 0xb68d,  };
+    case 0x90d6: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  41, .plm_room_argument = 0x8000,  };
+    case 0x90dc: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0x90e2: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0x90e8: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0x90ee: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  37, .plm_room_argument = 0x8000,  };
+    case 0x90f4: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  42, .plm_room_argument = 0xb690,  };
+    case 0x90fa: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  20, .y_block =  42, .plm_room_argument = 0xb695,  };
+    case 0x9100: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   8, .y_block =  41, .plm_room_argument =   0x4d,  };
+    case 0x9106: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x9108: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7f, .x_block =  14, .y_block =  11, .plm_room_argument =   0x4e,  };
+    case 0x910e: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x9110: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef73, .x_block =  11, .y_block =  40, .plm_room_argument =   0x4f,  };
+    case 0x9116: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x9118: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  54, .plm_room_argument = 0x8000,  };
+    case 0x911e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  55, .plm_room_argument = 0x8000,  };
+    case 0x9124: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  56, .plm_room_argument = 0xb72d,  };
+    case 0x912a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  45, .y_block =  57, .plm_room_argument = 0x8000,  };
+    case 0x9130: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  44, .y_block =  57, .plm_room_argument = 0x8000,  };
+    case 0x9136: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  43, .y_block =  57, .plm_room_argument = 0xb730,  };
+    case 0x913c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0x9142: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0x9148: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0x914e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =   9, .plm_room_argument = 0xb737,  };
+    case 0x9154: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  27, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x915a: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  26, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x9160: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  25, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x9166: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  24, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x916c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x9172: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  22, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x9178: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  21, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0x917e: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  20, .y_block =  11, .plm_room_argument = 0xb73c,  };
+    case 0x9184: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =  42, .y_block =  81, .plm_room_argument =   0x50,  };
+    case 0x918a: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0x918c: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x5,  };
+    case 0x9192: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc215: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  45, .plm_room_argument = 0xc9ec,  };
+    case 0xc21b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  65, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc221: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  65, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc227: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  65, .y_block =  40, .plm_room_argument = 0xc9f1,  };
+    case 0xc22d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc22f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc231: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =   0x80,  };
+    case 0xc237: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block = 110, .y_block =   6, .plm_room_argument =   0x81,  };
+    case 0xc23d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xbb05, .x_block =   8, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0xc243: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc245: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc247: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  62, .y_block =  87, .plm_room_argument = 0xcb7a,  };
+    case 0xc24d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  81, .y_block = 105, .plm_room_argument = 0xcb7d,  };
+    case 0xc253: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  65, .y_block =  87, .plm_room_argument = 0xcb80,  };
+    case 0xc259: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  78, .y_block = 105, .plm_room_argument = 0xcb83,  };
+    case 0xc25f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  71, .y_block = 109, .plm_room_argument = 0xcb86,  };
+    case 0xc265: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   2, .y_block =  89, .plm_room_argument =   0x80,  };
+    case 0xc26b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =  65, .y_block = 102, .plm_room_argument =   0x82,  };
+    case 0xc271: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  78, .y_block =  70, .plm_room_argument =   0x83,  };
+    case 0xc277: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc87e, .x_block =  70, .y_block = 125, .plm_room_argument =   0x84,  };
+    case 0xc27d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc27f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc281: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  16, .plm_room_argument = 0xcc24,  };
+    case 0xc287: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0xc28d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc28f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc291: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  64, .y_block =  12, .plm_room_argument = 0xccc0,  };
+    case 0xc297: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  70, .y_block =  12, .plm_room_argument = 0xccc5,  };
+    case 0xc29d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb5a, .x_block =  78, .y_block =   6, .plm_room_argument =   0x85,  };
+    case 0xc2a3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb60, .x_block =  78, .y_block =   9, .plm_room_argument =   0x85,  };
+    case 0xc2a9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb56, .x_block =  78, .y_block =   7, .plm_room_argument =   0x85,  };
+    case 0xc2af: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2b1: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2b3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =   0x86,  };
+    case 0xc2b9: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2bb: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2bd: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2bf: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  47, .y_block =   7, .plm_room_argument = 0xce3d,  };
+    case 0xc2c5: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2c7: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2c9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x0,  };
+    case 0xc2cf: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2d1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  45, .plm_room_argument = 0xc9ec,  };
+    case 0xc2d7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  65, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc2dd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  65, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc2e3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  65, .y_block =  40, .plm_room_argument = 0xc9f1,  };
+    case 0xc2e9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7b, .x_block =  83, .y_block =  11, .plm_room_argument =   0x81,  };
+    case 0xc2ef: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  60, .y_block =  38, .plm_room_argument =   0x82,  };
+    case 0xc2f5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument = 0x9087,  };
+    case 0xc2fb: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2fd: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc2ff: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xc88,  };
+    case 0xc305: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block = 110, .y_block =   6, .plm_room_argument =  0xc89,  };
+    case 0xc30b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc84e, .x_block =  70, .y_block =  14, .plm_room_argument =  0xc8a,  };
+    case 0xc311: return (RoomPlmEntry){ .plm_header_ptr_ = 0xbb05, .x_block =   8, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0xc317: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc319: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  45, .y_block =   8, .plm_room_argument =   0x83,  };
+    case 0xc31f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc321: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc323: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  16, .plm_room_argument = 0xcc24,  };
+    case 0xc329: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  16, .plm_room_argument = 0x8000,  };
+    case 0xc32f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =   6, .plm_room_argument =   0x8b,  };
+    case 0xc335: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc337: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =   3, .y_block =   6, .plm_room_argument =   0x84,  };
+    case 0xc33d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc33f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  64, .y_block =  12, .plm_room_argument = 0xccc0,  };
+    case 0xc345: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  70, .y_block =  12, .plm_room_argument = 0xccc5,  };
+    case 0xc34b: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc34d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6d3, .x_block =   5, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0xc353: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc355: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc357: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =   2, .y_block =   7, .plm_room_argument =   0x85,  };
+    case 0xc35d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc35f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  47, .y_block =   7, .plm_room_argument = 0xce3d,  };
+    case 0xc365: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =  56, .y_block =   9, .plm_room_argument =   0x86,  };
+    case 0xc36b: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc36d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef5f, .x_block =   7, .y_block =   9, .plm_room_argument =   0x87,  };
+    case 0xc373: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc375: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x0,  };
+    case 0xc37b: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc37d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   3, .y_block =  20, .plm_room_argument = 0xcf4c,  };
+    case 0xc383: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   4, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc389: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc38f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc395: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   9, .y_block =  20, .plm_room_argument = 0xcf4c,  };
+    case 0xc39b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc3a1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  11, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc3a7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  12, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc3ad: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =  29, .plm_room_argument = 0xcf4f,  };
+    case 0xc3b3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  29, .plm_room_argument = 0x8000,  };
+    case 0xc3b9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  29, .plm_room_argument = 0x8000,  };
+    case 0xc3bf: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  29, .plm_room_argument = 0x8000,  };
+    case 0xc3c5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  29, .plm_room_argument = 0x8000,  };
+    case 0xc3cb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  29, .plm_room_argument = 0x8000,  };
+    case 0xc3d1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xd70c, .x_block =   2, .y_block =  21, .plm_room_argument =   0x80,  };
+    case 0xc3d7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  38, .plm_room_argument =   0x8c,  };
+    case 0xc3dd: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc3df: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc3e1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =   9, .plm_room_argument = 0xcfb5,  };
+    case 0xc3e7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =  16, .plm_room_argument = 0xcfbc,  };
+    case 0xc3ed: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =  22, .plm_room_argument = 0xcfc1,  };
+    case 0xc3f3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  10, .y_block =   3, .plm_room_argument = 0x8000,  };
+    case 0xc3f9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  10, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0xc3ff: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  10, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0xc405: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  10, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0xc40b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  10, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0xc411: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  10, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0xc417: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  10, .y_block =   9, .plm_room_argument = 0xcfc6,  };
+    case 0xc41d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  22, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0xc423: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  22, .y_block =   5, .plm_room_argument =    0xa,  };
+    case 0xc429: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc42b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  37, .y_block =  41, .plm_room_argument = 0xd012,  };
+    case 0xc431: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  30, .y_block = 118, .plm_room_argument =   0x8d,  };
+    case 0xc437: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  14, .y_block =  53, .plm_room_argument =   0x88,  };
+    case 0xc43d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =  22, .y_block =  40, .plm_room_argument =   0x89,  };
+    case 0xc443: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc445: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc44b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc451: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0xc457: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  41, .plm_room_argument = 0xd052,  };
+    case 0xc45d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  48, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc463: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  48, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc469: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  48, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0xc46f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  48, .y_block =  41, .plm_room_argument = 0xd052,  };
+    case 0xc475: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  62, .y_block =  38, .plm_room_argument =   0x8e,  };
+    case 0xc47b: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc47d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =  31, .y_block =  10, .plm_room_argument =   0x8a,  };
+    case 0xc483: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =  44, .y_block =  29, .plm_room_argument =   0x8b,  };
+    case 0xc489: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc48b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc82a, .x_block =  14, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0xc491: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc836, .x_block =  14, .y_block =   7, .plm_room_argument =    0x8,  };
+    case 0xc497: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc499: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc49b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block =   6, .plm_room_argument = 0xd135,  };
+    case 0xc4a1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  30, .y_block =   6, .plm_room_argument = 0xd138,  };
+    case 0xc4a7: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc4a9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  31, .plm_room_argument = 0xd16a,  };
+    case 0xc4af: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =   4, .y_block =  38, .plm_room_argument =   0x8c,  };
+    case 0xc4b5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  11, .y_block =  39, .plm_room_argument =   0x8d,  };
+    case 0xc4bb: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc4bd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  32, .y_block =  22, .plm_room_argument = 0x8000,  };
+    case 0xc4c3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  32, .y_block =  23, .plm_room_argument = 0x8000,  };
+    case 0xc4c9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  32, .y_block =  24, .plm_room_argument = 0x8000,  };
+    case 0xc4cf: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  32, .y_block =  25, .plm_room_argument = 0xd1a0,  };
+    case 0xc4d5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =  22, .plm_room_argument = 0x8000,  };
+    case 0xc4db: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =  23, .plm_room_argument = 0x8000,  };
+    case 0xc4e1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  15, .y_block =  24, .plm_room_argument = 0x8000,  };
+    case 0xc4e7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  15, .y_block =  25, .plm_room_argument = 0xd1a0,  };
+    case 0xc4ed: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc4ef: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   7, .y_block =  45, .plm_room_argument = 0xd1d8,  };
+    case 0xc4f5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  45, .plm_room_argument = 0x8000,  };
+    case 0xc4fb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  30, .y_block =  54, .plm_room_argument =   0x8f,  };
+    case 0xc501: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc503: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc509: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc50f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  31, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0xc515: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  31, .y_block =  41, .plm_room_argument = 0xd216,  };
+    case 0xc51b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  29, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc521: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  29, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc527: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  29, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0xc52d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  29, .y_block =  41, .plm_room_argument = 0xd219,  };
+    case 0xc533: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  44, .y_block =  40, .plm_room_argument =   0x8e,  };
+    case 0xc539: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc53b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  14, .plm_room_argument = 0xd24d,  };
+    case 0xc541: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   8, .y_block =  17, .plm_room_argument = 0xd24d,  };
+    case 0xc547: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  22, .plm_room_argument =   0x90,  };
+    case 0xc54d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc54f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc551: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc553: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xc91,  };
+    case 0xc559: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef67, .x_block =  25, .y_block =  38, .plm_room_argument =   0x8f,  };
+    case 0xc55f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc561: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc563: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb70b, .x_block =   6, .y_block =  44, .plm_room_argument = 0x8000,  };
+    case 0xc569: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  70, .plm_room_argument =   0x92,  };
+    case 0xc56f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc571: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  46, .y_block =  22, .plm_room_argument =   0x93,  };
+    case 0xc577: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc87e, .x_block =   6, .y_block =  45, .plm_room_argument =   0x94,  };
+    case 0xc57d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc57f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc581: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6d3, .x_block =  11, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0xc587: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc589: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x1,  };
+    case 0xc58f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc591: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc593: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc595: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc597: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   3, .y_block =  20, .plm_room_argument = 0xd4bd,  };
+    case 0xc59d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   4, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5a3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5a9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5af: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5b5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5bb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5c1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5c7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  11, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5cd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  12, .y_block =  20, .plm_room_argument = 0x8000,  };
+    case 0xc5d3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc884, .x_block =   6, .y_block =   2, .plm_room_argument =   0x95,  };
+    case 0xc5d9: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc5db: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc5dd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   6, .y_block =   4, .plm_room_argument =   0x90,  };
+    case 0xc5e3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef7b, .x_block =  15, .y_block =   4, .plm_room_argument =   0x91,  };
+    case 0xc5e9: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc5eb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =   3, .y_block =   7, .plm_room_argument =   0x92,  };
+    case 0xc5f1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeee3, .x_block =  25, .y_block =  16, .plm_room_argument =   0x93,  };
+    case 0xc5f7: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc5f9: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc5fb: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc5fd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =  38, .plm_room_argument =   0x96,  };
+    case 0xc603: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedb, .x_block =  76, .y_block =   9, .plm_room_argument =   0x94,  };
+    case 0xc609: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeedf, .x_block =  92, .y_block =   8, .plm_room_argument =   0x95,  };
+    case 0xc60f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc611: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  14, .y_block =   6, .plm_room_argument =   0x97,  };
+    case 0xc617: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc619: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc61b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   6, .y_block =  50, .plm_room_argument = 0xd67d,  };
+    case 0xc621: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  50, .plm_room_argument = 0x8000,  };
+    case 0xc627: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  50, .plm_room_argument = 0x8000,  };
+    case 0xc62d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  50, .plm_room_argument = 0x8000,  };
+    case 0xc633: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  13, .y_block =  12, .plm_room_argument = 0xd67d,  };
+    case 0xc639: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0xc63f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0xc645: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0xc64b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0xc651: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0xc657: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0xc65d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0xc663: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  13, .y_block =   4, .plm_room_argument = 0x8000,  };
+    case 0xc669: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  18, .y_block =  14, .plm_room_argument = 0xd68a,  };
+    case 0xc66f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =  13, .plm_room_argument = 0x8000,  };
+    case 0xc675: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =  12, .plm_room_argument = 0x8000,  };
+    case 0xc67b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =  11, .plm_room_argument = 0x8000,  };
+    case 0xc681: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =  10, .plm_room_argument = 0x8000,  };
+    case 0xc687: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =   9, .plm_room_argument = 0x8000,  };
+    case 0xc68d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =   8, .plm_room_argument = 0x8000,  };
+    case 0xc693: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  18, .y_block =   7, .plm_room_argument = 0x8000,  };
+    case 0xc699: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  21, .y_block =  43, .plm_room_argument = 0xd695,  };
+    case 0xc69f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  22, .y_block =  43, .plm_room_argument = 0x8000,  };
+    case 0xc6a5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  23, .y_block =  43, .plm_room_argument = 0x8000,  };
+    case 0xc6ab: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc6ad: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =  34, .plm_room_argument = 0xd6c8,  };
+    case 0xc6b3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  34, .plm_room_argument = 0x8000,  };
+    case 0xc6b9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  34, .plm_room_argument = 0x8000,  };
+    case 0xc6bf: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  34, .plm_room_argument = 0x8000,  };
+    case 0xc6c5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  34, .plm_room_argument = 0x8000,  };
+    case 0xc6cb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  18, .plm_room_argument = 0x8000,  };
+    case 0xc6d1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   5, .y_block =  27, .plm_room_argument = 0xd6cb,  };
+    case 0xc6d7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  27, .plm_room_argument = 0x8000,  };
+    case 0xc6dd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  27, .plm_room_argument = 0x8000,  };
+    case 0xc6e3: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc6e5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef57, .x_block =  24, .y_block =  22, .plm_room_argument =   0x96,  };
+    case 0xc6eb: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc6ed: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc6ef: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block = 110, .y_block =   6, .plm_room_argument =   0x98,  };
+    case 0xc6f5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block =  78, .y_block =  38, .plm_room_argument =   0x99,  };
+    case 0xc6fb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc872, .x_block = 110, .y_block =  22, .plm_room_argument =   0x9a,  };
+    case 0xc701: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc703: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x2,  };
+    case 0xc709: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc70b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =   4, .y_block =  14, .plm_room_argument = 0xd7df,  };
+    case 0xc711: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   5, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc717: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   6, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc71d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   7, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc723: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   8, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc729: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =   9, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc72f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  10, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc735: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb63b, .x_block =  11, .y_block =  14, .plm_room_argument = 0x8000,  };
+    case 0xc73b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb4c, .x_block =   1, .y_block =  38, .plm_room_argument =   0x9b,  };
+    case 0xc741: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb52, .x_block =   1, .y_block =  41, .plm_room_argument =   0x9b,  };
+    case 0xc747: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb48, .x_block =   1, .y_block =  39, .plm_room_argument =   0x9b,  };
+    case 0xc74d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef83, .x_block =  28, .y_block =   6, .plm_room_argument =   0x97,  };
+    case 0xc753: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc755: return (RoomPlmEntry){ .plm_header_ptr_ = 0xeed7, .x_block =  50, .y_block =   5, .plm_room_argument =   0x98,  };
+    case 0xc75b: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc75d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x3,  };
+    case 0xc763: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc765: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6eb, .x_block =   8, .y_block =  10, .plm_room_argument =   0x99,  };
+    case 0xc76b: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc76d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc76f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc771: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc773: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  16, .y_block =  41, .plm_room_argument = 0xd951,  };
+    case 0xc779: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  11, .y_block =  41, .plm_room_argument = 0xd956,  };
+    case 0xc77f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  40, .plm_room_argument = 0x8000,  };
+    case 0xc785: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  39, .plm_room_argument = 0x8000,  };
+    case 0xc78b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb647, .x_block =  11, .y_block =  38, .plm_room_argument = 0x8000,  };
+    case 0xc791: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb703, .x_block =  14, .y_block =  41, .plm_room_argument = 0xd95b,  };
+    case 0xc797: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument =   0x9c,  };
+    case 0xc79d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc79f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0x49d,  };
+    case 0xc7a5: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7a7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xef6f, .x_block =   4, .y_block =   8, .plm_room_argument =   0x9a,  };
+    case 0xc7ad: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7af: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   8, .y_block =  10, .plm_room_argument =   0x9b,  };
+    case 0xc7b5: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7b7: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7b9: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7bb: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =   6, .plm_room_argument =   0x9e,  };
+    case 0xc7c1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument =   0x9f,  };
+    case 0xc7c7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdf65, .x_block =   2, .y_block =  11, .plm_room_argument = 0x8802,  };
+    case 0xc7cd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdf59, .x_block =   2, .y_block =  18, .plm_room_argument = 0x8804,  };
+    case 0xc7d3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdf71, .x_block =  29, .y_block =  15, .plm_room_argument = 0x8806,  };
+    case 0xc7d9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdf71, .x_block =  29, .y_block =  21, .plm_room_argument = 0x8808,  };
+    case 0xc7df: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7e1: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb70b, .x_block =   6, .y_block =  44, .plm_room_argument = 0x8000,  };
+    case 0xc7e7: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7e9: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =   0x12,  };
+    case 0xc7ef: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xca0,  };
+    case 0xc7f5: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc7f7: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =   0x14,  };
+    case 0xc7fd: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  14, .y_block =  22, .plm_room_argument =  0xca1,  };
+    case 0xc803: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc805: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =   0x16,  };
+    case 0xc80b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  94, .y_block =   6, .plm_room_argument =  0xca2,  };
+    case 0xc811: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc813: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =   0x18,  };
+    case 0xc819: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc84e, .x_block =   6, .y_block =  30, .plm_room_argument =  0xca3,  };
+    case 0xc81f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc821: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc823: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  30, .y_block =   6, .plm_room_argument = 0x90a4,  };
+    case 0xc829: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =   6, .plm_room_argument =  0xca5,  };
+    case 0xc82f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc831: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc842, .x_block =  62, .y_block =   6, .plm_room_argument = 0x90a6,  };
+    case 0xc837: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc839: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc88a, .x_block =  14, .y_block =  22, .plm_room_argument =   0xa7,  };
+    case 0xc83f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc841: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6eb, .x_block =   8, .y_block =  10, .plm_room_argument =   0x9c,  };
+    case 0xc847: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb6df, .x_block =   6, .y_block =  10, .plm_room_argument =   0x9d,  };
+    case 0xc84d: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc84f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xd6de, .x_block =   9, .y_block =   5, .plm_room_argument = 0x8000,  };
+    case 0xc855: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc857: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb5a, .x_block =  62, .y_block =   6, .plm_room_argument =   0xa8,  };
+    case 0xc85d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb60, .x_block =  62, .y_block =   9, .plm_room_argument =   0xa8,  };
+    case 0xc863: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb56, .x_block =  62, .y_block =   7, .plm_room_argument =   0xa8,  };
+    case 0xc869: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc86b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc890, .x_block =   1, .y_block =  38, .plm_room_argument =   0xa9,  };
+    case 0xc871: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc873: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   5, .y_block =  11, .plm_room_argument =    0x0,  };
+    case 0xc879: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc87b: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0x0,  };
+    case 0xc881: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc8ca, .x_block =  31, .y_block =   6, .plm_room_argument = 0x8000,  };
+    case 0xc887: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc889: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0x2,  };
+    case 0xc88f: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc854, .x_block =   6, .y_block =   3, .plm_room_argument = 0x90aa,  };
+    case 0xc895: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc897: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0x4,  };
+    case 0xc89d: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  22, .plm_room_argument = 0x90ab,  };
+    case 0xc8a3: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8a5: return (RoomPlmEntry){ .plm_header_ptr_ = 0xdb44, .x_block =   8, .y_block =   8, .plm_room_argument =    0x6,  };
+    case 0xc8ab: return (RoomPlmEntry){ .plm_header_ptr_ = 0xc848, .x_block =   1, .y_block =  54, .plm_room_argument = 0x90ac,  };
+    case 0xc8b1: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8b3: return (RoomPlmEntry){ .plm_header_ptr_ = 0xb76f, .x_block =   7, .y_block =  11, .plm_room_argument =    0x1,  };
+    case 0xc8b9: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8bb: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8bd: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8bf: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8c1: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8c3: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xc8c5: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    case 0xe87f: return (RoomPlmEntry){ .plm_header_ptr_ = 0x0000, };
+    default: Unreachable(); return (RoomPlmEntry){ 0 };
+  }
+}
+
+static PlmScrollData kPlmScrollData_92b0[] = {
+  [0] = { .dst_scroll = 19, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9389[] = {
+  [0] = { .dst_scroll =  8, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_938c[] = {
+  [0] = { .dst_scroll =  8, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_938f[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  6, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9396[] = {
+  [0] = { .dst_scroll =  6, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9399[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_939c[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_939f[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_93a2[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_93a5[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  8, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_94c2[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_94c7[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_94fa[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9658[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_968c[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9744[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9747[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_974a[] = {
+  [0] = { .dst_scroll = 23, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_974d[] = {
+  [0] = { .dst_scroll = 23, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9750[] = {
+  [0] = { .dst_scroll = 24, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9753[] = {
+  [0] = { .dst_scroll = 24, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9756[] = {
+  [0] = { .dst_scroll = 25, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9759[] = {
+  [0] = { .dst_scroll = 25, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_97ab[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_97b0[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9801[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9966[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_99f3[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_99f6[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9b46[] = {
+  [0] = { .dst_scroll = 28, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 29, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9b4b[] = {
+  [0] = { .dst_scroll = 28, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 29, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 41, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9b52[] = {
+  [0] = { .dst_scroll = 24, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 28, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 29, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll = 41, .scroll_type = kScroll_Red   , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9b98[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9bf9[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9c00[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9c32[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d11[] = {
+  [0] = { .dst_scroll = 11, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d14[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 11, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d84[] = {
+  [0] = { .dst_scroll = 32, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 37, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 38, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d8b[] = {
+  [0] = { .dst_scroll = 36, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d8e[] = {
+  [0] = { .dst_scroll = 29, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d91[] = {
+  [0] = { .dst_scroll = 28, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 29, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d96[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9d99[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9e40[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9e49[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9f05[] = {
+  [0] = { .dst_scroll = 18, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9f08[] = {
+  [0] = { .dst_scroll = 18, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9f0b[] = {
+  [0] = { .dst_scroll = 13, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9f0e[] = {
+  [0] = { .dst_scroll = 13, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9f5f[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_9fb7[] = {
+  [0] = { .dst_scroll =  5, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a04a[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  5, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a104[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a28e[] = {
+  [0] = { .dst_scroll =  6, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  7, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a36f[] = {
+  [0] = { .dst_scroll = 15, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 18, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a374[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  9, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a379[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a3a9[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a3da[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a439[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a43e[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a4a2[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a4a9[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a4ae[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a50f[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  5, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a514[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  5, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a519[] = {
+  [0] = { .dst_scroll =  5, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a51c[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  5, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a59c[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a6d6[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a6d9[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a6dc[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a6df[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a860[] = {
+  [0] = { .dst_scroll = 17, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 24, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a8ec[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a8ef[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a8f2[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a8f5[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a980[] = {
+  [0] = { .dst_scroll = 25, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 37, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 38, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a987[] = {
+  [0] = { .dst_scroll = 37, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_a98a[] = {
+  [0] = { .dst_scroll = 37, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aa70[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aa75[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aa7c[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aa7f[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_acb0[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ada7[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_adaa[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ae66[] = {
+  [0] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  7, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ae6b[] = {
+  [0] = { .dst_scroll =  8, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ae6e[] = {
+  [0] = { .dst_scroll =  8, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ae71[] = {
+  [0] = { .dst_scroll =  7, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aea9[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aeac[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_aeb1[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_af0f[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_af6f[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b0a7[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b0ac[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b0b1[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b224[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll =  6, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll =  7, .scroll_type = kScroll_Green , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b22d[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll =  7, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll =  8, .scroll_type = kScroll_Blue  , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b27d[] = {
+  [0] = { .dst_scroll = 12, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b280[] = {
+  [0] = { .dst_scroll = 12, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b2d1[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [4] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b3d9[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b3dc[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b445[] = {
+  [0] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b448[] = {
+  [0] = { .dst_scroll =  6, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b44b[] = {
+  [0] = { .dst_scroll =  7, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b44e[] = {
+  [0] = { .dst_scroll =  7, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b451[] = {
+  [0] = { .dst_scroll = 14, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b454[] = {
+  [0] = { .dst_scroll = 14, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b4e0[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b547[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll =  6, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b54e[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b555[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b5c3[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 13, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b5c8[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 13, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b5cd[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b5d2[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b612[] = {
+  [0] = { .dst_scroll =  7, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b615[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  7, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b61a[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b61d[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b622[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b625[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b628[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b68d[] = {
+  [0] = { .dst_scroll =  9, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b690[] = {
+  [0] = { .dst_scroll =  8, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  9, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b695[] = {
+  [0] = { .dst_scroll =  8, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b72d[] = {
+  [0] = { .dst_scroll = 11, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b730[] = {
+  [0] = { .dst_scroll = 11, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 13, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 14, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b737[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_b73c[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_c9ec[] = {
+  [0] = { .dst_scroll = 14, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 15, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_c9f1[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  5, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 11, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll = 16, .scroll_type = kScroll_Blue  , },
+  [4] = { .dst_scroll = 17, .scroll_type = kScroll_Blue  , },
+  [5] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cb7a[] = {
+  [0] = { .dst_scroll = 33, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cb7d[] = {
+  [0] = { .dst_scroll = 41, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cb80[] = {
+  [0] = { .dst_scroll = 33, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cb83[] = {
+  [0] = { .dst_scroll = 41, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cb86[] = {
+  [0] = { .dst_scroll = 40, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 46, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cc24[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ccc0[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ccc5[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_ce3d[] = {
+  [0] = { .dst_scroll =  3, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cf4c[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cf4f[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cfb5[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cfbc[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cfc1[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_cfc6[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d012[] = {
+  [0] = { .dst_scroll =  7, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 10, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d052[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d135[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d138[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d16a[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d1a0[] = {
+  [0] = { .dst_scroll =  5, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d1d8[] = {
+  [0] = { .dst_scroll =  4, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d216[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d219[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d24d[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d4bd[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d67d[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll =  4, .scroll_type = kScroll_Green , },
+  [3] = { .dst_scroll =  5, .scroll_type = kScroll_Red   , },
+  [4] = { .dst_scroll =  6, .scroll_type = kScroll_Blue  , },
+  [5] = { .dst_scroll =  7, .scroll_type = kScroll_Red   , },
+  [6] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d68a[] = {
+  [0] = { .dst_scroll =  2, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll =  3, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll =  4, .scroll_type = kScroll_Red   , },
+  [3] = { .dst_scroll =  5, .scroll_type = kScroll_Blue  , },
+  [4] = { .dst_scroll =  6, .scroll_type = kScroll_Red   , },
+  [5] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d695[] = {
+  [0] = { .dst_scroll =  5, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  7, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d6c8[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d6cb[] = {
+  [0] = { .dst_scroll =  1, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d7df[] = {
+  [0] = { .dst_scroll =  0, .scroll_type = kScroll_Green , },
+  [1] = { .dst_scroll =  2, .scroll_type = kScroll_Green , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d951[] = {
+  [0] = { .dst_scroll =  5, .scroll_type = kScroll_Red   , },
+  [1] = { .dst_scroll = 11, .scroll_type = kScroll_Blue  , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d956[] = {
+  [0] = { .dst_scroll =  5, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 11, .scroll_type = kScroll_Red   , },
+  [2] = { .dst_scroll = 0x80,},
+};
+
+static PlmScrollData kPlmScrollData_d95b[] = {
+  [0] = { .dst_scroll = 10, .scroll_type = kScroll_Blue  , },
+  [1] = { .dst_scroll = 0x80,},
+};
+
+PlmScrollData* get_PlmScrollData(uint16 plm_scroll_data_ptr) {
+  switch (plm_scroll_data_ptr) {
+    case 0x92b0: return kPlmScrollData_92b0;
+    case 0x9389: return kPlmScrollData_9389;
+    case 0x938c: return kPlmScrollData_938c;
+    case 0x938f: return kPlmScrollData_938f;
+    case 0x9396: return kPlmScrollData_9396;
+    case 0x9399: return kPlmScrollData_9399;
+    case 0x939c: return kPlmScrollData_939c;
+    case 0x939f: return kPlmScrollData_939f;
+    case 0x93a2: return kPlmScrollData_93a2;
+    case 0x93a5: return kPlmScrollData_93a5;
+    case 0x94c2: return kPlmScrollData_94c2;
+    case 0x94c7: return kPlmScrollData_94c7;
+    case 0x94fa: return kPlmScrollData_94fa;
+    case 0x9658: return kPlmScrollData_9658;
+    case 0x968c: return kPlmScrollData_968c;
+    case 0x9744: return kPlmScrollData_9744;
+    case 0x9747: return kPlmScrollData_9747;
+    case 0x974a: return kPlmScrollData_974a;
+    case 0x974d: return kPlmScrollData_974d;
+    case 0x9750: return kPlmScrollData_9750;
+    case 0x9753: return kPlmScrollData_9753;
+    case 0x9756: return kPlmScrollData_9756;
+    case 0x9759: return kPlmScrollData_9759;
+    case 0x97ab: return kPlmScrollData_97ab;
+    case 0x97b0: return kPlmScrollData_97b0;
+    case 0x9801: return kPlmScrollData_9801;
+    case 0x9966: return kPlmScrollData_9966;
+    case 0x99f3: return kPlmScrollData_99f3;
+    case 0x99f6: return kPlmScrollData_99f6;
+    case 0x9b46: return kPlmScrollData_9b46;
+    case 0x9b4b: return kPlmScrollData_9b4b;
+    case 0x9b52: return kPlmScrollData_9b52;
+    case 0x9b98: return kPlmScrollData_9b98;
+    case 0x9bf9: return kPlmScrollData_9bf9;
+    case 0x9c00: return kPlmScrollData_9c00;
+    case 0x9c32: return kPlmScrollData_9c32;
+    case 0x9d11: return kPlmScrollData_9d11;
+    case 0x9d14: return kPlmScrollData_9d14;
+    case 0x9d84: return kPlmScrollData_9d84;
+    case 0x9d8b: return kPlmScrollData_9d8b;
+    case 0x9d8e: return kPlmScrollData_9d8e;
+    case 0x9d91: return kPlmScrollData_9d91;
+    case 0x9d96: return kPlmScrollData_9d96;
+    case 0x9d99: return kPlmScrollData_9d99;
+    case 0x9e40: return kPlmScrollData_9e40;
+    case 0x9e49: return kPlmScrollData_9e49;
+    case 0x9f05: return kPlmScrollData_9f05;
+    case 0x9f08: return kPlmScrollData_9f08;
+    case 0x9f0b: return kPlmScrollData_9f0b;
+    case 0x9f0e: return kPlmScrollData_9f0e;
+    case 0x9f5f: return kPlmScrollData_9f5f;
+    case 0x9fb7: return kPlmScrollData_9fb7;
+    case 0xa04a: return kPlmScrollData_a04a;
+    case 0xa104: return kPlmScrollData_a104;
+    case 0xa28e: return kPlmScrollData_a28e;
+    case 0xa36f: return kPlmScrollData_a36f;
+    case 0xa374: return kPlmScrollData_a374;
+    case 0xa379: return kPlmScrollData_a379;
+    case 0xa3a9: return kPlmScrollData_a3a9;
+    case 0xa3da: return kPlmScrollData_a3da;
+    case 0xa439: return kPlmScrollData_a439;
+    case 0xa43e: return kPlmScrollData_a43e;
+    case 0xa4a2: return kPlmScrollData_a4a2;
+    case 0xa4a9: return kPlmScrollData_a4a9;
+    case 0xa4ae: return kPlmScrollData_a4ae;
+    case 0xa50f: return kPlmScrollData_a50f;
+    case 0xa514: return kPlmScrollData_a514;
+    case 0xa519: return kPlmScrollData_a519;
+    case 0xa51c: return kPlmScrollData_a51c;
+    case 0xa59c: return kPlmScrollData_a59c;
+    case 0xa6d6: return kPlmScrollData_a6d6;
+    case 0xa6d9: return kPlmScrollData_a6d9;
+    case 0xa6dc: return kPlmScrollData_a6dc;
+    case 0xa6df: return kPlmScrollData_a6df;
+    case 0xa860: return kPlmScrollData_a860;
+    case 0xa8ec: return kPlmScrollData_a8ec;
+    case 0xa8ef: return kPlmScrollData_a8ef;
+    case 0xa8f2: return kPlmScrollData_a8f2;
+    case 0xa8f5: return kPlmScrollData_a8f5;
+    case 0xa980: return kPlmScrollData_a980;
+    case 0xa987: return kPlmScrollData_a987;
+    case 0xa98a: return kPlmScrollData_a98a;
+    case 0xaa70: return kPlmScrollData_aa70;
+    case 0xaa75: return kPlmScrollData_aa75;
+    case 0xaa7c: return kPlmScrollData_aa7c;
+    case 0xaa7f: return kPlmScrollData_aa7f;
+    case 0xacb0: return kPlmScrollData_acb0;
+    case 0xada7: return kPlmScrollData_ada7;
+    case 0xadaa: return kPlmScrollData_adaa;
+    case 0xae66: return kPlmScrollData_ae66;
+    case 0xae6b: return kPlmScrollData_ae6b;
+    case 0xae6e: return kPlmScrollData_ae6e;
+    case 0xae71: return kPlmScrollData_ae71;
+    case 0xaea9: return kPlmScrollData_aea9;
+    case 0xaeac: return kPlmScrollData_aeac;
+    case 0xaeb1: return kPlmScrollData_aeb1;
+    case 0xaf0f: return kPlmScrollData_af0f;
+    case 0xaf6f: return kPlmScrollData_af6f;
+    case 0xb0a7: return kPlmScrollData_b0a7;
+    case 0xb0ac: return kPlmScrollData_b0ac;
+    case 0xb0b1: return kPlmScrollData_b0b1;
+    case 0xb224: return kPlmScrollData_b224;
+    case 0xb22d: return kPlmScrollData_b22d;
+    case 0xb27d: return kPlmScrollData_b27d;
+    case 0xb280: return kPlmScrollData_b280;
+    case 0xb2d1: return kPlmScrollData_b2d1;
+    case 0xb3d9: return kPlmScrollData_b3d9;
+    case 0xb3dc: return kPlmScrollData_b3dc;
+    case 0xb445: return kPlmScrollData_b445;
+    case 0xb448: return kPlmScrollData_b448;
+    case 0xb44b: return kPlmScrollData_b44b;
+    case 0xb44e: return kPlmScrollData_b44e;
+    case 0xb451: return kPlmScrollData_b451;
+    case 0xb454: return kPlmScrollData_b454;
+    case 0xb4e0: return kPlmScrollData_b4e0;
+    case 0xb547: return kPlmScrollData_b547;
+    case 0xb54e: return kPlmScrollData_b54e;
+    case 0xb555: return kPlmScrollData_b555;
+    case 0xb5c3: return kPlmScrollData_b5c3;
+    case 0xb5c8: return kPlmScrollData_b5c8;
+    case 0xb5cd: return kPlmScrollData_b5cd;
+    case 0xb5d2: return kPlmScrollData_b5d2;
+    case 0xb612: return kPlmScrollData_b612;
+    case 0xb615: return kPlmScrollData_b615;
+    case 0xb61a: return kPlmScrollData_b61a;
+    case 0xb61d: return kPlmScrollData_b61d;
+    case 0xb622: return kPlmScrollData_b622;
+    case 0xb625: return kPlmScrollData_b625;
+    case 0xb628: return kPlmScrollData_b628;
+    case 0xb68d: return kPlmScrollData_b68d;
+    case 0xb690: return kPlmScrollData_b690;
+    case 0xb695: return kPlmScrollData_b695;
+    case 0xb72d: return kPlmScrollData_b72d;
+    case 0xb730: return kPlmScrollData_b730;
+    case 0xb737: return kPlmScrollData_b737;
+    case 0xb73c: return kPlmScrollData_b73c;
+    case 0xc9ec: return kPlmScrollData_c9ec;
+    case 0xc9f1: return kPlmScrollData_c9f1;
+    case 0xcb7a: return kPlmScrollData_cb7a;
+    case 0xcb7d: return kPlmScrollData_cb7d;
+    case 0xcb80: return kPlmScrollData_cb80;
+    case 0xcb83: return kPlmScrollData_cb83;
+    case 0xcb86: return kPlmScrollData_cb86;
+    case 0xcc24: return kPlmScrollData_cc24;
+    case 0xccc0: return kPlmScrollData_ccc0;
+    case 0xccc5: return kPlmScrollData_ccc5;
+    case 0xce3d: return kPlmScrollData_ce3d;
+    case 0xcf4c: return kPlmScrollData_cf4c;
+    case 0xcf4f: return kPlmScrollData_cf4f;
+    case 0xcfb5: return kPlmScrollData_cfb5;
+    case 0xcfbc: return kPlmScrollData_cfbc;
+    case 0xcfc1: return kPlmScrollData_cfc1;
+    case 0xcfc6: return kPlmScrollData_cfc6;
+    case 0xd012: return kPlmScrollData_d012;
+    case 0xd052: return kPlmScrollData_d052;
+    case 0xd135: return kPlmScrollData_d135;
+    case 0xd138: return kPlmScrollData_d138;
+    case 0xd16a: return kPlmScrollData_d16a;
+    case 0xd1a0: return kPlmScrollData_d1a0;
+    case 0xd1d8: return kPlmScrollData_d1d8;
+    case 0xd216: return kPlmScrollData_d216;
+    case 0xd219: return kPlmScrollData_d219;
+    case 0xd24d: return kPlmScrollData_d24d;
+    case 0xd4bd: return kPlmScrollData_d4bd;
+    case 0xd67d: return kPlmScrollData_d67d;
+    case 0xd68a: return kPlmScrollData_d68a;
+    case 0xd695: return kPlmScrollData_d695;
+    case 0xd6c8: return kPlmScrollData_d6c8;
+    case 0xd6cb: return kPlmScrollData_d6cb;
+    case 0xd7df: return kPlmScrollData_d7df;
+    case 0xd951: return kPlmScrollData_d951;
+    case 0xd956: return kPlmScrollData_d956;
+    case 0xd95b: return kPlmScrollData_d95b;
+    default: Unreachable(); return (PlmScrollData*){ 0 };
+  }
+}

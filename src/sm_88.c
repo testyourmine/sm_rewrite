@@ -2436,7 +2436,7 @@ void FxTypeFunc_26_TourianEntranceStatue(void) {  // 0x88DB8A
 
   if (CheckEventHappened(kEvent_10_TourianEntranceUnlocked)) {
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 6, .y_pos = 12, .plm_id_ = addr_kPlmHeader_B777_TourianEntrance_ClearAccessToElevator });
-    *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
+    scrolls[1] = scrolls[0] = kScroll_Green;
   }
   reg_BG2SC = 74;
   fx_rising_function_bank_88 = FUNC16(FxRisingFunction_C428_WaterNormal);
@@ -2507,7 +2507,7 @@ void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_Descending(uint16 k) {  // 
 
 void HdmaobjPreInstr_TourianEntranceStatueBg2YScroll_EnableScrolling(uint16 v0) {  // 0x88DCBA
   tourian_entrance_statue_finished = 0x8000;
-  *(uint16 *)scrolls = (kScroll_Green << 8) | kScroll_Green;
+  scrolls[1] = scrolls[0] = kScroll_Green;
   SetupTourianEntranceStatueBg2YScroll(v0);
 }
 
@@ -2522,7 +2522,8 @@ const uint8 *HdmaobjInstr_GotoIfEventHappened(uint16 k, const uint8 *hdp) {  // 
   } else {
     hdma_object_B[v2] = 0;
     *(uint16 *)&hdma_window_1_left_pos[0].height = 0;
-    *(uint16 *)scrolls = kScroll_Blue;
+    scrolls[0] = kScroll_Blue;
+    scrolls[1] = kScroll_Red;
     return hdp + 2;
   }
 }

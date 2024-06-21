@@ -673,7 +673,7 @@ void Botwoon_Init(void) {  // 0xB39583
   Enemy_Botwoon *E = Get_Botwoon(cur_enemy_index);
   if ((boss_bits_for_area[4] & kBossBit_AreaMiniBoss) != 0) {
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 15, .y_pos = 4, .plm_id_ = addr_kPlmHeader_B797_Botwoon_ClearWall });
-    *(uint16 *)scrolls = (kScroll_Blue << 8) | kScroll_Blue;
+    scrolls[1] = scrolls[0] = kScroll_Blue;
     E->base.current_instruction = addr_kBotwoon_Ilist_Hide;
     E->base.properties |= kEnemyProps_Deleted;
   } else {

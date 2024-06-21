@@ -349,7 +349,7 @@ static uint8 Samus_HandleSpeedBoosterAnimDelay(const uint8 *jp) {  // 0x90852C
     return jp[0];
   uint16 v2 = speed_boost_counter;
   if ((speed_boost_counter & 0x400) == 0) {
-    v2 = speed_boost_counter + 256;
+    v2 = speed_boost_counter + 0x100;
     speed_boost_counter = v2;
     if ((v2 & 0x400) != 0) {
       // The original code forgets to preserve A here.
@@ -537,7 +537,7 @@ uint8 SamusBottomDrawn_1B_Shinespark_CrystalFlash_Drained_MBDamaged(void) {  // 
 
 void Samus_DrawEchoes(void) {  // 0x9087BD
   if ((speed_echoes_index & 0x8000) == 0) {
-    if ((speed_boost_counter & 0xFF00) == 1024) {
+    if ((speed_boost_counter & 0xFF00) == 0x400) {
       if (speed_echo_xpos[1])
         Samus_DrawEcho(2);
       if (speed_echo_xpos[0])
@@ -1445,7 +1445,7 @@ LABEL_24:
   AddToHiLo(&samus_x_extra_run_speed, &samus_x_extra_run_subspeed,
       __PAIR32__(kSamus_HandleExtraRunspeedX_Tab0[0], kSamus_HandleExtraRunspeedX_Tab1[0]));
 LABEL_26:
-  if ((speed_boost_counter & 0xFF00) == 1024)
+  if ((speed_boost_counter & 0xFF00) == 0x400)
     samus_contact_damage_index = kSamusContactDamageIndex_1_SpeedBoost;
 }
 
@@ -4489,7 +4489,7 @@ LABEL_9:
 void TriggerShinesparkWindup(void) {  // 0x90CFFA
   samus_movement_handler = FUNC16(Samus_MovementHandler_ShinesparkWindup);
   samus_y_dir = 1;
-  speed_boost_counter = 1024;
+  speed_boost_counter = 0x400;
   samus_y_subspeed = 0;
   samus_y_speed = 0;
   knockback_dir = 0;
@@ -6548,7 +6548,7 @@ void Samus_FootstepGraphics_Maridia(void) {  // 0x90EDEC
 }
 
 void Samus_FootstepGraphics_Common(void) {  // 0x90EE64
-  if ((speed_boost_counter & 0xFF00) == 1024) {
+  if ((speed_boost_counter & 0xFF00) == 0x400) {
     uint16 r18 = Samus_GetBottom_R18();
     if ((fx_y_pos & 0x8000) != 0) {
       if ((lava_acid_y_pos & 0x8000) == 0 && sign16(lava_acid_y_pos - r18))
@@ -6573,7 +6573,7 @@ void Samus_FootstepGraphics_Common(void) {  // 0x90EE64
 }
 
 void Samus_UpdateSpeedEchoPos(void) {  // 0x90EEE7
-  if ((speed_boost_counter & 0xFF00) == 1024 && (speed_echoes_index & 0x8000) == 0 && (game_time_frames & 3) == 0) {
+  if ((speed_boost_counter & 0xFF00) == 0x400 && (speed_echoes_index & 0x8000) == 0 && (game_time_frames & 3) == 0) {
     uint16 v0 = speed_echoes_index;
     int v1 = speed_echoes_index >> 1;
     speed_echo_xpos[v1] = samus_x_pos;

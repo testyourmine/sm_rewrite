@@ -1458,10 +1458,9 @@ const uint16 *Shaktool_Instr_7(uint16 k, const uint16 *jp) {  // 0xAAE5D8
 
 const uint16 *Shaktool_Instr_14(uint16 k, const uint16 *jp) {  // 0xAAE6F0
   RunSamusCode(kSamusCode_1_UnlockSamus);
-  *(uint16 *)&scrolls[6] = kScroll_Red;
-  *(uint16 *)&scrolls[8] = kScroll_Red;
-  *(uint16 *)&scrolls[9] = kScroll_Red;
-  *(uint16 *)&scrolls[13] = kScroll_Blue;
+  scrolls[10] = scrolls[9] = scrolls[8] = scrolls[7] = scrolls[6] = kScroll_Red;
+  scrolls[13] = kScroll_Blue;
+  scrolls[14] = kScroll_Red;
   SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 23, .y_pos = 29, .plm_id_ = addr_kPlmHeader_D6FC_WreckedShip_BlockChozoSlopeAccess });
   return jp;
 }
