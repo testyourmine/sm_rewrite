@@ -151,7 +151,7 @@ void SpawnRoomPLM(uint16 k) {  // 0x84846A
   int16 plm_idx = 78;
   while (plm_header_ptr[plm_idx >> 1] != 0) {
     plm_idx -= 2;
-    if (plm_idx <= 0)
+    if (plm_idx < 0)
       return;
   }
   rpe = (k == 0x12) ? *(RoomPlmEntry*)(g_ram + 0x12) : get_RoomPlmEntry(k);
@@ -584,7 +584,7 @@ const uint8 *PlmInstr_ProcessAirScrollUpdate(const uint8 *plmp, uint16 k) {  // 
   plm_variable[k >> 1] = 0;
   const PlmScrollData *PSD = get_PlmScrollData(plm_room_arguments[k >> 1]);
   for (PSD; (PSD->dst_scroll & 0x80) == 0; PSD++)
-	scrolls[PSD->dst_scroll] = PSD->scroll_type;
+    scrolls[PSD->dst_scroll] = PSD->scroll_type;
   int idx = plm_block_indices[k >> 1] >> 1;
   level_data[idx] = level_data[idx] & 0xFFF | 0x3000;
   return plmp;
@@ -594,7 +594,7 @@ const uint8 *PlmInstr_ProcessSolidScrollUpdate(const uint8 *plmp, uint16 k) {  /
   plm_variable[k >> 1] = 0;
   const PlmScrollData *PSD = get_PlmScrollData(plm_room_arguments[k >> 1]);
   for (PSD; (PSD->dst_scroll & 0x80) == 0; PSD++)
-	scrolls[PSD->dst_scroll] = PSD->scroll_type;
+    scrolls[PSD->dst_scroll] = PSD->scroll_type;
   int idx = plm_block_indices[k >> 1] >> 1;
   level_data[idx] = level_data[idx] & 0xFFF | 0xB000;
   return plmp;
