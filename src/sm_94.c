@@ -1177,7 +1177,7 @@ static void BlockInsideReact_SpecialAir_11(void) {  // 0x949946
 }
 
 static void BlockInsideReact_SpecialAir_70(void) {  // 0x949956
-  if (inside_block_reaction_samus_point == 1)
+  if (inside_block_reaction_samus_point == kInsideBlockReactionSamusPoint_1_Center)
     SpawnPLM(addr_kPlmHeader_B6FF_CollReact_SpecialAir_70);
 }
 
@@ -1311,7 +1311,7 @@ void BlockInsideDetection(void) {  // 0x949B60
   extra_samus_x_displacement = 0;
   extra_samus_y_subdisplacement = 0;
   extra_samus_y_displacement = 0;
-  inside_block_reaction_samus_point = 0;
+  inside_block_reaction_samus_point = kInsideBlockReactionSamusPoint_0_Bottom;
   uint16 r26 = samus_x_pos;
   uint16 samus_bottom_boundary_position = samus_y_radius + samus_y_pos - 1;
   uint16 r28 = samus_y_radius + samus_y_pos - 1;
@@ -1321,7 +1321,7 @@ void BlockInsideDetection(void) {  // 0x949B60
   do {
     rv = kSamus_BlockInsideDetection[(HIBYTE(level_data[cur_block_index]) & 0xF0) >> 4](&ci);
   } while (rv & 0x80);
-  inside_block_reaction_samus_point = 1;
+  inside_block_reaction_samus_point = kInsideBlockReactionSamusPoint_1_Center;
   if (((samus_bottom_boundary_position ^ samus_y_pos) & 0xFFF0) != 0) {
     r26 = samus_x_pos;
     r28 = samus_y_pos;
@@ -1331,7 +1331,7 @@ void BlockInsideDetection(void) {  // 0x949B60
       rv = kSamus_BlockInsideDetection[(HIBYTE(level_data[cur_block_index]) & 0xF0) >> 4](&ci);
     } while (rv & 0x80);
   }
-  inside_block_reaction_samus_point = 2;
+  inside_block_reaction_samus_point = kInsideBlockReactionSamusPoint_2_Top;
   if (((samus_bottom_boundary_position ^ (uint16)(samus_y_pos - samus_y_radius)) & 0xFFF0) != 0
       && ((samus_y_pos ^ (samus_bottom_boundary_position ^ (uint16)(samus_y_pos - samus_y_radius)) & 0xFFF0) & 0xFFF0) != 0) {
     r26 = samus_x_pos;

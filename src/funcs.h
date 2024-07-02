@@ -609,8 +609,8 @@ void UNUSED_sub_82F404(uint16 k);
 void OptionsInit_FileSelectHelmet(uint16 j);
 
 // Bank 84
-uint16 SetBtsTo0x10AdvanceRow(uint16 k);
-uint16 SetBtsTo0x10AdvanceRowUp(uint16 k);
+uint16 SetBtsToGateBlockMoveDownRow(uint16 k);
+uint16 SetBtsToGateBlockMoveUpRow(uint16 k);
 uint8 ActivateStationIfSamusCannonLinedUp(uint16 a, uint16 j);
 uint8 SpawnPLM(uint16 a);
 uint8 WakePlmIfSamusIsBelowAndRightOfTarget(uint16 k, uint16 x_r18, uint16 y_r20);
@@ -642,12 +642,16 @@ void LoadRoomPlmGfx(void);
 void LoadXrayBlocks(void);
 void PlaySpinJumpSoundIfSpinJumping(void);
 CoroutineRet PlmHandler_Async(void);
-void PlmSetup_QuicksandSurface_0(uint16 j);
-void PlmSetup_QuicksandSurface_1(uint16 j);
-void PlmSetup_QuicksandSurface_2(uint16 j);
+void InReact_QuicksandSurface_SamusOnGround(uint16 j);
+void InReact_QuicksandSurface_SamusMovingUp(uint16 j);
+void InReact_QuicksandSurface_SamusMovingDown(uint16 j);
+uint16 CollReact_QuicksandSurface_SamusOnGround(uint16 j);
+uint16 CollReact_QuicksandSurface_SamusMovingUp(uint16 j);
+uint16 CollReact_QuicksandSurface_SamusMovingDown(uint16 j);
+uint16 CollReact_QuicksandSurface_SpeedBoosting(void);
 void ProcessPlmDrawInstruction(uint16 k);
-void SetBts0x10FiveStepsDown(uint16 j);
-void SetBts0x10FiveStepsUp(uint16 j);
+void Spawn5BlocksOfGateBlocksDownwards(uint16 j);
+void Spawn5BlocksOfGateBlocksUpwards(uint16 j);
 void SetGoldenTorizoPalette(uint16 a);
 void SkipDebugDrawInstructionsForScrollPlms(uint16 j);
 
@@ -4381,6 +4385,7 @@ void VerifySRAM(void);
 #define fnPlmPreInstr_nullsub_60 0x848469
 #define fnPlmPreInstr_Empty2 0x8484E6
 #define fnPlmPreInstr_Empty3 0x84853D
+#define fnPlmPreInstr_Empty4 0x848AA6
 #define fnPlmInstr_Sleep 0x8486B4
 #define fnPlmInstr_Delete 0x8486BC
 #define fnPlmInstr_PreInstr 0x8486C1
@@ -4458,14 +4463,14 @@ void VerifySRAM(void);
 #define fnPlmInstr_PlaceSamusOnSaveStation 0x84B00E
 #define fnPlmInstr_DisplayGameSavedMessageBox 0x84B024
 #define fnPlmInstr_EnableMovementAndSetSaveStationUsed 0x84B030
-#define fnPlmSetup_SetrupWreckedShipEntrance 0x84B04A
+#define fnPlmSetup_SetupWreckedShipEntrance 0x84B04A
 #define fnPlmSetup_BTS_Brinstar_0x80_Floorplant 0x84B0DC
 #define fnPlmSetup_BTS_Brinstar_0x81_Ceilingplant 0x84B113
 #define fnPlmSetup_B6D3_MapStation 0x84B18B
 #define fnPlmSetup_Bts47_MapStationRightAccess 0x84B1C8
 #define fnPlmSetup_Bts4_MapStationLeftAccess 0x84B1F0
 #define fnPlmSetup_PlmB6DF_EnergyStation 0x84B21D
-#define fnPlmSetup_PlmB6EB_EnergyStation 0x84B245
+#define fnPlmSetup_PlmB6EB_MissileStation 0x84B245
 #define fnPlmSetup_B6E3_EnergyStationRightAccess 0x84B26D
 #define fnPlmSetup_B6E7_EnergyStationLeftAccess 0x84B29D
 #define fnPlmSetup_B6EF_MissileStationRightAccess 0x84B2D0
@@ -4482,17 +4487,17 @@ void VerifySRAM(void);
 #define fnPlmSetup_ReturnCarryClear 0x84B3D0
 #define fnPlmSetup_ReturnCarrySet 0x84B3D2
 #define fnPlmSetup_D094_EnemyBreakableBlock 0x84B3D4
-#define fnUNUSED_sub_84B3E3 0x84B3E3
+#define fnPlmSetup_B743_Unused 0x84B3E3
 #define fnPlmSetup_B70F_IcePhysics 0x84B3EB
-#define fnPlmSetup_QuicksandSurface 0x84B408
+#define fnPlmSetup_InsideReaction_QuicksandSurface 0x84B408
 #define fnPlmSetup_B71F_SubmergingQuicksand 0x84B497
 #define fnPlmSetup_B723_SandfallsSlow 0x84B4A8
 #define fnPlmSetup_B727_SandFallsFast 0x84B4B6
-#define fnPlmSetup_QuicksandSurfaceB 0x84B4C4
+#define fnPlmSetup_CollisionReaction_QuicksandSurface 0x84B4C4
 #define fnPlmSetup_B737_SubmergingQuicksand 0x84B541
 #define fnPlmSetup_B73B_B73F_SandFalls 0x84B54F
-#define fnPlmSetup_ClearShitroidInvisibleWall 0x84B551
-#define fnPlmSetup_B767_ClearShitroidInvisibleWall 0x84B56F
+#define fnPlmSetup_B763_ClearShitroidInvisibleWall 0x84B551
+#define fnPlmSetup_B767_CreateShitroidInvisibleWall 0x84B56F
 #define fnPlmSetup_B76B_SaveStationTrigger 0x84B590
 #define fnPlmSetup_B76F_SaveStation 0x84B5EE
 #define fnPlmSetup_MotherBrainRoomEscapeDoor 0x84B5F8
@@ -4529,7 +4534,7 @@ void VerifySRAM(void);
 #define fnPlmPreInstr_GoToLinkInstrIfShotWithAnyMissile 0x84BD50
 #define fnPlmPreInstr_GoToLinkInstrIfShotWithSuperMissile 0x84BD88
 #define fnPlmPreInstr_GoToLinkInstruction 0x84BDB2
-#define fnPlmPreInstr_GotoLinkIfBoss1Dead 0x84BDD4
+#define fnPlmPreInstr_GotoLinkIfAreaBossDead 0x84BDD4
 #define fnPlmPreInstr_GotoLinkIfMiniBossDead 0x84BDE3
 #define fnPlmPreInstr_GotoLinkIfTorizoDead 0x84BDF2
 #define fnPlmPreInstr_GotoLinkIfEnemyDeathQuotaOk 0x84BE01
@@ -4551,7 +4556,7 @@ void VerifySRAM(void);
 #define fnPlmSetup_C82E_UpwardsOpenGate 0x84C6DC
 #define fnPlmSetup_C836_DownwardsGateShootblock 0x84C6E0
 #define fnPlmSetup_C73A_UpwardsGateShootblock 0x84C73A
-#define fnPlmSetup_C794_GreyDoor 0x84C794
+#define fnPlmSetup_GreyDoor 0x84C794
 #define fnPlmSetup_Door_Colored 0x84C7B1
 #define fnPlmSetup_Door_Blue 0x84C7BB
 #define fnPlmSetup_C7E2_GenericShotTrigger 0x84C7E2
@@ -4563,9 +4568,9 @@ void VerifySRAM(void);
 #define fnPlmSetup_RespawningBombBlock 0x84CE83
 #define fnPlmSetup_RespawningBombBlock2 0x84CEDA
 #define fnPlmSetup_RespawningPowerBombBlock 0x84CF2E
-#define fnPlmSetup_D08C_SuperMissileBlockRespawning 0x84CF67
-#define fnPlmSetup_D08C_CrumbleBlock 0x84CFA0
-#define fnPlmSetup_D0DC_BreakableGrappleBlock 0x84CFB5
+#define fnPlmSetup_SuperMissileBlockRespawning 0x84CF67
+#define fnPlmSetup_CrumbleBlock 0x84CFA0
+#define fnPlmSetup_BreakableGrappleBlock 0x84CFB5
 #define fnPlmSetup_D0D8_SetVFlag 0x84CFCD
 #define fnPlmSetup_D0D8_ClearVflag 0x84CFD1
 #define fnPlmSetup_D0E8_GiveSamusDamage 0x84CFD5

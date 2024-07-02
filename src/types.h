@@ -25,9 +25,9 @@ typedef unsigned int uint;
 typedef uint16 VoidP;
 
 #define arraysize(x) sizeof(x)/sizeof(x[0])
-#define sign8(x) ((x) & 0x80)
-#define sign16(x) ((x) & 0x8000)
-#define sign32(x) ((x) & 0x80000000)
+#define sign8(x) ((x) & 0x80)  // 0 if positive, 1 if negative
+#define sign16(x) ((x) & 0x8000)  // 0 if positive, 1 if negative
+#define sign32(x) ((x) & 0x80000000)  // 0 if positive, 1 if negative
 #define load24(x) ((*(uint32*)&(x))&0xffffff)
 
 #ifdef _MSC_VER

@@ -108,7 +108,6 @@ void ProcessAnimtilesObject(void) {  // 0x878085
     AnimtilesEntry AtE;
     while (1) {
       AtE = get_AnimtilesEntry(instrlist_ptr);
-      // If the instruction is not a function, break
       if (!IS_FUNC(AtE.func_ptr))
         break;
       animtiles_instruction = AtE.func_ptr;

@@ -3576,7 +3576,7 @@ void LoadDoorHeader(void) {  // 0x82DE12
   door_destination_y_pos = DoorDef.y_pos_in_room << 8;
   samus_distance_from_door = DoorDef.samus_distance_from_door;
   if (samus_distance_from_door < 0) {
-    if ((door_direction & kDoorDirection_VerticalMask) != 0)
+    if (door_direction & kDoorDirection_VerticalMask)
       samus_distance_from_door = 384;
     else
       samus_distance_from_door = 200;
@@ -3865,7 +3865,7 @@ CoroutineRet DoorTransitionFunction_LoadDoorHeaderEtc(void) {  // 0x82E2F7
 }
 
 CoroutineRet DoorTransitionFunction_ScrollScreenToAlignment(void) {  // 0x82E310
-  if ((door_direction & kDoorDirection_VerticalMask) != 0) {
+  if (door_direction & kDoorDirection_VerticalMask) {
     if ((uint8)layer1_x_pos) {
       if ((layer1_x_pos & 0x80) != 0)
         ++layer1_x_pos;
@@ -4203,43 +4203,53 @@ void LoadLevelDataAndOtherThings(void) {  // 0x82E7D3
     elevator_status = kElevatorStatus_RoomTransition;
 }
 
+/**
+* @brief Spawns the door closing PLM for the door if the door cap is not already spawned
+*/
 void SpawnDoorClosingPLM(void) {  // 0x82E8EB
   if (!CheckIfColoredDoorCapSpawned()) {
-    const uint16 *v0 = (const uint16 *)RomPtr_8F(2 * door_direction + addr_kDoorClosingPlmIds);
-    if (*v0) {
-      RoomPlmEntry *rp = (RoomPlmEntry *)(g_ram + 0x12);
+    uint16 door_plm_id = kDoorClosingPlms[door_direction];
+    if (door_plm_id != 0) {
+      RoomPlmEntry *rpe = (RoomPlmEntry *)(g_ram + 0x12);
       DoorDef DD = get_DoorDef(door_def_ptr);
-      rp->plm_header_ptr_ = *v0;
-      WORD(rp->x_block) = WORD(DD.x_pos_plm);
-      rp->plm_room_argument = 0;
-      SpawnRoomPLM(0x12); // This reads from r18
+      rpe->plm_header_ptr_ = door_plm_id;
+      rpe->x_block = DD.x_pos_plm;
+      rpe->y_block = DD.y_pos_plm;
+      rpe->plm_room_argument = 0;
+      /** @bug This reads from RAM 0x12, which is not properly initialized here **/
+      SpawnRoomPLM(0x12);
     }
   }
 }
 
+/**
+* @brief Checks if the colored door cap has already been spawned, and changes the instruction list pointer if it has
+* @return 1 if the colored door cap has been spawned, 0 otherwise
+*/
 uint8 CheckIfColoredDoorCapSpawned(void) {  // 0x82E91C
   DoorDef DD = get_DoorDef(door_def_ptr);
-  uint16 v2 = 2 * (Mult8x8(DD.y_pos_plm, room_width_in_blocks) + DD.x_pos_plm);
-  uint16 v3 = 78;
-  while (v2 != plm_block_indices[v3 >> 1]) {
-    v3 -= 2;
-    if ((v3 & 0x8000) != 0)
+  uint16 y_offset = Mult8x8(DD.y_pos_plm, room_width_in_blocks);
+  uint16 plm_blk_idx = 2 * (y_offset + DD.x_pos_plm);
+  int16 plm_idx = MAX_PLMS-2;
+  while (plm_blk_idx != plm_block_indices[plm_idx >> 1]) {
+    plm_idx -= 2;
+    if (plm_idx < 0)
       return 0;
   }
-  int v5 = v3 >> 1;
-  if (!plm_header_ptr[v5])
+  int idx = plm_idx >> 1;
+  if (plm_header_ptr[idx] == 0)
     return 0;
-  int16 v6 = plm_room_arguments[v5];
-  if (v6 >= 0) {
-    int idx = PrepareBitAccess(v6);
-    if ((bitmask & opened_door_bit_array[idx]) != 0)
+  int16 plm_room_arg = plm_room_arguments[idx];
+  if (plm_room_arg >= 0) {
+    int byte_idx = PrepareBitAccess(plm_room_arg);
+    if (opened_door_bit_array[byte_idx] & bitmask)
       return 0;
   }
-  plm_instruction_timer[v5] = 1;
-  uint16 v8 = plm_header_ptr[v5];
-  if (!v8)
+  plm_instruction_timer[idx] = 1;
+  uint16 plm_id_ = plm_header_ptr[idx];
+  if (plm_id_ == 0)
     return 0;
-  plm_instr_list_ptrs[v5] = get_PlmHeader_Size6(v8)->instr_list_2_ptr;
+  plm_instr_list_ptrs[idx] = get_PlmHeader_Size6(plm_id_)->instr_list_2_ptr;
   return 1;
 }
 

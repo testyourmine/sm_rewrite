@@ -150,7 +150,7 @@ uint16 GetProjectileTrailFrame(uint16 proj_index) {  // 0x9381D1
   if (projectile_instruction_timers[proj_index >> 1] == 1 && !IS_FUNC(get_ProjectileInstr(instr_ptr).func_ptr))
       instr_offset = 0;
   else /* (projectile_instruction_timers[proj_index >> 1] != 1 || IS_FUNC(get_ProjectileInstr(instr_ptr).func_ptr)) */
-      instr_offset = -sizeof(ProjectileInstr);
+      instr_offset = -(int)sizeof(ProjectileInstr);
   return get_ProjectileInstr(instr_ptr + instr_offset).trail_frame;
 }
 

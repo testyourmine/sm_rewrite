@@ -1,6 +1,23 @@
 #pragma once
 
 #include "types.h"
+
+#define PLMS_ENABLED 0x8000
+#define MAX_PLMS 80
+#define PLM_TYPE_BTS(blk_type, bts) ( ((blk_type) << 12) | (bts))
+#define SET_BLK_TYPE(blk, blk_type) ((blk) & ~(0xF000) | ((blk_type) << 12))
+#define DEACTIVATE_BLK(blk) ((blk) & 0x8FFF)
+
+#define BLK_HORIZ_FLIP 0x400
+#define BLK_VERT_FLIP 0x800
+#define BLK_HAS_FLIP (BLK_HORIZ_FLIP | BLK_VERT_FLIP)
+#define BLK_X_FLIP 0x4000
+#define BLK_Y_FILP 0x8000
+#define BLK_X_Y_FLIP (BLK_X_FLIP | BLK_Y_FILP)
+
+#define DRAW_VERTICAL 0x0000
+#define DRAW_HORIZONTAL 0x8000
+
 //#define kGoldenTorizoPalette1 ((uint16*)RomFixedPtr(0x848032))
 //#define kGoldenTorizoPalette2 ((uint16*)RomFixedPtr(0x848132))
 
@@ -28,31 +45,31 @@ uint16 kXrayBlockDrawingInstrs[] = { 0xa30f, 0xa31b, 0xa327, 0xa333, 0xa2df, 0xa
 
 //#define kGrayDoorPreInstrs ((uint16*)RomFixedPtr(0x84be4b))
 
-uint16 kGrayDoorPreInstrs[] = { 0xbdd4, 0xbde3, 0xbdf2, 0xbe01, 0xbe1c, 0xbe1f, 0xbe30, };
+//uint16 kGrayDoorPreInstrs[] = { 0xbdd4, 0xbde3, 0xbdf2, 0xbe01, 0xbe1c, 0xbe1f, 0xbe30, };
 
-//#define kDowardGatePlmListPtrs ((uint16*)RomFixedPtr(0x84c70a))
-//#define kDowardGateLeftBlockBts ((uint16*)RomFixedPtr(0x84c71a))
-//#define kDowardGateRightBlockBts ((uint16*)RomFixedPtr(0x84c72a))
+//#define kDownwardGatePlmListPtrs ((uint16*)RomFixedPtr(0x84c70a))
+//#define kDownwardGateLeftBlockBts ((uint16*)RomFixedPtr(0x84c71a))
+//#define kDownwardGateRightBlockBts ((uint16*)RomFixedPtr(0x84c72a))
 
-uint16 kDowardGatePlmListPtrs[] = { 0xbcaf, 0xbcb5, 0xbcbb, 0xbcc1, 0xbcc7, 0xbccd, 0xbcd3, 0xbcd9, };
-
-uint16 kDowardGateLeftBlockBts[] = { 0xc046, 0x0, 0xc048, 0x0, 0xc04a, 0x0, 0xc04c, 0x0, };
-
-uint16 kDowardGateRightBlockBts[] = { 0x0, 0xc047, 0x0, 0xc049, 0x0, 0xc04b, 0x0, 0xc04d, };
+//uint16 kDownwardGatePlmListPtrs[] = { 0xbcaf, 0xbcb5, 0xbcbb, 0xbcc1, 0xbcc7, 0xbccd, 0xbcd3, 0xbcd9, };
+//
+//uint16 kDownwardGateLeftBlockBts[] = { 0xc046, 0x0, 0xc048, 0x0, 0xc04a, 0x0, 0xc04c, 0x0, };
+//
+//uint16 kDownwardGateRightBlockBts[] = { 0x0, 0xc047, 0x0, 0xc049, 0x0, 0xc04b, 0x0, 0xc04d, };
 
 //#define kUpwardGatePlmListPtrs ((uint16*)RomFixedPtr(0x84c764))
 //#define kUpwardGateLeftBlockBts ((uint16*)RomFixedPtr(0x84c774))
 //#define kUpwardGateRightBlockBts ((uint16*)RomFixedPtr(0x84c784))
 
-uint16 kUpwardGatePlmListPtrs[] = { 0xbcdf, 0xbce5, 0xbceb, 0xbcf1, 0xbcf7, 0xbcfd, 0xbd03, 0xbd09, };
-
-uint16 kUpwardGateLeftBlockBts[] = { 0xc046, 0x0, 0xc048, 0x0, 0xc04a, 0x0, 0xc04c, 0x0, };
-
-uint16 kUpwardGateRightBlockBts[] = { 0x0, 0xc047, 0x0, 0xc049, 0x0, 0xc04b, 0x0, 0xc04d, };
+//uint16 kUpwardGatePlmListPtrs[] = { 0xbcdf, 0xbce5, 0xbceb, 0xbcf1, 0xbcf7, 0xbcfd, 0xbd03, 0xbd09, };
+//
+//uint16 kUpwardGateLeftBlockBts[] = { 0xc046, 0x0, 0xc048, 0x0, 0xc04a, 0x0, 0xc04c, 0x0, };
+//
+//uint16 kUpwardGateRightBlockBts[] = { 0x0, 0xc047, 0x0, 0xc049, 0x0, 0xc04b, 0x0, 0xc04d, };
 
 //#define kSetMetroidsClearStatePreInstrs ((uint16*)RomFixedPtr(0x84db28))
 
-uint16 kSetMetroidsClearStatePreInstrs[] = { 0xdad5, 0xdad6, 0xdad7, 0xdad8, 0xdad9, 0xdada, 0xdadb, 0xdadc, 0xdadd, 0xdade, 0xdaee, 0xdafe, 0xdb0e, };
+//uint16 kSetMetroidsClearStatePreInstrs[] = { 0xdad5, 0xdad6, 0xdad7, 0xdad8, 0xdad9, 0xdada, 0xdadb, 0xdadc, 0xdadd, 0xdade, 0xdaee, 0xdafe, 0xdb0e, };
 
 //#define kDrawItemFrame0DrawInstrs ((uint16*)RomFixedPtr(0x84e05f))
 
@@ -62,7 +79,6 @@ uint16 kDrawItemFrame0DrawInstrs[] = { 0xa30f, 0xa31b, 0xa327, 0xa333, };
 
 uint16 kDrawItemFrame1DrawInstrs[] = { 0xa315, 0xa321, 0xa32d, 0xa339, };
 
-#define fnPlmPreInstr_Empty4 0x848AA6
 //#define kPlmVramAddresses ((uint16*)RomFixedPtr(0x8487cd))
 //#define kPlmTileDataOffs ((uint16*)RomFixedPtr(0x8487d5))
 //#define kPlmStartingTileNumber ((uint16*)RomFixedPtr(0x8487dd))

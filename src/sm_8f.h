@@ -4770,3 +4770,20 @@ PlmScrollData* get_PlmScrollData(uint16 plm_scroll_data_ptr) {
     default: Unreachable(); return (PlmScrollData*){ 0 };
   }
 }
+
+uint16 kDoorClosingPlms[12] = {
+  [kDoorDirection_Right] = 0,
+  [kDoorDirection_Left]  = 0,
+  [kDoorDirection_Down]  = 0,
+  [kDoorDirection_Up]    = 0,
+
+  [kDoorDirection_Right+kDoorDirection_Closing] = addr_kPlmHeader_C8BE_BlueDoorClosing_FaceR,
+  [kDoorDirection_Left+kDoorDirection_Closing]  = addr_kPlmHeader_C8BA_BlueDoorClosing_FaceL,
+  [kDoorDirection_Down+kDoorDirection_Closing]  = addr_kPlmHeader_C8C6_BlueDoorClosing_FaceD,
+  [kDoorDirection_Up+kDoorDirection_Closing]    = addr_kPlmHeader_C8C2_BlueDoorClosing_FaceU,
+
+  [kDoorDirection_Right+kDoorDirection_GateClosing] = addr_kPlmHeader_C8D0_C8CACopy_EscapeRoom1_ClosingGate,
+  [kDoorDirection_Left+kDoorDirection_GateClosing]  = addr_kPlmHeader_C8D0_C8CACopy_EscapeRoom1_ClosingGate,
+  [kDoorDirection_Down+kDoorDirection_GateClosing]  = addr_kPlmHeader_C8D0_C8CACopy_EscapeRoom1_ClosingGate,
+  [kDoorDirection_Up+kDoorDirection_GateClosing]    = addr_kPlmHeader_C8D0_C8CACopy_EscapeRoom1_ClosingGate,
+};

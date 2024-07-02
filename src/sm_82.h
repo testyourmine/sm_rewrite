@@ -3,6 +3,9 @@
 #include "ida_types.h"
 #include "types.h"
 
+extern uint16 kDoorClosingPlms[12];
+#define MAX_PLMS 80
+
 //#define kDemoRoomData ((uint16*)RomFixedPtr(0x82876c))
 
 //uint16 kDemoRoomData[] = { 0x8774, 0x87e2, 0x8850, 0x88be, };

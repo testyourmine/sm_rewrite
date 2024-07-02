@@ -1158,15 +1158,21 @@ static void CopyFlippedBlockToXrayBg1(uint16 dst_r22, uint16 a) {  // 0x91D0A6
   *(uint16 *)((uint8 *)&ram4000.xray_tilemaps[32] + dst_r22) = top_left;
 }
 
-void LoadBlockToXrayBg2(uint16 a, uint16 k, uint16 j) {  // 0x91D04C
-  uint16 R24 = k - (layer1_x_pos >> 4);
-  uint16 R26 = j - (layer1_y_pos >> 4);
-  if (!sign16(R24) && sign16(R24 - 16) && !sign16(R26) && sign16(R26 - 16)) {
-    uint16 R22 = 4 * (R24 + 32 * R26);
-    if ((a & 0x800) != 0)
-      CopyFlippedBlockToXrayBg1(R22, a & 0x3FF);
+/**
+* @brief Loads the level data block to the X-ray background 2
+* @param level_data_blk The level data block to load
+* @param x_blk The x position of the block
+* @param y_blk The y position of the block
+*/
+void LoadBlockToXrayBg2(uint16 level_data_blk, uint16 x_blk, uint16 y_blk) {  // 0x91D04C
+  uint16 x_blk_offset = x_blk - (layer1_x_pos / 16);
+  uint16 y_blk_offset = y_blk - (layer1_y_pos / 16);
+  if (0 <= x_blk_offset && x_blk_offset < 16 && 0 <= y_blk_offset && y_blk_offset < 16) {
+    uint16 xray_bg2_tilemap_idx = 4 * (x_blk_offset + 32 * y_blk_offset);
+    if (level_data_blk & BLK_VERT_FLIP)
+      CopyFlippedBlockToXrayBg1(xray_bg2_tilemap_idx, level_data_blk & 0x3FF);
     else
-      CopyBlockToXrayBg2(R22, a & 0x3FF);
+      CopyBlockToXrayBg2(xray_bg2_tilemap_idx, level_data_blk & 0x3FF);
   }
 }
 
@@ -1274,8 +1280,8 @@ void GameState_28_Unused_(void) {  // 0x91D4DA
 }
 
 void VariaSuitPickup(void) {  // 0x91D4E4
-  suit_pickup_color_math_R = 48;
-  suit_pickup_color_math_G = 80;
+  suit_pickup_color_math_R = 0x30;
+  suit_pickup_color_math_G = 0x50;
   suit_pickup_color_math_B = 0x80;
   suit_pickup_palette_transition_color = 0;
   Samus_CancelSpeedBoost();
@@ -1290,9 +1296,9 @@ void VariaSuitPickup(void) {  // 0x91D4E4
   elevator_status = 0;
   substate = 0;
   suit_pickup_light_beam_pos = 0;
-  suit_pickup_light_beam_widening_speed = 256;
+  suit_pickup_light_beam_widening_speed = 0x100;
   for (int i = 510; i >= 0; i -= 2)
-    hdma_table_1[i >> 1] = 255;
+    hdma_table_1[i >> 1] = 0x00FF;
   if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)
     QueueSfx1_Max9(kSfx1_SpinJumpEnd_Silence);
   if (equipped_items & kItem_GravitySuit)
@@ -1316,9 +1322,9 @@ void VariaSuitPickup(void) {  // 0x91D4E4
 }
 
 void GravitySuitPickup(void) {  // 0x91D5BA
-  suit_pickup_color_math_R = 48;
-  suit_pickup_color_math_G = 73;
-  suit_pickup_color_math_B = -112;
+  suit_pickup_color_math_R = 0x30;
+  suit_pickup_color_math_G = 0x49;
+  suit_pickup_color_math_B = 0x90;
   suit_pickup_palette_transition_color = 1;
   Samus_CancelSpeedBoost();
   SetHiLo(&samus_x_extra_run_speed, &samus_x_extra_run_subspeed, 0);
@@ -1332,12 +1338,12 @@ void GravitySuitPickup(void) {  // 0x91D5BA
   elevator_status = 0;
   substate = 0;
   suit_pickup_light_beam_pos = 0;
-  suit_pickup_light_beam_widening_speed = 256;
+  suit_pickup_light_beam_widening_speed = 0x100;
   for (int i = 510; i >= 0; i -= 2)
-    hdma_table_1[i >> 1] = 255;
+    hdma_table_1[i >> 1] = 0x00FF;
   if (samus_movement_type == kMovementType_03_SpinJumping || samus_movement_type == kMovementType_14_WallJumping)
     QueueSfx1_Max9(kSfx1_SpinJumpEnd_Silence);
-  if ((equipped_items & kItem_VariaSuit) != 0)
+  if (equipped_items & kItem_VariaSuit)
     samus_pose = kPose_9B_FaceF_VariaGravitySuit;
   else
     samus_pose = kPose_00_FaceF_Powersuit;
@@ -1345,9 +1351,9 @@ void GravitySuitPickup(void) {  // 0x91D5BA
   Samus_SetAnimationFrameIfPoseChanged();
   RunSamusCode(kSamusCode_21_LockToSuitAcquisition);
   samus_x_pos = layer1_x_pos + 120;
-  samus_prev_x_pos = layer1_x_pos + 120;
+  samus_prev_x_pos = samus_x_pos;
   samus_y_pos = layer1_y_pos + 136;
-  samus_prev_y_pos = layer1_y_pos + 136;
+  samus_prev_y_pos = samus_y_pos;
   QueueSfx2_Max6(kSfx2_AcquiredSuit);
   static const SpawnHdmaObject_Args kSpawnHdmaObject_91D673 = {
     .hdma_control = HDMA_CONTROL(0, 1, 1),

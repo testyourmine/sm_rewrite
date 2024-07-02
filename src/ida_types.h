@@ -278,7 +278,8 @@ enum DoorDirection {  // 0x7E0791
   kDoorDirection_Left = 0x1,
   kDoorDirection_Down = 0x2,
   kDoorDirection_Up = 0x3,
-  kDoorDirection_Closed = 0x4,
+  kDoorDirection_Closing = 0x4,
+  kDoorDirection_GateClosing = 0x8,
   kDoorDirection_VerticalMask = 0x2,
   kDoorDirection_DirectionMask = 0x3,
 };
@@ -735,7 +736,17 @@ enum LiquidPhysicsType {  // 0x7E0AD2
   kLiquidPhysicsType_LavaAcid = 0x2,
 };
 
-enum SamusYDirection {
+enum SamusCollisionDirection {
+  kSamusCollDir_0_Left = 0x0,
+  kSamusCollDir_1_Right = 0x1,
+  kSamusCollDir_2_Up = 0x2,
+  kSamusCollDir_3_Down = 0x3,
+  kSamusCollDir_VertMask = 0x2,
+  kSamusCollDir_DirMask = 0xF,
+  kSamusCollDir_F_DisableSpecialColl = 0xF,
+};
+
+enum SamusYDirection {  // 0x7E0B36
   kSamusYDir_None = 0x0,
   kSamusYDir_Up = 0x1,
   kSamusYDir_Down = 0x2,
@@ -973,6 +984,12 @@ enum TourianEntranceStatueAnimationState {  // 0x7E1E6F
   kStatueState_KraidProcessing = 0x4,
   kStatueState_DraygonProcessing = 0x8,
   kStatueState_ReleasingBossLock = 0x8000,
+};
+
+enum InsideBlockReactionSamusPoint {  // 0x7E1E73
+  kInsideBlockReactionSamusPoint_0_Bottom = 0x0,
+  kInsideBlockReactionSamusPoint_1_Center = 0x1,
+  kInsideBlockReactionSamusPoint_2_Top = 0x2,
 };
 
 typedef struct Ram3000_MsgBox {  // 0x7E30BC
@@ -1268,12 +1285,9 @@ typedef union RamHudTilemap {  // 0x7EC608
 } RamHudTilemap;
 
 enum RoomScrolls {  // 0x7ECD20
-  // Red scrolls can't be scrolled to
-  kScroll_Red = 0x0,
-  // Blue scrolls hides the bottom two rows
-  kScroll_Blue = 0x1,
-  // Green scrolls are unrestricted
-  kScroll_Green = 0x2,
+  kScroll_Red = 0x0,  // Red scrolls can't be scrolled to
+  kScroll_Blue = 0x1,  // Blue scrolls hides the bottom two rows
+  kScroll_Green = 0x2,  // Green scrolls are unrestricted
 };
 
 enum GameEvent {  // 0x7ED820
@@ -1313,6 +1327,155 @@ enum LoadingGameState {  // 0x7ED914
   kLoadingGameState_5_Main = 0x5,
   kLoadingGameState_1F_StartingAtCeres = 0x1F,
   kLoadingGameState_22_EscapingCeres = 0x22,
+};
+
+enum BlockTypes {  // 0x7F0003
+  kBlockType_0_Air = 0x0,
+  kBlockType_1_Slope = 0x1,
+  kBlockType_2_SpikeAir = 0x2,
+  kBlockType_3_SpecialAir = 0x3,
+  kBlockType_4_ShootableAir = 0x4,
+  kBlockType_5_HorizExtension = 0x5,
+  kBlockType_6_UnusedAir = 0x6,
+  kBlockType_7_BombableAir = 0x7,
+  kBlockType_8_SolidBlock = 0x8,
+  kBlockType_9_DoorBlock = 0x9,
+  kBlockType_A_SpikeBlock = 0xA,
+  kBlockType_B_SpecialBlock = 0xB,
+  kBlockType_C_ShootableBlock = 0xC,
+  kBlockType_D_VertExtension = 0xD,
+  kBlockType_E_GrappleBlock = 0xE,
+  kBlockType_F_BombableBlock = 0xF,
+};
+
+enum BtsTypes {  // 0x7F6402
+  kBtsType_Slope_0_Square_HalfHeight = 0x0,
+  kBtsType_Slope_1_Square_HalfWidth = 0x1,
+  kBtsType_Slope_2_Square_Quarter = 0x2,
+  kBtsType_Slope_3_Square_ThreeQuarter = 0x3,
+  kBtsType_Slope_4_Square_Whole = 0x4,
+  kBtsType_Slope_5_NonSquare_HalfHeightIsoscelesTriangle_Unused = 0x5,
+  kBtsType_Slope_6_NonSquare_IsoscelesTriangle_Unused = 0x6,
+  kBtsType_Slope_7_NonSquare_HalfHeightRectangle = 0x7,
+  kBtsType_Slope_8_NonSquare_Rectangle_Unused = 0x8,
+  kBtsType_Slope_9_NonSquare_Rectangle_Unused = 0x9,
+  kBtsType_Slope_A_NonSquare_Rectangle_Unused = 0xA,
+  kBtsType_Slope_B_NonSquare_Rectangle_Unused = 0xB,
+  kBtsType_Slope_C_NonSquare_Rectangle_Unused = 0xC,
+  kBtsType_Slope_D_NonSquare_Rectangle_Unused = 0xD,
+  kBtsType_Slope_E_NonSquare_VeryBumpyTriangle = 0xE,
+  kBtsType_Slope_F_NonSquare_BumpyTriangle = 0xF,
+  kBtsType_Slope_10_NonSquare_Unused = 0x10,
+  kBtsType_Slope_11_NonSquare_Unused = 0x11,
+  kBtsType_Slope_12_NonSquare_Triangle = 0x12,
+  kBtsType_Slope_13_NonSquare_Rectangle = 0x13,
+  kBtsType_Slope_14_NonSquare_QuarterTriangle = 0x14,
+  kBtsType_Slope_15_NonSquare_ThreeQuarterTriangle = 0x15,
+  kBtsType_Slope_16_NonSquare_LowerHalfHeightTriangle = 0x16,
+  kBtsType_Slope_17_NonSquare_UpperHalfHeightTriangle = 0x17,
+  kBtsType_Slope_18_NonSquare_LowerThirdHeightTriangle_Unused = 0x18,
+  kBtsType_Slope_19_NonSquare_MiddleThirdHeightTriangle_Unused = 0x19,
+  kBtsType_Slope_1A_NonSquare_UpperThirdHeightTriangle_Unused = 0x1A,
+  kBtsType_Slope_1B_NonSquare_UpperHalfWidthTriangle = 0x1B,
+  kBtsType_Slope_1C_NonSquare_LowerHalfWidthTriangle = 0x1C,
+  kBtsType_Slope_1D_NonSquare_UpperThirdWidthTriangle_Unused = 0x1D,
+  kBtsType_Slope_1E_NonSquare_MiddleThirdWidthTriangle_Unused = 0x1E,
+  kBtsType_Slope_1F_NonSquare_LowerThirdWidthTriangle_Unused = 0x1F,
+
+  kBtsType_Spike_0_Solid_GenericSpike = 0x0,
+  kBtsType_Spike_1_Solid_KraidLairSpike = 0x1,
+  kBtsType_Spike_2_Air_AirSpike = 0x2,
+  kBtsType_Spike_3_Solid_DraygonBrokenTurret = 0x3,
+  kBtsType_Spike_E_Solid_XrayableBlock = 0xE,
+  kBtsType_Spike_F_Solid_EnemyBreakableBlock = 0xF,
+
+  kBtsType_Special_0_1x1RespawningCrumbleBlock = 0x0,
+  kBtsType_Special_1_2x1RespawningCrumbleBlock = 0x1,
+  kBtsType_Special_2_1x2RespawningCrumbleBlock = 0x2,
+  kBtsType_Special_3_2x2RespawningCrumbleBlock = 0x3,
+  kBtsType_Special_4_1x1CrumbleBlock = 0x4,
+  kBtsType_Special_5_2x1CrumbleBlock = 0x5,
+  kBtsType_Special_6_1x2CrumbleBlock = 0x6,
+  kBtsType_Special_7_2x2CrumbleBlock = 0x7,
+  kBtsType_Special_8_Air_RightwardsTreadmillConditional = 0x8,
+  kBtsType_Special_9_Air_LeftwardsTreadmillConditional = 0x9,
+  kBtsType_Special_A_Air_RightwardsTreadmillAlwaysOn = 0xA,
+  kBtsType_Special_B_Air_LeftwardsTreadmillAlwaysOn = 0xB,
+  kBtsType_Special_E_RespawningSpeedBoostBlock = 0xE,
+  kBtsType_Special_F_SpeedBoostBlock = 0xF,
+  kBtsType_Special_44_GenericPLMShotTrigger = 0x44,
+  kBtsType_Special_45_ItemCollDetection = 0x45,
+  kBtsType_Special_46_ScrollPLMTrigger = 0x46,
+  kBtsType_Special_47_MapStationRightAccess = 0x47,
+  kBtsType_Special_48_MapStationLeftAccess = 0x48,
+  kBtsType_Special_49_EnergyStationRightAccess = 0x49,
+  kBtsType_Special_4A_EnergyStationLeftAccess = 0x4A,
+  kBtsType_Special_4B_MissileStationRightAccess = 0x4B,
+  kBtsType_Special_4C_MissileStationLeftAccess = 0x4C,
+  kBtsType_Special_4D_SaveStationTrigger = 0x4D,
+  kBtsType_Special_Crateria_80_Air_IcePhysics = 0x80,
+  kBtsType_Special_Brinstar_80_Air_FloorSamusEater = 0x80,
+  kBtsType_Special_Brinstar_81_Air_CeilingSamusEater = 0x81,
+  kBtsType_Special_Brinstar_82_SlowRespawningSpeedBlock = 0x82,
+  kBtsType_Special_Brinstar_83_SlowSpeedBlock = 0x83,
+  kBtsType_Special_Brinstar_84_DachoraPitRespawningSpeedBlock = 0x84,
+  kBtsType_Special_Brinstar_85_SpeedBlock = 0x85,
+  kBtsType_Special_Norfair_83_LowerNorfairChozoHandTrigger = 0x83,
+  kBtsType_Special_WreckedShip_80_WreckedShipChozoHandTrigger = 0x80,
+  kBtsType_Special_Maridia_80_RunnableQuicksandSurface = 0x80,
+  kBtsType_Special_Maridia_81_RunnableQuicksandSurface = 0x81,
+  kBtsType_Special_Maridia_82_RunnableQuicksandSurface = 0x82,
+  kBtsType_Special_Maridia_83_SubmergingQuicksand = 0x83,
+  kBtsType_Special_Maridia_84_SlowSandFall = 0x84,
+  kBtsType_Special_Maridia_85_FastSandFall = 0x85,
+
+  kBtsType_Shootable_0_1x1RespawningShotBlock = 0x0,
+  kBtsType_Shootable_1_2x1RespawningShotBlock = 0x1,
+  kBtsType_Shootable_2_1x2RespawningShotBlock = 0x2,
+  kBtsType_Shootable_3_2x2RespawningShotBlock = 0x3,
+  kBtsType_Shootable_4_1x1ShotBlock = 0x4,
+  kBtsType_Shootable_5_2x1ShotBlock = 0x5,
+  kBtsType_Shootable_6_1x2ShotBlock = 0x6,
+  kBtsType_Shootable_7_2x2ShotBlock = 0x7,
+  kBtsType_Shootable_8_RespawningPowerBombBlock = 0x8,
+  kBtsType_Shootable_9_PowerBombBlock = 0x9,
+  kBtsType_Shootable_A_RespawningSuperMissileBlock = 0xA,
+  kBtsType_Shootable_B_SuperMissileBlock = 0xB,
+  kBtsType_Shootable_C_FakeSuperMissileBlock_XRay = 0xC,
+  kBtsType_Shootable_D_FakeSuperMissileBlock = 0xD,
+  kBtsType_Shootable_E_FakeSuperMissileBlock = 0xE,
+  kBtsType_Shootable_F_FakeSuperMissileBlock = 0xF,
+  kBtsType_Shootable_10_GateBlocks = 0x10,
+  kBtsType_Shootable_40_BlueDoorFacingLeft = 0x40,
+  kBtsType_Shootable_41_BlueDoorFacingRight = 0x41,
+  kBtsType_Shootable_42_BlueDoorFacingUp = 0x42,
+  kBtsType_Shootable_43_BlueDoorFacingDown = 0x43,
+  kBtsType_Shootable_44_GenericShotTrigger = 0x44,
+  kBtsType_Shootable_45_ItemTrigger = 0x45,
+  kBtsType_Shootable_46_LeftBlueGateTrigger = 0x46,
+  kBtsType_Shootable_47_RightBlueGateTrigger = 0x47,
+  kBtsType_Shootable_48_LeftRedGateTrigger = 0x48,
+  kBtsType_Shootable_49_RightRedGateTrigger = 0x49,
+  kBtsType_Shootable_4A_LeftGreenGateTrigger = 0x4A,
+  kBtsType_Shootable_4B_RightGreenGateTrigger = 0x4B,
+  kBtsType_Shootable_4C_LeftOrangeGateTrigger = 0x4C,
+  kBtsType_Shootable_4D_RightOrangeGateTrigger = 0x4D,
+  kBtsType_Shootable_4F_CrittersEscapeBlock = 0x4F,
+
+  kBtsType_Bombable_0_1x1RespawningBombBlock = 0x0,
+  kBtsType_Bombable_1_2x1RespawningBombBlock = 0x1,
+  kBtsType_Bombable_2_1x2RespawningBombBlock = 0x2,
+  kBtsType_Bombable_3_2x2RespawningBombBlock = 0x3,
+  kBtsType_Bombable_4_1x1BombBlock = 0x4,
+  kBtsType_Bombable_5_2x1BombBlock = 0x5,
+  kBtsType_Bombable_6_1x2BombBlock = 0x6,
+  kBtsType_Bombable_7_2x2BombBlock = 0x7,
+
+  kBtsType_Grapple_0_GenericGrappleBlock = 0x0,
+  kBtsType_Grapple_1_RespawningCrumbleGrappleBlock = 0x1,
+  kBtsType_Grapple_2_NonRespawningCrumbleGrappleBlock = 0x2,
+  kBtsType_Grapple_3_GenricGrappleBlock = 0x3,
+  kBtsType_Grapple_80_GrappleThroughBlock = 0x80,
 };
 
 /* 4 */
@@ -1445,6 +1608,12 @@ typedef struct PlmHeader_Size6 {  // 0x840000
   VoidP instr_list_2_ptr;
 } PlmHeader_Size6;
 
+typedef struct LavaStage {  // 0x84B876
+  uint16 target_samus_x_pos;
+  uint16 max_fx_y_pos;
+  uint16 fx_y_vel_;
+} LavaStage;
+
 /* 5 */
 typedef struct  DebugDoorDef {  // 0x
   VoidP room_definition_ptr;
@@ -1499,6 +1668,7 @@ typedef struct MsgBoxConfig {  // 0x85869B
 
 enum kMessageBoxText {  // 0x85877F
   kTxt_Nul = 0xE,
+  kTxt_Sp = 0x4E,
   kTxt_Dash = 0xCF,
   kTxt_A = 0xE0,
   kTxt_B = 0xE1,
@@ -1526,7 +1696,6 @@ enum kMessageBoxText {  // 0x85877F
   kTxt_X = 0xF7,
   kTxt_Y = 0xF8,
   kTxt_Z = 0xF9,
-  kTxt_Sp = 0x4E,
 };
 
 /* 11 */
@@ -2819,7 +2988,7 @@ enum Consts_84 {
   addr_PlmPreInstr_Empty4 = 0x8AA6,
   addr_locret_848AE0 = 0x8AE0,
   addr_kDefaultPlmDrawInstruction = 0x8DA0,
-  addr_kPlmInstrList_MapStation = 0xAD76,
+  addr_kPlmInstrList_MapStation_FastAnim = 0xAD76,
   addr_kPlmHeader_B62F_Nothing = 0xB62F,
   addr_kPlmHeader_B633_CollReact_Special_128 = 0xB633,
   addr_kPlmHeader_B637_Unused = 0xB637,
@@ -2973,8 +3142,8 @@ enum Consts_84 {
   addr_kPlmHeader_C8C2_BlueDoorClosing_FaceU = 0xC8C2,
   addr_kPlmHeader_C8C6_BlueDoorClosing_FaceD = 0xC8C6,
   addr_kPlmHeader_C8CA_EscapeRoom1_ClosingGate = 0xC8CA,
-  addr_kPlmHeader_C8D0_CopyOfC8CA = 0xC8D0,
-  addr_kPlmInstrList_C91C_PowerBombBlockBombed_Unused = 0xC91C,
+  addr_kPlmHeader_C8D0_C8CACopy_EscapeRoom1_ClosingGate = 0xC8D0,
+  addr_kPlmInstrList_C91C_PowerBombBlockBombed_UnusedD01C = 0xC91C,
   addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused = 0xC922,
   addr_kPlmHeader_CFEC_Draw1x1ShotBlock_Unused = 0xCFEC,
   addr_kPlmHeader_CFF0_Draw1x2ShotBlock_Unused = 0xCFF0,
@@ -3226,6 +3395,7 @@ enum Consts_86 {
   addr_stru_86A95B = 0xA95B,
   addr_kEproj_BombTorizoLowHealthInitialDrool = 0xA969,
   addr_kEproj_BombTorizoExplosiveSwipe = 0xA985,
+  addr_kEproj_BombTorizoStatueBreaking = 0xA993,
   addr_kEproj_BombTorizoLowHealthExplode = 0xA9A1,
   addr_kEproj_BombTorizoDeathExplosion = 0xA9AF,
   addr_kEprojInit_AB07_Tile0 = 0xA9BD,
@@ -3261,6 +3431,7 @@ enum Consts_86 {
   addr_off_86B3CD = 0xB3CD,
   addr_off_86B3E5 = 0xB3E5,
   addr_kEproj_GoldenTorizoEyeBeam = 0xB428,
+  addr_kEproj_OldTourianEscapeShaftFakeWallExplosion = 0xB4B1,
   addr_word_86B4BF = 0xB4BF,
   addr_word_86B4CB = 0xB4CB,
   addr_word_86B4D7 = 0xB4D7,
@@ -3304,6 +3475,7 @@ enum Consts_86 {
   addr_kEproj_MotherBrainTubeFalling_TopLeft = 0xCC69,
   addr_kEproj_MotherBrainTubeFalling_TopMiddleLeft = 0xCC77,
   addr_kEproj_MotherBrainTubeFalling_TopMiddleRight = 0xCC85,
+  addr_kEproj_MotherBrainGlassShatteringShard = 0xCEFC,
   addr_kEproj_MotherBrainGlassShatteringSparkle = 0xCF0A,
   addr_off_86CF56 = 0xCF56,
   addr_word_86D03C = 0xD03C,
@@ -3316,6 +3488,7 @@ enum Consts_86 {
   addr_kEproj_WreckedShipRobotLaserDownLeft = 0xD2C2,
   addr_kEproj_WreckedShipRobotLaserUpRight = 0xD2D0,
   addr_kEproj_WreckedShipRobotLaserDownRight = 0xD2DE,
+  addr_kEproj_N00bTubeCracks = 0xD904,
   addr_kEproj_N00bTubeShards = 0xD912,
   addr_kEproj_N00bTubeReleasedAirBubbles = 0xD920,
   addr_kEproj_SpikeShootingPlantSpikes = 0xDAFE,
@@ -3335,6 +3508,10 @@ enum Consts_86 {
   addr_word_86E208 = 0xE208,
   addr_kEproj_DustCloudExplosion = 0xE509,
   addr_kEproj_EyeDoorSmoke = 0xE517,
+  addr_kEproj_SpawnedDownwardsShotGate = 0xE64B,
+  addr_kEproj_InitialClosedDownwardsShotGate = 0xE659,
+  addr_kEproj_SpawnedUpwardsShotGate = 0xE667,
+  addr_kEproj_InitialClosedUpwardsShotGate = 0xE675,
   addr_kEproj_SaveStationElectricity = 0xE6D2,
   addr_kEproj_BotwoonsBody = 0xEBA0,
   addr_word_86EBAE = 0xEBAE,

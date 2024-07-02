@@ -111,13 +111,13 @@ void ClearEventHappened(uint16 event_number) {  // 0x808212
 }
 
 /**
-* @brief Checks if the event being passed in has happened already
+* @brief Checks if the event has been set
 * @param event_number The event being checked for
 * @return true if the event happened, false if the event hasn't happened
 */
 bool CheckEventHappened(uint16 event_number) {  // 0x808233
   uint16 event_index = PrepareBitAccess(event_number);
-  return (bitmask & events_that_happened[event_index]) != 0;
+  return events_that_happened[event_index] & bitmask;
 }
 
 /**
@@ -777,7 +777,7 @@ void Nmi_ProcessVertScrollingDma(void) {  // 0x808DAC
 */
 void NMI_ProcessVramReadQueue(void) {  // 0x808EA2
   if ((uint8)vram_read_queue_tail != 0) {
-    *((uint8 *)&vram_read_queue[0].vram_target + (uint8)vram_read_queue_tail) = 0;
+    *((uint8 *)vram_read_queue + (uint8)vram_read_queue_tail) = 0;
     WriteReg(VMAIN, 0x80);
     for (int table_index = 0; vram_read_queue[table_index].vram_target != 0; ++table_index) {
       WriteRegWord(VMADDL, vram_read_queue[table_index].vram_target);
@@ -1234,7 +1234,7 @@ void NmiTransferSamusToVram(void) {  // 0x809376
 */
 void NmiProcessAnimtilesVramTransfers(void) {  // 0x809416
   if (animtiles_enable_flag & 0x8000) {
-    for (int i = 10; i >= 0; i -= 2) {
+    for (int i = 5*2; i >= 0; i -= 2) {
       int obj_idx = i >> 1;
       if (animtiles_ids[obj_idx] != 0) {
         if (animtiles_src_ptr[obj_idx] != 0) {
@@ -1632,7 +1632,7 @@ void AddMissilesToHudTilemap(void) {  // 0x8099CF
 * @brief Writes the HUD super missile icon to RAM
 */
 void AddSuperMissilesToHudTilemap(void) {  // 0x809A0E
-  uint16 super_missile_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.super_missiles) - ADDR16_OF_RAM(hud_tilemap);
+  uint16 super_missile_tilemap_offset = HUD_RAM_OFFSET(hud_tilemap.row1.super_missiles);
   AddToTilemapInner(super_missile_tilemap_offset, kHudTilemaps_SuperMissiles);
 }
 
@@ -1640,7 +1640,7 @@ void AddSuperMissilesToHudTilemap(void) {  // 0x809A0E
 * @brief Writes the HUD power bomb icon to RAM
 */
 void AddPowerBombsToHudTilemap(void) {  // 0x809A1E
-  uint16 power_bomb_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.power_bombs) - ADDR16_OF_RAM(hud_tilemap);
+  uint16 power_bomb_tilemap_offset = HUD_RAM_OFFSET(hud_tilemap.row1.power_bombs);
   AddToTilemapInner(power_bomb_tilemap_offset, kHudTilemaps_PowerBombs);
 }
 
@@ -1648,7 +1648,7 @@ void AddPowerBombsToHudTilemap(void) {  // 0x809A1E
 * @brief Writes the HUD grapple icon to RAM
 */
 void AddGrappleToHudTilemap(void) {  // 0x809A2E
-  uint16 grapple_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.grapple) - ADDR16_OF_RAM(hud_tilemap);
+  uint16 grapple_tilemap_offset = HUD_RAM_OFFSET(hud_tilemap.row1.grapple);
   AddToTilemapInner(grapple_tilemap_offset, kHudTilemaps_Grapple);
 }
 
@@ -1656,7 +1656,7 @@ void AddGrappleToHudTilemap(void) {  // 0x809A2E
 * @brief Writes the HUD x-ray icon to RAM
 */
 void AddXrayToHudTilemap(void) {  // 0x809A3E
-  uint16 xray_tilemap_offset = ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap);
+  uint16 xray_tilemap_offset = HUD_RAM_OFFSET(hud_tilemap.row1.x_ray);
   AddToTilemapInner(xray_tilemap_offset, kHudTilemaps_Xray);
 }
 
@@ -1699,16 +1699,16 @@ void InitializeHud(void) {  // 0x809A79
   samus_prev_hud_item_index = 0;
   InitializeMiniMapBroken();
 
-  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap);
   if (samus_max_missiles != 0) {
+    ammo_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.missile_count);
     DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, ammo_digits_offset);
   }
-  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap);
   if (samus_max_super_missiles != 0) {
+    ammo_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.super_missile_count);
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_super_missiles, ammo_digits_offset);
   }
-  ammo_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.power_bomb_count) - ADDR16_OF_RAM(hud_tilemap.row1);
   if (samus_max_power_bombs != 0) {
+    ammo_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.power_bomb_count);
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, ammo_digits_offset);
   }
 
@@ -1753,19 +1753,19 @@ void HandleHudTilemap(void) {  // 0x809B44
       uint16 tank_icon_offset = kEnergyTankIconTilemapOffsets[tank_index >> 1];
       hud_tilemap.arr[tank_icon_offset >> 1] = tank_tile;
     }
-    uint16 health_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.subtank_health) - ADDR16_OF_RAM(hud_tilemap);
+    uint16 health_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.subtank_health);
     DrawTwoHudDigits(kDigitTilesetsHealth, sub_tank_energy, health_digits_offset);
   }
 
   if (samus_max_missiles != 0 && samus_missiles != samus_prev_missiles) {
     samus_prev_missiles = samus_missiles;
-    uint16 missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.missile_count) - ADDR16_OF_RAM(hud_tilemap);
+    uint16 missile_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.missile_count);
     DrawThreeHudDigits(kDigitTilesetsWeapon, samus_missiles, missile_digits_offset);
   }
 
   if (samus_max_super_missiles != 0 && samus_super_missiles != samus_prev_super_missiles) {
     samus_prev_super_missiles = samus_super_missiles;
-    uint16 super_missile_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.super_missile_count) - ADDR16_OF_RAM(hud_tilemap);
+    uint16 super_missile_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.super_missile_count);
     if (joypad_dbg_flags & kDebugOption_Draw3DigitsSuperMissile)
       DrawThreeHudDigits(kDigitTilesetsWeapon, samus_prev_super_missiles, super_missile_digits_offset);
     else
@@ -1774,7 +1774,7 @@ void HandleHudTilemap(void) {  // 0x809B44
 
   if (samus_max_power_bombs != 0 && samus_power_bombs != samus_prev_power_bombs) {
     samus_prev_power_bombs = samus_power_bombs;
-    uint16 power_bomb_digits_offset = ADDR16_OF_RAM(hud_tilemap.row3.power_bomb_count) - ADDR16_OF_RAM(hud_tilemap);
+    uint16 power_bomb_digits_offset = HUD_RAM_OFFSET(hud_tilemap.row3.power_bomb_count);
     DrawTwoHudDigits(kDigitTilesetsWeapon, samus_power_bombs, power_bomb_digits_offset);
   }
 
@@ -1801,7 +1801,7 @@ void HandleHudTilemap(void) {  // 0x809B44
   // Queue a transfer of the HUD tilemap in RAM to VRAM 0x5820
   VramWriteEntry* vram_entry = gVramWriteEntry(vram_write_queue_tail);
   vram_entry->size = sizeof(RamHudTilemap);
-  vram_entry->src.addr = ADDR16_OF_RAM(hud_tilemap.arr[0]);
+  vram_entry->src.addr = ADDR16_OF_RAM(hud_tilemap);
   vram_entry->src.bank = 0x7E;
   vram_entry->vram_dst = addr_kVram_Hud;
   vram_write_queue_tail += sizeof(VramWriteEntry);
@@ -1815,7 +1815,7 @@ void HandleHudTilemap(void) {  // 0x809B44
 void ToggleHudItemHighlight(uint16 hud_item_index_, uint16 tilemap_palette_bits) {  // 0x809CEA
   hud_item_tilemap_palette_bits = tilemap_palette_bits;
   int16 item_index = hud_item_index_ - 1;
-  if (item_index >= 0) {
+  if (item_index >= (kHudItem_1_Missile-1)) {
     item_index *= 2;
     int offset = kHudItemTilemapOffsets[item_index >> 1] >> 1;
     uint16 blank_tile = 0x2C0F;
@@ -2110,7 +2110,7 @@ CoroutineRet StartGameplay_Async(void) {  // 0x80A07B
 CoroutineRet Play20FramesOfMusic_Async(void) {  // 0x80A12B
   COROUTINE_BEGIN(coroutine_state_3, 0)
   EnableNMI();
-  for(my_counter = 0; my_counter < 20; my_counter++) {
+  for (my_counter = 0; my_counter < 20; my_counter++) {
     HandleMusicQueue();
     COROUTINE_AWAIT(1, WaitForNMI_Async());
   }
@@ -2820,13 +2820,15 @@ void UpdateLevelOrBackgroundDataRow(uint16 update_layer_2) {  // 0x80AB78
         bg1_row_update_tilemap_top_halves[offset + 1] = tile_table.tables[block_tile_offset].top_left ^ BLK_X_FLIP;
         bg1_row_update_tilemap_bottom_halves[offset] = tile_table.tables[block_tile_offset].bottom_right ^ BLK_X_FLIP;
         bg1_row_update_tilemap_bottom_halves[offset + 1] = tile_table.tables[block_tile_offset].bottom_left ^ BLK_X_FLIP;
-      } else {
+      }
+      else {
         if (block_flip_type == BLK_VERT_FLIP) {
           bg1_row_update_tilemap_top_halves[offset] = tile_table.tables[block_tile_offset].bottom_left ^ BLK_Y_FILP;
           bg1_row_update_tilemap_top_halves[offset + 1] = tile_table.tables[block_tile_offset].bottom_right ^ BLK_Y_FILP;
           bg1_row_update_tilemap_bottom_halves[offset] = tile_table.tables[block_tile_offset].top_left ^ BLK_Y_FILP;
           bg1_row_update_tilemap_bottom_halves[offset + 1] = tile_table.tables[block_tile_offset].top_right ^ BLK_Y_FILP;
-        } else {
+        }
+        else {
           bg1_row_update_tilemap_top_halves[offset] = tile_table.tables[block_tile_offset].bottom_right ^ BLK_X_Y_FLIP;
           bg1_row_update_tilemap_top_halves[offset + 1] = tile_table.tables[block_tile_offset].bottom_left ^ BLK_X_Y_FLIP;
           bg1_row_update_tilemap_bottom_halves[offset] = tile_table.tables[block_tile_offset].top_right ^ BLK_X_Y_FLIP;
@@ -3286,8 +3288,8 @@ void LoadFromLoadStation(void) {  // 0x80C437
   samus_prev_x_pos = samus_x_pos = layer1_x_pos + L.samus_x_offset + 0x80;
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
-  BYTE(area_index) = get_RoomDefHeader(room_ptr).area_index_;
-  BYTE(debug_disable_minimap) = 0;
+  area_index = get_RoomDefHeader(room_ptr).area_index_;
+  debug_disable_minimap = 0;
 }
 
 /**

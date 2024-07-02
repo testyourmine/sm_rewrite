@@ -15,6 +15,8 @@
 #define VRAM_WRITE_TILEMAP 0x80
 #define VRAM_WRITE_TILES 0x40
 
+#define HUD_RAM_OFFSET(x) (ADDR16_OF_RAM(x) - ADDR16_OF_RAM(hud_tilemap))
+
 static const uint16 kHudTilemaps_TopRow[32] = {  // 0x80988B
   0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c0f, 0x2c1d, 0x2c1d, 0x2c1d, 0x2c1d, 0x2c1d, 0x2c1c,
 };
@@ -68,11 +70,11 @@ static const uint16 kEnergyTankIconTilemapOffsets[14] = {  // 0x809CCE
 };
 
 static const uint16 kHudItemTilemapOffsets[5] = {  // 0x809CEA
-  [kHudItem_1_Missile-1]      = 0x14,  // ADDR16_OF_RAM(hud_tilemap.row1.missiles) - ADDR16_OF_RAM(hud_tilemap),
-  [kHudItem_2_SuperMissile-1] = 0x1c,  // ADDR16_OF_RAM(hud_tilemap.row1.super_missiles) - ADDR16_OF_RAM(hud_tilemap)
-  [kHudItem_3_PowerBomb-1]    = 0x22,  // ADDR16_OF_RAM(hud_tilemap.row1.power_bombs) - ADDR16_OF_RAM(hud_tilemap)
-  [kHudItem_4_Grapple-1]      = 0x28,  // ADDR16_OF_RAM(hud_tilemap.row1.grapple) - ADDR16_OF_RAM(hud_tilemap)
-  [kHudItem_5_Xray-1]         = 0x2e,  // ADDR16_OF_RAM(hud_tilemap.row1.x_ray) - ADDR16_OF_RAM(hud_tilemap)
+  [kHudItem_1_Missile-1]      = 0x14,  // HUD_RAM_OFFSET(hud_tilemap.row1.missiles),
+  [kHudItem_2_SuperMissile-1] = 0x1c,  // HUD_RAM_OFFSET(hud_tilemap.row1.super_missiles)
+  [kHudItem_3_PowerBomb-1]    = 0x22,  // HUD_RAM_OFFSET(hud_tilemap.row1.power_bombs)
+  [kHudItem_4_Grapple-1]      = 0x28,  // HUD_RAM_OFFSET(hud_tilemap.row1.grapple)
+  [kHudItem_5_Xray-1]         = 0x2e,  // HUD_RAM_OFFSET(hud_tilemap.row1.x_ray)
 };
 
 static const uint16 kDigitTilesetsHealth[10] = {  // 0x809DBF
