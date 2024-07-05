@@ -127,7 +127,7 @@ void RoomCode_CeresElevatorShaft(void) {  // 0x89ACC3
       }
       else {
         new_index = rotation_matrix_index + 1;
-        uint16 max_index = arraysize(kCeresElevatorShaftMode7TransformationMatrix) - 1;
+        uint16 max_index = arrayend(kCeresElevatorShaftMode7TransformationMatrix);
         if (new_index == max_index)
           new_index |= ROTATE_CCW;
       }

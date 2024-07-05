@@ -613,11 +613,13 @@ CoroutineRet RunOneFrameOfGameInner(void) {
   // kGameStateFuncs[game_state]() thing, we need to make
   // sure we resume at the same position even if it changes
   // behind our back.
-  if (st >= 1 && st <= 3) {
+  if (1 <= st && st <= 3) {
     COROUTINE_AWAIT_ONLY(Vector_RESET_Async())
-  } else if (st >= 10) {
+  }
+  else if (st >= 10) {
     goto RESUME_AT_SWITCH;
-  } else if (st != 0) {
+  }
+  else if (st != 0) {
     Die("Incorrect coroutine_state_0");
   }
 
@@ -4986,7 +4988,7 @@ LABEL_16:
     v0 += 2;
   } while ((int16)(v0 - 14) < 0);
 }
-static const Buttons kControllerInputMasks[9] = {  // 0x82F558
+static const uint16 kControllerInputMasks[9] = {  // 0x82F558
   kButton_X,
   kButton_A,
   kButton_B,

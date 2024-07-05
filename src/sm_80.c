@@ -158,7 +158,7 @@ uint32 Multiply16x16(uint16 a, uint16 j) {  // 0x8082D6
 
 /**
 * @brief Waits for non-maskable interrupt to finish
-* @return true if waiting for the interrupt, false if it's finished
+* @return 1 if waiting for the interrupt, 0 if it's finished
 */
 CoroutineRet WaitForNMI_Async(void) {  // 0x808338
   // Return 0 from this routine as soon as the coroutine has finished
@@ -174,7 +174,7 @@ CoroutineRet WaitForNMI_Async(void) {  // 0x808338
 /**
 * @brief Waits for non-maskable interrupt to finish
 * @brief Does not update the nmi flag
-* @return true if waiting for the interrupt, false if it's finished
+* @return 1 if waiting for the interrupt, 0 if it's finished
 */
 CoroutineRet WaitForNMI_NoUpdate_Async(void) {
   // Return 0 from this routine as soon as the coroutine has finished

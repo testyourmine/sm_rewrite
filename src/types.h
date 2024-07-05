@@ -24,7 +24,8 @@ typedef unsigned int uint;
 
 typedef uint16 VoidP;
 
-#define arraysize(x) sizeof(x)/sizeof(x[0])
+#define arraysize(x) (sizeof(x)/sizeof(x[0]))
+#define arrayend(x) (sizeof(x)/sizeof(x[0]) - 1)
 #define sign8(x) ((x) & 0x80)  // 0 if positive, 1 if negative
 #define sign16(x) ((x) & 0x8000)  // 0 if positive, 1 if negative
 #define sign32(x) ((x) & 0x80000000)  // 0 if positive, 1 if negative
@@ -85,21 +86,21 @@ typedef uint8_t CoroutineRet;
   switch(*_state_variable_) {                 \
   case start_pos:
 
-#define COROUTINE_MANUAL_POS(position)         \
+#define COROUTINE_MANUAL_POS(position)        \
   case (position):
 
-#define COROUTINE_AWAIT(position, function)    \
-  case (position):                             \
-      { uint8 _coret_ = (function);            \
-      if (_coret_) {                           \
-        *_state_variable_ = (position);        \
-        return _coret_;                        \
+#define COROUTINE_AWAIT(position, function)   \
+  case (position): {                          \
+      uint8 _coret_ = (function);             \
+      if (_coret_) {                          \
+        *_state_variable_ = (position);       \
+        return _coret_;                       \
       }}
 
-#define COROUTINE_AWAIT_ONLY(function)         \
-      { uint8 _coret_ = (function);            \
-      if (_coret_)                             \
-        return _coret_;                        \
+#define COROUTINE_AWAIT_ONLY(function)        \
+      { uint8 _coret_ = (function);           \
+      if (_coret_)                            \
+        return _coret_;                       \
       }
 
 #define COROUTINE_END(position)               \
