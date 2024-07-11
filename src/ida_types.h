@@ -896,11 +896,12 @@ typedef struct EnemyBase {  // 0x7E0F78
 enum EnemyProps {  // 0x7E0F86
   kEnemyProps_Invisible = 0x100,
   kEnemyProps_Deleted = 0x200,
-  kEnemyProps_Tangible = 0x400,
+  kEnemyProps_Intangible = 0x400,
   kEnemyProps_ProcessedOffscreen = 0x800,
   kEnemyProps_BlockPlasmaBeam = 0x1000,
-  kEnemyProps_DisableSamusColl = 0x2000,
+  kEnemyProps_ProcessInstructions = 0x2000,
   kEnemyProps_RespawnIfKilled = 0x4000,
+  kEnemyProps_EnableSamusColl = 0x8000,
 };
 
 /* 50 */

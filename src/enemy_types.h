@@ -3100,24 +3100,50 @@ uint8 pad1[0x7800 - 0xFB8];
 }Enemy_Skree;
 typedef struct Enemy_SpacePirates {
 EnemyBase base;
-uint16 func_ptr;
-uint16 ai_unused;
-uint16 sps_var_C;
-uint16 walljump_arc_center_x_pos;
-uint16 walljump_arc_center_y_pos;
-uint16 walljump_arc_angle;
+union {
+  uint16 sps_var_A;
+  uint16 enemy_func;  // wall, ninja, walking
+};
+uint16 sps_var_B_unused;
+union {
+  uint16 sps_var_C;
+  uint16 direction;  // wall
+  uint16 ilist_ptr_unused;  // ninja
+};
+union {
+  uint16 sps_var_D;
+  uint16 walljump_arc_center_x_pos;  // wall
+  uint16 post_midpoint_x_pos;  // ninja
+};
+union {
+  uint16 sps_var_E;
+  uint16 walljump_arc_center_y_pos;  // wall
+  uint16 left_post_x_pos;  // ninja, walking
+};
+union {
+  uint16 sps_var_F;
+  uint16 walljump_arc_angle;  // wall
+  uint16 right_post_x_pos;  // ninja, walking
+};
 uint16 sps_parameter_1;
 uint16 sps_parameter_2;
 uint8 pad1[0x7800 - 0xFB8];
-  uint16 x_pos_backup;
+  union {
+    uint16 sps_var_00;
+    uint16 speed;  // ninja
+    uint16 x_pos_backup;  // walking
+  };
   uint16 sps_var_01;
   uint16 sps_var_02;
-  uint16 sps_var_03;
+  uint16 sps_var_03_unused;
   uint16 sps_var_04;
   uint16 sps_var_05;
   uint16 sps_var_06;
   uint16 sps_var_07;
-  uint16 sps_var_08;
+  union {
+    uint16 sps_var_08;
+    uint16 spawn_y_pos;  // ninja
+  };
   uint16 sps_var_09;
   uint16 sps_var_0A;
   uint16 sps_var_0B;
@@ -3142,9 +3168,18 @@ uint8 pad1[0x7800 - 0xFB8];
   uint16 sps_var_1E;
   uint16 sps_var_1F;
 uint8 pad2[0x8000-0x7840];
-  uint16 walljump_arc_right_target_angle;
-  uint16 walljump_arc_left_target_angle;
-  uint16 walljump_arc_angle_delta;
+  union {
+    uint16 sps_var_20;
+    uint16 walljump_arc_right_target_angle;  // wall
+  };
+  union {
+    uint16 sps_var_21;
+    uint16 walljump_arc_left_target_angle;  // wall
+  };
+  union {
+    uint16 sps_var_22;
+    uint16 walljump_arc_angle_delta;  // wall
+  };
   uint16 sps_var_23;
   uint16 sps_var_24;
   uint16 sps_var_25;

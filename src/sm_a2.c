@@ -291,7 +291,7 @@ uint8 MiniCrocomire_Func9(void) {  // 0xA28AA7
 
 void MaridiaBeybladeTurtle_Init(void) {  // 0xA28D6C
   Enemy_MaridiaBeybladeTurtle *E = Get_MaridiaBeybladeTurtle(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.spritemap_pointer = addr_kSpritemap_Nothing_A2;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -379,7 +379,7 @@ void MaridiaBeybladeTurtle_Func2(uint16 k) {  // 0xA28E0A
         v2 += 24;
       uint16 v3 = cur_enemy_index;
       E->base.y_height = -g_word_A28E80[v2];
-      E->base.properties |= 0x8000;
+      E->base.properties |= kEnemyProps_EnableSamusColl;
       if (CheckIfEnemyTouchesSamus(v3)) {
         uint16 r18 = E->base.y_pos - E->base.y_height;
         if ((int16)(samus_y_radius + samus_y_pos - r18) >= 0)
@@ -388,7 +388,7 @@ void MaridiaBeybladeTurtle_Func2(uint16 k) {  // 0xA28E0A
     }
   } else {
     E->mbte_var_A = FUNC16(MaridiaBeybladeTurtle_Func3);
-    E->base.properties &= ~kEnemyProps_Tangible;
+    E->base.properties &= ~kEnemyProps_Intangible;
   }
 }
 
@@ -613,7 +613,7 @@ void MiniMaridiaBeybladeTurtle_Func7(void) {  // 0xA2925E
 
 void MaridiaBeybladeTurtle_Touch(void) {  // 0xA29281
   Enemy_MiniMaridiaTurtle *E = Get_MiniMaridiaTurtle(cur_enemy_index);
-  if ((E->base.properties & 0x8000) == 0) {
+  if (!(E->base.properties & kEnemyProps_EnableSamusColl)) {
     Enemy_NormalTouchAI_A2();
     E->mmte_var_A = FUNC16(MaridiaBeybladeTurtle_Func11);
     E->mmte_var_04 = 2;
@@ -1271,7 +1271,7 @@ void MaridiaSpikeyShell_Shot(void) {  // 0xA2A579
 
 void GunshipTop_Init(void) {  // 0xA2A644
   Enemy_GunshipTop *E = Get_GunshipTop(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl | kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_ProcessInstructions | kEnemyProps_Intangible;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->base.current_instruction = addr_kGunshipTop_Ilist_A616;
@@ -1301,7 +1301,7 @@ void GunshipTop_Init(void) {  // 0xA2A644
 
 void GunshipBottom_Init(void) {  // 0xA2A6D2
   Enemy_GunshipBottom *E = Get_GunshipBottom(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl | kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_ProcessInstructions | kEnemyProps_Intangible;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   if (E->gbm_parameter_2)
@@ -1893,9 +1893,9 @@ void Rinka_Init(void) {  // 0xA2B602
   Enemy_Rinka *E = Get_Rinka(cur_enemy_index);
   if (E->rinka_parameter_1) {
     Rinka_1(cur_enemy_index);
-    E->base.properties = E->base.properties & ~(kEnemyProps_RespawnIfKilled | kEnemyProps_DisableSamusColl | kEnemyProps_ProcessedOffscreen | kEnemyProps_Tangible) | 0x2C00;
+    E->base.properties = E->base.properties & ~(kEnemyProps_RespawnIfKilled | kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible) | 0x2C00;
   } else {
-    E->base.properties = E->base.properties & ~(kEnemyProps_RespawnIfKilled | kEnemyProps_DisableSamusColl | kEnemyProps_ProcessedOffscreen | kEnemyProps_Tangible) | 0x6400;
+    E->base.properties = E->base.properties & ~(kEnemyProps_RespawnIfKilled | kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible) | 0x6400;
   }
   E->base.palette_index = 1024;
   Rinka_Init3(cur_enemy_index);
@@ -2028,9 +2028,9 @@ void Rinka_3(uint16 k) {  // 0xA2B7DF
     E->rinka_var_A = FUNC16(Rinka_B85B);
     uint16 v3;
     if (E->rinka_parameter_1)
-      v3 = E->base.properties & ~kEnemyProps_Tangible;
+      v3 = E->base.properties & ~kEnemyProps_Intangible;
     else
-      v3 = E->base.properties & 0xF3FF | 0x800;
+      v3 = E->base.properties & ~(kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible) | kEnemyProps_ProcessedOffscreen;
     E->base.properties = v3;
     uint16 r18 = (uint8)-(CalculateAngleFromXY(samus_x_pos - E->base.x_pos, samus_y_pos - E->base.y_pos) + 0x80);
     E->rinka_var_B = Math_MultBySin(0x120, r18);
@@ -2083,9 +2083,9 @@ void Rinka_6(uint16 k) {  // 0xA2B880
 void Rinka_7(uint16 k) {  // 0xA2B89C
   Enemy_Rinka *E = Get_Rinka(k);
   if ((random_enemy_counter & 3) == E->rinka_parameter_1)
-    E->base.properties &= ~kEnemyProps_Tangible;
+    E->base.properties &= ~kEnemyProps_Intangible;
   else
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
 }
 
 void Rinka_8(uint16 k) {  // 0xA2B8BB
@@ -2167,7 +2167,7 @@ void Rinka_B960(uint16 k) {  // 0xA2B960
     Rinka_6(k);
     Rinka_8(k);
     if (E->rinka_parameter_1) {
-      E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Invisible;
+      E->base.properties |= kEnemyProps_Intangible | kEnemyProps_Invisible;
       eproj_spawn_pt = (Point16U){ E->base.x_pos, E->base.y_pos };
       SpawnEprojWithRoomGfx(0xE509, 3);
       E->rinka_var_A = FUNC16(Rinka_4);
@@ -2188,19 +2188,19 @@ uint16 Rinka_Instr_B9A2(uint16 k, uint16 j) {  // 0xA2B9A2
 
 const uint16 *Rinka_Instr_B9B3(uint16 k, const uint16 *jp) {  // 0xA2B9B3
   Enemy_Rinka *E = Get_Rinka(k);
-  E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Invisible;
+  E->base.properties |= kEnemyProps_Intangible | kEnemyProps_Invisible;
   return jp;
 }
 
 const uint16 *Rinka_Instr_B9BD(uint16 k, const uint16 *jp) {  // 0xA2B9BD
   Enemy_Rinka *E = Get_Rinka(k);
-  E->base.properties |= kEnemyProps_ProcessedOffscreen | kEnemyProps_Tangible | kEnemyProps_Invisible;
+  E->base.properties |= kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible | kEnemyProps_Invisible;
   return jp;
 }
 
 const uint16 *Rinka_Instr_B9C7(uint16 k, const uint16 *jp) {  // 0xA2B9C7
   Enemy_Rinka *E = Get_Rinka(k);
-  E->base.properties &= ~(kEnemyProps_Tangible | kEnemyProps_Invisible);
+  E->base.properties &= ~(kEnemyProps_Intangible | kEnemyProps_Invisible);
   E->rinka_var_A = FUNC16(Rinka_3);
   Enemy_Rinka *E0 = Get_Rinka(0);
   ++E0->rinka_var_1E;
@@ -3286,7 +3286,7 @@ void LavaSeahorse_Init(void) {  // 0xA2E606
     E->lse_var_00 = 2;
     E->lse_var_01 = 2;
     E->base.current_instruction = addr_kLavaSeahorse_Ilist_E5A1;
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     E->lse_var_F = FUNC16(nullsub_196);
   } else {
     E->lse_var_00 = 0;
@@ -3419,7 +3419,7 @@ void LavaSeahorse_E7DA(void) {  // 0xA2E7DA
     E1->base.ai_handler_bits = E->base.ai_handler_bits;
   } else {
     Enemy_LavaSeahorse *E1 = Get_LavaSeahorse(cur_enemy_index + 64);
-    E1->base.properties |= 0x200;
+    E1->base.properties |= kEnemyProps_Deleted;
   }
 }
 

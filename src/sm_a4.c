@@ -370,7 +370,7 @@ void Crocomire_Init(void) {  // 0xA48A5A
     scrolls[3] = scrolls[2] = scrolls[1] = scrolls[0] = kScroll_Blue;
     croco_target_0688 = 0;
     Enemy_Crocomire *E = Get_Crocomire(0);
-    E->base.properties = E->base.properties & 0x7BFF | 0x400;
+    E->base.properties = E->base.properties & ~(kEnemyProps_EnableSamusColl) | kEnemyProps_Intangible;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 32, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 30, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 97, .y_pos = 11, .plm_id_ = addr_kPlmHeader_B747_Crocomire_ClearBridge });
@@ -616,11 +616,11 @@ void Crocomire_Func_37(void) {  // 0xA48D5E
       SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 78, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall });
       EK->base.current_instruction = addr_kCrocomire_Ilist_BFB0;
       EK->base.instruction_timer = 1;
-      EK->base.properties |= kEnemyProps_Tangible;
+      EK->base.properties |= kEnemyProps_Intangible;
       Enemy_Crocomire *E1 = Get_Crocomire(cur_enemy_index + 64);
       E1->base.instruction_timer = 0x7FFF;
       E1->base.current_instruction = addr_kCrocomire_Ilist_BF62;
-      Get_Crocomire(0x40)->base.properties |= 0x100;
+      Get_Crocomire(0x40)->base.properties |= kEnemyProps_Invisible;
       EK->crocom_var_E = 0;
       EK->crocom_var_F = 0;
       EK->crocom_var_D = 2048;
@@ -731,7 +731,7 @@ void Crocomire_Func_49(void) {  // 0xA49099
     E->base.current_instruction = addr_kCrocomire_Ilist_E1D2;
     scrolls[5] = scrolls[4] = kScroll_Blue;
     debug_disable_minimap = 0;
-    Get_Crocomire(0x40)->base.properties |= 0x200;
+    Get_Crocomire(0x40)->base.properties |= kEnemyProps_Deleted;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 78, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
     camera_distance_index = 0;
     croco_target_0688 = 0;
@@ -942,7 +942,7 @@ void Crocomire_Func_57(void) {  // 0xA49341
   Enemy_Crocomire *E1 = Get_Crocomire(cur_enemy_index + 64);
   E1->base.current_instruction = addr_kCrocomire_Ilist_BF98;
   E1->base.instruction_timer = 1;
-  E1->base.properties = E1->base.properties & 0xD2FF | 0x2C00;
+  E1->base.properties = E1->base.properties & ~(kEnemyProps_Invisible) | (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible);
   E1->base.x_pos = E->base.x_pos;
   E1->base.y_pos = E->base.y_pos + 16;
   uint16 v3 = 0;
@@ -1239,9 +1239,9 @@ void Crocomire_Func_68(void) {  // 0xA497D3
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 48, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall });
     camera_distance_index = 6;
     Enemy_Crocomire *E0 = Get_Crocomire(0);
-    E0->base.properties = E0->base.properties & 0x7BFF | kEnemyProps_Tangible;
+    E0->base.properties = E0->base.properties & ~(kEnemyProps_EnableSamusColl) | kEnemyProps_Intangible;
     Enemy_Crocomire *E1 = Get_Crocomire(0x40);
-    E1->base.properties |= 0x500;
+    E1->base.properties |= (kEnemyProps_Intangible | kEnemyProps_Invisible);
     E0->crocom_var_D = 4;
     E1->crocom_var_D = 0;
     Get_Crocomire(0x80)->crocom_var_D = 10;
@@ -1616,8 +1616,9 @@ void Crocomire_Func_1(void) {  // 0xA4BAB4
 void CrocomireTongue_Init(void) {  // 0xA4F67A
   Enemy_Crocomire *E = Get_Crocomire(cur_enemy_index);
   if ((*(uint16 *)&boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0) {
-    E->base.properties = E->base.properties & 0xDCFF | 0x300;
-  } else {
+    E->base.properties = E->base.properties & ~(kEnemyProps_ProcessInstructions) | (kEnemyProps_Deleted | kEnemyProps_Invisible);
+  }
+  else {
     E->base.current_instruction = addr_kCrocomire_Ilist_BE56;
     E->base.extra_properties |= 0x404;
     E->base.instruction_timer = 1;

@@ -36,8 +36,8 @@ void SetGoldenTorizoPalette(uint16 torizo_health) {  // 0x848000
 void LoadRoomPlmGfx(void) {  // 0x848232
   plm_item_gfx_index = 0;
   for (int item_plm_idx = 0; item_plm_idx < 8; item_plm_idx += 2) {
-	if (plm_item_gfx_ptrs[item_plm_idx >> 1] != 0)
-	  PlmInstr_LoadItemPlmGfx(RomPtr_84(plm_item_gfx_ptrs[item_plm_idx >> 1]), item_plm_idx);
+    if (plm_item_gfx_ptrs[item_plm_idx >> 1] != 0)
+      PlmInstr_LoadItemPlmGfx(RomPtr_84(plm_item_gfx_ptrs[item_plm_idx >> 1]), item_plm_idx);
   }
 }
 
@@ -227,7 +227,7 @@ void PlmPreInstr_Empty2(void) {  // 0x8484E6
 * @return uint8 0 if no PLM could be spawned, otherwise it depends on the PLM function
 */
 uint8 SpawnPLM(uint16 plm_id_) {  // 0x8484E7
-  uint16 plm_idx = MAX_PLMS-2;
+  int16 plm_idx = MAX_PLMS-2;
   while (plm_header_ptr[plm_idx >> 1] != 0) {
     plm_idx -= 2;
     if (plm_idx < 0)
@@ -258,7 +258,7 @@ CoroutineRet PlmHandler_Async(void) {  // 0x8485B4
   if (!(plm_flag & PLMS_ENABLED))
     return kCoroutineNone;
   plm_draw_tilemap_index = 0;
-  for (plm_id = MAX_PLMS-2; (int16)plm_id < 0; plm_id -= 2) {
+  for (plm_id = MAX_PLMS-2; (int16)plm_id >= 0; plm_id -= 2) {
     if (plm_header_ptr[plm_id >> 1] == 0)
       continue;
     CallPlmPreInstr(plm_pre_instrs[plm_id >> 1] | 0x840000, plm_id);
@@ -2172,7 +2172,7 @@ uint8 PlmSetup_B6FF_ScrollBlockTouch(uint16 plm_idx) {  // 0x84B393
   int idx = plm_idx >> 1;
   uint16 plm_blk_idx = plm_block_indices[idx];
   plm_block_indices[idx] = 0;
-  uint16 blk_idx = MAX_PLMS-2;
+  int16 blk_idx = MAX_PLMS-2;
   while (plm_blk_idx != plm_block_indices[blk_idx >> 1]) {
     blk_idx -= 2;
     if (blk_idx < 0) {
@@ -2529,7 +2529,7 @@ uint8 PlmSetup_B76B_SaveStationTrigger(uint16 plm_idx) {  // 0x84B590
       uint16 plm_blk_idx = plm_block_indices[idx];
       plm_block_indices[idx] = 0;
       plm_header_ptr[idx] = 0;
-      uint16 blk_idx = MAX_PLMS-2;
+      int16 blk_idx = MAX_PLMS-2;
       while (plm_blk_idx != plm_block_indices[blk_idx >> 1]) {
         blk_idx -= 2;
         if (blk_idx < 0)
@@ -3306,7 +3306,7 @@ uint8 TriggerPlmOfBlockToTheLeft(uint16 plm_idx) {  // 0x84C647
 * @return 1
 */
 uint8 TriggerPlmAtBlockIndex(uint16 plm_idx, uint16 plm_blk_idx) {  // 0x84C64C
-  uint16 blk_idx = MAX_PLMS-2;
+  int16 blk_idx = MAX_PLMS-2;
   while (plm_blk_idx != plm_block_indices[blk_idx >> 1]) {
     blk_idx -= 2;
     if (blk_idx < 0)
@@ -3550,7 +3550,7 @@ uint8 PlmSetup_Door_Blue(uint16 plm_idx) {  // 0x84C7BB
   int proj_idx = projectile_index >> 1;
   int proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
   // Not sure why it checks for the index to be greater than 0, that's not done in the original code
-  if ((int16)projectile_index >= 0 && proj_type == kProjectileType_PowerBomb) {
+  if (!sign16(projectile_index) && proj_type == kProjectileType_PowerBomb) {
     plm_header_ptr[idx] = 0;
   }
   else {
@@ -3569,7 +3569,7 @@ uint8 PlmSetup_C7E2_GenericShotTrigger(uint16 plm_idx) {  // 0x84C7E2
   int idx = plm_idx >> 1;
   uint16 plm_blk_idx = plm_block_indices[idx];
   plm_block_indices[idx] = 0;
-  uint16 blk_idx = MAX_PLMS-2;
+  int16 blk_idx = MAX_PLMS-2;
   while (plm_blk_idx != plm_block_indices[blk_idx >> 1]) {
     blk_idx -= 2;
     if (blk_idx < 0)

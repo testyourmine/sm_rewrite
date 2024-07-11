@@ -247,7 +247,7 @@ void MotherBrainsBody_Init(void) {  // 0xA98687
   MotherBrain_SetBodyInstrs(addr_kMotherBrain_Ilist_Initial_Dummy);
   Enemy_MotherBrain *E = Get_MotherBrain(0);
   E->base.vram_tiles_index = 0;
-  E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Tangible | kEnemyProps_Invisible;
+  E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Intangible | kEnemyProps_Invisible;
   E->base.palette_index = 0;
   WriteColorsToTargetPalette(0xa9, 0x162, addr_kMotherBrainPalette3_GlassShards + 2, 0xF);
   WriteColorsToTargetPalette(0xa9, 0x1E2, addr_kMotherBrainPalette7_TubeProjectiles + 2, 0xF);
@@ -273,7 +273,7 @@ void MotherBrainsBrain_Init(void) {  // 0xA98705
   E1->base.health = 3000;
   MotherBrain_SetBrainUnusedInstrs(addr_kMotherBrain_Ilist_Initial_Dummy);
   E1->base.vram_tiles_index = 0;
-  E1->base.properties |= 0x1100;
+  E1->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Invisible;
   E1->base.palette_index = 512;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
   E->mbn_var_0C = 512;
@@ -748,8 +748,8 @@ void MotherBrainBody_FakeDeath_Ascent_7_SetupPhase2Brain(void) {  // 0xA98D49
   Enemy_MotherBrainBody *E = Get_MotherBrainBody(0x40);
   E->mbby_var_A = FUNC16(MotherBrainsBrain_SetupBrainAndNeckToDraw);
   Enemy_MotherBrainBody *E0 = Get_MotherBrainBody(0);
-  E0->base.properties &= ~kEnemyProps_Tangible;
-  E->base.properties &= ~0x400;
+  E0->base.properties &= ~kEnemyProps_Intangible;
+  E->base.properties &= ~kEnemyProps_Intangible;
   E->base.health = 18000;
   E0->mbby_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_8_Pause);
   E0->mbby_var_F = 128;
@@ -770,7 +770,7 @@ void MotherBrainBody_FakeDeath_Ascent_9_PrepareRise(void) {  // 0xA98D8B
   if ((--E->mbn_var_F & 0x8000) != 0) {
     E->mbn_var_09 = MotherBrainRisingHdmaObject();
     Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
-    E1->base.properties |= 0x100;
+    E1->base.properties |= kEnemyProps_Invisible;
     MotherBrain_SetBrainInstrs(addr_kMotherBrain_Ilist_Initial);
     E->mbn_var_A = FUNC16(MotherBrainBody_FakeDeath_Ascent_10_LoadLegTiles);
     E->mbn_var_F = 256;
@@ -1143,7 +1143,7 @@ LABEL_10:
 }
 
 void MotherBrain_DrawNeck(void) {  // 0xA99303
-  if ((Get_MotherBrain(0)->base.properties & kEnemyProps_Invisible) == 0) {
+  if (!(Get_MotherBrain(0)->base.properties & kEnemyProps_Invisible)) {
     Enemy_MotherBrain *E = Get_MotherBrain(0x40);
     MotherBrain_DrawNeckSegment(E->mbn_var_2E, E->mbn_var_2F);
     MotherBrain_DrawNeckSegment(E->mbn_var_2B, E->mbn_var_2C);
@@ -1585,9 +1585,9 @@ uint16 MotherBrain_Instr_SetupFxForRainbowBeam(uint16 k) {  // 0xA99F8E
 
 void MotherBrain_Phase3_Death_0(void) {  // 0xA9AEE1
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
-  E1->base.properties |= 0x400;
+  E1->base.properties |= kEnemyProps_Intangible;
   E->mbn_var_04 = 0;
   if (MotherBrain_MakeWalkBackwards(0x28, 6) & 1) {
     E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_1);
@@ -1663,7 +1663,7 @@ void MotherBrain_Phase3_Death_5(void) {  // 0xA9AFB6
       for (int i = 710; i >= 0; i -= 2)
         tilemap_stuff[i >> 1] = 824;
       nmi_flag_bg2_enemy_vram_transfer = 1;
-      E->base.properties = E->base.properties & 0xDEFF | 0x100;
+      E->base.properties = E->base.properties & ~(kEnemyProps_ProcessInstructions) | kEnemyProps_Invisible;
       E->base.extra_properties = 0;
       E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_6);
       E->mbn_var_F = 16;
@@ -1781,7 +1781,7 @@ void MotherBrain_Phase3_Death_12(void) {  // 0xA9B1B8
   if ((--E->mbn_var_F & 0x8000) != 0) {
     E->mbn_var_A = FUNC16(MotherBrain_Phase3_Death_13);
     Enemy_MotherBrain *E1 = Get_MotherBrain(0x40);
-    E1->base.properties |= 0x400;
+    E1->base.properties |= kEnemyProps_Intangible;
     E->mbn_var_04 = 0;
   }
 }
@@ -1792,7 +1792,7 @@ void MotherBrain_Phase3_Death_13(void) {  // 0xA9B1D5
     ProcessCorpseRottingVramTransfers(dms_var_53);
   } else {
     Enemy_DeadMonsters *E1 = Get_DeadMonsters(0x40);
-    E1->base.properties = E1->base.properties & 0xDEFF | 0x100;
+    E1->base.properties = E1->base.properties & ~(kEnemyProps_ProcessInstructions) | kEnemyProps_Invisible;
     E1->base.extra_properties = 0;
     QueueMusic_Delayed8(kMusic_Stop);
     QueueMusic_Delayed8(kMusic_BossFight1);
@@ -3495,7 +3495,7 @@ LABEL_4:
 
 void ShitroidInCutscene_Init(void) {  // 0xA9C710
   Enemy_ShitroidInCutscene *E = Get_ShitdroidInCutscene(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl | kEnemyProps_BlockPlasmaBeam;
+  E->base.properties |= kEnemyProps_ProcessInstructions | kEnemyProps_BlockPlasmaBeam;
   E->base.palette_index = 3584;
   E->base.current_instruction = addr_kShitroid_Ilist_Initial;
   E->base.instruction_timer = 1;
@@ -4251,7 +4251,7 @@ void DeadTorizo_Init(void) {  // 0xA9D308
     tilemap_stuff[i >> 1] = 0;
   Enemy_DeadTorizo *E = Get_DeadTorizo(0);
   E->dto_var_A = FUNC16(DeadTorizo_WaitForSamusColl);
-  E->base.properties |= 0xA000;
+  E->base.properties |= kEnemyProps_EnableSamusColl | kEnemyProps_ProcessInstructions;
   E->base.current_instruction = addr_kDeadTorizo_Ilist_Initial;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -4276,8 +4276,8 @@ void CallDeadTorizoFuncA(uint32 ea) {
 
 void DeadTorizo_Main(void) {  // 0xA9D368
   Enemy_DeadTorizo *E = Get_DeadTorizo(0);
-  if ((E->base.properties & kEnemyProps_Tangible) == 0 && DeadTorizo_Func_0() & 1) {
-    E->base.properties |= kEnemyProps_Tangible;
+  if (!(E->base.properties & kEnemyProps_Intangible) && DeadTorizo_Func_0() & 1) {
+    E->base.properties |= kEnemyProps_Intangible;
     E->dto_var_A = FUNC16(DeadTorizo_Rotting);
   }
   mov24(&enemy_gfx_drawn_hook, 0xA9D39A);
@@ -4303,7 +4303,7 @@ void DeadTorizo_PreRotDelay(void) {  // 0xA9D3C8
   uint16 v1 = E->dto_var_04 + 1;
   E->dto_var_04 = v1;
   if (v1 >= 0x10) {
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     E->dto_var_A = FUNC16(DeadTorizo_Rotting);
     DeadTorizo_Rotting();
   }
@@ -4328,13 +4328,13 @@ void DeadTorizo_Rotting(void) {  // 0xA9D3E6
 }
 
 void DeadTorizo_Powerbomb(void) {  // 0xA9D42A
-  if ((Get_DeadTorizo(0)->base.properties & kEnemyProps_Tangible) == 0)
+  if (!(Get_DeadTorizo(0)->base.properties & kEnemyProps_Intangible))
     DeadTorizo_Shot();
 }
 
 void DeadTorizo_Shot(void) {  // 0xA9D433
   Enemy_DeadTorizo *E = Get_DeadTorizo(0);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   E->dto_var_A = FUNC16(DeadTorizo_Rotting);
 }
 
@@ -4461,7 +4461,7 @@ void DeadSidehopper_Init(void) {  // 0xA9D7B6
 
 void DeadSidehopper_Init_0(void) {  // 0xA9D7C4
   Enemy_DeadSidehopper *E = Get_DeadSidehopper(cur_enemy_index);
-  E->base.properties = E->base.properties & 0x77FF | kEnemyProps_ProcessedOffscreen;
+  E->base.properties = E->base.properties & ~(kEnemyProps_EnableSamusColl) | kEnemyProps_ProcessedOffscreen;
   if ((Get_DeadSidehopper(0)->base.properties & kEnemyProps_Invisible) != 0)
     E->base.properties |= kEnemyProps_Deleted;
   E->dsr_var_08 = 0;
@@ -4637,7 +4637,7 @@ void DeadMonsters_Func_5(uint16 k) {  // 0xA9DA08
     if (v5 >= 8) {
       Enemy_SetInstrList(v3, addr_kDeadMonsters_Ilist_SidehopperAlive_Corpse);
       E->dms_var_A = FUNC16(DeadSidehopper_WaitForSamusColl);
-      E->base.properties |= 0x8000;
+      E->base.properties |= kEnemyProps_EnableSamusColl;
       E->base.y_height = 12;
     }
   }
@@ -4688,7 +4688,7 @@ void DeadMonsters_PreRotDelay_Common(uint16 k, uint16 j) {  // 0xA9DAA1
   Enemy_DeadMonsters *E = Get_DeadMonsters(k);
   if (++E->dms_var_B >= 0x10) {
     E->dms_var_A = j;
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
   }
 }
 
@@ -4861,7 +4861,7 @@ void ProcessCorpseRottingVramTransfers(uint16 k) {  // 0xA9DCB9
 }
 
 void DeadZoomer_Powerbomb(void) {  // 0xA9DCED
-  if ((gEnemyData(cur_enemy_index)->properties & kEnemyProps_Tangible) == 0)
+  if ((gEnemyData(cur_enemy_index)->properties & kEnemyProps_Intangible) == 0)
     DeadZoomer_Shot();
 }
 
@@ -4870,7 +4870,7 @@ void DeadZoomer_Shot(void) {  // 0xA9DCF8
 }
 
 void DeadRipper_Powerbomb(void) {  // 0xA9DCFD
-  if ((gEnemyData(cur_enemy_index)->properties & kEnemyProps_Tangible) == 0)
+  if ((gEnemyData(cur_enemy_index)->properties & kEnemyProps_Intangible) == 0)
     DeadRipper_Shot();
 }
 
@@ -4879,7 +4879,7 @@ void DeadRipper_Shot(void) {  // 0xA9DD08
 }
 
 void DeadSkree_Powerbomb(void) {  // 0xA9DD0D
-  if ((gEnemyData(cur_enemy_index)->properties & kEnemyProps_Tangible) == 0)
+  if ((gEnemyData(cur_enemy_index)->properties & kEnemyProps_Intangible) == 0)
     DeadSkree_Shot();
 }
 
@@ -4889,7 +4889,7 @@ void DeadSkree_Shot(void) {  // 0xA9DD18
 
 void DeadSidehopper_Shot(void) {  // 0xA9DD1D
   Enemy_DeadSidehopper *E = Get_DeadSidehopper(cur_enemy_index);
-  if ((E->base.properties & kEnemyProps_Tangible) != 0 || E->dsr_var_08 < 8)
+  if ((E->base.properties & kEnemyProps_Intangible) != 0 || E->dsr_var_08 < 8)
     ;
   else
     DeadSidehopper_DD31();
@@ -4902,7 +4902,7 @@ void DeadSidehopper_DD31(void) {  // 0xA9DD31
 void DeadSidehopper_DD34(uint16 a) {  // 0xA9DD34
   Enemy_DeadSidehopper *E = Get_DeadSidehopper(cur_enemy_index);
   E->dsr_var_A = a;
-  E->base.properties |= kEnemyProps_ProcessedOffscreen | kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible;
 }
 
 void DeadSidehopper_Touch(void) {  // 0xA9DD44
@@ -5814,14 +5814,14 @@ void Shitroid_Init(void) {  // 0xA9EF37
   for (int i = 4094; i >= 0; i -= 2)
     tilemap_stuff[i >> 1] = 0;
   Enemy_Shitroid *E = Get_Shitroid(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl | kEnemyProps_BlockPlasmaBeam;
+  E->base.properties |= kEnemyProps_ProcessInstructions | kEnemyProps_BlockPlasmaBeam;
   E->base.palette_index = 1024;
   E->base.current_instruction = addr_kShitroid_Ilist_Normal;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   uint16 v2 = FUNC16(Shitroid_Func_4);
   if ((layer1_x_pos & 0x8000) != 0) {
-    E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Invisible;
+    E->base.properties |= kEnemyProps_Intangible | kEnemyProps_Invisible;
     v2 = FUNC16(Shitroid_Func_3);
   }
   E->shitr_var_A = v2;
@@ -6114,7 +6114,7 @@ void Shitroid_Func_23(void) {  // 0xA9F36D
     Enemy_Shitroid *E = Get_Shitroid(cur_enemy_index);
     E->shitr_var_B = 0;
     E->shitr_var_C = 0;
-    E->base.properties &= ~(kEnemyProps_DisableSamusColl | kEnemyProps_Invisible);
+    E->base.properties &= ~(kEnemyProps_ProcessInstructions | kEnemyProps_Invisible);
     E->shitr_var_A = FUNC16(Shitroid_Func_3);
   }
 }

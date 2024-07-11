@@ -24,11 +24,14 @@ static const int16 g_word_AAC532[20] = {
   -5, 0,   -5, -0x13, -0x10, -7, 0, -7, -0x11, -0x12, 5, 0, 5, 0x13, 0x10, 7,
    0, 7, 0x11,  0x12,
 };
-static const int16 g_word_AAC95F[2] = { 0xdb, 0x1a8 };
-static const int16 g_word_AAC963[2] = { 0xb3, 0x90 };
-static const int16 g_word_AAC96B[2] = { 0x2800, 0x2800 };
-static const int16 g_word_AAC96F[2] = { 0x12, 0x12 };
-static const int16 g_word_AAC973[2] = { 0x30, 0x29 };
+static const int16 kTorizoInit_XPos[2] = { 0xdb, 0x1a8 };
+static const int16 kTorizoInit_YPos[2] = { 0xb3, 0x90 };
+static const int16 kTorizoInit_Properties[2] = {
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen),
+};
+static const int16 kTorizoInit_XRadius[2] = { 0x12, 0x12 };
+static const int16 kTorizoInit_YRadius[2] = { 0x30, 0x29 };
 
 static const uint16 kTorizo_Palette[16] = { 0x3800, 0x3ff, 0x33b, 0x216, 0x113, 0x6b1e, 0x4a16, 0x3591, 0x20e9, 0x1580, 0x1580, 0x1580, 0x1580, 0x1580, 0x1580, 0x1580 };
 static const uint16 kTorizo_Palettes_1[16] = { 0x3800, 0x2df, 0x1d7, 0xac, 0x5a73, 0x41ad, 0x2d08, 0x1863, 0x1486, 0x145, 0x145, 0x145, 0x7fff, 0x145, 0x145, 0 };
@@ -508,13 +511,13 @@ void Torizo_Func_3(uint16 k) {  // 0xAAC6BF
 
 void Torizo_Func_4(uint16 k) {  // 0xAAC6C6
   Enemy_Torizo *E = Get_Torizo(k);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   uint16 v2 = 78;
   while (plm_header_ptr[v2 >> 1] != addr_kPlmHeader_D6EA_BombTorizo_CrumbleChozo) {
     v2 -= 2;
     if ((v2 & 0x8000) != 0) {
       QueueMusic_Delayed8(g_word_AAB096);
-      E->base.properties &= ~kEnemyProps_Tangible;
+      E->base.properties &= ~kEnemyProps_Intangible;
       E->base.current_instruction += 2;
       E->base.instruction_timer = 1;
       return;
@@ -632,10 +635,10 @@ void Torizo_Init(void) {  // 0xAAC87F
     E->base.properties |= kEnemyProps_Deleted;
   } else {
     int v2 = area_index >> 1;
-    E->base.properties |= g_word_AAC96B[v2];
+    E->base.properties |= kTorizoInit_Properties[v2];
     E->base.extra_properties |= 4;
-    E->base.x_width = g_word_AAC96F[v2];
-    E->base.y_height = g_word_AAC973[v2];
+    E->base.x_width = kTorizoInit_XRadius[v2];
+    E->base.y_height = kTorizoInit_YRadius[v2];
     E->toriz_var_E = FUNC16(Torizo_Func_3);
     E->base.instruction_timer = 1;
     E->base.timer = 0;
@@ -643,8 +646,8 @@ void Torizo_Init(void) {  // 0xAAC87F
     E->toriz_var_F = addr_locret_AAC95E;
     E->base.current_instruction = kEnemyInit_Torizo_InstrListPtrs[v2];
     E->base.spritemap_pointer = addr_kTorizo_ExtSprmap_87D0;
-    E->base.x_pos = g_word_AAC95F[v2];
-    E->base.y_pos = g_word_AAC963[v2];
+    E->base.x_pos = kTorizoInit_XPos[v2];
+    E->base.y_pos = kTorizoInit_YPos[v2];
     E->toriz_var_A = 0;
     E->toriz_var_B = 256;
     for (int i = 0x1E; i >= 0; i -= 2) {
@@ -693,7 +696,7 @@ void Torizo_Shot(void) {  // 0xAAC97C
         E->base.current_instruction = addr_kTorizo_Ilist_B1C8;
         E->base.instruction_timer = 1;
         E->toriz_parameter_2 |= 0xC000;
-        E->base.properties |= kEnemyProps_Tangible;
+        E->base.properties |= kEnemyProps_Intangible;
       }
     }
   }
@@ -1025,7 +1028,7 @@ void Torizo_D6A6(void) {  // 0xAAD6A6
     E->base.current_instruction = addr_kTorizo_Ilist_B1C8;
     E->base.instruction_timer = 1;
     E->toriz_parameter_2 |= 0xC000;
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
   }
 }
 
@@ -1388,13 +1391,13 @@ void Shaktool_Shot(void) {  // 0xAADF34
   Enemy_Shaktool *E = Get_Shaktool(cur_enemy_index);
   if (!E->base.health) {
     uint16 shakto_var_E = E->shakt_var_E;
-    Get_Shaktool(shakto_var_E)->base.properties = 512;
-    Get_Shaktool(shakto_var_E + 64)->base.properties = 512;
-    Get_Shaktool(shakto_var_E + 128)->base.properties = 512;
-    Get_Shaktool(shakto_var_E + 192)->base.properties = 512;
-    Get_Shaktool(shakto_var_E + 256)->base.properties = 512;
-    Get_Shaktool(shakto_var_E + 320)->base.properties = 512;
-    Get_Shaktool(shakto_var_E + 384)->base.properties = 512;
+    Get_Shaktool(shakto_var_E)->base.properties = kEnemyProps_Deleted;
+    Get_Shaktool(shakto_var_E + 0x40)->base.properties = kEnemyProps_Deleted;
+    Get_Shaktool(shakto_var_E + 0x80)->base.properties = kEnemyProps_Deleted;
+    Get_Shaktool(shakto_var_E + 0xC0)->base.properties = kEnemyProps_Deleted;
+    Get_Shaktool(shakto_var_E + 0x100)->base.properties = kEnemyProps_Deleted;
+    Get_Shaktool(shakto_var_E + 0x140)->base.properties = kEnemyProps_Deleted;
+    Get_Shaktool(shakto_var_E + 0x180)->base.properties = kEnemyProps_Deleted;
   }
 }
 
@@ -1472,7 +1475,7 @@ void N00bTubeCracks_Init(void) {  // 0xAAE716
 
 void ChozoStatue_Init(void) {  // 0xAAE725
   EnemyData *v0 = gEnemyData(cur_enemy_index);
-  v0->properties |= kEnemyProps_DisableSamusColl | kEnemyProps_ProcessedOffscreen | 0x8000;
+  v0->properties |= kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | 0x8000;
   v0->spritemap_pointer = addr_kSpritemap_Nothing_AA;
   v0->instruction_timer = 1;
   v0->timer = 0;

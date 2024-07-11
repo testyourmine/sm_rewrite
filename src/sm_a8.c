@@ -361,8 +361,8 @@ void MiniDraygon_Func_13(void) {  // 0xA88B16
   Enemy_MiniDraygon *E1 = Get_MiniDraygon(cur_enemy_index + 64);
   Enemy_MiniDraygon *E2 = Get_MiniDraygon(cur_enemy_index + 128);
   if (!E->base.health) {
-    E1->base.properties |= 0x200;
-    E2->base.properties |= 0x200;
+    E1->base.properties |= kEnemyProps_Deleted;
+    E2->base.properties |= kEnemyProps_Deleted;
   }
   uint16 frozen_timer = E->base.frozen_timer;
   if (frozen_timer) {
@@ -377,7 +377,7 @@ void MiniDraygon_Func_13(void) {  // 0xA88B16
 
 void MorphBallEye_Init(void) {  // 0xA89058
   Enemy_MorphBallEye *E = Get_MorphBallEye(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.spritemap_pointer = addr_kSpritemap_Nothing_A8;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -576,7 +576,7 @@ void Fune_Func_4(void) {  // 0xA8979B
 
 void WreckedShipGhost_Init(void) {  // 0xA89AEE
   Enemy_WreckedShipGhost *E = Get_WreckedShipGhost(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl | kEnemyProps_Tangible | kEnemyProps_Invisible;
+  E->base.properties |= kEnemyProps_ProcessInstructions | kEnemyProps_Intangible | kEnemyProps_Invisible;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->base.current_instruction = addr_kWreckedShipGhost_Ilist_9A8C;
@@ -641,7 +641,7 @@ void WreckedShipGhost_Func_2(uint16 k) {  // 0xA89BAD
   WreckedShipGhost_Func_3(cur_enemy_index);
   Enemy_WreckedShipGhost *E = Get_WreckedShipGhost(cur_enemy_index);
   if (!(E->wsgt_var_B | v4)) {
-    E->base.properties &= 0xFAFF;
+    E->base.properties &= ~(kEnemyProps_Intangible | kEnemyProps_Invisible);
     E->wsgt_var_A = FUNC16(WreckedShipGhost_Func_5);
     E->wsgt_var_00 = E->base.y_pos;
     E->wsgt_var_B = 1;
@@ -707,7 +707,7 @@ void WreckedShipGhost_Func_5(uint16 k) {  // 0xA89C8A
   AddToHiLo(&E->wsgt_var_02, &E->wsgt_var_01, ((int16)(E->base.y_pos - E->wsgt_var_00) < 0) ? g_word_A89AA0 : -g_word_A89AA0);
   if (--E->wsgt_var_B == 0) {
     E->wsgt_var_A = FUNC16(WreckedShipGhost_Func_4);
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     // todo: this must be swap16 it seems
     int t = swap16(E->base.palette_index);
     uint16 v9 = 16 * t + 256;
@@ -1259,7 +1259,7 @@ void YappingMaw_Func_19(void) {  // 0xA8A899
 
 void Kago_Init(void) {  // 0xA8AB46
   Enemy_Kago *E = Get_Kago(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->kago_var_E = 0;
@@ -1360,9 +1360,9 @@ const uint16 *NorfairLavaMan_Instr_9(uint16 k, const uint16 *jp) {  // 0xA8AE64
   E->base.y_pos = v4;
   Enemy_NorfairLavaMan *E1 = Get_NorfairLavaMan(cur_enemy_index + 64);
   E1->base.y_pos = v4;
-  E1->base.properties &= ~0x100;
+  E1->base.properties &= ~kEnemyProps_Invisible;
   Enemy_NorfairLavaMan *E2 = Get_NorfairLavaMan(cur_enemy_index + 128);
-  E2->base.properties &= ~0x100;
+  E2->base.properties &= ~kEnemyProps_Invisible;
   return jp;
 }
 
@@ -1380,9 +1380,9 @@ const uint16 *NorfairLavaMan_Instr_13(uint16 k, const uint16 *jp) {  // 0xA8AE96
   E->base.y_pos = v4;
   Enemy_NorfairLavaMan *E1 = Get_NorfairLavaMan(cur_enemy_index + 64);
   E1->base.y_pos = v4;
-  E1->base.properties |= 0x100;
+  E1->base.properties |= kEnemyProps_Invisible;
   Enemy_NorfairLavaMan *E2 = Get_NorfairLavaMan(cur_enemy_index + 128);
-  E2->base.properties |= 0x100;
+  E2->base.properties |= kEnemyProps_Invisible;
   return jp;
 }
 
@@ -1742,9 +1742,9 @@ void NorfairLavaMan_Common(void) {  // 0xA8B410
   Enemy_NorfairLavaMan *E = Get_NorfairLavaMan(cur_enemy_index);
   Enemy_NorfairLavaMan *E1 = Get_NorfairLavaMan(cur_enemy_index + 64);
   Enemy_NorfairLavaMan *E2 = Get_NorfairLavaMan(cur_enemy_index + 128);
-  if (!E->base.health) {
-    E1->base.properties |= 0x200;
-    E2->base.properties |= 0x200;
+  if (E->base.health == 0) {
+    E1->base.properties |= kEnemyProps_Deleted;
+    E2->base.properties |= kEnemyProps_Deleted;
   }
   uint16 frozen_timer = E->base.frozen_timer;
   if (frozen_timer) {
@@ -2254,7 +2254,7 @@ void Beetom_Shot(void) {  // 0xA8BEAC
 
 void MaridiaFloater_Init(void) {  // 0xA8C1C9
   Enemy_MaridiaFloater *E = Get_MaridiaFloater(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.spritemap_pointer = addr_kSpritemap_Nothing_A8;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -2587,7 +2587,7 @@ void WreckedShipRobot_Init(void) {  // 0xA8CB77
     enemy_gfx_drawn_hook.bank = -88;
     enemy_gfx_drawn_hook.addr = FUNC16(WreckedShipRobot_Func_1);
     Enemy_WreckedShipRobot *E = Get_WreckedShipRobot(cur_enemy_index);
-    E->base.properties |= 0xA000;
+    E->base.properties |= kEnemyProps_EnableSamusColl | kEnemyProps_ProcessInstructions;
     E->base.instruction_timer = 4;
     E->base.timer = 0;
     E->base.current_instruction = addr_kWreckedShipRobot_Ilist_C6E5;
@@ -3115,7 +3115,7 @@ void WalkingLavaSeahorse_Init(void) {  // 0xA8DCCD
   E->wlse_var_04 = 0;
   E->wlse_var_F = E->base.y_pos;
   E->wlse_var_02 = E->base.x_pos;
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.current_instruction = addr_kWalkingLavaSeahorse_Ilist_DBE7;
   E->wlse_var_A = FUNC16(WalkingLavaSeahorse_Func_3);
   WalkingLavaSeahorse_Func_1(cur_enemy_index);
@@ -3417,13 +3417,13 @@ void WreckedShipOrbs_Func_6(void) {  // 0xA8E462
 
 const uint16 *WreckedShipSpark_Instr_2(uint16 k, const uint16 *jp) {  // 0xA8E61D
   Enemy_WreckedShipSpark *E = Get_WreckedShipSpark(cur_enemy_index);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   return jp;
 }
 
 const uint16 *WreckedShipSpark_Instr_1(uint16 k, const uint16 *jp) {  // 0xA8E62A
   Enemy_WreckedShipSpark *E = Get_WreckedShipSpark(cur_enemy_index);
-  E->base.properties &= ~kEnemyProps_Tangible;
+  E->base.properties &= ~kEnemyProps_Intangible;
   return jp;
 }
 
@@ -3449,6 +3449,7 @@ void WreckedShipSpark_Init(void) {  // 0xA8E637
   E->base.timer = 0;
   E->base.instruction_timer = 1;
   if ((boss_bits_for_area[area_index] & kBossBit_AreaBoss) == 0) {
+    // @Bug This was supposed to be 0x100, but instead did 0x100 in RAM
     E->base.properties |= *(uint16 *)((uint8 *)&gVramWriteEntry(0)[6].vram_dst + 1);
   }
 }
@@ -3566,7 +3567,7 @@ void BlueBrinstarFaceBlock_Shot(void) {  // 0xA8E91D
 
 void KiHunter_Init(void) {  // 0xA8F188
   Enemy_KiHunter *E = Get_KiHunter(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->khr_var_14 = 0;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -3592,7 +3593,7 @@ void KiHunter_Init(void) {  // 0xA8F188
 
 void KiHunterWings_Init(void) {  // 0xA8F214
   Enemy_KiHunter *E = Get_KiHunter(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->base.current_instruction = addr_kKiHunter_Ilist_EA4E;
@@ -3939,7 +3940,7 @@ void KiHunter_Shot(void) {  // 0xA8F701
       E1->base.flash_timer = EK->base.flash_timer;
     }
   } else {
-    E1->base.properties = 512;
+    E1->base.properties = kEnemyProps_Deleted;
   }
 }
 

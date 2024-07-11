@@ -293,42 +293,35 @@ void Unused_PartialDrawProjectiles(void) {  // 0x9382FD
 void DrawBombAndProjectileExplosions(void) {  // 0x93834D
   int16 spritemap_y_pos, spritemap_x_pos;
 
-  int16 curr_proj_index = 18;
-  projectile_index = curr_proj_index;
-  do {
-    int index = curr_proj_index >> 1;
-    uint16 proj_instr = projectile_instruction_ptr[index];
-    uint16 proj_type = projectile_type[index] & kProjectileType_ProjMask;
-    uint16 bomb_timer = projectile_variables[index];
+  for (projectile_index = 18; (int16)projectile_index >= 0; projectile_index -= 2) {
+    int idx = projectile_index >> 1;
+    uint16 proj_instr = projectile_instruction_ptr[idx];
+    uint16 proj_type = projectile_type[idx] & kProjectileType_ProjMask;
+    uint16 bomb_timer = projectile_variables[idx];
     if (proj_instr != 0 && proj_type >= kProjectileType_PowerBomb) {
 
       if ((proj_type == kProjectileType_PowerBomb && bomb_timer != 0)
           || (proj_type > kProjectileType_PowerBomb && (proj_type == kProjectileType_Bomb || !(ceres_status & kCeresStatus_8000_ElevatorRoomRotate)))) {
-        spritemap_x_pos = projectile_x_pos[index] - layer1_x_pos;
+        spritemap_x_pos = projectile_x_pos[idx] - layer1_x_pos;
         // If the projectile is within the screen boundary, including three blocks to the left and right of the boundary
         if ((-3*16) <= spritemap_x_pos && spritemap_x_pos < (16*16 + 3*16)) {
-          spritemap_y_pos = projectile_y_pos[index] - layer1_y_pos;
+          spritemap_y_pos = projectile_y_pos[idx] - layer1_y_pos;
           // If the projectile is on screen
-          if ((spritemap_y_pos & 0xFF00) == 0) {
-            DrawProjectileSpritemap(curr_proj_index, spritemap_x_pos, spritemap_y_pos);
+          if ((uint16)spritemap_y_pos < (16*16)) {
+            DrawProjectileSpritemap(projectile_index, spritemap_x_pos, spritemap_y_pos);
           }
-          curr_proj_index = projectile_index;
         }
       }
 
       else if (proj_type > kProjectileType_PowerBomb && proj_type != kProjectileType_Bomb && (ceres_status & kCeresStatus_8000_ElevatorRoomRotate)) {
-        Point16U pt = CalcExplosion_Mode7(curr_proj_index);
+        Point16U pt = CalcExplosion_Mode7(projectile_index);
         spritemap_y_pos = pt.y;
         spritemap_x_pos = pt.x;
         // If the projectile is on screen
-        if ((spritemap_y_pos & 0xFF00) == 0) {
-          DrawProjectileSpritemap(curr_proj_index, spritemap_x_pos, spritemap_y_pos);
+        if ((uint16)spritemap_y_pos < (16*16)) {
+          DrawProjectileSpritemap(projectile_index, spritemap_x_pos, spritemap_y_pos);
         }
-        curr_proj_index = projectile_index;
       }
     }
-
-    curr_proj_index -= 2;
-    projectile_index = curr_proj_index;
-  } while (curr_proj_index >= 0);
+  }
 }

@@ -85,7 +85,7 @@ Now, the next few lines may seem a bit confusing, and the bank logs doesn't exac
 Let's start with `if (!sign16(2 * menu_option_index - 12))`. Here, `sign16` is macro that's a shorthand for `& 0x8000`,
 and the `!` is a logical not, so it's true if it's 0, since !0 is 1, which is true.
 So the if statement is checking if `(value & 0x8000) == 0`, which from before we know means that `value >= 0`.
-However, we can also not that the value in the if statement is similar to `uint16 v1 = 2 * menu_option_index + 2`,
+However, we can also note that the value in the if statement is similar to `uint16 v1 = 2 * menu_option_index + 2`,
 so we can replace the value inside the paranthesis with `v1 - 14`, where we have to subtract 2 to account for the added 2
 in v1. Now we have `if ((v1 - 14) >= 0)`, which using arithmetic, is `if (v1 >= 14)`. Now that the code is cleaned up a bit,
 we can see that it appears that `v1` is the next menu option index, and is reset back to 0 if the index reaches 14.
@@ -139,7 +139,7 @@ The next step would be to provide documentation above the function. There is no 
 comment will only consist of a brief, which would state something like `Sets the current option to the new binding
 and sets the option that has the same binding as the new one with what was originally in the current option`.
 Finally, the rewritten code and documented code should look like this:
-```
+```C
 /**
 * @brief Sets the current option to the new binding and sets the option that has the same binding as the new one
 * with what was originally in the current option

@@ -172,7 +172,7 @@ uint16 Kraid_CheckIfDead(void) {  // 0xA7A92C
 
 void Kraid_SetEnemyPropsToDead(void) {  // 0xA7A943
   Enemy_Kraid *E = Get_Kraid(cur_enemy_index);
-  E->base.properties = E->base.properties & 0x50FF | 0x700;
+  E->base.properties = E->base.properties & ~(kEnemyProps_EnableSamusColl | kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen) | (kEnemyProps_Intangible | kEnemyProps_Deleted | kEnemyProps_Invisible);
 }
 
 void Kraid_Init(void) {  // 0xA7A959
@@ -230,7 +230,7 @@ void Kraid_Init(void) {  // 0xA7A959
     E->field_2E[8] = 0;
     E->base.x_pos = 176;
     E->base.y_pos = 592;
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     E->kraid_var_A = FUNC16(Kraid_RestrictSamusXtoFirstScreen);
     E->kraid_var_F = 300;
     E->kraid_next = FUNC16(Kraid_RaiseKraidThroughFloor);
@@ -404,7 +404,7 @@ void Kraid_GetsBig_SetBG2TilemapPrioBits(void) {  // 0xA7AD3A
     v0 += 2;
   } while ((int16)(v0 - 4096) < 0);
   Enemy_Kraid *E = Get_Kraid(0x40);
-  E->base.properties &= ~0x400;
+  E->base.properties &= ~kEnemyProps_Intangible;
   Get_Kraid(0)->kraid_var_A = FUNC16(Kraid_GetsBig_FinishUpdateBg2Tilemap);
   Kraid_UpdateBg2TilemapTopHalf();
 }
@@ -519,7 +519,7 @@ void Kraid_Mainloop_Thinking(void) {  // 0xA7AEA4
     if (!v2) {
       E->kraid_var_A = FUNC16(Kraid_Main_AttackWithMouthOpen);
       E->kraid_var_B = addr_stru_A796DA;
-      E->kraid_var_C = kKraid_InvulnerableRoarInstrLists.timer;
+      E->kraid_var_C = kKraid_InvulnerableRoarInstrLists[0].timer;
     }
   }
 }
@@ -533,7 +533,7 @@ void Kraid_GetsBig_Thinking(void) {  // 0xA7AEC4
     if (!v2) {
       E->kraid_var_A = FUNC16(Kraid_Shot_MouthIsOpen);
       E->kraid_var_B = addr_stru_A796DA;
-      E->kraid_var_C = kKraid_InvulnerableRoarInstrLists.timer;
+      E->kraid_var_C = kKraid_InvulnerableRoarInstrLists[0].timer;
     }
   }
 }
@@ -675,12 +675,12 @@ LABEL_14:
     if (sign16(E->base.health - 1) && sign16(E->kraid_var_A + 0x3CA0)) {
       E->kraid_var_A = FUNC16(Kraid_Death_Init);
       E->kraid_mouth_flags = 0;
-      E->base.properties |= kEnemyProps_Tangible;
+      E->base.properties |= kEnemyProps_Intangible;
       Kraid_SetupGfxWithTilePrioClear(~0x2000);
       uint16 v12 = 0;
       do {
         Enemy_Kraid *EL = Get_Kraid(v12);
-        EL->base.properties |= kEnemyProps_Tangible;
+        EL->base.properties |= kEnemyProps_Intangible;
         v12 += 64;
       } while ((int16)(v12 - 384) < 0);
       if (sign16(E->kraid_var_B + 0x68F2))
@@ -960,7 +960,7 @@ void Kraid_Shot_UnglowEye(void) {  // 0xA7B73D
   if (!r20) {
     E->kraid_var_A = FUNC16(Kraid_Shot_MouthIsOpen);
     E->kraid_var_B = addr_stru_A796DA;
-    E->kraid_var_C = kKraid_InvulnerableRoarInstrLists.timer;
+    E->kraid_var_C = kKraid_InvulnerableRoarInstrLists[0].timer;
   }
 }
 
@@ -971,9 +971,9 @@ void KraidsArm_Main(void) {  // 0xA7B7BD
   Enemy_Kraid *E1 = Get_Kraid(0x40);
   E1->base.y_pos = v1;
   uint16 v3 = v1;
-  uint16 v4 = E1->base.properties | 0x100;
+  uint16 v4 = E1->base.properties | kEnemyProps_Invisible;
   if ((int16)(v3 - layer1_y_pos) >= 0 && (int16)(v3 - r18) < 0)
-    v4 = E1->base.properties & 0xFEFF;
+    v4 = E1->base.properties & ~(kEnemyProps_Invisible);
   E1->base.properties = v4;
   E1->base.x_pos = E->base.x_pos;
   if (HIBYTE(E->kraid_mouth_flags))
@@ -1031,7 +1031,7 @@ void KraidLint_FireLint(uint16 k) {  // 0xA7B89B
   Enemy_Kraid *E = Get_Kraid(k);
   AddToHiLo(&E->base.x_pos, &E->base.x_subpos, -IPAIR32(g_word_A7A928, g_word_A7A926));
   if (sign16(E->base.x_pos - 56))
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
   if (sign16(E->base.x_pos - 32)) {
     E->base.properties |= kEnemyProps_Invisible;
     E->kraid_var_A = FUNC16(Kraid_AlignEnemyToKraid);
@@ -1051,7 +1051,7 @@ void KraidFingernail_WaitForLintXpos(uint16 k) {  // 0xA7B907
   if (!sign16(E2->base.x_pos - 256)) {
     Enemy_Kraid *E = Get_Kraid(k);
     E->kraid_var_A = E->kraid_next;
-    E->base.properties &= 0xFAFF;
+    E->base.properties &= ~(kEnemyProps_Intangible | kEnemyProps_Invisible);
   }
 }
 
@@ -1091,7 +1091,7 @@ void KraidEnemy_ProcessInstrEnemyTimer(uint16 k) {  // 0xA7B965
 
 void Kraid_EnemyTouch_Lint(uint16 k) {  // 0xA7B96A
   Enemy_Kraid *E = Get_Kraid(k);
-  if ((E->base.properties & kEnemyProps_Tangible) == 0 && !samus_invincibility_timer) {
+  if (!(E->base.properties & kEnemyProps_Intangible) && !samus_invincibility_timer) {
     uint16 r18 = kKraid_LintBoundary.left + E->base.x_pos - 2;
     if (!sign16(samus_x_radius + samus_x_pos - r18)) {
       if (sign16(samus_x_pos - samus_x_radius - r18)) {
@@ -1104,7 +1104,7 @@ void Kraid_EnemyTouch_Lint(uint16 k) {  // 0xA7B96A
               v2 = 16;
             extra_samus_x_displacement = v2;
             NormalEnemyTouchAi();
-            E->base.properties |= kEnemyProps_Tangible;
+            E->base.properties |= kEnemyProps_Intangible;
           }
         }
       }
@@ -1337,7 +1337,7 @@ void KraidsFingernail_Init(void) {  // 0xA7BD60
   E->kraid_var_D = GET_WORD(v3 + 4);
   E->kraid_var_E = GET_WORD(v3 + 6);
   E->kraid_parameter_1 = 1;
-  E->base.properties &= ~(kEnemyProps_Tangible | kEnemyProps_Invisible);
+  E->base.properties &= ~(kEnemyProps_Intangible | kEnemyProps_Invisible);
   E->base.instruction_timer = 1;
   E->base.current_instruction = addr_kKraid_GoodFingernailInstrLists;
   E->kraid_var_A = FUNC16(KraidsFingernail_Fire);
@@ -1363,7 +1363,7 @@ LABEL_7:
     E->kraid_var_E = 0;
     E->kraid_var_A = FUNC16(KraidFingernail_WaitForLintXpos);
     E->kraid_next = FUNC16(KraidsFingernail_Fire);
-    E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Invisible;
+    E->base.properties |= kEnemyProps_Intangible | kEnemyProps_Invisible;
   }
 }
 
@@ -1467,7 +1467,7 @@ void Kraid_HandleFirstPhase(void) {  // 0xA7C005
       }
     }
     E0->kraid_var_B = v3 - 26918;
-    E0->kraid_var_C = *(uint16 *)((uint8 *)&kKraid_InvulnerableRoarInstrLists.timer + v3);
+    E0->kraid_var_C = *(uint16 *)((uint8 *)&kKraid_InvulnerableRoarInstrLists + v3);
     earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_2, kEarthquake_Layers_Bg1);
     earthquake_timer = 340;
     Enemy_Kraid *E5 = Get_Kraid(0x140);
@@ -1478,12 +1478,12 @@ void Kraid_HandleFirstPhase(void) {  // 0xA7C005
     E1->base.current_instruction = addr_kKraid_Ilist_89F3;
     E1->base.instruction_timer = 1;
     Enemy_Kraid *E2 = Get_Kraid(0x80);
-    E2->base.properties |= 0x100;
+    E2->base.properties |= kEnemyProps_Invisible;
     Enemy_Kraid *E3 = Get_Kraid(0xC0);
-    E3->base.properties |= 0x100;
+    E3->base.properties |= kEnemyProps_Invisible;
     Enemy_Kraid *E4 = Get_Kraid(0x100);
-    E4->base.properties |= 0x100;
-    E1->base.properties |= 0x400;
+    E4->base.properties |= kEnemyProps_Invisible;
+    E1->base.properties |= kEnemyProps_Intangible;
   }
 }
 
@@ -1606,11 +1606,11 @@ void Kraid_Death_Init(void) {  // 0xA7C360
     uint16 v4 = cur_enemy_index;
     uint16 v7 = cur_enemy_index;
     Enemy_Kraid *E6 = Get_Kraid(0x180);
-    E6->base.properties &= ~0x4000;
+    E6->base.properties &= ~kEnemyProps_RespawnIfKilled;
     cur_enemy_index = 384;
     EnemyDeathAnimation(v4, 0x180);
     Enemy_Kraid *E7 = Get_Kraid(0x1C0);
-    E7->base.properties &= ~0x4000;
+    E7->base.properties &= ~kEnemyProps_RespawnIfKilled;
     cur_enemy_index = 448;
     EnemyDeathAnimation(v4, 0x1C0);
     cur_enemy_index = 128;
@@ -1671,7 +1671,7 @@ void Kraid_Death_UpdateBG2TilemapBottomHalf(void) {  // 0xA7C4C8
   Enemy_Kraid *E = Get_Kraid(0);
   E->kraid_var_A = FUNC16(Kraid_Death_SinkThroughFloor);
   kraid_unk9000 = 43;
-  E->base.properties |= 0x8000;
+  E->base.properties |= kEnemyProps_EnableSamusColl;
   earthquake_type = EARTHQUAKE(kEarthquake_Direction_Vert, kEarthquake_Intensity_1, kEarthquake_Layers_Bg1);
   earthquake_timer = 256;
   Enemy_Kraid *E1 = Get_Kraid(0x40);
@@ -1721,14 +1721,14 @@ void Kraid_Death_SinkThroughFloor(void) {  // 0xA7C537
   Kraid_HandleSinking();
   Enemy_Kraid *E0 = Get_Kraid(0);
   if (!sign16(++E0->base.y_pos - 608)) {
-    E0->base.properties &= ~kEnemyProps_Tangible;
+    E0->base.properties &= ~kEnemyProps_Intangible;
     enemy_bg2_tilemap_size = 2;
     uint16 enemy_ptr = Get_Kraid(cur_enemy_index)->base.enemy_ptr;
     get_EnemyDef_A2(enemy_ptr)->shot_ai = FUNC16(nullsub_170_A7);
     Enemy_Kraid *E1 = Get_Kraid(0x40);
-    uint16 v3 = E1->base.properties | kEnemyProps_Tangible | kEnemyProps_Deleted;
+    uint16 v3 = E1->base.properties | kEnemyProps_Intangible | kEnemyProps_Deleted;
     E1->base.properties = v3;
-    uint16 v4 = v3 & 0x51FF | 0x600;
+    uint16 v4 = v3 & ~(kEnemyProps_EnableSamusColl | kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen) | (kEnemyProps_Intangible | kEnemyProps_Deleted);
     Get_Kraid(0x80)->base.properties = v4;
     Get_Kraid(0xC0)->base.properties = v4;
     Get_Kraid(0x100)->base.properties = v4;
@@ -2085,7 +2085,7 @@ void Phantoon_Init(void) {  // 0xA7CDF3
   E1->phant_parameter_1 = 0;
   E1->phant_parameter_2 = 0;
   Enemy_Phantoon *E0 = Get_Phantoon(0);
-  E0->base.properties |= kEnemyProps_Tangible;
+  E0->base.properties |= kEnemyProps_Intangible;
   static const SpawnHdmaObject_Args kSpawnHdmaObject_A7CE51 = {
     .hdma_control = HDMA_CONTROL(0, 0, 1),
     .hdma_target = REG(BG4VOFS),
@@ -2230,7 +2230,7 @@ void Phantoon_StartTrackingSamusAndInitEyeTimer(void) {  // 0xA7D03F
   Enemy_Phantoon *E = Get_Phantoon(0);
   E->base.instruction_timer = 1;
   E->base.current_instruction = addr_kKraid_Ilist_CC4D;
-  E->base.properties &= ~kEnemyProps_Tangible;
+  E->base.properties &= ~kEnemyProps_Intangible;
   E->phant_var_E = kPhantoon_Figure8VulnerabilityTimers[NextRandom() & 7];
   E->phant_var_F = FUNC16(Phantoon_EyeFollowsSamusUntilTimerRunsOut);
 
@@ -2611,7 +2611,7 @@ void Phantoon_EyeFollowsSamusUntilTimerRunsOut(uint16 k) {  // 0xA7D60D
       E1->base.instruction_timer = 1;
       E0->base.current_instruction = addr_kKraid_Ilist_CC41;
       E1->base.current_instruction = addr_kKraid_Ilist_CC81;
-      E0->base.properties |= kEnemyProps_Tangible;
+      E0->base.properties |= kEnemyProps_Intangible;
       E0->phant_parameter_2 = 1;
       return;
     }
@@ -2646,7 +2646,7 @@ void Phantoon_IsSwooping(uint16 k) {  // 0xA7D678
     E1->base.instruction_timer = 1;
     E0->base.current_instruction = addr_kKraid_Ilist_CC41;
     E1->base.current_instruction = addr_kKraid_Ilist_CC91;
-    E0->base.properties |= kEnemyProps_Tangible;
+    E0->base.properties |= kEnemyProps_Intangible;
     E1->phant_var_F = 0;
     Get_Phantoon(k + 128)->phant_var_B = 0;
   }
@@ -2712,7 +2712,7 @@ void Phantoon_FadeInDuringFireballRain(uint16 k) {  // 0xA7D767
   Phantoon_FadeIn(1);
   if (Get_Phantoon(0x40)->phant_var_F) {
     Enemy_Phantoon *E = Get_Phantoon(0);
-    E->base.properties &= ~kEnemyProps_Tangible;
+    E->base.properties &= ~kEnemyProps_Intangible;
     Get_Phantoon(k)->phant_var_F = FUNC16(Phantoon_FollowSamusWithEyeDuringFireballRain);
     E->phant_var_E = 90;
   }
@@ -2738,7 +2738,7 @@ void Phantoon_FollowSamusWithEyeDuringFireballRain(uint16 k) {  // 0xA7D788
       E1->base.instruction_timer = 1;
       E0->base.current_instruction = addr_kKraid_Ilist_CC41;
       E1->base.current_instruction = addr_kKraid_Ilist_CC91;
-      E0->base.properties |= kEnemyProps_Tangible;
+      E0->base.properties |= kEnemyProps_Intangible;
       phantom_related_layer_flag |= 0x4000;
     }
   }
@@ -2930,10 +2930,10 @@ void Phantoon_WavyDyingPhantoonAndCry(uint16 k) {  // 0xA7DA51
   Get_Phantoon(k)->phant_var_F = FUNC16(Phantoon_DyingFadeOut);
   Phantoon = Get_Phantoon(0x40);
   Phantoon->phant_var_C = 2;
-  uint16 v2 = Get_Phantoon(0)->base.properties & ~(kEnemyProps_DisableSamusColl | kEnemyProps_Tangible | kEnemyProps_Invisible) | kEnemyProps_Tangible | kEnemyProps_Invisible;
-  Phantoon->base.properties = v2;
-  Get_Phantoon(0x80)->base.properties = v2;
-  Get_Phantoon(0xC0)->base.properties = v2;
+  uint16 disable_enemy = Get_Phantoon(0)->base.properties & ~(kEnemyProps_ProcessInstructions) | kEnemyProps_Intangible | kEnemyProps_Invisible;
+  Phantoon->base.properties = disable_enemy;
+  Get_Phantoon(0x80)->base.properties = disable_enemy;
+  Get_Phantoon(0xC0)->base.properties = disable_enemy;
   QueueSfx2_Max6(kSfx2_MotherBrainsCryHighPitch_PhantoonsDyingCry_HighPriority);
 }
 
@@ -2992,11 +2992,11 @@ void Phantoon_Dead(uint16 k) {  // 0xA7DB3D
       reg_TM |= 2;
       Enemy_ItemDrop_Phantoon(k);
       Enemy_Phantoon *E0 = Get_Phantoon(0);
-      uint16 v4 = E0->base.properties | kEnemyProps_Deleted;
-      E0->base.properties = v4;
-      E1->base.properties = v4;
-      Get_Phantoon(0x80)->base.properties = v4;
-      Get_Phantoon(0xC0)->base.properties = v4;
+      uint16 delete_enemy = E0->base.properties | kEnemyProps_Deleted;
+      E0->base.properties = delete_enemy;
+      E1->base.properties = delete_enemy;
+      Get_Phantoon(0x80)->base.properties = delete_enemy;
+      Get_Phantoon(0xC0)->base.properties = delete_enemy;
       *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaBoss;
       SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 0, .y_pos = 6, .plm_id_ = addr_kPlmHeader_B78B_Phantoon_RestoreDoorAfterFight });
       QueueMusic_Delayed8(kMusic_Elevator);
@@ -3140,7 +3140,7 @@ void Phantoon_Shot(void) {  // 0xA7DD9B
   if (!EK->base.health) {
     QueueSfx2_Max6(kSfx2_PhantoonsCry_DraygonsCry_HighPriority);
     Get_Phantoon(0x80)->phant_parameter_2 = 1;
-    E0->base.properties |= kEnemyProps_Tangible;
+    E0->base.properties |= kEnemyProps_Intangible;
     Phantoon_StartDeathSequence(v1);
     return;
   }
@@ -3189,7 +3189,7 @@ LABEL_22:
       E1->base.instruction_timer = 1;
       E0->base.current_instruction = addr_kKraid_Ilist_CC41;
       E1->base.current_instruction = addr_kKraid_Ilist_CC91;
-      E0->base.properties |= kEnemyProps_Tangible;
+      E0->base.properties |= kEnemyProps_Intangible;
       E1->phant_var_F = 0;
       goto LABEL_20;
     }
@@ -3208,7 +3208,7 @@ LABEL_22:
 
 void Etecoon_Init(void) {  // 0xA7E912
   Enemy_Etecoon *E = Get_Etecoon(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.spritemap_pointer = addr_kSpritemap_Nothing_A7;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -3611,7 +3611,7 @@ void Dachora_Init(void) {  // 0xA7F4DD
   int16 dachor_parameter_1;
 
   Enemy_Dachora *E = Get_Dachora(cur_enemy_index);
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.spritemap_pointer = addr_kSpritemap_Nothing_A7;
   E->base.instruction_timer = 1;
   E->base.timer = 0;

@@ -90,7 +90,13 @@ uint16 kShaktool_InstrListPtrs2[] = {
 };
 
 uint16 kEnemyInit_Shaktool_PropertiesIndices[] = {
-  0x2800, 0x2c00, 0x2c00, 0x2c00, 0x2c00, 0x2c00, 0x2800,
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen | kEnemyProps_Intangible),
+  (kEnemyProps_ProcessInstructions | kEnemyProps_ProcessedOffscreen),
 };
 
 uint16 kEnemyInit_Shaktool_RamOffsetIndices[] = {

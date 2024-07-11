@@ -1609,7 +1609,7 @@ void Bang_Func_1(void) {  // 0xA3BB2B
   Get_Bang(cur_enemy_index)->bang_var_20 = v0;
   Bang_Func_18();
   Enemy_Bang *E = Get_Bang(cur_enemy_index);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
 }
 
 void Bang_Func_2(void) {  // 0xA3BB4A
@@ -1617,7 +1617,7 @@ void Bang_Func_2(void) {  // 0xA3BB4A
   Enemy_Bang *E = Get_Bang(cur_enemy_index);
   E->bang_var_20 = v0;
   Bang_Func_18();
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
 }
 
 void Bang_Func_3(void) {  // 0xA3BB66
@@ -1642,13 +1642,13 @@ void Bang_Func_3(void) {  // 0xA3BB66
     E0->bang_var_22 = 0;
     if (E0->bang_var_20 == 9) {
       E0->base.invincibility_timer = 16;
-      E0->base.properties |= kEnemyProps_Tangible;
+      E0->base.properties |= kEnemyProps_Intangible;
       uint16 v7 = DetermineDirectionOfSamusFromEnemy();
       uint16 v8 = Bang_Func_4(v7);
       EnemyDeathAnimation(cur_enemy_index, v8);
       uint16 v9 = cur_enemy_index;
       Enemy_Bang *E = Get_Bang(cur_enemy_index + 64);
-      E->base.properties |= 0x200;
+      E->base.properties |= kEnemyProps_Deleted;
       enemy_drawing_queue[(v9 >> 1) + 97] |= 0x200;
     } else {
       ++E0->bang_var_20;
@@ -2037,7 +2037,7 @@ void MaridiaSnail_Func_6(uint16 k) {  // 0xA3CF11
     if (samus_has_momentum_flag || E->msl_var_F != FUNC16(nullsub_215))
       goto LABEL_11;
 LABEL_10:
-    E->base.properties |= 0x8000;
+    E->base.properties |= kEnemyProps_EnableSamusColl;
     return;
   }
   if (!samus_has_momentum_flag) {
@@ -2046,7 +2046,7 @@ LABEL_10:
       goto LABEL_10;
   }
 LABEL_11:
-  E->base.properties &= 0x7FFF;
+  E->base.properties &= ~(kEnemyProps_EnableSamusColl);
 }
 
 static uint32 Shift8AddMagn(int16 a, int s) {

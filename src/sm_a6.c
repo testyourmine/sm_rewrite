@@ -253,7 +253,7 @@ void Boulder_Func_5(void) {  // 0xA68942
     v2 += 4;
   int v4 = v2 >> 1;
   if (Enemy_MoveRight_IgnoreSlopes(cur_enemy_index, kCommonEnemySpeeds_Quadratic32[v4 >> 1])) {
-    E->base.properties |= 0x300;
+    E->base.properties |= kEnemyProps_Deleted | kEnemyProps_Invisible;
     E->boulder_var_A = FUNC16(Boulder_Func_6);
     QueueSfx2_Max6(kSfx2_BoulderExplodesInitial);
     eproj_spawn_pt = (Point16U){ E->base.x_pos, E->base.y_pos };
@@ -594,7 +594,7 @@ const uint16 *FireGeyser_Instr_24(uint16 k, const uint16 *jp) {  // 0xA68FD1
   E1->base.y_height = 0;
   E->base.y_pos = E->fgr_var_D;
   E->base.properties |= kEnemyProps_Invisible;
-  E1->base.properties |= 0x400;
+  E1->base.properties |= kEnemyProps_Intangible;
   return jp;
 }
 
@@ -633,7 +633,7 @@ void FireGeyser_Func_1(void) {  // 0xA6902F
     E->base.current_instruction = addr_kFireGeyser_Ilist_8D1B;
     E->base.properties &= ~kEnemyProps_Invisible;
     Enemy_FireGeyser *E1 = Get_FireGeyser(cur_enemy_index + 64);
-    E1->base.properties &= ~0x400;
+    E1->base.properties &= ~kEnemyProps_Intangible;
   }
 }
 
@@ -879,7 +879,7 @@ void FakeKraid_Init(void) {  // 0xA69A58
   E->fkd_var_04 = v0;
   E->fkd_var_05 = v0 - 48;
   E->fkd_var_07 = 0;
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->fkd_var_B = -4;
@@ -1028,7 +1028,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
   Enemy_CeresRidley *E = Get_CeresRidley(0);
 
   if ((boss_bits_for_area[area_index] & kBossBit_AreaBoss) != 0) {
-    E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Deleted | kEnemyProps_Invisible;
+    E->base.properties |= kEnemyProps_Intangible | kEnemyProps_Deleted | kEnemyProps_Invisible;
   } else {
     for (int i = 4094; i >= 0; i -= 2)
       tilemap_stuff[i >> 1] = 0;
@@ -1046,7 +1046,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
     Ridley_Func_92();
     Ridley_Func_117();
     if (area_index == kArea_2_Norfair) {
-      E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Tangible;
+      E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Intangible;
       E->base.x_pos = 96;
       E->base.y_pos = 394;
       E->cry_var_A = FUNC16(CeresRidley_Func_3);
@@ -1072,7 +1072,7 @@ void CeresRidley_Init(void) {  // 0xA6A0F5
         --v4;
       } while (v4);
     } else {
-      E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Tangible;
+      E->base.properties |= kEnemyProps_BlockPlasmaBeam | kEnemyProps_Intangible;
       E->base.x_pos = 186;
       E->base.y_pos = 169;
       ceres_status = kCeresStatus_0_BeforeRidleyEscape;
@@ -1299,7 +1299,7 @@ void CeresRidley_Func_5(void) {  // 0xA6A3DF
     if (cry_var_E >= 0x160) {
       if (area_index == kArea_2_Norfair)
         E->base.layer = 2;
-      E->base.properties &= ~kEnemyProps_Tangible;
+      E->base.properties &= ~kEnemyProps_Intangible;
       E->cry_var_E = 0;
       E->cry_var_A = FUNC16(CeresRidley_Func_6);
       E->cry_var_F = 4;
@@ -2291,7 +2291,7 @@ void Ridley_Func_36(void) {  // 0xA6BC2E
 void Ridley_Func_37(void) {  // 0xA6BC68
   Ridley_Func_31();
   Enemy_Ridley *E = Get_Ridley(0);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   E->ridley_var_1B = 1;
   RunSamusCode(kSamusCode_0_LockSamus);
   Ridley_Func_119(1);
@@ -2317,17 +2317,17 @@ void Ridley_Func_39(void) {  // 0xA6BCB4
   if (ridley_var_01 >= 0) {
     if (ridley_var_01) {
       if (Ridley_Func_121() & 1) {
-        E->base.properties |= kEnemyProps_Tangible;
+        E->base.properties |= kEnemyProps_Intangible;
         return;
       }
-      E->base.properties &= ~kEnemyProps_Tangible;
+      E->base.properties &= ~kEnemyProps_Intangible;
     }
     uint16 ridley_var_1E = E->ridley_var_1E;
     if (ridley_var_1E) {
       uint16 v3 = ridley_var_1E - 1;
       E->ridley_var_1E = v3;
       if (!v3 && (E->ridley_var_01 & 0x8000) == 0)
-        E->base.properties &= ~kEnemyProps_Tangible;
+        E->base.properties &= ~kEnemyProps_Intangible;
     }
   }
 }
@@ -3044,7 +3044,7 @@ void Ridley_Func_70(void) {  // 0xA6CAF5
   Ridley_Func_86();
   Ridley_Func_87();
   Enemy_Ridley *E = Get_Ridley(0);
-  if (!(E->ridley_var_1B | (uint16)(samus_invincibility_timer | E->base.properties & kEnemyProps_Tangible)))
+  if (!(E->ridley_var_1B | (uint16)(samus_invincibility_timer | E->base.properties & kEnemyProps_Intangible)))
     Ridley_Func_127();
 }
 
@@ -4266,7 +4266,7 @@ void Ridley_Func_126(void) {  // 0xA6DFB7
   Enemy_Ridley *E = Get_Ridley(0);
   if (!E->base.health && (E->ridley_var_01 & 0x8000) == 0) {
     E->ridley_var_01 = -1;
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     E->ridley_var_A = FUNC16(Ridley_Func_63);
   }
 }
@@ -4298,7 +4298,7 @@ void Ridley_Func_128(void) {  // 0xA6E01B
 }
 
 void Ridley_Func_129(void) {  // 0xA6E088
-  if ((Get_Ridley(0)->base.properties & kEnemyProps_Tangible) == 0) {
+  if (!(Get_Ridley(0)->base.properties & kEnemyProps_Intangible)) {
     uint16 v0 = Ridley_Func_122((Rect16U) { tilemap_stuff[82], tilemap_stuff[83], 14, 14});
     if (sign16(v0)) {
       v0 = Ridley_Func_122((Rect16U) { tilemap_stuff[72], tilemap_stuff[73], 10, 10 });
@@ -4468,7 +4468,7 @@ const uint16 *Ridley_Instr_16(uint16 k, const uint16 *jp) {  // 0xA6E976
 void CeresSteam_Init(void) {  // 0xA6EFB1
   Enemy_CeresSteam *E = Get_CeresSteam(cur_enemy_index);
   E->base.vram_tiles_index = 0;
-  E->base.properties |= kEnemyProps_DisableSamusColl;
+  E->base.properties |= kEnemyProps_ProcessInstructions;
   E->base.extra_properties |= 4;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
@@ -4508,7 +4508,7 @@ void CeresSteam_Touch(void) {  // 0xA6F03F
 
 const uint16 *CeresSteam_Instr_1(uint16 k, const uint16 *jp) {  // 0xA6F11D
   Enemy_CeresSteam *E = Get_CeresSteam(k);
-  E->base.properties |= kEnemyProps_Tangible | kEnemyProps_Invisible;
+  E->base.properties |= kEnemyProps_Intangible | kEnemyProps_Invisible;
   return jp;
 }
 
@@ -4521,7 +4521,7 @@ const uint16 *CeresSteam_Instr_2(uint16 k, const uint16 *jp) {  // 0xA6F127
 
 const uint16 *CeresSteam_Instr_3(uint16 k, const uint16 *jp) {  // 0xA6F135
   Enemy_CeresSteam *E = Get_CeresSteam(k);
-  E->base.properties &= 0xFAFF;
+  E->base.properties &= ~(kEnemyProps_Intangible | kEnemyProps_Invisible);
   return jp;
 }
 
@@ -4554,13 +4554,13 @@ void CeresDoor_Func_6b(void) {  // 0xA6F67F
 
 const uint16 *CeresSteam_Instr_4(uint16 k, const uint16 *jp) {  // 0xA6F68B
   Enemy_CeresSteam *E = Get_CeresSteam(k);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   return jp;
 }
 
 const uint16 *CeresDoor_Instr_1(uint16 k, const uint16 *jp) {  // 0xA6F695
   Enemy_CeresDoor *E = Get_CeresDoor(k);
-  E->base.properties &= ~kEnemyProps_Tangible;
+  E->base.properties &= ~kEnemyProps_Intangible;
   return jp;
 }
 
@@ -4730,7 +4730,7 @@ void CeresDoor_Func_8(void) {  // 0xA6F8F1
 
 void Zebetites_Init(void) {  // 0xA6FB72
   Enemy_Zebetites *E = Get_Zebetites(cur_enemy_index);
-  E->base.properties |= 0xA000;
+  E->base.properties |= kEnemyProps_EnableSamusColl | kEnemyProps_ProcessInstructions;
   E->base.instruction_timer = 1;
   E->base.timer = 0;
   E->base.palette_index = 1024;

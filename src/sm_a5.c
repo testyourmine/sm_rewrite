@@ -500,7 +500,7 @@ void Draygon_Func_22(void) {  // 0xA58E19
 
   Draygon_Func_3();
   if (samus_x_speed_divisor) {
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     v2 = 8;
     if (!E->draygon_var_20)
       v2 = -8;
@@ -556,7 +556,7 @@ void Draygon_Func_24(uint16 k) {  // 0xA58F1E
       Enemy_Draygon *EK = Get_Draygon(k);
       EK->base.current_instruction = v6;
       EK->base.instruction_timer = 1;
-      E->base.properties |= kEnemyProps_Tangible;
+      E->base.properties |= kEnemyProps_Intangible;
     } else {
       uint16 varE20 = (uint8)(64 - CalculateAngleFromXY(256 - E->base.x_pos, 384 - E->base.y_pos));
       Point32 pt = ConvertAngleToXy(varE20, 2);
@@ -644,7 +644,7 @@ void Draygon_Func_29(void) {  // 0xA59128
   samus_grapple_flags = 0;
   Enemy_Draygon *E = Get_Draygon(0);
   E->draygon_var_A = FUNC16(Draygon_Func_30);
-  E->base.properties &= ~kEnemyProps_Tangible;
+  E->base.properties &= ~kEnemyProps_Intangible;
   uint16 v1 = addr_kDraygon_Ilist_Tail_FaceL_TailFlail;
   if (E->draygon_var_20)
     v1 = addr_kDraygon_Ilist_Tail_FaceR_TailFlail;
@@ -661,7 +661,7 @@ void Draygon_Func_30(void) {  // 0xA59154
   v1 = E->base.y_pos - 4;
   E->base.y_pos = v1;
   if (v1 < 0) {
-    E->base.properties &= ~kEnemyProps_Tangible;
+    E->base.properties &= ~kEnemyProps_Intangible;
     E->draygon_var_A = FUNC16(Draygon_Func_4);
     E->draygon_var_B = 0;
     E->base.x_pos = E->draygon_var_00;
@@ -1019,7 +1019,7 @@ const uint16 *Draygon_Instr_11(uint16 k, const uint16 *jp) {  // 0xA598D3
 
 const uint16 *Draygon_Instr_5(uint16 k, const uint16 *jp) {  // 0xA598EF
   Enemy_Draygon *E = Get_Draygon(0);
-  E->base.properties |= kEnemyProps_Tangible;
+  E->base.properties |= kEnemyProps_Intangible;
   return jp;
 }
 
@@ -1287,7 +1287,7 @@ const uint16 *SporeSpawn_Instr_Harden(uint16 k, const uint16 *jp) {  // 0xA5E87C
   Enemy_SporeSpawn *E = Get_SporeSpawn(0);
   E->base.x_pos = 128;
   E->base.y_pos = 624;
-  E->base.properties = E->base.properties & 0x5BFF | 0xA000;
+  E->base.properties = E->base.properties & ~(kEnemyProps_Intangible) | (kEnemyProps_EnableSamusColl | kEnemyProps_ProcessInstructions);
   return jp;
 }
 
@@ -1380,7 +1380,7 @@ void SporeSpawn_Init(void) {  // 0xA5EA2A
   if ((boss_bits_for_area[area_index] & kBossBit_AreaMiniBoss) != 0) {
     E0->base.current_instruction = addr_kSporeSpawn_Ilist_Init_Dead;
     E0->function = FUNC16(SporeSpawn_nullsub_223);
-    E0->base.properties |= 0x8000;
+    E0->base.properties |= kEnemyProps_EnableSamusColl;
     SporeSpawn_UpdateStalkSegmentPositions();
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 7, .y_pos = 30, .plm_id_ = addr_kPlmHeader_B793_SporeSpawn_ClearCeiling });
     scrolling_finished_hook = 0;
@@ -1572,7 +1572,7 @@ void SporeSpawn_Reaction(void) {  // 0xA5EDF3
     E->base.invincibility_timer = 0;
     E->base.flash_timer = 0;
     E->base.ai_handler_bits = 0;
-    E->base.properties |= kEnemyProps_Tangible;
+    E->base.properties |= kEnemyProps_Intangible;
     for (int i = 26; i >= 0; i -= 2)
       *(uint16 *)((uint8 *)eproj_id + (uint16)i) = 0;
     E0->base.current_instruction = addr_kSporeSpawn_Ilist_DeathSequence;

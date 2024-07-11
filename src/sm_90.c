@@ -3471,18 +3471,18 @@ LABEL_20:
 }
 
 static const uint16 kFireChargedBeam_Funcs[12] = {  // 0x90B986
-  (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WaveCombined,
-  (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WaveCombined,
-  (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WaveCombined,
-  (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WaveCombined,
-  (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WaveCombined,
-  (uint16)fnProjPreInstr_Beam_NoWaveBeam,
-  (uint16)fnProjPreInstr_WaveCombined,
+  [kProjectileType_Power]                                           = FUNC16(ProjPreInstr_Beam_NoWaveBeam),
+  [kProjectileType_Wave]                                            = FUNC16(ProjPreInstr_WaveCombined),
+  [kProjectileType_Ice]                                             = FUNC16(ProjPreInstr_Beam_NoWaveBeam),
+  [kProjectileType_Ice|kProjectileType_Wave]                        = FUNC16(ProjPreInstr_WaveCombined),
+  [kProjectileType_Spazer]                                          = FUNC16(ProjPreInstr_Beam_NoWaveBeam),
+  [kProjectileType_Spazer|kProjectileType_Wave]                     = FUNC16(ProjPreInstr_WaveCombined),
+  [kProjectileType_Spazer|kProjectileType_Ice]                      = FUNC16(ProjPreInstr_Beam_NoWaveBeam),
+  [kProjectileType_Spazer|kProjectileType_Ice|kProjectileType_Wave] = FUNC16(ProjPreInstr_WaveCombined),
+  [kProjectileType_Plasma]                                          = FUNC16(ProjPreInstr_Beam_NoWaveBeam),
+  [kProjectileType_Plasma|kProjectileType_Wave]                     = FUNC16(ProjPreInstr_WaveCombined),
+  [kProjectileType_Plasma|kProjectileType_Ice]                      = FUNC16(ProjPreInstr_Beam_NoWaveBeam),
+  [kProjectileType_Plasma|kProjectileType_Ice|kProjectileType_Wave] = FUNC16(ProjPreInstr_WaveCombined),
 };
 
 void FireChargedBeam(void) {
@@ -3811,25 +3811,26 @@ void WaveBeam_CheckColl_Left(void) {  // 0x90BDF2
   BlockCollWaveBeamHoriz(v0);
 }
 
-void ProjectileReflection(uint16 r20) {  // 0x90BE00
-  uint16 v0 = r20;
-  int v1 = r20 >> 1;
-  uint16 v2 = projectile_type[v1];
-  if ((v2 & kProjectileType_Missile) != 0) {
-    InitializeProjectile(r20);
-    projectile_pre_instructions[v1] = FUNC16(ProjPreInstr_Missile);
-    projectile_variables[v1] = 240;
-  } else if ((v2 & kProjectileType_SuperMissile) != 0) {
-    uint16 k = r20;
-    ClearProjectile(LOBYTE(projectile_variables[v1]));
-    InitializeProjectile(k);
-    int v3 = k >> 1;
-    projectile_pre_instructions[v3] = FUNC16(ProjPreInstr_SuperMissile);
-    projectile_variables[v3] = 240;
-  } else {
-    SetInitialProjectileSpeed(r20);
-    InitializeProjectile(v0);
-    projectile_pre_instructions[v1] = kFireChargedBeam_Funcs[projectile_type[v1] & kProjectileType_BeamMask];
+void ProjectileReflection(uint16 proj_idx) {  // 0x90BE00
+  int idx = proj_idx >> 1;
+  uint16 proj_type = projectile_type[idx];
+  if (proj_type & kProjectileType_Missile) {
+    InitializeProjectile(proj_idx);
+    projectile_pre_instructions[idx] = FUNC16(ProjPreInstr_Missile);
+    // projectile extra base speed
+    projectile_variables[idx] = 240;
+  }
+  else if (proj_type & kProjectileType_SuperMissile) {
+    ClearProjectile(LOBYTE(projectile_variables[idx]));
+    InitializeProjectile(proj_idx);
+    projectile_pre_instructions[idx] = FUNC16(ProjPreInstr_SuperMissile);
+    // projectile extra base speed
+    projectile_variables[idx] = 240;
+  }
+  else {
+    SetInitialProjectileSpeed(proj_idx);
+    InitializeProjectile(proj_idx);
+    projectile_pre_instructions[idx] = kFireChargedBeam_Funcs[proj_type & kProjectileType_BeamMask];
   }
 }
 
