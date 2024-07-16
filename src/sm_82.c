@@ -2697,14 +2697,12 @@ void EquipmentScreenCategory_Boots_MoveResponse(void) {  // 0x82B160
 
 void WriteSamusWireframeTilemapAndQueue(void) {  // 0x82B1E0
   WriteSamusWireframeTilemap();
-  uint16 v0 = vram_write_queue_tail;
-  gVramWriteEntry(vram_write_queue_tail)->size = 1280;
-  v0 += 2;
-  gVramWriteEntry(v0)->size = ADDR16_OF_RAM(ram3800) + 256;
-  v0 += 2;
-  LOBYTE(gVramWriteEntry(v0++)->size) = 126;
-  gVramWriteEntry(v0)->size = 0x3080;
-  vram_write_queue_tail = v0 + 2;
+  VramWriteEntry* vram_entry = gVramWriteEntry(vram_write_queue_tail);
+  vram_entry->size = 0x500;
+  vram_entry->src.addr = ADDR16_OF_RAM(ram3800.equipment_screen_bg1_tilemap[0x100 >> 1]);
+  vram_entry->src.bank = 0x7E;
+  vram_entry->vram_dst = 0x3080;
+  vram_write_queue_tail += sizeof(VramWriteEntry);
 }
 
 

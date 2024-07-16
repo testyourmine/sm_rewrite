@@ -2077,16 +2077,30 @@ uint16 mbb_parameter_2;
 }Enemy_MotherBomb;
 typedef struct Enemy_MotherBrain {
 EnemyBase base;
-uint16 mbn_var_A;
+union {
+  uint16 mbn_var_A;
+  uint16 enemy_func;
+};
 uint16 mbn_var_B;
 uint16 mbn_var_C;
 uint16 mbn_var_D;
-uint16 mbn_var_E;
-uint16 mbn_var_F;
+union {
+  uint16 mbn_var_E;
+  uint16 death_explosion_interval_timer;
+};
+union {
+  uint16 mbn_var_F;
+  uint16 body_func_timer;
+  uint16 death_explosion_index;
+};
 uint16 mbn_parameter_1;
 uint16 mbn_parameter_2;
 uint8 pad1[0x7800 - 0xFB8];
-  uint16 mbn_var_00;
+  union {
+    uint16 mbn_var_00;
+    uint16 mbn_state;
+    uint16 brain_shake_timer;
+  };
   uint16 mbn_var_01;
   uint16 mbn_var_02;
   uint16 mbn_var_03;
@@ -2099,14 +2113,29 @@ uint8 pad1[0x7800 - 0xFB8];
   uint16 mbn_var_0A;
   uint16 mbn_var_0B;
   uint16 mbn_var_0C;
-  uint16 mbn_var_0D;
+  union {
+    uint16 mbn_var_0D;
+    uint16 brain_palette_index;
+  };
   uint16 mbn_var_0E;
   uint16 mbn_var_0F;
-  uint16 mbn_var_10;
-  uint16 mbn_var_11;
-  uint16 mbn_var_12;
+  union {
+    uint16 mbn_var_10;
+    uint16 brain_palette_handling_enabled;
+  };
+  union {
+    uint16 mbn_var_11;
+    uint16 health_based_palette_handling_enabled;
+  };
+  union {
+    uint16 mbn_var_12;
+    uint16 drool_enabled_flag;
+  };
   uint16 mbn_var_13;
-  uint16 mbn_var_14;
+  union {
+    uint16 mbn_var_14;
+    uint16 purple_breath_enabled_flag;
+  };
   uint16 mbn_var_15;
   uint16 mbn_var_16;
   uint16 mbn_var_17;
@@ -2115,9 +2144,15 @@ uint8 pad1[0x7800 - 0xFB8];
   uint16 mbn_var_1A;
   uint16 mbn_var_1B;
   uint16 mbn_var_1C;
-  uint16 mbn_var_1D;
+  union {
+    uint16 mbn_var_1D;
+    uint16 delete_turrets_rinkas_flag;
+  };
   uint16 mbn_var_1E;
-  uint16 mbn_var_1F;
+  union {
+    uint16 mbn_var_1F;
+    uint16 phase2_corpse_state;
+  };
 uint8 pad2[0x8000-0x7840];
   uint16 mbn_var_20;
   uint16 mbn_var_21;
@@ -2136,21 +2171,55 @@ uint8 pad2[0x8000-0x7840];
   uint16 mbn_var_2E;
   uint16 mbn_var_2F;
   uint16 mbn_var_30;
-  uint16 mbn_var_31;
-  uint16 mbn_var_32;
-  uint16 mbn_var_33;
-  uint16 mbn_var_34;
+  union {
+    uint16 mbn_var_31;
+    uint16 rainbow_beam_angle;
+  };
+  union {
+    uint16 mbn_var_32;
+    uint16 lower_neck_movement_index;
+  };
+  union {
+    uint16 mbn_var_33;
+    uint16 upper_neck_movement_index;
+    uint16 rainbow_beam_angular_width;
+  };
+  union {
+    uint16 mbn_var_34;
+    uint16 neck_angle_delta;
+  };
   uint16 mbn_var_35;
   uint16 mbn_var_36;
-  uint16 mbn_var_37;
+  union {
+    uint16 mbn_var_37;
+    uint16 palette_fade_transition_counter;
+  };
   uint16 mbn_var_38;
   uint16 mbn_var_39;
-  uint16 mbn_var_3A;
-  uint16 mbn_var_3B;
-  uint16 mbn_var_3C;
-  uint16 mbn_var_3D;
-  uint16 mbn_var_3E;
-  uint16 mbn_var_3F;
+  union {
+    uint16 mbn_var_3A;
+    uint16 rainbow_beam_right_edge_angle;
+  };
+  union {
+    uint16 mbn_var_3B;
+    uint16 rainbow_beam_left_edge_angle;
+  };
+  union {
+    uint16 mbn_var_3C;
+    uint16 rainbow_beam_left_origin_x_pos;
+  };
+  union {
+    uint16 mbn_var_3D;
+    uint16 rainbow_beam_origin_y_pos;
+  };
+  union {
+    uint16 mbn_var_3E;
+    uint16 rainbow_beam_right_origin_x_pos;
+  };
+  union {
+    uint16 mbn_var_3F;
+    uint16 rainbow_beam_aimed_right_origin_y_pos;
+  };
 }Enemy_MotherBrain;
 typedef struct Enemy_MotherBrainBody {
 EnemyBase base;
@@ -2891,12 +2960,24 @@ uint16 shakt_parameter_2;
 }Enemy_Shaktool;
 typedef struct Enemy_ShitroidInCutscene {
 EnemyBase base;
-uint16 sice_var_A;
-uint16 sice_var_B;
-uint16 sice_var_C;
+union {
+  uint16 sice_var_A;
+  uint16 enemy_func;
+};
+union {
+  uint16 sice_var_B;
+  uint16 x_velocity;
+};
+union {
+  uint16 sice_var_C;
+  uint16 y_velocity;
+};
 uint16 sice_var_D;
 uint16 sice_var_E;
-uint16 sice_var_F;
+union {
+  uint16 sice_var_F;
+  uint16 enemy_func_timer;
+};
 uint16 sice_parameter_1;
 uint16 sice_parameter_2;
 uint8 pad1[0x7800 - 0xFB8];
@@ -2910,14 +2991,26 @@ uint8 pad1[0x7800 - 0xFB8];
   uint16 sice_var_07;
   uint16 sice_var_08;
   uint16 sice_var_09;
-  uint16 sice_var_0A;
+  union {
+    uint16 sice_var_0A;
+    uint16 enemy_index;
+  };
   uint16 sice_var_0B;
   uint16 sice_var_0C;
   uint16 sice_var_0D;
   uint16 sice_var_0E;
-  uint16 sice_var_0F;
-  uint16 sice_var_10;
-  uint16 sice_var_11;
+  union {
+    uint16 sice_var_0F;
+    uint16 palette_func;
+  };
+  union {
+    uint16 sice_var_10;
+    uint16 shaking_origin_x_pos;
+  };
+  union {
+    uint16 sice_var_11;
+    uint16 shaking_origin_y_pos;
+  };
   uint16 sice_var_12;
   uint16 sice_var_13;
   uint16 sice_var_14;
@@ -2956,7 +3049,10 @@ uint8 pad2[0x8000-0x7840];
   uint16 sice_var_34;
   uint16 sice_var_35;
   uint16 sice_var_36;
-  uint16 sice_var_37;
+  union {
+    uint16 sice_var_37;
+    uint16 palette_fade_transition_counter;
+  };
   uint16 sice_var_38;
   uint16 sice_var_39;
   uint16 sice_var_3A;
@@ -3126,7 +3222,10 @@ union {
   uint16 right_post_x_pos;  // ninja, walking
 };
 uint16 sps_parameter_1;
-uint16 sps_parameter_2;
+union {
+  uint16 sps_parameter_2;
+  uint16 max_x_offset;  // wall, ninja, walking
+};
 uint8 pad1[0x7800 - 0xFB8];
   union {
     uint16 sps_var_00;

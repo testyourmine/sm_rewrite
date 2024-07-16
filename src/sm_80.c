@@ -1175,15 +1175,15 @@ void NmiUpdatePalettesAndOam(void) {  // 0x80933A
   WriteReg(BBAD0, REG(OAMDATA));
   WriteRegWord(A1T0L, ADDR16_OF_RAM(*oam_ent));
   WriteReg(A1B0, 0);
-  uint16 oam_size = ADDR16_OF_RAM(oam_next_ptr) - ADDR16_OF_RAM(*oam_ent);
+  uint16 oam_size = ADDR16_OF_RAM_OFFSET(oam_next_ptr, *oam_ent);
   WriteRegWord(DAS0L, oam_size);
   WriteRegWord(OAMADDL, 0);
   // Set up transfer for palettes in RAM to CGRAM
   WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 0));
   WriteReg(BBAD1, REG(CGDATA));
-  WriteRegWord(A1T1L, ADDR16_OF_RAM(palette_buffer.pal[0]));
+  WriteRegWord(A1T1L, ADDR16_OF_RAM(palette_buffer));
   WriteReg(A1B1, 0x7E);
-  uint16 cgram_size = ADDR16_OF_RAM(target_palettes.pal[0]) - ADDR16_OF_RAM(palette_buffer.pal[0]);
+  uint16 cgram_size = ADDR16_OF_RAM_OFFSET(target_palettes, palette_buffer);
   WriteRegWord(DAS1L, cgram_size);
   WriteReg(CGADD, 0);
   // Execute transfers
@@ -2605,7 +2605,7 @@ void DebugScrollPosSaveLoad(void) {  // 0x80A9AC
 * @brief Updates the column of the background data
 */
 void UploadBackgroundDataColumn(void) {  // 0x80A9D6
-  uint16 bg_offset = ADDR16_OF_RAM(bg2_update_col_unwrapped_size) - ADDR16_OF_RAM(bg1_update_col_unwrapped_size);
+  uint16 bg_offset = ADDR16_OF_RAM_OFFSET(bg2_update_col_unwrapped_size, bg1_update_col_unwrapped_size);
   UpdateLevelOrBackgroundDataColumn(bg_offset);
 }
 
@@ -2726,7 +2726,7 @@ void UpdateLevelOrBackgroundDataColumn(uint16 update_layer_2) {  // 0x80A9DE
 * @brief Updates the row of the background data
 */
 void UpdateBackgroundDataRow(void) {  // 0x80AB70
-  uint16 bg_offset = ADDR16_OF_RAM(bg2_update_row_unwrapped_size) - ADDR16_OF_RAM(bg1_update_row_unwrapped_size);
+  uint16 bg_offset = ADDR16_OF_RAM_OFFSET(bg2_update_row_unwrapped_size, bg1_update_row_unwrapped_size);
   UpdateLevelOrBackgroundDataRow(bg_offset);
 }
 

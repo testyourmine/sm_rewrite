@@ -4120,7 +4120,7 @@ void sub_AAE445(uint16 k);
 void sub_AAE784(void);
 
 // Bank AD
-uint8 MotherBrain_EEF6(uint16 a);
+uint8 MotherBrain_FadeToFromGray_FakeDeath(uint16 a);
 uint8 MotherBrain_FadeFromGray_Drained(uint16 a);
 uint8 MotherBrain_FadeFromGray_FakeDeath(uint16 a);
 uint8 MotherBrain_FadePalToBlack(uint16 a);
@@ -4131,10 +4131,10 @@ uint8 MotherBrain_Phase3_TurnLightsBackOn(uint16 a);
 void EnableEarthquakeTypeAFor20Frames(uint16 a);
 void HandleMotherBrainBodyFlickering(void);
 void MotherBrain_CalcHdma(void);
-void MotherBrain_CalcHdma_BeamAimedRight(uint16 r22, uint16 r24);
-void MotherBrain_CalcHdma_BeamAimedRight2(void);
+void MotherBrain_CalcHdma_Right_Right(uint16 r22, uint16 r24);
+void MotherBrain_CalcHdma_BeamAimedRight(void);
 void MotherBrain_CalcHdma_BeamAimedUp(void);
-void MotherBrain_CalcHdma_Down(void);
+void MotherBrain_CalcHdma_BeamAimedDown(void);
 void MotherBrain_CalcHdma_Down_Down(uint16 r22, uint16 r24);
 void MotherBrain_CalcHdma_Down_DownLeft(uint16 r22, uint16 r24);
 void MotherBrain_CalcHdma_Down_DownRight(uint16 r22, uint16 r24);

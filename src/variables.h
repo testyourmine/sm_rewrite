@@ -1230,5 +1230,7 @@ extern int32 *cur_coll_amt32;
 #include "variables_extra.h"
 
 #define ADDR16_OF_RAM(x) ((uint8*)&(x) - g_ram)
+#define ADDR16_OF_RAM_OFFSET(x, y) (ADDR16_OF_RAM(x) - ADDR16_OF_RAM(y))
+#define PAL_RAM_OFFSET(x) (ADDR16_OF_RAM_OFFSET(x, palette_buffer))
 
 #endif // SM_VARIABLES_H_

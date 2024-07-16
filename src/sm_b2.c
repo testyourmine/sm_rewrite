@@ -210,8 +210,8 @@ const uint16 *WallSpacePirates_Instr_RandomNewDirFaceL(uint16 enemy_idx, const u
 */
 const uint16 *WallSpacePirates_Instr_PrepareWallJumpR(uint16 enemy_idx, const uint16 *enemy_ptr) {  // 0xB2EED4
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
-  E->sps_var_B_unused = E->base.x_pos + E->sps_parameter_2;
-  E->walljump_arc_center_x_pos = E->base.x_pos + (E->sps_parameter_2 / 2);
+  E->sps_var_B_unused = E->base.x_pos + E->max_x_offset;
+  E->walljump_arc_center_x_pos = E->base.x_pos + (E->max_x_offset / 2);
   E->walljump_arc_center_y_pos = E->base.y_pos;
   E->walljump_arc_angle = 64;
   return enemy_ptr;
@@ -225,8 +225,8 @@ const uint16 *WallSpacePirates_Instr_PrepareWallJumpR(uint16 enemy_idx, const ui
 */
 const uint16 *WallSpacePirates_Instr_PrepareWallJumpL(uint16 enemy_idx, const uint16 *enemy_ptr) {  // 0xB2EEFD
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
-  E->sps_var_B_unused = E->base.x_pos - E->sps_parameter_2;
-  E->walljump_arc_center_x_pos = E->base.x_pos - (E->sps_parameter_2 / 2);
+  E->sps_var_B_unused = E->base.x_pos - E->max_x_offset;
+  E->walljump_arc_center_x_pos = E->base.x_pos - (E->max_x_offset / 2);
   E->walljump_arc_center_y_pos = E->base.y_pos;
   E->walljump_arc_angle = 192;
   return enemy_ptr;
@@ -289,19 +289,20 @@ const uint16 *WallSpacePirates_Instr_PlaySpacePirateAttackSfx(uint16 enemy_idx, 
 void WallSpacePirates_Init(void) {  // 0xB2EF9F
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
   uint16 curr_instr = addr_kWallSpacePirates_Ilist_MoveDownLWall;
-  if ((E->sps_parameter_1 & 1) != 0)
+  if (E->sps_parameter_1 & SPS_FACE_RIGHT)
     curr_instr = addr_kWallSpacePirates_Ilist_MoveDownRWall;
   E->base.current_instruction = curr_instr;
   E->walljump_arc_right_target_angle = 190;
   E->walljump_arc_left_target_angle = 66;
   E->walljump_arc_angle_delta = 2;
-  if ((E->sps_parameter_1 & 0x8000) == 0) {
+  // if fast jump
+  if (!(E->sps_parameter_1 & SPS_JUMP_SLOW)) {
     E->walljump_arc_right_target_angle += 2;
     E->walljump_arc_left_target_angle -= 2;
     E->walljump_arc_angle_delta += 2;
   }
   uint16 curr_func = FUNC16(WallSpacePirates_Func_ClimbLWall);
-  if ((E->sps_parameter_1 & 1) != 0)
+  if (E->sps_parameter_1 & SPS_FACE_RIGHT)
     curr_func = FUNC16(WallSpacePirates_Func_ClimbRWall);
   E->enemy_func = curr_func;
   uint16 x_pos;
@@ -364,8 +365,8 @@ void WallSpacePirates_Func_ClimbLWall(uint16 enemy_idx) {  // 0xB2F034
 */
 void WallSpacePirates_Func_WallJumpR(uint16 enemy_idx) {  // 0xB2F050
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
-  E->base.x_pos = E->walljump_arc_center_x_pos + SineMult8bit(E->walljump_arc_angle, E->sps_parameter_2 / 2);
-  E->base.y_pos = E->walljump_arc_center_y_pos - CosineMult8bit(E->walljump_arc_angle, E->sps_parameter_2 / 4);
+  E->base.x_pos = E->walljump_arc_center_x_pos + SineMult8bit(E->walljump_arc_angle, E->max_x_offset / 2);
+  E->base.y_pos = E->walljump_arc_center_y_pos - CosineMult8bit(E->walljump_arc_angle, E->max_x_offset / 4);
   E->walljump_arc_angle = (uint8)(LOBYTE(E->walljump_arc_angle) - LOBYTE(E->walljump_arc_angle_delta));
   if (E->walljump_arc_angle == E->walljump_arc_right_target_angle) {
     E->base.current_instruction = addr_kWallSpacePirates_Ilist_LandedRWall;
@@ -397,8 +398,8 @@ void WallSpacePirates_Func_ClimbRWall(uint16 enemy_idx) {  // 0xB2F0C8
 */
 void WallSpacePirates_Func_WallJumpL(uint16 enemy_idx) {  // 0xB2F0E4
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
-  E->base.x_pos = E->walljump_arc_center_x_pos + SineMult8bit(E->walljump_arc_angle, E->sps_parameter_2 / 2);
-  E->base.y_pos = E->walljump_arc_center_y_pos - CosineMult8bit(E->walljump_arc_angle, E->sps_parameter_2 / 4);
+  E->base.x_pos = E->walljump_arc_center_x_pos + SineMult8bit(E->walljump_arc_angle, E->max_x_offset / 2);
+  E->base.y_pos = E->walljump_arc_center_y_pos - CosineMult8bit(E->walljump_arc_angle, E->max_x_offset / 4);
   E->walljump_arc_angle = (uint8)(LOBYTE(E->walljump_arc_angle) + LOBYTE(E->walljump_arc_angle_delta));
   if (E->walljump_arc_angle == E->walljump_arc_left_target_angle) {
     E->base.current_instruction = addr_kWallSpacePirates_Ilist_LandedLWall;
@@ -494,18 +495,18 @@ const uint16 *NinjaSpacePirates_Instr_ResetXSpeed(uint16 enemy_idx, const uint16
 void NinjaSpacePirates_Init(void) {  // 0xB2F5DE
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
   uint16 curr_instr = addr_kNinjaSpacePirates_Ilist_Initial_FaceL;
-  if ((E->sps_parameter_1 & 1) != 0)
+  if (E->sps_parameter_1 & SPS_FACE_RIGHT)
     curr_instr = addr_kNinjaSpacePirates_Ilist_Initial_FaceR;
   E->base.current_instruction = curr_instr;
   E->ilist_ptr_unused = E->base.current_instruction;
   uint16 x_pos = E->base.x_pos;
-  if ((E->sps_parameter_1 & 1) != 0) {
+  if (E->sps_parameter_1 & SPS_FACE_RIGHT) {
     E->left_post_x_pos = x_pos;
-    E->right_post_x_pos = x_pos + E->sps_parameter_2;
+    E->right_post_x_pos = x_pos + E->max_x_offset;
   }
   else {
     E->right_post_x_pos = x_pos;
-    E->left_post_x_pos = x_pos - E->sps_parameter_2;
+    E->left_post_x_pos = x_pos - E->max_x_offset;
   }
   uint16 right_post_x_offset = (uint16)(E->right_post_x_pos - E->left_post_x_pos) / 2;
   E->post_midpoint_x_pos = E->left_post_x_pos + right_post_x_offset;
@@ -521,7 +522,7 @@ void NinjaSpacePirates_Init(void) {  // 0xB2F5DE
   E->right_post_x_pos = E->post_midpoint_x_pos + post_x_pos_offset;
   E->left_post_x_pos = E->post_midpoint_x_pos - post_x_pos_offset;
   uint16 post_x_pos = E->left_post_x_pos;
-  if ((E->sps_parameter_1 & 1) == 0)
+  if (!(E->sps_parameter_1 & SPS_FACE_RIGHT))
     post_x_pos = E->right_post_x_pos;
   E->base.x_pos = post_x_pos;
   E->enemy_func = FUNC16(nullsub_169_B2);
@@ -934,12 +935,12 @@ const uint16 *WalkingSpacePirates_Instr_ChooseDir_FireLaserIfClose(uint16 enemy_
 void WalkingSpacePirates_Init(void) {  // 0xB2FD02
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
   uint16 curr_instr = addr_kWalkingSpacePirates_Ilist_WalkL;
-  if ((E->sps_parameter_1 & 1) != 0)
+  if (E->sps_parameter_1 & SPS_FACE_RIGHT)
     curr_instr = addr_kWalkingSpacePirates_Ilist_WalkR;
   E->base.current_instruction = curr_instr;
   E->enemy_func = FUNC16(nullsub_169_B2);
-  E->right_post_x_pos = E->base.x_pos + E->sps_parameter_2;
-  E->left_post_x_pos = E->base.x_pos - E->sps_parameter_2;
+  E->right_post_x_pos = E->base.x_pos + E->max_x_offset;
+  E->left_post_x_pos = E->base.x_pos - E->max_x_offset;
 }
 
 /**
@@ -948,7 +949,7 @@ void WalkingSpacePirates_Init(void) {  // 0xB2FD02
 void WalkingSpacePirates_Main(void) {  // 0xB2FD32
   Enemy_SpacePirates *E = Get_SpacePirates(cur_enemy_index);
   CallSpacePiratesEnemyFunc(E->enemy_func | 0xB20000, cur_enemy_index);
-  if ((E->sps_parameter_1 & 0x8000) != 0)
+  if (E->sps_parameter_1 & SPS_FLINCH)
     WalkingSpacePirates_FlinchTrigger();
 }
 

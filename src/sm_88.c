@@ -333,7 +333,7 @@ void WaitUntilEndOfVblankAndClearHdma(void) {  // 0x88829E
 
 void DeleteHdmaObjects(void) {  // 0x8882AC
   reg_HDMAEN = 0;
-  uint16 num_channels = ADDR16_OF_RAM(*hdma_object_bank_slot) - ADDR16_OF_RAM(*hdma_object_channels_bitmask);
+  uint16 num_channels = ADDR16_OF_RAM_OFFSET(*hdma_object_bank_slot, *hdma_object_channels_bitmask);
   memset7E(hdma_object_channels_bitmask, 0, num_channels);
 }
 
@@ -2871,14 +2871,14 @@ uint8 VariaSuitPickup_6(void) {  // 0x88E258
 
 uint8 GravitySuitPickup_6(void) {  // 0x88E25F
   reg_COLDATA[2] = 0x80;
-  reg_COLDATA[1] = 64;
-  reg_COLDATA[0] = 32;
+  reg_COLDATA[1] = 0x40;
+  reg_COLDATA[0] = 0x20;
   mov24(&hdma_ptr_1, 0x980001);
   *(uint16 *)((uint8 *)&demo_num_input_frames + 1) = 0;
   demo_input_prev = 0;
   demo_input_prev_new = 0;
   demo_backup_prev_controller_input = 0;
-  hdma_table_1[0] = 255;
+  hdma_table_1[0] = 0xFF;
   substate = 0;
   suit_pickup_light_beam_pos = 0;
   suit_pickup_color_math_R = 0;
@@ -3122,15 +3122,15 @@ uint16 SpawnMotherBrainRainbowBeamHdma(void) {  // 0x88E748
 }
 
 void InitializeRainbowBeam(void) {  // 0x88E767
-  reg_COLDATA[0] = 32;
-  reg_COLDATA[1] = 71;
+  reg_COLDATA[0] = 0x20;
+  reg_COLDATA[1] = 0x47;
   reg_COLDATA[2] = 0x8f;
   fx_layer_blending_config_c = 36;
   mother_brain_indirect_hdma[0] = 100;
-  *(uint16 *)&mother_brain_indirect_hdma[1] = -25344;
-  *(uint16 *)&mother_brain_indirect_hdma[3] = 0;
+  WORD(mother_brain_indirect_hdma[1]) = 0x9D00;
+  WORD(mother_brain_indirect_hdma[3]) = 0;
   hdma_table_2[0] = 0;
-  hdma_table_2[1] = -32736;
+  hdma_table_2[1] = 0x8020;
   hdma_table_2[2] = 0;
   MotherBrain_CalculateRainbowBeamHdma();
 }
@@ -3138,7 +3138,8 @@ void InitializeRainbowBeam(void) {  // 0x88E767
 void HdmaobjPreInstr_MotherBrainRainbowBeam(uint16 k) {  // 0x88E7BC
   if (game_state == kGameState_19_SamusNoHealth) {
     hdma_object_channels_bitmask[hdma_object_index >> 1] = 0;
-  } else {
+  }
+  else {
     fx_layer_blending_config_c = 36;
     if (game_state != kGameState_27_ReserveTanksAuto) {
       MotherBrain_CalculateRainbowBeamHdma();
@@ -3147,21 +3148,19 @@ void HdmaobjPreInstr_MotherBrainRainbowBeam(uint16 k) {  // 0x88E7BC
   }
 }
 
-
 void SetRainbowBeamColorMathSubscreenBackdropColor(void) {  // 0x88E7ED
-  uint16 v0 = kRainbowBeamColorTab0[hdma_object_A[0] >> 1];
-  if ((v0 & 0x8000) == 0) {
-    ++hdma_object_A[0];
-    ++hdma_object_A[0];
-    ++hdma_object_A[0];
-    ++hdma_object_A[0];
-  } else {
-    hdma_object_A[0] = 0;
-    v0 = kRainbowBeamColorTab0[0];
+  uint16 rainbow_color = kRainbowBeamColorTab0[hdma_object_A[0] >> 1];
+  if ((rainbow_color & 0x8000) == 0) {
+    // increments by 2 indices, so it skips every other entry in the color table
+    hdma_object_A[0] += 4;
   }
-  reg_COLDATA[0] = v0 & 0x1F | 0x20;
-  reg_COLDATA[1] = (v0 >> 5) & 0x1F | 0x40;
-  reg_COLDATA[2] = ((uint16)(v0 >> 2) >> 8) & 0x1F | 0x80;
+  else {
+    hdma_object_A[0] = 0;
+    rainbow_color = kRainbowBeamColorTab0[0];
+  }
+  reg_COLDATA[0] = rainbow_color & 0x1F | 0x20;
+  reg_COLDATA[1] = (rainbow_color >> 5) & 0x1F | 0x40;
+  reg_COLDATA[2] = (rainbow_color >> 10) & 0x1F | 0x80;
 }
 
 void SpawnMorphBallEyeBeamHdma(void) {  // 0x88E8D9
