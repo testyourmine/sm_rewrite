@@ -40,7 +40,7 @@ XrayBlockData kXrayBlockData[] = {
   0xd000, 0xd462,
   0xe000, 0xd46a,
   0xf000, 0xd484,
-  0xff00,
+  0xffff,
 };
 
 uint16 kSamusPalette_Normal[] = {
