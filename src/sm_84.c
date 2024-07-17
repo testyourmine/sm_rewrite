@@ -1047,7 +1047,7 @@ const uint8 *PlmInstr_ActivateEnergyStation(const uint8 *plmp, uint16 plm_idx) {
 }
 
 /**
-* @brief Missile stations will refill super missiles and power bombs
+* @brief Feature: Missile stations will refill super missiles and power bombs
 */
 void AmmoRechargeStation(void) {
   if (samus_max_missiles != samus_missiles || samus_max_super_missiles != samus_super_missiles || samus_max_power_bombs != samus_power_bombs) {

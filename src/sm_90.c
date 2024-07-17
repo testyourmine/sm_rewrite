@@ -4533,7 +4533,7 @@ void Samus_MovementHandler_ShinesparkWindup(void) {  // 0x90D068
 }
 
 /**
-* @brief Control the shinespark in any direction
+* @brief Feature: Control the shinespark in any direction
 */
 void Shinespark_Control(void) {
   if (joypad1_newkeys & kButton_Left && samus_pose != kPose_CA_FaceL_Shinespark_Horiz) {

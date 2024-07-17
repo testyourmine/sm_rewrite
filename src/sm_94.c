@@ -512,6 +512,34 @@ static uint8 BlockColl_Vert_Slope_NonSquare(CollInfo *ci, uint16 k) {  // 0x9486
   }
 }
 
+/**
+* @brief Feature: Resume speed boosting from slope
+*/
+void ChainSpark(void) {
+  if (samus_pose != kPose_C9_FaceR_Shinespark_Horiz && samus_pose != kPose_CA_FaceL_Shinespark_Horiz)
+    return;
+  if (samus_pose == kPose_C9_FaceR_Shinespark_Horiz) {
+    if (!(joypad1_lastkeys & kButton_Right))
+      return;
+    samus_new_pose = kPose_09_MoveR_NoAim;
+  }
+  else if (samus_pose == kPose_CA_FaceL_Shinespark_Horiz) {
+    if (!(joypad1_lastkeys & kButton_Left))
+      return;
+    samus_new_pose = kPose_0A_MoveL_NoAim;
+  }
+  samus_movement_type = kMovementType_01_Running;
+  samus_movement_handler = FUNC16(Samus_MovementHandler_Normal);
+  samus_input_handler = FUNC16(Samus_InputHandler_Normal);
+  samus_has_momentum_flag = 1;
+  speed_boost_counter = 0x400 + kSpeedBoostToCtr[4];
+  samus_contact_damage_index = kSamusContactDamageIndex_1_SpeedBoost;
+  SetHiLo(&samus_x_extra_run_speed, &samus_x_extra_run_subspeed, INT16_SHL16(7));
+  samus_echoes_sound_flag = 1;
+  samus_y_dir = kSamusYDir_None;
+  QueueSfx3_Max6(kSfx3_SpeedBooster);
+}
+
 void Samus_AlignYPosSlope(void) {  // 0x9487F4
   if ((enable_horiz_slope_coll & 2) == 0)
     return;
@@ -527,6 +555,7 @@ void Samus_AlignYPosSlope(void) {  // 0x9487F4
       uint16 v2 = (kAlignYPos_Tab0[temp_collision_DD6 + (v1 & 0xF)] & 0x1F) - temp_collision_DD4 - 1;
       if ((int16)v2 < 0) {
         samus_y_pos += v2;
+        ChainSpark();
         samus_pos_adjusted_by_slope_flag = 1;
       }
     }

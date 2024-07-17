@@ -1302,6 +1302,13 @@ void Sfx3_HandleCmdFromSnes(SpcPlayer *p) {
 }
 
 uint8 SfxChan_GetByte(SpcPlayer *p, SfxChan *s) {
+// Feature: Lower volume of low health beep
+#if 1
+  if (s->ptr + s->ptr_idx == 0x4EFA) {
+    int beep_vol = 100;  // beep volume is percentage, default 100
+    return p->ram[s->ptr + s->ptr_idx++] * (beep_vol / 100.0f);
+  }
+#endif
   return p->ram[s->ptr + s->ptr_idx++];
 }
 
