@@ -70,6 +70,11 @@ static uint16 WriteMessageTilemap(void) {  // 0x8582B8
   uint16 bottom_border_size = top_border_size;
   message_box_tilemap_size = top_border_size + message_size + bottom_border_size;
   const uint16* message_tilemap = getMessageTilemap(message_src);
+#if 1
+  if (message_src == addr_kMissileReloadCompletedMsgBoxTilemap) {
+    message_tilemap = kAmmoRechargeCompletedMsgBoxTilemap;
+  }
+#endif
   uint16 tilemap_offset = top_border_size >> 1;
   MemCpy(ram3000.msgbox.tilemap + tilemap_offset, message_tilemap, message_size);
   return top_border_size + message_size;

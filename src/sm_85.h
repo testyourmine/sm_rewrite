@@ -192,6 +192,12 @@ static const uint16 kEnergyRechargeCompletedMsgBoxTilemap[96] = {  // 0x85923F
   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(C),    YL(O),    YL(M),    YL(P),    YL(L),    YL(E),    YL(T),    YL(E),    YL(D),    0x3CFA,   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      NUL,
 };
 
+static const uint16 kAmmoRechargeCompletedMsgBoxTilemap[96] = {
+  NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      YL(Sp),   YL(Sp),   YL(A),    YL(M),    YL(M),    YL(O),    YL(Sp),   YL(R),    YL(E),    YL(C),    YL(H),    YL(A),    YL(R),    YL(G),    YL(E),    YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      NUL,
+  NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      NUL,
+  NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(C),    YL(O),    YL(M),    YL(P),    YL(L),    YL(E),    YL(T),    YL(E),    YL(D),    0x3CFA,   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      NUL,
+};
+
 static const uint16 kMissileReloadCompletedMsgBoxTilemap[96] = {  // 0x8592FF
   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      YL(Sp),   YL(Sp),   YL(M),    YL(I),    YL(S),    YL(S),    YL(I),    YL(L),    YL(E),    YL(Sp),   YL(R),    YL(E),    YL(L),    YL(O),    YL(A),    YL(D),    YL(Sp),   YL(Sp),   YL(Sp),   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      NUL,
   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      YL(Sp),   YL(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   GN(Sp),   YL(Sp),   YL(Sp),   YL(Sp),   NUL,      NUL,      NUL,      NUL,      NUL,      NUL,      NUL,

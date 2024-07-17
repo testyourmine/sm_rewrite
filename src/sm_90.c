@@ -4532,15 +4532,57 @@ void Samus_MovementHandler_ShinesparkWindup(void) {  // 0x90D068
   }
 }
 
+/**
+* @brief Control the shinespark in any direction
+*/
+void Shinespark_Control(void) {
+  if (joypad1_newkeys & kButton_Left && samus_pose != kPose_CA_FaceL_Shinespark_Horiz) {
+    samus_new_pose = kPose_CA_FaceL_Shinespark_Horiz;
+    SetHiLo(&samus_x_extra_run_speed, &samus_x_extra_run_subspeed, INT16_SHL16(2));
+  }
+  else if (joypad1_newkeys & kButton_Right && samus_pose != kPose_C9_FaceR_Shinespark_Horiz) {
+    samus_new_pose = kPose_C9_FaceR_Shinespark_Horiz;
+    SetHiLo(&samus_x_extra_run_speed, &samus_x_extra_run_subspeed, INT16_SHL16(2));
+  }
+  else if (joypad1_newkeys & kButton_Up) {
+    if (samus_pose_x_dir == kSamusXDir_FaceLeft && samus_pose != kPose_CC_FaceL_Shinespark_Vert) {
+      samus_new_pose = kPose_CC_FaceL_Shinespark_Vert;
+      SetHiLo(&samus_y_speed, &samus_y_subspeed, INT16_SHL16(1));
+      SetHiLo(&substate, &suit_pickup_light_beam_pos, 0);
+    }
+    else if (samus_pose_x_dir == kSamusXDir_FaceRight && samus_pose != kPose_CB_FaceR_Shinespark_Vert) {
+      samus_new_pose = kPose_CB_FaceR_Shinespark_Vert;
+      SetHiLo(&samus_y_speed, &samus_y_subspeed, INT16_SHL16(1));
+      SetHiLo(&substate, &suit_pickup_light_beam_pos, 0);
+    }
+  }
+  if (samus_pose == kPose_CA_FaceL_Shinespark_Horiz || samus_pose == kPose_C9_FaceR_Shinespark_Horiz) {
+    if (joypad1_prev & button_config_aim_down_L) {
+      Samus_MoveDown(__PAIR32__(4, 0));
+    }
+    else if (joypad1_prev & button_config_aim_up_R) {
+      Samus_MoveUp(__PAIR32__(-4, 0));
+    }
+  }
+  if (samus_pose != samus_new_pose) {
+  }
+}
+
 void Samus_MovementHandler_VerticalShinespark(void) {  // 0x90D0AB
   samus_contact_damage_index = kSamusContactDamageIndex_2_Shinespark;
   samus_hurt_flash_counter = 8;
   Samus_UpdateSpeedEchoPos();
   Samus_ShinesparkMove_Y();
+#if 1
+  Shinespark_Control();
+#endif
   Samus_EndShinespark();
+// disable shinespark health drain
+#if 0
   if (samus_health >= 30) {
     --samus_health;
   }
+#endif
 }
 
 void Samus_MovementHandler_DiagonalShinespark(void) {  // 0x90D0D7
@@ -4549,10 +4591,16 @@ void Samus_MovementHandler_DiagonalShinespark(void) {  // 0x90D0D7
   Samus_UpdateSpeedEchoPos();
   Samus_ShinesparkMove_X();
   Samus_ShinesparkMove_Y();
+#if 1
+  Shinespark_Control();
+#endif
   Samus_EndShinespark();
+// disable shinespark health drain
+#if 0
   if (samus_health >= 30) {
     --samus_health;
   }
+#endif
 }
 
 void Samus_MovementHandler_HorizontalShinespark(void) {  // 0x90D106
@@ -4560,10 +4608,16 @@ void Samus_MovementHandler_HorizontalShinespark(void) {  // 0x90D106
   samus_hurt_flash_counter = 8;
   Samus_UpdateSpeedEchoPos();
   Samus_ShinesparkMove_X();
+#if 1
+  Shinespark_Control();
+#endif
   Samus_EndShinespark();
+// disable shinespark health drain
+#if 0
   if (samus_health >= 30) {
     --samus_health;
   }
+#endif
 }
 
 static uint32 Samus_ClampSpeedHi(int32 amt, int val) {

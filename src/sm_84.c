@@ -1047,12 +1047,35 @@ const uint8 *PlmInstr_ActivateEnergyStation(const uint8 *plmp, uint16 plm_idx) {
 }
 
 /**
+* @brief Missile stations will refill super missiles and power bombs
+*/
+void AmmoRechargeStation(void) {
+  if (samus_max_missiles != samus_missiles || samus_max_super_missiles != samus_super_missiles || samus_max_power_bombs != samus_power_bombs) {
+    if (samus_max_missiles != samus_missiles) {
+      samus_missiles = samus_max_missiles;
+    }
+    if (samus_max_super_missiles != samus_super_missiles) {
+      samus_super_missiles = samus_max_super_missiles;
+    }
+    if (samus_max_power_bombs != samus_power_bombs) {
+      samus_power_bombs = samus_max_power_bombs;
+    }
+    DisplayMessageBox(kMessageBox_22_MissileReloadCompleted);
+  }
+}
+
+/**
 * @brief Sets the missiles to the max missiles and displays the missile station message
 * @param plmp The pointer to the PLM
 * @param plm_idx The index of the PLM
 * @return uint8* The pointer to the next PLM instruction
 */
 const uint8 *PlmInstr_ActivateMissileStation(const uint8 *plmp, uint16 plm_idx) {  // 0x848CD0
+#if 1
+  AmmoRechargeStation();
+  RunSamusCode(kSamusCode_1_UnlockSamus);
+  return plmp;
+#endif
   if (samus_max_missiles != samus_missiles) {
     DisplayMessageBox(kMessageBox_22_MissileReloadCompleted);
     samus_missiles = samus_max_missiles;
@@ -1789,6 +1812,11 @@ const uint8 *PlmInstr_GotoIfSamusHealthFull(const uint8 *plmp, uint16 plm_idx) {
 * otherwise the next PLM instruction
 */
 const uint8 *PlmInstr_GotoIfMissilesFull(const uint8 *plmp, uint16 plm_idx) {  // 0x84AEBF
+#if 1
+  if (samus_max_missiles != samus_missiles || samus_max_super_missiles != samus_super_missiles || samus_max_power_bombs != samus_power_bombs) {
+    return plmp + 2;
+  }
+#endif
   if (samus_max_missiles != samus_missiles)
     return plmp + 2;
   RunSamusCode(kSamusCode_1_UnlockSamus);
@@ -2047,7 +2075,11 @@ uint8 PlmSetup_B6EF_MissileStationRightAccess(uint16 plm_idx) {  // 0x84B2D0
   if ((samus_collision_direction & kSamusCollDir_DirMask) == kSamusCollDir_0_Left
       && samus_pose == kPose_8A_FaceL_Ranintowall
       && (samus_pose_x_dir & kSamusXDir_FaceLeft)
-      && samus_missiles != samus_max_missiles) {
+      && (samus_missiles != samus_max_missiles
+#if 1
+      || samus_super_missiles != samus_max_super_missiles || samus_power_bombs != samus_max_power_bombs
+#endif
+      )) {
     return ActivateStationIfSamusCannonLinedUp(plm_block_indices[plm_idx >> 1] - 2, plm_idx);
   }
   plm_header_ptr[plm_idx >> 1] = 0;
@@ -2063,7 +2095,11 @@ uint8 PlmSetup_B6F3_MissileStationLeftAccess(uint16 plm_idx) {  // 0x84B300
   if ((samus_collision_direction & kSamusCollDir_DirMask) == kSamusCollDir_1_Right
       && samus_pose == kPose_89_FaceR_Ranintowall
       && (samus_pose_x_dir & kSamusXDir_FaceRight)
-      && samus_missiles != samus_max_missiles) {
+      && (samus_missiles != samus_max_missiles
+#if 1
+      || samus_super_missiles != samus_max_super_missiles || samus_power_bombs != samus_max_power_bombs
+#endif
+      )) {
     return ActivateStationIfSamusCannonLinedUp(plm_block_indices[plm_idx >> 1] + 2, plm_idx);
   }
   plm_header_ptr[plm_idx >> 1] = 0;
