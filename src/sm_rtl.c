@@ -416,6 +416,9 @@ bool RtlRunFrame(int inputs) {
           StateRecorder_RecordPatchByte(&state_recorder, (uint8 *)&bug_fix_counter - g_ram, (uint8 *)&bug_fix_counter, 2);
         }
       }
+      if (enhanced_features0 != g_wanted_sm_features) {
+          enhanced_features0 = g_wanted_sm_features;
+      }
     }
 
     StateRecorder_Record(&state_recorder, inputs);

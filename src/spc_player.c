@@ -9,6 +9,7 @@
 #include <assert.h>
 #include "types.h"
 #include "snes/dsp_regs.h"
+#include "sm_rtl.h"
 
 void Sfx1_HandleCmdFromSnes(SpcPlayer *p);
 void Sfx2_HandleCmdFromSnes(SpcPlayer *p);
@@ -1303,12 +1304,13 @@ void Sfx3_HandleCmdFromSnes(SpcPlayer *p) {
 
 uint8 SfxChan_GetByte(SpcPlayer *p, SfxChan *s) {
 // Feature: Lower volume of low health beep
-#if 1
-  if (s->ptr + s->ptr_idx == 0x4EFA) {
-    int beep_vol = 100;  // beep volume is percentage, default 100
-    return p->ram[s->ptr + s->ptr_idx++] * (beep_vol / 100.0f);
-  }
-#endif
+    if (enhanced_features0 & kFeatures0_LowHealthBeep) {
+        if (s->ptr + s->ptr_idx == 0x4EFA) {
+            int beep_vol = 50;  // beep volume is percentage, default 100
+            //puts("Low Beep");
+            return p->ram[s->ptr + s->ptr_idx++] * (beep_vol / 100.0f);
+        }
+    }
   return p->ram[s->ptr + s->ptr_idx++];
 }
 

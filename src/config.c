@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include "types.h"
 #include "util.h"
+#include "features.h"
 
 enum {
   kKeyMod_ScanCode = 0x200,
@@ -414,6 +415,24 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       return ParseBool(value, &g_config.disable_frame_delay);
     }
   } else if (section == 4) {
+      if (StringEqualsNoCase(key, "AmmoRechargeStation")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_AmmoRechargeStation);
+      }
+      else if (StringEqualsNoCase(key, "ShinesparkControl")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_ShinesparkControl);
+      }
+      else if (StringEqualsNoCase(key, "ChainSpark")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_ChainSpark);
+      }
+      else if (StringEqualsNoCase(key, "LowHealthBeep")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_LowHealthBeep);
+      }
+      else if (StringEqualsNoCase(key, "PowerBombReveal")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_PowerBombReveal);
+      }
+      else if (StringEqualsNoCase(key, "InstantPickups")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_InstantPickups);
+      }
   }
   return false;
 }

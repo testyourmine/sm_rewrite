@@ -52,7 +52,7 @@ target_sources(sm PRIVATE
     "snes/snes.c"
     "snes/snes_other.c"
     "snes/spc.c"
-)
+ "features.h")
 
 target_include_directories(sm PRIVATE "." "snes")
 

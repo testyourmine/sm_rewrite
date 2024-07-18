@@ -4573,16 +4573,16 @@ void Samus_MovementHandler_VerticalShinespark(void) {  // 0x90D0AB
   samus_hurt_flash_counter = 8;
   Samus_UpdateSpeedEchoPos();
   Samus_ShinesparkMove_Y();
-#if 1
-  Shinespark_Control();
-#endif
+  if (enhanced_features0 & kFeatures0_ShinesparkControl) {
+      Shinespark_Control();
+  }
   Samus_EndShinespark();
 // disable shinespark health drain
-#if 0
-  if (samus_health >= 30) {
-    --samus_health;
+  if (!(enhanced_features0 & kFeatures0_ShinesparkControl)) {
+      if (samus_health >= 30) {
+          --samus_health;
+      }
   }
-#endif
 }
 
 void Samus_MovementHandler_DiagonalShinespark(void) {  // 0x90D0D7
@@ -4591,16 +4591,16 @@ void Samus_MovementHandler_DiagonalShinespark(void) {  // 0x90D0D7
   Samus_UpdateSpeedEchoPos();
   Samus_ShinesparkMove_X();
   Samus_ShinesparkMove_Y();
-#if 1
-  Shinespark_Control();
-#endif
-  Samus_EndShinespark();
-// disable shinespark health drain
-#if 0
-  if (samus_health >= 30) {
-    --samus_health;
+  if (enhanced_features0 & kFeatures0_ShinesparkControl) {
+      Shinespark_Control();
   }
-#endif
+  Samus_EndShinespark();
+  // disable shinespark health drain
+  if (!(enhanced_features0 & kFeatures0_ShinesparkControl)) {
+      if (samus_health >= 30) {
+          --samus_health;
+      }
+}
 }
 
 void Samus_MovementHandler_HorizontalShinespark(void) {  // 0x90D106
@@ -4608,16 +4608,16 @@ void Samus_MovementHandler_HorizontalShinespark(void) {  // 0x90D106
   samus_hurt_flash_counter = 8;
   Samus_UpdateSpeedEchoPos();
   Samus_ShinesparkMove_X();
-#if 1
-  Shinespark_Control();
-#endif
-  Samus_EndShinespark();
-// disable shinespark health drain
-#if 0
-  if (samus_health >= 30) {
-    --samus_health;
+  if (enhanced_features0 & kFeatures0_ShinesparkControl) {
+      Shinespark_Control();
   }
-#endif
+  Samus_EndShinespark();
+  // disable shinespark health drain
+  if (!(enhanced_features0 & kFeatures0_ShinesparkControl)) {
+      if (samus_health >= 30) {
+          --samus_health;
+      }
+}
 }
 
 static uint32 Samus_ClampSpeedHi(int32 amt, int val) {

@@ -332,6 +332,9 @@ int main(int argc, char** argv) {
 
   g_snes_width = (g_config.extended_aspect_ratio * 2 + 256);
   g_snes_height = 240;// (g_config.extend_y ? 240 : 224);
+
+  g_wanted_sm_features = g_config.features0;
+
   g_ppu_render_flags = g_config.new_renderer * kPpuRenderFlags_NewRenderer |
     g_config.enhanced_mode7 * kPpuRenderFlags_4x4Mode7 |
     g_config.extend_y * kPpuRenderFlags_Height240 |
@@ -377,8 +380,13 @@ int main(int argc, char** argv) {
   }
 
   // init snes, load rom
-  const char* filename = argv[0] ? argv[0] : "sm.smc";
+  char* filename = argv[0] ? argv[0] : "sm.smc";
   Snes *snes = SnesInit(filename);
+
+  if (snes == NULL) {
+      filename = "sm.sfc";
+      snes = SnesInit(filename);
+  }
 
   if(snes == NULL) {
   #ifdef __SWITCH__

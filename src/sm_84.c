@@ -911,11 +911,11 @@ const uint8 *PlmInstr_QueueMusic(const uint8 *plmp, uint16 k) {  // 0x848BD1
 */
 const uint8 *PlmInstr_ClearMusicQueueAndQueueTrack(const uint8 *plmp, uint16 plm_idx) {  // 0x848BDD
   // Feature: Quick pickups
-#if 1
+if (enhanced_features0 & kFeatures0_InstantPickups) {
   CancelSoundEffects();
   QueueSfx2_Max6(kSfx2_TypewriterStroke_CeresSelfDestructSequence);
   return plmp + 1;
-#endif
+}
   for (int queue_entry = 14; queue_entry >= 0; queue_entry -= 2) {
     int idx = queue_entry >> 1;
     music_queue_track[idx] = 0;
@@ -1095,11 +1095,11 @@ void AmmoRechargeStation(void) {
 * @return uint8* The pointer to the next PLM instruction
 */
 const uint8 *PlmInstr_ActivateMissileStation(const uint8 *plmp, uint16 plm_idx) {  // 0x848CD0
-#if 1
-  AmmoRechargeStation();
-  RunSamusCode(kSamusCode_1_UnlockSamus);
-  return plmp;
-#endif
+    if (enhanced_features0 & kFeatures0_AmmoRechargeStation) {
+        AmmoRechargeStation();
+        RunSamusCode(kSamusCode_1_UnlockSamus);
+        return plmp;
+    }
   if (samus_max_missiles != samus_missiles) {
     DisplayMessageBox(kMessageBox_22_MissileReloadCompleted);
     samus_missiles = samus_max_missiles;
@@ -3827,9 +3827,8 @@ uint8 PlmSetup_SuperMissileBlockRespawning(uint16 plm_idx) {  // 0x84CF67
   uint16 proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
   if (proj_type == kProjectileType_Bomb
 // Feature: Power bombs reveal super missile blocks
-#if 1
-      || proj_type == kProjectileType_PowerBomb
-#endif
+|| ( (enhanced_features0 & kFeatures0_InstantPickups)
+      && proj_type == kProjectileType_PowerBomb)
       ) {
     plm_instr_list_ptrs[plm_idx >> 1] = addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused;
   }
@@ -3856,9 +3855,8 @@ uint8 PlmSetup_CrumbleBlock(uint16 plm_idx) {  // 0x84CFA0
   uint16 proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
   if (proj_type != kProjectileType_Bomb
 // Feature: Power bombs reveal crumble and other blocks
-#if 1
-      && proj_type != kProjectileType_PowerBomb
-#endif
+|| ((enhanced_features0 & kFeatures0_InstantPickups)
+    && proj_type == kProjectileType_PowerBomb)
       )
     plm_header_ptr[plm_idx >> 1] = 0;
   return 0;
