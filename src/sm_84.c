@@ -589,7 +589,9 @@ const uint8 *PlmInstr_PickupBeamAndShowMessage(const uint8 *plmp, uint16 plm_idx
   equipped_beams &= ~((beam << 1) & kBeam_Plasma);
   equipped_beams &= ~((beam >> 1) & kBeam_Spazer);
   UpdateBeamTilesAndPalette();
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(plmp[2]);
   return plmp + 3;
 }
@@ -604,7 +606,9 @@ const uint8 *PlmInstr_PickupEquipmentAndShowMessage(const uint8 *plmp, uint16 pl
   uint16 item = GET_WORD(plmp);
   equipped_items |= item;
   collected_items |= item;
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(plmp[2]);
   return plmp + 3;
 }
@@ -620,7 +624,9 @@ const uint8 *PlmInstr_PickupEquipmentAddGrappleShowMessage(const uint8 *plmp, ui
   equipped_items |= item;
   collected_items |= item;
   AddGrappleToHudTilemap();
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_5_GrapplingBeam);
   return plmp + 2;
 }
@@ -636,7 +642,9 @@ const uint8 *PlmInstr_PickupEquipmentAddXrayShowMessage(const uint8 *plmp, uint1
   equipped_items |= item;
   collected_items |= item;
   AddXrayToHudTilemap();
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_6_XrayScope);
   return plmp + 2;
 }
@@ -650,7 +658,9 @@ const uint8 *PlmInstr_PickupEquipmentAddXrayShowMessage(const uint8 *plmp, uint1
 const uint8 *PlmInstr_CollectHealthEnergyTank(const uint8 *plmp, uint16 plm_idx) {  // 0x848968
   samus_max_health += GET_WORD(plmp);
   samus_health = samus_max_health;
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_1_EnergyTank);
   return plmp + 2;
 }
@@ -665,7 +675,9 @@ const uint8 *PlmInstr_CollectHealthReserveTank(const uint8 *plmp, uint16 plm_idx
   samus_max_reserve_health += GET_WORD(plmp);
   if (reserve_health_mode == kReserveHealthMode_0_None)
     reserve_health_mode = kReserveHealthMode_1_Auto;
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_25_ReserveTank);
   return plmp + 2;
 }
@@ -681,7 +693,9 @@ const uint8 *PlmInstr_CollectAmmoMissileTank(const uint8 *plmp, uint16 plm_idx) 
   samus_max_missiles += amt;
   samus_missiles += amt;
   AddMissilesToHudTilemap();
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_2_Missile);
   return plmp + 2;
 }
@@ -697,7 +711,9 @@ const uint8 *PlmInstr_CollectAmmoSuperMissileTank(const uint8 *plmp, uint16 plm_
   samus_max_super_missiles += amt;
   samus_super_missiles += amt;
   AddSuperMissilesToHudTilemap();
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_3_SuperMissile);
   return plmp + 2;
 }
@@ -713,7 +729,9 @@ const uint8 *PlmInstr_CollectAmmoPowerBombTank(const uint8 *plmp, uint16 plm_idx
   samus_max_power_bombs += amt;
   samus_power_bombs += amt;
   AddPowerBombsToHudTilemap();
+#if 0
   PlayRoomMusicTrackAfterAFrames(360);
+#endif
   DisplayMessageBox(kMessageBox_4_PowerBomb);
   return plmp + 2;
 }
@@ -892,6 +910,12 @@ const uint8 *PlmInstr_QueueMusic(const uint8 *plmp, uint16 k) {  // 0x848BD1
 * @return uint8* The pointer to the next PLM instruction
 */
 const uint8 *PlmInstr_ClearMusicQueueAndQueueTrack(const uint8 *plmp, uint16 plm_idx) {  // 0x848BDD
+  // Feature: Quick pickups
+#if 1
+  CancelSoundEffects();
+  QueueSfx2_Max6(kSfx2_TypewriterStroke_CeresSelfDestructSequence);
+  return plmp + 1;
+#endif
   for (int queue_entry = 14; queue_entry >= 0; queue_entry -= 2) {
     int idx = queue_entry >> 1;
     music_queue_track[idx] = 0;
@@ -3801,7 +3825,12 @@ uint8 PlmSetup_RespawningPowerBombBlock(uint16 plm_idx) {  // 0x84CF2E
 uint8 PlmSetup_SuperMissileBlockRespawning(uint16 plm_idx) {  // 0x84CF67
   uint16 proj_idx = projectile_index >> 1;
   uint16 proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
-  if (proj_type == kProjectileType_Bomb) {
+  if (proj_type == kProjectileType_Bomb
+// Feature: Power bombs reveal super missile blocks
+#if 1
+      || proj_type == kProjectileType_PowerBomb
+#endif
+      ) {
     plm_instr_list_ptrs[plm_idx >> 1] = addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused;
   }
   else if (proj_type == kProjectileType_SuperMissile) {
@@ -3825,7 +3854,12 @@ uint8 PlmSetup_SuperMissileBlockRespawning(uint16 plm_idx) {  // 0x84CF67
 uint8 PlmSetup_CrumbleBlock(uint16 plm_idx) {  // 0x84CFA0
   uint16 proj_idx = projectile_index >> 1;
   uint16 proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
-  if (proj_type != kProjectileType_Bomb)
+  if (proj_type != kProjectileType_Bomb
+// Feature: Power bombs reveal crumble and other blocks
+#if 1
+      && proj_type != kProjectileType_PowerBomb
+#endif
+      )
     plm_header_ptr[plm_idx >> 1] = 0;
   return 0;
 }
