@@ -347,6 +347,9 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
           return true;
         }
       }
+    }
+    else if (StringEqualsNoCase(key, "ExtendedY")) {
+        return ParseBool(value, &g_config.extend_y);
     } else if (StringEqualsNoCase(key, "EnhancedMode7")) {
       return ParseBool(value, &g_config.enhanced_mode7);
     } else if (StringEqualsNoCase(key, "NewRenderer")) {

@@ -164,7 +164,10 @@ static SDL_HitTestResult HitTestCallback(SDL_Window *win, const SDL_Point *pt, v
 
 void RtlDrawPpuFrame(uint8 *pixel_buffer, size_t pitch, uint32 render_flags) {
   uint8 *ppu_pixels = g_other_image ? g_my_pixels : g_pixels;
-  for (size_t y = 0; y < 240; y++)
+
+  int height = render_flags & kPpuRenderFlags_Height240 ? 240 : 224;
+
+  for (size_t y = 0; y < height; y++)
     memcpy((uint8_t *)pixel_buffer + y * pitch, ppu_pixels + y * 256 * 4, 256 * 4);
 }
 
@@ -331,7 +334,7 @@ int main(int argc, char** argv) {
   ParseConfigFile(config_file);
 
   g_snes_width = (g_config.extended_aspect_ratio * 2 + 256);
-  g_snes_height = 240;// (g_config.extend_y ? 240 : 224);
+  g_snes_height = (g_config.extend_y ? 240 : 224);
 
   g_wanted_sm_features = g_config.features0;
 
