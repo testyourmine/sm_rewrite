@@ -5,7 +5,7 @@
 #include <SDL.h>
 #include "types.h"
 #include "util.h"
-#include "features.h"
+#include "extra_features.h"
 
 enum {
   kKeyMod_ScanCode = 0x200,
