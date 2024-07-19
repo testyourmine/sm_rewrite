@@ -425,7 +425,14 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
           return ParseBoolBit(value, &g_config.features0, kFeatures0_ChainSpark);
       }
       else if (StringEqualsNoCase(key, "LowHealthBeep")) {
-          return ParseBoolBit(value, &g_config.features0, kFeatures0_LowHealthBeep);
+          g_config.low_beep = (uint8)strtol(value, (char**)NULL, 10);
+          if (g_config.low_beep > 100) {
+              g_config.low_beep = 100;
+          }
+          else if (g_config.low_beep < 0) {
+              g_config.low_beep = 0;
+          }
+          return true;
       }
       else if (StringEqualsNoCase(key, "PowerBombReveal")) {
           return ParseBoolBit(value, &g_config.features0, kFeatures0_PowerBombReveal);

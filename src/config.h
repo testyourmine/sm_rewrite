@@ -66,6 +66,7 @@ typedef struct Config {
   bool disable_frame_delay;
   uint8 msuvolume;
   uint32 features0;
+  uint8 low_beep;
 
   const char *link_graphics;
   char *memory_buffer;
