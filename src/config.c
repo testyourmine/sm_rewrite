@@ -427,6 +427,9 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       else if (StringEqualsNoCase(key, "ChainSpark")) {
           return ParseBoolBit(value, &g_config.features0, kFeatures0_ChainSpark);
       }
+      else if (StringEqualsNoCase(key, "ShinesparkHealth")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_ShinesparkHealth);
+      }
       else if (StringEqualsNoCase(key, "LowHealthBeep")) {
           g_config.low_beep = (uint8)strtol(value, (char**)NULL, 10);
           if (g_config.low_beep > 100) {
