@@ -418,6 +418,8 @@ bool RtlRunFrame(int inputs) {
       }
       if (enhanced_features0 != g_wanted_sm_features) {
           enhanced_features0 = g_wanted_sm_features;
+          RtlSyncMemoryRegion(&enhanced_features0, sizeof(enhanced_features0));
+          StateRecorder_RecordPatchByte(&state_recorder, kRam_Features0, (uint8*)&enhanced_features0, 4);
       }
     }
 
