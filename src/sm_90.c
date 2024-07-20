@@ -4578,10 +4578,12 @@ void Samus_MovementHandler_VerticalShinespark(void) {  // 0x90D0AB
   }
   Samus_EndShinespark();
 // disable shinespark health drain
-  if (!(enhanced_features0 & kFeatures0_ShinesparkHealth)) {
-      if (samus_health >= 30) {
-          --samus_health;
-      }
+  if (enhanced_features0 & kFeatures0_ShinesparkHealth) {
+      return;
+  }
+
+  if (samus_health >= 30) {
+      --samus_health;
   }
 }
 
@@ -4596,11 +4598,13 @@ void Samus_MovementHandler_DiagonalShinespark(void) {  // 0x90D0D7
   }
   Samus_EndShinespark();
   // disable shinespark health drain
-  if (!(enhanced_features0 & kFeatures0_ShinesparkHealth)) {
-      if (samus_health >= 30) {
-          --samus_health;
-      }
-}
+  if (enhanced_features0 & kFeatures0_ShinesparkHealth) {
+      return;
+  }
+
+  if (samus_health >= 30) {
+      --samus_health;
+  }
 }
 
 void Samus_MovementHandler_HorizontalShinespark(void) {  // 0x90D106
@@ -4613,11 +4617,13 @@ void Samus_MovementHandler_HorizontalShinespark(void) {  // 0x90D106
   }
   Samus_EndShinespark();
   // disable shinespark health drain
-  if (!(enhanced_features0 & kFeatures0_ShinesparkHealth)) {
-      if (samus_health >= 30) {
-          --samus_health;
-      }
-}
+  if (enhanced_features0 & kFeatures0_ShinesparkHealth) {
+      return;
+  }
+
+  if (samus_health >= 30) {
+      --samus_health;
+  }
 }
 
 static uint32 Samus_ClampSpeedHi(int32 amt, int val) {
