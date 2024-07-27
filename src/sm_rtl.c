@@ -16,6 +16,8 @@ uint8 g_ram[0x20000];
 uint8 *g_sram;
 const uint8 *g_rom;
 
+uint32 g_wanted_sm_features;
+
 static uint8 *g_rtl_memory_ptr;
 static RunFrameFunc *g_rtl_runframe;
 static SyncAllFunc *g_rtl_syncall;

@@ -8,8 +8,6 @@ extern uint8 g_ram[0x20000];
 extern void RtlApuWrite(uint32 adr, uint8 val);
 extern int snes_frame_counter;
 
-uint32 g_wanted_sm_features;
-
 extern uint8 *g_sram;
 extern const uint8 *g_rom;
 extern bool g_use_my_apu_code;
