@@ -419,20 +419,19 @@ int main(int argc, char** argv) {
   g_spc_player = SpcPlayer_Create();
   SpcPlayer_Initialize(g_spc_player);
 
-  bool enable_audio = true;
-  if (enable_audio) {
+  if (g_config.enable_audio) {
     SDL_AudioSpec want = { 0 }, have;
-    want.freq = 44100;
+    want.freq = g_config.audio_freq;
     want.format = AUDIO_S16;
-    want.channels = 2;
-    want.samples = 2048;
+    want.channels = g_config.audio_channels;
+    want.samples = g_config.audio_samples;
     want.callback = &AudioCallback;
     g_audio_device = SDL_OpenAudioDevice(NULL, 0, &want, &have, 0);
     if (g_audio_device == 0) {
       printf("Failed to open audio device: %s\n", SDL_GetError());
       return 1;
     }
-    g_audio_channels = 2;
+    g_audio_channels = have.channels;
     g_frames_per_block = (534 * have.freq) / 32000;
     g_audiobuffer = (uint8 *)malloc(g_frames_per_block * have.channels * sizeof(int16));
   }
