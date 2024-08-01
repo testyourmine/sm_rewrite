@@ -3827,7 +3827,7 @@ uint8 PlmSetup_SuperMissileBlockRespawning(uint16 plm_idx) {  // 0x84CF67
   uint16 proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
   if (proj_type == kProjectileType_Bomb
 // Feature: Power bombs reveal super missile blocks
-|| ( (enhanced_features0 & kFeatures0_InstantPickups)
+|| ( (enhanced_features0 & kFeatures0_PowerBombReveal)
       && proj_type == kProjectileType_PowerBomb)
       ) {
     plm_instr_list_ptrs[plm_idx >> 1] = addr_kPlmInstrList_C922_SuperMissileBlockBombed_Unused;
@@ -3855,7 +3855,7 @@ uint8 PlmSetup_CrumbleBlock(uint16 plm_idx) {  // 0x84CFA0
   uint16 proj_type = projectile_type[proj_idx] & kProjectileType_ProjMask;
   if (proj_type != kProjectileType_Bomb
 // Feature: Power bombs reveal crumble and other blocks
-|| ((enhanced_features0 & kFeatures0_InstantPickups)
+|| ((enhanced_features0 & kFeatures0_PowerBombReveal)
     && proj_type == kProjectileType_PowerBomb)
       )
     plm_header_ptr[plm_idx >> 1] = 0;

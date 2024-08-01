@@ -345,10 +345,14 @@ int main(int argc, char** argv) {
 
   msu_enabled = g_config.enable_msu;
 
+#ifdef __SWITCH__
+  g_win_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
+#else
   if (g_config.fullscreen == 1)
-    g_win_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
+      g_win_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
   else if (g_config.fullscreen == 2)
-    g_win_flags ^= SDL_WINDOW_FULLSCREEN;
+      g_win_flags ^= SDL_WINDOW_FULLSCREEN;
+#endif
 
   // Window scale (1=100%, 2=200%, 3=300%, etc.)
   g_current_window_scale = (g_config.window_scale == 0) ? 2 : IntMin(g_config.window_scale, kMaxWindowScale);
