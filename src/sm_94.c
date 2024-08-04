@@ -555,7 +555,9 @@ void Samus_AlignYPosSlope(void) {  // 0x9487F4
       uint16 v2 = (kAlignYPos_Tab0[temp_collision_DD6 + (v1 & 0xF)] & 0x1F) - temp_collision_DD4 - 1;
       if ((int16)v2 < 0) {
         samus_y_pos += v2;
-        ChainSpark();
+        if (enhanced_features0 & kFeatures0_ChainSpark) {
+            ChainSpark();
+        }
         samus_pos_adjusted_by_slope_flag = 1;
       }
     }

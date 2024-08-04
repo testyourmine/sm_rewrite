@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include "extra_features.h"
 
 
 extern uint8 g_ram[0x20000];

@@ -338,11 +338,11 @@ static CoroutineRet HandleMessageBoxInteraction_Async(void) {  // 0x85846D
     if (message_box_index != kMessageBox_20_MapDataAccessCompleted && message_box_index != kMessageBox_21_EnergyRechargeCompleted 
         && message_box_index != kMessageBox_22_MissileReloadCompleted && message_box_index != kMessageBox_24_SaveCompleted)
   // Feature: Quick pickups
-#if 1
+    if (enhanced_features0 & kFeatures0_InstantPickups) {
       my_counter = 30;
-#else
+    }else{
       my_counter = 360;
-#endif
+      }
     do {
       COROUTINE_AWAIT(2, WaitForNMI_NoUpdate_Async());
       HandleMusicQueue();

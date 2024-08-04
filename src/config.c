@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include "types.h"
 #include "util.h"
+#include "extra_features.h"
 
 enum {
   kKeyMod_ScanCode = 0x200,
@@ -346,6 +347,9 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
           return true;
         }
       }
+    }
+    else if (StringEqualsNoCase(key, "ExtendedY")) {
+        return ParseBool(value, &g_config.extend_y);
     } else if (StringEqualsNoCase(key, "EnhancedMode7")) {
       return ParseBool(value, &g_config.enhanced_mode7);
     } else if (StringEqualsNoCase(key, "NewRenderer")) {
@@ -414,6 +418,34 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
       return ParseBool(value, &g_config.disable_frame_delay);
     }
   } else if (section == 4) {
+      if (StringEqualsNoCase(key, "AmmoRechargeStation")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_AmmoRechargeStation);
+      }
+      else if (StringEqualsNoCase(key, "ShinesparkControl")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_ShinesparkControl);
+      }
+      else if (StringEqualsNoCase(key, "ChainSpark")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_ChainSpark);
+      }
+      else if (StringEqualsNoCase(key, "ShinesparkHealth")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_ShinesparkHealth);
+      }
+      else if (StringEqualsNoCase(key, "LowHealthBeep")) {
+          g_config.low_beep = (uint8)strtol(value, (char**)NULL, 10);
+          if (g_config.low_beep > 100) {
+              g_config.low_beep = 100;
+          }
+          else if (g_config.low_beep < 0) {
+              g_config.low_beep = 0;
+          }
+          return true;
+      }
+      else if (StringEqualsNoCase(key, "PowerBombReveal")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_PowerBombReveal);
+      }
+      else if (StringEqualsNoCase(key, "InstantPickups")) {
+          return ParseBoolBit(value, &g_config.features0, kFeatures0_InstantPickups);
+      }
   }
   return false;
 }

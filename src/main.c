@@ -164,7 +164,10 @@ static SDL_HitTestResult HitTestCallback(SDL_Window *win, const SDL_Point *pt, v
 
 void RtlDrawPpuFrame(uint8 *pixel_buffer, size_t pitch, uint32 render_flags) {
   uint8 *ppu_pixels = g_other_image ? g_my_pixels : g_pixels;
-  for (size_t y = 0; y < 240; y++)
+
+  int height = render_flags & kPpuRenderFlags_Height240 ? 240 : 224;
+
+  for (size_t y = 0; y < height; y++)
     memcpy((uint8_t *)pixel_buffer + y * pitch, ppu_pixels + y * 256 * 4, 256 * 4);
 }
 
@@ -331,7 +334,10 @@ int main(int argc, char** argv) {
   ParseConfigFile(config_file);
 
   g_snes_width = (g_config.extended_aspect_ratio * 2 + 256);
-  g_snes_height = 240;// (g_config.extend_y ? 240 : 224);
+  g_snes_height = (g_config.extend_y ? 240 : 224);
+
+  g_wanted_sm_features = g_config.features0;
+
   g_ppu_render_flags = g_config.new_renderer * kPpuRenderFlags_NewRenderer |
     g_config.enhanced_mode7 * kPpuRenderFlags_4x4Mode7 |
     g_config.extend_y * kPpuRenderFlags_Height240 |
@@ -339,10 +345,14 @@ int main(int argc, char** argv) {
 
   msu_enabled = g_config.enable_msu;
 
+#ifdef __SWITCH__
+  g_win_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
+#else
   if (g_config.fullscreen == 1)
-    g_win_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
+      g_win_flags ^= SDL_WINDOW_FULLSCREEN_DESKTOP;
   else if (g_config.fullscreen == 2)
-    g_win_flags ^= SDL_WINDOW_FULLSCREEN;
+      g_win_flags ^= SDL_WINDOW_FULLSCREEN;
+#endif
 
   // Window scale (1=100%, 2=200%, 3=300%, etc.)
   g_current_window_scale = (g_config.window_scale == 0) ? 2 : IntMin(g_config.window_scale, kMaxWindowScale);
@@ -377,8 +387,13 @@ int main(int argc, char** argv) {
   }
 
   // init snes, load rom
-  const char* filename = argv[0] ? argv[0] : "sm.smc";
+  char* filename = argv[0] ? argv[0] : "sm.smc";
   Snes *snes = SnesInit(filename);
+
+  if (snes == NULL) {
+      filename = "sm.sfc";
+      snes = SnesInit(filename);
+  }
 
   if(snes == NULL) {
   #ifdef __SWITCH__
@@ -408,20 +423,19 @@ int main(int argc, char** argv) {
   g_spc_player = SpcPlayer_Create();
   SpcPlayer_Initialize(g_spc_player);
 
-  bool enable_audio = true;
-  if (enable_audio) {
+  if (g_config.enable_audio) {
     SDL_AudioSpec want = { 0 }, have;
-    want.freq = 44100;
+    want.freq = g_config.audio_freq;
     want.format = AUDIO_S16;
-    want.channels = 2;
-    want.samples = 2048;
+    want.channels = g_config.audio_channels;
+    want.samples = g_config.audio_samples;
     want.callback = &AudioCallback;
     g_audio_device = SDL_OpenAudioDevice(NULL, 0, &want, &have, 0);
     if (g_audio_device == 0) {
       printf("Failed to open audio device: %s\n", SDL_GetError());
       return 1;
     }
-    g_audio_channels = 2;
+    g_audio_channels = have.channels;
     g_frames_per_block = (534 * have.freq) / 32000;
     g_audiobuffer = (uint8 *)malloc(g_frames_per_block * have.channels * sizeof(int16));
   }

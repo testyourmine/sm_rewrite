@@ -16,6 +16,8 @@ uint8 g_ram[0x20000];
 uint8 *g_sram;
 const uint8 *g_rom;
 
+uint32 g_wanted_sm_features;
+
 static uint8 *g_rtl_memory_ptr;
 static RunFrameFunc *g_rtl_runframe;
 static SyncAllFunc *g_rtl_syncall;
@@ -415,6 +417,11 @@ bool RtlRunFrame(int inputs) {
           bug_fix_counter = kCurrentBugFixCounter;
           StateRecorder_RecordPatchByte(&state_recorder, (uint8 *)&bug_fix_counter - g_ram, (uint8 *)&bug_fix_counter, 2);
         }
+      }
+      if (enhanced_features0 != g_wanted_sm_features) {
+          enhanced_features0 = g_wanted_sm_features;
+          RtlSyncMemoryRegion(&enhanced_features0, sizeof(enhanced_features0));
+          StateRecorder_RecordPatchByte(&state_recorder, kRam_Features0, (uint8*)&enhanced_features0, 4);
       }
     }
 
