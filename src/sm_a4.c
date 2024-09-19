@@ -402,7 +402,7 @@ void Crocomire_Init(void) {  // 0xA48A5A
     }
     E->crocom_var_C = 4;
     UNUSED_word_7E179E = 16;
-    camera_distance_index = 2;
+    camera_distance_index = kCameraDistanceIndex_2_Kraid_Crocomire;
     enemy_bg2_tilemap_size = 1024;
     E->base.current_instruction = addr_kCrocomire_Ilist_BADE;
     E->base.extra_properties |= 4;
@@ -730,10 +730,10 @@ void Crocomire_Func_49(void) {  // 0xA49099
     E->crocom_var_A = 88;
     E->base.current_instruction = addr_kCrocomire_Ilist_E1D2;
     scrolls[5] = scrolls[4] = kScroll_Blue;
-    debug_disable_minimap = 0;
+    disable_minimap = 0;
     Get_Crocomire(0x40)->base.properties |= kEnemyProps_Deleted;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 78, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B753_Crocomire_ClearInvisibleWall });
-    camera_distance_index = 0;
+    camera_distance_index = kCameraDistanceIndex_0_Normal;
     croco_target_0688 = 0;
   }
 }
@@ -1237,7 +1237,7 @@ void Crocomire_Func_68(void) {  // 0xA497D3
     scrolls[3] = kScroll_Red;
     scrolls[4] = kScroll_Blue;
     SpawnHardcodedPlm((SpawnHardcodedPlmArgs) { .x_pos = 48, .y_pos = 3, .plm_id_ = addr_kPlmHeader_B757_Crocomire_CreateInvisibleWall });
-    camera_distance_index = 6;
+    camera_distance_index = kCameraDistanceIndex_6_CrocomireWall;
     Enemy_Crocomire *E0 = Get_Crocomire(0);
     E0->base.properties = E0->base.properties & ~(kEnemyProps_EnableSamusColl) | kEnemyProps_Intangible;
     Enemy_Crocomire *E1 = Get_Crocomire(0x40);
@@ -1484,7 +1484,7 @@ void Crocomire_Func_90(void) {  // 0xA49B7D
 
 void Crocomire_9B86(void) {  // 0xA49B86
   QueueMusic_Delayed8(kMusic_Song1);
-  camera_distance_index = 0;
+  camera_distance_index = kCameraDistanceIndex_0_Normal;
   *(uint16 *)&boss_bits_for_area[area_index] |= kBossBit_AreaMiniBoss;
   QueueMusic_Delayed8(kMusic_Song1);
   Crocomire_Func_87(0, 0xFFF0);

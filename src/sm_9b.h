@@ -31,7 +31,7 @@
 //#define kGrappleBeamFlareTileEndPtr (*(uint16*)RomFixedPtr(0x9bc344))
 //#define kGrappleBeamFlareTileBeginPtr (*(uint16*)RomFixedPtr(0x9bc342))
 //#define kGrappleBeamTilePtrs ((uint16*)RomFixedPtr(0x9bc346))
-////#define kFlareAnimDelays ((uint16*)RomFixedPtr(0x90c481))
+////#define kFlareAnimDelayPtrs ((uint16*)RomFixedPtr(0x90c481))
 //#define kFlareAnimDelays_Main ((uint8*)RomFixedPtr(0x90c487))
 ////#define kFlareAnimDelays_SlowSparks ((uint8*)RomFixedPtr(0x90c4a7))
 ////#define kFlareAnimDelays_FastSparks ((uint8*)RomFixedPtr(0x90c4ae))

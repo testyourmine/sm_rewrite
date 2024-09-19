@@ -6,6 +6,7 @@
 #include "variables.h"
 
 #define BLK_VERT_FLIP 0x800
+#define SHOT_DISABLED 0xF0
 
 //#define kXrayBlockData ((XrayBlockData*)RomFixedPtr(0x91d2d6))
 //#define kSamusPalette_Normal ((uint16*)RomFixedPtr(0x91d727))
@@ -21,9 +22,9 @@
 //#define kSamusPal_Shinespark ((uint16*)RomFixedPtr(0x91db75))
 //#define kSamusPal_CrystalFlash0to9 ((SamusCrystalFlashPalTable*)RomFixedPtr(0x91dc00))
 //#define kSamusPal_CrystalFlash10to15 ((uint16*)RomFixedPtr(0x91dc28))
-//#define kSamusPose_Falling ((uint16*)RomFixedPtr(0x91e921))
-//#define kSamusPose_Landing ((uint16*)RomFixedPtr(0x91e9f3))
-//#define kSamusPose_RanIntoWall ((uint16*)RomFixedPtr(0x91eb74))
+//#define kSamusNewPose_Falling ((uint16*)RomFixedPtr(0x91e921))
+//#define kSamusNewPose_Landing ((uint16*)RomFixedPtr(0x91e9f3))
+//#define kSamusNewPose_RanIntoWall ((uint16*)RomFixedPtr(0x91eb74))
 //#define kSamusTurnPose_Standing ((uint8*)RomFixedPtr(0x91f9c2))
 //#define kSamusTurnPose_Crouching ((uint8*)RomFixedPtr(0x91f9cc))
 //#define kSamusTurnPose_Jumping ((uint8*)RomFixedPtr(0x91f9d6))
@@ -96,41 +97,331 @@ uint16 kSamusPal_CrystalFlash10to15[] = {
   0x96d4, 0x96f4, 0x9714, 0x9734, 0x9754, 0x9774,
 };
 
-uint16 kSamusPose_Falling[] = {
-    0x29,  0x2a,
-    0x31,  0x32,
-    0x33,  0x34,
-    0x7d,  0x7e,
+uint16 kSamusNewPose_Falling[] = {
+  kPose_29_FaceR_Fall, kPose_2A_FaceL_Fall,
+  kPose_31_FaceR_Morphball_Air, kPose_32_FaceL_Morphball_Air,
+  kPose_33, kPose_34,
+  kPose_7D_FaceR_Springball_Fall, kPose_7E_FaceL_Springball_Fall,
 };
 
-uint16 kSamusPose_Landing[] = {
-    0xe0,  0xe2,  0xa4,  0xe4,  0xa4,
-    0xa5,  0xe5,  0xa5,  0xe3,  0xe1,
+uint16 kSamusNewPose_Landing[] = {
+  kPose_E0_FaceR_LandJump_AimU, kPose_E2_FaceR_LandJump_AimUR, kPose_A4_FaceR_LandJump, kPose_E4_FaceR_LandJump_AimDR, kPose_A4_FaceR_LandJump,
+  kPose_A5_FaceL_LandJump, kPose_E5_FaceL_LandJump_AimDL, kPose_A5_FaceL_LandJump, kPose_E3_FaceL_LandJump_AimUL, kPose_E1_FaceL_LandJump_AimU,
 };
 
-uint16 kSamusPose_RanIntoWall[] = {
-     0x3,  0xcf,  0x89,  0xd1,  0x89,
-    0x8a,  0xd2,  0x8a,  0xd0,   0x4,
+uint16 kSamusNewPose_RanIntoWall[] = {
+  kPose_03_FaceR_AimU, kPose_CF_FaceR_Ranintowall_AimUR, kPose_89_FaceR_Ranintowall, kPose_D1_FaceR_Ranintowall_AimDR, kPose_89_FaceR_Ranintowall,
+  kPose_8A_FaceL_Ranintowall, kPose_D2_FaceL_Ranintowall_AimDL, kPose_8A_FaceL_Ranintowall, kPose_D0_FaceL_Ranintowall_AimUL, kPose_04_FaceL_AimU,
 };
 
 uint8 kSamusTurnPose_Standing[] = {
-  0x8b, 0x9c, 0x25, 0x8d, 0x8d, 0x8e, 0x8e, 0x26, 0x9d, 0x8c,
+  kPose_8B_FaceR_Turn_Stand_AimU, kPose_9C_FaceR_Turn_Stand_AimUR, kPose_25_FaceR_Turn_Stand, kPose_8D_FaceR_Turn_Stand_AimDR, kPose_8D_FaceR_Turn_Stand_AimDR,
+  kPose_8E_FaceL_Turn_Stand_AimDL, kPose_8E_FaceL_Turn_Stand_AimDL, kPose_26_FaceL_Turn_Stand, kPose_9D_FaceL_Turn_Stand_AimUL, kPose_8C_FaceL_Turn_Stand_AimU,
 };
 
 uint8 kSamusTurnPose_Crouching[] = {
-  0x97, 0xa2, 0x43, 0x99, 0x99, 0x9a, 0x9a, 0x44, 0xa3, 0x98,
+  kPose_97_FaceR_Turn_Crouch_AimU, kPose_A2_FaceR_Turn_Crouch_AimUR, kPose_43_FaceR_Turn_Crouch, kPose_99_FaceR_Turn_Crouch_AimDDR, kPose_99_FaceR_Turn_Crouch_AimDDR,
+  kPose_9A_FaceL_Turn_Crouch_AimDDL, kPose_9A_FaceL_Turn_Crouch_AimDDL, kPose_44_FaceL_Turn_Crouch, kPose_A3_FaceL_Turn_Crouch_AimUL, kPose_98_FaceL_Turn_Crouch_AimU,
 };
 
 uint8 kSamusTurnPose_Jumping[] = {
-  0x8f, 0x9e, 0x2f, 0x91, 0x91, 0x92, 0x92, 0x30, 0x9f, 0x90,
+  kPose_8F_FaceR_Turn_Air_AimU, kPose_9E_FaceR_Turn_Air_AimUR, kPose_2F_FaceR_Turn_Jump, kPose_91_FaceR_Turn_Air_AimDDR, kPose_91_FaceR_Turn_Air_AimDDR,
+  kPose_92_FaceL_Turn_Air_AimDDL, kPose_92_FaceL_Turn_Air_AimDDL, kPose_30_FaceL_Turn_Jump, kPose_9F_FaceL_Turn_Air_AimUL, kPose_90_FaceL_Turn_Air_AimU,
 };
 
 uint8 kSamusTurnPose_Falling[] = {
-  0x93, 0xa0, 0x87, 0x95, 0x95, 0x96, 0x96, 0x88, 0xa1, 0x94,
+  kPose_93_FaceR_Turn_Fall_AimU, kPose_A0_FaceR_Turn_Fall_AimUR, kPose_87_FaceR_Turn_Fall, kPose_95_FaceR_Turn_Fall_AimDDR, kPose_95_FaceR_Turn_Fall_AimDDR,
+  kPose_96_FaceL_Turn_Fall_AimDDL, kPose_96_FaceL_Turn_Fall_AimDDL, kPose_88_FaceL_Turn_Fall, kPose_A1_FaceL_Turn_Fall_AimUL, kPose_94_FaceL_Turn_Fall_AimU,
 };
 
 uint8 kSamusTurnPose_Moonwalk[] = {
-  0xc1, 0xc1, 0xbf, 0xc3, 0x8d, 0x8e, 0xc4, 0xc0, 0xc2, 0xc2,
+  kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR, kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR, kPose_BF_FaceR_Moonwalk_TurnjumpL, kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR, kPose_8D_FaceR_Turn_Stand_AimDR,
+  kPose_8E_FaceL_Turn_Stand_AimDL, kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL, kPose_C0_FaceL_Moonwalk_TurnjumpR, kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL, kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL,
+};
+
+const uint8 kDefaultAnimFrames[11] = {  // 0x91B5D1
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1,
+};
+
+const uint8 kSpeedBoostToAnimFrames[5][11] = {  // 0x91B5DE
+  [0] = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, -1, },
+  [1] = { 2, 3, 2, 3, 2, 3, 2, 3, 2, 3, -1, },
+  [2] = { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1, },
+  [3] = { 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, -1, },
+  [4] = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, },
+};
+
+const uint16 kSpeedBoostToCtr[5] = {  // 0x91B61F
+  1, 1, 1, 1, 2,
+};
+
+const SamusPoseParams kPoseParams[0xFC] = {  // 0x91B629
+  [kPose_00_FaceF_Powersuit]                = { .pose_x_dir = kSamusXDir_FaceForward  , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 24, .UNUSED_field_7 = 0, },
+  [kPose_01_FaceR_Normal]                   = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_02_FaceL_Normal]                   = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_03_FaceR_AimU]                     = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_04_FaceL_AimU]                     = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_05_FaceR_AimUR]                    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_06_FaceL_AimUL]                    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_07_FaceR_AimDR]                    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_08_FaceL_AimDL]                    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_09_MoveR_NoAim]                    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_0A_MoveL_NoAim]                    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_0B_MoveR_Gun]                      = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_0C_MoveL_Gun]                      = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_0D]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_0E]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_0F_MoveR_AimUR]                    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_10_MoveL_AimUL]                    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_11_MoveR_AimDR]                    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_12_MoveL_AimDL]                    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_13_FaceR_Jump_NoAim_NoMove_Gun]    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_14_FaceL_Jump_NoAim_NoMove_Gun]    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_15_FaceR_Jump_AimU]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = kPose_51_FaceR_Jump_NoAim_MoveF        , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_16_FaceL_Jump_AimU]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = kPose_52_FaceL_Jump_NoAim_MoveF        , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_17_FaceR_Jump_AimD]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownFaceRight                   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 10, .UNUSED_field_7 = 0, },
+  [kPose_18_FaceL_Jump_AimD]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownFaceLeft                    , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 10, .UNUSED_field_7 = 0, },
+  [kPose_19_FaceR_SpinJump]                 = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_03_SpinJumping                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_1A_FaceL_SpinJump]                 = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_03_SpinJumping                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_1B_FaceR_SpaceJump]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_03_SpinJumping                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_1C_FaceL_SpaceJump]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_03_SpinJumping                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_1D_FaceR_Morphball_Ground]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_04_MorphBallOnGround                                    , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_1E_MoveR_Morphball_Ground]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_04_MorphBallOnGround                                    , .new_pose_unless_buttons = kPose_1D_FaceR_Morphball_Ground        , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_1F_MoveL_Morphball_Ground]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_04_MorphBallOnGround                                    , .new_pose_unless_buttons = kPose_41_FaceL_Morphball_Ground        , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_20]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_07_Unused                                               , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_21]                                = { .pose_x_dir = kSamusXDir_UnusedPose21 , .movement_type = kMovementType_07_Unused                                               , .new_pose_unless_buttons = kPose_20                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_22]                                = { .pose_x_dir = kSamusXDir_UnusedPose22 , .movement_type = kMovementType_07_Unused                                               , .new_pose_unless_buttons = kPose_20                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_23]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_07_Unused                                               , .new_pose_unless_buttons = kPose_42                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_24]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_07_Unused                                               , .new_pose_unless_buttons = kPose_20                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_25_FaceR_Turn_Stand]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_26_FaceL_Turn_Stand]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_27_FaceR_Crouch]                   = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_27_FaceR_Crouch                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_28_FaceL_Crouch]                   = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_29_FaceR_Fall]                     = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_2A_FaceL_Fall]                     = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_2B_FaceR_Fall_AimU]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = kPose_29_FaceR_Fall                    , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_2C_FaceL_Fall_AimU]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = kPose_2A_FaceL_Fall                    , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_2D_FaceR_Fall_AimD]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownFaceRight                   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 10, .UNUSED_field_7 = 0, },
+  [kPose_2E_FaceL_Fall_AimD]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownFaceLeft                    , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 10, .UNUSED_field_7 = 0, },
+  [kPose_2F_FaceR_Turn_Jump]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_30_FaceL_Turn_Jump]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_31_FaceR_Morphball_Air]            = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_08_MorphBallFalling                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_32_FaceL_Morphball_Air]            = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_08_MorphBallFalling                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_33]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_09_Unused                                               , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_34]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_09_Unused                                               , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_35_FaceR_CrouchTrans]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_36_FaceL_CrouchTrans]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_37_FaceR_MorphTrans]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_38_FaceL_MorphTrans]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_39]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_3A]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_3B_FaceR_StandTrans]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_3C_FaceL_StandTrans]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_3D_FaceR_UnmorphTrans]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_3E_FaceL_UnmorphTrans]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_3F]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_40]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_41_FaceL_Morphball_Ground]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_04_MorphBallOnGround                                    , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_42]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_07_Unused                                               , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_43_FaceR_Turn_Crouch]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_44_FaceL_Turn_Crouch]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_45]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_46]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_01_Running                                              , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_47]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_48]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_49_FaceL_Moonwalk]                 = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_10_Moonwalking                                          , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_4A_FaceR_Moonwalk]                 = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_10_Moonwalking                                          , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_4B_FaceR_Jumptrans]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_4C_FaceL_Jumptrans]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun]  = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun]  = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_4F_FaceL_Dmgboost]                 = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_19_DamageBoost                                          , .new_pose_unless_buttons = kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_50_FaceR_Dmgboost]                 = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_19_DamageBoost                                          , .new_pose_unless_buttons = kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_51_FaceR_Jump_NoAim_MoveF]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_52_FaceL_Jump_NoAim_MoveF]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_53_FaceR_Knockback]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0A_KnockbackOrCrystalFlashEnding                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_54_FaceL_Knockback]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0A_KnockbackOrCrystalFlashEnding                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_55_FaceR_Jumptrans_AimU]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_56_FaceL_Jumptrans_AimU]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_57_FaceR_Jumptrans_AimUR]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_58_FaceL_Jumptrans_AimUL]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_59_FaceR_Jumptrans_AimDR]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_5A_FaceL_Jumptrans_AimDL]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_5B]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_5C]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_5D]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0B_Unused                                               , .new_pose_unless_buttons = kPose_5D                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_5E]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0B_Unused                                               , .new_pose_unless_buttons = kPose_5E                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_5F]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0B_Unused                                               , .new_pose_unless_buttons = kPose_5F                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_60]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0B_Unused                                               , .new_pose_unless_buttons = kPose_60                               , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_61]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_B2_FaceR_Grapple_Air             , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_62]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_B3_FaceL_Grapple_Air             , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_63]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0D_Unused                                               , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  12, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_64]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0D_Unused                                               , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  12, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_65]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0D_Unused                                               , .new_pose_unless_buttons = kPose_29_FaceR_Fall                    , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  12, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_66]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0D_Unused                                               , .new_pose_unless_buttons = kPose_2A_FaceL_Fall                    , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  12, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_67_FaceR_Fall_Gun]                 = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_68_FaceL_Fall_Gun]                 = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_69_FaceR_Jump_AimUR]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = kPose_51_FaceR_Jump_NoAim_MoveF        , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_6A_FaceL_Jump_AimUL]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = kPose_52_FaceL_Jump_NoAim_MoveF        , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_6B_FaceR_Jump_AimDR]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = kPose_51_FaceR_Jump_NoAim_MoveF        , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_6C_FaceL_Jump_AimDL]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_02_NormalJumping                                        , .new_pose_unless_buttons = kPose_52_FaceL_Jump_NoAim_MoveF        , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_6D_FaceR_Fall_AimUR]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = kPose_29_FaceR_Fall                    , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_6E_FaceL_Fall_AimUL]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = kPose_2A_FaceL_Fall                    , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_6F_FaceR_Fall_AimDR]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = kPose_29_FaceR_Fall                    , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_70_FaceL_Fall_AimDL]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_06_Falling                                              , .new_pose_unless_buttons = kPose_2A_FaceL_Fall                    , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_71_FaceR_Crouch_AimUR]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_27_FaceR_Crouch                  , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_72_FaceL_Crouch_AimUL]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_73_FaceR_Crouch_AimDR]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_27_FaceR_Crouch                  , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_74_FaceL_Crouch_AimDL]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_75_FaceL_Moonwalk_AimUL]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_10_Moonwalking                                          , .new_pose_unless_buttons = kPose_06_FaceL_AimUL                   , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_76_FaceR_Moonwalk_AimUR]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_10_Moonwalking                                          , .new_pose_unless_buttons = kPose_05_FaceR_AimUR                   , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_77_FaceL_Moonwalk_AimDL]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_10_Moonwalking                                          , .new_pose_unless_buttons = kPose_08_FaceL_AimDL                   , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_78_FaceR_Moonwalk_AimDR]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_10_Moonwalking                                          , .new_pose_unless_buttons = kPose_07_FaceR_AimDR                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_79_FaceR_Springball_Ground]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_11_SpringBallOnGround                                   , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_7A_FaceL_Springball_Ground]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_11_SpringBallOnGround                                   , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_7B_MoveR_Springball_Ground]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_11_SpringBallOnGround                                   , .new_pose_unless_buttons = kPose_79_FaceR_Springball_Ground       , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_7C_MoveL_Springball_Ground]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_11_SpringBallOnGround                                   , .new_pose_unless_buttons = kPose_7A_FaceL_Springball_Ground       , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_7D_FaceR_Springball_Fall]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_13_SpringBallFalling                                    , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_7E_FaceL_Springball_Fall]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_13_SpringBallFalling                                    , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_7F_FaceR_Springball_Air]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_12_SpringBallInAir                                      , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_80_FaceL_Springball_Air]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_12_SpringBallInAir                                      , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_81_FaceR_Screwattack]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_03_SpinJumping                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_82_FaceL_Screwattack]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_03_SpinJumping                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 12, .UNUSED_field_7 = 0, },
+  [kPose_83_FaceR_Walljump]                 = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_14_WallJumping                                          , .new_pose_unless_buttons = kPose_19_FaceR_SpinJump                , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_84_FaceL_Walljump]                 = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_14_WallJumping                                          , .new_pose_unless_buttons = kPose_1A_FaceL_SpinJump                , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_85_FaceR_Crouch_AimU]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_27_FaceR_Crouch                  , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_86_FaceL_Crouch_AimU]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_87_FaceR_Turn_Fall]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_88_FaceL_Turn_Fall]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_89_FaceR_Ranintowall]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_15_RanIntoWall                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_8A_FaceL_Ranintowall]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_15_RanIntoWall                                          , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_8B_FaceR_Turn_Stand_AimU]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_8C_FaceL_Turn_Stand_AimU]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_8D_FaceR_Turn_Stand_AimDR]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_8E_FaceL_Turn_Stand_AimDL]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_8F_FaceR_Turn_Air_AimU]            = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_90_FaceL_Turn_Air_AimU]            = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_91_FaceR_Turn_Air_AimDDR]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_92_FaceL_Turn_Air_AimDDL]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_93_FaceR_Turn_Fall_AimU]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_94_FaceL_Turn_Fall_AimU]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_95_FaceR_Turn_Fall_AimDDR]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_96_FaceL_Turn_Fall_AimDDL]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_97_FaceR_Turn_Crouch_AimU]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_98_FaceL_Turn_Crouch_AimU]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_99_FaceR_Turn_Crouch_AimDDR]       = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_9A_FaceL_Turn_Crouch_AimDDL]       = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_9B_FaceF_VariaGravitySuit]         = { .pose_x_dir = kSamusXDir_FaceForward  , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 24, .UNUSED_field_7 = 0, },
+  [kPose_9C_FaceR_Turn_Stand_AimUR]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_9D_FaceL_Turn_Stand_AimUL]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_9E_FaceR_Turn_Air_AimUR]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_9F_FaceL_Turn_Air_AimUL]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_A0_FaceR_Turn_Fall_AimUR]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_A1_FaceL_Turn_Fall_AimUL]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_18_TurningAroundFalling                                 , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_A2_FaceR_Turn_Crouch_AimUR]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_A3_FaceL_Turn_Crouch_AimUL]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_17_TurningAroundJumping                                 , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_A4_FaceR_LandJump]                 = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_A5_FaceL_LandJump]                 = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_A6_FaceR_LandSpinJump]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_A7_FaceL_LandSpinJump]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_A8_FaceR_Grappling]                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_01_FaceR_Normal                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_A9_FaceL_Grappling]                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_02_FaceL_Normal                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_AA_FaceR_Grappling_AimDR]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_07_FaceR_AimDR                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_AB_FaceL_Grappling_AimDL]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_08_FaceL_AimDL                   , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_AC]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_67_FaceR_Fall_Gun                , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_AD]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_68_FaceL_Fall_Gun                , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_AE]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_2D_FaceR_Fall_AimD               , .direction_shots_fired = kProjectileOriginDir_DownFaceRight                   , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 10, .UNUSED_field_7 = 0, },
+  [kPose_AF]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_2E_FaceL_Fall_AimD               , .direction_shots_fired = kProjectileOriginDir_DownFaceLeft                    , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 10, .UNUSED_field_7 = 0, },
+  [kPose_B0]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_6F_FaceR_Fall_AimDR              , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_B1]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_70_FaceL_Fall_AimDL              , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_B2_FaceR_Grapple_Air]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_B2_FaceR_Grapple_Air             , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 17, .UNUSED_field_7 = 0, },
+  [kPose_B3_FaceL_Grapple_Air]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_B3_FaceL_Grapple_Air             , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =  16, .UNUSED_field_5 = 0, .y_radius = 17, .UNUSED_field_7 = 0, },
+  [kPose_B4_FaceR_Grappling_Crouch]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_27_FaceR_Crouch                  , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_B5_FaceL_Grappling_Crouch]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_B6_FaceR_Grappling_Crouch_AimDR]   = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_27_FaceR_Crouch                  , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_B7_FaceL_Grappling_Crouch_AimDL]   = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = kPose_28_FaceL_Crouch                  , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_B8_FaceL_GrappleWalljumpPose]      = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_B9_FaceR_GrappleWalljumpPose]      = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_16_Grappling                                            , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_BA_FaceL_Draygon_NoMove_NoAim]     = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_BB_FaceL_Draygon_NoMove_AimUL]     = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_BA_FaceL_Draygon_NoMove_NoAim    , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_BC_FaceL_Draygon_Fire]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_BA_FaceL_Draygon_NoMove_NoAim    , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_BD_FaceL_Draygon_NoMove_AimDL]     = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_BA_FaceL_Draygon_NoMove_NoAim    , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_BE_FaceL_Draygon_Move]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_BA_FaceL_Draygon_NoMove_NoAim    , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_BF_FaceR_Moonwalk_TurnjumpL]       = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C0_FaceL_Moonwalk_TurnjumpR]       = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR] = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL] = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimUpward   , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR] = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL] = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0E_TurningAroundOnGround                                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimDownward , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C5]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_C6]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = SHOT_DISABLED | kProjectileOriginDir_TurnAimNeutral  , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_C7_FaceR_ShinesparkWindup_Vert]    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_C8_FaceL_ShinesparkWindup_Vert]    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_C9_FaceR_Shinespark_Horiz]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_CA_FaceL_Shinespark_Horiz]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_CB_FaceR_Shinespark_Vert]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_CC_FaceL_Shinespark_Vert]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_CD_FaceR_Shinespark_Diag]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_CE_FaceL_Shinespark_Diag]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 19, .UNUSED_field_7 = 0, },
+  [kPose_CF_FaceR_Ranintowall_AimUR]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_15_RanIntoWall                                          , .new_pose_unless_buttons = kPose_89_FaceR_Ranintowall             , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D0_FaceL_Ranintowall_AimUL]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_15_RanIntoWall                                          , .new_pose_unless_buttons = kPose_8A_FaceL_Ranintowall             , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D1_FaceR_Ranintowall_AimDR]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_15_RanIntoWall                                          , .new_pose_unless_buttons = kPose_89_FaceR_Ranintowall             , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D2_FaceL_Ranintowall_AimDL]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_15_RanIntoWall                                          , .new_pose_unless_buttons = kPose_8A_FaceL_Ranintowall             , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D3_FaceR_CrystalFlash]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D4_FaceL_CrystalFlash]             = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D5_FaceR_Xray_Stand]               = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D6_FaceL_Xray_Stand]               = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D7_FaceR_CrystalFlashEnd]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0A_KnockbackOrCrystalFlashEnding                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D8_FaceL_CrystalFlashEnd]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0A_KnockbackOrCrystalFlashEnding                        , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_D9_FaceR_Xray_Crouch]              = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_DA_FaceL_Xray_Crouch]              = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_05_Crouching                                            , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_DB]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_DC]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_DD]                                = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_DE]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_DF]                                = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   0, .UNUSED_field_5 = 0, .y_radius =  7, .UNUSED_field_7 = 0, },
+  [kPose_E0_FaceR_LandJump_AimU]            = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E1_FaceL_LandJump_AimU]            = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E2_FaceR_LandJump_AimUR]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E3_FaceL_LandJump_AimUL]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E4_FaceR_LandJump_AimDR]           = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E5_FaceL_LandJump_AimDL]           = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E6_FaceR_LandJump_Fire]            = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E7_FaceL_LandJump_Fire]            = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_00_Standing                                             , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Left                            , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E8_FaceR_Drained_CrouchFalling]    = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx = 252, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_E9_FaceL_Drained_CrouchFalling]    = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx = 252, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_EA_FaceR_Drained_Stand]            = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx = 252, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_EB_FaceL_Drained_Stand]            = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx = 252, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_EC_FaceR_Draygon_NoMove_NoAim]     = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_ED_FaceR_Draygon_NoMove_AimUR]     = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_EC_FaceR_Draygon_NoMove_NoAim    , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_EE_FaceR_Draygon_Fire]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_EC_FaceR_Draygon_NoMove_NoAim    , .direction_shots_fired = kProjectileOriginDir_Right                           , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_EF_FaceR_Draygon_NoMove_AimDR]     = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_EC_FaceR_Draygon_NoMove_NoAim    , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_F0_FaceR_Draygon_Move]             = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_1A_GrabbedByDraygon                                     , .new_pose_unless_buttons = kPose_EC_FaceR_Draygon_NoMove_NoAim    , .direction_shots_fired = 0xff                                                 , .y_offset_proj_origin_to_gfx =   6, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_F1_FaceR_CrouchTrans_AimU]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_F2_FaceL_CrouchTrans_AimU]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_F3_FaceR_CrouchTrans_AimUR]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_F4_FaceL_CrouchTrans_AimUL]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_F5_FaceR_CrouchTrans_AimDR]        = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_F6_FaceL_CrouchTrans_AimDL]        = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownLeft                        , .y_offset_proj_origin_to_gfx =   8, .UNUSED_field_5 = 0, .y_radius = 16, .UNUSED_field_7 = 0, },
+  [kPose_F7_FaceR_StandTrans_AimU]          = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceRight                     , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_F8_FaceL_StandTrans_AimU]          = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpFaceLeft                      , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_F9_FaceR_StandTrans_AimUR]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpRight                         , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_FA_FaceL_StandTrans_AimUL]         = { .pose_x_dir = kSamusXDir_FaceLeft     , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_UpLeft                          , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+  [kPose_FB_FaceR_StandTrans_AimDR]         = { .pose_x_dir = kSamusXDir_FaceRight    , .movement_type = kMovementType_0F_Crouch_Stand_Morph_Unmorph_Transition                , .new_pose_unless_buttons = 0xff                                   , .direction_shots_fired = kProjectileOriginDir_DownRight                       , .y_offset_proj_origin_to_gfx =   3, .UNUSED_field_5 = 0, .y_radius = 21, .UNUSED_field_7 = 0, },
+};
+
+// Each entry x is the value = |tan(x * pi/0x80)| * 0x100
+// Clockwise, 0 = up
+const uint16 kAbsTanTable[0x80+1] = {  // 0x91C9D4
+      0,     6,    12,    18,    25,    31,    37,    44,    50,    57,    64,    70,    77,    84,    91,    98, 
+    106,   113,   121,   128,   136,   145,   153,   162,   171,   180,   189,   199,   210,   220,   232,   243, 
+    256,   268,   282,   296,   311,   328,   345,   363,   383,   404,   427,   451,   478,   508,   541,   577, 
+    618,   663,   715,   774,   843,   925,  1022,  1140,  1286,  1475,  1725,  2075,  2599,  3470,  5210, 10427, 
+  15360, 10427,  5210,  3470,  2599,  2075,  1725,  1475,  1286,  1140,  1022,   925,   843,   774,   715,   663, 
+    618,   577,   541,   508,   478,   451,   427,   404,   383,   363,   345,   328,   311,   296,   282,   268, 
+    256,   243,   232,   220,   210,   199,   189,   180,   171,   162,   153,   145,   136,   128,   121,   113, 
+    106,    98,    91,    84,    77,    70,    64,    57,    50,    44,    37,    31,    25,    18,    12,     6, 
+      0,
 };
 
 static const PoseEntry Trans_00[] = {  // 0x91a0de
@@ -2257,5 +2548,939 @@ DemoInputEntry get_DemoInputEntry(uint16 demo_input_) {
     case 0x9e4a: return (DemoInputEntry){ .timer = 316, .cur_input =                                              0, .new_input =                                0 };
     case 0x9e50: return (DemoInputEntry){ .func_ptr = FUNC16(DemoInstr_Finish), .instr_list_ptr = 0 };
     default: return (DemoInputEntry){ Unreachable() };
+  }
+}
+
+
+const uint8 kSamusAnimationDelayData_09[24] = {  // 0x91B20A
+  2, 3, 2, 3, 2, 3, 2, 3, 2, 3, 0xff,
+  4, 4, 4, 4, 4, 4, 3, 4, 4, 3, 0xff,
+  10, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_03[4] = {  // 0x91B222
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_49[7] = {  // 0x91B226
+  16, 16, 16, 16, 16, 16, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_A4[4] = {  // 0x91B22D
+  5, 2, 0xf8,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_A5[4] = {  // 0x91B231
+  5, 2, 0xf8,kPose_02_FaceL_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_A6[5] = {  // 0x91B235
+  3, 5, 2, 0xf8,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_A7[5] = {  // 0x91B23A
+  3, 5, 2, 0xf8,kPose_02_FaceL_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_E0[4] = {  // 0x91B23F
+  5, 2, 0xf8,kPose_03_FaceR_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_E1[4] = {  // 0x91B243
+  5, 2, 0xf8,kPose_04_FaceL_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_E2[4] = {  // 0x91B247
+  5, 2, 0xf8,kPose_05_FaceR_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_E3[4] = {  // 0x91B24B
+  5, 2, 0xf8,kPose_06_FaceL_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_E4[4] = {  // 0x91B24F
+  5, 2, 0xf8,kPose_07_FaceR_AimDR,
+ };
+
+const uint8 kSamusAnimationDelayData_E5[4] = {  // 0x91B253
+  5, 2, 0xf8,kPose_08_FaceL_AimDL,
+ };
+
+const uint8 kSamusAnimationDelayData_E8[17] = {  // 0x91B257
+  2, 2, 2, 16, 0xf7,
+  1, 0xfe,1,
+  16, 16, 16, 16, 0xfe,4,
+  3, 0xfd,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_E9[32] = {  // 0x91B268
+  2, 2, 16, 0xf7,
+  1, 0xfe,1,
+  8, 16, 16, 16, 16, 0xfe,4,
+  16, 16, 16, 0xfd,kPose_02_FaceL_Normal,
+  16, 16, 16, 16, 16, 0xfe,14,
+  16, 0xfe,17,
+  16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_EA[8] = {  // 0x91B288
+  16, 16, 16, 16, 0xff,
+  3, 0xfd,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_EB[8] = {  // 0x91B290
+  16, 16, 16, 16, 0xff,
+  3, 0xfd,kPose_02_FaceL_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_01[11] = {  // 0x91B298
+  10, 10, 10, 10, 0xf6,
+  8, 8, 8, 8, 0xfe,4,
+ };
+
+const uint8 kSamusAnimationDelayData_27[11] = {  // 0x91B2A3
+  10, 10, 10, 10, 0xf6,
+  8, 8, 8, 8, 0xfe,4,
+ };
+
+const uint8 kSamusAnimationDelayData_D5[6] = {  // 0x91B2AE
+  15, 15, 15, 15, 15, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_05[2] = {  // 0x91B2B4
+  16, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_A8[2] = {  // 0x91B2B6
+  16, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_AC[4] = {  // 0x91B2B8
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_AE[4] = {  // 0x91B2BC
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_B0[4] = {  // 0x91B2C0
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_B2[68] = {  // 0x91B2C4
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+  8, 8, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_4B[3] = {  // 0x91B308
+  1, 0xfd,kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun,
+ };
+
+const uint8 kSamusAnimationDelayData_4C[3] = {  // 0x91B30B
+  1, 0xfd,kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun,
+ };
+
+const uint8 kSamusAnimationDelayData_55[4] = {  // 0x91B30E
+  1, 0xfd,kPose_15_FaceR_Jump_AimU,
+  0,};
+
+const uint8 kSamusAnimationDelayData_56[4] = {  // 0x91B312
+  1, 0xfd,kPose_16_FaceL_Jump_AimU,
+  0,};
+
+const uint8 kSamusAnimationDelayData_57[4] = {  // 0x91B316
+  1, 0xfd,kPose_69_FaceR_Jump_AimUR,
+  0,};
+
+const uint8 kSamusAnimationDelayData_58[4] = {  // 0x91B31A
+  1, 0xfd,kPose_6A_FaceL_Jump_AimUL,
+  0,};
+
+const uint8 kSamusAnimationDelayData_59[4] = {  // 0x91B31E
+  1, 0xfd,kPose_6B_FaceR_Jump_AimDR,
+  0,};
+
+const uint8 kSamusAnimationDelayData_5A[4] = {  // 0x91B322
+  1, 0xfd,kPose_6C_FaceL_Jump_AimDL,
+  0,};
+
+const uint8 kSamusAnimationDelayData_4D[8] = {  // 0x91B326
+  3, 4, 4, 4, 4, 80, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_4F[12] = {  // 0x91B32E
+  8, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_15[4] = {  // 0x91B33A
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_17[4] = {  // 0x91B33E
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_51[4] = {  // 0x91B342
+  2, 3, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_13[4] = {  // 0x91B346
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_29[9] = {  // 0x91B34A
+  8, 6, 6, 0xfe,1,
+  8, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_67[9] = {  // 0x91B353
+  8, 6, 6, 0xfe,1,
+  8, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_2B[5] = {  // 0x91B35C
+  2, 16, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_6D[5] = {  // 0x91B361
+  2, 0xf0,
+  16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_2D[4] = {  // 0x91B366
+  2, 16, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_53[14] = {  // 0x91B36A
+  2, 16, 0xfe,1,
+  6, 6, 6, 8, 0xff,
+  8, 8, 0xff,
+  10, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_1D[12] = {  // 0x91B378
+  3, 3, 3, 3, 3, 3, 3, 3, 0xff,
+  3, 0xfe,10,
+ };
+
+const uint8 kSamusAnimationDelayData_19[13] = {  // 0x91B384
+  4, 3, 2, 3, 2, 3, 2, 3, 2, 0xfe,8,
+  8, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_1B[13] = {  // 0x91B391
+  4, 1, 1, 1, 1, 1, 1, 1, 1, 0xfe,8,
+  8, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_81[29] = {  // 0x91B39E
+  4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0xfe,24,
+  8, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_25[5] = {  // 0x91B3BB
+  2, 2, 2, 0xf8,kPose_02_FaceL_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_26[5] = {  // 0x91B3C0
+  2, 2, 2, 0xf8,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_2F[5] = {  // 0x91B3C5
+  2, 2, 2, 0xf8,kPose_52_FaceL_Jump_NoAim_MoveF,
+ };
+
+const uint8 kSamusAnimationDelayData_30[5] = {  // 0x91B3CA
+  2, 2, 2, 0xf8,kPose_51_FaceR_Jump_NoAim_MoveF,
+ };
+
+const uint8 kSamusAnimationDelayData_43[5] = {  // 0x91B3CF
+  2, 2, 2, 0xf8,kPose_28_FaceL_Crouch,
+ };
+
+const uint8 kSamusAnimationDelayData_44[5] = {  // 0x91B3D4
+  2, 2, 2, 0xf8,kPose_27_FaceR_Crouch,
+ };
+
+const uint8 kSamusAnimationDelayData_87[5] = {  // 0x91B3D9
+  2, 2, 2, 0xf8,kPose_2A_FaceL_Fall,
+ };
+
+const uint8 kSamusAnimationDelayData_88[5] = {  // 0x91B3DE
+  2, 2, 2, 0xf8,kPose_29_FaceR_Fall,
+ };
+
+const uint8 kSamusAnimationDelayData_8B[5] = {  // 0x91B3E3
+  2, 2, 2, 0xf8,kPose_04_FaceL_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_8C[5] = {  // 0x91B3E8
+  2, 2, 2, 0xf8,kPose_03_FaceR_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_8D[5] = {  // 0x91B3ED
+  2, 2, 2, 0xf8,kPose_08_FaceL_AimDL,
+ };
+
+const uint8 kSamusAnimationDelayData_8E[5] = {  // 0x91B3F2
+  2, 2, 2, 0xf8,kPose_07_FaceR_AimDR,
+ };
+
+const uint8 kSamusAnimationDelayData_8F[5] = {  // 0x91B3F7
+  2, 2, 2, 0xf8,kPose_16_FaceL_Jump_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_90[5] = {  // 0x91B3FC
+  2, 2, 2, 0xf8,kPose_15_FaceR_Jump_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_91[5] = {  // 0x91B401
+  2, 2, 2, 0xf8,kPose_18_FaceL_Jump_AimD,
+ };
+
+const uint8 kSamusAnimationDelayData_92[5] = {  // 0x91B406
+  2, 2, 2, 0xf8,kPose_17_FaceR_Jump_AimD,
+ };
+
+const uint8 kSamusAnimationDelayData_93[5] = {  // 0x91B40B
+  2, 2, 2, 0xf8,kPose_2C_FaceL_Fall_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_94[5] = {  // 0x91B410
+  2, 2, 2, 0xf8,kPose_2B_FaceR_Fall_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_95[5] = {  // 0x91B415
+  2, 2, 2, 0xf8,kPose_2E_FaceL_Fall_AimD,
+ };
+
+const uint8 kSamusAnimationDelayData_96[5] = {  // 0x91B41A
+  2, 2, 2, 0xf8,kPose_2D_FaceR_Fall_AimD,
+ };
+
+const uint8 kSamusAnimationDelayData_97[5] = {  // 0x91B41F
+  2, 2, 2, 0xf8,kPose_86_FaceL_Crouch_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_98[5] = {  // 0x91B424
+  2, 2, 2, 0xf8,kPose_85_FaceR_Crouch_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_99[5] = {  // 0x91B429
+  2, 2, 2, 0xf8,kPose_74_FaceL_Crouch_AimDL,
+ };
+
+const uint8 kSamusAnimationDelayData_9A[5] = {  // 0x91B42E
+  2, 2, 2, 0xf8,kPose_73_FaceR_Crouch_AimDR,
+ };
+
+const uint8 kSamusAnimationDelayData_9C[5] = {  // 0x91B433
+  2, 2, 2, 0xf8,kPose_06_FaceL_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_9D[5] = {  // 0x91B438
+  2, 2, 2, 0xf8,kPose_05_FaceR_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_9E[5] = {  // 0x91B43D
+  2, 2, 2, 0xf8,kPose_6A_FaceL_Jump_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_9F[5] = {  // 0x91B442
+  2, 2, 2, 0xf8,kPose_69_FaceR_Jump_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_A0[5] = {  // 0x91B447
+  2, 2, 2, 0xf8,kPose_6E_FaceL_Fall_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_A1[5] = {  // 0x91B44C
+  2, 2, 2, 0xf8,kPose_6D_FaceR_Fall_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_A2[5] = {  // 0x91B451
+  2, 2, 2, 0xf8,kPose_72_FaceL_Crouch_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_A3[5] = {  // 0x91B456
+  2, 2, 2, 0xf8,kPose_71_FaceR_Crouch_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_BF[5] = {  // 0x91B45B
+  2, 2, 2, 0xf8,kPose_1A_FaceL_SpinJump,
+ };
+
+const uint8 kSamusAnimationDelayData_C0[5] = {  // 0x91B460
+  2, 2, 2, 0xf8,kPose_19_FaceR_SpinJump,
+ };
+
+const uint8 kSamusAnimationDelayData_C1[5] = {  // 0x91B465
+  2, 2, 2, 0xf8,kPose_1A_FaceL_SpinJump,
+ };
+
+const uint8 kSamusAnimationDelayData_C2[5] = {  // 0x91B46A
+  2, 2, 2, 0xf8,kPose_19_FaceR_SpinJump,
+ };
+
+const uint8 kSamusAnimationDelayData_C3[5] = {  // 0x91B46F
+  2, 2, 2, 0xf8,kPose_1A_FaceL_SpinJump,
+ };
+
+const uint8 kSamusAnimationDelayData_C4[5] = {  // 0x91B474
+  2, 2, 2, 0xf8,kPose_19_FaceR_SpinJump,
+ };
+
+const uint8 kSamusAnimationDelayData_C6[5] = {  // 0x91B479
+  2, 2, 2, 0xfd,kPose_BA_FaceL_Draygon_NoMove_NoAim,
+ };
+
+const uint8 kSamusAnimationDelayData_63[4] = {  // 0x91B47E
+  4, 3, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_64[4] = {  // 0x91B482
+  4, 3, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_65[11] = {  // 0x91B486
+  3, 2, 2, 2, 2, 2, 2, 2, 2, 0xfe,8,
+ };
+
+const uint8 kSamusAnimationDelayData_83[49] = {  // 0x91B491
+  5, 5, 0xfb,
+  3, 2, 3, 2, 3, 2, 3, 2, 0xfe,8,
+  2, 1, 2, 1, 2, 1, 2, 1, 0xfe,8,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0xfe,24,
+ };
+
+const uint8 kSamusAnimationDelayData_35[3] = {  // 0x91B4C2
+  3, 0xfd,kPose_27_FaceR_Crouch,
+ };
+
+const uint8 kSamusAnimationDelayData_36[3] = {  // 0x91B4C5
+  3, 0xfd,kPose_28_FaceL_Crouch,
+ };
+
+const uint8 kSamusAnimationDelayData_37[9] = {  // 0x91B4C8
+  3, 3, 0xf9,kItem_SpringBall,kPose_00_FaceF_Powersuit,kPose_1D_FaceR_Morphball_Ground,kPose_31_FaceR_Morphball_Air,kPose_79_FaceR_Springball_Ground,
+  125,};
+
+const uint8 kSamusAnimationDelayData_38[9] = {  // 0x91B4D1
+  3, 3, 0xf9,kItem_SpringBall,kPose_00_FaceF_Powersuit,kPose_41_FaceL_Morphball_Ground,kPose_32_FaceL_Morphball_Air,kPose_7A_FaceL_Springball_Ground,
+  126,};
+
+const uint8 kSamusAnimationDelayData_39[3] = {  // 0x91B4DA
+  0, 0xfd,kPose_20,
+ };
+
+const uint8 kSamusAnimationDelayData_3A[3] = {  // 0x91B4DD
+  0, 0xfd,kPose_42,
+ };
+
+const uint8 kSamusAnimationDelayData_3B[3] = {  // 0x91B4E0
+  3, 0xfd,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_3C[3] = {  // 0x91B4E3
+  3, 0xfd,kPose_02_FaceL_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_3D[4] = {  // 0x91B4E6
+  3, 3, 0xfd,kPose_27_FaceR_Crouch,
+ };
+
+const uint8 kSamusAnimationDelayData_3E[4] = {  // 0x91B4EA
+  3, 3, 0xfd,kPose_28_FaceL_Crouch,
+ };
+
+const uint8 kSamusAnimationDelayData_3F[6] = {  // 0x91B4EE
+  0, 0xfc,kItem_SpringBall,kPose_00_FaceF_Powersuit,kPose_1D_FaceR_Morphball_Ground,
+  121,};
+
+const uint8 kSamusAnimationDelayData_40[6] = {  // 0x91B4F4
+  0, 0xfc,kItem_SpringBall,kPose_00_FaceF_Powersuit,kPose_41_FaceL_Morphball_Ground,
+  122,};
+
+const uint8 kSamusAnimationDelayData_DB[10] = {  // 0x91B4FA
+  3, 3, 3, 0xf9,kItem_SpringBall,kPose_00_FaceF_Powersuit,kPose_1D_FaceR_Morphball_Ground,kPose_31_FaceR_Morphball_Air,kPose_79_FaceR_Springball_Ground,
+  125,};
+
+const uint8 kSamusAnimationDelayData_DC[10] = {  // 0x91B504
+  3, 3, 3, 0xf9,kItem_SpringBall,kPose_00_FaceF_Powersuit,kPose_DF,kPose_DF,kPose_DF,
+  223,};
+
+const uint8 kSamusAnimationDelayData_DD[5] = {  // 0x91B50E
+  3, 3, 3, 0xfd,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_DE[5] = {  // 0x91B513
+  3, 3, 3, 0xfd,kPose_BA_FaceL_Draygon_NoMove_NoAim,
+ };
+
+const uint8 kSamusAnimationDelayData_F1[3] = {  // 0x91B518
+  3, 0xfd,kPose_85_FaceR_Crouch_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_F2[3] = {  // 0x91B51B
+  3, 0xfd,kPose_86_FaceL_Crouch_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_F3[3] = {  // 0x91B51E
+  3, 0xfd,kPose_71_FaceR_Crouch_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_F4[3] = {  // 0x91B521
+  3, 0xfd,kPose_72_FaceL_Crouch_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_F5[3] = {  // 0x91B524
+  3, 0xfd,kPose_73_FaceR_Crouch_AimDR,
+ };
+
+const uint8 kSamusAnimationDelayData_F6[3] = {  // 0x91B527
+  3, 0xfd,kPose_74_FaceL_Crouch_AimDL,
+ };
+
+const uint8 kSamusAnimationDelayData_F7[3] = {  // 0x91B52A
+  3, 0xfd,kPose_03_FaceR_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_F8[3] = {  // 0x91B52D
+  3, 0xfd,kPose_04_FaceL_AimU,
+ };
+
+const uint8 kSamusAnimationDelayData_F9[3] = {  // 0x91B530
+  3, 0xfd,kPose_05_FaceR_AimUR,
+ };
+
+const uint8 kSamusAnimationDelayData_FA[3] = {  // 0x91B533
+  3, 0xfd,kPose_06_FaceL_AimUL,
+ };
+
+const uint8 kSamusAnimationDelayData_FB[3] = {  // 0x91B536
+  3, 0xfd,kPose_07_FaceR_AimDR,
+ };
+
+const uint8 kSamusAnimationDelayData_FC[3] = {  // 0x91B539
+  3, 0xfd,kPose_08_FaceL_AimDL,
+ };
+
+const uint8 kSamusAnimationDelayData_BE[7] = {  // 0x91B53C
+  6, 6, 6, 6, 6, 6, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_C9[2] = {  // 0x91B543
+  8, 0xff,
+ };
+
+const uint8 kSamusAnimationDelayData_D3[17] = {  // 0x91B545
+  3, 3, 1, 1, 0xfe,2,
+  12, 12, 12, 12, 0xfe,4,
+  3, 3, 3, 0xfd,kPose_01_FaceR_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_D4[17] = {  // 0x91B556
+  3, 3, 1, 1, 0xfe,2,
+  12, 12, 12, 12, 0xfe,4,
+  3, 3, 3, 0xfd,kPose_02_FaceL_Normal,
+ };
+
+const uint8 kSamusAnimationDelayData_D7[8] = {  // 0x91B567
+  2, 2, 2, 2, 2, 2, 0xfe,1,
+ };
+
+const uint8 kSamusAnimationDelayData_00[98] = {  // 0x91B56F
+  8, 0xff,
+  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+  3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 51, 2, 2, 2, 48, 0xfe,1,
+ };
+
+
+const uint8 *get_AnimationDelayData(uint16 pose) {
+  switch (pose) {
+  case kPose_09_MoveR_NoAim:
+  case kPose_0A_MoveL_NoAim:
+  case kPose_0B_MoveR_Gun:
+  case kPose_0C_MoveL_Gun:
+  case kPose_0D:
+  case kPose_0E:
+  case kPose_0F_MoveR_AimUR:
+  case kPose_10_MoveL_AimUL:
+  case kPose_11_MoveR_AimDR:
+  case kPose_12_MoveL_AimDL:
+  case kPose_45:
+  case kPose_46:
+    return kSamusAnimationDelayData_09;
+  case kPose_03_FaceR_AimU:
+  case kPose_04_FaceL_AimU:
+  case kPose_85_FaceR_Crouch_AimU:
+  case kPose_86_FaceL_Crouch_AimU:
+    return kSamusAnimationDelayData_03;
+  case kPose_49_FaceL_Moonwalk:
+  case kPose_4A_FaceR_Moonwalk:
+  case kPose_75_FaceL_Moonwalk_AimUL:
+  case kPose_76_FaceR_Moonwalk_AimUR:
+  case kPose_77_FaceL_Moonwalk_AimDL:
+  case kPose_78_FaceR_Moonwalk_AimDR:
+    return kSamusAnimationDelayData_49;
+  case kPose_A4_FaceR_LandJump:
+  case kPose_E6_FaceR_LandJump_Fire:
+    return kSamusAnimationDelayData_A4;
+  case kPose_A5_FaceL_LandJump:
+  case kPose_E7_FaceL_LandJump_Fire:
+    return kSamusAnimationDelayData_A5;
+  case kPose_A6_FaceR_LandSpinJump:
+    return kSamusAnimationDelayData_A6;
+  case kPose_A7_FaceL_LandSpinJump:
+    return kSamusAnimationDelayData_A7;
+  case kPose_E0_FaceR_LandJump_AimU:
+    return kSamusAnimationDelayData_E0;
+  case kPose_E1_FaceL_LandJump_AimU:
+    return kSamusAnimationDelayData_E1;
+  case kPose_E2_FaceR_LandJump_AimUR:
+    return kSamusAnimationDelayData_E2;
+  case kPose_E3_FaceL_LandJump_AimUL:
+    return kSamusAnimationDelayData_E3;
+  case kPose_E4_FaceR_LandJump_AimDR:
+    return kSamusAnimationDelayData_E4;
+  case kPose_E5_FaceL_LandJump_AimDL:
+    return kSamusAnimationDelayData_E5;
+  case kPose_E8_FaceR_Drained_CrouchFalling:
+    return kSamusAnimationDelayData_E8;
+  case kPose_E9_FaceL_Drained_CrouchFalling:
+    return kSamusAnimationDelayData_E9;
+  case kPose_EA_FaceR_Drained_Stand:
+    return kSamusAnimationDelayData_EA;
+  case kPose_EB_FaceL_Drained_Stand:
+    return kSamusAnimationDelayData_EB;
+  case kPose_01_FaceR_Normal:
+  case kPose_02_FaceL_Normal:
+    return kSamusAnimationDelayData_01;
+  case kPose_27_FaceR_Crouch:
+  case kPose_28_FaceL_Crouch:
+    return kSamusAnimationDelayData_27;
+  case kPose_D5_FaceR_Xray_Stand:
+  case kPose_D6_FaceL_Xray_Stand:
+  case kPose_D9_FaceR_Xray_Crouch:
+  case kPose_DA_FaceL_Xray_Crouch:
+    return kSamusAnimationDelayData_D5;
+  case kPose_05_FaceR_AimUR:
+  case kPose_06_FaceL_AimUL:
+  case kPose_07_FaceR_AimDR:
+  case kPose_08_FaceL_AimDL:
+  case kPose_47:
+  case kPose_48:
+  case kPose_71_FaceR_Crouch_AimUR:
+  case kPose_72_FaceL_Crouch_AimUL:
+  case kPose_73_FaceR_Crouch_AimDR:
+  case kPose_74_FaceL_Crouch_AimDL:
+  case kPose_89_FaceR_Ranintowall:
+  case kPose_8A_FaceL_Ranintowall:
+  case kPose_B4_FaceR_Grappling_Crouch:
+  case kPose_B5_FaceL_Grappling_Crouch:
+  case kPose_B6_FaceR_Grappling_Crouch_AimDR:
+  case kPose_B7_FaceL_Grappling_Crouch_AimDL:
+  case kPose_B8_FaceL_GrappleWalljumpPose:
+  case kPose_B9_FaceR_GrappleWalljumpPose:
+  case kPose_BA_FaceL_Draygon_NoMove_NoAim:
+  case kPose_BB_FaceL_Draygon_NoMove_AimUL:
+  case kPose_BC_FaceL_Draygon_Fire:
+  case kPose_BD_FaceL_Draygon_NoMove_AimDL:
+  case kPose_CF_FaceR_Ranintowall_AimUR:
+  case kPose_D0_FaceL_Ranintowall_AimUL:
+  case kPose_D1_FaceR_Ranintowall_AimDR:
+  case kPose_D2_FaceL_Ranintowall_AimDL:
+  case kPose_EC_FaceR_Draygon_NoMove_NoAim:
+  case kPose_ED_FaceR_Draygon_NoMove_AimUR:
+  case kPose_EE_FaceR_Draygon_Fire:
+  case kPose_EF_FaceR_Draygon_NoMove_AimDR:
+    return kSamusAnimationDelayData_05;
+  case kPose_A8_FaceR_Grappling:
+  case kPose_A9_FaceL_Grappling:
+  case kPose_AA_FaceR_Grappling_AimDR:
+  case kPose_AB_FaceL_Grappling_AimDL:
+    return kSamusAnimationDelayData_A8;
+  case kPose_AC:
+  case kPose_AD:
+    return kSamusAnimationDelayData_AC;
+  case kPose_AE:
+  case kPose_AF:
+    return kSamusAnimationDelayData_AE;
+  case kPose_B0:
+  case kPose_B1:
+    return kSamusAnimationDelayData_B0;
+  case kPose_B2_FaceR_Grapple_Air:
+  case kPose_B3_FaceL_Grapple_Air:
+    return kSamusAnimationDelayData_B2;
+  case kPose_4B_FaceR_Jumptrans:
+    return kSamusAnimationDelayData_4B;
+  case kPose_4C_FaceL_Jumptrans:
+    return kSamusAnimationDelayData_4C;
+  case kPose_55_FaceR_Jumptrans_AimU:
+    return kSamusAnimationDelayData_55;
+  case kPose_56_FaceL_Jumptrans_AimU:
+    return kSamusAnimationDelayData_56;
+  case kPose_57_FaceR_Jumptrans_AimUR:
+    return kSamusAnimationDelayData_57;
+  case kPose_58_FaceL_Jumptrans_AimUL:
+    return kSamusAnimationDelayData_58;
+  case kPose_59_FaceR_Jumptrans_AimDR:
+    return kSamusAnimationDelayData_59;
+  case kPose_5A_FaceL_Jumptrans_AimDL:
+    return kSamusAnimationDelayData_5A;
+  case kPose_4D_FaceR_Jump_NoAim_NoMove_NoGun:
+  case kPose_4E_FaceL_Jump_NoAim_NoMove_NoGun:
+  case kPose_C7_FaceR_ShinesparkWindup_Vert:
+  case kPose_C8_FaceL_ShinesparkWindup_Vert:
+    return kSamusAnimationDelayData_4D;
+  case kPose_4F_FaceL_Dmgboost:
+  case kPose_50_FaceR_Dmgboost:
+    return kSamusAnimationDelayData_4F;
+  case kPose_15_FaceR_Jump_AimU:
+  case kPose_16_FaceL_Jump_AimU:
+    return kSamusAnimationDelayData_15;
+  case kPose_17_FaceR_Jump_AimD:
+  case kPose_18_FaceL_Jump_AimD:
+    return kSamusAnimationDelayData_17;
+  case kPose_51_FaceR_Jump_NoAim_MoveF:
+  case kPose_52_FaceL_Jump_NoAim_MoveF:
+    return kSamusAnimationDelayData_51;
+  case kPose_13_FaceR_Jump_NoAim_NoMove_Gun:
+  case kPose_14_FaceL_Jump_NoAim_NoMove_Gun:
+  case kPose_69_FaceR_Jump_AimUR:
+  case kPose_6A_FaceL_Jump_AimUL:
+  case kPose_6B_FaceR_Jump_AimDR:
+  case kPose_6C_FaceL_Jump_AimDL:
+    return kSamusAnimationDelayData_13;
+  case kPose_29_FaceR_Fall:
+  case kPose_2A_FaceL_Fall:
+    return kSamusAnimationDelayData_29;
+  case kPose_67_FaceR_Fall_Gun:
+  case kPose_68_FaceL_Fall_Gun:
+    return kSamusAnimationDelayData_67;
+  case kPose_2B_FaceR_Fall_AimU:
+  case kPose_2C_FaceL_Fall_AimU:
+    return kSamusAnimationDelayData_2B;
+  case kPose_6D_FaceR_Fall_AimUR:
+  case kPose_6E_FaceL_Fall_AimUL:
+  case kPose_6F_FaceR_Fall_AimDR:
+  case kPose_70_FaceL_Fall_AimDL:
+    return kSamusAnimationDelayData_6D;
+  case kPose_2D_FaceR_Fall_AimD:
+  case kPose_2E_FaceL_Fall_AimD:
+    return kSamusAnimationDelayData_2D;
+  case kPose_53_FaceR_Knockback:
+  case kPose_54_FaceL_Knockback:
+    return kSamusAnimationDelayData_53;
+  case kPose_1D_FaceR_Morphball_Ground:
+  case kPose_1E_MoveR_Morphball_Ground:
+  case kPose_1F_MoveL_Morphball_Ground:
+  case kPose_20:
+  case kPose_21:
+  case kPose_22:
+  case kPose_23:
+  case kPose_24:
+  case kPose_31_FaceR_Morphball_Air:
+  case kPose_32_FaceL_Morphball_Air:
+  case kPose_33:
+  case kPose_34:
+  case kPose_41_FaceL_Morphball_Ground:
+  case kPose_42:
+  case kPose_5B:
+  case kPose_5C:
+  case kPose_5D:
+  case kPose_5E:
+  case kPose_5F:
+  case kPose_60:
+  case kPose_61:
+  case kPose_62:
+  case kPose_79_FaceR_Springball_Ground:
+  case kPose_7A_FaceL_Springball_Ground:
+  case kPose_7B_MoveR_Springball_Ground:
+  case kPose_7C_MoveL_Springball_Ground:
+  case kPose_7D_FaceR_Springball_Fall:
+  case kPose_7E_FaceL_Springball_Fall:
+  case kPose_7F_FaceR_Springball_Air:
+  case kPose_80_FaceL_Springball_Air:
+  case kPose_C5:
+  case kPose_DF:
+    return kSamusAnimationDelayData_1D;
+  case kPose_19_FaceR_SpinJump:
+  case kPose_1A_FaceL_SpinJump:
+    return kSamusAnimationDelayData_19;
+  case kPose_1B_FaceR_SpaceJump:
+  case kPose_1C_FaceL_SpaceJump:
+    return kSamusAnimationDelayData_1B;
+  case kPose_81_FaceR_Screwattack:
+  case kPose_82_FaceL_Screwattack:
+    return kSamusAnimationDelayData_81;
+  case kPose_25_FaceR_Turn_Stand:
+    return kSamusAnimationDelayData_25;
+  case kPose_26_FaceL_Turn_Stand:
+    return kSamusAnimationDelayData_26;
+  case kPose_2F_FaceR_Turn_Jump:
+    return kSamusAnimationDelayData_2F;
+  case kPose_30_FaceL_Turn_Jump:
+    return kSamusAnimationDelayData_30;
+  case kPose_43_FaceR_Turn_Crouch:
+    return kSamusAnimationDelayData_43;
+  case kPose_44_FaceL_Turn_Crouch:
+    return kSamusAnimationDelayData_44;
+  case kPose_87_FaceR_Turn_Fall:
+    return kSamusAnimationDelayData_87;
+  case kPose_88_FaceL_Turn_Fall:
+    return kSamusAnimationDelayData_88;
+  case kPose_8B_FaceR_Turn_Stand_AimU:
+    return kSamusAnimationDelayData_8B;
+  case kPose_8C_FaceL_Turn_Stand_AimU:
+    return kSamusAnimationDelayData_8C;
+  case kPose_8D_FaceR_Turn_Stand_AimDR:
+    return kSamusAnimationDelayData_8D;
+  case kPose_8E_FaceL_Turn_Stand_AimDL:
+    return kSamusAnimationDelayData_8E;
+  case kPose_8F_FaceR_Turn_Air_AimU:
+    return kSamusAnimationDelayData_8F;
+  case kPose_90_FaceL_Turn_Air_AimU:
+    return kSamusAnimationDelayData_90;
+  case kPose_91_FaceR_Turn_Air_AimDDR:
+    return kSamusAnimationDelayData_91;
+  case kPose_92_FaceL_Turn_Air_AimDDL:
+    return kSamusAnimationDelayData_92;
+  case kPose_93_FaceR_Turn_Fall_AimU:
+    return kSamusAnimationDelayData_93;
+  case kPose_94_FaceL_Turn_Fall_AimU:
+    return kSamusAnimationDelayData_94;
+  case kPose_95_FaceR_Turn_Fall_AimDDR:
+    return kSamusAnimationDelayData_95;
+  case kPose_96_FaceL_Turn_Fall_AimDDL:
+    return kSamusAnimationDelayData_96;
+  case kPose_97_FaceR_Turn_Crouch_AimU:
+    return kSamusAnimationDelayData_97;
+  case kPose_98_FaceL_Turn_Crouch_AimU:
+    return kSamusAnimationDelayData_98;
+  case kPose_99_FaceR_Turn_Crouch_AimDDR:
+    return kSamusAnimationDelayData_99;
+  case kPose_9A_FaceL_Turn_Crouch_AimDDL:
+    return kSamusAnimationDelayData_9A;
+  case kPose_9C_FaceR_Turn_Stand_AimUR:
+    return kSamusAnimationDelayData_9C;
+  case kPose_9D_FaceL_Turn_Stand_AimUL:
+    return kSamusAnimationDelayData_9D;
+  case kPose_9E_FaceR_Turn_Air_AimUR:
+    return kSamusAnimationDelayData_9E;
+  case kPose_9F_FaceL_Turn_Air_AimUL:
+    return kSamusAnimationDelayData_9F;
+  case kPose_A0_FaceR_Turn_Fall_AimUR:
+    return kSamusAnimationDelayData_A0;
+  case kPose_A1_FaceL_Turn_Fall_AimUL:
+    return kSamusAnimationDelayData_A1;
+  case kPose_A2_FaceR_Turn_Crouch_AimUR:
+    return kSamusAnimationDelayData_A2;
+  case kPose_A3_FaceL_Turn_Crouch_AimUL:
+    return kSamusAnimationDelayData_A3;
+  case kPose_BF_FaceR_Moonwalk_TurnjumpL:
+    return kSamusAnimationDelayData_BF;
+  case kPose_C0_FaceL_Moonwalk_TurnjumpR:
+    return kSamusAnimationDelayData_C0;
+  case kPose_C1_FaceR_Moonwalk_TurnjumpL_AimUR:
+    return kSamusAnimationDelayData_C1;
+  case kPose_C2_FaceL_Moonwalk_TurnjumpR_AimUL:
+    return kSamusAnimationDelayData_C2;
+  case kPose_C3_FaceR_Moonwalk_TurnjumpL_AimDR:
+    return kSamusAnimationDelayData_C3;
+  case kPose_C4_FaceL_Moonwalk_TurnjumpR_AimDL:
+    return kSamusAnimationDelayData_C4;
+  case kPose_C6:
+    return kSamusAnimationDelayData_C6;
+  case kPose_63:
+    return kSamusAnimationDelayData_63;
+  case kPose_64:
+    return kSamusAnimationDelayData_64;
+  case kPose_65:
+  case kPose_66:
+    return kSamusAnimationDelayData_65;
+  case kPose_83_FaceR_Walljump:
+  case kPose_84_FaceL_Walljump:
+    return kSamusAnimationDelayData_83;
+  case kPose_35_FaceR_CrouchTrans:
+    return kSamusAnimationDelayData_35;
+  case kPose_36_FaceL_CrouchTrans:
+    return kSamusAnimationDelayData_36;
+  case kPose_37_FaceR_MorphTrans:
+    return kSamusAnimationDelayData_37;
+  case kPose_38_FaceL_MorphTrans:
+    return kSamusAnimationDelayData_38;
+  case kPose_39:
+    return kSamusAnimationDelayData_39;
+  case kPose_3A:
+    return kSamusAnimationDelayData_3A;
+  case kPose_3B_FaceR_StandTrans:
+    return kSamusAnimationDelayData_3B;
+  case kPose_3C_FaceL_StandTrans:
+    return kSamusAnimationDelayData_3C;
+  case kPose_3D_FaceR_UnmorphTrans:
+    return kSamusAnimationDelayData_3D;
+  case kPose_3E_FaceL_UnmorphTrans:
+    return kSamusAnimationDelayData_3E;
+  case kPose_3F:
+    return kSamusAnimationDelayData_3F;
+  case kPose_40:
+    return kSamusAnimationDelayData_40;
+  case kPose_DB:
+    return kSamusAnimationDelayData_DB;
+  case kPose_DC:
+    return kSamusAnimationDelayData_DC;
+  case kPose_DD:
+    return kSamusAnimationDelayData_DD;
+  case kPose_DE:
+    return kSamusAnimationDelayData_DE;
+  case kPose_F1_FaceR_CrouchTrans_AimU:
+    return kSamusAnimationDelayData_F1;
+  case kPose_F2_FaceL_CrouchTrans_AimU:
+    return kSamusAnimationDelayData_F2;
+  case kPose_F3_FaceR_CrouchTrans_AimUR:
+    return kSamusAnimationDelayData_F3;
+  case kPose_F4_FaceL_CrouchTrans_AimUL:
+    return kSamusAnimationDelayData_F4;
+  case kPose_F5_FaceR_CrouchTrans_AimDR:
+    return kSamusAnimationDelayData_F5;
+  case kPose_F6_FaceL_CrouchTrans_AimDL:
+    return kSamusAnimationDelayData_F6;
+  case kPose_F7_FaceR_StandTrans_AimU:
+    return kSamusAnimationDelayData_F7;
+  case kPose_F8_FaceL_StandTrans_AimU:
+    return kSamusAnimationDelayData_F8;
+  case kPose_F9_FaceR_StandTrans_AimUR:
+    return kSamusAnimationDelayData_F9;
+  case kPose_FA_FaceL_StandTrans_AimUL:
+    return kSamusAnimationDelayData_FA;
+  case kPose_FB_FaceR_StandTrans_AimDR:
+    return kSamusAnimationDelayData_FB;
+  case kPose_FC_FaceL_StandTrans_AimDL:
+    return kSamusAnimationDelayData_FC;
+  case kPose_BE_FaceL_Draygon_Move:
+  case kPose_F0_FaceR_Draygon_Move:
+    return kSamusAnimationDelayData_BE;
+  case kPose_C9_FaceR_Shinespark_Horiz:
+  case kPose_CA_FaceL_Shinespark_Horiz:
+  case kPose_CB_FaceR_Shinespark_Vert:
+  case kPose_CC_FaceL_Shinespark_Vert:
+  case kPose_CD_FaceR_Shinespark_Diag:
+  case kPose_CE_FaceL_Shinespark_Diag:
+    return kSamusAnimationDelayData_C9;
+  case kPose_D3_FaceR_CrystalFlash:
+    return kSamusAnimationDelayData_D3;
+  case kPose_D4_FaceL_CrystalFlash:
+    return kSamusAnimationDelayData_D4;
+  case kPose_D7_FaceR_CrystalFlashEnd:
+  case kPose_D8_FaceL_CrystalFlashEnd:
+    return kSamusAnimationDelayData_D7;
+  case kPose_00_FaceF_Powersuit:
+  case kPose_9B_FaceF_VariaGravitySuit:
+    return kSamusAnimationDelayData_00;
+  default: Unreachable(); return (uint8*){0};
   }
 }

@@ -521,7 +521,7 @@ void Elevator_Func_EnteringRoom(void) {  // 0xA395BC
   elevator_properties = 0;
   QueueSfx3_Max6(kSfx3_ClearSpeedBooster_ElevatorSound_Silence);
   E->base.y_pos = E->elevat_var_A;
-  RunSamusCode(kSamusCode_11_DrawHandlerDefault);
+  RunSamusCode(kSamusCode_11_UnlockFromFacingForward);
   PlaceSamusOnElevator();
 }
 

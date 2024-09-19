@@ -3,9 +3,9 @@
 #include "types.h"
 
 //#define kEnemyInit_Torizo_InstrListPtrs ((uint16*)RomFixedPtr(0xaac967))
-//#define kEnemyInit_TourianEntranceStatue_InstrListPtrs ((uint16*)RomFixedPtr(0xaad810))
-//#define kEnemyInit_TourianEntranceStatue_PaletteTab0 ((uint16*)RomFixedPtr(0xaad765))
-//#define kEnemyInit_TourianEntranceStatue_PaletteTab1 ((uint16*)RomFixedPtr(0xaad785))
+//#define kTourianEntranceStatue_InstrListPtrs ((uint16*)RomFixedPtr(0xaad810))
+//#define kTourianEntranceStatue_SpritePalette2 ((uint16*)RomFixedPtr(0xaad765))
+//#define kTourianEntranceStatue_SpritePalette7 ((uint16*)RomFixedPtr(0xaad785))
 //#define kShaktool_InstrListPtrs0 ((uint16*)RomFixedPtr(0xaadf13))
 //#define kShaktool_InstrListPtrs1 ((uint16*)RomFixedPtr(0xaadf21))
 //#define kSine ((uint16*)RomFixedPtr(0xaae0bd))
@@ -30,15 +30,17 @@ uint16 kEnemyInit_Torizo_InstrListPtrs[] = {
   0xb879, 0xc9cb,
 };
 
-uint16 kEnemyInit_TourianEntranceStatue_InstrListPtrs[] = {
-  0xd7b9, 0xd7a5, 0xd7af,
+static const uint16 kTourianEntranceStatue_InstrListPtrs[3] = {
+  addr_kTourianEntranceStatue_Ilist_BaseDecoration,
+  addr_kTourianEntranceStatue_Ilist_Ridley,
+  addr_kTourianEntranceStatue_Ilist_Phantoon,
 };
 
-uint16 kEnemyInit_TourianEntranceStatue_PaletteTab0[] = {
+static const uint16 kTourianEntranceStatue_SpritePalette2[] = {
   0x3800, 0x57ff, 0x2bff, 0x1f3c,  0x278,  0x1b0,  0x10b,   0x87,   0x44, 0x7fff, 0x7fff, 0x7fff,  0x3ff,  0x252,  0x129,    0x0,
 };
 
-uint16 kEnemyInit_TourianEntranceStatue_PaletteTab1[] = {
+static const uint16 kTourianEntranceStatue_SpritePalette7[] = {
   0x3800, 0x27f9, 0x2375, 0x1ad2, 0x164e, 0x11ab,  0xd27,  0x484,    0x0, 0x7f5f, 0x7c1f, 0x5816, 0x300c, 0x5294, 0x39ce, 0x2108,
 };
 

@@ -145,6 +145,18 @@ typedef struct Mode7ObjectDef {
     VoidP instr_list;
 }Mode7ObjectDef;
 
+/* 30 */
+typedef struct SamusPoseParams {  // 0x91B629
+  uint8 pose_x_dir;
+  uint8 movement_type;
+  uint8 new_pose_unless_buttons;
+  uint8 direction_shots_fired;
+  uint8 y_offset_proj_origin_to_gfx;
+  uint8 UNUSED_field_5;
+  uint8 y_radius;
+  uint8 UNUSED_field_7;
+} SamusPoseParams;
+
 /* 38 */
 typedef union DemoInputEntry {
     struct {

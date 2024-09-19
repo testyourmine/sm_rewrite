@@ -312,7 +312,7 @@ uint32 PatchBugs(uint32 mode, uint32 addr) {
   } else if (FixBugHook(0xA496C8)) { // Crocomire_Func_67 assumes A is zero
     g_cpu->a = 0;
   } else if (FixBugHook(0x9085AA)) { // Samus_HandleSpeedBoosterAnimDelay doesn't preserve A
-    g_cpu->a = speed_boost_counter;
+    g_cpu->a = PAIR16(speed_boost_counter, speed_boost_timer);
   } else if (FixBugHook(0xA29044) || FixBugHook(0xA2905D)) { // MaridiaBeybladeTurtle_Func8 thinks INC sets carry
     g_cpu->c = (g_cpu->a == 0);
   } else if (FixBugHook(0xa29051)) {  /// MaridiaBeybladeTurtle_Func8 does an INC too much

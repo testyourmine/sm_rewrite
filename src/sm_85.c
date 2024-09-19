@@ -26,21 +26,19 @@ static void InitializePpuForMessageBoxes(void) {  // 0x858143
   ram3000.msgbox.backup_of_enabled_hdma_channels = reg_HDMAEN;
   ram3000.msgbox.backup_of_bg3_tilemap_and_size = gameplay_BG3SC;
   gameplay_BG3SC = 0x58;
-  gameplay_TM = 23;
+  gameplay_TM = 0x10 | 0x4 | 0x2 | 0x1;
   gameplay_CGWSEL = 0;
   gameplay_CGADSUB = 0;
   // Set color math subscreen backdrop to transparent
   WriteReg(COLDATA, 0x20);
   WriteReg(COLDATA, 0x40);
   WriteReg(COLDATA, 0x80);
-  ReadReg(BG3HOFS);         // Useless
   // Initialize BG3 X scroll to 0
   WriteReg(BG3HOFS, 0);
-  WriteReg(BG3HOFS, 0);     // Doubly useless
-  ReadReg(BG3VOFS);         // Triply useless
+  WriteReg(BG3HOFS, 0);
   // Initialize BG3 Y scroll to 0
   WriteReg(BG3VOFS, 0);
-  WriteReg(BG3VOFS, 0);     // Combo breaker
+  WriteReg(BG3VOFS, 0);
   memset(&ram3000.msgbox, 0, 0x80);
   uint16 vram_backup_size = sizeof(ram4000.backups.backup_of_vram_0x5880_msgbox);
   CopyFromVram(addr_kVram_FxBackup, ram4000.backups.backup_of_vram_0x5880_msgbox, vram_backup_size, 1);
@@ -97,28 +95,27 @@ static void WriteSmallMessageBoxTilemap(void) {  // 0x858289
 
 /**
 * @brief Creates a squishing effect using an HDMA table as the message box expands/contracts
-  @brief until it reaches the desired Y radius
+* until it reaches the desired Y radius
 */
-static void MsgBoxMakeHdmaTable(void) {  // 0x85959B
-  message_box_animation_y2_top_half = (uint16)(0x7B00 - message_box_animation_y_radius) >> 8;
+static void MsgBoxMakeHdmaTable(void) {  // 0x85859B
+  message_box_animation_y2_top_half = 123 - HIBYTE(message_box_animation_y_radius);
   message_box_animation_y3_top_half = 99;
-  message_box_animation_y0_bottom_half = (uint16)(0x7C00 + message_box_animation_y_radius) >> 8;
+  message_box_animation_y0_bottom_half = 124 + HIBYTE(message_box_animation_y_radius);
   message_box_animation_y1_bottom_half = 148;
+
   uint16 max_radius = sizeof(ram3000.msgbox.msg_box_anim_y_radius) / 2;
-  uint16 y_top_pos = max_radius - 1;
-  uint16 y_bottom_pos = 0;
-  // Subtracting and incrementing the bases does nothing
-  // Should just do a two equations beforehand and write the result to RAM
-  for (int r20 = max_radius; r20 > 0; r20--) {
-    ram3000.msgbox.msg_box_anim_y_radius_neg[y_top_pos] = message_box_animation_y3_top_half - message_box_animation_y2_top_half;
-    --message_box_animation_y3_top_half;
-    --message_box_animation_y2_top_half;
-    --y_top_pos;
-    ram3000.msgbox.msg_box_anim_y_radius[y_bottom_pos] = message_box_animation_y1_bottom_half - message_box_animation_y0_bottom_half;
-    ++message_box_animation_y1_bottom_half;
-    ++message_box_animation_y0_bottom_half;
-    ++y_bottom_pos;
-  }
+  // message_box_animation_y3_top_half - message_box_animation_y2_top_half
+  uint16 top_half_radius = -(24 - HIBYTE(message_box_animation_y_radius));
+  //message_box_animation_y1_bottom_half - message_box_animation_y0_bottom_half
+  uint16 bottom_half_radius = 24 - HIBYTE(message_box_animation_y_radius);
+
+  memset7E(ram3000.msgbox.msg_box_anim_y_radius_neg, top_half_radius, sizeof(ram3000.msgbox.msg_box_anim_y_radius_neg));
+  memset7E(ram3000.msgbox.msg_box_anim_y_radius, bottom_half_radius, sizeof(ram3000.msgbox.msg_box_anim_y_radius));
+
+  message_box_animation_y3_top_half -= max_radius;
+  message_box_animation_y2_top_half -= max_radius;
+  message_box_animation_y1_bottom_half += max_radius;
+  message_box_animation_y0_bottom_half += max_radius;
   memset(ram3000.msgbox.msg_box_anim_clear, 0, sizeof(ram3000.msgbox.msg_box_anim_clear));
 }
 
@@ -126,22 +123,21 @@ static void MsgBoxMakeHdmaTable(void) {  // 0x85959B
 * @brief Sets up an indirect HDMA to BG3 Y scroll for the expanding/contracting squish effect
 */
 static void SetupMessageBoxBg3YscrollHdma(void) {  // 0x858363
+  // Indirect HDMA table = ram3000.msgbox.msg_box_anim_hdma_table
   ram3000.msgbox.indirect_hdma[0] = 0xFF;
   WORD(ram3000.msgbox.indirect_hdma[1]) = 0x3000;
   ram3000.msgbox.indirect_hdma[3] = 0xE1;
   WORD(ram3000.msgbox.indirect_hdma[4]) = 0x30FE;
   ram3000.msgbox.indirect_hdma[6] = 0;
+
   // Set up indirect HDMA to BG3 Y scroll on HDMA channel 6
   WriteReg(DMAP6, HDMA_CONTROL(0, 1, 2));
   WriteReg(BBAD6, REG(BG3VOFS));
-  WriteReg(A1T6L, 0x80);
-  WriteReg(DAS6L, 0x80);
-  WriteReg(A1T6H, 0x33);
-  WriteReg(DAS6H, 0x33);
+  WriteRegWord(A1T6L, ADDR16_OF_RAM(ram3000.msgbox.indirect_hdma));
   WriteReg(A1B6, 0x7E);
+  WriteRegWord(DAS6L, ADDR16_OF_RAM(ram3000.msgbox.indirect_hdma));
   WriteReg(DAS60, 0x7E);
-  WriteReg(A2A6L, 0);
-  WriteReg(A2A6H, 0);
+  WriteRegWord(A2A6L, 0);
   WriteReg(NTRL6, 0);
   MsgBoxMakeHdmaTable();
   // Enable HDMA channel 6
@@ -164,19 +160,19 @@ static void SetupPpuForActiveMessageBox(uint16 bg3_tilemap_offset) {  // 0x85831
 */
 static void DrawSpecialButtonAndSetupPpuForLargeMessageBox(uint16 special_button) {  // 0x8583D1
   uint16 button_offset = 0;
-  if ((special_button & kButton_A) == 0) {
+  if (!(special_button & kButton_A)) {
     button_offset = 2;
-    if ((special_button & kButton_B) == 0) {
+    if (!(special_button & kButton_B)) {
       button_offset = 4;
-      if ((special_button & kButton_X) == 0) {
+      if (!(special_button & kButton_X)) {
         button_offset = 6;
-        if ((special_button & kButton_Y) == 0) {
+        if (!(special_button & kButton_Y)) {
           button_offset = 8;
-          if ((special_button & kButton_Select) == 0) {
+          if (!(special_button & kButton_Select)) {
             button_offset = 10;
-            if ((special_button & kButton_L) == 0) {
+            if (!(special_button & kButton_L)) {
               button_offset = 12;
-              if ((special_button & kButton_R) == 0)
+              if (!(special_button & kButton_R))
                 button_offset = 14;
             }
           }
@@ -194,14 +190,14 @@ static void DrawSpecialButtonAndSetupPpuForLargeMessageBox(uint16 special_button
 * @brief Draws the button assigned to shoot and sets up the PPU for a large message box
 */
 static void DrawShootButtonAndSetupPpuForLargeMessageBox(void) {  // 0x8583C5
-  DrawSpecialButtonAndSetupPpuForLargeMessageBox(button_config_shoot_x);
+  DrawSpecialButtonAndSetupPpuForLargeMessageBox(button_config_shoot);
 }
 
 /**
 * @brief Draws the button assigned to run and sets up the PPU for a large message box
 */
 static void DrawRunButtonAndSetupPpuForLargeMessageBox(void) {  // 0x8583CC
-  DrawSpecialButtonAndSetupPpuForLargeMessageBox(button_config_run_b);
+  DrawSpecialButtonAndSetupPpuForLargeMessageBox(button_config_run);
 }
 
 /**
@@ -287,7 +283,7 @@ static void RestorePpuForMessageBox(void) {  // 0x85861A
 }
 
 /**
-* @brief Expands the message box until it's reached the max radius
+* @brief Expands the message box until it's reached the max radius and handles music/sfx
 */
 static CoroutineRet OpenMessageBox_Async(void) {  // 0x85844C
   COROUTINE_BEGIN(coroutine_state_4, 0);
@@ -333,11 +329,11 @@ static CoroutineRet HandleMessageBoxInteraction_Async(void) {  // 0x85846D
     if (message_box_index != kMessageBox_20_MapDataAccessCompleted && message_box_index != kMessageBox_21_EnergyRechargeCompleted 
         && message_box_index != kMessageBox_22_MissileReloadCompleted && message_box_index != kMessageBox_24_SaveCompleted)
       my_counter = 360;
-    do {
+    for (; my_counter > 0; --my_counter) {
       COROUTINE_AWAIT(2, WaitForNMI_NoUpdate_Async());
       HandleMusicQueue();
       HandleSoundEffects();
-    } while (--my_counter);
+    }
     do {
       COROUTINE_AWAIT(3, WaitForNMI_NoUpdate_Async());
       ReadJoypadInputs();
@@ -347,17 +343,16 @@ static CoroutineRet HandleMessageBoxInteraction_Async(void) {  // 0x85846D
 }
 
 /**
-* @brief Shrinks the message box until it's gone
+* @brief Shrinks the message box until it's gone and handles music/sfx
 */
 static CoroutineRet CloseMessageBox_Async(void) {  // 0x858589
   COROUTINE_BEGIN(coroutine_state_4, 0);
-  do {
+  for (; (int16)message_box_animation_y_radius >= 0; message_box_animation_y_radius -= 0x200) {
     COROUTINE_AWAIT(1, WaitForNMI_NoUpdate_Async());
     HandleMusicQueue();
     HandleSoundEffects();
     MsgBoxMakeHdmaTable();
-    message_box_animation_y_radius -= 512;
-  } while ((int16)message_box_animation_y_radius >= 0);
+  }
   COROUTINE_END(0);
 }
 
@@ -382,12 +377,11 @@ CoroutineRet DisplayMessageBox_Async(uint16 queued_message) {  // 0x858080
     ClearMessageBoxBg3Tilemap();
     QueueSfx1_Max6(kSfx1_Saving);
 
-    my_counter = 160;
-    do {
+    for (my_counter = 160; my_counter > 0; --my_counter) {
       HandleMusicQueue();
       HandleSoundEffects();
       COROUTINE_AWAIT(8, WaitForNMI_NoUpdate_Async());
-    } while (--my_counter != 0);
+    }
 
     InitializeMessageBox();
     COROUTINE_AWAIT(5, OpenMessageBox_Async());

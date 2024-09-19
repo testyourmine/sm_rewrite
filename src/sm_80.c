@@ -239,7 +239,7 @@ CoroutineRet Vector_RESET_Async(void) {  // 0x80841C
   reg_MEMSEL = 1;
   // Removed code to wait 4 frames
   uint16 bak = bug_fix_counter;
-  memset(g_ram, 0, 8192);
+  memset(g_ram, 0, 0x2000);
   bug_fix_counter = bak;
   COROUTINE_AWAIT(2, InitializeIoDisplayLogo_Async());
 
@@ -277,7 +277,8 @@ CoroutineRet Vector_RESET_Async(void) {  // 0x80841C
   reg_OAMaddr_UNUSED = 0;
   ClearOamExt();
   ClearUnusedOam();
-  nmi_copy_samus_halves = 0;
+  nmi_copy_samus_top_half_ready_flag = 0;
+  nmi_copy_samus_bottom_half_ready_flag = 0;
   nmi_copy_samus_top_half_src = 0;
   nmi_copy_samus_bottom_half_src = 0;
   EnableNMI();
@@ -626,9 +627,8 @@ void NMI_ProcessVramWriteQueue(void) {  // 0x808C83
     gVramWriteEntry(vram_write_queue_tail)->size = 0;
     WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
     WriteReg(BBAD1, REG(VMDATAL));
-    //WriteRegWord(DMAP1, 0x1801);
-    for (int i = 0; ; i += sizeof(VramWriteEntry)) {
-      VramWriteEntry *vram_entry = gVramWriteEntry(i);
+    for (int vram_write_queue_idx = 0; ; vram_write_queue_idx += sizeof(VramWriteEntry)) {
+      VramWriteEntry *vram_entry = gVramWriteEntry(vram_write_queue_idx);
       if (vram_entry->size == 0)
         break;
       WriteRegWord(DAS1L, vram_entry->size);
@@ -1191,38 +1191,46 @@ void NmiUpdatePalettesAndOam(void) {  // 0x80933A
 }
 
 /**
-* @brief Transfer Samus tiles from RAM to VRAM
+* @brief Transfer Samus tiles from ROM to VRAM
 */
 void NmiTransferSamusToVram(void) {  // 0x809376
   WriteReg(VMAIN, 0x80);
   if (nmi_copy_samus_top_half_ready_flag) {
     SamusTileAnimationTileDefs *td = (SamusTileAnimationTileDefs *)RomPtr_92(nmi_copy_samus_top_half_src);
-    WriteRegWord(VMADDL, 0x6000);
+    // Set up transfer for Samus top graphics part 1 from ROM to VRAM
+    // CopyToVram(addr_kVram_SamusTopGfx_Part1, td->src, td->part1_size, 1)
+    WriteRegWord(VMADDL, addr_kVram_SamusTopGfx_Part1);
     WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
     WriteReg(BBAD1, REG(VMDATAL));
     WriteRegWord(A1T1L, td->src.addr);
     WriteReg(A1B1, td->src.bank);
     WriteRegWord(DAS1L, td->part1_size);
     WriteReg(MDMAEN, 2);
-    WriteRegWord(VMADDL, 0x6100);
+    // Set up transfer for Samus top graphics part 2 from ROM to VRAM
+    // CopyToVram(addr_kVram_SamusTopGfx_Part2, td->src, td->part2_size, 1)
+    WriteRegWord(VMADDL, addr_kVram_SamusTopGfx_Part2);
     WriteRegWord(A1T1L, td->src.addr + td->part1_size);
-    if (td->part2_size) {
+    if (td->part2_size != 0) {
       WriteRegWord(DAS1L, td->part2_size);
       WriteReg(MDMAEN, 2);
     }
   }
   if (nmi_copy_samus_bottom_half_ready_flag) {
     SamusTileAnimationTileDefs *td = (SamusTileAnimationTileDefs *)RomPtr_92(nmi_copy_samus_bottom_half_src);
-    WriteRegWord(VMADDL, 0x6080);
+    // Set up transfer for Samus bottom graphics part 1 from ROM to VRAM
+    // CopyToVram(addr_kVram_SamusBottomGfx_Part1, td->src, td->part1_size, 1)
+    WriteRegWord(VMADDL, addr_kVram_SamusBottomGfx_Part1);
     WriteReg(DMAP1, DMA_CONTROL(0, 0, 0, 0, 1));
     WriteReg(BBAD1, REG(VMDATAL));
     WriteRegWord(A1T1L, td->src.addr);
     WriteReg(A1B1, td->src.bank);
     WriteRegWord(DAS1L, td->part1_size);
     WriteReg(MDMAEN, 2);
-    WriteRegWord(VMADDL, 0x6180);
+    // Set up transfer for Samus bottom graphics part 2 from ROM to VRAM
+    // CopyToVram(addr_kVram_SamusBottomGfx_Part1, td->src, td->part2_size, 1)
+    WriteRegWord(VMADDL, addr_kVram_SamusBottomGfx_Part2);
     WriteRegWord(A1T1L, td->src.addr + td->part1_size);
-    if (td->part2_size) {
+    if (td->part2_size != 0) {
       WriteRegWord(DAS1L, td->part2_size);
       WriteReg(MDMAEN, 2);
     }
@@ -1621,7 +1629,7 @@ void Vector_IRQ(void) {
 * @brief Writes the top and bottom row of the HUD missile icon to RAM if the tilemap is blank
 */
 void AddMissilesToHudTilemap(void) {  // 0x8099CF
-  if ((hud_tilemap.row1.missiles[0] & 0x3FF) == 15) {
+  if ((hud_tilemap.row1.missiles[0] & 0x3FF) == 0xF) {
     uint16 row_size = sizeof(hud_tilemap.row1.missiles);
     MemCpy(hud_tilemap.row1.missiles, kHudTilemaps_Missiles, row_size);
     MemCpy(hud_tilemap.row2.missiles, kHudTilemaps_Missiles + (row_size >> 1), row_size);
@@ -1667,7 +1675,7 @@ void AddXrayToHudTilemap(void) {  // 0x809A3E
 */
 void AddToTilemapInner(uint16 hud_tilemap_offset, const uint16 *tilemap_src) {  // 0x809A4C
   int offset = hud_tilemap_offset >> 1;
-  if ((hud_tilemap.arr[offset] & 0x3FF) == 15) {
+  if ((hud_tilemap.arr[offset] & 0x3FF) == 0xF) {
     MemCpy(hud_tilemap.row1.arr + offset, &tilemap_src[0], 2*2);
     MemCpy(hud_tilemap.row2.arr + offset, &tilemap_src[2], 2*2);
   }
@@ -2357,9 +2365,11 @@ void HandleAutoscrolling_X(void) {  // 0x80A528
 
   if (!time_is_frozen_flag) {
     uint16 layer1_x_pos_backup = layer1_x_pos;
-    layer1_x_pos = IntMax(layer1_x_pos, 0);
+    if ((int16)layer1_x_pos < 0)
+      layer1_x_pos = 0;
     uint16 room_pixel_width = swap16(room_width_in_scrolls - 1);
-    layer1_x_pos = IntMin(layer1_x_pos, room_pixel_width);
+    if (room_pixel_width < layer1_x_pos)
+      layer1_x_pos = room_pixel_width;
 
     uint16 nearest_half_scroll_vertically = (uint16)(layer1_y_pos + 0x80) >> 8;
     half_scroll_pos_on_screen = Mult8x8(nearest_half_scroll_vertically, room_width_in_scrolls);
@@ -2477,10 +2487,12 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
       next_scroll_offset = 31;
 
     uint16 layer1_y_pos_backup = layer1_y_pos;
-    layer1_y_pos = IntMax(layer1_y_pos, 0);
-    uint16 room_pixel_height = swap16(room_height_in_scrolls - 1);
+    if ((int16)layer1_y_pos < 0)
+      layer1_y_pos = 0;
+    int16 room_pixel_height = swap16(room_height_in_scrolls - 1);
     uint16 scroll_pos = next_scroll_offset + room_pixel_height;
-    layer1_y_pos = IntMin(layer1_y_pos, scroll_pos);
+    if (scroll_pos < layer1_y_pos)
+      layer1_y_pos = scroll_pos;
 
     nearest_top_scroll_bound = HIBYTE(layer1_y_pos);
     nearest_half_scroll_horizontally = (uint16)(layer1_x_pos + 0x80) >> 8;
@@ -2505,10 +2517,9 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
           new_layer1_y_pos = next_scroll_downwards & 0xFF00;
       }
       layer1_y_pos = new_layer1_y_pos;
-      return;
     }
 
-    if (scrolls[(uint16)(room_width_in_scrolls + half_scroll_index)] == kScroll_Red) {
+    else if (scrolls[(uint16)(room_width_in_scrolls + half_scroll_index)] == kScroll_Red) {
       uint16 top_scroll_bound_pos = next_scroll_offset + (layer1_y_pos & 0xFF00);
       if (top_scroll_bound_pos < layer1_y_pos) {
         uint16 next_scroll_upwards = layer1_y_pos_backup - camera_y_speed - 2;
@@ -2517,18 +2528,16 @@ void HandleAutoscrolling_Y(void) {  // 0x80A731
           new_layer1_y_pos = top_scroll_bound_pos;
         }
         else {
-          layer1_y_pos_backup = next_scroll_upwards;
           nearest_half_scroll_horizontally = (uint16)(layer1_x_pos + 0x80) >> 8;
           nearest_top_scroll_bound = HIBYTE(next_scroll_upwards);
           half_scroll_pos_on_screen = Mult8x8(nearest_top_scroll_bound, room_width_in_scrolls);
           half_scroll_index = half_scroll_pos_on_screen + nearest_half_scroll_horizontally;
           if (scrolls[half_scroll_index] != kScroll_Red)
-            new_layer1_y_pos = layer1_y_pos_backup;
+            new_layer1_y_pos = next_scroll_upwards;
           else
-            new_layer1_y_pos = (layer1_y_pos_backup & 0xFF00) + 0x100;
+            new_layer1_y_pos = (next_scroll_upwards & 0xFF00) + 0x100;
         }
         layer1_y_pos = new_layer1_y_pos;
-        return;
       }
     }
   }
@@ -3289,7 +3298,7 @@ void LoadFromLoadStation(void) {  // 0x80C437
   reg_BG1HOFS = 0;
   reg_BG1VOFS = 0;
   area_index = get_RoomDefHeader(room_ptr).area_index_;
-  debug_disable_minimap = 0;
+  disable_minimap = 0;
 }
 
 /**

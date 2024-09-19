@@ -2028,8 +2028,8 @@ void SamusProjectileInteractionHandler(void) {  // 0xA09785
         return;
       }
       if (projectile_variables[pidx] == 8) {
-        bomb_jump_dir = (samus_x_pos == projectile_x_pos[pidx]) ? 2 :
-            (int16)(samus_x_pos - projectile_x_pos[pidx]) < 0 ? 1 : 3;
+        bomb_jump_dir = (samus_x_pos == projectile_x_pos[pidx]) ? kBombJumpDir_Up :
+            (int16)(samus_x_pos - projectile_x_pos[pidx]) < kBombJumpDir_None ? kBombJumpDir_Left : kBombJumpDir_Right;
       }
     }
   }

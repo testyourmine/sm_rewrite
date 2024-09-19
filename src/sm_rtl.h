@@ -21,7 +21,7 @@ typedef uint8 Func_U8(void);
 typedef void Func_Y_V(uint16 j);
 typedef uint16 Func_Y_Y(uint16 j);
 typedef void FuncXY_V(uint16 k, uint16 j);
-typedef PairU16 Func_Y_To_PairU16(uint16 j);
+typedef Point16U Func_Y_To_Point16U(uint16 j);
 
 struct LongPtr;
 void mov24(LongPtr *dst, uint32 src);
@@ -152,27 +152,20 @@ struct VramWriteEntry;
 
 
 PairU16 MakePairU16(uint16 k, uint16 j);
+Point16U MakePoint16U(uint16 k, uint16 j);
 
-#define kPoseParams ((SamusPoseParams*)RomFixedPtr(0x91b629))
-#define kAtmosphericGraphicAnimationTimers ((uint16*)RomFixedPtr(0x908b93))
-#define kAtmosphericTypeNumFrames ((uint16*)RomFixedPtr(0x908bef))
-#define kAtmosphericTypeTileNumAndAttributes ((uint16*)RomFixedPtr(0x908bff))
-#define kBossRoomMapTile ((DisableMinimapAndMarkBossRoomAsExploredEnt*)RomFixedPtr(0x90a83a))
-#define kPlayerPoseToPtr ((uint16*)RomFixedPtr(0x90c7df))
-#define kDrawArmCannon_Tab2 ((uint16*)RomFixedPtr(0x90c7a5))
+extern const SamusPoseParams kPoseParams[0xFC];
 extern const int16 kSinCosTable8bit_Sext[320];
-//#define kPoseTransitionTable ((uint16*)RomFixedPtr(0x919ee2))
-//#define kDemoSetDefPtrs ((uint16*)RomFixedPtr(0x918885))
-#define kSpeedBoostToCtr ((uint16*)RomFixedPtr(0x91b61f))
-#define kSpeedBoostToAnimFramePtr ((uint16 *)RomFixedPtr(0x91B5DE))
-#define kSamusPoseToBaseSpritemapIndexTop ((uint16*)RomFixedPtr(0x929263))
-#define kSamusPoseToBaseSpritemapIndexBottom ((uint16*)RomFixedPtr(0x92945d))
-#define kSamusAnimationDelayData ((uint16*)RomFixedPtr(0x91b010))
+extern const uint8 kDefaultAnimFrames[11];
+extern const uint8 kSpeedBoostToAnimFrames[5][11];
+extern const uint16 kSpeedBoostToCtr[5];
+extern const uint16 kSamusPoseToBaseSpritemapIndexTop[];
+extern const uint16 kSamusPoseToBaseSpritemapIndexBottom[];
 #define kCommonEnemySpeeds_Linear ((uint16*)RomFixedPtr(0xa28187))
 #define kCommonEnemySpeeds_Quadratic ((uint16*)RomFixedPtr(0xa2838f))
 #define kCommonEnemySpeeds_Quadratic32 ((uint32*)RomFixedPtr(0xa0cbc7))
 #define kSine16bit ((uint16*)RomFixedPtr(0xa0b1c3))
-#define kTanTable ((uint16*)RomFixedPtr(0x91c9d4))
+extern const uint16 kAbsTanTable[129];
 
 void CallEnemyAi(uint32 ea);
 void CallEnemyPreInstr(uint32 ea);
@@ -181,6 +174,7 @@ const uint16 *CallEnemyInstr(uint32 ea, uint16 k, const uint16 *jp);
 void CalculateBlockContainingPixelPos(uint16 xpos, uint16 ypos);
 
 #define REG(x) ((x) & 0xFF)
+
 /**
 * direction: 0 = CPU -> PPU, 1 = PPU -> CPU
 * address mode: 0 = holds data, 1 = holds pointer to data (HDMA only)
@@ -194,7 +188,9 @@ void CalculateBlockContainingPixelPos(uint16 xpos, uint16 ypos);
 *   4 = 4 regs, write once
 *   5 = 2 regs, write twice alternate
 */
-#define DMA_CONTROL(dir, addr_mode, inc, fixed, trans_mode) (((dir) << 7) | ((addr_mode) << 6) | ((inc) << 4) | ((fixed) << 3) | trans_mode)
+#define DMA_CONTROL(dir, addr_mode, inc, fixed, trans_mode) \
+(((dir) << 7) | ((addr_mode) << 6) | ((inc) << 4) | ((fixed) << 3) | trans_mode)
+
 /**
 * direction: 0 = CPU -> PPU, 1 = PPU -> CPU
 * address mode: 0 = holds data, 1 = holds pointer to data
@@ -207,6 +203,17 @@ void CalculateBlockContainingPixelPos(uint16 xpos, uint16 ypos);
 *   5 = 2 regs, write twice alternate
 */
 #define HDMA_CONTROL(dir, addr_mode, trans_mode) DMA_CONTROL(dir, addr_mode, 0, 0, trans_mode)
+
+/**
+* y_flip: flag to flip the sprite vertically
+* x_flip: flag to flip the sprite horizontally
+* priority: the placement of the sprite, from 0 to 3, lowest to highest
+* pal: the palette to select
+* tile_nbr: the tile to select
+*/
+#define OAM_DATA(y_flip, x_flip, priority, pal, tile_nbr) \
+(((y_flip) << 15) | ((x_flip) << 14) | ((priority) << 12) | ((pal) << 9) | (tile_nbr))
+
 
 /* 148 */
 typedef enum SnesRegs {

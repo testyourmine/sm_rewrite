@@ -45,9 +45,22 @@ Here are some tips and conventions for cleaning up code:
   originally an unsigned integer, it should either be changed to a signed integer or sign casted. However, checks against 0x8000 sometimes
   indicates that it's checking for a flag, in which case the `0x8000` should be replaced with a macro that describes the flag.
 
+- Most of the time, when the code does something like `if ((x & 0xFF00) == 0)`, it usually means it is checking the high byte.
+  However, there are a few instances where it is a shorthand for `if (0 <= x && x < 0x100)`. This is because by masking out
+  the low byte, it can check if any bit above 0x00FF is set. This means that any value from 0x100 onward will make the
+  condition false, and any negative value will also cause the condition to be false since negative values sets 0x8000.
+  This check is most often used when checking location of an object on screen, however it may be used for other purposes.
+  If it's not entirely clear whether this is the case, consulting the bank logs is a good choice.
+
 - Some while and do while loops can be replaced with for loops. For example, `int index = 0; while (index < 10) { ...; index++; }`
   can be replaced with `for (int index = 0; index < 10; index++) { ... }`. However, this is not always the case, especially
   when the order of iterating and checking is not the same.
+
+- When comparing values, it is important to note what the sign of the values should be. Often, the port code does something like
+  `if ((int16)(x - y) >= 0)`, which could be reduced to `if (x >= y)`, casting to `int16` if they are not already of that type.
+  Currently, I do not know if all instances of these need to be signed or unsigned. So, when simplifying these,
+  check with the original code the type of comparison it does. If it uses `BCC/BCS`, then the comparison is unsigned.
+  If it uses `BPL/BMI`, then the comparison is signed.
 
 - Whether a number is expressed in decimal or hex is up to interpretation. Generally, numbers that are used as bit flags
   are expressed in hex. Sequences of numbers which seem random in decimal but line up nicely in hex should be expressed in hex,
@@ -66,7 +79,7 @@ Here are some tips and conventions for cleaning up code:
 * @brief A brief description of the function
 * @param1 A description of the first parameter
 * @param2 A description of the second parameter
-* @return type A description of the return value
+* @return *type* description of the return value
 */
 ```
 - Commenting in the middle of functions is fine, especially if its clarifying what a block of code or a condition is doing.

@@ -445,7 +445,7 @@ void HandleMode7TransformationMatrix(void) {  // 0x8B8532
 
 void SetPpuBackdropSomeColor(void) {  // 0x8B866B
   reg_CGWSEL = 0;
-  reg_CGADSUB = -127;
+  reg_CGADSUB = 0x81;
   reg_COLDATA[0] = 56;
   reg_COLDATA[1] = 88;
   reg_COLDATA[2] = 0x80;
@@ -540,18 +540,18 @@ void ProcessCinematicBgObject_DrawToTextTilemap(uint16 k, uint16 j, uint16 r18) 
   uint16 offs = CinematicGetTilemapOffsetForTile(r18);
   uint16 r22 = offs;
   const uint8 *v3 = RomPtr_8C(j);
-  uint16 m = v3[2];
-  uint16 morg = m;
-  uint16 n = v3[3];
+  uint16 col_num = v3[2];
+  uint16 col_num_org = col_num;
+  uint16 row_num = v3[3];
   while (1) {
     do {
       *(uint16 *)((uint8 *)ram3000.pause_menu_map_tilemap + offs) = *((uint16 *)RomPtr_8C(j) + 2);
       j += 2;
       offs += 2;
-      --m;
-    } while (m);
-    m = morg;
-    if (!--n)
+      --col_num;
+    } while (col_num);
+    col_num = col_num_org;
+    if (!--row_num)
       break;
     r22 += 64;
     offs = r22;
@@ -638,12 +638,11 @@ uint16 Mult0x80Add(uint16 r18) {  // 0x8B8A2C
 void Samus_CalcPos_Mode7(void) {  // 0x8B8A52
   uint16 x_pos = samus_x_pos - reg_M7X;
   uint16 y_pos = reg_M7Y - samus_y_pos;
-  uint16 x_offset = Smult16x16(x_pos, reg_M7A) >> 8;
-  x_offset += Smult16x16(reg_M7B, y_pos) >> 8;
-  samus_x_pos = x_offset + reg_M7X;
+
+  uint16 x_offset = Smult16x16(x_pos, reg_M7A) / 0x100 + Smult16x16(y_pos, reg_M7B) / 0x100;
+  samus_x_pos = reg_M7X + x_offset;
  
-  uint16 y_offset = Smult16x16(reg_M7C, x_pos) >> 8;
-  y_offset += Smult16x16(reg_M7A, y_pos) >> 8;
+  uint16 y_offset = Smult16x16(x_pos, reg_M7C) / 0x100 + Smult16x16(y_pos, reg_M7A) / 0x100;
   samus_y_pos = reg_M7Y - y_offset;
 }
 
@@ -878,7 +877,9 @@ CoroutineRet InitializeIoDisplayLogo_Async(void) {  // 0x8B9146
   oam_next_ptr = 0;
   ClearOamExt();
   ClearUnusedOam();
-  nmi_copy_samus_halves = 0;
+  //nmi_copy_samus_halves = 0;
+  nmi_copy_samus_top_half_ready_flag = 0;
+  nmi_copy_samus_bottom_half_ready_flag = 0;
   nmi_copy_samus_top_half_src = 0;
   nmi_copy_samus_bottom_half_src = 0;
   WriteReg(NMITIMEN, 1);
@@ -1923,19 +1924,17 @@ uint16 CinematicSprInstr_9F19(uint16 k, uint16 j) {  // 0x8B9F19
 }
 
 void CinematicFunc_Func1(void) {  // 0x8B9F29
-  bool v0 = (--demo_timer & 0x8000) != 0;
-  if (!demo_timer || v0) {
+  if ((int16)--demo_timer <= 0) {
     cinematic_function = FUNC16(CinematicFunc_Func9);
-LABEL_6:
     screen_fade_delay = 2;
     screen_fade_counter = 2;
-    goto LABEL_7;
   }
-  if ((joypad1_newkeys & (uint16)(kButton_B | kButton_Start | kButton_A)) != 0) {
+  else if (joypad1_newkeys & (kButton_B | kButton_Start | kButton_A)) {
     cinematic_function = FUNC16(CinematicFunc_Func10);
-    goto LABEL_6;
+    screen_fade_delay = 2;
+    screen_fade_counter = 2;
   }
-LABEL_7:;
+  // REMOVED: Debug_DisplayVersionInfo()
 }
 
 void CinematicFunc_Func10(void) {  // 0x8B9F52
@@ -2076,7 +2075,7 @@ void CinematicFunction_Intro_Initial(void) {  // 0x8BA395
   samus_max_missiles = 900;
   samus_missiles = 900;
   cinematic_samus_display_flag = 0;
-  samus_draw_handler = FUNC16(SamusDrawHandler_Default);
+  samus_draw_handler = FUNC16(Samus_DrawHandler_Default);
   ResetButtonAssignmentsToDefault();
   samus_invincibility_timer = 0;
   samus_knockback_timer = 0;
@@ -3284,10 +3283,11 @@ void CinematicFunction_Intro_Func44(uint16 k) {  // 0x8BB8D8
   if (sign16(cinematicbg_x_pos[v1] + 8 - (samus_x_pos - 5))) {
     if (cinematicspr_preinstr_func[0] != FUNC16(CinematicFunction_Intro_Func39))
       return;
-  } else {
+  }
+  else {
     samus_invincibility_timer = 11;
     samus_knockback_timer = 11;
-    knockback_x_dir = 1;
+    knockback_x_dir = kKnockbackXDir_Right;
   }
   cinematicspr_instr_timer[v1] = 1;
   cinematicspr_instr_ptr[v1] = addr_kCinematicSpriteObjectInstrList_CE52_Nothing;
@@ -3432,34 +3432,34 @@ void CinematicFunction_Intro_Func53(uint16 k) {  // 0x8BBB24
 }
 
 void ResetButtonAssignmentsToDefault(void) {  // 0x8BBC08
-  button_config_shoot_x_saved = button_config_shoot_x;
-  button_config_jump_a_saved = button_config_jump_a;
-  button_config_run_b_saved = button_config_run_b;
-  button_config_itemcancel_y_saved = button_config_itemcancel_y;
+  button_config_shoot_saved = button_config_shoot;
+  button_config_jump_saved = button_config_jump;
+  button_config_run_saved = button_config_run;
+  button_config_itemcancel_saved = button_config_itemcancel;
   button_config_itemswitch_saved = button_config_itemswitch;
-  button_config_aim_down_L_saved = button_config_aim_down_L;
-  button_config_aim_up_R_saved = button_config_aim_up_R;
+  button_config_aim_down_saved = button_config_aim_down;
+  button_config_aim_up_saved = button_config_aim_up;
   button_config_up = kButton_Up;
   button_config_down = kButton_Down;
   button_config_left = kButton_Left;
   button_config_right = kButton_Right;
-  button_config_shoot_x = kButton_X;
-  button_config_jump_a = kButton_A;
-  button_config_run_b = kButton_B;
-  button_config_itemcancel_y = kButton_Y;
+  button_config_shoot = kButton_X;
+  button_config_jump = kButton_A;
+  button_config_run = kButton_B;
+  button_config_itemcancel = kButton_Y;
   button_config_itemswitch = kButton_Select;
-  button_config_aim_down_L = kButton_L;
-  button_config_aim_up_R = kButton_R;
+  button_config_aim_down = kButton_L;
+  button_config_aim_up = kButton_R;
 }
 
 void RevertButtonConfig(void) {  // 0x8BBC75
-  button_config_shoot_x = button_config_shoot_x_saved;
-  button_config_jump_a = button_config_jump_a_saved;
-  button_config_run_b = button_config_run_b_saved;
-  button_config_itemcancel_y = button_config_itemcancel_y_saved;
+  button_config_shoot = button_config_shoot_saved;
+  button_config_jump = button_config_jump_saved;
+  button_config_run = button_config_run_saved;
+  button_config_itemcancel = button_config_itemcancel_saved;
   button_config_itemswitch = button_config_itemswitch_saved;
-  button_config_aim_down_L = button_config_aim_down_L_saved;
-  button_config_aim_up_R = button_config_aim_up_R_saved;
+  button_config_aim_down = button_config_aim_down_saved;
+  button_config_aim_up = button_config_aim_up_saved;
 }
 
 void CinematicFunction_Intro_Func54(void) {  // 0x8BBCA0
@@ -5184,47 +5184,46 @@ void CinematicFunction_Intro_Func144(void) {  // 0x8BE58A
 }
 
 uint16 CalcItemPercentageCount(uint16 k, uint16 instrp) {  // 0x8BE627
-  uint16 j;
+  uint16 item_percentage = 0;
 
-  uint16 v0 = 4;
-  uint16 r18 = 0;
-  do {
-    const uint16 *v1 = (const uint16 *)RomPtr_RAM(kCredits_ItemPercentageRamAddresses[v0]);
-    r18 += SnesDivide(*v1, kCredits_ItemPercentageDivisors[v0]);
-    --v0;
-  } while ((v0 & 0x8000) == 0);
-  for (int i = 20; i >= 0; i -= 2) {
-    if ((kCredits_ItemPercentageItemBits[i >> 1] & collected_items) != 0)
-      ++r18;
+  // Get total percentage across all tanks collected (i.e. energy, reserves, missiles, etc.)
+  for (int item_tank_idx = 0; item_tank_idx < arraysize(kCredits_ItemPercentageDivisors); item_tank_idx++) {
+    uint16 item_tank_amt = GET_WORD(RomPtr_RAM(kCredits_ItemPercentageRamAddresses[item_tank_idx]));
+    item_percentage += item_tank_amt / kCredits_ItemPercentageDivisors[item_tank_idx];
+    --item_tank_idx;
   }
-  for (j = 8; (j & 0x8000) == 0; j -= 2) {
-    if ((kCredits_ItemPercentageBeamBits[j >> 1] & collected_beams) != 0)
-      ++r18;
+  // Get total percentage across all items collected (i.e. upgrades not including tanks and beams)
+  for (int item_idx = 0; item_idx < arraysize(kCredits_ItemPercentageItemBits); item_idx++) {
+    if (collected_items & kCredits_ItemPercentageItemBits[item_idx])
+      ++item_percentage;
   }
-  uint16 RegWord = r18 / 10;
-  uint16 r22 = r18 % 10;
-  r18 = RegWord / 10;
-  uint16 r20 = RegWord % 10;
-  if (r18) {
-    int v5 = (uint16)(4 * r18) >> 1;
-    ram3000.pause_menu_map_tilemap[462] = kCredits_ItemPercentageDigitsTilemap[v5];
-    ram3000.pause_menu_map_tilemap[494] = kCredits_ItemPercentageDigitsTilemap[v5 + 1];
+  // Get total percentage across all beams collected
+  for (int beam_idx = 0; beam_idx < arraysize(kCredits_ItemPercentageBeamBits); beam_idx++) {
+    if (collected_beams & kCredits_ItemPercentageBeamBits[beam_idx])
+      ++item_percentage;
   }
-  uint16 v6 = r20;
-  if (r20)
-    goto LABEL_16;
-  if (r18) {
-    v6 = r20;
-LABEL_16:;
-    int v7 = (uint16)(4 * v6) >> 1;
-    ram3000.pause_menu_map_tilemap[463] = kCredits_ItemPercentageDigitsTilemap[v7];
-    ram3000.pause_menu_map_tilemap[495] = kCredits_ItemPercentageDigitsTilemap[v7 + 1];
+
+  // Calculate the digits of the item percentage
+  uint16 ones_digit = item_percentage % 10;
+  uint16 hundreds_digit = item_percentage / 100;
+  uint16 tens_digit = item_percentage / 10 % 10;
+
+  // Draw the item percentage
+  if (hundreds_digit != 0) {
+    ram3000.cinematic_bg_tilemap[462] = kCredits_ItemPercentageDigitsTilemap[hundreds_digit].top_half_tilemap;
+    ram3000.cinematic_bg_tilemap[494] = kCredits_ItemPercentageDigitsTilemap[hundreds_digit].bottom_half_tilemap;
   }
-  int v8 = (uint16)(4 * r22) >> 1;
-  ram3000.pause_menu_map_tilemap[464] = kCredits_ItemPercentageDigitsTilemap[v8];
-  ram3000.pause_menu_map_tilemap[496] = kCredits_ItemPercentageDigitsTilemap[v8 + 1];
-  ram3000.pause_menu_map_tilemap[465] = 14442;
-  ram3000.pause_menu_map_tilemap[497] = 14458;
+  // Always draw tens digit if >= 100%
+  if (tens_digit != 0 || hundreds_digit != 0) {
+    ram3000.cinematic_bg_tilemap[463] = kCredits_ItemPercentageDigitsTilemap[tens_digit].top_half_tilemap;
+    ram3000.cinematic_bg_tilemap[495] = kCredits_ItemPercentageDigitsTilemap[tens_digit].bottom_half_tilemap;
+  }
+  ram3000.cinematic_bg_tilemap[464] = kCredits_ItemPercentageDigitsTilemap[ones_digit].top_half_tilemap;
+  ram3000.cinematic_bg_tilemap[496] = kCredits_ItemPercentageDigitsTilemap[ones_digit].bottom_half_tilemap;
+  // % symbol top half
+  ram3000.cinematic_bg_tilemap[465] = 0x386A;
+  // % symbol bottom half
+  ram3000.cinematic_bg_tilemap[497] = 0x387A;
 
   return instrp;
 }

@@ -2269,6 +2269,7 @@ static const uint16 kInReact_QuicksandSurface_MaxVertVel[2] = { 0x280, 0x380 };
 */
 uint8 PlmSetup_InsideReaction_QuicksandSurface(uint16 plm_idx) {
   samus_has_momentum_flag = 0;
+  speed_boost_timer = 0;
   speed_boost_counter = 0;
   samus_echoes_sound_flag = 0;
   samus_x_extra_run_subspeed = 0;
@@ -3619,7 +3620,7 @@ uint8 PlmSetup_D028_D02C_Unused(uint16 plm_idx) {  // 0x84CDC2
 */
 uint8 PlmSetup_RespawningSpeedBoostBlock(uint16 plm_idx) {  // 0x84CDEA
   int idx = plm_idx >> 1;
-  if ((speed_boost_counter & 0xF00) == 0x400
+  if (speed_boost_counter == SPEED_BOOST_THRESHOLD
       || samus_pose == kPose_C9_FaceR_Shinespark_Horiz
       || samus_pose == kPose_CA_FaceL_Shinespark_Horiz
       || samus_pose == kPose_CB_FaceR_Shinespark_Vert
@@ -3678,15 +3679,11 @@ uint8 PlmSetup_RespawningShotBlock(uint16 plm_idx) {  // 0x84CE6B
 * @return 1 if there was a collision, 0 if there was no collision
 */
 uint8 PlmSetup_RespawningBombBlock(uint16 plm_idx) {  // 0x84CE83
-  if ((speed_boost_counter & 0xF00) == 0x400
-      || samus_pose == kPose_81_FaceR_Screwattack
-      || samus_pose == kPose_82_FaceL_Screwattack
-      || samus_pose == kPose_C9_FaceR_Shinespark_Horiz
-      || samus_pose == kPose_CA_FaceL_Shinespark_Horiz
-      || samus_pose == kPose_CB_FaceR_Shinespark_Vert
-      || samus_pose == kPose_CC_FaceL_Shinespark_Vert
-      || samus_pose == kPose_CD_FaceR_Shinespark_Diag
-      || samus_pose == kPose_CE_FaceL_Shinespark_Diag) {
+  if (speed_boost_counter == SPEED_BOOST_THRESHOLD
+      || samus_pose == kPose_81_FaceR_Screwattack || samus_pose == kPose_82_FaceL_Screwattack
+      || samus_pose == kPose_C9_FaceR_Shinespark_Horiz || samus_pose == kPose_CA_FaceL_Shinespark_Horiz
+      || samus_pose == kPose_CB_FaceR_Shinespark_Vert || samus_pose == kPose_CC_FaceL_Shinespark_Vert
+      || samus_pose == kPose_CD_FaceR_Shinespark_Diag || samus_pose == kPose_CE_FaceL_Shinespark_Diag) {
     int idx = plm_idx >> 1;
     int plm_blk_idx = plm_block_indices[idx] >> 1;
     uint16 plm_respawn_blk = level_data[plm_blk_idx] & 0xF000 | 0x58;
@@ -4033,7 +4030,7 @@ const uint8 *PlmInstr_TransferWreckedShipSlopesToChozoSpikes(const uint8 *plmp, 
 }
 
 /**
-* @brief Activates the PLM if the face buttons or left/right d-pad buttons are pressed
+* @brief Activates the PLM if the face buttons or left/right d-pad0 buttons are pressed
 * @param plm_idx The index of the PLM
 */
 void PlmPreInstr_WakeOnKeyPress(uint16 plm_idx) {  // 0x84D4BF

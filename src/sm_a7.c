@@ -205,7 +205,7 @@ void Kraid_Init(void) {  // 0xA7A959
     E->kraid_var_A = FUNC16(Kraid_FadeInBg_ClearBg2TilemapTopHalf);
   } else {
     reg_BG2SC = 67;
-    camera_distance_index = 2;
+    camera_distance_index = kCameraDistanceIndex_2_Kraid_Crocomire;
     scrolls[1] = scrolls[0] = kScroll_Red;
     scrolls[2] = kScroll_Blue;
     scrolls[3] = kScroll_Red;
@@ -1734,7 +1734,7 @@ void Kraid_Death_SinkThroughFloor(void) {  // 0xA7C537
     Get_Kraid(0x100)->base.properties = v4;
     Get_Kraid(0x140)->base.properties = v4;
     Get_Kraid(0)->kraid_var_A = FUNC16(Kraid_FadeInBg_ClearBg2TilemapTopHalf);
-    camera_distance_index = 0;
+    camera_distance_index = kCameraDistanceIndex_0_Normal;
     Enemy_ItemDrop_Kraid(enemy_ptr);
     Kraid_DrawRoomBg();
   }

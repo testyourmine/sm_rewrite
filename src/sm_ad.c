@@ -71,8 +71,8 @@ void MotherBrain_CalcHdma_Right_Right(uint16 right_edge_origin_x_pos, uint16 lef
   hdma_table_2[0] = 0x00FF;
   hdma_table_2[1] = 0x00FF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 right_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
-  uint16 left_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_aimed_right_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *left_dst = hdma_table_2 + num_pad_lines + 1;
@@ -88,7 +88,7 @@ void MotherBrain_CalcHdma_Right_Right(uint16 right_edge_origin_x_pos, uint16 lef
     *left_dst-- = HIBYTE(left_edge_origin_x_pos) | 0xFF00;
   }
 
-  // pad
+  // pad0
   do {
     *left_dst-- = 0x00FF;
   } while (--beam_y_pos > 32);
@@ -104,7 +104,7 @@ void MotherBrain_CalcHdma_Right_Right(uint16 right_edge_origin_x_pos, uint16 lef
       return;
   }
 
-  // pad
+  // pad0
   do {
     *right_dst++ = 0x00FF;
   } while (++beam_y_pos < 232);
@@ -170,8 +170,8 @@ void MotherBrain_CalcHdma_Up_UpRight(uint16 left_edge_origin_x_pos, uint16 right
   hdma_table_2[0] = 0x00FF;
   hdma_table_2[1] = 0x00FF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 left_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
-  uint16 right_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *dst = hdma_table_2 + num_pad_lines + 1;
@@ -196,8 +196,8 @@ void MotherBrain_CalcHdma_Up_Up(uint16 left_edge_origin_x_pos, uint16 right_edge
   hdma_table_2[0] = 0x00FF;
   hdma_table_2[1] = 0x00FF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 left_edge_gradient = kTanTable[(uint8)-LOBYTE(E->rainbow_beam_left_edge_angle)];
-  uint16 right_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[(uint8)-LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *dst = hdma_table_2 + num_pad_lines + 1;
@@ -222,8 +222,8 @@ void MotherBrain_CalcHdma_Up_UpLeft(uint16 left_edge_origin_x_pos, uint16 right_
   hdma_table_2[0] = 0xFF;
   hdma_table_2[1] = 0xFF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 left_edge_gradient = kTanTable[(uint8)-LOBYTE(E->rainbow_beam_left_edge_angle)];
-  uint16 right_edge_gradient = kTanTable[(uint8)-LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[(uint8)-LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[(uint8)-LOBYTE(E->rainbow_beam_right_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *dst = hdma_table_2 + num_pad_lines + 1;
@@ -280,8 +280,8 @@ void MotherBrain_CalcHdma_Down_DownRight(uint16 right_edge_origin_x_pos, uint16 
   hdma_table_2[0] = 0xFF;
   hdma_table_2[1] = 0xFF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 right_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
-  uint16 left_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *dst = hdma_table_2 + 2;
@@ -306,8 +306,8 @@ void MotherBrain_CalcHdma_Down_Down(uint16 right_edge_origin_x_pos, uint16 left_
   hdma_table_2[0] = 0xFF;
   hdma_table_2[1] = 0xFF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 right_edge_gradient = kTanTable[(uint8)-LOBYTE(E->rainbow_beam_right_edge_angle)];
-  uint16 left_edge_gradient = kTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[(uint8)-LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[LOBYTE(E->rainbow_beam_left_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *dst = hdma_table_2 + 2;
@@ -332,8 +332,8 @@ void MotherBrain_CalcHdma_Down_DownLeft(uint16 right_edge_origin_x_pos, uint16 l
   hdma_table_2[0] = 0xFF;
   hdma_table_2[1] = 0xFF;
   Enemy_MotherBrain *E = Get_MotherBrain(0);
-  uint16 right_edge_gradient = kTanTable[(uint8)-LOBYTE(E->rainbow_beam_right_edge_angle)];
-  uint16 left_edge_gradient = kTanTable[(uint8)-LOBYTE(E->rainbow_beam_left_edge_angle)];
+  uint16 right_edge_gradient = kAbsTanTable[(uint8)-LOBYTE(E->rainbow_beam_right_edge_angle)];
+  uint16 left_edge_gradient = kAbsTanTable[(uint8)-LOBYTE(E->rainbow_beam_left_edge_angle)];
   uint16 beam_y_pos = E->rainbow_beam_origin_y_pos;
   uint16 num_pad_lines = beam_y_pos - 32;
   uint16 *dst = hdma_table_2 + 2;

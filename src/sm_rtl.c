@@ -505,6 +505,11 @@ PairU16 MakePairU16(uint16 k, uint16 j) {
   return r;
 }
 
+Point16U MakePoint16U(uint16 k, uint16 j) {
+  Point16U r = { k, j };
+  return r;
+}
+
 void mov24(struct LongPtr *a, uint32 d) {
   a->addr = d & 0xffff;
   a->bank = d >> 16;

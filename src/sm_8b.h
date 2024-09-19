@@ -228,32 +228,43 @@ uint16 kPalettes_EndingSuperMetroidIconGlare[] = {
 };
 
 uint16 kCredits_ItemPercentageRamAddresses[] = {
-   0x9c4,  0x9d4,  0x9c8,  0x9cc,  0x9d0,
+  0x9c4,  // ADDR16_OF_RAM(samus_max_health),
+  0x9d4,  // ADDR16_OF_RAM(samus_max_reserve_health),
+  0x9c8,  // ADDR16_OF_RAM(samus_max_missiles),
+  0x9cc,  // ADDR16_OF_RAM(samus_max_super_missiles),
+  0x9d0,  // ADDR16_OF_RAM(samus_max_power_bombs),
 };
 
 uint16 kCredits_ItemPercentageDivisors[] = {
-    100,   100,     5,     5,     5,
+  100,  // samus_max_health
+  100,  // samus_max_reserve_health
+    5,  // samus_max_missiles
+    5,  // samus_max_super_missiles
+    5,  // samus_max_power_bombs
 };
 
 uint16 kCredits_ItemPercentageItemBits[] = {
-     0x1,   0x20,    0x4, 0x1000,    0x2,    0x8,  0x100,  0x200, 0x2000, 0x4000, 0x8000,
+  /* SUIT */     kItem_VariaSuit, kItem_GravitySuit,
+  /* MISC. */    kItem_MorphBall, kItem_Bombs, kItem_SpringBall, kItem_ScrewAttack,
+  /* BOOTS */    kItem_HiJumpBoots, kItem_SpaceJump, kItem_SpeedBooster,
+  /* UPGRADES */ kItem_Grapple, kItem_Xray,
 };
 
 uint16 kCredits_ItemPercentageBeamBits[] = {
-     0x1,    0x2,    0x4,    0x8, 0x1000,
+  kBeam_Wave, kBeam_Ice, kBeam_Spazer, kBeam_Plasma, kBeam_Charge,
 };
 
-uint16 kCredits_ItemPercentageDigitsTilemap[] = {
-  0x3860, 0x3870, 
-  0x3861, 0x3871, 
-  0x3862, 0x3872, 
-  0x3863, 0x3873, 
-  0x3864, 0x3874, 
-  0x3865, 0x3875, 
-  0x3866, 0x3876, 
-  0x3867, 0x3877, 
-  0x3868, 0x3878, 
-  0x3869, 0x3879,
+ItemPercentageDigitsTilemap kCredits_ItemPercentageDigitsTilemap[] = {
+  [0] = { .top_half_tilemap = 0x3860, .bottom_half_tilemap = 0x3870, }, 
+  [1] = { .top_half_tilemap = 0x3861, .bottom_half_tilemap = 0x3871, }, 
+  [2] = { .top_half_tilemap = 0x3862, .bottom_half_tilemap = 0x3872, }, 
+  [3] = { .top_half_tilemap = 0x3863, .bottom_half_tilemap = 0x3873, }, 
+  [4] = { .top_half_tilemap = 0x3864, .bottom_half_tilemap = 0x3874, }, 
+  [5] = { .top_half_tilemap = 0x3865, .bottom_half_tilemap = 0x3875, }, 
+  [6] = { .top_half_tilemap = 0x3866, .bottom_half_tilemap = 0x3876, }, 
+  [7] = { .top_half_tilemap = 0x3867, .bottom_half_tilemap = 0x3877, }, 
+  [8] = { .top_half_tilemap = 0x3868, .bottom_half_tilemap = 0x3878, }, 
+  [9] = { .top_half_tilemap = 0x3869, .bottom_half_tilemap = 0x3879, },
 };
 
 uint16 kShootingStarTable[] = {

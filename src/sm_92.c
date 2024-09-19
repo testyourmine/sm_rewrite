@@ -10,15 +10,15 @@
 * @brief Sets the tile definition entry for the current Samus animation
 */
 void SetSamusTilesDefsForCurAnim(void) {  // 0x928000
-  uint16 anim_def_ptr = 4 * samus_anim_frame + kSamus_AnimationDefinitionPtrs[samus_pose];
+  uint16 anim_def_ptr = kSamus_AnimationDefinitionPtrs[samus_pose] + samus_anim_frame * sizeof(SamusTileAnimationDefs);
   SamusTileAnimationDefs *AD = get_SamusTileAnimationDefs(anim_def_ptr);
   uint16 tile_def_entry = sizeof(SamusTileAnimationTileDefs);
-  nmi_copy_samus_top_half_src = tile_def_entry * AD->top_half_pos + kSamus_TileDefs_TopHalf[AD->top_half_idx];
-  nmi_copy_samus_top_half_ready_flag = 1;
-  // The index will never be 255, so this condition is always true
-  if (AD->bottom_half_idx != 255) {
-    nmi_copy_samus_bottom_half_src = tile_def_entry * AD->bottom_half_pos + kSamus_TileDefs_BottomHalf[AD->bottom_half_idx];
-    nmi_copy_samus_bottom_half_ready_flag = 1;
+  nmi_copy_samus_top_half_src = kSamus_TileDefs_TopHalf[AD->top_half_idx] + AD->top_half_pos * tile_def_entry;
+  nmi_copy_samus_top_half_ready_flag = true;
+  // The index will never be 0xFF, so this condition is always true
+  if (AD->bottom_half_idx != 0xFF) {
+    nmi_copy_samus_bottom_half_src = kSamus_TileDefs_BottomHalf[AD->bottom_half_idx] + AD->bottom_half_pos * tile_def_entry;
+    nmi_copy_samus_bottom_half_ready_flag = true;
   }
 }
 
@@ -31,20 +31,20 @@ uint8 PlaySamusFanfare(void) {  // 0x92ED24
     QueueMusic_DelayedY(kMusic_SamusFanfare, 14);
   }
   else if (samus_fanfare_timer == 5) {
-    PlayRoomMusicTrackAfterAFrames(360);
+    PlayRoomMusicTrackAfterAFrames(6*60);
   }
 
-  if (samus_fanfare_timer + 1 < 360) {
+  if (samus_fanfare_timer + 1 < 6*60) {
     ++samus_fanfare_timer;
     return 0;
   }
   else {
     samus_last_different_pose = samus_prev_pose;
     samus_last_different_pose_x_dir = samus_prev_pose_x_dir;
-    samus_last_different_pose_movement_type = samus_prev_movement_type2;
+    samus_last_different_pose_movement_type = samus_prev_movement_type;
     samus_prev_pose = samus_pose;
     samus_prev_pose_x_dir = samus_pose_x_dir;
-    samus_prev_movement_type2 = samus_movement_type;
+    samus_prev_movement_type = samus_movement_type;
     samus_fanfare_timer = 0;
     return 1;
   }

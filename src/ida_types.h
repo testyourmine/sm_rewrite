@@ -11,6 +11,7 @@
 #pragma pack(push, 1)
 
 #define EARTHQUAKE(dir, disp, lyr) (dir + 3*disp + 9*lyr)
+#define SPEED_BOOST_THRESHOLD 4
 
 enum NmiEnable { // 0x7E0084
   kNmi_EnableAutoJoypadRead = 0x1,
@@ -295,6 +296,9 @@ enum ElevatorDirection {  // 0x7E0799
   kElevatorDirection_Up = 0x8000,
 };
 
+enum RoomIndex {  // 0x7E079D
+};
+
 enum AreaIndex {  // 0x7E079F
   kArea_0_Crateria = 0x0,
   kArea_1_Brinstar = 0x1,
@@ -317,6 +321,13 @@ enum CeresStatus {  // 0x7E093F
   kCeresStatus_1_DuringRidleyEscapeCutscene = 0x1,
   kCeresStatus_2_DuringEscapeSequence = 0x2,
   kCeresStatus_8000_ElevatorRoomRotate = 0x8000
+};
+
+enum CameraDistanceIndex {
+  kCameraDistanceIndex_0_Normal = 0x0,
+  kCameraDistanceIndex_2_Kraid_Crocomire = 0x2,
+  kCameraDistanceIndex_4_Unused = 0x4,
+  kCameraDistanceIndex_6_CrocomireWall = 0x6,
 };
 
 enum TimerStatus {  // 0x7E0943
@@ -715,6 +726,33 @@ enum SamusMovementType {  // 0x7E0A1F
   kMovementType_1B_Shinespark_CrystalFlash_Drained_DamagedByMotherBrain = 0x1B,
 };
 
+enum KnockbackDir {  // 0x7E0A52
+  kKnockbackDir_None = 0x0,
+  kKnockbackDir_UpLeft = 0x1,
+  kKnockbackDir_UpRight = 0x2,
+  kKnockbackDir_DownLeft = 0x4,
+  kKnockbackDir_DownRight = 0x5,
+};
+
+enum KnockbackXDir {  // 0x7E0A54
+  kKnockbackXDir_Left = 0x0,
+  kKnockbackXDir_Right = 0x1,
+};
+
+enum BombJumpDir {  // 0x7E0A56
+  kBombJumpDir_None = 0x0,
+  kBombJumpDir_Left = 0x1,
+  kBombJumpDir_Up = 0x2,
+  kBombJumpDir_Right = 0x3,
+  kBombJumpDir_Active = 0x800,
+};
+
+enum SamusPushDirection {  // 0x7E0A62
+  kSamusPushDirection_None = 0x0,
+  kSamusPushDirection_Left = 0x1,
+  kSamusPushDirection_Right = 0x2,
+};
+
 enum SamusContactDamageIndex {  // 0x7E0A6E
   kSamusContactDamageIndex_0_Normal = 0x0,
   kSamusContactDamageIndex_1_SpeedBoost = 0x1,
@@ -729,6 +767,22 @@ enum SamusSuitPaletteIndex {  // 0x7E0A74
   kSuitPaletteIndex_4_Gravity = 0x4,
 };
 
+enum ArmCannonFrame {  // 0x7E0AA8
+  kArmCannonFrame_0_Closed = 0x0,
+  kArmCannonFrame_3_Opened = 0x3,
+};
+
+enum ArmCannonToggle {  // 0x7E0AAA
+  kArmCannonToggle_1_Yes = 0x1,
+  kArmCannonToggle_2_No = 0x2,
+};
+
+enum ArmCannonDrawingMode {  // 0x7E0AAC
+  kArmCannonDrawingMode_0_NoDraw = 0x0,
+  kArmCannonDrawingMode_1_Draw = 0x1,
+  kArmCannonDrawingMode_2_FaceForward = 0x2
+};
+
 /* 29 */
 enum LiquidPhysicsType {  // 0x7E0AD2
   kLiquidPhysicsType_Air = 0x0,
@@ -736,7 +790,18 @@ enum LiquidPhysicsType {  // 0x7E0AD2
   kLiquidPhysicsType_LavaAcid = 0x2,
 };
 
-enum SamusCollisionDirection {
+enum AtmosphericGraphicsType {  // 0x7E0AEC
+  kAtmosphericGraphicType_0_None = 0x0,
+  kAtmosphericGraphicType_1_FootstepSplashes = 0x1,
+  kAtmosphericGraphicType_2_FootstepSplashes = 0x2,
+  kAtmosphericGraphicType_3_DivingSplashes = 0x3,
+  kAtmosphericGraphicType_4_LavaAcidSurfaceDamage = 0x4,
+  kAtmosphericGraphicType_5_Bubbles = 0x5,
+  kAtmosphericGraphicType_6_LandingDust = 0x6,
+  kAtmosphericGraphicType_7_SpeedBoostDust = 0x7,
+};
+
+enum SamusCollisionDirection {  // 0x7E0B02
   kSamusCollDir_0_Left = 0x0,
   kSamusCollDir_1_Right = 0x1,
   kSamusCollDir_2_Up = 0x2,
@@ -746,10 +811,24 @@ enum SamusCollisionDirection {
   kSamusCollDir_F_DisableSpecialColl = 0xF,
 };
 
+enum MorphBallBounceState {  // 0x7E0B20
+  kMorphBallBounceState_NoBounce = 0x0,
+  kMorphBallBounceState_Morph_FirstBounce = 0x1,
+  kMorphBallBounceState_Morph_SecondBounce = 0x2,
+  kMorphBallBounceState_Spring_FirstBounce = 0x601,
+  kMorphBallBounceState_Spring_SecondBounce = 0x602
+};
+
 enum SamusYDirection {  // 0x7E0B36
   kSamusYDir_None = 0x0,
   kSamusYDir_Up = 0x1,
   kSamusYDir_Down = 0x2,
+};
+
+enum SamusXAccelerationMode {  // 0x7E0B4A
+  kSamusXAccelMode_0_Accelerate = 0x0,
+  kSamusXAccelMode_1_TurnAround = 0x1,
+  kSamusXAccelMode_2_Decelerate = 0x2,
 };
 
 enum ProjectileDirection { // 0x7E0C04
@@ -767,6 +846,22 @@ enum ProjectileDirection { // 0x7E0C04
   kProjectileDir_Delete = 0x10,
 };
 
+enum ProjectileOriginDirection { // 0x7E0C04
+  kProjectileOriginDir_UpFaceRight = 0x0,
+  kProjectileOriginDir_UpRight = 0x1,
+  kProjectileOriginDir_Right = 0x2,
+  kProjectileOriginDir_DownRight = 0x3,
+  kProjectileOriginDir_DownFaceRight = 0x4,
+  kProjectileOriginDir_DownFaceLeft = 0x5,
+  kProjectileOriginDir_DownLeft = 0x6,
+  kProjectileOriginDir_Left = 0x7,
+  kProjectileOriginDir_UpLeft = 0x8,
+  kProjectileOriginDir_UpFaceLeft = 0x9,
+  kProjectileOriginDir_TurnAimUpward = 0xA,
+  kProjectileOriginDir_TurnAimNeutral = 0xB,
+  kProjectileOriginDir_TurnAimDownward = 0xC,
+};
+
 /* 52 */
 enum ProjectileType {  // 0x7E0C18
   kProjectileType_NormalBombExplosion = 0x1,
@@ -780,7 +875,7 @@ enum ProjectileType {  // 0x7E0C18
   kProjectileType_SpazerSbaMask = 0x20,
   kProjectileType_SpazerSbaTrail = 0x24,
   kProjectileType_ShinesparkEcho = 0x29,
-  kProjectileType_CooldownMask = 0x3F,
+  kProjectileType_TableIndexMask = 0x3F,
   kProjectileType_Missile = 0x100,
   kProjectileType_SuperMissile = 0x200,
   kProjectileType_PowerBomb = 0x300,
@@ -790,6 +885,34 @@ enum ProjectileType {  // 0x7E0C18
   kProjectileType_ProjMask = 0xF00,
   kProjectileType_ChargeBeamEquipped = 0x1000,
   kProjectileType_DontInteractWithSamus = 0x8000,
+};
+
+enum SpazerSbaPhase {  // 0x7E0CA4
+  kSpazerSbaPhase_0_Circle = 0x0,
+  kSpazerSbaPhase_2_FlyToPoint = 0x2,
+  kSpazerSbaPhase_4_FlyFromPoint = 0x4,
+};
+
+enum SamusSolidVerticalCollResult {  // 0x7E0DC6
+  kSolidVertCollResult_0_NoChange = 0x0,
+  kSolidVertCollResult_1_Landed = 0x1,
+  kSolidVertCollResult_2_Falling = 0x2,
+  kSolidVertCollResult_3_Unused = 0x3,
+  kSolidVertCollResult_4_HitCeiling = 0x4,
+  kSolidVertCollResult_5_WallJumped = 0x5,
+};
+
+enum SamusDownwardCollResult {  // 0x7E0DC7
+  kDownwardCollResult_Landed_0_Grounded = 0x0,
+  kDownwardCollResult_Landed_1_MorphGrounded = 0x1,
+  kDownwardCollResult_Landed_2_Unused = 0x2,
+  kDownwardCollResult_Landed_3_SpringGrounded = 0x3,
+  kDownwardCollResult_Landed_4_NoChange = 0x4,
+  kDownwardCollResult_Falling_0_Airborne = 0x0,
+  kDownwardCollResult_Falling_1_MorphAirborne = 0x1,
+  kDownwardCollResult_Falling_2_Unused = 0x2,
+  kDownwardCollResult_Falling_3_SpringAirborne = 0x3,
+  kDownwardCollResult_Falling_4_NoChange = 0x4,
 };
 
 enum GameOptionsMenuIndex {  // 0x7E0DE2
@@ -806,6 +929,12 @@ enum GameOptionsMenuIndex {  // 0x7E0DE2
   kGameOptionsMenu_10_ScrollControllerSettingsUp = 0xA,
   kGameOptionsMenu_11_TransitionToFileSelect = 0xB,
   kGameOptionsMenu_12_FadeOutOptionsMenu = 0xC,
+};
+
+enum CrystalFlashAmmoDecrementIndex {
+  kCrystalFlashAmmoDecrement_0_Missiles = 0x0,
+  kCrystalFlashAmmoDecrement_1_SuperMissiles = 0x1,
+  kCrystalFlashAmmoDecrement_2_PowerBombs = 0x2,
 };
 
 enum ElevatorProperties {  // 0x7E0E16
@@ -994,14 +1123,20 @@ enum InsideBlockReactionSamusPoint {  // 0x7E1E73
 };
 
 typedef struct Ram3000_MsgBox {  // 0x7E30BC
-  uint8 pad[188];
-  uint16 msg_box_anim_y_radius_neg[30];
-  uint16 msg_box_anim_y_radius[30];
-  uint16 msg_box_anim_clear[86];
-  uint8 field_134[32];
-  uint16 tilemap[192];
+  union {
+    struct {
+      uint8 pad0[188];
+      uint16 msg_box_anim_y_radius_neg[30];
+      uint16 msg_box_anim_y_radius[30];
+      uint16 msg_box_anim_clear[86];
+    };
+    uint16 msg_box_anim_hdma_table[0x1E0 >> 1];
+  };
+  
+  uint8 pad1[0x20];
+  uint16 tilemap[0x180 >> 1];
   uint8 indirect_hdma[7];
-  uint8 field_387[99];
+  uint8 pad2[99];
   uint8 backup_of_enabled_hdma_channels;
   uint8 backup_of_bg3_tilemap_and_size;
 } Ram3000_MsgBox;
@@ -1784,6 +1919,11 @@ typedef struct CinematicSpriteObjectDef {  // 0x8B0000
 //  VoidP instr_list;
 //}CinematicBgObjectDef;
 
+typedef struct ItemPercentageDigitsTilemap {  // 0x8BE741
+  uint16 top_half_tilemap;
+  uint16 bottom_half_tilemap;
+} ItemPercentageDigitsTilemap;
+
 /* 21 */
 typedef struct PalFxDef {  // 0x8D0000
   VoidP func;
@@ -2198,52 +2338,6 @@ typedef struct SpawnHdmaObject_Args {  // 0x
 //  uint16 field_0;
 //}LoadBg_4;
 
-/* 33 */
-typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {  // 0x90A83A
-  uint16 boss_id_;
-  VoidP ptrs;
-} DisableMinimapAndMarkBossRoomAsExploredEnt;
-
-typedef struct MarkMapTileExplored {  // 0x90A852
-  uint16 x_offset;
-  uint16 y_offset;
-} MarkMapTileExplored;
-
-enum SamusCode {  // 0x90F084
-  kSamusCode_0_LockSamus = 0x0,
-  kSamusCode_1_UnlockSamus = 0x1,
-  kSamusCode_2_ReachCeresElevator = 0x2,
-  kSamusCode_3_UnspinSamus = 0x3,
-  kSamusCode_4_EndChargeBeam = 0x4,
-  kSamusCode_5_SetupDrained = 0x5,
-  kSamusCode_6_LockToStation = 0x6,
-  kSamusCode_7_SetupForElevator = 0x7,
-  kSamusCode_8_SetupForCeresStart = 0x8,
-  kSamusCode_9_SetupForZebesStart = 0x9,
-  kSamusCode_10_ClearDrawHandler = 0xA,
-  kSamusCode_11_DrawHandlerDefault = 0xB,
-  kSamusCode_12_UnlockFromMapStation = 0xC,
-  kSamusCode_13_IsGrappleActive = 0xD,
-  kSamusCode_14_UnlockFromCeresElevator = 0xE,
-  kSamusCode_15_EnableTimerHandling = 0xF,
-  kSamusCode_16_UnlockSamusFromReserveTank = 0x10,
-  kSamusCode_17_SetupForDeath = 0x11,
-  kSamusCode_18_EnableBlueFlashing = 0x12,
-  kSamusCode_19_DisableBlueFlashing = 0x13,
-  kSamusCode_20_QueueSfx = 0x14,
-  kSamusCode_21_LockToSuitAcquisition = 0x15,
-  kSamusCode_22_EnableRainbowSamus = 0x16,
-  kSamusCode_23_DisableRainbowSamusAndStandUp = 0x17,
-  kSamusCode_24_SetupDrainedAndDisableStandUp = 0x18,
-  kSamusCode_25_FreezeDrainedSamus = 0x19,
-  kSamusCode_26_EnterGunship = 0x1A,
-  kSamusCode_27_LockForReserveTank = 0x1B,
-  kSamusCode_28_PlaySpinSfxIfSpinJumping = 0x1C,
-  kSamusCode_29_ClearSoundInDoor = 0x1D,
-  kSamusCode_30_ResumeSfxAfterPowerBombExplosion = 0x1E,
-  kSamusCode_31_KillGrappleBeam = 0x1F,
-};
-
 /* 31 */
 typedef struct SamusSpeedTableEntry {  // 0x909F55
   uint16 accel;
@@ -2253,6 +2347,104 @@ typedef struct SamusSpeedTableEntry {  // 0x909F55
   uint16 decel;
   uint16 decel_sub;
 } SamusSpeedTableEntry;
+
+typedef struct MarkMapTileExplored {  // 0x90A852
+  uint16 room_pixel_x_offset;
+  uint16 room_pixel_y_offset;
+} MarkMapTileExplored;
+
+/* 33 */
+typedef struct DisableMinimapAndMarkBossRoomAsExploredEnt {  // 0x90A83A
+  uint16 boss_id_;
+  const MarkMapTileExplored* ptrs;
+} DisableMinimapAndMarkBossRoomAsExploredEnt;
+
+typedef struct ProjectileTrailInstr {
+  union {
+    uint16 func_ptr;
+    uint16 timer;
+  };
+  uint16 tile_num_attributes;
+} ProjectileTrailInstr;
+
+typedef union ProjectileOriginOffsetDirection {  // 0x90C1A8
+  uint16 dir[13];
+  struct {
+    uint16 up_face_right;
+    uint16 up_right;
+    uint16 right;
+    uint16 down_right;
+    uint16 down_face_right;
+    uint16 down_face_left;
+    uint16 down_left;
+    uint16 left;
+    uint16 up_left;
+    uint16 up_face_left;
+    uint16 turn_aim_upward;
+    uint16 turn_aim_neutral;
+    uint16 turn_aim_downward;
+  };
+} ProjectileOriginOffsetDirection;
+
+typedef struct BeamSpeed {  // 0x90C2D1
+  uint16 horiz_vert_speed;
+  uint16 diag_speed;
+} BeamSpeed;
+
+typedef struct MissileAcceleration {  // 0x90C303
+  uint16 x_accel;
+  uint16 y_accel;
+} MissileAcceleration;
+
+typedef union ArmCannonDrawingData {  // 0x90C7DF
+  struct {
+    uint8 direction;
+    uint8 draw_mode;
+  };
+  struct {
+    uint8 frame_zero_direction;
+    uint8 frame_zero_draw_mode;
+  };
+  struct {
+    int8 x_offset;
+    int8 y_offset;
+  };
+} ArmCannonDrawingData;
+
+enum SamusCode {  // 0x90F084
+  kSamusCode_0_LockSamus = 0x0,
+  kSamusCode_1_UnlockSamus = 0x1,
+  kSamusCode_2_ReachCeresElevator = 0x2,
+  kSamusCode_3_UnspinSamus = 0x3,
+  kSamusCode_4_EndChargeBeam = 0x4,
+  kSamusCode_5_SetupDrained_AbleToStand = 0x5,
+  kSamusCode_6_LockToStation = 0x6,
+  kSamusCode_7_SetupForElevator = 0x7,
+  kSamusCode_8_SetupForCeresStart = 0x8,
+  kSamusCode_9_SetupForZebesStart = 0x9,
+  kSamusCode_10_ClearDrawHandler = 0xA,
+  kSamusCode_11_UnlockFromFacingForward = 0xB,
+  kSamusCode_12_UpdateDueToUnpause = 0xC,
+  kSamusCode_13_IsGrappleActive = 0xD,
+  kSamusCode_14_UnlockFromCeresElevator = 0xE,
+  kSamusCode_15_EnableTimerHandling = 0xF,
+  kSamusCode_16_UnlockFromReserveTank = 0x10,
+  kSamusCode_17_SetupForDeath = 0x11,
+  kSamusCode_18_EnableBlueFlashing = 0x12,
+  kSamusCode_19_DisableBlueFlashing = 0x13,
+  kSamusCode_20_QueueSfx = 0x14,
+  kSamusCode_21_LockToSuitAcquisition = 0x15,
+  kSamusCode_22_EnableRainbowSamus = 0x16,
+  kSamusCode_23_DisableRainbowSamusAndStandUp = 0x17,
+  kSamusCode_24_SetupDrained_UnableToStand = 0x18,
+  kSamusCode_25_FreezeDrainedSamus = 0x19,
+  kSamusCode_26_EnterGunship = 0x1A,
+  kSamusCode_27_LockForReserveTank = 0x1B,
+  kSamusCode_28_PlaySpinSfxIfSpinJumping = 0x1C,
+  kSamusCode_29_ClearSoundInDoor = 0x1D,
+  kSamusCode_30_ResumeSfxAfterPowerBombExplosion = 0x1E,
+  kSamusCode_31_KillGrappleBeam = 0x1F,
+};
 
 /* 36 */
 typedef struct DemoInputObject {  // 0x910000
@@ -2293,17 +2485,17 @@ typedef struct PoseEntry {  // 0x919EE2
   uint16 new_pose;
 } PoseEntry;
 
-/* 30 */
-typedef struct SamusPoseParams {  // 0x91B629
-  uint8 pose_x_dir;
-  uint8 movement_type;
-  uint8 new_pose_unless_buttons;
-  uint8 direction_shots_fired;
-  uint8 y_offset_to_gfx;
-  uint8 UNUSED_field_5;
-  uint8 y_radius;
-  uint8 UNUSED_field_7;
-} SamusPoseParams;
+///* 30 */
+//typedef struct SamusPoseParams {  // 0x91B629
+//  uint8 pose_x_dir;
+//  uint8 movement_type;
+//  uint8 new_pose_unless_buttons;
+//  uint8 direction_shots_fired;
+//  uint8 y_offset_proj_origin_to_gfx;
+//  uint8 UNUSED_field_5;
+//  uint8 y_radius;
+//  uint8 UNUSED_field_7;
+//} SamusPoseParams;
 
 /* 40 */
 typedef struct XrayBlockData {  // 0x91D2D6
@@ -2344,16 +2536,16 @@ typedef struct ProjectileDataTable {  // 0x938431
   union { 
     uint16 instr_ptrs[10];
     struct {
-      uint16 up_to_right;
+      uint16 up_face_right;
       uint16 up_right;
       uint16 right;
       uint16 down_right;
-      uint16 down_to_right;
-      uint16 down_to_left;
+      uint16 down_face_right;
+      uint16 down_face_left;
       uint16 down_left;
       uint16 left;
       uint16 up_left;
-      uint16 up_to_left;
+      uint16 up_face_left;
     };
   };
 } ProjectileDataTable;
@@ -2903,16 +3095,22 @@ enum Consts_60 {
   addr_kVram_2ndScreenOffset = 0x53E0,
   addr_kVram_2ndScreen = 0x5400,
   addr_kVram_Bg3Tilemap = 0x5800,
-// BG3 Tilemaps {
+//BG3 Tilemaps {
   addr_kVram_HudTopRow = 0x5800,
   addr_kVram_Hud = 0x5820,
   addr_kVram_FxBackup = 0x5880,
   addr_kVram_LargeMessageBox = 0x59A0,
   addr_kVram_SmallMessageBox = 0x59C0,
   addr_kVram_Fx = 0x5BE0,
-// }
+//}
+//Sprite Tiles {
+  addr_kVram_SamusTopGfx_Part1 = 0x6000,
+  addr_kVram_SamusBottomGfx_Part1 = 0x6080,
+  addr_kVram_SamusTopGfx_Part2 = 0x6100,
+  addr_kVram_SamusBottomGfx_Part2 = 0x6180,
   addr_kVram_UnclosedArmCannon = 0x61F0,
   addr_kVram_Beam = 0x6300,
+//}
 };
 enum Consts_80 {
   //addr_kHudTilemaps_AutoReserve = 0x998B,
@@ -2960,7 +3158,6 @@ enum Consts_81 {
   addr_kAreaSelectBackgroundTilemaps = 0xBF1A,
 };
 enum Consts_82 {
-  addr_kPauseMenuMapData = 0x9717,
   addr_kLeftMapScrollArrowData = 0xB9A0,
   addr_kRightMapScrollArrowData = 0xB9AA,
   addr_kUpMapScrollArrowData = 0xB9B4,
@@ -3868,7 +4065,6 @@ enum Consts_8F {
   addr_kDoorClosingPlmIds = 0xE68A,
 };
 enum Consts_90 {
-  //addr_loc_908029 = 0x8029,
   addr_kSamusSpeedTable_DuringDiagonalBombJump = 0x9F25,
   addr_kSamusSpeedTable_GrappleDisconnect_Air = 0x9F31,
   addr_kSamusSpeedTable_GrappleDisconnect_Water = 0x9F3D,
@@ -3876,8 +4072,11 @@ enum Consts_90 {
   addr_kSamusSpeedTable_Normal_X = 0x9F55,
   addr_kSamusSpeedTable_Water_X = 0xA08D,
   addr_kSamusSpeedTable_LavaAcid_X = 0xA1DD,
-  addr_kMissileAccelerations = 0xC303,
-  addr_kSuperMissileAccelerations = 0xC32B,
+  addr_kProjectileTrail_IList_Empty = 0xB4C9,
+  addr_kProjectileTrail_IList_IceBeams_ChargedPowerBeam_Left = 0xB4CB,
+  addr_kProjectileTrail_IList_SomeIceBeams_Right = 0xB52D,
+  addr_kProjectileTrail_IList_WaveBeam = 0xB58F,
+  addr_kProjectileTrail_IList_AnyMissile = 0xB5A1,
 };
 enum Consts_91 {
   addr_kDemoPreInstr_Empty = 0x8447,
@@ -4614,6 +4813,9 @@ enum Consts_AA {
   addr_kTorizo_Ilist_D203 = 0xD203,
   addr_kTorizo_Ilist_D2AD = 0xD2AD,
   addr_kTorizo_Ilist_D2BF = 0xD2BF,
+  addr_kTourianEntranceStatue_Ilist_Ridley = 0xD7A5,
+  addr_kTourianEntranceStatue_Ilist_Phantoon = 0xD7AF,
+  addr_kTourianEntranceStatue_Ilist_BaseDecoration = 0xD7B9,
   addr_kShaktool_Ilist_E3A7 = 0xE3A7,
   addr_kShaktool_Ilist_E461 = 0xE461,
 };
@@ -4729,11 +4931,12 @@ struct PlmHeader_Size4; static inline PlmHeader_Size4 *get_PlmHeader_Size4(uint1
 struct PlmHeader_Size6; static inline PlmHeader_Size6 *get_PlmHeader_Size6(uint16 a) { return (PlmHeader_Size6 *)RomPtr(0x840000 | a); }
 //struct RoomDefStateSelect; static inline RoomDefStateSelect *get_RoomDefStateSelect(uint16 a) { return (RoomDefStateSelect *)RomPtr(0x8F0000 | a); }
 extern RoomDefStateSelect get_RoomDefStateSelect(uint16 a);
-struct SamusSpeedTableEntry; static inline SamusSpeedTableEntry *get_SamusSpeedTableEntry(uint16 a) { return (SamusSpeedTableEntry *)RomPtr(0x900000 | a); }
+//struct SamusSpeedTableEntry; static inline SamusSpeedTableEntry *get_SamusSpeedTableEntry(uint16 a) { return (SamusSpeedTableEntry *)RomPtr(0x900000 | a); }
 struct SamusTileAnimationDefs; static inline SamusTileAnimationDefs *get_SamusTileAnimationDefs(uint16 a) { return (SamusTileAnimationDefs *)RomPtr(0x920000 | a); }
 struct PalFxDef; static inline PalFxDef *get_PalFxDef(uint16 a) { return (PalFxDef *)RomPtr(0x8D0000 | a); }
 //struct Mode7ObjectDef; static inline Mode7ObjectDef *get_Mode7ObjectDef(uint16 a) { return (Mode7ObjectDef *)RomPtr(0x8B0000 | a); }
 static inline Ram7800_Default *gRam7800_Default(uint16 a) { return (Ram7800_Default *)&g_ram[0x7800 + a]; }
 //static inline Mode7CgvmWriteQueue *get_Mode7CgvmWriteQueue_RAM(uint16 a) { return (Mode7CgvmWriteQueue *)RomPtr_RAM(a); }
+extern const uint8* get_AnimationDelayData(uint16 pose);
 
 #pragma pack(pop)

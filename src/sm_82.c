@@ -540,7 +540,7 @@ void LoadDemoRoomData(void) {  // 0x828679
   samus_reserve_health = 0;
   reserve_health_mode = kReserveHealthMode_0_None;
   loading_game_state = kLoadingGameState_0_Intro;
-  debug_disable_minimap = 0;
+  disable_minimap = 0;
 }
 
 void DemoRoom_ChargeBeamRoomScroll21(void) {  // 0x82891A
@@ -632,7 +632,9 @@ CoroutineRet RunOneFrameOfGameInner(void) {
   NextRandom();
   ClearOamExt();
   oam_next_ptr = 0;
-  nmi_copy_samus_halves = 0;
+  //nmi_copy_samus_halves = 0;
+  nmi_copy_samus_top_half_ready_flag = 0;
+  nmi_copy_samus_bottom_half_ready_flag = 0;
   nmi_copy_samus_top_half_src = 0;
   nmi_copy_samus_bottom_half_src = 0;
 
@@ -1508,22 +1510,23 @@ void LoadPauseMenuMapTilemapAndAreaLabel(void) {  // 0x8293C3
   WriteReg(BBAD1, REG(VMDATAL));
   WriteReg(DAS1L, 0x18);
   WriteReg(DAS1H, 0);
-  uint16 v0 = area_index;
+  uint16 area_idx = area_index;
   if (area_index >= kArea_7_Debug)
-    v0 = kArea_0_Crateria;
-  WriteRegWord(A1T1L, kPauseAreaLabelTilemap[v0]);
+    area_idx = kArea_0_Crateria;
+  WriteRegWord(A1T1L, kPauseAreaLabelTilemap[area_idx]);
   WriteReg(A1B1, 0x82);
   WriteReg(MDMAEN, 2);
 }
 
 void LoadPauseMenuMapTilemap(void) {  // 0x82943D
-  uint16 v0 = area_index;
+  uint16 area_idx = area_index;
   if (area_index >= kArea_7_Debug)
-    v0 = kArea_0_Crateria;
-  const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[v0]));
+    area_idx = kArea_0_Crateria;
+  const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[area_idx]));
   uint16 *r3 = (uint16 *)&ram4000;
-  const uint16 *r6 = (const uint16 *)RomPtr_82(kPauseMenuMapData[v0]);
+  const uint16* r6 = (const uint16 *)kPauseMenuMapData[area_idx];
   const uint16 *r9 = (const uint16 *)map_tiles_explored;
+
   if (map_station_byte_array[area_index]) {
     uint16 r38 = swap16(*r6++);
     uint16 r40 = swap16(*r9++);
@@ -1536,7 +1539,8 @@ void LoadPauseMenuMapTilemap(void) {  // 0x82943D
       if (v11) {
         v10 &= ~0x400;
         r38 *= 2;
-      } else {
+      }
+      else {
         v11 = r38 >> 15;
         r38 *= 2;
         if (!v11)
@@ -1550,7 +1554,8 @@ void LoadPauseMenuMapTilemap(void) {  // 0x82943D
       }
       v8 += 2;
     } while ((int16)(v8 - 4096) < 0);
-  } else {
+  }
+  else {
     uint16 v1 = 0;
     uint16 v2 = 0;
     uint8 r18 = 0;
@@ -1559,7 +1564,8 @@ void LoadPauseMenuMapTilemap(void) {  // 0x82943D
       map_tiles_explored[v2] <<= 1;
       if (!(t & 0x80)) {
         r3[v1 >> 1] = 0x1f;
-      } else {
+      }
+      else {
         ++map_tiles_explored[v2];
         r3[v1 >> 1] = r0[v1 >> 1] & 0xFBFF;
       }
@@ -1577,13 +1583,13 @@ void DrawRoomSelectMap(void) {  // 0x829517
   reg_BG12NBA = 51;
   reg_TM = 19;
   reg_BG1VOFS = -40;
-  uint16 v0 = area_index;
+  uint16 area_idx = area_index;
   if (area_index >= kArea_7_Debug)
-    v0 = kArea_0_Crateria;
+    area_idx = kArea_0_Crateria;
 
-  const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[v0]));
+  const uint16 *r0 = (const uint16 *)RomPtr(Load24(&kPauseMenuMapTilemaps[area_idx]));
   uint16 *r3 = (uint16 *)&ram3000;
-  const uint16 *r6 = (const uint16 *)RomPtr_82(kPauseMenuMapData[v0]);
+  const uint16* r6 = (const uint16 *)kPauseMenuMapData[area_idx];
   const uint16 *r9 = (const uint16 *)map_tiles_explored;
 
   if (map_station_byte_array[area_index]) {
@@ -1612,7 +1618,8 @@ void DrawRoomSelectMap(void) {  // 0x829517
       }
       v9 += 2;
     } while ((int16)(v9 - 4096) < 0);
-  } else {
+  }
+  else {
     uint16 v1 = 0;
     uint16 v2 = 0;
     uint8 r18 = 0;
@@ -1621,7 +1628,8 @@ void DrawRoomSelectMap(void) {  // 0x829517
       map_tiles_explored[v2] <<= 1;
       if (!(what & 0x80)) {
         r3[v1 >> 1] = 0xf;
-      } else {
+      }
+      else {
         ++map_tiles_explored[v2];
         r3[v1 >> 1] = r0[v1 >> 1] & ~0x400;
       }
@@ -1634,13 +1642,13 @@ void DrawRoomSelectMap(void) {  // 0x829517
       }
     }
   }
-  uint16 v16 = vram_write_queue_tail;
-  VramWriteEntry *v17 = gVramWriteEntry(vram_write_queue_tail);
-  v17->size = 4096;
-  v17->src.addr = ADDR16_OF_RAM(ram3000);
-  v17->src.bank = 126;
-  v17->vram_dst = (reg_BG1SC & 0xFC) << 8;
-  vram_write_queue_tail = v16 + 7;
+
+  VramWriteEntry *vram_entry = gVramWriteEntry(vram_write_queue_tail);
+  vram_entry->size = 0x1000;
+  vram_entry->src.addr = ADDR16_OF_RAM(ram3000);
+  vram_entry->src.bank = 0x7E;
+  vram_entry->vram_dst = (reg_BG1SC & 0xFC) << 8;
+  vram_write_queue_tail += sizeof(VramWriteEntry);
 }
 
 void DrawRoomSelectMapAreaLabel(uint16 *dst) {  // 0x829628
@@ -1757,18 +1765,19 @@ static uint16 DetermineBottommostMapColumn(const uint8 *r0) {  // 0x82A053
 }
 
 void DetermineMapScrollLimits(void) {  // 0x829EC4
-  const uint8 *r6;
+  const uint8 *map_data;
   if (has_area_map) {
-    r6 = RomPtr_82(GET_WORD(RomPtr_82(addr_kPauseMenuMapData + 2 * area_index)));
-  } else {
-    r6 = map_tiles_explored;
+    map_data = kPauseMenuMapData[area_index];
   }
-  map_min_x_scroll = DetermineLeftmostMapColumn(r6) * 8;
+  else {
+    map_data = map_tiles_explored;
+  }
+  map_min_x_scroll = DetermineLeftmostMapColumn(map_data) * 8;
   if (area_index == kArea_4_Maridia)
     map_min_x_scroll -= 24;
-  map_max_x_scroll = DetermineRightmostMapColumn(r6 + 131) * 8;
-  map_min_y_scroll = DetermineTopmostMapColumn(r6) * 8;
-  map_max_y_scroll = DetermineBottommostMapColumn(r6 + 124) * 8;
+  map_max_x_scroll = DetermineRightmostMapColumn(map_data + 131) * 8;
+  map_min_y_scroll = DetermineTopmostMapColumn(map_data) * 8;
+  map_max_y_scroll = DetermineBottommostMapColumn(map_data + 124) * 8;
 }
 
 void SetupPpuForPauseMenu(void) {  // 0x82A09A
@@ -1892,7 +1901,7 @@ void ContinueInitGameplayResume(void) {  // 0x82A2E3
   CalculateBgScrolls_Unpause();
   UpdateBeamTilesAndPalette_Unpause();
   ClearPauseMenuData();
-  RunSamusCode(kSamusCode_12_UnlockFromMapStation);
+  RunSamusCode(kSamusCode_12_UpdateDueToUnpause);
 }
 
 void SetupPpuForGameplayResume(void) {  // 0x82A313
@@ -2541,27 +2550,32 @@ void EquipmentScreenCategory_Tanks_0(void) {
   }
 }
 
+/**
+* @brief This function does not work correctly in the original game as it loads garbage to the HUD tilemap.
+* It's overwritten by HandleHudTilemap(), thus this function is harmless
+*/
 void EquipmentScreenHudReserveAutoTilemap_On_BUGGY(void) {  // 0x82AEFD
-  // loads garbage...
-  uint16 v0 = 0x998B;
-  if (!samus_reserve_health)
-    v0 = 0x9997;
-  const uint16 *v1 = (const uint16 *)RomPtr_82(v0);
-  hud_tilemap.row1.auto_reserve[0] = v1[0];
-  hud_tilemap.row1.auto_reserve[1] = v1[1];
-  hud_tilemap.row2.auto_reserve[0] = v1[2];
-  hud_tilemap.row2.auto_reserve[1] = v1[3];
-  hud_tilemap.row3.auto_reserve[0] = v1[4];
-  hud_tilemap.row3.auto_reserve[1] = v1[5];
+  //// loads garbage...
+  //uint16 v0 = 0x998B;
+  //if (!samus_reserve_health)
+  //  v0 = 0x9997;
+  //const uint16 *v1 = (const uint16 *)RomPtr_82(v0);
+  //hud_tilemap.row1.auto_reserve[0] = v1[0];
+  //hud_tilemap.row1.auto_reserve[1] = v1[1];
+  //hud_tilemap.row2.auto_reserve[0] = v1[2];
+  //hud_tilemap.row2.auto_reserve[1] = v1[3];
+  //hud_tilemap.row3.auto_reserve[0] = v1[4];
+  //hud_tilemap.row3.auto_reserve[1] = v1[5];
 }
 
 void EquipmentScreenHudReserveAutoTilemap_Off(void) {  // 0x82AF33
-  hud_tilemap.row1.auto_reserve[0] = 0x2C0F;
-  hud_tilemap.row1.auto_reserve[1] = 0x2C0F;
-  hud_tilemap.row2.auto_reserve[0] = 0x2C0F;
-  hud_tilemap.row2.auto_reserve[1] = 0x2C0F;
-  hud_tilemap.row3.auto_reserve[0] = 0x2C0F;
-  hud_tilemap.row3.auto_reserve[1] = 0x2C0F;
+  uint16 blank_tile = 0x2C0F;
+  hud_tilemap.row1.auto_reserve[0] = blank_tile;
+  hud_tilemap.row1.auto_reserve[1] = blank_tile;
+  hud_tilemap.row2.auto_reserve[0] = blank_tile;
+  hud_tilemap.row2.auto_reserve[1] = blank_tile;
+  hud_tilemap.row3.auto_reserve[0] = blank_tile;
+  hud_tilemap.row3.auto_reserve[1] = blank_tile;
 }
 
 static const uint16 kReserveTankEnergyTransferPerFrame = 1;
@@ -3264,7 +3278,7 @@ void CancelSoundEffects(void) {  // 0x82BE17
 }
 
 void QueueSamusMovementSfx(void) {  // 0x82BE2F
-  if ((speed_boost_counter & 0xFF00) == 1024)
+  if (speed_boost_counter == SPEED_BOOST_THRESHOLD)
     QueueSfx3_Max6(kSfx3_ResumeSpeedBooster_Shinespark);
   if (!sign16(flare_counter - 16))
     QueueSfx1_Max6(kSfx1_ResumeChargingBeam);
@@ -3331,21 +3345,52 @@ uint8 AdvancePaletteFadeForAllPalettes(void) {  // 0x82DA02
   }
 }
 
-uint16 CalculateNthTransitionColorFromXtoY(uint16 a, uint16 k, uint16 j) {  // 0x82DA4A
-  return CalculateNthTransitionColorComponentFromXtoY(a, k & 0x1F, j & 0x1F) |
-         CalculateNthTransitionColorComponentFromXtoY(a, (k >> 5) & 0x1F, (j >> 5) & 0x1F) << 5 |
-         CalculateNthTransitionColorComponentFromXtoY(a, (k >> 10) & 0x1F, (j >> 10) & 0x1F) << 10;
+/**
+* @brief Calculate the numerator-th transition color from the source to the destination palette
+* @param pal_change_numer The palette change numerator
+* @param src_pal The color from the source palette
+* @param dst_pal The color from the destination palette
+* @return uint16 The numerator-th transition color
+*/
+uint16 CalculateNthTransitionColorFromXtoY(uint16 pal_change_numer, uint16 src_pal, uint16 dst_pal) {  // 0x82DA4A
+  uint16 src_color_red = src_pal & 0x1F;
+  uint16 dst_color_red = dst_pal & 0x1F;
+
+  uint16 src_color_green = (src_pal >> 5) & 0x1F;
+  uint16 dst_color_green = (dst_pal >> 5) & 0x1F;
+
+  uint16 src_color_blue = (src_pal >> 10) & 0x1F;
+  uint16 dst_color_blue = (dst_pal >> 10) & 0x1F;
+
+  uint16 trans_color_red = CalculateNthTransitionColorComponentFromXtoY(pal_change_numer, src_color_red, dst_color_red);
+  uint16 trans_color_green = CalculateNthTransitionColorComponentFromXtoY(pal_change_numer, src_color_green, dst_color_green) << 5;
+  uint16 trans_color_blue = CalculateNthTransitionColorComponentFromXtoY(pal_change_numer, src_color_blue, dst_color_blue) << 10;
+
+  uint16 transition_color = trans_color_red | trans_color_green | trans_color_blue;
+  return transition_color;
 }
 
-uint16 CalculateNthTransitionColorComponentFromXtoY(uint16 a, uint16 k, uint16 j) {  // 0x82DAA6
-  if (!a)
-    return k;
-  uint16 v4 = a - 1;
-  if (v4 == palette_change_denom)
-    return j;
-  uint16 RegWord = SnesDivide(abs16(j - k) << 8, palette_change_denom - (v4 + 1) + 1);
-  uint16 r18 = sign16(j - k) ? -RegWord : RegWord;
-  return (uint16)(r18 + (k << 8)) >> 8;
+/**
+* @brief Calculate the color component of the numerator-th transitition color from the source to the destination palette
+* @param pal_change_numer The palette change numerator
+* @param src_pal_color The color component from the source palette
+* @param dst_pal_color The color component from the destination palette
+* @return uint16 The color component from the numerator-th transition color
+*/
+uint16 CalculateNthTransitionColorComponentFromXtoY(uint16 pal_change_numer, uint16 src_pal_color, uint16 dst_pal_color) {  // 0x82DAA6
+  if (pal_change_numer == 0)
+    return src_pal_color;
+  if (pal_change_numer == (palette_change_denom + 1))
+    return dst_pal_color;
+
+  // For information about the math, see the "Color interpolation" section in math.md
+  // todo: The 0x100s should cancel, but it gives bad results
+  uint16 color_slope = (uint16)(0x100 * (dst_pal_color - src_pal_color) / (palette_change_denom + 1 - pal_change_numer)) / 0x100;
+  return (uint8)(src_pal_color + color_slope);
+
+  // Original code
+  //uint16 r18 = ((dst_pal_color - src_pal_color) << 8) / (palette_change_denom + 1 - pal_change_numer);
+  //return (uint16)(r18 + (src_pal_color << 8)) >> 8;
 }
 
 uint8 AdvancePaletteFadeForAllPalettesInA(uint16 a) {  // 0x82DAF7
@@ -3423,7 +3468,7 @@ CoroutineRet GameState_27_ReserveTanksAuto(void) {  // 0x82DC10
   if (coroutine_state_1 == 0 && RefillHealthFromReserveTanks()) {
     time_is_frozen_flag = 0;
     game_state = kGameState_8_MainGameplay;
-    RunSamusCode(kSamusCode_16_UnlockSamusFromReserveTank);
+    RunSamusCode(kSamusCode_16_UnlockFromReserveTank);
   }
   COROUTINE_AWAIT_ONLY(GameState_8_MainGameplay());
   Samus_LowHealthCheck_0();
@@ -3511,7 +3556,7 @@ CoroutineRet GameState_20_SamusNoHealth_BlackOut(void) {  // 0x82DCE0
 }
 
 CoroutineRet GameState_21_SamusNoHealth(void) {  // 0x82DD71
-  Samus_DrawWhenNotAnimatingOrDying();
+  Samus_DrawInanimateSamus();
   if (!HasQueuedMusic()) {
     StartSamusDeathAnimation();
     ++game_state;
@@ -3587,9 +3632,7 @@ void LoadDoorHeader(void) {  // 0x82DE12
 }
 
 void LoadRoomHeader(void) {  // 0x82DE6F
-  RoomDefHeader RoomDefHeader;
-
-  RoomDefHeader = get_RoomDefHeader(room_ptr);
+  RoomDefHeader RoomDefHeader = get_RoomDefHeader(room_ptr);
   room_index = RoomDefHeader.semiunique_room_number;
   area_index = RoomDefHeader.area_index_;
   room_x_coordinate_on_map = RoomDefHeader.x_coordinate_on_map;
@@ -3602,8 +3645,7 @@ void LoadRoomHeader(void) {  // 0x82DE6F
   down_scroller = RoomDefHeader.down_scroller_;
   door_list_pointer = RoomDefHeader.ptr_to_doorout;
   HandleRoomDefStateSelect(room_ptr);
-  uint16 prod = Mult8x8(room_width_in_blocks, room_height_in_blocks);
-  room_size_in_blocks = 2 * prod;
+  room_size_in_blocks = 2 * Mult8x8(room_width_in_blocks, room_height_in_blocks);
 }
 
 void LoadStateHeader(void) {  // 0x82DEF2
@@ -3644,7 +3686,7 @@ void LoadMapExploredIfElevator(void) {  // 0x82DFB6
 
 void EnsureSamusDrawnEachFrame(void) {  // 0x82DFC7
   if (!elevator_properties)
-    Samus_DrawWhenNotAnimatingOrDying();
+    Samus_DrawInanimateSamus();
 }
 
 void LoadEnemyGfxToVram(void) {  // 0x82DFD1
@@ -3781,7 +3823,7 @@ CoroutineRet DoorTransitionFunction_Wait48frames(void) {  // 0x82E19F
 CoroutineRet GameState_10_LoadingNextRoom_Async(void) {  // 0x82E1B7
   door_transition_flag_enemies = 1;
   door_transition_flag_elevator_zebetites = 1;
-  debug_disable_minimap = 0;
+  disable_minimap = 0;
   save_station_lockout_flag = 0;
   DetermineWhichEnemiesToProcess();
   EnemyMain();
@@ -4816,14 +4858,14 @@ void GameOptionsMenu_7_ControllerSettings(void) {
 }
 
 void OptionsMenuControllerFunc_ResetToDefault(void) {  // 0x82F224
-  if ((joypad1_newkeys & (kButton_Start | kButton_A)) != 0) {
-    button_config_shoot_x = 64;
-    button_config_jump_a = 128;
-    button_config_run_b = 0x8000;
-    button_config_itemcancel_y = 0x4000;
-    button_config_itemswitch = 0x2000;
-    button_config_aim_up_R = 16;
-    button_config_aim_down_L = 32;
+  if (joypad1_newkeys & (kButton_Start | kButton_A)) {
+    button_config_shoot = kButton_X;
+    button_config_jump = kButton_A;
+    button_config_run = kButton_B;
+    button_config_itemcancel = kButton_Y;
+    button_config_itemswitch = kButton_Select;
+    button_config_aim_up = kButton_R;
+    button_config_aim_down = kButton_L;
     LoadControllerOptionsFromControllerBindings();
     OptionsMenuFunc6_DrawControllerBindings();
   }

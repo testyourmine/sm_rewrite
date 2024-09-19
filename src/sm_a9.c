@@ -2413,10 +2413,10 @@ void MotherBomb_FiringRainbowBeam_5_StartFiring(void) {  // 0xA9B975
       E1->mbn_var_33 = 4;
       E->mbn_parameter_1 = 0;
       E->mbn_parameter_2 = 0;
-      uint16 v4 = kSamusCode_5_SetupDrained;
-      if ((int16)(samus_health - 700) < 0)
-        v4 = kSamusCode_24_SetupDrainedAndDisableStandUp;
-      RunSamusCode(v4);
+      uint16 samus_code = kSamusCode_5_SetupDrained_AbleToStand;
+      if ((int16)samus_health < 700)
+        samus_code = kSamusCode_24_SetupDrained_UnableToStand;
+      RunSamusCode(samus_code);
       E->mbn_var_15 = 6;
       E->mbn_var_A = FUNC16(MotherBomb_FiringRainbowBeam_6_MoveSamusToWall);
     }

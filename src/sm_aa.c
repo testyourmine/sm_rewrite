@@ -657,17 +657,13 @@ void Torizo_Init(void) {  // 0xAAC87F
     }
     if (area_index != kArea_0_Crateria) {
       Torizo_C280();
+      // GT Code
       if (joypad1_lastkeys == (kButton_B | kButton_Y | kButton_A | kButton_X)) {
-        samus_health = 700;
-        samus_max_health = 700;
-        samus_max_reserve_health = 300;
-        samus_reserve_health = 300;
-        samus_missiles = 100;
-        samus_max_missiles = 100;
-        samus_super_missiles = 20;
-        samus_max_super_missiles = 20;
-        samus_power_bombs = 20;
-        samus_max_power_bombs = 20;
+        samus_max_health = samus_health = 700;
+        samus_reserve_health = samus_max_reserve_health = 300;
+        samus_max_missiles = samus_missiles = 100;
+        samus_max_super_missiles = samus_super_missiles = 20;
+        samus_max_power_bombs = samus_power_bombs = 20;
         equipped_items = (kItem_Xray | kItem_Grapple | kItem_SpeedBooster | kItem_Bombs | kItem_SpaceJump | kItem_HiJumpBoots | kItem_GravitySuit | 0x10 | kItem_MorphBall | kItem_SpringBall | kItem_VariaSuit);
         collected_items = (kItem_Xray | kItem_Grapple | kItem_SpeedBooster | kItem_Bombs | kItem_SpaceJump | kItem_HiJumpBoots | kItem_GravitySuit | 0x10 | kItem_MorphBall | kItem_SpringBall | kItem_VariaSuit);
         equipped_beams = (kBeam_Charge | kBeam_Plasma | kBeam_Spazer | kBeam_Ice | kBeam_Wave);
@@ -957,11 +953,9 @@ void Torizo_D5ED(uint16 k) {  // 0xAAD5ED
 }
 
 void Torizo_D5F1(uint16 k) {  // 0xAAD5F1
-  uint16 v3;
-
   Enemy_Torizo *E = Get_Torizo(k);
   uint16 torizo_var_03 = E->toriz_var_03;
-  if (!torizo_var_03 || (v3 = torizo_var_03 - 1, (E->toriz_var_03 = v3) != 0)) {
+  if (E->toriz_var_03 == 0 || --E->toriz_var_03 != 0) {
     uint16 v5 = abs16(E->toriz_var_A) + 1;
     if (v5 >= 0x10)
       v5 = 15;
@@ -976,7 +970,8 @@ void Torizo_D5F1(uint16 k) {  // 0xAAD5F1
       E->toriz_var_B = 256;
       E->toriz_var_A = 0;
     }
-  } else {
+  }
+  else {
     E->toriz_var_03 = 0;
     uint16 v4;
     if ((E->toriz_parameter_1 & 0x8000) != 0)
@@ -1070,23 +1065,22 @@ void Torizo_D6F7(uint16 k, uint16 j) {  // 0xAAD6F7
   }
 }
 
+/**
+* @brief Initialize the Tourian entrance statue
+*/
 void TourianEntranceStatue_Init(void) {  // 0xAAD7C8
-  EnemyData *v0 = gEnemyData(cur_enemy_index);
-  v0->palette_index = 0;
-  v0->instruction_timer = 1;
-  v0->timer = 0;
-  uint16 v1 = kEnemyInit_TourianEntranceStatue_InstrListPtrs[v0->parameter_1 >> 1];
-  v0->current_instruction = v1;
-  if (!v0->parameter_1) {
+  EnemyData *E = gEnemyData(cur_enemy_index);
+  E->palette_index = 0;
+  E->instruction_timer = 1;
+  E->timer = 0;
+  E->current_instruction = kTourianEntranceStatue_InstrListPtrs[E->parameter_1 >> 1];
+  if (E->parameter_1 == 0) {
     SpawnEprojWithRoomGfx(addr_kEproj_TourianStatueBaseDecoration, 0);
     SpawnEprojWithRoomGfx(addr_kEproj_TourianStatueRidley, 0);
     SpawnEprojWithRoomGfx(addr_kEproj_TourianStatuePhantoon, 0);
   }
-  for (int i = 0x1E; i >= 0; i -= 2) {
-    int v5 = i >> 1;
-    target_palettes.sprite_pal_7[v5] = kEnemyInit_TourianEntranceStatue_PaletteTab1[v5];
-    target_palettes.sprite_pal_2[v5] = kEnemyInit_TourianEntranceStatue_PaletteTab0[v5];
-  }
+  MemCpy(target_palettes.sprite_pal_7, kTourianEntranceStatue_SpritePalette7, sizeof(kTourianEntranceStatue_SpritePalette7));
+  MemCpy(target_palettes.sprite_pal_2, kTourianEntranceStatue_SpritePalette2, sizeof(kTourianEntranceStatue_SpritePalette2));
 }
 
 const uint16 *Shaktool_Instr_2(uint16 k, const uint16 *jp) {  // 0xAAD931
@@ -1363,6 +1357,7 @@ void Shaktool_DD25(uint16 k) {  // 0xAADD25
   }
 }
 
+/** @todo fix shaktool */
 void Shaktool_Init(void) {  // 0xAADE43
   Enemy_Shaktool *E = Get_Shaktool(cur_enemy_index);
   E->base.instruction_timer = 1;

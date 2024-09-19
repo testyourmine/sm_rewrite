@@ -348,7 +348,7 @@ void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
       || room_ptr == addr_kRoom_EscapeRoom4) {
     earthquake_sfx_timer = -1;
   }
-  debug_disable_minimap = 0;
+  disable_minimap = 0;
   for (int i = 0x20; i != 0x80; i += 0x10) {
     WriteReg((SnesRegs)(i + DMAP0), DMA_CONTROL(0, 0, 0, 0, 0));
     WriteReg((SnesRegs)(i + BBAD0), REG(BG4HOFS));
@@ -369,7 +369,7 @@ void InitializeSpecialEffectsForNewRoom(void) {  // 0x8882C1
   bg3_xpos = 0;
   bg3_ypos = 0;
   irq_enable_mode7 = 0;
-  camera_distance_index = 0;
+  camera_distance_index = kCameraDistanceIndex_0_Normal;
   tourian_entrance_statue_animstate = 0;
   tourian_entrance_statue_finished = 0;
   earthquake_timer = 0;
@@ -648,7 +648,7 @@ uint8 RaiseOrLowerFx(void) {  // 0x88868C
 }
 
 void HdmaobjPreInstr_XrayFunc0_NoBeam(uint16 k) {  // 0x888732
-  if ((button_config_run_b & joypad1_lastkeys) != 0) {
+  if ((button_config_run & joypad1_lastkeys) != 0) {
     CalculateXrayHdmaTable();
     ++demo_input_pre_instr;
   } else {
@@ -657,7 +657,7 @@ void HdmaobjPreInstr_XrayFunc0_NoBeam(uint16 k) {  // 0x888732
 }
 
 void HdmaobjPreInstr_XrayFunc1_BeamWidening(uint16 k) {  // 0x888754
-  if ((button_config_run_b & joypad1_lastkeys) != 0) {
+  if ((button_config_run & joypad1_lastkeys) != 0) {
     AddToHiLo(&demo_input_instr_timer, &demo_input_instr_ptr, 2048);
     AddToHiLo(&demo_input, &demo_input_new, __PAIR32__(demo_input_instr_timer, demo_input_instr_ptr));
     if (!sign16(demo_input - 11)) {
@@ -672,7 +672,7 @@ void HdmaobjPreInstr_XrayFunc1_BeamWidening(uint16 k) {  // 0x888754
 }
 
 void HdmaobjPreInstr_XrayFunc2_FullBeam(uint16 k) {  // 0x8887AB
-  if ((button_config_run_b & joypad1_lastkeys) != 0) {
+  if ((button_config_run & joypad1_lastkeys) != 0) {
     HandleMovingXrayUpDown();
     CalculateXrayHdmaTable();
   } else {
@@ -2888,7 +2888,7 @@ uint8 GravitySuitPickup_6(void) {  // 0x88E25F
   int idx = hdma_object_index >> 1;
   hdma_object_instruction_list_pointers[idx] += 2;
   hdma_object_instruction_timers[idx] = 1;
-  RunSamusCode(kSamusCode_11_DrawHandlerDefault);
+  RunSamusCode(kSamusCode_11_UnlockFromFacingForward);
   return 0;
 }
 
@@ -3343,17 +3343,17 @@ void SpawnWavySamusHdmaObject(void) {  // 0x88EC3B
   hdma_wavy_samus_enable_flag = 1;
   WORD(hdma_wavy_samus_amplitude_low) = 0x4000;
   loop_counter_transfer_enemies_to_vram = 8;
-  button_config_shoot_x_saved = 192;
-  button_config_itemcancel_y_saved = 192;
+  button_config_shoot_saved = 192;
+  button_config_itemcancel_saved = 192;
   v0 = 12621824;
-  *(uint16 *)((uint8 *)&button_config_jump_a_saved + 1) = HIWORD(v0);
-  *(uint16 *)((uint8 *)&button_config_shoot_x_saved + 1) = v0;
-  button_config_run_b_saved = -26496;
+  *(uint16 *)((uint8 *)&button_config_jump_saved + 1) = HIWORD(v0);
+  *(uint16 *)((uint8 *)&button_config_shoot_saved + 1) = v0;
+  button_config_run_saved = -26496;
   v1 = 12621824;
   *(uint16 *)((uint8 *)&button_config_itemswitch_saved + 1) = HIWORD(v1);
-  *(uint16 *)((uint8 *)&button_config_itemcancel_y_saved + 1) = v1;
-  button_config_aim_down_L_saved = -26496;
-  button_config_aim_up_R_saved = 0;
+  *(uint16 *)((uint8 *)&button_config_itemcancel_saved + 1) = v1;
+  button_config_aim_down_saved = -26496;
+  button_config_aim_up_saved = 0;
   static const SpawnHdmaObject_Args kSpawnHdmaObject_88EC82 = {
     .hdma_control = HDMA_CONTROL(0, 1, 2),
     .hdma_target = REG(BG3HOFS),
