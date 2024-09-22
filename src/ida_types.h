@@ -297,6 +297,7 @@ enum ElevatorDirection {  // 0x7E0799
 };
 
 enum RoomIndex {  // 0x7E079D
+  kNUM_ROOM_IDX = 0x0 // none for now
 };
 
 enum AreaIndex {  // 0x7E079F

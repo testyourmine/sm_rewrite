@@ -61,7 +61,8 @@ uint8 kSamusFramesForUnderwaterSfx[] = {
   0, 201,   4,   0,
 };
 
-const uint8 *kPauseMenuMapData[8];
+// declared in sm_82.h, extern here to not break ODR with other variables in sm_82.c
+extern const uint8 *kPauseMenuMapData[8];
 
 LongPtr kPauseMenuMapTilemaps_90[] = {
   0x9000, 0xb5, 0x8000, 0xb5, 0xa000, 0xb5, 0xb000, 0xb5, 0xc000, 0xb5, 0xd000, 0xb5, 0xe000, 0xb5,
