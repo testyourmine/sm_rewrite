@@ -1,6 +1,6 @@
 #pragma once
 
-#include "types.h"
+#include "ida_types.h"
 
 // Bank 80
 bool CheckEventHappened(uint16 a);
@@ -164,7 +164,7 @@ void Write0x800BytesToRam4000(uint16 a);
 void Write0x800BytesToRam6000(uint16 a);
 
 // Bank 81
-uint16 CheckIfFileSelectMapAreaCanBeSelected(uint16 a);
+uint16 Debug_CheckIfFileSelectMapAreaCanBeSelected(uint16 a);
 uint16 DecAndWraparoundTo5(uint16 a);
 uint16 HandleRoomSelectMapExpandingSquareTrans(void);
 uint16 WraparoundFrom6to0(uint16 a);
@@ -203,7 +203,7 @@ void FileSelectMap(void);
 void FileSelectMap_0_OptionsToAreaSelectSetupFadeOut(void);
 void FileSelectMap_1_OptionsToAreaSelectFadeOut(void);
 void FileSelectMap_10_RoomSelectMap(void);
-void FileSelectMap_11_RoomSelectToGameWaitForFadeOut(void);
+void FileSelectMap_11_12_RoomSelectToGameWaitForFadeOut(void);
 void FileSelectMap_13_RoomSelectToLoadGameFadeOut(void);
 void FileSelectMap_14_RoomSelectToLoadGameWait(void);
 void FileSelectMap_15_RoomSelectToAreaSelectClearTileMap(void);
@@ -212,9 +212,9 @@ void FileSelectMap_18_RoomSelectToAreaSelectLoadBackgroundTilemap(void);
 void FileSelectMap_20_SetupContractingSquare(void);
 void FileSelectMap_21_RoomSelectToAreaSelectMoveExpandingSquare(void);
 void FileSelectMap_22_SelectSlotFromFileClear(void);
-void FileSelectMap_2_LoadAreaSelectForegroundTilemap(void);
+void FileSelectMap_2_17_LoadAreaSelectForegroundTilemap(void);
 void FileSelectMap_3_LoadAreaSelectBackgroundTilemap(void);
-void FileSelectMap_4_SetupExpandingSquareTransition(void);
+void FileSelectMap_4_19_SetupExpandingSquareTransition(void);
 void FileSelectMap_5_ExpandingSquare(void);
 void FileSelectMap_6_AreaSelectMap(void);
 void FileSelectMap_7_PrepExpandSquareTransToRoomMap(void);
@@ -254,12 +254,12 @@ void InitFileSelectMenuFileCopy(void);
 void GameOverMenu(void);
 void GameOverMenu_0_FadeOutConfigGfx(void);
 void GameOverMenu_1_Init(void);
-void GameOverMenu_24_FadeIn(void);
+void DebugGameOverMenu_2_4_FadeIn(void);
 void GameOverMenu_2_PlayMusic(void);
 void GameOverMenu_3_FadeIn(void);
-void GameOverMenu_3_Main(void);
+void DebugGameOverMenu_3_Main(void);
 void GameOverMenu_4_Main(void);
-void GameOverMenu_5_Continue(void);
+void DebugGameOverMenu_5_Continue(void);
 void GameOverMenu_5_FadeOutToGameMap(void);
 void GameOverMenu_6_LoadGameMapView(void);
 void GameOverMenu_7_FadeOutToSoftReset(void);
@@ -284,10 +284,10 @@ void SaveToSram(uint16 a);
 void SelectFileSelectMapArea(void);
 void SetFileClearMenuMissilePos(void);
 void SetFileCopyMenuSelectionMissilePosition(void);
-void SetInitialFileCopyMenuSelection(void);
+void SetInitialFileCopyClearMenuSelection(void);
 void SetupInitialExpandingSquareHDMA(void);
 void SetupRoomSelectMapExpandingSquareTransHDMA(void);
-void SwitchActiveFileSelectMapArea(uint16 R28);
+void Debug_SwitchActiveFileSelectMapArea(uint16 R28);
 void UnpackMapFromSave(void);
 void DrawGrappleOrProjectileSpritemap(const uint8 *pp, uint16 x_r20, uint16 y_r18);
 void UNUSED_sub_819591(void);
@@ -387,7 +387,7 @@ void DrawFileSelectMapIcons(void);
 void DrawLrHighlight(void);
 void DrawMapIcons(void);
 void DrawMapIconsOfType(uint16 a, uint16 r34, uint16 r36, uint16 r3);
-void DrawMapScrollArrowAndCheckToScroll(uint8 db, uint16 k);
+void DrawMapScrollArrowAndCheckToScroll(MapScrollArrowData k);
 void DrawMenuSelectionMissile(void);
 void DrawOptionsMenuSpritemaps(void);
 void DrawPauseMenuDuringFadeIn(void);

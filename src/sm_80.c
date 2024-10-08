@@ -1806,7 +1806,8 @@ void HandleHudTilemap(void) {  // 0x809B44
   if (nmi_frame_counter_byte & 16)
     hud_palette = highlighted_palette;
   ToggleHudItemHighlight(samus_auto_cancel_hud_item_index, hud_palette);
-  // Queue a transfer of the HUD tilemap in RAM to VRAM 0x5820
+
+  // Transfer the HUD tilemap in RAM to VRAM 0x5820
   VramWriteEntry* vram_entry = gVramWriteEntry(vram_write_queue_tail);
   vram_entry->size = sizeof(RamHudTilemap);
   vram_entry->src.addr = ADDR16_OF_RAM(hud_tilemap);

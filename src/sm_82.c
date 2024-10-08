@@ -1046,7 +1046,7 @@ CoroutineRet GameState_13_Pausing_Async(void) {  // 0x828CEF
   screen_fade_counter = 1;
   pausemenu_leftarrow_animation_frame = 0;
   pausemenu_palette_animation_timer = 1;
-  map_scrolling_direction = 0;
+  map_scrolling_direction = kMapScrollingDirection_None;
   map_scrolling_speed_index = 0;
   QueueClearingOfFxTilemap();
   ++game_state;
@@ -1418,7 +1418,7 @@ void MapScrolling_Common(void) {  // 0x829299
   ++map_scrolling_speed_index;
   if ((++map_scrolling_speed_index & 0xF) == 0) {
     QueueSfx1_Max6(kSfx1_ScrollingMap);
-    map_scrolling_direction = 0;
+    map_scrolling_direction = kMapScrollingDirection_None;
     map_scrolling_speed_index = 0;
     if (map_scrolling_gear_switch_timer)
       --map_scrolling_gear_switch_timer;
@@ -2962,10 +2962,10 @@ void UNKNOWN_sub_82B650(void) {  // 0x82B650
 static const uint16 kMap_Criteria_SavePoints[16] = { 0xd8, 0x28, 0x90, 0x38, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe, 0xfffe };
 
 void DrawMapIcons(void) {  // 0x82B672
-  DrawBossMapIcons(9, addr_kMapIconDataPointers);
-  DrawSimpleMapIcons(0xB, addr_kMapIconDataPointers + 0x10, 3584);
-  DrawSimpleMapIcons(0xA, addr_kMapIconDataPointers + 0x20, 3584);
-  DrawSimpleMapIcons(0x4E, addr_kMapIconDataPointers + 0x30, 3584);
+  DrawBossMapIcons(9, addr_kMapIconPositionsPointers);
+  DrawSimpleMapIcons(11, addr_kMapIconPositionsPointers + 0x10, 3584);
+  DrawSimpleMapIcons(10, addr_kMapIconPositionsPointers + 0x20, 3584);
+  DrawSimpleMapIcons(78, addr_kMapIconPositionsPointers + 0x30, 3584);
   DrawSaveStationMapIcon(8, 0xC80B, 1024);
   if (enable_debug)
     DrawSimpleMapIcons(8, 0xC82B, 1024);
@@ -2980,9 +2980,10 @@ void DrawFileSelectMapIcons(void) {  // 0x82B6DD
   DrawSimpleMapIcons(0xA, 0xC7EB, 3584);
   DrawSimpleMapIcons(0x4E, 0xC7FB, 3584);
   uint16 a = UpdateSamusPositionIndicatorAnimation();
-  const uint16 *data = (uint16 *)RomPtr_82(*(VoidP *)((uint8 *)&kMapIconDataPointers_82[4].crateria + 2 * area_index)) + load_station_index * 2;
-  uint16 v1 = data[0] - reg_BG1HOFS;
-  uint16 v2 = data[1] - reg_BG1VOFS;
+  //const uint16 *data = (uint16 *)RomPtr_82(*(VoidP *)((uint8 *)&kMapIconDataPointers[4].crateria + 2 * area_index)) + load_station_index * 2;
+  const Point16U data = kMapIconPositions_SavePoints[area_index][load_station_index];
+  uint16 v1 = data.x - reg_BG1HOFS;
+  uint16 v2 = data.y - reg_BG1VOFS;
   if ((samus_position_indicator_animation_loop_counter & 1) == 0)
     DrawMenuSpritemap(0x12, v1, v2, 3584);
   DrawMenuSpritemap(a, v1, v2, 3584);
@@ -3084,34 +3085,41 @@ void DrawBossMapIcons(uint16 a, uint16 k) {  // 0x82B892
   }
 }
 
-void DrawMapScrollArrowAndCheckToScroll(uint8 db, uint16 k) {  // 0x82B90A
-  const uint16 *v1 = (const uint16 *)RomPtrWithBank(db, k);
-  DrawPauseScreenSpriteAnim(v1[2], *v1, v1[1]);
-  const uint8 *v2 = RomPtrWithBank(db, k);
-  if ((joypad1_lastkeys & GET_WORD(v2 + 6)) != 0 && !map_scrolling_direction)
-    map_scrolling_direction = GET_WORD(v2 + 8);
+/**
+* @brief Draw the map scroll arrow and update scrolling direction
+* @param map_scroll_arrow_data The map scroll arrow data
+*/
+void DrawMapScrollArrowAndCheckToScroll(MapScrollArrowData map_scroll_arrow_data) {  // 0x82B90A
+  MapScrollArrowData scroll_arrow = map_scroll_arrow_data;
+  DrawPauseScreenSpriteAnim(scroll_arrow.pause_screen_animation_id, scroll_arrow.xpos, scroll_arrow.ypos);
+  if ((joypad1_lastkeys & scroll_arrow.joypad_input) && map_scrolling_direction == kMapScrollingDirection_None)
+    map_scrolling_direction = scroll_arrow.map_scroll_dir;
 }
 
 void UNUSED_sub_82B932(void) {  // 0x82B932
   HandleMapScrollArrows();
 }
 
-
+/**
+* @brief Handle drawing and scrolling map scroll arrows in 
+*/
 void HandleMapScrollArrows(void) {  // 0x82B934
-  if (sign16(map_min_x_scroll - 24 - reg_BG1HOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kLeftMapScrollArrowData);
-  if (!sign16(map_max_x_scroll - 232 - reg_BG1HOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kRightMapScrollArrowData);
-  if (sign16(map_min_y_scroll - 56 - reg_BG1VOFS))
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kUpMapScrollArrowData);
-  if (sign16(map_max_y_scroll - 177 - reg_BG1VOFS)) {
+  if ((int16)(map_min_x_scroll - 24) < (int16)reg_BG1HOFS)
+    DrawMapScrollArrowAndCheckToScroll(kLeftMapScrollArrowData);
+  if ((int16)(map_max_x_scroll - 232) >= (int16)reg_BG1HOFS)
+    DrawMapScrollArrowAndCheckToScroll(kRightMapScrollArrowData);
+  if ((int16)(map_min_y_scroll - 56) < (int16)reg_BG1VOFS)
+    DrawMapScrollArrowAndCheckToScroll(kUpMapScrollArrowData);
+  if ((int16)(map_max_y_scroll - 177) >= (int16)reg_BG1VOFS) {
+    DrawMapScrollArrowAndCheckToScroll(kDownMapScrollArrowData);
+  }
+  // This check is likely useless
+  else {
     if (map_scrolling_direction == kDownMapScrollArrowData.map_scroll_dir) {
       map_scrolling_gear_switch_timer = 0;
-      map_scrolling_direction = 0;
+      map_scrolling_direction = kMapScrollingDirection_None;
       map_scrolling_speed_index = 0;
     }
-  } else {
-    DrawMapScrollArrowAndCheckToScroll(0x82, addr_kDownMapScrollArrowData);
   }
 }
 

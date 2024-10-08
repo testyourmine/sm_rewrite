@@ -58,7 +58,36 @@
 #define cinematicbg_text_click_flag (*(uint16*)(g_ram+0x1BA1))
 #define cinematic_jp_text_timer (*(uint16*)(g_ram+0x1BA3))
 
+// Main menu stuff
+#define menu_selection_missile_anim_timer (*(uint16*)(g_ram+0x198D))
+#define menu_selection_file_copy_arrow_palette_timer (*(uint16*)(g_ram+0x198F))
+#define menu_selection_slot_samus_helmet_anim_timer ((uint16*)(g_ram+0x1991))
+#define menu_selection_slot_a_samus_helmet_anim_timer (*(uint16*)(g_ram+0x1991))
+#define menu_selection_slot_b_samus_helmet_anim_timer (*(uint16*)(g_ram+0x1993))
+#define menu_selection_slot_c_samus_helmet_anim_timer (*(uint16*)(g_ram+0x1995))
+#define menu_selection_missile_anim_frame (*(uint16*)(g_ram+0x1997))
 
+#define menu_selection_slot_samus_helmet_anim_frame ((uint16*)(g_ram+0x199B))
+#define menu_selection_slot_a_samus_helmet_anim_frame (*(uint16*)(g_ram+0x199B))
+#define menu_selection_slot_b_samus_helmet_anim_frame (*(uint16*)(g_ram+0x199D))
+#define menu_selection_slot_c_samus_helmet_anim_frame (*(uint16*)(g_ram+0x199F))
+#define menu_selection_missile_x_pos (*(uint16*)(g_ram+0x19A1))
+
+#define menu_selection_slot_samus_helmet_x_pos ((uint16*)(g_ram+0x19A5))
+#define menu_selection_slot_a_samus_helmet_x_pos (*(uint16*)(g_ram+0x19A5))
+#define menu_selection_slot_b_samus_helmet_x_pos (*(uint16*)(g_ram+0x19A7))
+#define menu_selection_slot_c_samus_helmet_x_pos (*(uint16*)(g_ram+0x19A9))
+#define menu_selection_missile_y_pos (*(uint16*)(g_ram+0x19AB))
+
+#define menu_selection_slot_samus_helmet_y_pos ((uint16*)(g_ram+0x19AF))
+#define menu_selection_slot_a_samus_helmet_y_pos (*(uint16*)(g_ram+0x19AF))
+#define menu_selection_slot_b_samus_helmet_y_pos (*(uint16*)(g_ram+0x19B1))
+#define menu_selection_slot_c_samus_helmet_y_pos (*(uint16*)(g_ram+0x19B3))
+#define menu_selection_file_copy_clear_select (*(uint16*)(g_ram+0x19B5))
+#define menu_selection_file_copy_source_clear_slot (*(uint16*)(g_ram+0x19B7))
+#define menu_selection_file_destination_slot (*(uint16*)(g_ram+0x19B9))
+
+// Game options menu stuff
 #define optionsmenu_index (*(uint16*)(g_ram+0x1A8F))
 #define optionsmenu_init_param (*(uint16*)(g_ram+0x1A93))
 #define optionsmenu_cur_data ((uint16*)(g_ram+0x1A9D))

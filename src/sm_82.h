@@ -634,23 +634,405 @@ uint16 kEquipmentPtrsToEquipmentTilemaps[] = { 0x0, 0xc08c, 0xc096, 0xc0a2, };
 
 //#define kMapIconDataPointers ((MapIconDataPointers*)RomFixedPtr(0x82c7cb))
 
-MapIconDataPointers kMapIconDataPointers_82[] = { 0xc83b, 0xc89d, 0xc90b, 0xc981, 0xc9db,    0x0, 0xca9b,    0x0, 
-											      0x0, 0xc8a3,    0x0,    0x0, 0xc9e1,    0x0,    0x0,    0x0, 
-											      0x0, 0xc8a9, 0xc913,    0x0, 0xc9e7, 0xca49,    0x0,    0x0, 
-											   0xc84d, 0xc8b7, 0xc91d, 0xc98b, 0xc9ed, 0xca4f,    0x0,    0x0, 
-											   0xc853, 0xc8bd, 0xc923, 0xc991, 0xc9f3, 0xca51,    0x0,    0x0, 
-											   0xc873, 0xc8dd, 0xc943, 0xc9b1, 0xca13, 0xca71,    0x0,    0x0, 
-											   0xc893, 0xc8fd, 0xc963, 0xc9d1, 0xca33, 0xca91,    0x0,    0x0, };
+MapIconDataPointers kMapIconDataPointers[] = {
+  [0] = { .crateria = 0xc83b, .brinstar = 0xc89d, .norfair =  0xc90b, .wrecked_ship = 0xc981, .maridia = 0xc9db, .tourian =    0x0, .ceres = 0xca9b, .debug =    0x0, }, 
+  [1] = { .crateria =    0x0, .brinstar = 0xc8a3, .norfair =     0x0, .wrecked_ship =    0x0, .maridia = 0xc9e1, .tourian =    0x0, .ceres =    0x0, .debug =    0x0, }, 
+  [2] = { .crateria =    0x0, .brinstar = 0xc8a9, .norfair =  0xc913, .wrecked_ship =    0x0, .maridia = 0xc9e7, .tourian = 0xca49, .ceres =    0x0, .debug =    0x0, }, 
+  [3] = { .crateria = 0xc84d, .brinstar = 0xc8b7, .norfair =  0xc91d, .wrecked_ship = 0xc98b, .maridia = 0xc9ed, .tourian = 0xca4f, .ceres =    0x0, .debug =    0x0, }, 
+  [4] = { .crateria = 0xc853, .brinstar = 0xc8bd, .norfair =  0xc923, .wrecked_ship = 0xc991, .maridia = 0xc9f3, .tourian = 0xca51, .ceres =    0x0, .debug =    0x0, }, 
+  [5] = { .crateria = 0xc873, .brinstar = 0xc8dd, .norfair =  0xc943, .wrecked_ship = 0xc9b1, .maridia = 0xca13, .tourian = 0xca71, .ceres =    0x0, .debug =    0x0, }, 
+  [6] = { .crateria = 0xc893, .brinstar = 0xc8fd, .norfair =  0xc963, .wrecked_ship = 0xc9d1, .maridia = 0xca33, .tourian = 0xca91, .ceres =    0x0, .debug =    0x0, },
+};
 
-//#define kLeftMapScrollArrowData ((MapScrollArrowData*)RomFixedPtr(0x82b9a0))
-//#define kRightMapScrollArrowData ((MapScrollArrowData*)RomFixedPtr(0x82b9aa))
-//#define kUpMapScrollArrowData ((MapScrollArrowData*)RomFixedPtr(0x82b9b4))
-//#define kDownMapScrollArrowData (*(MapScrollArrowData*)RomFixedPtr(0x82b9be))
+Point16U kMapIconPositions_BossIcons_Crateria[4] = {  // 0x82C83B
+  [0] = { .x = -2, .y = -2, },
+  [1] = { .x = -2, .y = -2, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_Brinstar[2] = {  // 0x82C89D
+  [0] = { .x = 444, .y = 156, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_Norfair[2] = {  // 0x82C90B
+  [0] = { .x = 184, .y = 144, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_WreckedShip[2] = {  // 0x82C981
+  [0] = { .x = 152, .y = 160, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_Maridia[2] = {  // 0x82C9DB
+  [0] = { .x = 316, .y = 84, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_Tourian[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_Ceres[2] = {  // 0x82CA9B
+  [0] = { .x = 160, .y = 136, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_BossIcons_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Crateria[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Brinstar[2] = {  // 0x82C8A3
+  [0] = { .x = 40, .y = 64, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Norfair[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_WreckedShip[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Maridia[2] = {  // 0x82C9E1
+  [0] = { .x = 304, .y = 72, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Tourian[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Ceres[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MissileStations_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Crateria[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Brinstar[4] = {  // 0x82C8A9
+  [0] = { .x = 72, .y = 104, },
+  [1] = { .x = 256, .y = 152, },
+  [2] = { .x = 432, .y = 152, },
+  [3] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Norfair[3] = {  // 0x82C913
+  [0] = { .x = 160, .y = 80, },
+  [1] = { .x = 168, .y = 128, },
+  [2] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_WreckedShip[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Maridia[2] = {  // 0x82C9E7
+  [0] = { .x = 336, .y = 56, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Tourian[2] = {  // 0x82CA49
+  [0] = { .x = 88, .y = 136, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Ceres[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_EnergyStations_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Crateria[2] = {  // 0x82C84D
+  [0] = { .x = 184, .y = 64, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Brinstar[2] = {  // 0x82C8B7
+  [0] = { .x = 40, .y = 40, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Norfair[2] = {  // 0x82C91D
+  [0] = { .x = 72, .y = 40, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_WreckedShip[2] = {  // 0x82C98B
+  [0] = { .x = 104, .y = 160, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Maridia[2] = {  // 0x82C9ED
+  [0] = { .x = 136, .y = 144, },
+  [1] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Tourian[1] = {  // 0x82CA4F
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Ceres[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_MapStations_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Crateria[9] = {  // 0x82C853
+  [0] = { .x = 216, .y = 40, },
+  [1] = { .x = 144, .y = 56, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Brinstar[9] = {  // 0x82C8BD
+  [0] = { .x = 120, .y = 40, },
+  [1] = { .x = 64, .y = 48, },
+  [2] = { .x = 40, .y = 96, },
+  [3] = { .x = 392, .y = 152, },
+  [4] = { .x = 304, .y = 72, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Norfair[9] = {  // 0x82C923
+  [0] = { .x = 96, .y = 96, },
+  [1] = { .x = 168, .y = 32, },
+  [2] = { .x = 88, .y = 48, },
+  [3] = { .x = 128, .y = 72, },
+  [4] = { .x = 160, .y = 88, },
+  [5] = { .x = 288, .y = 104, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_WreckedShip[9] = {  // 0x82C991
+  [0] = { .x = 136, .y = 120, },
+  [1] = { .x = -2, .y = -2, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Maridia[9] = {  // 0x82C9F3
+  [0] = { .x = 96, .y = 160, },
+  [1] = { .x = 280, .y = 40, },
+  [2] = { .x = 152, .y = 96, },
+  [3] = { .x = 328, .y = 56, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Tourian[9] = {  // 0x82CA51
+  [0] = { .x = 128, .y = 144, },
+  [1] = { .x = 168, .y = 104, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Ceres[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_SavePoints_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Crateria[9] = {  // 0x82C873
+  [0] = { .x = 416, .y = 88, },
+  [1] = { .x = 272, .y = 64, },
+  [2] = { .x = 184, .y = 144, },
+  [3] = { .x = 48, .y = 72, },
+  [4] = { .x = 136, .y = 80, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Brinstar[9] = {  // 0x82C8DD
+  [0] = { .x = 72, .y = 24, },
+  [1] = { .x = 208, .y = 88, },
+  [2] = { .x = 296, .y = 56, },
+  [3] = { .x = 328, .y = 152, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Norfair[9] = {  // 0x82C943
+  [0] = { .x = 80, .y = 24, },
+  [1] = { .x = 168, .y = 88, },
+  [2] = { .x = 168, .y = 112, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_WreckedShip[9] = {  // 0x82C9B1
+  [0] = { .x = -2, .y = -2, },
+  [1] = { .x = -2, .y = -2, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Maridia[9] = {  // 0x82CA13
+  [0] = { .x = 272, .y = 24, },
+  [1] = { .x = -2, .y = -2, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Tourian[9] = {  // 0x82CA71
+  [0] = { .x = 160, .y = 96, },
+  [1] = { .x = -2, .y = -2, },
+  [2] = { .x = -2, .y = -2, },
+  [3] = { .x = -2, .y = -2, },
+  [4] = { .x = -2, .y = -2, },
+  [5] = { .x = -2, .y = -2, },
+  [6] = { .x = -2, .y = -2, },
+  [7] = { .x = -2, .y = -2, },
+  [8] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Ceres[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugElevatorMarkers_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Crateria[3] = {  // 0x82C893
+  [0] = { .x = 216, .y = 40, },
+  [1] = { .x = 392, .y = 40, },
+  [2] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Brinstar[4] = {  // 0x82C8FD
+  [0] = { .x = 72, .y = 24, },
+  [1] = { .x = 440, .y = 160, },
+  [2] = { .x = 144, .y = 32, },
+  [3] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Norfair[8] = {  // 0x82C963
+  [0] = { .x = 80, .y = 16, },
+  [1] = { .x = 120, .y = 80, },
+  [2] = { .x = 176, .y = 136, },
+  [3] = { .x = 80, .y = 88, },
+  [4] = { .x = 168, .y = 112, },
+  [5] = { .x = 160, .y = 128, },
+  [6] = { .x = 16, .y = 8, },
+  [7] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_WreckedShip[3] = {  // 0x82C9D1
+  [0] = { .x = 80, .y = 120, },
+  [1] = { .x = 144, .y = 160, },
+  [2] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Maridia[5] = {  // 0x82CA33
+  [0] = { .x = 144, .y = 40, },
+  [1] = { .x = 328, .y = 80, },
+  [2] = { .x = 184, .y = 72, },
+  [3] = { .x = 176, .y = 136, },
+  [4] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Tourian[3] = {  // 0x82CA91
+  [0] = { .x = 136, .y = 80, },
+  [1] = { .x = 104, .y = 192, },
+  [2] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Ceres[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U kMapIconPositions_DebugSavePoints_Debug[1] = {  // 0x820000
+  [0] = 0xFFFF,
+};
+Point16U* kMapIconPositions_BossIcons[8] = {  // 0x82C7CB
+  [kArea_0_Crateria]    = kMapIconPositions_BossIcons_Crateria,
+  [kArea_1_Brinstar]    = kMapIconPositions_BossIcons_Brinstar,
+  [kArea_2_Norfair]     = kMapIconPositions_BossIcons_Norfair,
+  [kArea_3_WreckedShip] = kMapIconPositions_BossIcons_WreckedShip,
+  [kArea_4_Maridia]     = kMapIconPositions_BossIcons_Maridia,
+  [kArea_5_Tourian]     = 0,
+  [kArea_6_Ceres]       = kMapIconPositions_BossIcons_Ceres,
+  [kArea_7_Debug]       = 0,
+};
+Point16U* kMapIconPositions_MissileStations[8] = {  // 0x82C7DB
+  [kArea_0_Crateria]    = 0,
+  [kArea_1_Brinstar]    = kMapIconPositions_MissileStations_Brinstar,
+  [kArea_2_Norfair]     = 0,
+  [kArea_3_WreckedShip] = 0,
+  [kArea_4_Maridia]     = kMapIconPositions_MissileStations_Maridia,
+  [kArea_5_Tourian]     = 0,
+  [kArea_6_Ceres]       = 0,
+  [kArea_7_Debug]       = 0,
+};
+Point16U* kMapIconPositions_EnergyStations[8] = {  // 0x82C7EB
+  [kArea_0_Crateria]    = 0,
+  [kArea_1_Brinstar]    = kMapIconPositions_EnergyStations_Brinstar,
+  [kArea_2_Norfair]     = kMapIconPositions_EnergyStations_Norfair,
+  [kArea_3_WreckedShip] = 0,
+  [kArea_4_Maridia]     = kMapIconPositions_EnergyStations_Maridia,
+  [kArea_5_Tourian]     = kMapIconPositions_EnergyStations_Tourian,
+  [kArea_6_Ceres]       = 0,
+  [kArea_7_Debug]       = 0,
+};
+Point16U* kMapIconPositions_MapStations[8] = {  // 0x82C7FB
+  [kArea_0_Crateria]    = kMapIconPositions_MapStations_Crateria,
+  [kArea_1_Brinstar]    = kMapIconPositions_MapStations_Brinstar,
+  [kArea_2_Norfair]     = kMapIconPositions_MapStations_Norfair,
+  [kArea_3_WreckedShip] = kMapIconPositions_MapStations_WreckedShip,
+  [kArea_4_Maridia]     = kMapIconPositions_MapStations_Maridia,
+  [kArea_5_Tourian]     = kMapIconPositions_MapStations_Tourian,
+  [kArea_6_Ceres]       = 0,
+  [kArea_7_Debug]       = 0,
+};
+Point16U* kMapIconPositions_SavePoints[8] = {  // 0x82C80B
+  [kArea_0_Crateria]    = kMapIconPositions_SavePoints_Crateria,
+  [kArea_1_Brinstar]    = kMapIconPositions_SavePoints_Brinstar,
+  [kArea_2_Norfair]     = kMapIconPositions_SavePoints_Norfair,
+  [kArea_3_WreckedShip] = kMapIconPositions_SavePoints_WreckedShip,
+  [kArea_4_Maridia]     = kMapIconPositions_SavePoints_Maridia,
+  [kArea_5_Tourian]     = kMapIconPositions_SavePoints_Tourian,
+  [kArea_6_Ceres]       = 0,
+  [kArea_7_Debug]       = 0,
+};
+Point16U* kMapIconPositions_DebugElevatorMarkers[8] = {  // 0x82C81B
+  [kArea_0_Crateria]    = kMapIconPositions_DebugElevatorMarkers_Crateria,
+  [kArea_1_Brinstar]    = kMapIconPositions_DebugElevatorMarkers_Brinstar,
+  [kArea_2_Norfair]     = kMapIconPositions_DebugElevatorMarkers_Norfair,
+  [kArea_3_WreckedShip] = kMapIconPositions_DebugElevatorMarkers_WreckedShip,
+  [kArea_4_Maridia]     = kMapIconPositions_DebugElevatorMarkers_Maridia,
+  [kArea_5_Tourian]     = kMapIconPositions_DebugElevatorMarkers_Tourian,
+  [kArea_6_Ceres]       = 0,
+  [kArea_7_Debug]       = 0,
+};
+Point16U* kMapIconPositions_DebugSavePoints[8] = {  // 0x82C82B
+  [kArea_0_Crateria]    = kMapIconPositions_DebugSavePoints_Crateria,
+  [kArea_1_Brinstar]    = kMapIconPositions_DebugSavePoints_Brinstar,
+  [kArea_2_Norfair]     = kMapIconPositions_DebugSavePoints_Norfair,
+  [kArea_3_WreckedShip] = kMapIconPositions_DebugSavePoints_WreckedShip,
+  [kArea_4_Maridia]     = kMapIconPositions_DebugSavePoints_Maridia,
+  [kArea_5_Tourian]     = kMapIconPositions_DebugSavePoints_Tourian,
+  [kArea_6_Ceres]       = 0,
+  [kArea_7_Debug]       = 0,
+};
 
-MapScrollArrowData kLeftMapScrollArrowData = { 16, 120, 9, 512, 1, };
-MapScrollArrowData kRightMapScrollArrowData = { 240, 120, 8, 256, 2, };
-MapScrollArrowData kUpMapScrollArrowData = { 128, 56, 6, 2048, 3, };
-MapScrollArrowData kDownMapScrollArrowData = { 128, 184, 7, 1024, 4, };
+static const MapScrollArrowData kLeftMapScrollArrowData = {  // 0x82B9A0
+  .xpos = 1*16, .ypos = 7*16 + 8, .pause_screen_animation_id = 9, .joypad_input = kButton_Left, .map_scroll_dir = kMapScrollingDirection_Left,
+};
+static const MapScrollArrowData kRightMapScrollArrowData = {  // 0x82B9AA
+  .xpos = 15*16, .ypos = 7*16 + 8, .pause_screen_animation_id = 8, .joypad_input = kButton_Right, .map_scroll_dir = kMapScrollingDirection_Right,
+};
+static const MapScrollArrowData kUpMapScrollArrowData = {  // 0x82B9B4
+  .xpos = 8*16, .ypos = 3*16 + 8, .pause_screen_animation_id = 6, .joypad_input = kButton_Up, .map_scroll_dir = kMapScrollingDirection_Up,
+};
+static const MapScrollArrowData kDownMapScrollArrowData = {  // 0x82B9BE
+  .xpos = 8*16, .ypos = 11*16 + 8, .pause_screen_animation_id = 7, .joypad_input = kButton_Down, .map_scroll_dir = kMapScrollingDirection_Down,
+};
 
 //#define file_copy_arrow_stuff ((FileCopyArrowStuff*)RomFixedPtr(0x82bb0c))
 
@@ -681,7 +1063,7 @@ uint16 kMapElevatorDests[] = {
 //								  0xe744, 0xe74d, 0xe756, 0xe75f, 0xe768, 0xe771, 0xe77a, 0xe783, 0xe78c, 
 //								  0xe795, 0xe79e, };
 
-TileSet kTileSetTable[] = {
+static const TileSet kTileSetTable[29] = {
   [kTileSet_0_UpperCrateria]              = { .tile_table_ptr = LONGPTR(0xc1b6f6), .tiles_ptr = LONGPTR(0xbac629), .palette_ptr = LONGPTR(0xc2ad7c), },
   [kTileSet_1_RedCrateria]                = { .tile_table_ptr = LONGPTR(0xc1b6f6), .tiles_ptr = LONGPTR(0xbac629), .palette_ptr = LONGPTR(0xc2ae5d), },
   [kTileSet_2_LowerCrateria]              = { .tile_table_ptr = LONGPTR(0xc1beee), .tiles_ptr = LONGPTR(0xbaf911), .palette_ptr = LONGPTR(0xc2af43), },

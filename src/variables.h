@@ -384,7 +384,10 @@ extern int32 *cur_coll_amt32;
 #define timer_minutes (*(uint8*)(g_ram+0x947))
 #define timer_x_pos (*(uint16*)(g_ram+0x948))
 #define timer_y_pos (*(uint16*)(g_ram+0x94A))
+// {
 #define file_select_map_area_index (*(uint16*)(g_ram+0x950))
+#define game_over_menu_selection (*(uint16*)(g_ram+0x950))
+// }
 #define selected_save_slot (*(uint16*)(g_ram+0x952))
 #define nonempty_save_slots (*(uint16*)(g_ram+0x954))
 #define bg1_update_col_unwrapped_size (*(uint16*)(g_ram+0x956))
@@ -1276,6 +1279,7 @@ extern int32 *cur_coll_amt32;
 #define level_data ((uint16*)(g_ram+0x10002))
 #define BTS ((uint8*)(g_ram+0x16402))
 #define custom_background ((uint16*)(g_ram+0x19602))
+
 #define kSramChecksum ((uint16*)(g_sram+0x0))
 #define kSramChecksumInverted ((uint16*)(g_sram+0x8))
 #define sram_save_slot_selected (*(uint16*)(g_sram+0x1FEC))

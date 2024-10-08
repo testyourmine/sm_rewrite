@@ -2138,22 +2138,24 @@ void sub_86A91A(uint16 v0) {  // 0x86A91A
 }
 
 static void EprojInit_AB07(uint16 j) {  // 0x86AA3D
-  uint16 v1 = vram_write_queue_tail;
-  VramWriteEntry *v2 = gVramWriteEntry(vram_write_queue_tail);
-  v2->size = 64;
-  v2->src.addr = addr_kEprojInit_AB07_Tile0;
-  *(uint16 *)&v2->src.bank = 134;
-  v2->vram_dst = 28160;
-  v1 += 7;
-  VramWriteEntry *v3 = gVramWriteEntry(v1);
-  v3->size = 64;
-  v3->src.addr = addr_kEprojInit_AB07_Tile1;
-  *(uint16 *)&v3->src.bank = 134;
-  v3->vram_dst = 28416;
-  vram_write_queue_tail = v1 + 7;
-  int v4 = j >> 1;
-  eproj_x_pos[v4] = samus_x_pos;
-  eproj_y_pos[v4] = samus_y_pos - 36;
+  VramWriteEntry *vram_entry;
+  vram_entry = gVramWriteEntry(vram_write_queue_tail);
+  vram_entry->size = 0x40;  // sizeof(kEprojInit_AB07_Tile0)
+  vram_entry->src.addr = addr_kEprojInit_AB07_Tile0;
+  vram_entry->src.bank = 0x86;
+  vram_entry->vram_dst = 0x6E00;
+  vram_write_queue_tail += 7;
+
+  vram_entry = gVramWriteEntry(vram_write_queue_tail);
+  vram_entry->size = 0x40;  // sizeof(kEprojInit_AB07_Tile1)
+  vram_entry->src.addr = addr_kEprojInit_AB07_Tile1;
+  vram_entry->src.bank = 0x86;
+  vram_entry->vram_dst = 0x6F00;
+  vram_write_queue_tail = vram_write_queue_tail + 7;
+
+  int idx = j >> 1;
+  eproj_x_pos[idx] = samus_x_pos;
+  eproj_y_pos[idx] = samus_y_pos - (2*16 + 4);
 }
 
 void EprojPreInstr_AB07(uint16 k) {  // 0x86AA8C

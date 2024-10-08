@@ -117,6 +117,14 @@ enum SaveConfirmationSelection {  // 0x7E05F9
   kConfirmSave_Toggle = 0x2,
 };
 
+enum MapScrollingDirection {  // 0x7E05FD
+  kMapScrollingDirection_None = 0x0,
+  kMapScrollingDirection_Left = 0x1,
+  kMapScrollingDirection_Right = 0x2,
+  kMapScrollingDirection_Up = 0x3,
+  kMapScrollingDirection_Down = 0x4,
+};
+
 enum MusicEntry {  // 0x7E063D
   kMusic_Stop = 0x0,
   kMusic_SamusFanfare = 0x1,
@@ -212,29 +220,29 @@ enum FileSelectMenu {  // 0x7E0727
 };
 
 enum FileSelectMap {  // 0x7E0727
-  kFileSeletMap_0_OptionsToAreaSelect_ClearBg2_SetUpFadeOut = 0x0,
-  kFileSeletMap_1_OptionsToAreaSelect_FadeOut_LoadAreaPalette = 0x1,
-  kFileSeletMap_2_OptionsToAreaSelect_LoadForegroundTilemap = 0x2,
-  kFileSeletMap_3_OptionsToAreaSelect_LoadBackgroundTilemap = 0x3,
-  kFileSeletMap_4_OptionsToAreaSelect_PrepareExpandingContractingSquareTransition = 0x4,
-  kFileSeletMap_5_OptionsToAreaSelect_ExpandingSquareTransition = 0x5,
-  kFileSeletMap_6_AreaSelect = 0x6,
-  kFileSeletMap_7_AreaSelectToRoomSelect_PrepareExpandingSquareTransition = 0x7,
-  kFileSeletMap_8_AreaSelectToRoomSelect_ExpandingSquareTransition = 0x8,
-  kFileSeletMap_9_AreaSelectToRoomSelect_Initialize = 0x9,
-  kFileSeletMap_10_RoomSelect = 0xA,
-  kFileSeletMap_11_RoomSelectToLoadGame_FadeOut2FrameDelay = 0xB,
-  kFileSeletMap_12_RoomSelectToLoadGame_FadeOut1FrameDelay = 0xC,
-  kFileSeletMap_13_RoomSelectToLoadGame_FadeOut = 0xD,
-  kFileSeletMap_14_RoomSelectToLoadGame_Wait = 0xE,
-  kFileSeletMap_15_RoomSelectToAreaSelect_ClearBg1Tilemap = 0xF,
-  kFileSeletMap_16_RoomSelectToAreaSelect_LoadPalettes = 0x10,
-  kFileSeletMap_17_RoomSelectToAreaSelect_LoadForegroundTilemap = 0x11,
-  kFileSeletMap_18_RoomSelectToAreaSelect_LoadBackgroundTilemap = 0x12,
-  kFileSeletMap_19_RoomSelectToAreaSelect_PrepareExpandingContractingSquareTransition = 0x13,
-  kFileSeletMap_20_RoomSelectToAreaSelect_PrepareContractingSquareTransition = 0x14,
-  kFileSeletMap_21_RoomSelectToAreaSelect_ContractingSquareTransition = 0x15,
-  kFileSeletMap_22_AreaSelectToOptions = 0x16,
+  kFileSelectMap_0_OptionsToAreaSelect_ClearBg2_SetUpFadeOut = 0x0,
+  kFileSelectMap_1_OptionsToAreaSelect_FadeOut_LoadAreaPalette = 0x1,
+  kFileSelectMap_2_OptionsToAreaSelect_LoadForegroundTilemap = 0x2,
+  kFileSelectMap_3_OptionsToAreaSelect_LoadBackgroundTilemap = 0x3,
+  kFileSelectMap_4_OptionsToAreaSelect_PrepareExpandingContractingSquareTransition = 0x4,
+  kFileSelectMap_5_OptionsToAreaSelect_ExpandingSquareTransition = 0x5,
+  kFileSelectMap_6_AreaSelect = 0x6,
+  kFileSelectMap_7_AreaSelectToRoomSelect_PrepareExpandingSquareTransition = 0x7,
+  kFileSelectMap_8_AreaSelectToRoomSelect_ExpandingSquareTransition = 0x8,
+  kFileSelectMap_9_AreaSelectToRoomSelect_Initialize = 0x9,
+  kFileSelectMap_10_RoomSelect = 0xA,
+  kFileSelectMap_11_RoomSelectToLoadGame_FadeOut2FrameDelay = 0xB,
+  kFileSelectMap_12_RoomSelectToLoadGame_FadeOut1FrameDelay = 0xC,
+  kFileSelectMap_13_RoomSelectToLoadGame_FadeOut = 0xD,
+  kFileSelectMap_14_RoomSelectToLoadGame_Wait = 0xE,
+  kFileSelectMap_15_RoomSelectToAreaSelect_ClearBg1Tilemap = 0xF,
+  kFileSelectMap_16_RoomSelectToAreaSelect_LoadPalettes = 0x10,
+  kFileSelectMap_17_RoomSelectToAreaSelect_LoadForegroundTilemap = 0x11,
+  kFileSelectMap_18_RoomSelectToAreaSelect_LoadBackgroundTilemap = 0x12,
+  kFileSelectMap_19_RoomSelectToAreaSelect_PrepareExpandingContractingSquareTransition = 0x13,
+  kFileSelectMap_20_RoomSelectToAreaSelect_PrepareContractingSquareTransition = 0x14,
+  kFileSelectMap_21_RoomSelectToAreaSelect_ContractingSquareTransition = 0x15,
+  kFileSelectMap_22_AreaSelectToOptions = 0x16,
 };
 
 enum PauseMenu {  // 0x7E0727
@@ -339,6 +347,32 @@ enum TimerStatus {  // 0x7E0943
   kTimerStatus_4_Counting_MovementDelayed = 0x4,
   kTimerStatus_5_Counting_MovingIntoPlace = 0x5,
   kTimerStatus_6_Counting_MovedIntoPlace = 0x6,
+};
+
+enum GameOverMenuSelection {  // 0x7E0950
+  kGameOverMenuSelect_Yes = 0,
+  kGameOverMenuSelect_No = 1,
+};
+
+enum SaveSlotSelected {  // 0x7E0952
+  kSaveSlotSelected_SlotA = 0x0,
+  kSaveSlotSelected_SlotB = 0x1,
+  kSaveSlotSelected_SlotC = 0x2,
+};
+
+enum FileSelectMenuSelection {  // 0x7E0952
+  kFileSelectMenuSelection_SlotA = 0x0,
+  kFileSelectMenuSelection_SlotB = 0x1,
+  kFileSelectMenuSelection_SlotC = 0x2,
+  kFileSelectMenuSelection_FileCopy = 0x3,
+  kFileSelectMenuSelection_FileClear = 0x4,
+  kFileSelectMenuSelection_Exit = 0x5,
+};
+
+enum NonemptySaveSlot {  // 0x7E0954
+  kNonemptySaveSlot_A = 0x1,
+  kNonemptySaveSlot_B = 0x2,
+  kNonemptySaveSlot_C = 0x4,
 };
 
 /* 93 */
@@ -1151,11 +1185,11 @@ typedef struct Ram3000_Misc {  // 0x7E31D8
 
 /* 135 */
 typedef struct Ram3000_Menu {  // 0x7E3300
-  uint8 field_0[768];
-  uint16 palette_backup_in_menu[256];
-  uint8 backup_of_io_registers_in_gameover[54];
+  uint8 field_0[0x300];
+  uint16 palette_backup_in_menu[0x200 >> 1];
+  uint8 backup_of_io_registers_in_gameover[54];  // ADDR16_OF_RAM_OFFSET(reg_MEMSEL, reg_INIDISP)
   uint8 field_536[202];
-  uint8 menu_tilemap[512];
+  uint8 menu_tilemap[0x800];
 } Ram3000_Menu;
 
 /* 149 */
@@ -1178,10 +1212,10 @@ typedef union Ram3800 {  // 0x7E3800
 
 /* 137 */
 typedef struct Ram4000_Backups {  // 0x7E4100
-  uint8 field_0[256];
+  uint8 field_0[0x100];
   uint16 backup_of_vram_0x5880_msgbox[0x700 >> 1];
-  uint8 field_800[2048];
-  uint8 backup_of_0x3e00_in_kraid_pause[1024];
+  uint8 field_800[0x800];
+  uint8 backup_of_0x3e00_in_kraid_pause[0x400];
 } Ram4000_Backups;
 
 /* 138 */
@@ -1294,8 +1328,15 @@ typedef struct ExtraEnemyRam8800 {  // 0x7E8800
 /* 109 */
 typedef struct ExpandingSquareTransitionHdma {  // 0x7E9E00
   uint8 height;
-  uint8 addr_lo;
-  uint8 addr_hi;
+  union {
+    struct {
+      uint8 addr_lo;
+      uint8 addr_hi;
+    };
+    uint16 addr;
+  };
+  
+  
 } ExpandingSquareTransitionHdma;
 
 /* 110 */
@@ -1634,6 +1675,11 @@ typedef struct ElevatorsUsedConf {  // 0x80CD46
   uint8 dst_bit;
 } ElevatorsUsedConf;
 
+typedef struct MenuSelectMissileCoord {  // 0x81A312
+  uint16 y_pos;
+  uint16 x_pos;
+} MenuSelectMissileCoord;
+
 /* 115 */
 typedef struct ExpandingSquareVels {  // 0x81AA34
   uint16 left_subvel;
@@ -1697,7 +1743,7 @@ typedef struct MapIconDataPointers {  // 0x82C7CB
   VoidP brinstar;
   VoidP norfair;
   VoidP wrecked_ship;
-  VoidP maraidia;
+  VoidP maridia;
   VoidP tourian;
   VoidP ceres;
   VoidP debug;
@@ -3156,7 +3202,12 @@ enum Consts_81 {
   addr_kMenuTilemap_ClearSamusA = 0xB69A,
   addr_kMenuTilemap_DataCleared = 0xB6DA,
   addr_kAreaSelectForegroundTilemap = 0xB71A,
-  addr_kAreaSelectBackgroundTilemaps = 0xBF1A,
+  addr_kAreaSelectBackgroundTilemap_Crateria = 0xBF1A,
+  addr_kAreaSelectBackgroundTilemap_Brinstar = 0xC71A,
+  addr_kAreaSelectBackgroundTilemap_Norfair = 0xCF1A,
+  addr_kAreaSelectBackgroundTilemap_WreckedShip = 0xD71A,
+  addr_kAreaSelectBackgroundTilemap_Maridia = 0xDF1A,
+  addr_kAreaSelectBackgroundTilemap_Tourian = 0xE71A,
 };
 enum Consts_82 {
   addr_kLeftMapScrollArrowData = 0xB9A0,
@@ -3172,7 +3223,7 @@ enum Consts_82 {
   addr_kEquipmentTilemapOffs_Suits = 0xC076,
   addr_kEquipmentTilemapOffs_Boots = 0xC082,
   addr_kDummySamusWireframeTilemap = 0xC639,
-  addr_kMapIconDataPointers = 0xC7CB,
+  addr_kMapIconPositionsPointers = 0xC7CB,
   addr_kOptionsInstr_Destroy = 0xF4B6,
   addr_kOptionsInit_MenuSelectMissile = 0xF4B8,
   addr_kOptionsInit_OptionModeBorder = 0xF4C4,
