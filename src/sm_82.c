@@ -608,6 +608,9 @@ static Func_V_Coroutine *const kGameStateFuncs[45] = {
 };
 
 CoroutineRet RunOneFrameOfGameInner(void) {
+  if (game_state == 0xffff) {
+    coroutine_state_0 = 3;
+  }
   int st = coroutine_state_0;
   // This uses manual coroutine handling because of the 
   // kGameStateFuncs[game_state]() thing, we need to make
